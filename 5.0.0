@@ -1,0 +1,6 @@
++ acorn@6.0.0
++ ajv@6.7.0
++ @babel/core@7.0.0
+updated 3 packages and audited 14756 packages in 14.018s
+found 8 vulnerabilities (4 low, 4 moderate)
+  run `npm audit fix` to fix them, or `npm audit` for details
