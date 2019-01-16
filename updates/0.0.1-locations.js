@@ -8,8 +8,10 @@
  */
 
 exports.create = {
-	User: [
-		{ 'name.first': 'Admin', 'name.last': 'User', 'email': 'hrvoje.kusanic@hotmail.com', 'password': 'Test01!', 'canAccessKeystone': true },
+	Location: [
+		{ title: 'Kiev' },
+		{ title: 'Boston' },
+		{ title: 'Moscow' },
 	],
 };
 

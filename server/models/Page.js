@@ -27,13 +27,13 @@ function formatDate (date) {
 var pageImgStorage = new keystone.Storage({
 	adapter: keystone.Storage.Adapters.FS,
 	fs: {
-			// required; path where the files should be stored
+		// required; path where the files should be stored
 		path: keystone.expandPath('server/public/img'),
 		generateFilename: function (file, index) {
 			return file.originalname;
 		},
 		whenExists: 'error',
-			// path where files will be served
+		// path where files will be served
 		publicPath: '/public/img',
 	},
 });

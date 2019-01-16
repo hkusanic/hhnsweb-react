@@ -1,5 +1,6 @@
 var keystone = require('keystone');
 let modelHelper = require('../helpers/modelHelper');
+
 // Then to get access to our API route we will use importer
 var importRoutes = keystone.importer(__dirname);
 // And finally set up the api on a route
@@ -24,7 +25,7 @@ exports = module.exports = function (app) {
 				<!doctype html>
 				<html>
 					<head>
-						<title>Keystone With React And Redux</title>
+						<title>H.H. Niranjana Swami - Official web-site</title>
 						<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Work+Sans:300,500,700,800%7COswald:300,400,500">
 						<link rel="stylesheet" href="../css/bootstrap.css">
 						<link rel="stylesheet" href="../css/fonts.css">

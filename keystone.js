@@ -33,5 +33,3 @@ keystone.set('routes', require('./server/routes'));
 
 // Start Keystone
 keystone.start();
-
-keystone.redirect('/index.html');
