@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Types = keystone.Field.Types;
 
 let Location = new keystone.List('Location', {
-	autokey: { path: 'slug', from: 'title', unique: true },
+	autokey: { path: 'slug', from: 'title _id', unique: true },
 	map: { name: 'title' },
 });
 

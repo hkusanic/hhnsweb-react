@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Types = keystone.Field.Types;
 
 let Lecture = new keystone.List('Lecture', {
-	autokey: { path: 'slug', from: '_id title.en', unique: true },
+	autokey: { path: 'slug', from: 'title.en _id', unique: true },
 	map: { name: 'title' },
 	defaultSort: '-date',
 });
