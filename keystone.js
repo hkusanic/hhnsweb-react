@@ -4,7 +4,7 @@ var keystone = require('keystone');
 // Set up our keystone instance
 keystone.init({
 	// The name of the KeystoneJS application
-	'name': 'Keystone CMS',
+	'name': 'H.H. Niranja Swami Web - Admin UI',
 	// Paths to our application static files
 	'static': [
 		'./server/public',
