@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Types = keystone.Field.Types;
 
 let Comment = new keystone.List('Comment', {
-	autokey: { path: 'slug', from: 'message', unique: true },
+	autokey: { path: 'slug', from: 'dateCreated _id', unique: true },
 	map: { name: 'message' },
 	defaultSort: '-dateCreated',
 });

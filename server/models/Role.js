@@ -3,7 +3,7 @@ var Types = keystone.Field.Types;
 
 // create a role collection
 let Role = new keystone.List('Role', {
-	autokey: { path: 'slug', from: 'title', unique: true },
+	autokey: { path: 'slug', from: 'title _id', unique: true },
 	map: { name: 'title' },
 });
 
