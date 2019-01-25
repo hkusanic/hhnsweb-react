@@ -9,6 +9,7 @@ import thunk from 'redux-thunk';
 import reducers from './reducers/reducers';
 // And our Recipe component
 import Recipe from './containers/Recipe'
+import Home from './containers/Home/Home';
 
 // Define our store
 const store = createStore(reducers, applyMiddleware(thunk));
@@ -17,16 +18,31 @@ const store = createStore(reducers, applyMiddleware(thunk));
 const App = () => {
   return (
     // We will add our components here
-    <div>
-      <Recipe />
-    </div>
+    // {/*<div>*/}
+      // {/*<Recipe />*/}
+      <Home />
+    // </div>
   );
 };
 
-ReactDOM.render(
-  // We need to wrap our app in provider to make use of redux
-  // Passing our store to the provider
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.querySelector('.react-container'));
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const target = document.querySelector("#react-container");
+ 
+  ReactDOM.render(
+    // We need to wrap our app in provider to make use of redux
+    // Passing our store to the provider
+    <Provider store={store}>
+      <App />
+    </Provider>,
+   target);
+ });
+
+// ReactDOM.render(
+//   // We need to wrap our app in provider to make use of redux
+//   // Passing our store to the provider
+//   <Provider store={store}>
+//     <App />
+//   </Provider>,
+//   document.querySelector('.react-container'));

@@ -38,6 +38,12 @@ module.exports = {
 			}),
 		},
 		{
+			test: /\.less$/,
+				use: ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use: ['css-loader?importLoaders=1', 'postcss-loader', 'less-loader']
+				})},
+		{
 			test: /\.(png|jpg|gif)$/,
 			use: [{
 				loader: 'url-loader',

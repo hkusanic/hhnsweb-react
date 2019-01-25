@@ -32,8 +32,9 @@ exports = module.exports = function (app) {
 						<link rel="stylesheet" href="../css/style.css" id="main-styles-link">
 					</head>
 					<body>
-						<div class="react-container" />
+						<div id="react-container" />
 						<script type="text/javascript" src="../js/bundle.js"></script>
+						<script src="../js/core.min.js"></script>
 					</body>
 				</html>
 				`;
