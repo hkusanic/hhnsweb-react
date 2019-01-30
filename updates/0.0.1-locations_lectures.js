@@ -77,6 +77,105 @@ exports.create = {
 	 
 		   ]
 		},
+		 {  
+			"title.en":"August 30, 2018 - Almaty - SB 4.9.11 - &quot;Why Not Take the Easiest Path?&quot; - English/ Russian",
+			"title.ru":"30 августа, 2018 - Алматы - Ш.Б. 4.9.11 - &quot;Почему бы ни следовать по самому лёгкому пути?&quot; - Английский/ Русский",
+			"youtube":[  
+			   "https://www.youtube.com/embed/0bYWy4jQfMQ?rel=gallery-all&wmode=opaque&autoplay=0"
+			],
+			"topic":"Srimad Bhagavatam",
+			"date":"2018-08-30",
+			"event":"None",
+			"translation":"Russian",
+			"audio":"https://nrs-site.s3.amazonaws.com/lectures/2018/2018-08/niranjana_swami_-_sb_4.9.11_in_almaty_kazakhstan_eng_rus_-_30-aug-2018.mp3",
+			"duration":"01:20:34",
+			"downloads":"115",
+			"location":"Almaty",
+			"transcriptions":[  
+	  
+			]
+		 },
+		 {  
+			"title.en":"August 26, 2018 - Almaty, Kazakhstan - Balarama Purnima Class - English/ Russian",
+			"title.ru":"26 августа, 2018 - Алматы, Казахстан - Лекция на Баларама Пурниме - Английский/ Русский",
+			"youtube":[  
+			   "https://www.youtube.com/embed/jsg2S32qsdM?rel=gallery-all&wmode=opaque&autoplay=0"
+			],
+			"topic":"Srimad Bhagavatam",
+			"date":"2018-08-26",
+			"event":"Festival",
+			"translation":"Russian",
+			"audio":"https://nrs-site.s3.amazonaws.com/lectures/2018/2018-08/niranjana_swami_-_sb_7.15.45_on_balarama-purnima_-c2a0almaty_26-aug-2018.mp3",
+			"duration":"01:37:59",
+			"downloads":"138",
+			"location":"Almaty",
+			"transcriptions":[  
+	  
+			]
+		 },
+		 {  
+			"title.en":"August 9, 2018 - Disciple Retreat - Magdalinivka - Opening Talk - English/ Russian",
+			"title.ru":"9 августа, 2018 - Ретрит учеников - Магдалиновка - Лекция на открытии - Английский/ Русский",
+			"youtube":[  
+			   "https://www.youtube.com/embed/ss_Wi3V86LQ?rel=gallery-all&wmode=opaque&autoplay=0",
+			   "https://www.youtube.com/embed/IQYt6nn7luo?rel=gallery-all&wmode=opaque",
+			   "https://www.youtube.com/embed/CcahRHij_Oo?rel=gallery-all&wmode=opaque",
+			   "https://www.youtube.com/embed/NOn7A8CVV2A?rel=gallery-all&wmode=opaque",
+			   "https://www.youtube.com/embed/7MfkQ3L5JpY?rel=gallery-all&wmode=opaque"
+			],
+			"topic":"Other",
+			"date":"2018-08-09",
+			"event":"Retreat",
+			"translation":"Russian",
+			"audio":"https://nrs-site.s3.amazonaws.com/lectures/2018/2018-08/2018.08.09_e.s.nirandzhana_svami._privetstvennoe_slovo._retrit._magdalinovka.mp3",
+			"duration":"00:28:13",
+			"downloads":"86",
+			"location":"Magdalinivka",
+			"transcriptions":[  
+	  
+			]
+		 },
+		 {  
+			"title.en":"August 1, 2018 - Boston - Wednesday Evening Program - BG 11.32 - English Only",
+			"title.ru":"1 августа, 2018 - Бостон - Вечерняя программа - Б.Г. 11.32 - Только английский",
+			"youtube":[  
+			   "https://www.youtube.com/embed/L7XJk_m6Oaw?rel=gallery-all&wmode=opaque&autoplay=0",
+			   "https://www.youtube.com/embed/JLXE_Y4Khbg?rel=gallery-all&wmode=opaque",
+			   "https://www.youtube.com/embed/WxwkiIGqdBM?rel=gallery-all&wmode=opaque",
+			   "https://www.youtube.com/embed/gXJN_ZoiFQk?rel=gallery-all&wmode=opaque",
+			   "https://www.youtube.com/embed/A1T_nEYaMUE?rel=gallery-all&wmode=opaque",
+			   "https://www.youtube.com/embed/BfQngP2OZRg?rel=gallery-all&wmode=opaque"
+			],
+			"topic":"Bhagavad-gita",
+			"date":"2018-08-01",
+			"event":"None",
+			"translation":"No translation",
+			"audio":"https://nrs-site.s3.amazonaws.com/lectures/2018/2018-08/august_1_2018_-_boston_-_wednesday_program_class_-_bg_11.32_-_english_only.mp3",
+			"duration":"00:53:10",
+			"downloads":"48",
+			"location":"Boston",
+			"transcriptions":[  
+	  
+			]
+		 },
+		 {  
+			"title.en":"July 22, 2018 - Hartford - Sunday Lecture - BG 10.4-5 continuation - English Only",
+			"title.ru":"22 июля, 2018 - Хартфорд - Воскресная лекция - Б.Г. 10.4-5 - Продолжение - Только английский",
+			"youtube":[  
+			   "https://www.youtube.com/embed/Jk43wuJObJU?rel=gallery-all&wmode=opaque&autoplay=0"
+			],
+			"topic":"Bhagavad-gita",
+			"date":"2018-07-22",
+			"event":"Sunday program",
+			"translation":"No translation",
+			"audio":"https://nrs-site.s3.amazonaws.com/lectures/2018/2018-07/18.07.22_hartford.mp3",
+			"duration":"01:01:19",
+			"downloads":"65",
+			"location":"Hartford",
+			"transcriptions":[  
+	  
+			]
+		 },
 	
 	 ],
 };
