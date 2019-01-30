@@ -1,5 +1,4 @@
 const keystone = require('keystone');
-const mongoose = require('mongoose');
 const Types = keystone.Field.Types;
 
 let Lecture = new keystone.List('Lecture', {
