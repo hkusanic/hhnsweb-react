@@ -11,7 +11,7 @@ Blog.add({
 	title: { type: String },
 	date: { type: Types.Date, default: Date.now },
 	author: { type: String },
-	body: { type: Types.Text },
+	body: { type: Types.Html, wysiwyg: true, height: 600 },
 	slug: { type: String, index: true },
 });
 
