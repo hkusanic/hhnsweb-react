@@ -1,6 +1,6 @@
 { 
-    "presets": ["react"],
     "plugins": [
-        ["import", {"libraryName": "antd", "style": true} ]
-      ]
+        "react-hot-loader/babel"
+      ],
+      "presets": ["babel-preset-env", "babel-preset-react", "babel-preset-es2015"]
   }

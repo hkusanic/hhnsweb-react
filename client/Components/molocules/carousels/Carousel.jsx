@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import  script  from "../../../assets/script";
 
 export class Carousel extends Component {
     constructor(props) {
@@ -6,6 +7,9 @@ export class Carousel extends Component {
         this.state = {
 
         }
+    }
+    componentDidMount(){
+        script();
     }
     render() {
         return (

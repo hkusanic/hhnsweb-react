@@ -7,11 +7,11 @@ export class LatestLecture extends Component {
 
         }
     }
-
+    
     render() {
         return (
             <div>
-                <section className="section section-lg text-center">
+               <section className="section section-lg text-center">
                     <div className="container">
                         <h3 className="wow-outer text-center"><span className="wow slideInDown">Latest Lectures</span></h3>
                         <div className="row row-50">

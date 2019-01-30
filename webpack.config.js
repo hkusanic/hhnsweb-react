@@ -13,7 +13,7 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, '/server/public/js/'),
 		filename: 'bundle.js',
-		publicPath: 'server/public/js/',
+		publicPath: 'js/',
 	},
 	// Adding babel loader to compile our javascript and jsx files
 	module: {
@@ -26,7 +26,11 @@ module.exports = {
 					presets: [
 						'react',
 						'env',
+						'es2015',
+						'babel-preset-stage-0'
 					],
+				cacheDirectory: true,	
+				plugins: ['react-hot-loader/babel']
 				},
 			},
 		},
@@ -46,9 +50,9 @@ module.exports = {
 		{
 			test: /\.(png|jpg|gif)$/,
 			use: [{
-				loader: 'url-loader',
+				loader: 'file-loader',
 				options: {
-					limit: 10000,
+					
 				}
 			}]
 		},

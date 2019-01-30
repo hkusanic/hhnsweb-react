@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import Login from './../../../containers/Login/Login';
+import {
+    Link
+  } from 'react-router-dom';
+import logo from '../../../assets/images/lotus.png';
 
 export class Navigation extends Component {
     constructor(props) {
@@ -22,7 +26,7 @@ export class Navigation extends Component {
                                     <div className="rd-navbar-panel">
 
                                         <button className="rd-navbar-toggle" data-rd-navbar-toggle="#rd-navbar-nav-wrap-1"><span></span></button>
-                                        <a className="rd-navbar-brand" href="index.html"><img src="images/logo-default-256x50.png" alt="" width="256" height="50" srcSet="images/logo-default-512x100.png 2x" /></a>
+                                        <a className="rd-navbar-brand" href="index.html"><img src={logo} alt="" width="256" height="50" srcSet="../../../assets/images/lotus.png 2x" /></a>
                                     </div>
                                     <div className="rd-navbar-collapse">
                                         <button className="rd-navbar-collapse-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle="#rd-navbar-collapse-content-1"><span></span></button>
@@ -43,7 +47,7 @@ export class Navigation extends Component {
                                                     <div className="unit-left"><span className="icon icon-md icon-modern mdi mdi-map-marker"></span></div>
                                                     <div className="unit-body"><a className="link-default" href="tel:#">2130 Fulton Street <br /> San Diego, CA 94117-1080</a></div>
                                                 </article>
-                                            </div><a className="button button-primary-outline button-winona" href="tours.html"></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -65,11 +69,13 @@ export class Navigation extends Component {
                                         </div>
 
                                         <ul className="rd-navbar-nav">
-                                            <li className="rd-nav-item active"><a className="rd-nav-link">Home</a>
-                                            </li>
-                                            <li className="rd-nav-item"><a className="rd-nav-link">Lectures</a></li>
-                                            <li className="rd-nav-item"><a className="rd-nav-link">Admin</a></li>
-                                            <li className="rd-nav-item"><a className="rd-nav-link"><Login /></a></li>
+                                            <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">Home</a></Link></li>
+                                            <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Lectures</a></Link></li>
+                                            <li className="rd-nav-item active"><Link to="/blog"><a className="rd-nav-link">Blog</a></Link></li>
+                                            <li className="rd-nav-item active"><Link to="/calender"><a className="rd-nav-link">Calender</a></Link></li>
+                                            <li className="rd-nav-item"><Link to="/booking"><a className="rd-nav-link">Booking</a></Link></li>
+                                            <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">Admin</a></Link></li>
+                                            <li className="rd-nav-item"><Link to="/"><a className="rd-nav-link"><Login /></a></Link></li>
                                         </ul>
                                     </div>
                                 </div>
