@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-
+import renderHTML from 'react-render-html';
+import {
+    Link
+} from 'react-router-dom'
 export class SingleBlog extends Component {
     constructor(props) {
         super(props);
@@ -7,6 +10,17 @@ export class SingleBlog extends Component {
 
         }
     }
+
+    showing100Characters = (sentence) => {
+        var result = sentence;
+        var resultArray = result.split(' ');
+        if (resultArray.length > 10) {
+            resultArray = resultArray.slice(0, 10);
+            result = resultArray.join(' ') + '...';
+        }
+        return result;
+    }
+
     render() {
         return (
             <div className="col-md-6 scaleFadeInWrap">
@@ -16,15 +30,14 @@ export class SingleBlog extends Component {
                         <a className="post-modern-media">
                             {/* <img src="images/grid-blog-4-571x353.jpg" alt="" width="100" height="100" /> */}
                         </a>
-                        <h4 className="post-modern-title"><a href="single-blog-post.html">How to Choose Your Ideal Travel Destination: Tips from Our Travel Agents</a></h4>
+                        <h4 className="post-modern-title"><Link to={{ pathname: '/blogDetails', state:this.props.blog }}><a href="single-blog-post.html">{renderHTML(this.props.blog.title)}</a></Link></h4>
                         <ul className="post-modern-meta">
-                            <li>by Theresa Barnes</li>
+                            <li>by {this.props.blog.author}</li>
                             <li>
-                                <time datetime="2018">Apr 21, 2018 at 12:05 pm</time>
+                                <time datetime="2018">{this.props.blog.date}</time>
                             </li>
-                            <li><a className="button-winona" href="#">News</a></li>
                         </ul>
-                        <p>Ubi est barbatus era? Impositios unda in barbatus sala! Danista, gemna, et abactor. Ecce. Nunquam quaestio cobaltum. Fuga de emeritis scutum, resuscitabo fraticinida!</p>
+                        <p>{renderHTML(this.showing100Characters(this.props.blog.body))}</p>
                     </article>
                 </div>
             </div>
@@ -32,5 +45,4 @@ export class SingleBlog extends Component {
         );
     }
 }
-
 export default SingleBlog;
