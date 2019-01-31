@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import SingleLecture from '../../Components/molocules/SingleLecture/SingleLecture';
+import Pagination from 'react-js-pagination';
 
 export class Lectures extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            totalItem: null,
+            currentPage: null,
+            page: null,
             lectures: []
         }
     }
@@ -14,11 +18,28 @@ export class Lectures extends Component {
         const request = axios.get(API_URL);
         request.then((response) => {
             this.setState({
-                lectures: response.data.lecture
+                lectures: response.data.lecture.results,
+                totalItem: response.data.lecture.total,
+                currentPage: response.data.lecture.currentPage
             })
         })
             .catch((err) => {
                 console.log("error occured", err);
+            })
+    }
+
+    handlePageChange = (pageNumber) => {
+        const API_URL = `http://localhost:3000/api/lecture?page=${pageNumber}`;
+        const request = axios.get(API_URL);
+        request.then((response) => {
+            this.setState({
+                lectures: response.data.lecture.results,
+                totalItem: response.data.lecture.total,
+                currentPage: response.data.lecture.currentPage
+            })
+        })
+            .catch((err) => {
+                console.log("error", err);
             })
     }
     render() {
@@ -31,12 +52,18 @@ export class Lectures extends Component {
                                 return <SingleLecture lecture={item} key={key} />
                             })}
                         </div>
-                        <div className="pagination">
-                            <div className="page-item active"><a className="page-link button-winona" href="#">1</a></div>
-                            <div className="page-item"><a className="page-link button-winona" href="#">2</a></div>
-                            <div className="page-item"><a className="page-link button-winona" href="#">3</a></div>
-                            <div className="page-item"><a className="page-link button-winona" href="#">4</a></div>
-                        </div>
+                        <Pagination
+                            style={{ fontSize: '30px', lineHeight: '2em' }}
+                            innerClass='pagination'
+                            activeClass='page-item active'
+                            itemClass='page-item'
+                            linkClass='page-link button-winona'
+                            activePage={this.state.currentPage}
+                            itemsCountPerPage={4}
+                            totalItemsCount={this.state.totalItem}
+                            pageRangeDisplayed={5}
+                            onChange={this.handlePageChange}
+                        />
                     </div>
                 </section>
             </div>
