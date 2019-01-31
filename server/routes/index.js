@@ -13,8 +13,13 @@ exports = module.exports = function (app) {
 	// Get access to the API route in our app
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
 	app.get('/api/page/', keystone.middleware.api, routes.api.page.list);
+	app.get('/api/blog/find/:id', keystone.middleware.api, routes.api.blog.get);
+	app.get('/api/blog/', keystone.middleware.api, routes.api.blog.list);
+	app.get('/api/lecture/', keystone.middleware.api, routes.api.lecture.list);
+	app.post('/api/signin/', keystone.middleware.api, routes.api.user.signin);
+	app.post('/api/signout/', keystone.middleware.api, routes.api.user.signout);
 	// Set up the default app route to  http://localhost:3000/index.html
-	app.get('/index.html', function (req, res) {
+	app.get('/*', function (req, res) {
 
 		keystone.set('updateDatabase', false);
 		// Render some simple boilerplate html
@@ -30,10 +35,11 @@ exports = module.exports = function (app) {
 						<link rel="stylesheet" href="../css/bootstrap.css">
 						<link rel="stylesheet" href="../css/fonts.css">
 						<link rel="stylesheet" href="../css/style.css" id="main-styles-link">
+						<script type="text/javascript" src="../js/bundle.js"></script>
+						<script src="../js/core.min.js"></script>
 					</head>
 					<body>
-						<div class="react-container" />
-						<script type="text/javascript" src="../js/bundle.js"></script>
+						<div id="react-container" />
 					</body>
 				</html>
 				`;
