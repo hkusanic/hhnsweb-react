@@ -29,8 +29,8 @@ module.exports = {
 						'es2015',
 						'babel-preset-stage-0'
 					],
-				cacheDirectory: true,	
-				plugins: ['react-hot-loader/babel']
+					cacheDirectory: true,
+					plugins: ['react-hot-loader/babel']
 				},
 			},
 		},
@@ -43,16 +43,21 @@ module.exports = {
 		},
 		{
 			test: /\.less$/,
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: ['css-loader?importLoaders=1', 'postcss-loader', 'less-loader']
-				})},
+			use: ExtractTextPlugin.extract({
+				fallback: 'style-loader',
+				use: ['css-loader?importLoaders=1', 'postcss-loader', 'less-loader']
+			})
+		},
+		{
+			test: /\.css$/,
+			use: ['css-loader'],
+		},
 		{
 			test: /\.(png|jpg|gif)$/,
 			use: [{
 				loader: 'file-loader',
 				options: {
-					
+
 				}
 			}]
 		},

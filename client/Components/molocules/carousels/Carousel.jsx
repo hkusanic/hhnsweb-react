@@ -26,8 +26,8 @@ export class Carousel extends Component {
                             <div className="slide-inner">
                                 <div className="container">
                                     <div className="swiper-slide-caption">
-                                        <h1 className="wow-outer"><span className="font-weight-light wow-outer"><span className="wow" data-caption-animate="slideInDown">Unique Travel</span></span><span className="font-weight-bold wow-outer"><span className="wow" data-caption-animate="slideInDown" data-wow-delay="0">Insights & Tips</span></span></h1>
-                                        <div className="wow-outer button-outer"><a className="button button-lg button-primary button-winona wow" href="#" data-caption-animate="slideInDown" data-wow-delay=".2s">Learn More</a></div>
+                                        <h1 className="wow-outer"><span className="font-weight-light wow-outer"><span className="wow" data-caption-animate="slideInDown">The Official Website </span></span><span className="font-weight-bold wow-outer"><span className="wow" data-caption-animate="slideInDown" data-wow-delay="0">H.H. Niranjana Swami</span></span></h1>
+                                        <div className="wow-outer button-outer"><a className="button button-lg button-primary button-winona wow" href="#" data-caption-animate="slideInDown" data-wow-delay=".2s"> </a></div>
                                     </div>
                                 </div>
                             </div>

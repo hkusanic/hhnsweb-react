@@ -8,6 +8,7 @@ import Calender from '../../containers/Calender/Calender';
 import Lectures from '../../containers/Lectures/Lectures';
 import Booking from '../../containers/Booking/Booking';
 import BlogDetails from '../../Components/molocules/SingleBlog/BlogDetails';
+import LectureDetails from '../../Components/molocules/SingleLecture/LectureDetails';
 
 import {
     Route,
@@ -36,6 +37,7 @@ export class Home extends Component {
                             <Route path='/calender' component={Calender} />
                             <Route path='/lectures' component={Lectures} />
                             <Route path='/blogDetails' component={BlogDetails} />
+                            <Route path='/lectureDetails' component={LectureDetails} />
                         </Switch>
                     </div>
                     <Footer />
