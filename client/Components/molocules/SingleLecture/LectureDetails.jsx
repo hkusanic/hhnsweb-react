@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
-import styles from './LectureDetails.css';
 
 export class LectureDetails extends Component {
     constructor(props) {
