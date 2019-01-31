@@ -43,43 +43,63 @@ export class Login extends Component {
   render() {
     return (
       <div>
-        <div className="modal " id="modalLoginForm" style={{ height: '500px' }} tabIndex="-1" role="dialog" aria-labelledby="myModalLabel"
-          aria-hidden="false">
-          <div className="modal-dialog" role="document" >
-            <div className="modal-content">
-              <div className="modal-header text-center">
-                <h4 className="modal-title w-100 font-weight-bold">Log in</h4>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+      <div class="rd-navbar-block">
+      <ul class="list-inline-bordered">
+        <li>
+          <button class="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">Login</button>
+          <div class="rd-navbar-popup bg-gray-700" id="rd-navbar-login-5">
+            <h4>Sign In</h4>
+            <form class="rd-form rd-form-small">
+              <div class="form-wrap">
+                <input class="form-input" id="login-email-5" type="email" name="email" data-constraints="@Email @Required"/>
+                <label class="form-label" for="login-email-5">E-mail</label>
               </div>
-              <div className="modal-body mx-3">
-                <div className="md-form mb-5">
-                  <i className="fas fa-envelope prefix grey-text"></i>
-                  <input type="email" id="defaultForm-email" className="form-control validate" />
-                  <label data-error="wrong" data-success="right" htmlFor="defaultForm-email">Your email</label>
-                </div>
-
-                <div className="md-form mb-4">
-                  <i className="fas fa-lock prefix grey-text"></i>
-                  <input type="password" id="defaultForm-pass" className="form-control validate" />
-                  <label data-error="wrong" data-success="right" htmlFor="defaultForm-pass">Your password</label>
-                </div>
-
+              <div class="form-wrap">
+                <input class="form-input" id="login-password-5" type="password" name="password" data-constraints="@Required"/>
+                <label class="form-label" for="login-password-5">Password</label>
               </div>
-              <div className="modal-footer d-flex justify-content-center">
-                <button className="btn btn-default">Login</button>
+              <div class="form-wrap">
+                <button class="button button-primary-lighten button-winona" type="submit">Sign in</button>
               </div>
-            </div>
+            </form>
           </div>
-        </div>
-
-        <div className="text-center">
-          <a href="" className="btn-default" data-toggle="modal" data-target="#modalLoginForm">
-            Login</a>
-        </div>
-
-      </div>
+        </li>
+        <li>
+          <button class="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-register-5">Registration</button>
+          <div class="rd-navbar-popup bg-gray-700" id="rd-navbar-register-5">
+            <h4>Registration</h4>
+            <form class="rd-form rd-form-small">
+              <div class="form-wrap">
+                <input class="form-input" id="register-name-5" type="text" name="username" data-constraints="@Required"/>
+                <label class="form-label" for="register-name-5">Username</label>
+              </div>
+              <div class="form-wrap">
+                <input class="form-input" id="register-email-5" type="email" name="email" data-constraints="@Email @Required"/>
+                <label class="form-label" for="register-email-5">E-mail</label>
+              </div>
+              <div class="form-wrap">
+                <input class="form-input" id="register-password-5" type="password" name="password" data-constraints="@Required"/>
+                <label class="form-label" for="register-password-5">Password</label>
+              </div>
+              <div class="form-wrap">
+                <input class="form-input" id="register-password-confirm-5" type="password" name="password" data-constraints="@Required"/>
+                <label class="form-label" for="register-password-confirm-5">Confirm Password</label>
+              </div>
+              <div class="form-wrap">
+                <button class="button button-block button-primary-lighten button-winona" type="submit">Create an Account</button>
+              </div>
+              <div class="form-wrap">
+                <div class="text-decoration-lines"><span class="text-decoration-lines-content">or enter with</span></div>
+              </div>
+              <div class="form-wrap">
+                <div class="button-group"> <a class="button button-facebook button-icon button-icon-only button-winona" href="#" aria-label="Facebook"><span class="icon mdi mdi mdi-facebook"></span></a><a class="button button-twitter button-icon button-icon-only button-winona" href="#" aria-label="Twitter"><span class="icon mdi mdi-twitter"></span></a><a class="button button-google button-icon button-icon-only button-winona" href="#" aria-label="Google+"><span class="icon mdi mdi-google"></span></a></div>
+              </div>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
+    </div>
     );
   }
 }
