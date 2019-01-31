@@ -1,44 +1,70 @@
 import React, { Component } from 'react';
 import SingleBlog from '../../Components/molocules/SingleBlog/SIngleBlog';
 import axios from 'axios';
+import Pagination from 'react-js-pagination';
 
 export class Blogs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            blogs : []
+            totalItem: null,
+            currentPage: null,
+            page: null,
+            blogs: []
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const API_URL = 'http://localhost:3000/api/blog/';
         const request = axios.get(API_URL);
-        request.then((response)=> {
+        request.then((response) => {
             this.setState({
-                blogs: response.data.blog
+                blogs: response.data.blog.results,
+                totalItem: response.data.blog.total,
+                currentPage: response.data.blog.currentPage
             })
         })
-        .catch((err)=> {
-            console.log("error occured ======>>>>>", err);
-        })
+            .catch((err) => {
+                console.log("error", err);
+            })
     }
 
+    handlePageChange = (pageNumber) => {
+        const API_URL = `http://localhost:3000/api/blog?page=${pageNumber}`;
+        const request = axios.get(API_URL);
+        request.then((response) => {
+            this.setState({
+                blogs: response.data.blog.results,
+                totalItem: response.data.blog.total,
+                currentPage: response.data.blog.currentPage
+            })
+        })
+            .catch((err) => {
+                console.log("error", err);
+            })
+    }
     render() {
         return (
-            <div> 
+            <div >
                 <section className="section section-lg">
                     <div className="container">
                         <div className="row row-50 row-xxl-70">
-                            {this.state.blogs.map((item, key) =>{
+                            {this.state.blogs.map((item, key) => {
                                 return <SingleBlog blog={item} key={key} />
                             })}
                         </div>
-                        <div className="pagination">
-                            <div className="page-item active"><a className="page-link button-winona" href="#">1</a></div>
-                            <div className="page-item"><a className="page-link button-winona" href="#">2</a></div>
-                            <div className="page-item"><a className="page-link button-winona" href="#">3</a></div>
-                            <div className="page-item"><a className="page-link button-winona" href="#">4</a></div>
-                        </div>
+                        <Pagination
+                            style={{ fontSize: '30px', lineHeight: '2em' }}
+                            innerClass='pagination'
+                            activeClass='page-item active'
+                            itemClass='page-item'
+                            linkClass='page-link button-winona'
+                            activePage={this.state.currentPage}
+                            itemsCountPerPage={4}
+                            totalItemsCount={this.state.totalItem}
+                            pageRangeDisplayed={5}
+                            onChange={this.handlePageChange}
+                        />
                     </div>
                 </section>
             </div>

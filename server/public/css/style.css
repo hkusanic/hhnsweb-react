@@ -4932,8 +4932,8 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 * Pagination custom
 */
 .pagination {
-	font-size: 0;
-	line-height: 0;
+	font-size: 30px;
+	line-height: 2em;
 	margin-bottom: -10px;
 	margin-left: -10px;
 }
