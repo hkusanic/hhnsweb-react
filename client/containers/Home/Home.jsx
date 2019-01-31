@@ -9,6 +9,7 @@ import Lectures from '../../containers/Lectures/Lectures';
 import Booking from '../../containers/Booking/Booking';
 import BlogDetails from '../../Components/molocules/SingleBlog/BlogDetails';
 import LectureDetails from '../../Components/molocules/SingleLecture/LectureDetails';
+import AudioList from './../../Components/molocules/Audio/AudioList';
 
 import {
     Route,
@@ -38,6 +39,7 @@ export class Home extends Component {
                             <Route path='/lectures' component={Lectures} />
                             <Route path='/blogDetails' component={BlogDetails} />
                             <Route path='/lectureDetails' component={LectureDetails} />
+                            <Route path='/audio' component={AudioList} />
                         </Switch>
                     </div>
                     <Footer />

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import  script  from "../../../assets/script";
-import image1 from './../../../assets/images/_DSC1480.jpg';
+import image1 from './../../../assets/images/_DSC1480.png';
 import image2 from './../../../assets/images/1.jpg';
 import image3 from './../../../assets/images/IMG_1709.jpg';
 import image4 from './../../../assets/images/IMG_2570.jpg';

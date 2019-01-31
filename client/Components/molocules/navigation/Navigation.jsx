@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import Login from './../../../containers/Login/Login';
 import {
     Link
-  } from 'react-router-dom';
+} from 'react-router-dom';
 import logo from '../../../assets/images/lotus.png';
 
 export class Navigation extends Component {
     constructor(props) {
         super(props);
         this.showLogin = {
-            login : false
+            login: false
         }
     }
 
@@ -71,6 +71,20 @@ export class Navigation extends Component {
                                         <ul className="rd-navbar-nav">
                                             <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">Home</a></Link></li>
                                             <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Lectures</a></Link></li>
+                                            <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Audio</a></Link>
+                                                <ul class="rd-menu rd-navbar-dropdown">
+                                                    <li class="rd-dropdown-item"><Link to="/audio"><a class="rd-dropdown-link">Recent Audio</a></Link></li>
+                                                    <li class="rd-dropdown-item"><a class="rd-dropdown-link">Lectures</a></li>
+                                                    <li class="rd-dropdown-item"><a class="rd-dropdown-link">Kirtan And Bhajan</a></li>
+                                                </ul>
+                                            </li>
+                                            <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Video</a></Link>
+                                                <ul class="rd-menu rd-navbar-dropdown">
+                                                    <li class="rd-dropdown-item"><a class="rd-dropdown-link" >Recent Video</a></li>
+                                                    <li class="rd-dropdown-item"><Link to="/lectures"><a class="rd-dropdown-link">Lectures</a></Link></li>
+                                                    <li class="rd-dropdown-item"><a class="rd-dropdown-link" >Kirtan And Bhajan</a></li>
+                                                </ul>
+                                            </li>
                                             <li className="rd-nav-item active"><Link to="/blog"><a className="rd-nav-link">Blog</a></Link></li>
                                             <li className="rd-nav-item active"><Link to="/calender"><a className="rd-nav-link">Calender</a></Link></li>
                                             <li className="rd-nav-item"><Link to="/booking"><a className="rd-nav-link">Booking</a></Link></li>
@@ -86,8 +100,8 @@ export class Navigation extends Component {
             </div>)
     }
 
-     showLogin(){
-       this.setState({login: true})
+    showLogin() {
+        this.setState({ login: true })
     }
 }
 
