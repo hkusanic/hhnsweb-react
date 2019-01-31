@@ -16,6 +16,8 @@ exports = module.exports = function (app) {
 	app.get('/api/blog/find/:id', keystone.middleware.api, routes.api.blog.get);
 	app.get('/api/blog/', keystone.middleware.api, routes.api.blog.list);
 	app.get('/api/lecture/', keystone.middleware.api, routes.api.lecture.list);
+	app.post('/api/signin/', keystone.middleware.api, routes.api.user.signin);
+	app.post('/api/signout/', keystone.middleware.api, routes.api.user.signout);
 	// Set up the default app route to  http://localhost:3000/index.html
 	app.get('/*', function (req, res) {
 
