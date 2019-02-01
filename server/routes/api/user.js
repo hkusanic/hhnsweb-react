@@ -21,8 +21,11 @@ exports.signin = function(req, res) {
           success: true,
           session: true,
           date: new Date().getTime(),
-          userId: user.id,
           admin: user.canAccessKeystone,
+          loginUser: {
+            userId: user.id,
+            userName: user.email
+          }
         });
         
       }, function(err) {

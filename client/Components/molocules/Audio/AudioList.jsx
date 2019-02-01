@@ -40,6 +40,16 @@ export class AudioList extends Component {
                 console.log("error", err);
             })
     }
+
+    showing100Characters = (sentence) => {
+        var result = sentence;
+        var resultArray = result.split(' ');
+        if (resultArray.length > 10) {
+            resultArray = resultArray.slice(0, 10);
+            result = resultArray.join(' ') + '...';
+        }
+        return result;
+    }
     render() {
         return (
             <div>
@@ -49,17 +59,15 @@ export class AudioList extends Component {
                             <table className="table table-hover table-job-positions">
                                 <thead>
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Topic</th>
-                                        <th style={{ paddingLeft: '10%' }}>Audio</th>
+                                        <th style={{textAlign:'center'}}>Title</th>
+                                        <th style={{ paddingLeft: '10%' }}>Player</th>
                                         <th>Downloads</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.state.lectures.map((item, key) => {
                                         return <tr key={key}>
-                                            <td>{new Date(item.date).toDateString()}</td>
-                                            <td>{item.topic}</td>
+                                            <td style={{color:'#ff830a'}}>{renderHTML(item.title.en)}</td>
                                             <td>
                                                 <audio controls>
                                                     <source src={renderHTML(item.audio)} type="audio/mpeg" />
@@ -72,7 +80,7 @@ export class AudioList extends Component {
                             </table>
                         </div>
                     </div>
-                    <div style={{paddingLeft:'10%'}}>
+                    <div style={{ paddingLeft: '10%' }}>
                         <Pagination
                             style={{ fontSize: '30px', lineHeight: '2em' }}
                             innerClass='pagination'

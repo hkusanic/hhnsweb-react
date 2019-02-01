@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import script from "../../assets/script.js"
 import Navigation from '../../Components/molocules/navigation/Navigation';
 import Carousel from '../../Components/molocules/carousels/Carousel';
@@ -10,6 +11,7 @@ import Booking from '../../containers/Booking/Booking';
 import BlogDetails from '../../Components/molocules/SingleBlog/BlogDetails';
 import LectureDetails from '../../Components/molocules/SingleLecture/LectureDetails';
 import AudioList from './../../Components/molocules/Audio/AudioList';
+import VideoList from '../../Components/molocules/Video/VideoList';
 
 import {
     Route,
@@ -20,16 +22,45 @@ import {
 export class Home extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isLogin: false,
+            isAdmin: false,
+            userId: ''
+        }
     }
 
     componentDidMount() {
         script();
+        console.log("this.props====>>>>", this.props);
+        this.setState({
+            isLogin: this.props.login.isLogin,
+            isAdmin: this.props.login.isAdmin,
+            userId: this.props.login.loginUser.userId
+        }, ()=> {
+            console.log("home state ====>>>>", this.state);
+        });
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.login !== this.props.login){
+            this.setState({
+                isLogin: nextProps.login.isLogin,
+                isAdmin: nextProps.login.isAdmin,
+                userId: nextProps.login.loginUser.userId
+            },()=>{
+                console.log("home state ====>>>>", this.state);
+            });
+        }
     }
     render() {
         return (
             <div>
                 <div className="page">
-                    <Navigation />
+                    <Navigation 
+                     isLogin={this.state.isLogin}
+                     isAdmin={this.state.isAdmin}
+                     />
                     <div style={{ height: '600px', width: '100%', overflow: 'scroll' }}>
                         <Switch>
                             <Route exact path='/' component={Carousel} />
@@ -40,6 +71,7 @@ export class Home extends Component {
                             <Route path='/blogDetails' component={BlogDetails} />
                             <Route path='/lectureDetails' component={LectureDetails} />
                             <Route path='/audio' component={AudioList} />
+                            <Route path='/video' component={VideoList} />
                         </Switch>
                     </div>
                     <Footer />
@@ -61,4 +93,10 @@ export class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        login: state.loginReducer,
+    };
+};
+
+export default connect(mapStateToProps)(Home);

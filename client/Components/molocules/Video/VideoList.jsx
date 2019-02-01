@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import SingleLecture from '../../Components/molocules/SingleLecture/SingleLecture';
-import Pagination from 'react-js-pagination';
 import renderHTML from 'react-render-html';
-export class Lectures extends Component {
+import Pagination from 'react-js-pagination';
+
+export class VideoList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            lectures: [],
             totalItem: null,
-            currentPage: null,
-            page: null,
-            lectures: []
+            currentPage: null
         }
     }
     componentDidMount() {
@@ -27,7 +26,6 @@ export class Lectures extends Component {
                 console.log("error occured", err);
             })
     }
-
     handlePageChange = (pageNumber) => {
         const API_URL = `http://localhost:3000/api/lecture?page=${pageNumber}`;
         const request = axios.get(API_URL);
@@ -55,35 +53,37 @@ export class Lectures extends Component {
     render() {
         return (
             <div>
-                <section className="section section-lg">
+                <section className="section section-lg text-center">
                     <div className="container">
-                        <div className="row row-50 row-xxl-70">
-                            {this.state.lectures.map((item, key) => {
-                                return <SingleLecture lecture={item} key={key} />
-                            })}
-                        </div>
-                        {/* <div className="table-responsive wow fadeIn">
+                        <div className="table-responsive wow fadeIn">
                             <table className="table table-hover table-job-positions">
                                 <thead>
                                     <tr>
                                         <th style={{ textAlign: 'center' }}>Title</th>
-                                        <th>Event</th>
-                                        <th>date</th>
+                                        <th style={{ paddingLeft: '10%' }}>Link</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {
-                                        this.state.lectures.map((item, key) => {
-                                            return <tr key={key}>
-                                                <td style={{ color: '#ff830a' }}>{renderHTML(this.showing100Characters(item.title.en))}</td>
-                                                <td>{item.event}</td>
-                                                <td>{ new Date(item.date).getDate()}</td>
-                                            </tr>
-                                        })
-                                    }
+                                    {this.state.lectures.map((item, key) => {
+                                        return <tr key={key}>
+                                            <td style={{ color: '#ff830a' }}>{renderHTML(this.showing100Characters(item.title.en))}</td>
+                                            {
+                                                item.youtube.length > 0 ?
+                                                    <td>
+                                                        <ul style={{listStyle:'none'}}>
+                                                        {item.youtube.map((item)=>{
+                                                            return <li><a>{renderHTML(item)}</a></li>
+                                                        })}</ul>
+                                                    </td>
+                                                    : ''
+                                            }
+                                        </tr>
+                                    })}
                                 </tbody>
                             </table>
-                        </div> */}
+                        </div>
+                    </div>
+                    <div style={{ paddingLeft: '10%' }}>
                         <Pagination
                             style={{ fontSize: '30px', lineHeight: '2em' }}
                             innerClass='pagination'
@@ -99,8 +99,8 @@ export class Lectures extends Component {
                     </div>
                 </section>
             </div>
-        )
+        );
     }
 }
 
-export default Lectures;
+export default VideoList

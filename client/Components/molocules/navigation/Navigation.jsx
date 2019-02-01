@@ -80,7 +80,7 @@ export class Navigation extends Component {
                                             </li>
                                             <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Video</a></Link>
                                                 <ul class="rd-menu rd-navbar-dropdown">
-                                                    <li class="rd-dropdown-item"><a class="rd-dropdown-link" >Recent Video</a></li>
+                                                    <li class="rd-dropdown-item"><Link to="/video"><a class="rd-dropdown-link" >Recent Video</a></Link></li>
                                                     <li class="rd-dropdown-item"><Link to="/lectures"><a class="rd-dropdown-link">Lectures</a></Link></li>
                                                     <li class="rd-dropdown-item"><a class="rd-dropdown-link" >Kirtan And Bhajan</a></li>
                                                 </ul>
@@ -88,7 +88,7 @@ export class Navigation extends Component {
                                             <li className="rd-nav-item active"><Link to="/blog"><a className="rd-nav-link">Blog</a></Link></li>
                                             <li className="rd-nav-item active"><Link to="/calender"><a className="rd-nav-link">Calender</a></Link></li>
                                             <li className="rd-nav-item"><Link to="/booking"><a className="rd-nav-link">Booking</a></Link></li>
-                                            <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">Admin</a></Link></li>
+                                            {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">Admin</a></Link></li> : ''}
                                             <li className="rd-nav-item"><Link to="/"><a className="rd-nav-link"><Login /></a></Link></li>
                                         </ul>
                                     </div>
