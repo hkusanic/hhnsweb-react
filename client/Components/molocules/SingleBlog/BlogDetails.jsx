@@ -23,7 +23,7 @@ export class BlogDetails extends Component {
                                     <ul class="post-creative-meta">
                                         <li><span class="icon mdi mdi-calendar-clock"></span>
                                             <time datetime="2018">
-                                                {this.props.location.state.date}
+                                                {new Date(this.props.location.state.date).toDateString()}
                                             </time>
                                         </li>
                                         <li><span class="icon mdi mdi-tag-multiple"></span><a>Blog</a></li>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import renderHTML from 'react-render-html';
 import Pagination from 'react-js-pagination';
+import {Link} from 'react-router-dom';
 
 export class VideoList extends Component {
     constructor(props) {
@@ -60,23 +61,14 @@ export class VideoList extends Component {
                                 <thead>
                                     <tr>
                                         <th style={{ textAlign: 'center' }}>Title</th>
-                                        <th style={{ paddingLeft: '10%' }}>Link</th>
+                                        <th style={{ paddingLeft: '10%' }}>View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.state.lectures.map((item, key) => {
                                         return <tr key={key}>
-                                            <td style={{ color: '#ff830a' }}>{renderHTML(this.showing100Characters(item.title.en))}</td>
-                                            {
-                                                item.youtube.length > 0 ?
-                                                    <td>
-                                                        <ul style={{listStyle:'none'}}>
-                                                        {item.youtube.map((item)=>{
-                                                            return <li><a>{renderHTML(item)}</a></li>
-                                                        })}</ul>
-                                                    </td>
-                                                    : ''
-                                            }
+                                            <td style={{ color: '#ff830a' }}><Link to={{ pathname: '/videoDetails', state:item }}>{renderHTML(item.title.en)}</Link></td>
+                                            <td style={{ paddingLeft: '10%' }}>60</td>
                                         </tr>
                                     })}
                                 </tbody>

@@ -70,7 +70,7 @@ export class Navigation extends Component {
 
                                         <ul className="rd-navbar-nav">
                                             <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">Home</a></Link></li>
-                                            <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Lectures</a></Link></li>
+                                            {/* <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Lectures</a></Link></li> */}
                                             <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Audio</a></Link>
                                                 <ul class="rd-menu rd-navbar-dropdown">
                                                     <li class="rd-dropdown-item"><Link to="/audio"><a class="rd-dropdown-link">Recent Audio</a></Link></li>
@@ -88,6 +88,8 @@ export class Navigation extends Component {
                                             <li className="rd-nav-item active"><Link to="/blog"><a className="rd-nav-link">Blog</a></Link></li>
                                             <li className="rd-nav-item active"><Link to="/calender"><a className="rd-nav-link">Calender</a></Link></li>
                                             <li className="rd-nav-item"><Link to="/booking"><a className="rd-nav-link">Booking</a></Link></li>
+                                            <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
+                                            <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li>
                                             {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">Admin</a></Link></li> : ''}
                                             <li className="rd-nav-item"><Link to="/"><a className="rd-nav-link"><Login /></a></Link></li>
                                         </ul>

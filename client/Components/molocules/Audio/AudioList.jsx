@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import renderHTML from 'react-render-html';
 import Pagination from 'react-js-pagination';
+import {Link} from 'react-router-dom';
 
 export class AudioList extends Component {
     constructor(props) {
@@ -50,6 +51,10 @@ export class AudioList extends Component {
         }
         return result;
     }
+
+    // redirectAudioDetails = (lecture) => {
+    //     <Link to={{ pathname: '/audioDetails', state: lecture }}></Link>
+    // }
     render() {
         return (
             <div>
@@ -59,7 +64,7 @@ export class AudioList extends Component {
                             <table className="table table-hover table-job-positions">
                                 <thead>
                                     <tr>
-                                        <th style={{textAlign:'center'}}>Title</th>
+                                        <th style={{ textAlign: 'center' }}>Title</th>
                                         <th style={{ paddingLeft: '10%' }}>Player</th>
                                         <th>Downloads</th>
                                     </tr>
@@ -67,7 +72,7 @@ export class AudioList extends Component {
                                 <tbody>
                                     {this.state.lectures.map((item, key) => {
                                         return <tr key={key}>
-                                            <td style={{color:'#ff830a'}}>{renderHTML(item.title.en)}</td>
+                                            <td style={{ color: '#ff830a' }}> <Link to={{ pathname: '/audioDetails', state:item }}>{renderHTML(item.title.en)}</Link></td>
                                             <td>
                                                 <audio controls>
                                                     <source src={renderHTML(item.audio)} type="audio/mpeg" />

@@ -12,6 +12,8 @@ import BlogDetails from '../../Components/molocules/SingleBlog/BlogDetails';
 import LectureDetails from '../../Components/molocules/SingleLecture/LectureDetails';
 import AudioList from './../../Components/molocules/Audio/AudioList';
 import VideoList from '../../Components/molocules/Video/VideoList';
+import AudioDetails from '../../Components/molocules/Audio/AudioDetails';
+import VideoDetails from '../../Components/molocules/Video/VideoDetails';
 
 import {
     Route,
@@ -31,37 +33,37 @@ export class Home extends Component {
 
     componentDidMount() {
         script();
-        console.log("this.props====>>>>", this.props);
-        this.setState({
-            isLogin: this.props.login.isLogin,
-            isAdmin: this.props.login.isAdmin,
-            userId: this.props.login.loginUser.userId
-        }, ()=> {
-            console.log("home state ====>>>>", this.state);
-        });
+        // console.log("this.props====>>>>", this.props);
+        // this.setState({
+        //     isLogin: this.props.login.isLogin,
+        //     isAdmin: this.props.login.isAdmin,
+        //     userId: this.props.login.loginUser.userId
+        // }, ()=> {
+        //     console.log("home state ====>>>>", this.state);
+        // });
 
     }
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.login !== this.props.login){
-            this.setState({
-                isLogin: nextProps.login.isLogin,
-                isAdmin: nextProps.login.isAdmin,
-                userId: nextProps.login.loginUser.userId
-            },()=>{
-                console.log("home state ====>>>>", this.state);
-            });
-        }
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     if(nextProps.login !== this.props.login){
+    //         this.setState({
+    //             isLogin: nextProps.login.isLogin,
+    //             isAdmin: nextProps.login.isAdmin,
+    //             userId: nextProps.login.loginUser.userId
+    //         },()=>{
+    //             console.log("home state ====>>>>", this.state);
+    //         });
+    //     }
+    // }
     render() {
         return (
             <div>
                 <div className="page">
                     <Navigation 
-                     isLogin={this.state.isLogin}
-                     isAdmin={this.state.isAdmin}
+                    //  isLogin={this.state.isLogin}
+                    //  isAdmin={this.state.isAdmin}
                      />
-                    <div style={{ height: '600px', width: '100%', overflow: 'scroll' }}>
+                    {/* <div style={{ height: '600px', width: '100%', overflow: 'scroll' }}> */}
                         <Switch>
                             <Route exact path='/' component={Carousel} />
                             <Route path='/blog' component={Blog} />
@@ -71,9 +73,11 @@ export class Home extends Component {
                             <Route path='/blogDetails' component={BlogDetails} />
                             <Route path='/lectureDetails' component={LectureDetails} />
                             <Route path='/audio' component={AudioList} />
+                            <Route path='/audioDetails' component={AudioDetails} />
                             <Route path='/video' component={VideoList} />
+                            <Route path='/videoDetails' component={VideoDetails} />
                         </Switch>
-                    </div>
+                    {/* </div> */}
                     <Footer />
 
                 </div>
@@ -93,10 +97,12 @@ export class Home extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        login: state.loginReducer,
-    };
-};
+// const mapStateToProps = (state) => {
+//     return {
+//         login: state.loginReducer,
+//     };
+// };
 
-export default connect(mapStateToProps)(Home);
+// export default connect(mapStateToProps)(Home);
+
+export default Home;

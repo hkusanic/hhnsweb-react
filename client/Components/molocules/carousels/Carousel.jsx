@@ -19,7 +19,6 @@ export class Carousel extends Component {
     }
     render() {
         return (
-            <div>
                 <section className="swiper-container swiper-slider swiper-slider-light bg-gray-700" data-loop="true" data-autoplay="5000" data-simulate-touch="false" data-custom-slide-effect="inter-leave-effect" data-inter-leave-offset="-.5">
                     <div className="swiper-wrapper">
                         <div className="swiper-slide" data-slide-bg={image1}>
@@ -77,9 +76,6 @@ export class Carousel extends Component {
                         <div className="swiper-pagination swiper-pagination-modern swiper-pagination-marked" data-index-bullet="true"></div>
                     </div>
                 </section>
-
-
-            </div>
         );
     }
 }
