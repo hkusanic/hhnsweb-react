@@ -8,3 +8,7 @@ export const LOCAL_SIGNUP = 'LOCAL_SIGNUP'
 
 //Blog Constants
 export const GET_BLOGS = 'GET_BLOGS';
+
+
+//Lecture Constants
+export const GET_LECTURES = 'GET_LECTURES';

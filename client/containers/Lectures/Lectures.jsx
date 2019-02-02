@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import SingleLecture from '../../Components/molocules/SingleLecture/SingleLecture';
 import Pagination from 'react-js-pagination';
-import renderHTML from 'react-render-html';
+import { connect } from 'react-redux';
+import { getLectures } from '../../actions/lectureActions';
+
 export class Lectures extends Component {
     constructor(props) {
         super(props);
@@ -14,33 +16,24 @@ export class Lectures extends Component {
         }
     }
     componentDidMount() {
-        const API_URL = 'http://localhost:3000/api/lecture/';
-        const request = axios.get(API_URL);
-        request.then((response) => {
-            this.setState({
-                lectures: response.data.lecture.results,
-                totalItem: response.data.lecture.total,
-                currentPage: response.data.lecture.currentPage
-            })
+        this.setState({
+            lectures: this.props.lecturesDetails.lectures,
+            currentPage: this.props.lecturesDetails.currentPage,
+            totalItem: this.props.lecturesDetails.totalLectures
         })
-            .catch((err) => {
-                console.log("error occured", err);
-            })
+        this.props.getLectures(1);
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            lectures: nextProps.lecturesDetails.lectures,
+            currentPage: nextProps.lecturesDetails.currentPage,
+            totalItem: nextProps.lecturesDetails.totalLectures
+        })
     }
 
     handlePageChange = (pageNumber) => {
-        const API_URL = `http://localhost:3000/api/lecture?page=${pageNumber}`;
-        const request = axios.get(API_URL);
-        request.then((response) => {
-            this.setState({
-                lectures: response.data.lecture.results,
-                totalItem: response.data.lecture.total,
-                currentPage: response.data.lecture.currentPage
-            })
-        })
-            .catch((err) => {
-                console.log("error", err);
-            })
+        this.props.getLectures(pageNumber);
     }
 
     showing100Characters = (sentence) => {
@@ -103,4 +96,18 @@ export class Lectures extends Component {
     }
 }
 
-export default Lectures;
+const mapStateToProps = (state) => {
+    return {
+        lecturesDetails: state.lectureReducer
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getLectures: (page) => {
+            dispatch(getLectures(page));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Lectures);
