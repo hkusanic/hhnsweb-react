@@ -32,28 +32,28 @@ export class AudioDetails extends Component {
                                         <li><span class="icon mdi mdi-tag-multiple"></span><a>Lecture</a></li>
                                     </ul>
                                 </article>
-                                <div style={{paddingTop: '2em', paddingBottom: '1em'}}>
+                                <div className="audioStyle">
                                     <audio controls>
                                         <source src={renderHTML(this.props.location.state.audio)} type="audio/mpeg" />
                                     </audio>
                                 </div>
                                 <div>
-                                    <table>
+                                    <table className="maintable">
                                         <tbody>
                                             <tr>
-                                                <td style={{ paddingTop: '1em', paddingBottom: '1em' }}><b><span style={{width:'85px', display:'inline-block'}}>Event</span> :</b></td><td style={{ paddingTop: '1em', paddingBottom: '1em', paddingLeft:'1em' }}>{this.props.location.state.event}</td>
+                                                <td><b><span>Event</span> :</b></td><td className="padLeftRow">{this.props.location.state.event}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ paddingTop: '1em', paddingBottom: '1em' }}><b><span style={{width:'85px', display:'inline-block'}}>Durations</span> :</b></td  ><td style={{ paddingTop: '1em', paddingBottom: '1em', paddingLeft:'1em'  }}>{this.props.location.state.duration}</td>
+                                                <td><b><span>Durations</span> :</b></td  ><td className="padLeftRow">{this.props.location.state.duration}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ paddingTop: '1em', paddingBottom: '1em' }}><b><span style={{width:'85px', display:'inline-block'}}>Location</span> :</b></td ><td style={{ paddingTop: '1em', paddingBottom: '1em', paddingLeft:'1em'  }}>{this.props.location.state.location}</td>
+                                                <td><b><span>Location</span> :</b></td ><td className="padLeftRow">{this.props.location.state.location}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ paddingTop: '1em', paddingBottom: '1em' }}><b><span style={{width:'85px', display:'inline-block'}}>Download</span> :</b></td><td style={{ paddingTop: '1em', paddingBottom: '1em', paddingLeft:'1em'  }}>{this.props.location.state.downloads}</td>
+                                                <td><b><span>Download</span> :</b></td><td className="padLeftRow">{this.props.location.state.downloads}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ paddingTop: '1em', paddingBottom: '1em' }}><b><span style={{width:'85px', display:'inline-block'}}>Topic</span> :</b></td><td style={{ paddingTop: '1em', paddingBottom: '1em', paddingLeft:'1em'  }}>{this.props.location.state.topic}</td>
+                                                <td><b><span>Topic</span> :</b></td><td className="padLeftRow">{this.props.location.state.topic}</td>
                                             </tr>
                                         </tbody>
                                     </table>

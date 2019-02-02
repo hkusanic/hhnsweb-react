@@ -30,10 +30,10 @@ export class VideoDetails extends Component {
                                 </article>
                                 <div>
                                    
-                                    <div  className="row row-50 row-xxl-70" style={{paddingTop: '1em'}}>
+                                    <div  className="row row-50 row-xxl-70 padTop">
                                         {
                                             this.props.location.state.youtube.map((item, key) => {
-                                                return  <iframe width="420" height="315"
+                                                return  <iframe className="iframeStyle"
                                                             src={item}>
                                                         </iframe>
                                                     

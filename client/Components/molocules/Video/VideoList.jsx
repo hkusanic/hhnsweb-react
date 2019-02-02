@@ -55,24 +55,24 @@ export class VideoList extends Component {
                             <table className="table table-hover table-job-positions">
                                 <thead>
                                     <tr>
-                                        <th style={{ textAlign: 'center' }}>Title</th>
-                                        <th style={{ paddingLeft: '10%' }}>View</th>
+                                        <th className="align">Title</th>
+                                        <th className="padLeft">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.state.lectures.map((item, key) => {
                                         return <tr key={key}>
-                                            <td style={{ color: '#ff830a' }}><Link to={{ pathname: '/videoDetails', state: item }}>{renderHTML(item.title.en)}</Link></td>
-                                            <td style={{ paddingLeft: '10%' }}>60</td>
+                                            <td className="titleColor"><Link to={{ pathname: '/videoDetails', state: item }}>{renderHTML(item.title.en)}</Link></td>
+                                            <td className="padLeft">60</td>
                                         </tr>
                                     })}
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div style={{ paddingLeft: '10%' }}>
+                    <div className="padLeft">
                         <Pagination
-                            style={{ fontSize: '30px', lineHeight: '2em' }}
+                            className="paginationStyle"
                             innerClass='pagination'
                             activeClass='page-item active'
                             itemClass='page-item'

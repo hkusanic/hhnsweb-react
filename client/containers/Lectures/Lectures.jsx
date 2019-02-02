@@ -78,7 +78,7 @@ export class Lectures extends Component {
                             </table>
                         </div> */}
                         <Pagination
-                            style={{ fontSize: '30px', lineHeight: '2em' }}
+                            className="paginationStyle"
                             innerClass='pagination'
                             activeClass='page-item active'
                             itemClass='page-item'

@@ -56,15 +56,15 @@ export class AudioList extends Component {
                             <table className="table table-hover table-job-positions">
                                 <thead>
                                     <tr>
-                                        <th style={{ textAlign: 'center' }}>Title</th>
-                                        <th style={{ paddingLeft: '10%' }}>Player</th>
+                                        <th className="align">Title</th>
+                                        <th className="padLeft">Player</th>
                                         <th>Downloads</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.state.lectures.map((item, key) => {
                                         return <tr key={key}>
-                                            <td style={{ color: '#ff830a' }}> <Link to={{ pathname: '/audioDetails', state: item }}>{renderHTML(item.title.en)}</Link></td>
+                                            <td className="titleColor"> <Link to={{ pathname: '/audioDetails', state: item }}>{renderHTML(item.title.en)}</Link></td>
                                             <td>
                                                 <audio controls>
                                                     <source src={renderHTML(item.audio)} type="audio/mpeg" />
@@ -77,9 +77,9 @@ export class AudioList extends Component {
                             </table>
                         </div>
                     </div>
-                    <div style={{ paddingLeft: '10%' }}>
+                    <div className="padLeft">
                         <Pagination
-                            style={{ fontSize: '30px', lineHeight: '2em' }}
+                            className="paginationStyle"
                             innerClass='pagination'
                             activeClass='page-item active'
                             itemClass='page-item'

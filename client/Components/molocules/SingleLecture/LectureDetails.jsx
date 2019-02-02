@@ -30,31 +30,31 @@ export class LectureDetails extends Component {
                                     </ul>
                                 </article>
                                 <div>
-                                    <table>
+                                    <table className="maintable">
                                         <tbody>
                                             <tr>
-                                                <td style={{ paddingTop: '1em', paddingBottom: '1em' }}><b><span style={{ width: '85px', display: 'inline-block' }}>Event</span> :</b></td><td style={{ paddingTop: '1em', paddingBottom: '1em', paddingLeft: '1em' }}>{this.props.location.state.event}</td>
+                                                <td><b><span>Event</span> :</b></td><td className="padLeftRow">{this.props.location.state.event}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ paddingTop: '1em', paddingBottom: '1em' }}><b><span style={{ width: '85px', display: 'inline-block' }}>Durations</span> :</b></td  ><td style={{ paddingTop: '1em', paddingBottom: '1em', paddingLeft: '1em' }}>{this.props.location.state.duration}</td>
+                                                <td><b><span>Durations</span> :</b></td><td className="padLeftRow">{this.props.location.state.duration}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ paddingTop: '1em', paddingBottom: '1em' }}><b><span style={{ width: '85px', display: 'inline-block' }}>Location</span> :</b></td ><td style={{ paddingTop: '1em', paddingBottom: '1em', paddingLeft: '1em' }}>{this.props.location.state.location}</td>
+                                                <td><b><span>Location</span> :</b></td ><td className="padLeftRow">{this.props.location.state.location}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ paddingTop: '1em', paddingBottom: '1em' }}><b><span style={{ width: '85px', display: 'inline-block' }}>Download</span> :</b></td><td style={{ paddingTop: '1em', paddingBottom: '1em', paddingLeft: '1em' }}>{this.props.location.state.downloads}</td>
+                                                <td><b><span>Download</span> :</b></td><td className="padLeftRow">{this.props.location.state.downloads}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ paddingTop: '1em', paddingBottom: '1em' }}><b><span style={{ width: '85px', display: 'inline-block' }}>Topic</span> :</b></td><td style={{ paddingTop: '1em', paddingBottom: '1em', paddingLeft: '1em' }}>{this.props.location.state.topic}</td>
+                                                <td><b><span>Topic</span> :</b></td><td className="padLeftRow">{this.props.location.state.topic}</td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div style={{ paddingTop: '1em' }}>
+                                    <div className="padTop">
                                         {
                                             this.props.location.state.youtube.map((item, key) => {
                                                 return <tr>
                                                     <td>
-                                                        <iframe width="420" height="315"
+                                                        <iframe className="iframeStyle"
                                                             src={item}>
                                                         </iframe>
                                                     </td>
