@@ -4,3 +4,7 @@ export const LOGOUT = 'LOGOUT';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const REQ_RESET_PASSWORD = 'REQ_RESET_PASSWORD';
 export const LOCAL_SIGNUP = 'LOCAL_SIGNUP'
+
+
+//Blog Constants
+export const GET_BLOGS = 'GET_BLOGS';
