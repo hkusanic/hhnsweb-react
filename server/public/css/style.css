@@ -17864,3 +17864,13 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 		margin-right: auto;
 	}
 }
+
+.margin-left-login-modal {
+   margin-left: -132px;
+
+}
+
+.margin-left-register-modal {
+	margin-left: -200px;
+ 
+ }
