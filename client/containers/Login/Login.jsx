@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { loginUser, logoutUser, checkLogin } from '../../actions/loginActions';
+import Auth from '../../utils/Auth';
 
 export class Login extends Component {
   constructor(props) {
@@ -11,22 +12,27 @@ export class Login extends Component {
       username: '',
       password: '',
       isLogin: false,
-      userDetails : {}
+      userDetails : {},
+      isUserLogin: false
     }
   }
 
   componentDidMount() {
+    const isUserLogin = Auth.isUserAuthenticated();
     this.setState({
       isLogin: this.props.login.isLogin,
-      userDetails: this.props.login.loginUser
+      userDetails: this.props.login.loginUser,
+      isUserLogin
     })
   }
 
   componentWillReceiveProps(nextProps){
     if(nextProps.login !== this.props.login){
+      const isUserLogin = Auth.isUserAuthenticated();
       this.setState({
         isLogin: nextProps.login.isLogin,
-        userDetails: nextProps.login.loginUser
+        userDetails: nextProps.login.loginUser,
+        isUserLogin
       })
     }
   }
@@ -59,33 +65,35 @@ export class Login extends Component {
     return (
       <div>
         <div className="rd-navbar-block">
-        {!this.state.isLogin ? 
+        {this.state.isUserLogin ? 
           <ul className="list-inline-bordered">
           
             <li>
               <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">LOGIN</button>
               <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal" id="rd-navbar-login-5">
                 <h4>Sign In</h4>
-                <form id="loginForm" className="rd-form rd-form-small">
+                <form id="loginForm" className="rd-form rd-form-small" autoComplete="false">
                   <div className="form-wrap">
                     <input
                       className="form-input"
+                      autoComplete="false"
                       id="login-email-5"
                       type="email"
                       name="email"
                       onChange={this.handleEmail}
                       data-constraints="@Email @Required" />
-                    <label className="form-label" for="login-email-5">E-mail</label>
+                    <label className="form-label" htmlFor="login-email-5">E-mail</label>
                   </div>
                   <div className="form-wrap">
-                    <input
+     ß               <input
                       className="form-input"
+                      autoComplete="false"
                       id="login-password-5"
                       type="password"
                       name="password"
                       onChange={this.handlePassword}
                       data-constraints="@Required" />
-                    <label className="form-label" for="login-password-5">Password</label>
+                    <label className="form-label" htmlFor="login-password-5">Password</label>
                   </div>
                   <div className="form-wrap">
                     <button className="button button-primary-lighten button-winona" onClick={this.loginSubmit} type="submit">Sign in</button>
@@ -100,19 +108,19 @@ export class Login extends Component {
                 <form className="rd-form rd-form-small">
                   <div className="form-wrap">
                     <input className="form-input" id="register-name-5" type="text" name="username" data-constraints="@Required" />
-                    <label className="form-label" for="register-name-5">Username</label>
+                    <label className="form-label" htmlFor="register-name-5">Username</label>
                   </div>
                   <div className="form-wrap">
                     <input className="form-input" id="register-email-5" type="email" name="email" data-constraints="@Email @Required" />
-                    <label className="form-label" for="register-email-5">E-mail</label>
+                    <label className="form-label" htmlFor="register-email-5">E-mail</label>
                   </div>
                   <div className="form-wrap">
                     <input className="form-input" id="register-password-5" type="password" name="password" data-constraints="@Required" />
-                    <label className="form-label" for="register-password-5">Password</label>
+                    <label className="form-label" htmlFor="register-password-5">Password</label>
                   </div>
                   <div className="form-wrap">
                     <input className="form-input" id="register-password-confirm-5" type="password" name="password" data-constraints="@Required" />
-                    <label className="form-label" for="register-password-confirm-5">Confirm Password</label>
+                    <label className="form-label" htmlFor="register-password-confirm-5">Confirm Password</label>
                   </div>
                   <div className="form-wrap">
                     <button className="button button-block button-primary-lighten button-winona" type="submit">Create an Account</button>

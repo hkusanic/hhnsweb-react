@@ -58,3 +58,27 @@
     border: 0px;
     background-color: transparent;
 }
+
+.banner{
+	background-image: url("data:../../../../../client/assets//images/banner.png");
+}
+
+.menubanner {
+    display: flex;
+    height: 70px !important;
+}
+
+.menulogoDiv {
+  z-index: 2;
+  width: 20%;
+}
+
+.menulogoImg {
+    margin: -35%;
+    margin-left: 0%;
+}
+
+.outSideBanner {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}

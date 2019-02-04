@@ -1,4 +1,5 @@
 import * as types from '../../constants/index';
+import Auth from '../../utils/Auth';
 
 const initialState = {
     isLogin: false,
@@ -16,6 +17,7 @@ const loginReducer = (state = initialState, action) => {
         case types.LOGIN:
             const user = action.payload;
             if (user.success) {
+                Auth.authenticateUser(user.session);
                 state = {
                     ...state,
                     isLogin: true,
@@ -28,6 +30,7 @@ const loginReducer = (state = initialState, action) => {
             break;
 
         case types.LOGOUT:
+            Auth.deauthenticateUser();
             state = {
                 ...state,
                 isLogin: false,
