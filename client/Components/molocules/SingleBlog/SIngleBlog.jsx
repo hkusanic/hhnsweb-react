@@ -34,7 +34,7 @@ export class SingleBlog extends Component {
                         <ul className="post-modern-meta">
                             <li>by {this.props.blog.author}</li>
                             <li>
-                                <time datetime="2018">{this.props.blog.date}</time>
+                                <time datetime="2018">{new Date(this.props.blog.date).toDateString()}</time>
                             </li>
                         </ul>
                         <p>{renderHTML(this.showing100Characters(this.props.blog.body))}</p>
