@@ -64,7 +64,7 @@ export class Login extends Component {
           
             <li>
               <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">LOGIN</button>
-              <div className="rd-navbar-popup bg-gray-700" id="rd-navbar-login-5">
+              <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal" id="rd-navbar-login-5">
                 <h4>Sign In</h4>
                 <form id="loginForm" className="rd-form rd-form-small">
                   <div className="form-wrap">
@@ -95,7 +95,7 @@ export class Login extends Component {
             </li>
             <li>
               <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-register-5">REGISTRATION</button>
-              <div className="rd-navbar-popup bg-gray-700" id="rd-navbar-register-5">
+              <div className="rd-navbar-popup bg-gray-700 margin-left-register-modal" id="rd-navbar-register-5">
                 <h4>Registration</h4>
                 <form className="rd-form rd-form-small">
                   <div className="form-wrap">
