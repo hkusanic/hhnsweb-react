@@ -5,13 +5,19 @@ import {
 } from 'react-router-dom';
 import logo from '../../../assets/images/Prabhupada.png';
 import banner from '../../../assets/images/banner.png';
+import Auth from '../../../utils/Auth';
 
 export class Navigation extends Component {
     constructor(props) {
         super(props);
-        this.showLogin = {
-            login: false
+        this.state = {
+            isUserLogin: false
         }
+    }
+
+    componentDidMount() {
+        const isUserLogin = Auth.isUserAuthenticated();
+        this.setState({isUserLogin})
     }
 
     render() {
@@ -77,17 +83,17 @@ export class Navigation extends Component {
                                             <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">Home</a></Link></li>
                                             {/* <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Lectures</a></Link></li> */}
                                             <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Audio</a></Link>
-                                                <ul class="rd-menu rd-navbar-dropdown">
-                                                    <li class="rd-dropdown-item"><Link to="/audio"><a class="rd-dropdown-link">Recent Audio</a></Link></li>
-                                                    <li class="rd-dropdown-item"><a class="rd-dropdown-link">Lectures</a></li>
-                                                    <li class="rd-dropdown-item"><a class="rd-dropdown-link">Kirtan And Bhajan</a></li>
+                                                <ul className="rd-menu rd-navbar-dropdown">
+                                                    <li className="rd-dropdown-item"><Link to="/audio"><a className="rd-dropdown-link">Recent Audio</a></Link></li>
+                                                    <li className="rd-dropdown-item"><a className="rd-dropdown-link">Lectures</a></li>
+                                                    <li className="rd-dropdown-item"><a className="rd-dropdown-link">Kirtan And Bhajan</a></li>
                                                 </ul>
                                             </li>
                                             <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Video</a></Link>
-                                                <ul class="rd-menu rd-navbar-dropdown">
-                                                    <li class="rd-dropdown-item"><Link to="/video"><a class="rd-dropdown-link" >Recent Video</a></Link></li>
-                                                    <li class="rd-dropdown-item"><Link to="/lectures"><a class="rd-dropdown-link">Lectures</a></Link></li>
-                                                    <li class="rd-dropdown-item"><a class="rd-dropdown-link" >Kirtan And Bhajan</a></li>
+                                                <ul className="rd-menu rd-navbar-dropdown">
+                                                    <li className="rd-dropdown-item"><Link to="/video"><a className="rd-dropdown-link" >Recent Video</a></Link></li>
+                                                    <li className="rd-dropdown-item"><Link to="/lectures"><a className="rd-dropdown-link">Lectures</a></Link></li>
+                                                    <li className="rd-dropdown-item"><a className="rd-dropdown-link" >Kirtan And Bhajan</a></li>
                                                 </ul>
                                             </li>
                                             <li className="rd-nav-item active"><Link to="/blog"><a className="rd-nav-link">Blog</a></Link></li>
@@ -107,9 +113,6 @@ export class Navigation extends Component {
             </div>)
     }
 
-    showLogin() {
-        this.setState({ login: true })
-    }
 }
 
 export default Navigation;
