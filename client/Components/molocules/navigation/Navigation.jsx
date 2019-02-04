@@ -3,7 +3,8 @@ import Login from './../../../containers/Login/Login';
 import {
     Link
 } from 'react-router-dom';
-import logo from '../../../assets/images/lotus.png';
+import logo from '../../../assets/images/Prabhupada.png';
+import banner from '../../../assets/images/banner.png';
 
 export class Navigation extends Component {
     constructor(props) {
@@ -20,8 +21,9 @@ export class Navigation extends Component {
 
                     <div className="rd-navbar-wrap">
                         <nav className="rd-navbar rd-navbar-corporate" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
-                            <div className="rd-navbar-aside-outer">
-                                <div className="rd-navbar-aside">
+                            <div className="rd-navbar-aside-outer banner outSideBanner" style={{ backgroundAttachment: `${banner}` }}>
+                                <img src={banner} alt="" width="100%" height="100%" srcSet="../../../assets/images/banner.png 2x" />
+                                {/* <div className="rd-navbar-aside">
 
                                     <div className="rd-navbar-panel">
 
@@ -50,9 +52,12 @@ export class Navigation extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
-                            <div className="rd-navbar-main-outer">
+                            <div className="rd-navbar-main-outer menubanner">
+                                <div className="menulogoDiv">
+                                    <img src={logo} className="menulogoImg" alt="" width="100%" height="100%" srcSet="../../../assets/images/Prabhupada.png 2x" />
+                                </div>
                                 <div className="rd-navbar-main">
                                     <div className="rd-navbar-nav-wrap" id="rd-navbar-nav-wrap-1">
 
