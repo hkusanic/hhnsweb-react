@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import SingleLecture from '../../Components/molocules/SingleLecture/SingleLecture';
 import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';

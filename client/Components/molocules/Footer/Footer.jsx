@@ -67,33 +67,3 @@ export class Footer extends Component {
 
 export default Footer;
 
-
-
-
-{/* <footer classNameName="section footer-advanced bg-gray-700">
-                    <div classNameName="footer-advanced-aside">
-                        <div classNameName="container">
-                            <div classNameName="footer-advanced-layout">
-                                <div>
-                                    <ul classNameName="list-nav">
-                                        <li><a >Home</a></li>
-                                        <li><a >Lectures</a></li>
-                                        <li><a >Admin</a></li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <ul classNameName="list-inline list-inline-md">
-                                        <li><a classNameName="icon icon-sm link-default mdi mdi-facebook" href="#"></a></li>
-                                        <li><a classNameName="icon icon-sm link-default mdi mdi-twitter" href="#"></a></li>
-                                        <li><a classNameName="icon icon-sm link-default mdi mdi-instagram" href="#"></a></li>
-                                        <li><a classNameName="icon icon-sm link-default mdi mdi-google" href="#"></a></li>
-                                        <li><a classNameName="icon icon-sm link-default mdi mdi-linkedin" href="#"></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div classNameName="container">
-                        <hr />
-                    </div>
-                </footer> */}
