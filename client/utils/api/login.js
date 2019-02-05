@@ -10,6 +10,11 @@ const utils = {
 	logout: () => {
 		let url = serverAddress + '/api/signout/';
 		return axios.post(url);
+	},
+
+	signup: (body) => {
+		let url = serverAddress + '/api/signup/';
+		return axios.post(url, body);
 	}
 }
 

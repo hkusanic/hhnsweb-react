@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { loginUser, logoutUser, checkLogin } from '../../actions/loginActions';
+import { loginUser, logoutUser, checkLogin, signupUser } from '../../actions/loginActions';
 import Auth from '../../utils/Auth';
 
 export class Login extends Component {
@@ -12,8 +12,13 @@ export class Login extends Component {
       username: '',
       password: '',
       isLogin: false,
-      userDetails : {},
-      isUserLogin: false
+      userDetails: {},
+      isUserLogin: false,
+      firstName: '',
+      lastName: '',
+      email_signup: '',
+      password_signup: '',
+      confirmPassword: ''
     }
   }
 
@@ -26,8 +31,8 @@ export class Login extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.login !== this.props.login){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.login !== this.props.login) {
       const isUserLogin = Auth.isUserAuthenticated();
       this.setState({
         isLogin: nextProps.login.isLogin,
@@ -45,6 +50,25 @@ export class Login extends Component {
     this.setState({ password: event.target.value })
   }
 
+  handlefirstName = (event) => {
+    this.setState({ firstName: event.target.value })
+  }
+
+  handlelastName = (event) => {
+    this.setState({ lastName: event.target.value })
+  }
+
+  handleEmail = (event) => {
+    this.setState({ email_signup: event.target.value })
+  }
+
+  handlePassword = (event) => {
+    this.setState({ password_signup: event.target.value })
+  }
+
+  handleConfirmPassword = (event) => {
+    this.setState({ confirmPassword: event.target.value })
+  }
 
   loginSubmit = () => {
     if (this.state.username && this.state.password) {
@@ -56,8 +80,21 @@ export class Login extends Component {
     }
   }
 
-  logoutSubmit = () =>{
+  logoutSubmit = () => {
     this.props.logoutUser();
+    location.reload();
+  }
+
+  signUP = () => {
+    if (this.state.password_signup === this.state.confirmPassword) {
+      const body = {
+        email : this.state.email_signup,
+        password: this.state.password_signup,
+        firstname: this.state.firstName,
+        lastname: this.state.lastName
+      }
+      this.props.signup(body);
+    }
   }
 
 
@@ -65,73 +102,107 @@ export class Login extends Component {
     return (
       <div>
         <div className="rd-navbar-block">
-        {this.state.isUserLogin ? 
-          <ul className="list-inline-bordered">
-          
-            <li>
-              <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">LOGIN</button>
-              <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal" id="rd-navbar-login-5">
-                <h4>Sign In</h4>
-                <form id="loginForm" className="rd-form rd-form-small" autoComplete="false">
-                  <div className="form-wrap">
-                    <input
-                      className="form-input"
-                      autoComplete="false"
-                      id="login-email-5"
-                      type="email"
-                      name="email"
-                      onChange={this.handleEmail}
-                      data-constraints="@Email @Required" />
-                    <label className="form-label" htmlFor="login-email-5">E-mail</label>
-                  </div>
-                  <div className="form-wrap">
-     ß               <input
-                      className="form-input"
-                      autoComplete="false"
-                      id="login-password-5"
-                      type="password"
-                      name="password"
-                      onChange={this.handlePassword}
-                      data-constraints="@Required" />
-                    <label className="form-label" htmlFor="login-password-5">Password</label>
-                  </div>
-                  <div className="form-wrap">
-                    <button className="button button-primary-lighten button-winona" onClick={this.loginSubmit} type="submit">Sign in</button>
-                  </div>
-                </form>
-              </div>
-            </li>
-            <li>
-              <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-register-5">REGISTRATION</button>
-              <div className="rd-navbar-popup bg-gray-700 margin-left-register-modal" id="rd-navbar-register-5">
-                <h4>Registration</h4>
-                <form className="rd-form rd-form-small">
-                  <div className="form-wrap">
-                    <input className="form-input" id="register-name-5" type="text" name="username" data-constraints="@Required" />
-                    <label className="form-label" htmlFor="register-name-5">Username</label>
-                  </div>
-                  <div className="form-wrap">
-                    <input className="form-input" id="register-email-5" type="email" name="email" data-constraints="@Email @Required" />
-                    <label className="form-label" htmlFor="register-email-5">E-mail</label>
-                  </div>
-                  <div className="form-wrap">
-                    <input className="form-input" id="register-password-5" type="password" name="password" data-constraints="@Required" />
-                    <label className="form-label" htmlFor="register-password-5">Password</label>
-                  </div>
-                  <div className="form-wrap">
-                    <input className="form-input" id="register-password-confirm-5" type="password" name="password" data-constraints="@Required" />
-                    <label className="form-label" htmlFor="register-password-confirm-5">Confirm Password</label>
-                  </div>
-                  <div className="form-wrap">
-                    <button className="button button-block button-primary-lighten button-winona" type="submit">Create an Account</button>
-                  </div>
-                </form>
-              </div>
-            </li>
-          </ul>
-          : <ul className="list-inline-bordered">
-            <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>LOGOUT</button></li>
-          </ul> }
+          {this.state.isUserLogin ?
+            <ul className="list-inline-bordered">
+
+              <li>
+                <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">LOGIN</button>
+                <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal" id="rd-navbar-login-5">
+                  <h4>Sign In</h4>
+                  <form id="loginForm" className="rd-form rd-form-small" autoComplete="false">
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        autoComplete="false"
+                        id="login-email-5"
+                        type="email"
+                        name="email"
+                        onChange={this.handleEmail}
+                        data-constraints="@Email @Required" />
+                      <label className="form-label" htmlFor="login-email-5">E-mail</label>
+                    </div>
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        autoComplete="false"
+                        id="login-password-5"
+                        type="password"
+                        name="password"
+                        onChange={this.handlePassword}
+                        data-constraints="@Required" />
+                      <label className="form-label" htmlFor="login-password-5">Password</label>
+                    </div>
+                    <div className="form-wrap">
+                      <button className="button button-primary-lighten button-winona" onClick={this.loginSubmit} type="submit">Sign in</button>
+                    </div>
+                  </form>
+                </div>
+              </li>
+              <li>
+                <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-register-5">REGISTRATION</button>
+                <div className="rd-navbar-popup bg-gray-700 margin-left-register-modal" id="rd-navbar-register-5">
+                  <h4>Registration</h4>
+                  <form className="rd-form rd-form-small">
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        id="register-firstName-5"
+                        type="text"
+                        name="username"
+                        data-constraints="@Required"
+                        onChange={this.handlefirstName} />
+                      <label className="form-label" htmlFor="register-firstName-5">FirstName</label>
+                    </div>
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        id="register-lastName-5"
+                        type="email"
+                        name="email"
+                        data-constraints="@Required"
+                        onChange={this.handlelastName} />
+                      <label className="form-label" htmlFor="register-lastName-5">LastName</label>
+                    </div>
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        id="register-email-5"
+                        type="email"
+                        name="email"
+                        data-constraints="@Email @Required"
+                        onChange={this.handleEmail} />
+                      <label className="form-label" htmlFor="register-email-5">E-mail</label>
+                    </div>
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        id="register-password-5"
+                        type="password"
+                        name="password"
+                        data-constraints="@Required"
+                        onChange={this.handlePassword} />
+                      <label className="form-label" htmlFor="register-password-5">Password</label>
+                    </div>
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        id="register-password-confirm-5"
+                        type="password"
+                        name="password"
+                        data-constraints="@Required"
+                        onChange={this.handleConfirmPassword} />
+                      <label className="form-label" htmlFor="register-password-confirm-5">Confirm Password</label>
+                    </div>
+                    <div className="form-wrap">
+                      <button className="button button-block button-primary-lighten button-winona" onClick={this.signUP}>Create an Account</button>
+                    </div>
+                  </form>
+                </div>
+              </li>
+            </ul>
+            : <ul className="list-inline-bordered">
+              <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>LOGOUT</button></li>
+            </ul>}
         </div>
       </div>
     );
@@ -155,6 +226,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     checkLogin: () => {
       dispatch(checkLogin())
+    },
+    signup: (body) => {
+      dispatch(signupUser(body))
     }
   };
 };
