@@ -20,7 +20,7 @@ export class SingleLecture extends Component {
                         <ul className="post-modern-meta">
                             <li>{this.props.lecture.event}</li>
                             <li>
-                                <time datetime="2018">{this.props.lecture.date}</time>
+                                { this.props.lecture.date ? new Date(this.props.lecture.date).toDateString() : ""}
                             </li>
                         </ul>
                     </article>

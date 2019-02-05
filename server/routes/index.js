@@ -17,6 +17,7 @@ exports = module.exports = function (app) {
 	app.get('/api/blog/', keystone.middleware.api, routes.api.blog.list);
 	app.get('/api/lecture/', keystone.middleware.api, routes.api.lecture.list);
 	app.post('/api/signin/', keystone.middleware.api, routes.api.user.signin);
+	app.post('/api/signup/', keystone.middleware.api, routes.api.user.signup);
 	app.post('/api/signout/', keystone.middleware.api, routes.api.user.signout);
 	// Set up the default app route to  http://localhost:3000/index.html
 	app.get('/*', function (req, res) {
@@ -34,6 +35,7 @@ exports = module.exports = function (app) {
 						<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Work+Sans:300,500,700,800%7COswald:300,400,500">
 						<link rel="stylesheet" href="../css/bootstrap.css">
 						<link rel="stylesheet" href="../css/fonts.css">
+						<link rel="stylesheet" href="../css/custom.css">
 						<link rel="stylesheet" href="../css/style.css" id="main-styles-link">
 						<script type="text/javascript" src="../js/bundle.js"></script>
 						<script src="../js/core.min.js"></script>

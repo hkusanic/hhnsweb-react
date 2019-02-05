@@ -2,24 +2,61 @@ import loginApi from '../utils/api/login';
 import * as types from '../constants/index';
 
 export function loginUser(credential) {
-
-    return {
-        type: types.LOGIN,
-        payload: loginApi.login(credential)
+    return (dispatch) => {
+        loginApi.login(credential)
             .then((response) => {
-                response.data.status = response.status;
-                return response.data;
+                dispatch(loginAction(response.data))
             })
-    };
-
-}
-
-export function logoutUser() {
-    return {
-        type: types.LOGOUT
+            .catch((err) => {
+                console.log("error ====>>>", err);
+            })
     }
 }
 
+export function logoutUser() {
+    return (dispatch) => {
+        loginApi.logout()
+            .then((response) => {
+                dispatch(logoutAction(response.data))
+            })
+            .catch((err) => {
+                console.log("error =====>>>", err);
+            })
+    }
+}
+
+export function signupUser(body) {
+    return (dispatch) => {
+        loginApi.signup(body)
+           .then((response) => {
+               dispatch(signupAction(response.data))
+           })
+           .catch((err) => {
+               console.log("error =====>>>>", err);
+           })
+    }
+}
+
+export function signupAction(data) {
+    return {
+        type: types.SIGNUP,
+        payload: data
+    }
+}
+
+export function logoutAction(data) {
+    return {
+        type: types.LOGOUT,
+        payload: data
+    }
+}
+
+export function loginAction(data) {
+    return {
+        type: types.LOGIN,
+        payload: data
+    }
+}
 
 export function checkLogin() {
     return {

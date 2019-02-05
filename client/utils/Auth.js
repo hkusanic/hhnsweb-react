@@ -5,11 +5,11 @@ class Auth {
      *
      * @param {string} token
      */
-    static authenticateUser(token) {
+    static authenticateUser(session) {
       try{
-        localStorage.setItem('token', token);
+        localStorage.setItem('session', session);
       }catch(e){
-        document.cookie = "token="+token+";";
+        document.cookie = "session="+session+";";
       }
     }
   
@@ -19,9 +19,8 @@ class Auth {
      * @returns {boolean}
      */
     static isUserAuthenticated() {
-      var local_storage = localStorage.getItem('token');
-      var cookie_token = this.getCookieToken();
-      if(!local_storage && !cookie_token){
+      var local_storage = localStorage.getItem('session');
+      if(!local_storage){
         return true;
       }
       return false;
@@ -32,54 +31,19 @@ class Auth {
      *
      */
     static deauthenticateUser() {
-      localStorage.removeItem('token');
-      this.removeCookieToken();
+      localStorage.removeItem('session');
     }
     /**
      * Get a token value.
      *
      * @returns {string}
      */
-    static getToken() {
-      var local_storage = localStorage.getItem('token');    
-      var cookie_token = this.getCookieToken();
+    static getUserSeesion() {
+      var local_storage = localStorage.getItem('session');    
   
-      return local_storage ? local_storage : cookie_token;
+      return local_storage ? local_storage : '';
     }
-  
-    static getCookieToken(){
-      let  cookieName = "token=";
-      let ca = document.cookie.split(';');
-      for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(cookieName) == 0) 
-          return c.substring(cookieName.length,c.length);
-      }
-    return null;
-    }
-  
-    static getCookieKey(){
-      let  cookieName = "key=";
-      let ca = document.cookie.split(';');
-      for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(cookieName) == 0) 
-          return c.substring(cookieName.length,c.length);
-      }
-    return null;
-    }
-  
-    static removeCookieToken(){
-      console.log("Removing cookieXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-      document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-      console.log("Cookie value ===================>", this.getCookieToken())
-    }
-  
-    static removeCookieKey(){
-      document.cookie = 'key=;  Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    }
+
   }
   export default Auth;
   
