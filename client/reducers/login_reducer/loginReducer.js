@@ -17,7 +17,7 @@ const loginReducer = (state = initialState, action) => {
         case types.LOGIN:
             const user = action.payload;
             if (user.success) {
-                Auth.authenticateUser(user.session);
+                Auth.authenticateUser(user.session, user.loginUser);
                 state = {
                     ...state,
                     isLogin: true,

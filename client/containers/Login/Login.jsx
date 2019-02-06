@@ -11,6 +11,7 @@ export class Login extends Component {
     this.state = {
       visible: false,
       username: '',
+      userpassword: '',
       password: '',
       isLogin: false,
       userDetails: {},
@@ -43,12 +44,12 @@ export class Login extends Component {
     }
   }
 
-  handleEmail = (event) => {
+  handleUsername = (event) => {
     this.setState({ username: event.target.value })
   }
 
-  handlePassword = (event) => {
-    this.setState({ password: event.target.value })
+  handleUserpassword = (event) => {
+    this.setState({ userpassword: event.target.value })
   }
 
   handlefirstName = (event) => {
@@ -72,10 +73,10 @@ export class Login extends Component {
   }
 
   loginSubmit = () => {
-    if (this.state.username && this.state.password) {
+    if (this.state.username && this.state.userpassword) {
       const body = {
         "username": this.state.username,
-        "password": this.state.password
+        "password": this.state.userpassword
       }
       this.props.loginUser(body);
     }
@@ -103,75 +104,116 @@ export class Login extends Component {
     return (
       <div>
         <div className="rd-navbar-block">
-        {this.state.isUserLogin ? 
-          <ul className="list-inline-bordered">
-          
-            <li className="rd-nav-item">
-             <Translate>
+          {this.state.isUserLogin ?
+            <ul className="list-inline-bordered">
+
+              <li>
+                <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">   <Translate>
               {({ translate }) => translate('loginLabel')}
-            </Translate>
-              <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal" id="rd-navbar-login-5">
-                <h4>Sign In</h4>
-                <form id="loginForm" className="rd-form rd-form-small" autoComplete="false">
-                  <div className="form-wrap">
-                    <input
-                      className="form-input"
-                      autoComplete="false"
-                      id="login-email-5"
-                      type="email"
-                      name="email"
-                      onChange={this.handleEmail}
-                      data-constraints="@Email @Required" />
-                    <label className="form-label" htmlFor="login-email-5">E-mail</label>
-                  </div>
-                  <div className="form-wrap">
-     ß               <input
-                      className="form-input"
-                      autoComplete="false"
-                      id="login-password-5"
-                      type="password"
-                      name="password"
-                      onChange={this.handlePassword}
-                      data-constraints="@Required" />
-                    <label className="form-label" htmlFor="login-password-5">Password</label>
-                  </div>
-                  <div className="form-wrap">
-                    <button className="button button-primary-lighten button-winona" onClick={this.loginSubmit} type="submit">Sign in</button>
-                  </div>
-                </form>
-              </div>
-            </li>
-            <li>
-              <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-register-5">REGISTRATION</button>
-              <div className="rd-navbar-popup bg-gray-700 margin-left-register-modal" id="rd-navbar-register-5">
-                <h4>Registration</h4>
-                <form className="rd-form rd-form-small">
-                  <div className="form-wrap">
-                    <input className="form-input" id="register-name-5" type="text" name="username" data-constraints="@Required" />
-                    <label className="form-label" htmlFor="register-name-5">Username</label>
-                  </div>
-                  <div className="form-wrap">
-                    <input className="form-input" id="register-email-5" type="email" name="email" data-constraints="@Email @Required" />
-                    <label className="form-label" htmlFor="register-email-5">E-mail</label>
-                  </div>
-                  <div className="form-wrap">
-                    <input className="form-input" id="register-password-5" type="password" name="password" data-constraints="@Required" />
-                    <label className="form-label" htmlFor="register-password-5">Password</label>
-                  </div>
-                  <div className="form-wrap">
-                    <input className="form-input" id="register-password-confirm-5" type="password" name="password" data-constraints="@Required" />
-                    <label className="form-label" htmlFor="register-password-confirm-5">Confirm Password</label>
-                  </div>
-                  <div className="form-wrap">
-                    <button className="button button-block button-primary-lighten button-winona" type="submit">Create an Account</button>
-                  </div>
-                </form>
-              </div>
-            </li>
-          </ul>
-          : <ul className="list-inline-bordered">
-            <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>LOGOUT</button></li>
-          </ul> }
+            </Translate></button>
+                <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal" id="rd-navbar-login-5">
+                  <h4>Sign In</h4>
+                  <form id="loginForm" className="rd-form rd-form-small" autoComplete="false">
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        autoComplete="off"
+                        id="login-email-5"
+                        type="email"
+                        name="email"
+                        placeholder="E-mail"
+                        onChange={this.handleUsername}
+                        data-constraints="@Email @Required" />
+                      {/* <label className="form-label" htmlFor="login-email-5">E-mail</label> */}
+                    </div>
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        autoComplete="off"
+                        id="login-password-5"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        onChange={this.handleUserpassword}
+                        data-constraints="@Required" />
+                      {/* <label className="form-label" htmlFor="login-password-5">Password</label> */}
+                    </div>
+                    <div className="form-wrap">
+                      <button className="button button-primary-lighten button-winona" onClick={this.loginSubmit} type="submit">Sign in</button>
+                    </div>
+                  </form>
+                </div>
+              </li>
+              <li>
+                <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-register-5">REGISTRATION</button>
+                <div className="rd-navbar-popup bg-gray-700 margin-left-register-modal" id="rd-navbar-register-5">
+                  <h4>Registration</h4>
+                  <form className="rd-form rd-form-small">
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        id="register-firstName-5"
+                        type="text"
+                        name="username"
+                        placeholder="FirstName"
+                        data-constraints="@Required"
+                        onChange={this.handlefirstName} />
+                      {/* <label className="form-label" htmlFor="register-firstName-5">FirstName</label> */}
+                    </div>
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        id="register-lastName-5"
+                        type="email"
+                        name="email"
+                        placeholder="LastName"
+                        data-constraints="@Required"
+                        onChange={this.handlelastName} />
+                      {/* <label className="form-label" htmlFor="register-lastName-5">LastName</label> */}
+                    </div>
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        id="register-email-5"
+                        type="email"
+                        name="email"
+                        placeholder="E-mail"
+                        data-constraints="@Email @Required"
+                        onChange={this.handleEmail} />
+                      {/* <label className="form-label" htmlFor="register-email-5">E-mail</label> */}
+                    </div>
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        id="register-password-5"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        data-constraints="@Required"
+                        onChange={this.handlePassword} />
+                      {/* <label className="form-label" htmlFor="register-password-5">Password</label> */}
+                    </div>
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        id="register-password-confirm-5"
+                        type="password"
+                        name="password"
+                        placeholder="Confirm Password"
+                        data-constraints="@Required"
+                        onChange={this.handleConfirmPassword} />
+                      {/* <label className="form-label" htmlFor="register-password-confirm-5">Confirm Password</label> */}
+                    </div>
+                    <div className="form-wrap">
+                      <button className="button button-block button-primary-lighten button-winona" onClick={this.signUP}>Create an Account</button>
+                    </div>
+                  </form>
+                </div>
+              </li>
+            </ul>
+            : <ul className="list-inline-bordered">
+              <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>LOGOUT</button></li>
+            </ul>}
         </div>
       </div>
     );

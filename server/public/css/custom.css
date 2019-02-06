@@ -83,3 +83,87 @@
     padding-left: 0px !important;
     padding-right: 0px !important;
 }
+
+.progressBarDiv{
+    padding-top: 3%;
+    padding-bottom: 2%;
+    padding-left: 25%;
+    padding-right: 25%
+}
+
+.bookingformDiv {
+    text-align: center;
+    width: 65%;
+    padding-left: 35%;
+    padding-bottom: 2%;
+}
+
+.indexedStep {
+    color: white;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    background-color: rgba(211, 211, 211, 0.8);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .indexedStep.accomplished {
+    background-color:#aeb2bd;
+  }
+
+  .RSPBprogressBar {
+    height: 10px;
+    line-height: 1;
+    border-radius: 10px;
+    position: relative;
+    background-color: rgba(211, 211, 211, 0.6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 0; }
+    .RSPBprogressBar .RSPBstep {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 0;
+      position: absolute;
+      transform: translateX(-50%);
+      transition-property: all;
+      transition-timing-function: ease; }
+    .RSPBprogressBar .RSPBprogressBarText {
+      color: white;
+      font-size: 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); }
+    .RSPBprogressBar .RSPBprogression {
+      position: absolute;
+      transition: width 0.3s ease;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      border-radius: 10px;
+      background: rgb(230, 138, 67);
+      z-index: -1; }
+  
+      .radioDiv {
+        width: 100%;
+        min-height: 35px;
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1.5;
+        color: #122e44;
+        background-color: #fff;
+    }
+    .flexDiv {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .flexRow {
+        width: 39%;
+        box-sizing: border-box;
+    }
