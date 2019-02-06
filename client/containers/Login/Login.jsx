@@ -10,6 +10,7 @@ export class Login extends Component {
     this.state = {
       visible: false,
       username: '',
+      userpassword: '',
       password: '',
       isLogin: false,
       userDetails: {},
@@ -42,12 +43,12 @@ export class Login extends Component {
     }
   }
 
-  handleEmail = (event) => {
+  handleUsername = (event) => {
     this.setState({ username: event.target.value })
   }
 
-  handlePassword = (event) => {
-    this.setState({ password: event.target.value })
+  handleUserpassword = (event) => {
+    this.setState({ userpassword: event.target.value })
   }
 
   handlefirstName = (event) => {
@@ -71,10 +72,10 @@ export class Login extends Component {
   }
 
   loginSubmit = () => {
-    if (this.state.username && this.state.password) {
+    if (this.state.username && this.state.userpassword) {
       const body = {
         "username": this.state.username,
-        "password": this.state.password
+        "password": this.state.userpassword
       }
       this.props.loginUser(body);
     }
@@ -113,24 +114,26 @@ export class Login extends Component {
                     <div className="form-wrap">
                       <input
                         className="form-input"
-                        autoComplete="false"
+                        autoComplete="off"
                         id="login-email-5"
                         type="email"
                         name="email"
-                        onChange={this.handleEmail}
+                        placeholder="E-mail"
+                        onChange={this.handleUsername}
                         data-constraints="@Email @Required" />
-                      <label className="form-label" htmlFor="login-email-5">E-mail</label>
+                      {/* <label className="form-label" htmlFor="login-email-5">E-mail</label> */}
                     </div>
                     <div className="form-wrap">
                       <input
                         className="form-input"
-                        autoComplete="false"
+                        autoComplete="off"
                         id="login-password-5"
                         type="password"
                         name="password"
-                        onChange={this.handlePassword}
+                        placeholder="Password"
+                        onChange={this.handleUserpassword}
                         data-constraints="@Required" />
-                      <label className="form-label" htmlFor="login-password-5">Password</label>
+                      {/* <label className="form-label" htmlFor="login-password-5">Password</label> */}
                     </div>
                     <div className="form-wrap">
                       <button className="button button-primary-lighten button-winona" onClick={this.loginSubmit} type="submit">Sign in</button>
@@ -149,9 +152,10 @@ export class Login extends Component {
                         id="register-firstName-5"
                         type="text"
                         name="username"
+                        placeholder="FirstName"
                         data-constraints="@Required"
                         onChange={this.handlefirstName} />
-                      <label className="form-label" htmlFor="register-firstName-5">FirstName</label>
+                      {/* <label className="form-label" htmlFor="register-firstName-5">FirstName</label> */}
                     </div>
                     <div className="form-wrap">
                       <input
@@ -159,9 +163,10 @@ export class Login extends Component {
                         id="register-lastName-5"
                         type="email"
                         name="email"
+                        placeholder="LastName"
                         data-constraints="@Required"
                         onChange={this.handlelastName} />
-                      <label className="form-label" htmlFor="register-lastName-5">LastName</label>
+                      {/* <label className="form-label" htmlFor="register-lastName-5">LastName</label> */}
                     </div>
                     <div className="form-wrap">
                       <input
@@ -169,9 +174,10 @@ export class Login extends Component {
                         id="register-email-5"
                         type="email"
                         name="email"
+                        placeholder="E-mail"
                         data-constraints="@Email @Required"
                         onChange={this.handleEmail} />
-                      <label className="form-label" htmlFor="register-email-5">E-mail</label>
+                      {/* <label className="form-label" htmlFor="register-email-5">E-mail</label> */}
                     </div>
                     <div className="form-wrap">
                       <input
@@ -179,9 +185,10 @@ export class Login extends Component {
                         id="register-password-5"
                         type="password"
                         name="password"
+                        placeholder="Password"
                         data-constraints="@Required"
                         onChange={this.handlePassword} />
-                      <label className="form-label" htmlFor="register-password-5">Password</label>
+                      {/* <label className="form-label" htmlFor="register-password-5">Password</label> */}
                     </div>
                     <div className="form-wrap">
                       <input
@@ -189,9 +196,10 @@ export class Login extends Component {
                         id="register-password-confirm-5"
                         type="password"
                         name="password"
+                        placeholder="Confirm Password"
                         data-constraints="@Required"
                         onChange={this.handleConfirmPassword} />
-                      <label className="form-label" htmlFor="register-password-confirm-5">Confirm Password</label>
+                      {/* <label className="form-label" htmlFor="register-password-confirm-5">Confirm Password</label> */}
                     </div>
                     <div className="form-wrap">
                       <button className="button button-block button-primary-lighten button-winona" onClick={this.signUP}>Create an Account</button>
