@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { loginUser, logoutUser, checkLogin } from '../../actions/loginActions';
+import { loginUser, logoutUser, checkLogin, signupUser } from '../../actions/loginActions';
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 
@@ -13,8 +13,13 @@ export class Login extends Component {
       username: '',
       password: '',
       isLogin: false,
-      userDetails : {},
-      isUserLogin: false
+      userDetails: {},
+      isUserLogin: false,
+      firstName: '',
+      lastName: '',
+      email_signup: '',
+      password_signup: '',
+      confirmPassword: ''
     }
   }
 
@@ -27,8 +32,8 @@ export class Login extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.login !== this.props.login){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.login !== this.props.login) {
       const isUserLogin = Auth.isUserAuthenticated();
       this.setState({
         isLogin: nextProps.login.isLogin,
@@ -46,6 +51,25 @@ export class Login extends Component {
     this.setState({ password: event.target.value })
   }
 
+  handlefirstName = (event) => {
+    this.setState({ firstName: event.target.value })
+  }
+
+  handlelastName = (event) => {
+    this.setState({ lastName: event.target.value })
+  }
+
+  handleEmail = (event) => {
+    this.setState({ email_signup: event.target.value })
+  }
+
+  handlePassword = (event) => {
+    this.setState({ password_signup: event.target.value })
+  }
+
+  handleConfirmPassword = (event) => {
+    this.setState({ confirmPassword: event.target.value })
+  }
 
   loginSubmit = () => {
     if (this.state.username && this.state.password) {
@@ -57,8 +81,21 @@ export class Login extends Component {
     }
   }
 
-  logoutSubmit = () =>{
+  logoutSubmit = () => {
     this.props.logoutUser();
+    location.reload();
+  }
+
+  signUP = () => {
+    if (this.state.password_signup === this.state.confirmPassword) {
+      const body = {
+        email : this.state.email_signup,
+        password: this.state.password_signup,
+        firstname: this.state.firstName,
+        lastname: this.state.lastName
+      }
+      this.props.signup(body);
+    }
   }
 
 
@@ -158,6 +195,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     checkLogin: () => {
       dispatch(checkLogin())
+    },
+    signup: (body) => {
+      dispatch(signupUser(body))
     }
   };
 };

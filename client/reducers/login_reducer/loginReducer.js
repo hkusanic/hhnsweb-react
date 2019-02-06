@@ -38,6 +38,18 @@ const loginReducer = (state = initialState, action) => {
                 loginUser: {}
             }
             break;
+         
+        case types.SIGNUP:
+             const signedUser = action.payload; 
+             Auth.authenticateUser(signedUser.session);
+             state = {
+                ...state,
+                isLogin: true,
+                isComplete: signedUser.success,
+                loginUser: signedUser.loginUser,
+                isAdmin: signedUser.admin,
+                session: signedUser.session
+            }
 
     }
     return state

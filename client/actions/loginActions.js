@@ -25,6 +25,24 @@ export function logoutUser() {
     }
 }
 
+export function signupUser(body) {
+    return (dispatch) => {
+        loginApi.signup(body)
+           .then((response) => {
+               dispatch(signupAction(response.data))
+           })
+           .catch((err) => {
+               console.log("error =====>>>>", err);
+           })
+    }
+}
+
+export function signupAction(data) {
+    return {
+        type: types.SIGNUP,
+        payload: data
+    }
+}
 
 export function logoutAction(data) {
     return {
