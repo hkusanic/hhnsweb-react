@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { loginUser, logoutUser, checkLogin } from '../../actions/loginActions';
 import Auth from '../../utils/Auth';
+import { Translate } from 'react-localize-redux';
 
 export class Login extends Component {
   constructor(props) {
@@ -68,8 +69,10 @@ export class Login extends Component {
         {this.state.isUserLogin ? 
           <ul className="list-inline-bordered">
           
-            <li>
-              <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">LOGIN</button>
+            <li className="rd-nav-item">
+             <Translate>
+              {({ translate }) => translate('loginLabel')}
+            </Translate>
               <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal" id="rd-navbar-login-5">
                 <h4>Sign In</h4>
                 <form id="loginForm" className="rd-form rd-form-small" autoComplete="false">

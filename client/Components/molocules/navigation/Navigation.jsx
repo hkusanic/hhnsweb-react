@@ -6,6 +6,9 @@ import {
 import logo from '../../../assets/images/Prabhupada.png';
 import banner from '../../../assets/images/banner.png';
 import Auth from '../../../utils/Auth';
+import { Translate } from 'react-localize-redux';
+import { LanguageSwitch } from '../../atoms/LanguageSwitch/LanguageSwitch';
+
 
 export class Navigation extends Component {
     constructor(props) {
@@ -80,7 +83,12 @@ export class Navigation extends Component {
                                         </div>
 
                                         <ul className="rd-navbar-nav">
-                                            <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">Home</a></Link></li>
+                                           <li className="rd-nav-item"><LanguageSwitch/></li>
+                                            <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">
+                                              <Translate>
+                                                 {({ translate }) => translate('homePage')}
+                                              </Translate>
+                                             </a></Link></li>
                                             {/* <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Lectures</a></Link></li> */}
                                             <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Audio</a></Link>
                                                 <ul className="rd-menu rd-navbar-dropdown">
@@ -92,15 +100,20 @@ export class Navigation extends Component {
                                             <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Video</a></Link>
                                                 <ul className="rd-menu rd-navbar-dropdown">
                                                     <li className="rd-dropdown-item"><Link to="/video"><a className="rd-dropdown-link" >Recent Video</a></Link></li>
-                                                    <li className="rd-dropdown-item"><Link to="/lectures"><a className="rd-dropdown-link">Lectures</a></Link></li>
+                                                    <li className="rd-dropdown-item"><Link to="/lectures"><a className="rd-dropdown-link">
+                                                    <Translate>
+                                                 {({ translate }) => translate('navBlog')}
+                                              </Translate></a></Link></li>
                                                     <li className="rd-dropdown-item"><a className="rd-dropdown-link" >Kirtan And Bhajan</a></li>
                                                 </ul>
                                             </li>
-                                            <li className="rd-nav-item active"><Link to="/blog"><a className="rd-nav-link">Blog</a></Link></li>
+                                            <li className="rd-nav-item active"><Link to="/blog"><a className="rd-nav-link"> <Translate>
+                                                 {({ translate }) => translate('navLectures')}
+                                              </Translate></a></Link></li>
                                             <li className="rd-nav-item active"><Link to="/calender"><a className="rd-nav-link">Calender</a></Link></li>
                                             <li className="rd-nav-item"><Link to="/booking"><a className="rd-nav-link">Booking</a></Link></li>
-                                            <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
-                                            <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li>
+                                            {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
+                                            <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
                                             {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">Admin</a></Link></li> : ''}
                                             <li className="rd-nav-item"><Link to="/"><a className="rd-nav-link"><Login /></a></Link></li>
                                         </ul>

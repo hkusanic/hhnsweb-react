@@ -1,0 +1,20 @@
+{
+	"homePageTitle": ["H.H. Niranjana Swami", "E.C. Ниранджана Свами"],
+	"homePageSubTitle": ["the official website", "официальный сайт"],
+	"loginButton": ["Log in", "Авторизоваться"],
+	"loginLabel": ["log in", "авторизоваться"],
+	"logoutLabel": ["log out","выйти"],
+	"emailAddress": ["Email address", "Адрес электронной почты"],
+	"password": ["Password", "пароль"],
+	"homePage": ["home", "главная страница"],
+	"emailErrorMessage": ["is not a valid email address", "Неверный адрес электронной почты"],
+	"requiredField": ["* This is a required field", "* Это обязательное поле"],
+	"navHome": ["Home", "Главная страница"],
+	"navBio": ["Biography", "биография"],
+	"navMedia": ["Media", "аудио / видео"],
+	"navLectures": ["Lectures", "Лекции"],
+	"navMeeting": ["Scheduele a meeting", "Назначь всречу"],
+	"navBlog": ["Blog", "Блог"],
+	"navContacts": ["Contacts", "контакты"],
+	"lecturesTitle": ["Lectures", "Лекции"]
+}

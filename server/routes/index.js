@@ -1,6 +1,7 @@
 var keystone = require('keystone');
 let modelHelper = require('../helpers/modelHelper');
 
+
 // Then to get access to our API route we will use importer
 var importRoutes = keystone.importer(__dirname);
 // And finally set up the api on a route
@@ -21,7 +22,6 @@ exports = module.exports = function (app) {
 	app.post('/api/signout/', keystone.middleware.api, routes.api.user.signout);
 	// Set up the default app route to  http://localhost:3000/index.html
 	app.get('/*', function (req, res) {
-
 		keystone.set('updateDatabase', false);
 		// Render some simple boilerplate html
 		function renderFullPage (result) {
