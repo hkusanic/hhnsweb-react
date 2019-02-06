@@ -16,11 +16,13 @@ export class Booking extends Component {
     componentDidMount() {
         const user = Auth.getUserDetails();
         const isLogin = Auth.getUserSeesion();
-        console.log("user details =====>>>", JSON.parse(user));
-        this.setState({
-            user: JSON.parse(user),
-            isLogin
-        })
+        if(user && isLogin) {
+            console.log("user details =====>>>", JSON.parse(user));
+            this.setState({
+                user: JSON.parse(user),
+                isLogin
+            })
+        }
     }
     render() {
         if (!(this.state && this.state.user)) {
