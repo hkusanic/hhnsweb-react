@@ -124,7 +124,6 @@ export class Login extends Component {
                         placeholder="E-mail"
                         onChange={this.handleUsername}
                         data-constraints="@Email @Required" />
-                      {/* <label className="form-label" htmlFor="login-email-5">E-mail</label> */}
                     </div>
                     <div className="form-wrap">
                       <input
@@ -136,7 +135,6 @@ export class Login extends Component {
                         placeholder="Password"
                         onChange={this.handleUserpassword}
                         data-constraints="@Required" />
-                      {/* <label className="form-label" htmlFor="login-password-5">Password</label> */}
                     </div>
                     <div className="form-wrap">
                       <button className="button button-primary-lighten button-winona" onClick={this.loginSubmit} type="submit">Sign in</button>
@@ -158,7 +156,6 @@ export class Login extends Component {
                         placeholder="FirstName"
                         data-constraints="@Required"
                         onChange={this.handlefirstName} />
-                      {/* <label className="form-label" htmlFor="register-firstName-5">FirstName</label> */}
                     </div>
                     <div className="form-wrap">
                       <input
@@ -169,7 +166,6 @@ export class Login extends Component {
                         placeholder="LastName"
                         data-constraints="@Required"
                         onChange={this.handlelastName} />
-                      {/* <label className="form-label" htmlFor="register-lastName-5">LastName</label> */}
                     </div>
                     <div className="form-wrap">
                       <input
@@ -180,7 +176,6 @@ export class Login extends Component {
                         placeholder="E-mail"
                         data-constraints="@Email @Required"
                         onChange={this.handleEmail} />
-                      {/* <label className="form-label" htmlFor="register-email-5">E-mail</label> */}
                     </div>
                     <div className="form-wrap">
                       <input
@@ -191,7 +186,6 @@ export class Login extends Component {
                         placeholder="Password"
                         data-constraints="@Required"
                         onChange={this.handlePassword} />
-                      {/* <label className="form-label" htmlFor="register-password-5">Password</label> */}
                     </div>
                     <div className="form-wrap">
                       <input
@@ -202,7 +196,6 @@ export class Login extends Component {
                         placeholder="Confirm Password"
                         data-constraints="@Required"
                         onChange={this.handleConfirmPassword} />
-                      {/* <label className="form-label" htmlFor="register-password-confirm-5">Confirm Password</label> */}
                     </div>
                     <div className="form-wrap">
                       <button className="button button-block button-primary-lighten button-winona" onClick={this.signUP}>Create an Account</button>

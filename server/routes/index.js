@@ -13,6 +13,10 @@ var routes = {
 exports = module.exports = function (app) {
 	// Get access to the API route in our app
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
+	app.all('/api/appointment/:id/update', keystone.middleware.api, routes.api.appointment.update);
+	app.post('/api/appointment/:id/remove', keystone.middleware.api, routes.api.appointment.remove);
+	app.all('/api/appointment/create', keystone.middleware.api, routes.api.appointment.create);
+	app.get('/api/appointment/:id', keystone.middleware.api, routes.api.appointment.get);
 	app.get('/api/page/', keystone.middleware.api, routes.api.page.list);
 	app.get('/api/blog/find/:id', keystone.middleware.api, routes.api.blog.get);
 	app.get('/api/blog/', keystone.middleware.api, routes.api.blog.list);

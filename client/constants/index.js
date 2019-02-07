@@ -12,3 +12,7 @@ export const GET_BLOGS = 'GET_BLOGS';
 
 //Lecture Constants
 export const GET_LECTURES = 'GET_LECTURES';
+
+
+//Appoitment Constants
+export const CREATE_APPOINTMENT = 'CREATE_APPOINTMENT';

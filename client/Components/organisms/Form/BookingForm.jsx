@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
-import { Radio } from 'antd';
-
 export class BookingForm extends Component {
     constructor(props) {
         super(props);
     }
+
+    signUP = (event) => {
+        event.preventDefault();
+      const body = {
+            "email":"hrvoje.kusanic@hotmail.com",
+            "mobileNumber":8948594895,
+            "disciple":"yes"
+      }
+      this.props.createAppointment(body);    
+    }
+
     render() {
         return (
             <div id="rd-navbar-register-5">
@@ -16,6 +25,7 @@ export class BookingForm extends Component {
                             type="text"
                             name="firstname"
                             placeholder="First Name"
+                            readonly="readonly"
                             value={this.props.user.firstName}
                             data-constraints="@Required" />
                     </div>
@@ -25,6 +35,7 @@ export class BookingForm extends Component {
                             id="register-lastName-5"
                             type="text"
                             name="lastName"
+                            readonly="readonly"
                             placeholder="Last Name"
                             value={this.props.user.last}
                             data-constraints="@Required" />
@@ -35,6 +46,7 @@ export class BookingForm extends Component {
                             id="register-email-5"
                             type="email"
                             name="email"
+                            readonly="readonly"
                             placeholder="E-mail"
                             value={this.props.user.email}
                             data-constraints="@Email @Required" />
@@ -47,6 +59,14 @@ export class BookingForm extends Component {
                             name="number"
                             placeholder="Mobile Number"
                             data-constraints="@Required" />
+                    </div>
+                    <div className="form-wrap">
+                        <select className="form-input">
+                            <option value="volvo">15 Minute</option>
+                            <option value="saab">30 Minute</option>
+                            <option value="opel">45 Minute</option>
+                            <option value="audi">60 Minuts</option>
+                        </select>
                     </div>
                     <div className="form-wrap">
                         <p className="radioDiv">Are you Niranjana Swami Disciple</p>
@@ -71,6 +91,9 @@ export class BookingForm extends Component {
 
         )
     }
+
 }
+
+
 
 export default BookingForm;
