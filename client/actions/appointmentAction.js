@@ -8,7 +8,7 @@ export function createAppointment(body) {
                dispatch(createAction(response.data))
            })
            .catch((err) => {
-               console.log("error =====>>>>", err);
+            dispatch(createError(err))
            })
     }
 }
@@ -16,6 +16,13 @@ export function createAppointment(body) {
 export function createAction(data) {
     return {
         type: types.CREATE_APPOINTMENT,
+        payload: data
+    }
+}
+
+export function createError(data) {
+    return {
+        type: types.CREATE_APPOINTMENT_ERROR,
         payload: data
     }
 }

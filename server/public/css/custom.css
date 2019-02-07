@@ -167,3 +167,17 @@
         width: 39%;
         box-sizing: border-box;
     }
+  
+    .requestDiv {
+        height: 100px;
+        width: 100%;
+        text-align: center;
+        margin-top: 10%;
+        margin-bottom: 10%;
+    }
+
+    .requestText {
+        font-size: 20px;
+        font-weight: 400;
+        color: #ff830a;
+    }

@@ -1,8 +1,9 @@
 import * as types from '../../constants/index';
 
 const initialState = {
-    appointmentData : '',
+    appointmentData: '',
     loading: true,
+    isSubmitted: false,
     error: ''
 }
 
@@ -14,9 +15,20 @@ const appointmentReducer = (state = initialState, action) => {
             state = {
                 ...state,
                 loading: false,
-                appointmentData: data
+                appointmentData: data,
+                isSubmitted: true,
+                error: ''
             }
             break;
+        case types.CREATE_APPOINTMENT_ERROR:
+            const error = action.payload.response.data.detail.detail.errmsg;
+            state ={
+                ...state,
+                error: error ? error : 'Error Occured',
+                loading: false,
+                isSubmitted: false,
+                appointmentData: ''
+            }
     }
     return state
 }

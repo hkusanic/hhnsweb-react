@@ -3,8 +3,8 @@ import Login from './../../../containers/Login/Login';
 import {
     Link
 } from 'react-router-dom';
-import logo from '../../../assets/images/Prabhupada.png';
-import banner from '../../../assets/images/banner.png';
+import logo from '../../../assets/images/logo1.png';
+import banner from '../../../assets/images/banner1.png';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import { LanguageSwitch } from '../../atoms/LanguageSwitch/LanguageSwitch';
