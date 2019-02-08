@@ -23,17 +23,17 @@ export class LanguageSwitch extends Component {
     }
 
     render() {
-        let currentLanguage = 'eu';
+        let currentLanguage = 'en';
         if(reactCookie.load('languageCode')){
          currentLanguage = reactCookie.load('languageCode');
          }
         return (
         <span>
-        <a  className={currentLanguage === 'eu' ? 'color-toggle' : 'color-toggle-cursor'} onClick={
+        <a  className={currentLanguage === 'en' ? 'color-toggle' : 'color-toggle-cursor'} onClick={
             ()=> {
-            if(currentLanguage !== 'eu'){
-            this.languageToggle('eu');
-        }}} >eu </a> |
+            if(currentLanguage !== 'en'){
+            this.languageToggle('en');
+        }}} >en </a> |
         <a  className={currentLanguage === 'ru' ? 'color-toggle' : 'color-toggle-cursor'} onClick={()=> {
             if(currentLanguage !== 'ru'){
             this.languageToggle('ru')}}}> ru </a>

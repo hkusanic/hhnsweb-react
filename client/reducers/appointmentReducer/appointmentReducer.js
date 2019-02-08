@@ -4,7 +4,8 @@ const initialState = {
     appointmentData: '',
     loading: true,
     isSubmitted: false,
-    error: ''
+    error: '',
+    success: false,
 }
 
 const appointmentReducer = (state = initialState, action) => {
@@ -29,6 +30,15 @@ const appointmentReducer = (state = initialState, action) => {
                 isSubmitted: false,
                 appointmentData: ''
             }
+            break;
+        case types.GET_APPOINTMENT:
+            const appointment = action.payload;
+            state = {
+                ...state,
+                appointmentData: appointment,
+                success: true
+            }
+            break;
     }
     return state
 }

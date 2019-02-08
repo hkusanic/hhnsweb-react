@@ -5,7 +5,7 @@ import Progress from '../../Components/organisms/ProgressBar/ProgressBar';
 import BookingForm from '../../Components/organisms/Form/BookingForm';
 import Auth from '../../utils/Auth';
 import { connect } from "react-redux";
-import { createAppointment } from '../../actions/appointmentAction';
+import { createAppointment, getAppointment } from '../../actions/appointmentAction';
 
 export class Booking extends Component {
     constructor(props) {
@@ -18,6 +18,7 @@ export class Booking extends Component {
     componentDidMount() {
         const user = Auth.getUserDetails();
         const isLogin = Auth.getUserSeesion();
+        this.props.getAppointment('bhvbfhvbfhbh@bfhdf.df');
         if (user && isLogin) {
             this.setState({
                 user: JSON.parse(user),
@@ -94,8 +95,13 @@ const mapDispatchToProps = (dispatch) => {
     return {
         createAppointment: (body) => {
             dispatch(createAppointment(body));
-        }
+        },
+        getAppointment: (email) => {
+                    dispatch(getAppointment(email));
+                }
+            }
+        
     };
-};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Booking);

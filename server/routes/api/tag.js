@@ -1,12 +1,19 @@
+
 var keystone = require('keystone');
-var Appointment = keystone.list('Appointment');
+
+/**
+ * List Recipe
+ */
+
+// Getting our recipe model
+var Tag = keystone.list('Tag');
 
 
 
 
 exports.create = function(req, res) {
 	
-	var item = new Appointment.model(),
+	var item = new Tag.model(),
 		data = (req.method == 'POST') ? req.body : req.query;
 	
 	item.getUpdateHandler(req).process(data, function(err) {
@@ -14,7 +21,7 @@ exports.create = function(req, res) {
 		if (err) return res.apiError('error', err);
 		
 		res.apiResponse({
-			Appointment: item
+			tag: item
 		});
 		
 	});
@@ -22,7 +29,7 @@ exports.create = function(req, res) {
 
 
 exports.update = function(req, res) {
-	Appointment.model.findById(req.params.id).exec(function(err, item) {
+	Tag.model.findById(req.params.id).exec(function(err, item) {
 		
 		if (err) return res.apiError('database error', err);
 		if (!item) return res.apiError('not found');
@@ -34,7 +41,7 @@ exports.update = function(req, res) {
 			if (err) return res.apiError('create error', err);
 			
 			res.apiResponse({
-				Appointment: item
+				tag: item
 			});
 			
 		});
@@ -43,7 +50,7 @@ exports.update = function(req, res) {
 }
 
 exports.remove = function(req, res) {
-	Appointment.model.findById(req.params.id).exec(function (err, item) {
+	Tag.model.findById(req.params.id).exec(function (err, item) {
 		
 		if (err) return res.apiError('database error', err);
 		if (!item) return res.apiError('not found');
@@ -60,14 +67,13 @@ exports.remove = function(req, res) {
 }
 
 exports.get = function(req, res) {
-   
-	Appointment.model.findOne({email: req.params.id }).exec(function(err, item) {
+	Tag.model.findById(req.params.id).exec(function(err, item) {
 		
 		if (err) return res.apiError('database error', err);
 		if (!item) return res.apiError('not found');
 		
 		res.apiResponse({
-			Appointment: item
+			tag: item
 		});
 		
 	});

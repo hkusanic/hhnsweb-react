@@ -26,3 +26,24 @@ export function createError(data) {
         payload: data
     }
 }
+
+export function getAppointment (parameter) {
+    return (dispatch) => {
+        appointmentApi.getAppointment(parameter)
+        .then((response) => {
+            dispatch(getAppointmentAction(response.data))
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+}
+
+
+
+export function getAppointmentAction (data) {
+    return {
+        type: types.GET_APPOINTMENT,
+        payload: data
+    }
+}
