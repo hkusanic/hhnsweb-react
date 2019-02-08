@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { loginUser, logoutUser, checkLogin, signupUser } from '../../actions/loginActions';
 import Auth from '../../utils/Auth';
+import { Translate } from 'react-localize-redux';
 
 export class Login extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ export class Login extends Component {
     this.state = {
       visible: false,
       username: '',
+      userpassword: '',
       password: '',
       isLogin: false,
       userDetails: {},
@@ -42,12 +44,12 @@ export class Login extends Component {
     }
   }
 
-  handleEmail = (event) => {
+  handleUsername = (event) => {
     this.setState({ username: event.target.value })
   }
 
-  handlePassword = (event) => {
-    this.setState({ password: event.target.value })
+  handleUserpassword = (event) => {
+    this.setState({ userpassword: event.target.value })
   }
 
   handlefirstName = (event) => {
@@ -71,10 +73,10 @@ export class Login extends Component {
   }
 
   loginSubmit = () => {
-    if (this.state.username && this.state.password) {
+    if (this.state.username && this.state.userpassword) {
       const body = {
         "username": this.state.username,
-        "password": this.state.password
+        "password": this.state.userpassword
       }
       this.props.loginUser(body);
     }
@@ -106,31 +108,34 @@ export class Login extends Component {
             <ul className="list-inline-bordered">
 
               <li>
-                <button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">LOGIN</button>
+                <li className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">  
+                 <Translate>
+              {({ translate }) => translate('loginLabel')}
+            </Translate></li>
                 <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal" id="rd-navbar-login-5">
                   <h4>Sign In</h4>
                   <form id="loginForm" className="rd-form rd-form-small" autoComplete="false">
                     <div className="form-wrap">
                       <input
                         className="form-input"
-                        autoComplete="false"
+                        autoComplete="off"
                         id="login-email-5"
                         type="email"
                         name="email"
-                        onChange={this.handleEmail}
+                        placeholder="E-mail"
+                        onChange={this.handleUsername}
                         data-constraints="@Email @Required" />
-                      <label className="form-label" htmlFor="login-email-5">E-mail</label>
                     </div>
                     <div className="form-wrap">
                       <input
                         className="form-input"
-                        autoComplete="false"
+                        autoComplete="off"
                         id="login-password-5"
                         type="password"
                         name="password"
-                        onChange={this.handlePassword}
+                        placeholder="Password"
+                        onChange={this.handleUserpassword}
                         data-constraints="@Required" />
-                      <label className="form-label" htmlFor="login-password-5">Password</label>
                     </div>
                     <div className="form-wrap">
                       <button className="button button-primary-lighten button-winona" onClick={this.loginSubmit} type="submit">Sign in</button>
@@ -148,20 +153,20 @@ export class Login extends Component {
                         className="form-input"
                         id="register-firstName-5"
                         type="text"
-                        name="username"
+                        name="firstname"
+                        placeholder="FirstName"
                         data-constraints="@Required"
                         onChange={this.handlefirstName} />
-                      <label className="form-label" htmlFor="register-firstName-5">FirstName</label>
                     </div>
                     <div className="form-wrap">
                       <input
                         className="form-input"
                         id="register-lastName-5"
-                        type="email"
-                        name="email"
+                        type="text"
+                        name="lastname"
+                        placeholder="LastName"
                         data-constraints="@Required"
                         onChange={this.handlelastName} />
-                      <label className="form-label" htmlFor="register-lastName-5">LastName</label>
                     </div>
                     <div className="form-wrap">
                       <input
@@ -169,9 +174,9 @@ export class Login extends Component {
                         id="register-email-5"
                         type="email"
                         name="email"
+                        placeholder="E-mail"
                         data-constraints="@Email @Required"
                         onChange={this.handleEmail} />
-                      <label className="form-label" htmlFor="register-email-5">E-mail</label>
                     </div>
                     <div className="form-wrap">
                       <input
@@ -179,9 +184,9 @@ export class Login extends Component {
                         id="register-password-5"
                         type="password"
                         name="password"
+                        placeholder="Password"
                         data-constraints="@Required"
                         onChange={this.handlePassword} />
-                      <label className="form-label" htmlFor="register-password-5">Password</label>
                     </div>
                     <div className="form-wrap">
                       <input
@@ -189,9 +194,9 @@ export class Login extends Component {
                         id="register-password-confirm-5"
                         type="password"
                         name="password"
+                        placeholder="Confirm Password"
                         data-constraints="@Required"
                         onChange={this.handleConfirmPassword} />
-                      <label className="form-label" htmlFor="register-password-confirm-5">Confirm Password</label>
                     </div>
                     <div className="form-wrap">
                       <button className="button button-block button-primary-lighten button-winona" onClick={this.signUP}>Create an Account</button>

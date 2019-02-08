@@ -13,11 +13,12 @@ const initialState = {
 }
 
 const loginReducer = (state = initialState, action) => {
+    console.log("action ===>>>", action);
     switch (action.type) {
         case types.LOGIN:
             const user = action.payload;
             if (user.success) {
-                Auth.authenticateUser(user.session);
+                Auth.authenticateUser(user.session, user.loginUser);
                 state = {
                     ...state,
                     isLogin: true,
@@ -41,7 +42,7 @@ const loginReducer = (state = initialState, action) => {
          
         case types.SIGNUP:
              const signedUser = action.payload; 
-             Auth.authenticateUser(signedUser.session);
+             Auth.authenticateUser(signedUser.session, signedUser.loginUser);
              state = {
                 ...state,
                 isLogin: true,

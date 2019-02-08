@@ -13,6 +13,7 @@ var BlogGet = keystone.get('Blog');
 // More about keystone api here: https://gist.github.com/JedWatson/9741171
 exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
+	console.log('------>REQUEST------->',req.cookies.languageCode);
 	Blog.paginate({
 		page: req.query.page || 1,
 		perPage: 3,

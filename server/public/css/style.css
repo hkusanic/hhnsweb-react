@@ -244,7 +244,7 @@ h3,
 @media (min-width: 1200px) {
 	h3,
 	.heading-3 {
-		font-size: 36px;
+		font-size: 25px;
 		line-height: 1.33333;
 	}
 }
@@ -8187,7 +8187,8 @@ html [class*='section-'].section-bottom-0 {
 */
 .bg-gray-700 {
 	color: #aeb1be;
-	background-color: #122e44;
+	/* background-color: #122e44; */
+	background-color: #342c29;
 }
 
 .bg-gray-700 a {
@@ -17873,4 +17874,13 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 .margin-left-register-modal {
 	margin-left: -200px;
  
+ }
+
+ .color-toggle {
+	 
+	 color: #ff830a !important;
+ }
+
+ .color-toggle-cursor {
+	 cursor: pointer;
  }
