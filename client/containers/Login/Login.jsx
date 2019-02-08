@@ -153,7 +153,7 @@ export class Login extends Component {
                         className="form-input"
                         id="register-firstName-5"
                         type="text"
-                        name="username"
+                        name="firstname"
                         placeholder="FirstName"
                         data-constraints="@Required"
                         onChange={this.handlefirstName} />
@@ -162,8 +162,8 @@ export class Login extends Component {
                       <input
                         className="form-input"
                         id="register-lastName-5"
-                        type="email"
-                        name="email"
+                        type="text"
+                        name="lastname"
                         placeholder="LastName"
                         data-constraints="@Required"
                         onChange={this.handlelastName} />

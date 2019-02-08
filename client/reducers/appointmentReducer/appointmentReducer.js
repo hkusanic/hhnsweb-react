@@ -23,7 +23,7 @@ const appointmentReducer = (state = initialState, action) => {
             break;
         case types.CREATE_APPOINTMENT_ERROR:
             const error = action.payload.response.data.detail.detail.errmsg;
-            state ={
+            state = {
                 ...state,
                 error: error ? error : 'Error Occured',
                 loading: false,
@@ -39,6 +39,17 @@ const appointmentReducer = (state = initialState, action) => {
                 success: true
             }
             break;
+
+        case "RESET_STATE":
+            state = {
+                ...state,
+                appointmentData: '',
+                loading: true,
+                isSubmitted: false,
+                error: '',
+                success: false,
+            }
+
     }
     return state
 }

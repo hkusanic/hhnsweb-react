@@ -10,7 +10,7 @@ export class App extends Component {
     constructor(props) {
         super(props); 
         const languages = [
-        { name: "English", code: "eu" },
+        { name: "English", code: "en" },
         { name: "Russian", code: "ru" }
     ];
     const defaultLanguage =  cookie.load('languageCode') || languages[0].code;
