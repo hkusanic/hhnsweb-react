@@ -13,6 +13,7 @@ Blog.add({
 	author: { type: String },
 	body: { type: Types.Text },
 	slug: { type: String, index: true },
+	language: { type: String },
 });
 
 Blog.schema.pre('save', function (next) {
