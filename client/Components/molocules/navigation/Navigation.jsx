@@ -102,13 +102,13 @@ export class Navigation extends Component {
                                                     <li className="rd-dropdown-item"><Link to="/video"><a className="rd-dropdown-link" >Recent Video</a></Link></li>
                                                     <li className="rd-dropdown-item"><Link to="/lectures"><a className="rd-dropdown-link">
                                                     <Translate>
-                                                 {({ translate }) => translate('navBlog')}
+                                                 {({ translate }) => translate('navLectures')}
                                               </Translate></a></Link></li>
                                                     <li className="rd-dropdown-item"><a className="rd-dropdown-link" >Kirtan And Bhajan</a></li>
                                                 </ul>
                                             </li>
                                             <li className="rd-nav-item active"><Link to="/blog"><a className="rd-nav-link"> <Translate>
-                                                 {({ translate }) => translate('navLectures')}
+                                                 {({ translate }) => translate('navBlog')}
                                               </Translate></a></Link></li>
                                             <li className="rd-nav-item active"><Link to="/calender"><a className="rd-nav-link">Calender</a></Link></li>
                                             <li className="rd-nav-item"><Link to="/booking"><a className="rd-nav-link">Booking</a></Link></li>

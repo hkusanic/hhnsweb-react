@@ -5,34 +5,49 @@ import Progress from '../../Components/organisms/ProgressBar/ProgressBar';
 import BookingForm from '../../Components/organisms/Form/BookingForm';
 import Auth from '../../utils/Auth';
 import { connect } from "react-redux";
-import { createAppointment, getAppointment } from '../../actions/appointmentAction';
+import { createAppointment, getAppointment, resetState } from '../../actions/appointmentAction';
 
 export class Booking extends Component {
     constructor(props) {
         super(props);
         this.state = {
             user: '',
-            isLogin: false
+            isLogin: false,
+            DarshanApproved: ''
         }
+        this.props.resetState();
     }
     componentDidMount() {
         const user = Auth.getUserDetails();
         const isLogin = Auth.getUserSeesion();
-        this.props.getAppointment('bhvbfhvbfhbh@bfhdf.df');
         if (user && isLogin) {
             this.setState({
                 user: JSON.parse(user),
                 isLogin
+            }, () => {
+                this.props.getAppointment(this.state.user.email);
             })
         }
     }
     componentWillReceiveProps(nextProps) {
         if (this.props !== nextProps) {
             this.props = nextProps;
+            if (this.props.appointment.appointmentData.Appointment) {
+                this.handleDarshanApproved(this.props.appointment.appointmentData.Appointment);
+            }
+        }
+    }
+
+    handleDarshanApproved = (appointment) => {
+        if (appointment.approved) {
+            let approvedFor = appointment.approvedFor;
+            approvedFor = approvedFor.replace('-', '');
+            this.setState({
+                DarshanApproved: approvedFor
+            })
         }
     }
     render() {
-        const parameter = 'Darshan30'
         return (
             <div>
                 <div>
@@ -50,7 +65,7 @@ export class Booking extends Component {
                         </div>
                         : ''
                 }
-                 {
+                {
                     this.props.appointment.error ?
                         <div className="requestDiv">
                             <p className="requestText">Booking is already under Approval process</p>
@@ -58,7 +73,7 @@ export class Booking extends Component {
                         : ''
                 }
                 {
-                    this.state.user && this.state.isLogin && !this.props.appointment.isSubmitted && !this.props.appointment.error ?
+                    this.state.user && this.state.isLogin && !this.props.appointment.isSubmitted && !this.props.appointment.error && !this.state.DarshanApproved ?
                         <div>
                             <div className="progressBarDiv">
                                 <Progress percent={50} />
@@ -69,16 +84,20 @@ export class Booking extends Component {
                                     createAppointment={this.props.createAppointment} />
                             </div>
                         </div>
-                        : 
-                       ''
+                        :
+                        ''
                 }
-                {/* <iframe
-                    src={`https://nrs15.youcanbook.me/?service=${parameter}&skipHeaderFooter=true&noframe=true`}
-                    id="ycbmiframeniranjanaswami"
-                    className="bookingStyle"
-                    frameBorder="0"
-                    allowtransparency="true">
-                </iframe> */}
+                {
+                    this.state.DarshanApproved ?
+                        <iframe
+                            src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
+                            id="ycbmiframeniranjanaswami"
+                            className="bookingStyle"
+                            frameBorder="0"
+                            allowtransparency="true">
+                        </iframe>
+                        : ''
+                }
             </div>
         )
     }
@@ -97,11 +116,14 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(createAppointment(body));
         },
         getAppointment: (email) => {
-                    dispatch(getAppointment(email));
-                }
-            }
-        
-    };
+            dispatch(getAppointment(email));
+        },
+        resetState: () => {
+            dispatch(resetState());
+        }
+    }
+
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Booking);

@@ -66,10 +66,10 @@ exports.signup = function (req, res) {
 			date: new Date().getTime(),
 			admin: req.user.canAccessKeystone,
 			loginUser: {
-				id: user.id,
-				email: user.email,
-				firstName: user.name.first,
-				last: user.name.last
+				id: req.user.id,
+				email: req.user.email,
+				firstName: req.user.name.first,
+				last: req.user.name.last
 			}
 		});
 	}
@@ -128,8 +128,10 @@ exports.signup = function (req, res) {
 					date: new Date().getTime(),
 					admin: user.canAccessKeystone,
 					loginUser: {
-						userId: user.id,
-						userName: user.email
+						id: user.id,
+						email: user.email,
+						firstName: user.name.first,
+						last: user.name.last
 					}
 				});
 			};
