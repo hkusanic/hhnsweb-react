@@ -185,3 +185,12 @@
     .alignment{
         text-align: center;
     }
+
+    .centerAlign {
+        padding-left: 12%;
+
+    }
+
+    .padLeftBlog {
+        padding-left: 7%;
+    }

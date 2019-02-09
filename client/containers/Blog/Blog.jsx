@@ -39,7 +39,7 @@ export class Blogs extends Component {
         return (
             <div >
                 <section className="section section-lg">
-                    <div className="container">
+                    <div className="container centerAlign">
                         <div className="row row-50 row-xxl-70">
                             {this.state.blogs.map((item, key) => {
                                 return <SingleBlog blog={item} key={key} />
