@@ -75,7 +75,7 @@
 }
 
 .menulogoImg {
-    margin: -35%;
+    margin: -45%;
     margin-left: 0%;
 }
 
@@ -180,4 +180,8 @@
         font-size: 20px;
         font-weight: 400;
         color: #ff830a;
+    }
+
+    .alignment{
+        text-align: center;
     }

@@ -15,8 +15,9 @@ export class BookingForm extends Component {
             "email": this.props.user.email,
             "mobileNumber": this.state.mobileNumber,
             "disciple": this.state.disciple,
-            "requestFor": this.state.requestFor
+            "requestedFor": this.state.requestFor
         }
+        console.log("body ====>>>>", body);
         this.props.createAppointment(body);
     }
 
@@ -26,8 +27,11 @@ export class BookingForm extends Component {
         })
     }
     handleChangeDarshan = (event) => {
+        console.log("requestFor ===>>", event.target.value);
         this.setState({
             requestFor: event.target.value
+        }, () => {
+            console.log("requestFor======>>>>", this.state.requestFor);
         })
     }
     handleDiscipleChange = (event) => {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import script from "../../../assets/script";
 import image1 from './../../../assets/images/_DSC1480.png';
-import image2 from './../../../assets/images/1.jpg';
-import image3 from './../../../assets/images/IMG_1709.jpg';
-import image4 from './../../../assets/images/IMG_2570.jpg';
+import image2 from './../../../assets/images/1(1).png';
+import image3 from './../../../assets/images/2.png';
+import image4 from './../../../assets/images/3(1).png';
 import image5 from './../../../assets/images/IMG_2735.jpg';
 import SingleCarousel from '../../atoms/SingleCarousel/singleCarousel';
 
@@ -42,7 +42,7 @@ export class Carousel extends Component {
                         heading=""
                         text="" />
                 </div>
-                <div className="swiper-pagination-outer container">
+                <div className="swiper-pagination-outer container alignment">
                     <div className="swiper-pagination swiper-pagination-modern swiper-pagination-marked" data-index-bullet="true"></div>
                 </div>
             </section>
