@@ -16,7 +16,7 @@ exports.list = function (req, res) {
 	Blog.paginate({
 		page: req.query.page || 1,
 		perPage: 3,
-	}).exec(function (err, items) {
+	}).find({ language: req.cookies.languageCode }).exec(function (err, items) {
 		if (err) return res.apiError('database error', err);
 		res.apiResponse({
 			// Filter page by

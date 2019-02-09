@@ -10,6 +10,9 @@ import Booking from '../../containers/Booking/Booking';
 import BlogDetails from '../../Components/molocules/SingleBlog/BlogDetails';
 import LectureDetails from '../../Components/molocules/SingleLecture/LectureDetails';
 import AudioList from './../../Components/molocules/Audio/AudioList';
+import VideoList from '../../Components/molocules/Video/VideoList';
+import AudioDetails from '../../Components/molocules/Audio/AudioDetails';
+import VideoDetails from '../../Components/molocules/Video/VideoDetails';
 
 import {
     Route,
@@ -20,6 +23,11 @@ import {
 export class Home extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isLogin: false,
+            isAdmin: false,
+            userId: ''
+        }
     }
 
     componentDidMount() {
@@ -30,7 +38,7 @@ export class Home extends Component {
             <div>
                 <div className="page">
                     <Navigation />
-                    <div style={{ height: '600px', width: '100%', overflow: 'scroll' }}>
+                    {/* <div style={{ height: '600px', width: '100%', overflow: 'scroll' }}> */}
                         <Switch>
                             <Route exact path='/' component={Carousel} />
                             <Route path='/blog' component={Blog} />
@@ -40,8 +48,11 @@ export class Home extends Component {
                             <Route path='/blogDetails' component={BlogDetails} />
                             <Route path='/lectureDetails' component={LectureDetails} />
                             <Route path='/audio' component={AudioList} />
+                            <Route path='/audioDetails' component={AudioDetails} />
+                            <Route path='/video' component={VideoList} />
+                            <Route path='/videoDetails' component={VideoDetails} />
                         </Switch>
-                    </div>
+                    {/* </div> */}
                     <Footer />
 
                 </div>

@@ -194,6 +194,16 @@ h2,
 	letter-spacing: 0;
 }
 
+h4,
+.heading-2 {
+	font-family: "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-weight: 300;
+	font-size: 28px;
+	line-height: 1.4;
+	letter-spacing: 0;
+}
+
+
 @media (min-width: 576px) {
 	h2,
 	.heading-2 {
@@ -234,7 +244,7 @@ h3,
 @media (min-width: 1200px) {
 	h3,
 	.heading-3 {
-		font-size: 36px;
+		font-size: 25px;
 		line-height: 1.33333;
 	}
 }
@@ -247,16 +257,19 @@ h3 .big,
 
 h4,
 .heading-4 {
+	font-family: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	font-size: 18px;
 	line-height: 1.5;
 	letter-spacing: 0;
 }
 
+
+
 @media (min-width: 1200px) {
 	h4,
 	.heading-4 {
-		font-size: 24px;
-		line-height: 1.33333;
+		font-size: 16px;
+		line-height: 1.5;
 	}
 }
 
@@ -1632,7 +1645,7 @@ html .list-inline-md > * {
 .list-inline-bordered {
 	margin-left: -18px;
 	margin-right: -18px;
-	color: #122e44;
+	color: #ff830a;
 }
 
 .list-inline-bordered > * {
@@ -1863,6 +1876,7 @@ img {
 
 .table tr td {
 	border-bottom: 1px solid #e8e9ee;
+	white-space: normal;
 }
 
 .table tfoot td {
@@ -1893,7 +1907,7 @@ img {
 }
 
 .table-job-positions td:first-child {
-	width: 8%;
+	/* width: 8%; */
 	padding-right: 6px;
 	text-align: center;
 }
@@ -8173,7 +8187,8 @@ html [class*='section-'].section-bottom-0 {
 */
 .bg-gray-700 {
 	color: #aeb1be;
-	background-color: #122e44;
+	/* background-color: #122e44; */
+	background-color: #342c29;
 }
 
 .bg-gray-700 a {
@@ -17850,3 +17865,22 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 		margin-right: auto;
 	}
 }
+
+.margin-left-login-modal {
+   margin-left: -132px;
+
+}
+
+.margin-left-register-modal {
+	margin-left: -200px;
+ 
+ }
+
+ .color-toggle {
+	 
+	 color: #ff830a !important;
+ }
+
+ .color-toggle-cursor {
+	 cursor: pointer;
+ }

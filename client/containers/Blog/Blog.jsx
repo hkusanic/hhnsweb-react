@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import SingleBlog from '../../Components/molocules/SingleBlog/SIngleBlog';
-import axios from 'axios';
 import Pagination from 'react-js-pagination';
-
+import { connect } from 'react-redux';
+import { getBlogs } from '../../actions/blogActions';
 export class Blogs extends Component {
     constructor(props) {
         super(props);
@@ -15,46 +15,38 @@ export class Blogs extends Component {
     }
 
     componentDidMount() {
-        const API_URL = 'http://localhost:3000/api/blog/';
-        const request = axios.get(API_URL);
-        request.then((response) => {
-            this.setState({
-                blogs: response.data.blog.results,
-                totalItem: response.data.blog.total,
-                currentPage: response.data.blog.currentPage
-            })
+        this.setState({
+            totalItem: this.props.blogsDetails.totalBlogs,
+            blogs: this.props.blogsDetails.blogs,
+            currentPage: this.props.blogsDetails.currentPage
         })
-            .catch((err) => {
-                console.log("error", err);
-            })
+        this.props.getBlogs(1);
+    }
+
+    componentWillReceiveProps(nextprops) {
+        this.setState({
+            totalItem: nextprops.blogsDetails.totalBlogs,
+            blogs: nextprops.blogsDetails.blogs,
+            currentPage: nextprops.blogsDetails.currentPage
+        })
     }
 
     handlePageChange = (pageNumber) => {
-        const API_URL = `http://localhost:3000/api/blog?page=${pageNumber}`;
-        const request = axios.get(API_URL);
-        request.then((response) => {
-            this.setState({
-                blogs: response.data.blog.results,
-                totalItem: response.data.blog.total,
-                currentPage: response.data.blog.currentPage
-            })
-        })
-            .catch((err) => {
-                console.log("error", err);
-            })
+        this.props.getBlogs(pageNumber);
     }
+
     render() {
         return (
             <div >
                 <section className="section section-lg">
-                    <div className="container">
+                    <div className="container centerAlign">
                         <div className="row row-50 row-xxl-70">
                             {this.state.blogs.map((item, key) => {
                                 return <SingleBlog blog={item} key={key} />
                             })}
                         </div>
                         <Pagination
-                            style={{ fontSize: '30px', lineHeight: '2em' }}
+                            className="paginationStyle"
                             innerClass='pagination'
                             activeClass='page-item active'
                             itemClass='page-item'
@@ -72,4 +64,18 @@ export class Blogs extends Component {
     }
 }
 
-export default Blogs;
+const mapStateToProps = (state) => {
+    return {
+        blogsDetails: state.blogReducer,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getBlogs: (page) => {
+            dispatch(getBlogs(page));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Blogs);

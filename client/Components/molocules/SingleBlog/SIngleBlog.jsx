@@ -28,13 +28,12 @@ export class SingleBlog extends Component {
                 <div className="wow scaleFadeIn" data-wow-delay=".1s">
                     <article className="post-modern">
                         <a className="post-modern-media">
-                            {/* <img src="images/grid-blog-4-571x353.jpg" alt="" width="100" height="100" /> */}
                         </a>
                         <h4 className="post-modern-title"><Link to={{ pathname: '/blogDetails', state:this.props.blog }}><a href="single-blog-post.html">{renderHTML(this.props.blog.title)}</a></Link></h4>
                         <ul className="post-modern-meta">
                             <li>by {this.props.blog.author}</li>
                             <li>
-                                <time datetime="2018">{this.props.blog.date}</time>
+                                <time datetime="2018">{new Date(this.props.blog.date).toDateString()}</time>
                             </li>
                         </ul>
                         <p>{renderHTML(this.showing100Characters(this.props.blog.body))}</p>

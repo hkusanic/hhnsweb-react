@@ -13,6 +13,7 @@ Blog.add({
 	author: { type: String },
 	body: { type: Types.Html, wysiwyg: true, height: 600 },
 	slug: { type: String, index: true },
+	language: { type: String },
 });
 
 Blog.schema.pre('save', function (next) {

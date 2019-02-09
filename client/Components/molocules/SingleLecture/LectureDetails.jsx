@@ -23,38 +23,38 @@ export class LectureDetails extends Component {
                                     <ul class="post-creative-meta">
                                         <li><span class="icon mdi mdi-calendar-clock"></span>
                                             <time datetime="2018">
-                                                {this.props.location.state.date}
+                                                {new Date(this.props.location.state.date).toDateString()}
                                             </time>
                                         </li>
                                         <li><span class="icon mdi mdi-tag-multiple"></span><a>Lecture</a></li>
                                     </ul>
                                 </article>
                                 <div>
-                                    <table>
+                                    <table className="maintable">
                                         <tbody>
-                                            <tr style={{ paddingTop: '1em', paddingBottom: '1em' }}>
-                                                <td><b>Event :</b></td><td>{this.props.location.state.event}</td>
+                                            <tr>
+                                                <td><b><span>Event</span> :</b></td><td className="padLeftRow">{this.props.location.state.event}</td>
                                             </tr>
-                                            <tr style={{ paddingTop: '1em', paddingBottom: '1em' }}>
-                                                <td><b>Durations :</b></td><td>{this.props.location.state.duration}</td>
+                                            <tr>
+                                                <td><b><span>Durations</span> :</b></td><td className="padLeftRow">{this.props.location.state.duration}</td>
                                             </tr>
-                                            <tr style={{ paddingTop: '1em', paddingBottom: '1em' }}>
-                                                <td><b>Location :</b></td><td>{this.props.location.state.location}</td>
+                                            <tr>
+                                                <td><b><span>Location</span> :</b></td ><td className="padLeftRow">{this.props.location.state.location}</td>
                                             </tr>
-                                            <tr style={{ paddingTop: '1em', paddingBottom: '1em' }}>
-                                                <td><b>Download :</b></td><td>{this.props.location.state.downloads}</td>
+                                            <tr>
+                                                <td><b><span>Download</span> :</b></td><td className="padLeftRow">{this.props.location.state.downloads}</td>
                                             </tr>
-                                            <tr style={{ paddingTop: '1em', paddingBottom: '1em' }}>
-                                                <td><b>Topic :</b></td><td>{this.props.location.state.topic}</td>
+                                            <tr>
+                                                <td><b><span>Topic</span> :</b></td><td className="padLeftRow">{this.props.location.state.topic}</td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div style={{paddingTop: '1em'}}>
+                                    <div className="padTop">
                                         {
                                             this.props.location.state.youtube.map((item, key) => {
                                                 return <tr>
                                                     <td>
-                                                        <iframe width="420" height="315"
+                                                        <iframe className="iframeStyle"
                                                             src={item}>
                                                         </iframe>
                                                     </td>

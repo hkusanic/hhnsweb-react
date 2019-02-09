@@ -1,45 +1,52 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import renderHTML from 'react-render-html';
 import Pagination from 'react-js-pagination';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getLectures } from '../../../actions/lectureActions';
 
 export class AudioList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lectures: [],
             totalItem: null,
-            currentPage: null
+            currentPage: null,
+            page: null,
+            lectures: []
         }
     }
+
     componentDidMount() {
-        const API_URL = 'http://localhost:3000/api/lecture/';
-        const request = axios.get(API_URL);
-        request.then((response) => {
-            this.setState({
-                lectures: response.data.lecture.results,
-                totalItem: response.data.lecture.total,
-                currentPage: response.data.lecture.currentPage
-            })
+        this.setState({
+            lectures: this.props.lecturesDetails.lectures,
+            currentPage: this.props.lecturesDetails.currentPage,
+            totalItem: this.props.lecturesDetails.totalLectures
         })
-            .catch((err) => {
-                console.log("error occured", err);
-            })
+        this.props.getLectures(1);
     }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            lectures: nextProps.lecturesDetails.lectures,
+            currentPage: nextProps.lecturesDetails.currentPage,
+            totalItem: nextProps.lecturesDetails.totalLectures
+        })
+    }
+
     handlePageChange = (pageNumber) => {
-        const API_URL = `http://localhost:3000/api/lecture?page=${pageNumber}`;
-        const request = axios.get(API_URL);
-        request.then((response) => {
-            this.setState({
-                lectures: response.data.lecture.results,
-                totalItem: response.data.lecture.total,
-                currentPage: response.data.lecture.currentPage
-            })
-        })
-            .catch((err) => {
-                console.log("error", err);
-            })
+        this.props.getLectures(pageNumber);
     }
+
+    showing100Characters = (sentence) => {
+        var result = sentence;
+        var resultArray = result.split(' ');
+        if (resultArray.length > 10) {
+            resultArray = resultArray.slice(0, 10);
+            result = resultArray.join(' ') + '...';
+        }
+        return result;
+    }
+
     render() {
         return (
             <div>
@@ -49,17 +56,15 @@ export class AudioList extends Component {
                             <table className="table table-hover table-job-positions">
                                 <thead>
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Topic</th>
-                                        <th style={{ paddingLeft: '10%' }}>Audio</th>
+                                        <th className="align">Title</th>
+                                        <th className="padLeft">Player</th>
                                         <th>Downloads</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.state.lectures.map((item, key) => {
                                         return <tr key={key}>
-                                            <td>{new Date(item.date).toDateString()}</td>
-                                            <td>{item.topic}</td>
+                                            <td className="titleColor"> <Link to={{ pathname: '/audioDetails', state: item }}>{renderHTML(item.title.en)}</Link></td>
                                             <td>
                                                 <audio controls>
                                                     <source src={renderHTML(item.audio)} type="audio/mpeg" />
@@ -72,9 +77,9 @@ export class AudioList extends Component {
                             </table>
                         </div>
                     </div>
-                    <div style={{paddingLeft:'10%'}}>
+                    <div className="padLeft">
                         <Pagination
-                            style={{ fontSize: '30px', lineHeight: '2em' }}
+                            className="paginationStyle"
                             innerClass='pagination'
                             activeClass='page-item active'
                             itemClass='page-item'
@@ -92,4 +97,19 @@ export class AudioList extends Component {
     }
 }
 
-export default AudioList
+const mapStateToProps = (state) => {
+    return {
+        lecturesDetails: state.lectureReducer
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getLectures: (page) => {
+            dispatch(getLectures(page));
+        }
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(AudioList);

@@ -7,7 +7,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 // Getting our combined reducers
 import reducers from './reducers/reducers';
-import {  BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom';
+import { LocalizeProvider } from "react-localize-redux";
 import App from './App';
 
 
@@ -18,9 +19,11 @@ const target = document.getElementById("react-container");
   
 ReactDOM.render(
   <Provider store={store}> 
+  <LocalizeProvider>
     <Router>
       <App />
     </Router>
+    </LocalizeProvider>
   </Provider>
   , target
 )

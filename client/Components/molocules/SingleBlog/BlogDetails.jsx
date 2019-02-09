@@ -13,17 +13,17 @@ export class BlogDetails extends Component {
         return (
             <div>
                 <section class="section section-lg">
-                    <div class="container">
+                    <div class="container padLeftBlog">
                         <div class="row row-50">
-                            <div class="col-lg-8">
+                            <div class="col-lg-12">
                                 <article class="post-creative">
-                                    <h3 class="post-creative-title">
+                                    <h3 class="post-creative-title alignment padLeft">
                                         {renderHTML(this.props.location.state.title)}
                                     </h3>
                                     <ul class="post-creative-meta">
                                         <li><span class="icon mdi mdi-calendar-clock"></span>
-                                            <time datetime="2018">
-                                                {this.props.location.state.date}
+                                            <time dateTime="2018">
+                                                {new Date(this.props.location.state.date).toDateString()}
                                             </time>
                                         </li>
                                         <li><span class="icon mdi mdi-tag-multiple"></span><a>Blog</a></li>
