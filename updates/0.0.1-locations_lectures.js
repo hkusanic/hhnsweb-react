@@ -53,6 +53,7 @@ exports.create = {
 		{ title: 'Donetsk', __ref: 'Donetsk' },
 		{ title: 'Evpatoriya', __ref: 'Evpatoriya' },
 		{ title: 'Pune', __ref: 'Pune' },
+		{ title: 'Bhakti Sangama Festival', __ref: 'Bhakti Sangama Festival' },
 	],
 	Lecture: [  
 		{  

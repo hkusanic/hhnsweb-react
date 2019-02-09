@@ -69,7 +69,6 @@ export default Footer;
 
 
 
-
 {/* <footer classNameName="section footer-advanced bg-gray-700">
                     <div classNameName="footer-advanced-aside">
                         <div classNameName="container">
