@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import * as DATA from '../../constants/credentials';
 export class Calender extends Component {
     constructor(props){
         super(props);
@@ -9,10 +9,11 @@ export class Calender extends Component {
     }
 
     render() {
+        let srcGoogle = 'https://calendar.google.com/calendar/embed?src=' + DATA.GOOGLE_CREDENTIALS.USER + '%40' + DATA.GOOGLE_CREDENTIALS.EMAIL_DOMAIN + '&ctz=Asia%2FKolkata';
         return (
             <div>
                 <div className="align">
-                    <iframe src="https://calendar.google.com/calendar/embed?title=Calender&amp;height=600&amp;wkst=1&amp;hl=en&amp;bgcolor=%23ff9900&amp;src=cronj.com_eas7lttbn6qff3sd509bk7le6o%40group.calendar.google.com&amp;color=%23333333&amp;ctz=Asia%2FKolkata" 
+                    <iframe src={srcGoogle}
                     style={{frameBorder:"0", Scrolling:"no"}}
                     className="calenderStyle">
                     </iframe>
