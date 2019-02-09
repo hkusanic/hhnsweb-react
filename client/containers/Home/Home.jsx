@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import script from "../../assets/script.js"
 import Navigation from '../../Components/molocules/navigation/Navigation';
 import Carousel from '../../Components/molocules/carousels/Carousel';
@@ -32,12 +33,36 @@ export class Home extends Component {
 
     componentDidMount() {
         script();
+        // console.log("this.props====>>>>", this.props);
+        // this.setState({
+        //     isLogin: this.props.login.isLogin,
+        //     isAdmin: this.props.login.isAdmin,
+        //     userId: this.props.login.loginUser.userId
+        // }, ()=> {
+        //     console.log("home state ====>>>>", this.state);
+        // });
+
     }
+
+    // componentWillReceiveProps(nextProps) {
+    //     if(nextProps.login !== this.props.login){
+    //         this.setState({
+    //             isLogin: nextProps.login.isLogin,
+    //             isAdmin: nextProps.login.isAdmin,
+    //             userId: nextProps.login.loginUser.userId
+    //         },()=>{
+    //             console.log("home state ====>>>>", this.state);
+    //         });
+    //     }
+    // }
     render() {
         return (
             <div>
                 <div className="page">
-                    <Navigation />
+                    <Navigation 
+                    //  isLogin={this.state.isLogin}
+                    //  isAdmin={this.state.isAdmin}
+                     />
                     {/* <div style={{ height: '600px', width: '100%', overflow: 'scroll' }}> */}
                         <Switch>
                             <Route exact path='/' component={Carousel} />
@@ -71,5 +96,13 @@ export class Home extends Component {
         )
     }
 }
+
+// const mapStateToProps = (state) => {
+//     return {
+//         login: state.loginReducer,
+//     };
+// };
+
+// export default connect(mapStateToProps)(Home);
 
 export default Home;

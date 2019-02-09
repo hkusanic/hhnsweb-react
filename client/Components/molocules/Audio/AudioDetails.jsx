@@ -5,7 +5,10 @@ export class AudioDetails extends Component {
     constructor(props) {
         super(props);
     }
-    
+    componentDidMount() {
+        console.log("props=====>>", this.props);
+    }
+
     render() {
         if (!this.props.location.state) {
             return <div>Error Occured..........</div>
