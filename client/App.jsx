@@ -4,7 +4,7 @@ import { hot } from 'react-hot-loader';
 import { renderToStaticMarkup } from "react-dom/server";
 import { withLocalize, setActiveLanguage } from "react-localize-redux";
 import globalTranslations from "./translations/global.json";
-import cookie from 'react-cookies';
+import reactCookie from 'react-cookies';
 
 export class App extends Component {
     constructor(props) {
@@ -13,7 +13,11 @@ export class App extends Component {
         { name: "English", code: "en" },
         { name: "Russian", code: "ru" }
     ];
-    const defaultLanguage =  cookie.load('languageCode') || languages[0].code;
+    const defaultLanguage =  reactCookie.load('languageCode') || languages[0].code;
+
+    if(!reactCookie.load('languageCode')){
+        reactCookie.save("languageCode", 'en', { path: '/' });
+    }
 
     this.props.initialize({
       languages,

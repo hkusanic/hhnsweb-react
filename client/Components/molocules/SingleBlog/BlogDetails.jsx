@@ -13,11 +13,11 @@ export class BlogDetails extends Component {
         return (
             <div>
                 <section class="section section-lg">
-                    <div class="container">
+                    <div class="container padLeftBlog">
                         <div class="row row-50">
-                            <div class="col-lg-8">
+                            <div class="col-lg-12">
                                 <article class="post-creative">
-                                    <h3 class="post-creative-title">
+                                    <h3 class="post-creative-title alignment padLeft">
                                         {renderHTML(this.props.location.state.title)}
                                     </h3>
                                     <ul class="post-creative-meta">
