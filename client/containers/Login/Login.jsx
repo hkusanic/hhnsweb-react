@@ -44,32 +44,12 @@ export class Login extends Component {
     }
   }
 
-  handleUsername = (event) => {
-    this.setState({ username: event.target.value })
-  }
-
-  handleUserpassword = (event) => {
-    this.setState({ userpassword: event.target.value })
-  }
-
-  handlefirstName = (event) => {
-    this.setState({ firstName: event.target.value })
-  }
-
-  handlelastName = (event) => {
-    this.setState({ lastName: event.target.value })
-  }
-
-  handleEmail = (event) => {
-    this.setState({ email_signup: event.target.value })
-  }
-
-  handlePassword = (event) => {
-    this.setState({ password_signup: event.target.value })
-  }
-
-  handleConfirmPassword = (event) => {
-    this.setState({ confirmPassword: event.target.value })
+  handleChange = (type, event) => {
+    const value = event.target.value;
+    this.setState({
+      ...this.state,
+      [type] : value
+    })
   }
 
   loginSubmit = () => {
@@ -123,7 +103,7 @@ export class Login extends Component {
                         type="email"
                         name="email"
                         placeholder="E-mail"
-                        onChange={this.handleUsername}
+                        onChange={() => { this.handleChange('username', event)} }
                         data-constraints="@Email @Required" />
                     </div>
                     <div className="form-wrap">
@@ -134,7 +114,7 @@ export class Login extends Component {
                         type="password"
                         name="password"
                         placeholder="Password"
-                        onChange={this.handleUserpassword}
+                        onChange={() => { this.handleChange('userpassword', event)}}
                         data-constraints="@Required" />
                     </div>
                     <div className="form-wrap">
@@ -156,7 +136,8 @@ export class Login extends Component {
                         name="firstname"
                         placeholder="FirstName"
                         data-constraints="@Required"
-                        onChange={this.handlefirstName} />
+                        onChange={() => {this.handleChange('firstName', event)}}
+                        />
                     </div>
                     <div className="form-wrap">
                       <input
@@ -166,7 +147,7 @@ export class Login extends Component {
                         name="lastname"
                         placeholder="LastName"
                         data-constraints="@Required"
-                        onChange={this.handlelastName} />
+                        onChange={() => {this.handleChange('lastName', event)}} />
                     </div>
                     <div className="form-wrap">
                       <input
@@ -176,7 +157,7 @@ export class Login extends Component {
                         name="email"
                         placeholder="E-mail"
                         data-constraints="@Email @Required"
-                        onChange={this.handleEmail} />
+                        onChange={() => {this.handleChange('email_signup', event)}} />
                     </div>
                     <div className="form-wrap">
                       <input
@@ -186,7 +167,7 @@ export class Login extends Component {
                         name="password"
                         placeholder="Password"
                         data-constraints="@Required"
-                        onChange={this.handlePassword} />
+                        onChange={() => {this.handleChange('password_signup', event)}} />
                     </div>
                     <div className="form-wrap">
                       <input
@@ -196,7 +177,7 @@ export class Login extends Component {
                         name="password"
                         placeholder="Confirm Password"
                         data-constraints="@Required"
-                        onChange={this.handleConfirmPassword} />
+                        onChange={() => {this.handleChange('confirmPassword', event)}} />
                     </div>
                     <div className="form-wrap">
                       <button className="button button-block button-primary-lighten button-winona" onClick={this.signUP}>Create an Account</button>
