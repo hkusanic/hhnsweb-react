@@ -9,7 +9,7 @@ let Blog = new keystone.List('Blog', {
 
 Blog.add({
 	title: { type: String },
-	date: { type: Types.Date, default: Date.now },
+	date: { type: String },
 	author: { type: String },
 	body: { type: Types.Html, wysiwyg: true, height: 600 },
 	slug: { type: String, index: true },

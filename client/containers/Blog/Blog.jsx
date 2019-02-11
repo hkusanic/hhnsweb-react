@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SingleBlog from '../../Components/molocules/SingleBlog/SIngleBlog';
 import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
-import { getBlogs } from '../../actions/blogActions';
+import { getBlogs,getBlog } from '../../actions/blogActions';
 export class Blogs extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +12,9 @@ export class Blogs extends Component {
             page: null,
             blogs: []
         }
+
+        this.props.getBlog({"date":"Wed, Nov 22, 2017",
+        "language": "en"});
     }
 
     componentDidMount() {
@@ -74,6 +77,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getBlogs: (page) => {
             dispatch(getBlogs(page));
+        },
+        getBlog: (body) => {
+            dispatch(getBlog(body));
         }
     };
 };

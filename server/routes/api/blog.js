@@ -30,8 +30,8 @@ exports.list = function (req, res) {
 
 
 exports.get = function (req, res) {
-	console.log('---->', req.params.id);
-	BlogGet.model.findOne().where('id', req.params.id).exec(function (err, item) {
+	
+	Blog.model.findOne().where({ date: req.body.date, language: req.body.language }).exec(function (err, item) {
 		if (err) return res.apiError('database error', err);
 		if (!item) return res.apiError('not found');
 		res.apiResponse({
