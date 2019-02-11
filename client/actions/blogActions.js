@@ -19,3 +19,22 @@ export function getBlogAction(data) {
         payload: data
     }
 }
+
+export function getBlog(body) {
+    return (dispatch) => {
+        blogApi.getBlog(body)
+            .then((response) => {
+                dispatch(getAction(response.data))
+            })
+            .catch((err) => {
+                console.log("error ====>>>", err);
+            })
+    }
+}
+
+export function getAction(data) {
+    return {
+        type: types.GET_BLOG,
+        payload: data
+    }
+}

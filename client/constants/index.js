@@ -8,7 +8,7 @@ export const SIGNUP = 'SIGNUP'
 
 //Blog Constants
 export const GET_BLOGS = 'GET_BLOGS';
-
+export const GET_BLOG = 'GET_BLOG';
 
 //Lecture Constants
 export const GET_LECTURES = 'GET_LECTURES';
