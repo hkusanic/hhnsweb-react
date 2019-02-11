@@ -15,8 +15,8 @@ exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	Blog.paginate({
 		page: req.query.page || 1,
-		perPage: 3,
-	}).find({ language: req.cookies.languageCode }).exec(function (err, items) {
+		perPage: 5,
+	}).exec(function (err, items) {
 		if (err) return res.apiError('database error', err);
 		res.apiResponse({
 			// Filter page by
@@ -31,7 +31,7 @@ exports.list = function (req, res) {
 
 exports.get = function (req, res) {
 	
-	Blog.model.findOne().where({ date: req.body.date, language: req.body.language }).exec(function (err, item) {
+	Blog.model.findOne().where({ uuid: req.body.uuid }).exec(function (err, item) {
 		if (err) return res.apiError('database error', err);
 		if (!item) return res.apiError('not found');
 		res.apiResponse({

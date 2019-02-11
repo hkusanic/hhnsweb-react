@@ -13,8 +13,7 @@ export class Blogs extends Component {
             blogs: []
         }
 
-        this.props.getBlog({"date":"Wed, Nov 22, 2017",
-        "language": "en"});
+        this.props.getBlog({"uuid": "02d47a4e-2dfc-11e9-b210-d663bd873d93"});
     }
 
     componentDidMount() {
