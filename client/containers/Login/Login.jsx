@@ -218,6 +218,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     signup: (body) => {
       dispatch(signupUser(body))
+    },
+    forgotPassword: (email) => {
+      dispatch(forgotPassword(email))
     }
   };
 };

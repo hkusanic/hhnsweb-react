@@ -18,7 +18,7 @@ const utils = {
 	},
 
 	forgotPassword: (email) => {
-		let url = serverAddress + '/apiu/forgotpassword/';
+		let url = serverAddress + '/api/forgotpassword/';
 		return axios.post(url, email);
 	}
 }

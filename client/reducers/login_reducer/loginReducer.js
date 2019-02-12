@@ -56,7 +56,7 @@ const loginReducer = (state = initialState, action) => {
             const response = action.payload;
             state ={
                 ...state,
-                error = ''
+                error: ''
             }    
 
     }
