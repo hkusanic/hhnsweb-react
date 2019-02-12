@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import { loginUser, logoutUser, checkLogin, signupUser } from '../../actions/loginActions';
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
-
+import {
+  Link
+} from 'react-router-dom'
 export class Login extends Component {
   constructor(props) {
     super(props);
@@ -119,6 +121,7 @@ export class Login extends Component {
                     </div>
                     <div className="form-wrap">
                       <button className="button button-primary-lighten button-winona" onClick={this.loginSubmit} type="submit">Sign in</button>
+                      <p><Link to='/forgotPassword'>Forgot Password</Link></p>
                     </div>
                   </form>
                 </div>
