@@ -52,6 +52,13 @@ const loginReducer = (state = initialState, action) => {
                 session: signedUser.session
             }
 
+        case types.FORGOT_PASSWORD:
+            const response = action.payload;
+            state ={
+                ...state,
+                error = ''
+            }    
+
     }
     return state
 }

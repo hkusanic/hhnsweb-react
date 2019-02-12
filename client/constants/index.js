@@ -4,7 +4,7 @@ export const LOGOUT = 'LOGOUT';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const REQ_RESET_PASSWORD = 'REQ_RESET_PASSWORD';
 export const SIGNUP = 'SIGNUP'
-
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 
 //Blog Constants
 export const GET_BLOGS = 'GET_BLOGS';

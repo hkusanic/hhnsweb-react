@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { loginUser, logoutUser, checkLogin, signupUser } from '../../actions/loginActions';
+import { loginUser, logoutUser, checkLogin, signupUser, forgotPassword} from '../../actions/loginActions';
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import {
