@@ -1,5 +1,6 @@
 var keystone = require('keystone');
 const async = require('async');
+var Email = require('keystone-email');
 
 exports.signin = function (req, res) {
 
@@ -146,6 +147,40 @@ exports.signup = function (req, res) {
 
 
 };
+
+
+exports.forgotpassword = function (req, res) {
+	if (!req.body.email) {
+		res.json({ error: { title: 'Email is Reqired', detail: 'Mandatory values are missing. Please check.' } });	
+	}
+
+	keystone.list('User').model.findOne().where('email', req.body.email).exec((err, userFound) => {
+		if (err) return res.json({ error: { title: 'Not able to reset password' } });
+		userFound.password = keystone.utils.randomString();
+		let userPassword = userFound.password = userFound.password.substring(userFound.password.length - 7, userFound.password.length);
+		userFound.save((err) => {
+			if (err) return res.json({ error: { title: 'Not able to reset password' } });			;
+			new Email('./templates/testemail.pug', {
+				transport: 'mailgun',
+			  }).send({}, {
+				apiKey: 'key-c836106c22729cdb1f80d4ba601e864c',
+				domain: 'sandbox965a1c0e2b714acab57623c5d878e8ca.mailgun.org',
+				to: 'shailendra@cronj.com',
+				from: {
+				  name: 'kiran',
+				  email: 'kiran.kulkarni@cronj.com',
+				},
+				subject: 'Password is reset and New password is - ' + userPassword,
+			  });
+			  res.json({
+				success: true,
+			});
+		 
+		});
+	});
+
+
+}
 
 
 
