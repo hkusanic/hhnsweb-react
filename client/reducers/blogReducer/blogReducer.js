@@ -20,6 +20,14 @@ const blogReducer = (state = initialState, action) => {
                 isCompleted: true
             }
             break;
+        case types.GET_BLOG:
+        const data = action.payload;
+        state = {
+            ...state,
+            appointmentData: data,
+            error: ''
+        }
+            break;
     }
     return state
 }

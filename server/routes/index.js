@@ -18,12 +18,13 @@ exports = module.exports = function (app) {
 	app.all('/api/appointment/create', keystone.middleware.api, routes.api.appointment.create);
 	app.get('/api/appointment/:id', keystone.middleware.api, routes.api.appointment.get);
 	app.get('/api/page/', keystone.middleware.api, routes.api.page.list);
-	app.get('/api/blog/find/:id', keystone.middleware.api, routes.api.blog.get);
+	app.post('/api/blog/find/', keystone.middleware.api, routes.api.blog.get);
 	app.get('/api/blog/', keystone.middleware.api, routes.api.blog.list);
 	app.get('/api/lecture/', keystone.middleware.api, routes.api.lecture.list);
 	app.post('/api/signin/', keystone.middleware.api, routes.api.user.signin);
 	app.post('/api/signup/', keystone.middleware.api, routes.api.user.signup);
 	app.post('/api/signout/', keystone.middleware.api, routes.api.user.signout);
+	app.post('/api/forgotpassword/', keystone.middleware.api, routes.api.user.forgotpassword);
 	// Set up the default app route to  http://localhost:3000/index.html
 	app.get('/*', function (req, res) {
 		keystone.set('updateDatabase', false);

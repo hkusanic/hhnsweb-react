@@ -28,12 +28,24 @@ export function logoutUser() {
 export function signupUser(body) {
     return (dispatch) => {
         loginApi.signup(body)
-           .then((response) => {
-               dispatch(signupAction(response.data))
-           })
-           .catch((err) => {
-               console.log("error =====>>>>", err);
-           })
+            .then((response) => {
+                dispatch(signupAction(response.data))
+            })
+            .catch((err) => {
+                console.log("error =====>>>>", err);
+            })
+    }
+}
+
+export function forgotPassword(body) {
+    return (dispatch) => {
+        loginApi.forgotPassword(body)
+         .then((response) => {
+             dispatch(forgotPasswordAction(response.data))
+         })
+         .catch((err)=> {
+             console.log("error ======>>>>>>", err);
+         })
     }
 }
 
@@ -54,6 +66,13 @@ export function logoutAction(data) {
 export function loginAction(data) {
     return {
         type: types.LOGIN,
+        payload: data
+    }
+}
+
+export function forgotPasswordAction(data) {
+    return {
+        type: types.FORGOT_PASSWORD,
         payload: data
     }
 }

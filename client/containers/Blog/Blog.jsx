@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SingleBlog from '../../Components/molocules/SingleBlog/SIngleBlog';
 import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
-import { getBlogs } from '../../actions/blogActions';
+import { getBlogs,getBlog } from '../../actions/blogActions';
 export class Blogs extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +12,8 @@ export class Blogs extends Component {
             page: null,
             blogs: []
         }
+
+        this.props.getBlog({"uuid": "02d47a4e-2dfc-11e9-b210-d663bd873d93"});
     }
 
     componentDidMount() {
@@ -74,6 +76,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getBlogs: (page) => {
             dispatch(getBlogs(page));
+        },
+        getBlog: (body) => {
+            dispatch(getBlog(body));
         }
     };
 };

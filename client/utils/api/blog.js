@@ -7,6 +7,10 @@ const utils = {
         const page = pageNumber || 1;
         let url = serverAddress + `/api/blog?page=${page}`;
         return axios.get(url);
+    },
+    getBlog : (body) => {
+        let url = serverAddress + `/api/blog/find/`;
+        return axios.post(url, body);
     }
 }
 

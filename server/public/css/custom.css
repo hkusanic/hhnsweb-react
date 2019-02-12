@@ -61,7 +61,7 @@
 
 .banner{
     background-image: url("data:../../../../../client/assets//images/banner.png");
-    height: 170px;
+    /* height: 170px; */
 }
 
 .menubanner {
@@ -193,4 +193,27 @@
 
     .padLeftBlog {
         padding-left: 7%;
+    }
+    .ForgotPasText{
+        text-align: center;
+        font-size: 25px;
+        color: #eb7217;
+    }
+
+    @media(min-width: 780px) {
+        .head {
+            display: contents !important;
+        }
+      
+    }
+
+    @media(min-width: 200px) {
+        .rd-navbar-fixed .banner {
+            padding: 0px !important;
+            margin: 0px !important;
+        }
+        .rd-navbar-fixed .banner::before {
+            background: none !important;
+        }
+        
     }

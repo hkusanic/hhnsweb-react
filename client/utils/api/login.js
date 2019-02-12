@@ -15,6 +15,11 @@ const utils = {
 	signup: (body) => {
 		let url = serverAddress + '/api/signup/';
 		return axios.post(url, body);
+	},
+
+	forgotPassword: (body) => {
+		let url = serverAddress + '/api/forgotpassword/';
+		return axios.post(url, body);
 	}
 }
 

@@ -8,12 +8,15 @@ let Blog = new keystone.List('Blog', {
 });
 
 Blog.add({
-	title: { type: String },
-	date: { type: Types.Date, default: Date.now },
+	title_en: { type: String },
+	title_ru: { type: String },
+	date: { type: String },
 	author: { type: String },
-	body: { type: Types.Html, wysiwyg: true, height: 600 },
+	body_en: { type: Types.Html, wysiwyg: true, height: 600 },
+	body_ru: { type: Types.Html, wysiwyg: true, height: 600 },
 	slug: { type: String, index: true },
 	language: { type: String },
+	uuid: { type: String }
 });
 
 Blog.schema.pre('save', function (next) {
