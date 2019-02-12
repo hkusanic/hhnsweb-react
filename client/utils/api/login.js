@@ -17,9 +17,9 @@ const utils = {
 		return axios.post(url, body);
 	},
 
-	forgotPassword: (email) => {
+	forgotPassword: (body) => {
 		let url = serverAddress + '/api/forgotpassword/';
-		return axios.post(url, email);
+		return axios.post(url, body);
 	}
 }
 

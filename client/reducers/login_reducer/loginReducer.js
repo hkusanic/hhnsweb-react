@@ -8,6 +8,7 @@ const initialState = {
     isAdmin: false,
     loginUser: {},
     checkedLogin: false,
+    forgotPasswordSentEmail : false,
     error: "",
 
 }
@@ -56,6 +57,7 @@ const loginReducer = (state = initialState, action) => {
             const response = action.payload;
             state ={
                 ...state,
+                forgotPasswordSentEmail: true,
                 error: ''
             }    
 

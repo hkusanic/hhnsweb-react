@@ -37,9 +37,9 @@ export function signupUser(body) {
     }
 }
 
-export function forgotPassword(email) {
+export function forgotPassword(body) {
     return (dispatch) => {
-        loginApi.forgotPassword(email)
+        loginApi.forgotPassword(body)
          .then((response) => {
              dispatch(forgotPasswordAction(response.data))
          })
