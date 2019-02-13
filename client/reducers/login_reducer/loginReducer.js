@@ -96,14 +96,6 @@ const loginReducer = (state = initialState, action) => {
             }
             break;
 
-        case types.FORGOT_PASSWORD:
-            const response = action.payload;
-            state ={
-                ...state,
-                forgotPasswordSentEmail: true,
-                error: ''
-            }    
-
     }
     return state
 }
