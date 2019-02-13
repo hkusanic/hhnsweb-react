@@ -50,6 +50,7 @@ export class Login extends Component {
         isLogin: nextProps.login.isLogin,
         userDetails: nextProps.login.loginUser,
         error: nextProps.login.error,
+        regError: nextProps.login.regError,
         isUserLogin
       })
     }

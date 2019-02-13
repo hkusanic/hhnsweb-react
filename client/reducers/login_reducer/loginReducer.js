@@ -8,8 +8,9 @@ const initialState = {
     isAdmin: false,
     loginUser: {},
     checkedLogin: false,
-    forgotPasswordSentEmail : false,
+    forgotPasswordSentEmail: false,
     error: "",
+    regError: ''
 
 }
 
@@ -26,10 +27,11 @@ const loginReducer = (state = initialState, action) => {
                     isComplete: user.success,
                     loginUser: user.loginUser,
                     isAdmin: user.admin,
-                    session: user.session
+                    session: user.session,
+                    error: ''
                 }
             }
-            else if(!user.session) {
+            else if (!user.session) {
                 state = {
                     ...state,
                     error: user.message,
@@ -48,26 +50,40 @@ const loginReducer = (state = initialState, action) => {
                 loginUser: {}
             }
             break;
-         
+
         case types.SIGNUP:
-             const signedUser = action.payload; 
-             Auth.authenticateUser(signedUser.session, signedUser.loginUser);
-             state = {
-                ...state,
-                isLogin: true,
-                isComplete: signedUser.success,
-                loginUser: signedUser.loginUser,
-                isAdmin: signedUser.admin,
-                session: signedUser.session
+            const signedUser = action.payload;
+            if (signedUser.session && signedUser.loginUser) {
+                Auth.authenticateUser(signedUser.session, signedUser.loginUser);
+                state = {
+                    ...state,
+                    isLogin: true,
+                    isComplete: signedUser.success,
+                    loginUser: signedUser.loginUser,
+                    isAdmin: signedUser.admin,
+                    session: signedUser.session,
+                    regError: ''
+                }
+            }
+            else if(signedUser.error){
+                Auth.deauthenticateUser();
+                state = {
+                    ...state,
+                    regError: signedUser.error.title,
+                    isLogin: false,
+                    session: false,
+                    loginUser: {}
+                }
             }
 
         case types.FORGOT_PASSWORD:
             const response = action.payload;
-            state ={
+            state = {
                 ...state,
                 forgotPasswordSentEmail: true,
                 error: ''
-            }    
+            }
+            break;
 
     }
     return state
