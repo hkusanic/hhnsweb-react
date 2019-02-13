@@ -200,6 +200,11 @@
         color: #eb7217;
     }
 
+    .loginError {
+        color: red !important;
+        font: 400 16px/20px "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
     @media(min-width: 780px) {
         .head {
             display: contents !important;
@@ -216,4 +221,18 @@
             background: none !important;
         }
         
+    }
+
+    @media(min-width: 990px){
+        .topMenu {
+            visibility: collapse;
+            height: 0px !important;
+        }
+    }
+
+    @media(max-width: 990px){
+        .languageToggle {
+            padding-top: 12px;
+            font-size: 18px;
+        }
     }

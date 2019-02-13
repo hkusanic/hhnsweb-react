@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { forgotPassword } from '../../../actions/loginActions';
-import { isValidEmail } from '../../../utils/validation';
+import { isValidEmail, isNotEmpty } from '../../../utils/validation';
 export class ForgotPassword extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
-            submitting: false
+            submitting: false,
+            error: ''
         }
     }
 
@@ -17,23 +18,31 @@ export class ForgotPassword extends Component {
                 submitting: !this.state.submitting
             })
         }
+        if (nextProps.forgotError) {
+            this.setState({ error: nextProps.forgotError })
+        }
     }
 
     handleEmail = (event) => {
         this.setState({
-            email: event.target.value
+            email: event.target.value,
+            error: ''
         })
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        if (isValidEmail(this.state.email)) {
+        if (!isNotEmpty(this.state.email)) {
+            this.setState({ error: "**Please enter the email" })
+        }
+        else if (!isValidEmail(this.state.email)) {
+            this.setState({ error: "**Please enter correct email address" })
+        }
+        else {
             const body = {
                 'email': this.state.email
             }
             this.props.forgotPassword(body);
-        } else {
-            console.log("email is not valid");
         }
     }
     render() {
@@ -56,6 +65,7 @@ export class ForgotPassword extends Component {
                                     </form>
                                     : ""}
                                 {this.state.submitting ? <p class="wow-outer ForgotPasText"><span class="wow slideInLeft">Please check your email</span></p> : ''}
+                                <p className="loginError">{this.state.error}</p>
                             </div>
                         </div>
                     </div>
@@ -69,6 +79,7 @@ export class ForgotPassword extends Component {
 const mapStateToProps = (state) => {
     return {
         forgotPasswordSentEmail: state.loginReducer.forgotPasswordSentEmail,
+        forgotError: state.loginReducer.forgotError
     };
 };
 
