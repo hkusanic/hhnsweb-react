@@ -10,7 +10,8 @@ const initialState = {
     checkedLogin: false,
     forgotPasswordSentEmail: false,
     error: "",
-    regError: ''
+    regError: '',
+    forgotError: ''
 
 }
 
@@ -65,7 +66,7 @@ const loginReducer = (state = initialState, action) => {
                     regError: ''
                 }
             }
-            else if(signedUser.error){
+            else if (signedUser.error) {
                 Auth.deauthenticateUser();
                 state = {
                     ...state,
@@ -75,13 +76,23 @@ const loginReducer = (state = initialState, action) => {
                     loginUser: {}
                 }
             }
+            break;
 
         case types.FORGOT_PASSWORD:
             const response = action.payload;
-            state = {
-                ...state,
-                forgotPasswordSentEmail: true,
-                error: ''
+            if (response.success) {
+                state = {
+                    ...state,
+                    forgotPasswordSentEmail: true,
+                    forgotError: ''
+                }
+            }
+            else if (response.error){
+                state ={
+                    ...state,
+                    forgotError: response.error.title,
+                    forgotPasswordSentEmail: false
+                }
             }
             break;
 
