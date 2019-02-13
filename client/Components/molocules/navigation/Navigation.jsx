@@ -31,22 +31,19 @@ export class Navigation extends Component {
                     <div className="rd-navbar-wrap">
                         <nav className="rd-navbar rd-navbar-corporate" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
                             <div className="rd-navbar-aside-outer banner outSideBanner banner1">
-                                <div className="rd-navbar-aside head">
+                                <div className="rd-navbar-aside head ">
                                     <div className="rd-navbar-panel">
                                         <button className="rd-navbar-toggle" data-rd-navbar-toggle="#rd-navbar-nav-wrap-1"><span></span></button>
-                                    </div>
-                                    <div className="rd-navbar-collapse">
-                                        <button className="rd-navbar-collapse-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle="#rd-navbar-collapse-content-1"><span></span></button>
-                                        <div className="rd-navbar-collapse-content" id="rd-navbar-collapse-content-1">
-                                            <div>
-                                                <article className="unit align-items-center">
-
-                                                </article>
+                                        <div style={{ width: '100%' }}>
+                                            <div className="topMenu" style={{ float: 'right' }}>
+                                                <ul className="rd-navbar-nav">
+                                                    <li className="rd-nav-item"><Link to="/"><a className="rd-nav-link"><Login /></a></Link></li>
+                                                </ul>
                                             </div>
-                                            <div>
-                                                <article className="unit align-items-center">
-
-                                                </article>
+                                            <div className="topMenu languageToggle" style={{ float: 'right' }}>
+                                                <ul className="rd-navbar-nav">
+                                                    <li className="rd-nav-item"><LanguageSwitch /></li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -123,3 +120,5 @@ export class Navigation extends Component {
 }
 
 export default Navigation;
+
+

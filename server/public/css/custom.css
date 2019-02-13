@@ -222,3 +222,17 @@
         }
         
     }
+
+    @media(min-width: 990px){
+        .topMenu {
+            visibility: collapse;
+            height: 0px !important;
+        }
+    }
+
+    @media(max-width: 990px){
+        .languageToggle {
+            padding-top: 12px;
+            font-size: 18px;
+        }
+    }
