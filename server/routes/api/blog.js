@@ -15,7 +15,7 @@ exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	Blog.paginate({
 		page: req.query.page || 1,
-		perPage: 5,
+		perPage: 20,
 	}).exec(function (err, items) {
 		if (err) return res.apiError('database error', err);
 		res.apiResponse({
