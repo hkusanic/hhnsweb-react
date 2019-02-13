@@ -18,7 +18,7 @@ const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.LOGIN:
             const user = action.payload;
-            if (user.success) {
+            if (user.success && user.session) {
                 Auth.authenticateUser(user.session, user.loginUser);
                 state = {
                     ...state,
@@ -27,6 +27,14 @@ const loginReducer = (state = initialState, action) => {
                     loginUser: user.loginUser,
                     isAdmin: user.admin,
                     session: user.session
+                }
+            }
+            else if(!user.session) {
+                state = {
+                    ...state,
+                    error: user.message,
+                    isLogin: false,
+                    isComplete: false
                 }
             }
             break;

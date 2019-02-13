@@ -1,12 +1,13 @@
 
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { loginUser, logoutUser, checkLogin, signupUser, forgotPassword} from '../../actions/loginActions';
+import { loginUser, logoutUser, checkLogin, signupUser, forgotPassword } from '../../actions/loginActions';
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import {
   Link
-} from 'react-router-dom'
+} from 'react-router-dom';
+import { isValidEmail, isNotEmpty, isMatch } from '../../utils/validation';
 export class Login extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +23,10 @@ export class Login extends Component {
       lastName: '',
       email_signup: '',
       password_signup: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      error: '',
+      regError: ''
+
     }
   }
 
@@ -31,7 +35,11 @@ export class Login extends Component {
     this.setState({
       isLogin: this.props.login.isLogin,
       userDetails: this.props.login.loginUser,
-      isUserLogin
+      isUserLogin,
+      error: '',
+      regError: '',
+      username: '',
+      userpassword: '',
     })
   }
 
@@ -41,6 +49,7 @@ export class Login extends Component {
       this.setState({
         isLogin: nextProps.login.isLogin,
         userDetails: nextProps.login.loginUser,
+        error: nextProps.login.error,
         isUserLogin
       })
     }
@@ -50,12 +59,20 @@ export class Login extends Component {
     const value = event.target.value;
     this.setState({
       ...this.state,
-      [type] : value
+      error: '',
+      regError: '',
+      [type]: value
     })
   }
 
   loginSubmit = () => {
-    if (this.state.username && this.state.userpassword) {
+    if (!isNotEmpty(this.state.username) || !isNotEmpty(this.state.userpassword)) {
+      this.setState({ error: '**Please fill all the fields' })
+    }
+    else if (!isValidEmail(this.state.username)) {
+      this.setState({ error: '**Please enter the correct email address' })
+    }
+    else if (this.state.username && this.state.userpassword) {
       const body = {
         "username": this.state.username,
         "password": this.state.userpassword
@@ -70,9 +87,20 @@ export class Login extends Component {
   }
 
   signUP = () => {
-    if (this.state.password_signup === this.state.confirmPassword) {
+    if (!isNotEmpty(this.state.email_signup) || !isNotEmpty(this.state.password_signup) ||
+      !isNotEmpty(this.state.firstName) || !isNotEmpty(this.state.lastName) ||
+      !isNotEmpty(this.state.confirmPassword)) {
+      this.setState({ regError: '**Please fill all the fields' })
+    }
+    else if (!isValidEmail(this.state.email_signup)) {
+      this.setState({ regError: '**Please enter the correct email address' })
+    }
+    else if (!isMatch(this.state.password_signup, this.state.confirmPassword)) {
+      this.setState({ regError: '**Password and confirm password should match' })
+    }
+    else {
       const body = {
-        email : this.state.email_signup,
+        email: this.state.email_signup,
         password: this.state.password_signup,
         firstname: this.state.firstName,
         lastname: this.state.lastName
@@ -90,10 +118,10 @@ export class Login extends Component {
             <ul className="list-inline-bordered">
 
               <li>
-                <li className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">  
-                 <Translate>
-              {({ translate }) => translate('loginLabel')}
-            </Translate></li>
+                <li className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">
+                  <Translate>
+                    {({ translate }) => translate('loginLabel')}
+                  </Translate></li>
                 <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal" id="rd-navbar-login-5">
                   <h4>Sign In</h4>
                   <form id="loginForm" className="rd-form rd-form-small" autoComplete="false">
@@ -105,7 +133,7 @@ export class Login extends Component {
                         type="email"
                         name="email"
                         placeholder="E-mail"
-                        onChange={() => { this.handleChange('username', event)} }
+                        onChange={() => { this.handleChange('username', event) }}
                         data-constraints="@Email @Required" />
                     </div>
                     <div className="form-wrap">
@@ -116,13 +144,14 @@ export class Login extends Component {
                         type="password"
                         name="password"
                         placeholder="Password"
-                        onChange={() => { this.handleChange('userpassword', event)}}
+                        onChange={() => { this.handleChange('userpassword', event) }}
                         data-constraints="@Required" />
                     </div>
                     <div className="form-wrap">
                       <button className="button button-primary-lighten button-winona" onClick={this.loginSubmit} type="submit">Sign in</button>
                       <p><Link to='/forgotPassword'>Forgot Password</Link></p>
                     </div>
+                    <p className="loginError">{this.state.error}</p>
                   </form>
                 </div>
               </li>
@@ -139,8 +168,8 @@ export class Login extends Component {
                         name="firstname"
                         placeholder="FirstName"
                         data-constraints="@Required"
-                        onChange={() => {this.handleChange('firstName', event)}}
-                        />
+                        onChange={() => { this.handleChange('firstName', event) }}
+                      />
                     </div>
                     <div className="form-wrap">
                       <input
@@ -150,7 +179,7 @@ export class Login extends Component {
                         name="lastname"
                         placeholder="LastName"
                         data-constraints="@Required"
-                        onChange={() => {this.handleChange('lastName', event)}} />
+                        onChange={() => { this.handleChange('lastName', event) }} />
                     </div>
                     <div className="form-wrap">
                       <input
@@ -160,7 +189,7 @@ export class Login extends Component {
                         name="email"
                         placeholder="E-mail"
                         data-constraints="@Email @Required"
-                        onChange={() => {this.handleChange('email_signup', event)}} />
+                        onChange={() => { this.handleChange('email_signup', event) }} />
                     </div>
                     <div className="form-wrap">
                       <input
@@ -170,7 +199,7 @@ export class Login extends Component {
                         name="password"
                         placeholder="Password"
                         data-constraints="@Required"
-                        onChange={() => {this.handleChange('password_signup', event)}} />
+                        onChange={() => { this.handleChange('password_signup', event) }} />
                     </div>
                     <div className="form-wrap">
                       <input
@@ -180,12 +209,13 @@ export class Login extends Component {
                         name="password"
                         placeholder="Confirm Password"
                         data-constraints="@Required"
-                        onChange={() => {this.handleChange('confirmPassword', event)}} />
+                        onChange={() => { this.handleChange('confirmPassword', event) }} />
                     </div>
                     <div className="form-wrap">
                       <button className="button button-block button-primary-lighten button-winona" onClick={this.signUP}>Create an Account</button>
                     </div>
                   </form>
+                  <p className="loginError">{this.state.regError}</p>
                 </div>
               </li>
             </ul>
