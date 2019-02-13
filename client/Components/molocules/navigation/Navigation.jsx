@@ -34,7 +34,7 @@ export class Navigation extends Component {
                                 <div className="rd-navbar-aside head ">
                                     <div className="rd-navbar-panel">
                                         <button className="rd-navbar-toggle" data-rd-navbar-toggle="#rd-navbar-nav-wrap-1"><span></span></button>
-                                        <div style={{ width: '100%' }}>
+                                        {/* <div style={{ width: '100%' }}>
                                             <div className="topMenu" style={{ float: 'right' }}>
                                                 <ul className="rd-navbar-nav">
                                                     <li className="rd-nav-item"><Link to="/"><a className="rd-nav-link"><Login /></a></Link></li>
@@ -44,8 +44,8 @@ export class Navigation extends Component {
                                                 <ul className="rd-navbar-nav">
                                                     <li className="rd-nav-item"><LanguageSwitch /></li>
                                                 </ul>
-                                            </div>
-                                        </div>
+                                            </div> */}
+                                        {/* </div> */}
                                     </div>
                                 </div>
                                 <img src={banner} alt="" width="100%" height="100%" srcSet="../../../assets/images/banner.png 2x" />
@@ -58,17 +58,17 @@ export class Navigation extends Component {
                                 <div className="rd-navbar-main">
                                     <div className="rd-navbar-nav-wrap" id="rd-navbar-nav-wrap-1">
 
-                                        <div className="rd-navbar-search" id="rd-navbar-search-1">
-                                            <button className="rd-navbar-search-toggle" data-rd-navbar-toggle="#rd-navbar-search-1"><span></span></button>
-                                            <form className="rd-search" action="search-results.html" data-search-live="rd-search-results-live-1" method="GET">
+                                        {/* <div className="rd-navbar-search" id="rd-navbar-search-1"> */}
+                                            {/* <button className="rd-navbar-search-toggle" data-rd-navbar-toggle="#rd-navbar-search-1"><span></span></button> */}
+                                            {/* <form className="rd-search" action="search-results.html" data-search-live="rd-search-results-live-1" method="GET">
                                                 <div className="form-wrap">
                                                     <label className="form-label" htmlFor="rd-navbar-search-form-input-1">Search...</label>
                                                     <input className="form-input rd-navbar-search-form-input" id="rd-navbar-search-form-input-1" type="text" name="s" autoComplete="off" />
                                                     <div className="rd-search-results-live" id="rd-search-results-live-1"></div>
                                                 </div>
                                                 <button className="rd-search-form-submit fa-search" type="submit"></button>
-                                            </form>
-                                        </div>
+                                            </form> */}
+                                        {/* </div> */}
 
                                         <ul className="rd-navbar-nav">
                                             <li className="rd-nav-item"><LanguageSwitch /></li>
