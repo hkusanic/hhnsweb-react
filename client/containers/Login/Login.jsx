@@ -4,20 +4,15 @@ import { connect } from "react-redux";
 import { loginUser, logoutUser, checkLogin, signupUser, forgotPassword } from '../../actions/loginActions';
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
-import {
-  Link
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { isValidEmail, isNotEmpty, isMatch } from '../../utils/validation';
+import LoginForm from '../../Components/organisms/Form/LoginFrom';
+
 export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       visible: false,
-      username: '',
-      userpassword: '',
-      password: '',
-      isLogin: false,
-      userDetails: {},
       isUserLogin: false,
       firstName: '',
       lastName: '',
@@ -33,13 +28,9 @@ export class Login extends Component {
   componentDidMount() {
     const isUserLogin = Auth.isUserAuthenticated();
     this.setState({
-      isLogin: this.props.login.isLogin,
-      userDetails: this.props.login.loginUser,
       isUserLogin,
       error: '',
       regError: '',
-      username: '',
-      userpassword: '',
     })
   }
 
@@ -47,8 +38,6 @@ export class Login extends Component {
     if (nextProps.login !== this.props.login) {
       const isUserLogin = Auth.isUserAuthenticated();
       this.setState({
-        isLogin: nextProps.login.isLogin,
-        userDetails: nextProps.login.loginUser,
         error: nextProps.login.error,
         regError: nextProps.login.regError,
         isUserLogin
@@ -64,22 +53,6 @@ export class Login extends Component {
       regError: '',
       [type]: value
     })
-  }
-
-  loginSubmit = () => {
-    if (!isNotEmpty(this.state.username) || !isNotEmpty(this.state.userpassword)) {
-      this.setState({ error: '**Please fill all the fields' })
-    }
-    else if (!isValidEmail(this.state.username)) {
-      this.setState({ error: '**Please enter the correct email address' })
-    }
-    else if (this.state.username && this.state.userpassword) {
-      const body = {
-        "username": this.state.username,
-        "password": this.state.userpassword
-      }
-      this.props.loginUser(body);
-    }
   }
 
   logoutSubmit = () => {
@@ -124,36 +97,9 @@ export class Login extends Component {
                     {({ translate }) => translate('loginLabel')}
                   </Translate></li>
                 <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal" id="rd-navbar-login-5">
-                  <h4>Sign In</h4>
-                  <form id="loginForm" className="rd-form rd-form-small" autoComplete="false">
-                    <div className="form-wrap">
-                      <input
-                        className="form-input"
-                        autoComplete="off"
-                        id="login-email-5"
-                        type="email"
-                        name="email"
-                        placeholder="E-mail"
-                        onChange={() => { this.handleChange('username', event) }}
-                        data-constraints="@Email @Required" />
-                    </div>
-                    <div className="form-wrap">
-                      <input
-                        className="form-input"
-                        autoComplete="off"
-                        id="login-password-5"
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        onChange={() => { this.handleChange('userpassword', event) }}
-                        data-constraints="@Required" />
-                    </div>
-                    <div className="form-wrap">
-                      <button className="button button-primary-lighten button-winona" onClick={this.loginSubmit} type="submit">Sign in</button>
-                      <p><Link to='/forgotPassword'>Forgot Password</Link></p>
-                    </div>
-                    <p className="loginError">{this.state.error}</p>
-                  </form>
+                  <h4>Log In</h4>
+                  <LoginForm loginUser={this.props.loginUser} error={this.state.error} />
+                  <p><Link to='/forgotPassword'>Forgot Password</Link></p>
                 </div>
               </li>
               <li>
