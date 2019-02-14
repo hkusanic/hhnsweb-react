@@ -13,13 +13,17 @@ export class LanguageSwitch extends Component {
     }
 
     componentDidMount() {
-       
+        $(window).load(function() {
+            $("html, body").animate({ scrollTop: $(document).height() }, 20);
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+          });
     }
 
     languageToggle(language) {
         setActiveLanguage(language);
         reactCookie.save("languageCode", language, { path: '/' });
         window.location.reload();
+       
     }
 
     render() {
