@@ -8,6 +8,7 @@ import Calender from '../../containers/Calender/Calender';
 import Lectures from '../../containers/Lectures/Lectures';
 import Booking from '../../containers/Booking/Booking';
 import BlogDetails from '../../Components/molocules/SingleBlog/BlogDetails';
+import BiographyDetails from '../../Components/molocules/Biography/BiographyDetails';
 import LectureDetails from '../../Components/molocules/SingleLecture/LectureDetails';
 import AudioList from './../../Components/molocules/Audio/AudioList';
 import VideoList from '../../Components/molocules/Video/VideoList';
@@ -47,6 +48,7 @@ export class Home extends Component {
                             <Route path='/calender' component={Calender} />
                             <Route path='/lectures' component={Lectures} />
                             <Route path='/blogDetails' component={BlogDetails} />
+                            <Route path='/biograhyDetails' component={BiographyDetails} />
                             <Route path='/lectureDetails' component={LectureDetails} />
                             <Route path='/audio' component={AudioList} />
                             <Route path='/audioDetails' component={AudioDetails} />

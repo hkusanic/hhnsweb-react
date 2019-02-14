@@ -6,6 +6,7 @@ import image3 from './../../../assets/images/2.png';
 import image4 from './../../../assets/images/3(1).png';
 import image5 from './../../../assets/images/IMG_2735.jpg';
 import SingleCarousel from '../../atoms/SingleCarousel/singleCarousel';
+import Biography from '../Biography/Biography';
 
 export class Carousel extends Component {
     constructor(props) {
@@ -19,6 +20,7 @@ export class Carousel extends Component {
     }
     render() {
         return (
+            <div>
             <section className="swiper-container swiper-slider swiper-slider-light bg-gray-700" data-loop="true" data-autoplay="5000" data-simulate-touch="false" data-custom-slide-effect="inter-leave-effect" data-inter-leave-offset="-.5">
                 <div className="swiper-wrapper">
                     <SingleCarousel
@@ -46,6 +48,9 @@ export class Carousel extends Component {
                     <div className="swiper-pagination swiper-pagination-modern swiper-pagination-marked" data-index-bullet="true"></div>
                 </div>
             </section>
+            <Biography></Biography>
+            </div>
+          
         );
     }
 }

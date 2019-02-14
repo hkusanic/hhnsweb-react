@@ -101,7 +101,7 @@ export class Navigation extends Component {
                                             <li className="rd-nav-item active"><Link to="/blog"><a className="rd-nav-link"> <Translate>
                                                 {({ translate }) => translate('navBlog')}
                                             </Translate></a></Link></li>
-                                            <li className="rd-nav-item active"><Link to="/calender"><a className="rd-nav-link">Calender</a></Link></li>
+                                            <li className="rd-nav-item active"><Link to="/calender"><a className="rd-nav-link">Calendar</a></Link></li>
                                             <li className="rd-nav-item"><Link to="/booking"><a className="rd-nav-link">Booking</a></Link></li>
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
