@@ -15,6 +15,8 @@ import VideoList from '../../Components/molocules/Video/VideoList';
 import AudioDetails from '../../Components/molocules/Audio/AudioDetails';
 import VideoDetails from '../../Components/molocules/Video/VideoDetails';
 import ForgotPassword from '../../Components/organisms/Form/ForgotPassword';
+import ShellCompoenent from '../../Components/organisms/ShellComponent/ShellComponent';
+
 
 import {
     Route,
@@ -41,8 +43,10 @@ export class Home extends Component {
             <div>
                 <div className="page">
                     <Navigation />
-                        <Switch>
-                            <Route exact path='/' component={Carousel} />
+                    <Switch>
+                        <Route exact path='/' component={Carousel} />
+                        <Route path='/forgotPassword' component={ForgotPassword} />
+                        <ShellCompoenent>
                             <Route path='/blog' component={Blog} />
                             <Route path='/booking' component={Booking} />
                             <Route path='/calender' component={Calender} />
@@ -54,8 +58,8 @@ export class Home extends Component {
                             <Route path='/audioDetails' component={AudioDetails} />
                             <Route path='/video' component={VideoList} />
                             <Route path='/videoDetails' component={VideoDetails} />
-                            <Route path='/forgotPassword' component={ForgotPassword} />
-                        </Switch>
+                        </ShellCompoenent>
+                    </Switch>
                     <Footer />
                 </div>
                 <div className="preloader">
