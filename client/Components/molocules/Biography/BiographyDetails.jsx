@@ -20,9 +20,9 @@ export class BiographyDetails extends Component {
                             <div class="col-lg-12">
                                 <article class="post-creative">
                                     <h3 class="post-creative-title alignment padLeft">
-                                        {renderHTML(this.props.location.state.title)}
+                                        {renderHTML(reactCookie.load('languageCode') === 'en'?this.props.location.state.title_en:this.props.location.state.title_ru)}
                                     </h3>
-                                    {renderHTML(this.props.location.state.content)}
+                                    {renderHTML(reactCookie.load('languageCode') === 'en'?this.props.location.state.content_en:this.props.location.state.content_ru)}
                                 </article>
                             </div>
                             <div class="col-lg-4">

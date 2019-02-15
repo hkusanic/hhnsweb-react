@@ -20,9 +20,9 @@ export class Biography extends Component {
             <section class="section section-lg text-center">
             <div class="container">
               <div class="row row-50">
-              <SingleBiography img={image4} title={reactCookie.load('languageCode') === 'en'?DATA.BIOGRAPHY.one_title_en:DATA.BIOGRAPHY.one_title_ru} content={reactCookie.load('languageCode') === 'en'?DATA.BIOGRAPHY.one_content_en:DATA.BIOGRAPHY.one_content_ru}  />
-              <SingleBiography img={image4} title={reactCookie.load('languageCode') === 'en'?DATA.BIOGRAPHY.two_title_en:DATA.BIOGRAPHY.two_title_ru} content={reactCookie.load('languageCode') === 'en'?DATA.BIOGRAPHY.two_content_en:DATA.BIOGRAPHY.two_content_ru} />
-              </div>
+              <SingleBiography img={image4} title_en={DATA.BIOGRAPHY.one_title_en} title_ru={DATA.BIOGRAPHY.one_title_ru} content_en={DATA.BIOGRAPHY.one_content_en} content_ru={DATA.BIOGRAPHY.one_content_ru} />
+              <SingleBiography img={image4} title_en={DATA.BIOGRAPHY.two_title_en} title_ru={DATA.BIOGRAPHY.two_title_ru} content_en={DATA.BIOGRAPHY.two_content_en} content_ru={DATA.BIOGRAPHY.two_content_ru} />
+                </div>
               </div>
             </section>
         );
