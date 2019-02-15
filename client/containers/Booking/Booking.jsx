@@ -69,6 +69,7 @@ export class Booking extends Component {
                                 <Progress percent={50} />
                             </div> */}
                             <div className="bookingformDiv">
+                                <p className="bookingForm">Booking Form</p>
                                 <BookingForm
                                     user={this.state.user ? this.state.user : ''}
                                     createAppointment={this.props.createAppointment} />
