@@ -58,7 +58,7 @@ export class Booking extends Component {
                 {
                     this.props.appointment.isSubmitted ?
                         <div className="requestDiv">
-                            <p className="requestText">You will receive an email once your request is reviewed</p>
+                                    <p className="requestText">Your request is under reviewed, you will receive an email once your request is reviewed</p>
                         </div>
                         : ''
                 }
