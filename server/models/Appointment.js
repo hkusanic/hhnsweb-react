@@ -2,6 +2,7 @@ const keystone = require('keystone');
 const mongoose = require('mongoose');
 const Types = keystone.Field.Types;
 var Email = require('keystone-email');
+var EMAIL_CONFIG = require('../constants/constant');
 
 
 let Appointment = new keystone.List('Appointment', {
@@ -25,18 +26,19 @@ Appointment.schema.pre('save', function (next) {
 });
 
 Appointment.schema.post('save', function (data) {
+	
 	if (data.approved) {
 		new Email('./templates/testemail.pug', {
 			transport: 'mailgun',
 		  }).send({}, {
-			apiKey: 'key-c836106c22729cdb1f80d4ba601e864c',
-			domain: 'sandbox965a1c0e2b714acab57623c5d878e8ca.mailgun.org',
-			to: 'shailendra@cronj.com',
+			apiKey: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.API_KEY,
+			domain: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.DOMAIN,
+			to: data.email,
 			from: {
-			  name: 'kiran',
-			  email: 'kiran.kulkarni@cronj.com',
+			  name: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_NAME,
+			  email: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
 			},
-			subject: 'Appointment Approved by Niranjanaswami',
+			subject: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.SUBJECT,
 		  });
       console.log('SEND EMAIL');
 	}
@@ -47,11 +49,11 @@ Appointment.schema.post('validate', function (err, next) {
 });
 
 Appointment.schema.pre('remove', function (next) {
-	next();
+	//next();
 });
 
 Appointment.schema.post('remove', function (next) {
-	next();
+	//next();
 });
 
 Appointment.register();

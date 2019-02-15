@@ -59,21 +59,6 @@ exports.signout = function (req, res) {
 
 
 exports.signup = function (req, res) {
-	console.log('----->', req.user);
-	if (req.user) {
-		return res.json({
-			success: true,
-			session: true,
-			date: new Date().getTime(),
-			admin: req.user.canAccessKeystone,
-			loginUser: {
-				id: req.user.id,
-				email: req.user.email,
-				firstName: req.user.name.first,
-				last: req.user.name.last
-			}
-		});
-	}
 
 	async.series([
 		(cb) => {

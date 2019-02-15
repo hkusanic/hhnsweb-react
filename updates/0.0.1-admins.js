@@ -11,6 +11,8 @@ exports.create = {
 	User: [
 		{ 'name.first': 'Admin', 'name.last': 'User', 'email': 'hrvoje.kusanic@hotmail.com', 'password': 'Test01!', 'canAccessKeystone': true },
 		{ 'name.first': 'Shailendra', 'name.last': 'sahu', 'email': 'shailendra@cronj.com', 'password': 'cronj123@', 'canAccessKeystone': false },
+		{ 'name.first': 'Kiran', 'name.last': 'Kulkarni', 'email': 'kiran.kulkarni@cronj.com', 'password': '12345', 'canAccessKeystone': false },
+
 	],
 };
 
