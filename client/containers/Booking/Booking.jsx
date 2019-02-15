@@ -65,9 +65,9 @@ export class Booking extends Component {
                 {
                     (!this.props.appointment.isSubmitted && !this.props.appointment.appointmentData && !this.props.appointment.appointmentData.Appointment) ?
                         <div>
-                            <div className="progressBarDiv">
+                            {/* <div className="progressBarDiv">
                                 <Progress percent={50} />
-                            </div>
+                            </div> */}
                             <div className="bookingformDiv">
                                 <BookingForm
                                     user={this.state.user ? this.state.user : ''}
