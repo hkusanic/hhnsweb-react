@@ -12,18 +12,15 @@ export class Booking extends Component {
         super(props);
         this.state = {
             user: '',
-            isLogin: false,
             DarshanApproved: ''
         }
         this.props.resetState();
     }
     componentDidMount() {
         const user = Auth.getUserDetails();
-        const isLogin = Auth.getUserSeesion();
-        if (user && isLogin) {
+        if (user) {
             this.setState({
                 user: JSON.parse(user),
-                isLogin
             }, () => {
                 this.props.getAppointment(this.state.user.email);
             })
@@ -61,19 +58,12 @@ export class Booking extends Component {
                 {
                     this.props.appointment.isSubmitted ?
                         <div className="requestDiv">
-                            <p className="requestText">Your Request has been submitted successfully for Approval</p>
+                            <p className="requestText">You will receive an email once your request is reviewed</p>
                         </div>
                         : ''
                 }
                 {
-                    this.props.appointment.error ?
-                        <div className="requestDiv">
-                            <p className="requestText">Booking is already under Approval process</p>
-                        </div>
-                        : ''
-                }
-                {
-                    this.state.user && this.state.isLogin && !this.props.appointment.isSubmitted && !this.props.appointment.error && !this.state.DarshanApproved ?
+                    (!this.props.appointment.isSubmitted && !this.props.appointment.appointmentData && !this.props.appointment.appointmentData.Appointment) ?
                         <div>
                             <div className="progressBarDiv">
                                 <Progress percent={50} />
@@ -85,20 +75,24 @@ export class Booking extends Component {
                             </div>
                         </div>
                         :
-                        ''
+                        (
+                            (this.props.appointment.appointmentData && this.props.appointment.appointmentData.Appointment && !this.props.appointment.appointmentData.Appointment.approved &&
+                                !this.props.isSubmitted) ?
+                                < div className="requestDiv">
+                                    <p className="requestText">Your request is under reviewed, you will receive an email once your request is reviewed</p>
+                                </div>
+                                :
+                                <iframe
+                                    src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
+                                    id="ycbmiframeniranjanaswami"
+                                    className="bookingStyle"
+                                    frameBorder="0"
+                                    allowtransparency="true">
+                                </iframe>
+
+                        )
                 }
-                {
-                    this.state.DarshanApproved ?
-                        <iframe
-                            src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
-                            id="ycbmiframeniranjanaswami"
-                            className="bookingStyle"
-                            frameBorder="0"
-                            allowtransparency="true">
-                        </iframe>
-                        : ''
-                }
-            </div>
+            </div >
         )
     }
 }
