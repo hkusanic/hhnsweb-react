@@ -10,9 +10,8 @@ export class Biography extends Component {
 
     }
   }
-  componentDidMount() {
 
-  }
+
   render() {
     return (
       <section className="section section-lg text-center">
