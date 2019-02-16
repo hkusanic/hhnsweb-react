@@ -1,4 +1,4 @@
 export const GOOGLE_CREDENTIALS = {
-    "USER": "shailendra",
+    "USER": "hhnsweb",
     "EMAIL_DOMAIN": "gmail.com"
 }
