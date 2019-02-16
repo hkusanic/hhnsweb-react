@@ -49,7 +49,6 @@ export class LoginForm extends Component {
                 <div className="form-wrap">
                     <input
                         className="form-input"
-                        id="login-email"
                         type="email"
                         name="email"
                         data-constraints="@Email @Required"
@@ -59,7 +58,6 @@ export class LoginForm extends Component {
                 <div className="form-wrap">
                     <input
                         className="form-input"
-                        id="login-password"
                         type="password"
                         name="password"
                         data-constraints="@Required"

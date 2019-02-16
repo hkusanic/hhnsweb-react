@@ -16,7 +16,7 @@ export class SingleLecture extends Component {
             <div className="col-md-6 scaleFadeInWrap">
                 <div className="wow scaleFadeIn" data-wow-delay=".1s">
                     <article className="post-modern">
-                        <h4 className="post-modern-title"><Link to={{ pathname: '/lectureDetails', state:this.props.lecture }}><a href="single-blog-post.html">{renderHTML(this.props.lecture.title.en)}</a></Link></h4>
+                        <h4 className="post-modern-title"><Link to={{ pathname: '/lectureDetails', state:this.props.lecture }}>{renderHTML(this.props.lecture.title.en)}</Link></h4>
                         <ul className="post-modern-meta">
                             <li>{this.props.lecture.event}</li>
                             <li>
