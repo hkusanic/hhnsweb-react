@@ -44,6 +44,22 @@ export class Booking extends Component {
             })
         }
     }
+
+    ApprovedText = () => {
+        return (
+            <div>
+                <p>Dear <span style={{ fontWeight: '400' }}>{this.state.user.firstName} {this.state.user.last}</span>,</p>
+                <div>Please accept our humble obeisances,</div>
+                <div>All glories to Srila Prabhupada!</div>
+                <div>&nbsp;</div>
+                <div>Your request is under a review.&nbsp;</div>
+                <div>Once its is approved you will receive an email with further instructions.</div>
+                <div>&nbsp;</div>
+                <div>Your servants,</div>
+                <div>web-site administrators</div>
+            </div>
+        )
+    }
     render() {
         return (
             <div>
@@ -58,7 +74,8 @@ export class Booking extends Component {
                 {
                     this.props.appointment.isSubmitted ?
                         <div className="requestDiv">
-                            <p className="requestText">Your request is under review, you will receive an email once your request is reviewed</p>
+                            <p className="Bookingsubmit">
+                                {this.ApprovedText()}</p>
                         </div>
                         :
                         (!this.props.appointment.isSubmitted && !this.props.appointment.appointmentData && !this.props.appointment.appointmentData.Appointment) ?
@@ -78,7 +95,9 @@ export class Booking extends Component {
                                 (this.props.appointment.appointmentData && this.props.appointment.appointmentData.Appointment && !this.props.appointment.appointmentData.Appointment.approved &&
                                     !this.props.isSubmitted) ?
                                     < div className="requestDiv">
-                                        <p className="requestText">Your request is under review, you will receive an email once your request is reviewed</p>
+                                        <p className="Bookingsubmit">
+                                            {this.ApprovedText()}
+                                        </p>
                                     </div>
                                     :
                                     <iframe

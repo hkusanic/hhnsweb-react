@@ -168,11 +168,10 @@
     }
   
     .requestDiv {
-        height: 100px;
         width: 100%;
         text-align: center;
-        margin-top: 10%;
-        margin-bottom: 10%;
+        margin-top: 2%;
+        margin-bottom: 3%;
     }
 
     .requestText {
@@ -238,6 +237,14 @@
     padding-bottom: 2%; 
 }
 
+.Bookingsubmit {
+    text-align: left;
+    padding-left: 35%;
+    font-size: 16px;
+    font-weight: 300;
+    color: none !important;
+
+}
     @media(min-width: 780px) {
         .head {
             display: contents !important;
