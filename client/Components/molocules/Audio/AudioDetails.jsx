@@ -5,9 +5,6 @@ export class AudioDetails extends Component {
     constructor(props) {
         super(props);
     }
-    componentDidMount() {
-        console.log("props=====>>", this.props);
-    }
 
     render() {
         if (!this.props.location.state) {
@@ -15,21 +12,21 @@ export class AudioDetails extends Component {
         }
         return (
             <div>
-                <section class="section section-lg">
-                    <div class="container">
-                        <div class="row row-100">
-                            <div class="col-lg-12">
-                                <article class="post-creative">
-                                    <h3 class="post-creative-title">
+                <section className="section section-lg">
+                    <div className="container">
+                        <div className="row row-100">
+                            <div className="col-lg-12">
+                                <article className="post-creative">
+                                    <h3 className="post-creative-title">
                                         {renderHTML(this.props.location.state.title.en)}
                                     </h3>
-                                    <ul class="post-creative-meta">
-                                        <li><span class="icon mdi mdi-calendar-clock"></span>
-                                            <time datetime="2018">
+                                    <ul className="post-creative-meta">
+                                        <li><span className="icon mdi mdi-calendar-clock"></span>
+                                            <time dateTime="2018">
                                                 {new Date(this.props.location.state.date).toDateString()}
                                             </time>
                                         </li>
-                                        <li><span class="icon mdi mdi-tag-multiple"></span><a>Lecture</a></li>
+                                        <li><span className="icon mdi mdi-tag-multiple"></span><a>Lecture</a></li>
                                     </ul>
                                 </article>
                                 <div className="audioStyle">
@@ -59,8 +56,6 @@ export class AudioDetails extends Component {
                                     </table>
                                 </div>
                             </div>
-                            {/* <div class="col-lg-4">
-                            </div> */}
                         </div>
                     </div>
                 </section>

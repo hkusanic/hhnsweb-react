@@ -31,14 +31,14 @@ export class SingleBlog extends Component {
                         <a className="post-modern-media">
                             {/* <img src="images/grid-blog-4-571x353.jpg" alt="" width="100" height="100" /> */}
                         </a>
-                        <h4 className="post-modern-title"><Link to={{ pathname: '/blogDetails', state:this.props.blog }}><a href="single-blog-post.html">{renderHTML(reactCookie.load('languageCode') === 'en'?this.props.blog.title_en: this.props.blog.title_ru)}</a></Link></h4>
+                        <h4 className="post-modern-title"><Link to={{ pathname: '/blogDetails', state:this.props.blog }}>{renderHTML(reactCookie.load('languageCode') === 'en'?this.props.blog.title_en: this.props.blog.title_ru)}</Link></h4>
                         <ul className="post-modern-meta">
                             <li>by {this.props.blog.author}</li>
                             <li>
-                                <time datetime="2018">{new Date(this.props.blog.date).toDateString()}</time>
+                                <time dateTime="2018">{new Date(this.props.blog.date).toDateString()}</time>
                             </li>
                         </ul>
-                        <p>{renderHTML(this.showing100Characters(reactCookie.load('languageCode') === 'en'? this.props.blog.body_en : this.props.blog.body_ru ))}</p>
+                        {renderHTML(this.showing100Characters(reactCookie.load('languageCode') === 'en'? this.props.blog.body_en : this.props.blog.body_ru ))}
                     </article>
                 </div>
             </div>

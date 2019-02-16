@@ -225,6 +225,9 @@
         padding-bottom: 3%;
     }
 
+    .borderright{
+        border-right: 0px !important;
+    }
     @media(min-width: 780px) {
         .head {
             display: contents !important;

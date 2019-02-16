@@ -17,7 +17,6 @@ export class BookingForm extends Component {
             "disciple": this.state.disciple,
             "requestedFor": this.state.requestFor
         }
-        console.log("body ====>>>>", body);
         this.props.createAppointment(body);
     }
 
@@ -27,11 +26,8 @@ export class BookingForm extends Component {
         })
     }
     handleChangeDarshan = (event) => {
-        console.log("requestFor ===>>", event.target.value);
         this.setState({
             requestFor: event.target.value
-        }, () => {
-            console.log("requestFor======>>>>", this.state.requestFor);
         })
     }
     handleDiscipleChange = (event) => {
@@ -43,46 +39,35 @@ export class BookingForm extends Component {
     render() {
         return (
             <div id="rd-navbar-register-5">
-                <form className="rd-form rd-form-small">
+                <form id="bookingForm" className="rd-form rd-form-small">
                     <div className="form-wrap">
                         <input
                             className="form-input"
-                            id="register-firstName-5"
                             type="text"
-                            name="firstname"
                             placeholder="First Name"
-                            readonly="readonly"
-                            value={this.props.user.firstName}
-                            data-constraints="@Required" />
+                            readOnly="readonly"
+                            value={this.props.user.firstName} />
                     </div>
                     <div className="form-wrap">
                         <input
                             className="form-input"
-                            id="register-lastName-5"
                             type="text"
-                            name="lastName"
-                            readonly="readonly"
+                            readOnly="readonly"
                             placeholder="Last Name"
-                            value={this.props.user.last}
-                            data-constraints="@Required" />
+                            value={this.props.user.last} />
                     </div>
                     <div className="form-wrap">
                         <input
                             className="form-input"
-                            id="register-email-5"
                             type="email"
-                            name="email"
-                            readonly="readonly"
+                            readOnly="readonly"
                             placeholder="E-mail"
-                            value={this.props.user.email}
-                            data-constraints="@Email @Required" />
+                            value={this.props.user.email} />
                     </div>
                     <div className="form-wrap">
                         <input
                             className="form-input"
-                            id="register-mobile-5"
-                            type="number"
-                            name="number"
+                            type="text"
                             placeholder="Mobile Number"
                             data-constraints="@Required"
                             onChange={this.handleChangeMobile} />
@@ -97,35 +82,35 @@ export class BookingForm extends Component {
                     </div>
                     <div className="form-wrap">
                         <p className="radioDiv">Are you Niranjana Swami Disciple</p>
-                        <div class="custom-control custom-radio">
+                        <div className="custom-control custom-radio">
                             <input
                                 type="radio"
-                                class="custom-control-input"
+                                className="custom-control-input"
                                 id="no"
                                 value="no"
                                 checked={this.state.disciple === 'no'}
                                 onChange={this.handleDiscipleChange} />
-                            <label class="custom-control-label" htmlFor="no">No</label>
+                            <label className="custom-control-label" htmlFor="no">No</label>
                         </div>
-                        <div class="custom-control custom-radio">
+                        <div className="custom-control custom-radio">
                             <input
                                 type="radio"
-                                class="custom-control-input"
+                                className="custom-control-input"
                                 id="disciple"
                                 value="disciple"
                                 checked={this.state.disciple === 'disciple'}
                                 onChange={this.handleDiscipleChange} />
-                            <label class="custom-control-label" htmlFor="disciple">Disciple</label>
+                            <label className="custom-control-label" htmlFor="disciple">Disciple</label>
                         </div>
-                        <div class="custom-control custom-radio">
+                        <div className="custom-control custom-radio">
                             <input
                                 type="radio"
-                                class="custom-control-input"
+                                className="custom-control-input"
                                 id="aspiring_disciple"
                                 value="aspiring_disciple"
                                 checked={this.state.disciple === 'aspiring_disciple'}
                                 onChange={this.handleDiscipleChange} />
-                            <label class="custom-control-label" htmlFor="aspiring_disciple">Aspiring Disciple</label>
+                            <label className="custom-control-label" htmlFor="aspiring_disciple">Aspiring Disciple</label>
                         </div>
                     </div>
                     <div className="form-wrap">
