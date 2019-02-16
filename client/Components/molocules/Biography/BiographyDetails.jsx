@@ -21,6 +21,7 @@ export class BiographyDetails extends Component {
                                     <h3 className="post-creative-title alignment padLeft">
                                         {renderHTML(reactCookie.load('languageCode') === 'en' ? this.props.location.state.title_en : this.props.location.state.title_ru)}
                                     </h3>
+                                    <img className="biodetailsImg" src={this.props.location.state.img} alt="" width="300" height="300" />
                                     {renderHTML(reactCookie.load('languageCode') === 'en' ? this.props.location.state.content_en : this.props.location.state.content_ru)}
                                 </article>
                             </div>

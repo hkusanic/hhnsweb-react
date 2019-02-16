@@ -46,13 +46,13 @@ export class Home extends Component {
                     <Switch>
                         <Route exact path='/' component={Carousel} />
                         <Route path='/forgotPassword' component={ForgotPassword} />
+                        <Route path='/biograhyDetails' component={BiographyDetails} />
                         <ShellCompoenent>
                             <Route path='/blog' component={Blog} />
                             <Route path='/booking' component={Booking} />
                             <Route path='/calender' component={Calender} />
                             <Route path='/lectures' component={Lectures} />
                             <Route path='/blogDetails' component={BlogDetails} />
-                            <Route path='/biograhyDetails' component={BiographyDetails} />
                             <Route path='/lectureDetails' component={LectureDetails} />
                             <Route path='/audio' component={AudioList} />
                             <Route path='/audioDetails' component={AudioDetails} />
