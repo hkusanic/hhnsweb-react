@@ -58,40 +58,37 @@ export class Booking extends Component {
                 {
                     this.props.appointment.isSubmitted ?
                         <div className="requestDiv">
-                                    <p className="requestText">Your request is under reviewed, you will receive an email once your request is reviewed</p>
-                        </div>
-                        : ''
-                }
-                {
-                    (!this.props.appointment.isSubmitted && !this.props.appointment.appointmentData && !this.props.appointment.appointmentData.Appointment) ?
-                        <div>
-                            {/* <div className="progressBarDiv">
-                                <Progress percent={50} />
-                            </div> */}
-                            <div className="bookingformDiv">
-                                <p className="bookingForm">Booking Form</p>
-                                <BookingForm
-                                    user={this.state.user ? this.state.user : ''}
-                                    createAppointment={this.props.createAppointment} />
-                            </div>
+                            <p className="requestText">Your request is under review, you will receive an email once your request is reviewed</p>
                         </div>
                         :
-                        (
-                            (this.props.appointment.appointmentData && this.props.appointment.appointmentData.Appointment && !this.props.appointment.appointmentData.Appointment.approved &&
-                                !this.props.isSubmitted) ?
-                                < div className="requestDiv">
-                                    <p className="requestText">Your request is under reviewed, you will receive an email once your request is reviewed</p>
+                        (!this.props.appointment.isSubmitted && !this.props.appointment.appointmentData && !this.props.appointment.appointmentData.Appointment) ?
+                            <div>
+                                {/* <div className="progressBarDiv">
+                                <Progress percent={50} />
+                            </div> */}
+                                <div className="bookingformDiv">
+                                    <p className="bookingForm">Booking Form</p>
+                                    <BookingForm
+                                        user={this.state.user ? this.state.user : ''}
+                                        createAppointment={this.props.createAppointment} />
                                 </div>
-                                :
-                                <iframe
-                                    src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
-                                    id="ycbmiframeniranjanaswami"
-                                    className="bookingStyle"
-                                    frameBorder="0"
-                                    allowtransparency="true">
-                                </iframe>
-
-                        )
+                            </div>
+                            :
+                            (
+                                (this.props.appointment.appointmentData && this.props.appointment.appointmentData.Appointment && !this.props.appointment.appointmentData.Appointment.approved &&
+                                    !this.props.isSubmitted) ?
+                                    < div className="requestDiv">
+                                        <p className="requestText">Your request is under review, you will receive an email once your request is reviewed</p>
+                                    </div>
+                                    :
+                                    <iframe
+                                        src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
+                                        id="ycbmiframeniranjanaswami"
+                                        className="bookingStyle"
+                                        frameBorder="0"
+                                        allowtransparency="true">
+                                    </iframe>
+                            )
                 }
             </div >
         )
