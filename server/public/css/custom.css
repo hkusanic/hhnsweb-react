@@ -228,6 +228,16 @@
     .borderright{
         border-right: 0px !important;
     }
+
+    .biodetailsImg {
+    width: 90% !important;
+    height: 400px !important;
+    margin-left: 10%;
+    padding-right: 10%;
+    margin-top: 2%;
+    padding-bottom: 2%; 
+}
+
     @media(min-width: 780px) {
         .head {
             display: contents !important;

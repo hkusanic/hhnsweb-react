@@ -8,17 +8,41 @@ import banner from '../../../assets/images/header.png';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import { LanguageSwitch } from '../../atoms/LanguageSwitch/LanguageSwitch';
-
+import * as DATA from '../../../constants/biographies';
+import image from './../../../assets/images/3(1).png';
 
 export class Navigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isUserLogin: false
+            isUserLogin: false,
+            Prabhupada_swami_bio: '',
+            Niranjana_swami_bio: ''
+
         }
     }
 
     componentDidMount() {
+        const Prabhupada_swami_bio = {
+            img : image,
+            title_en: DATA.BIOGRAPHY.one_title_en,
+            title_ru: DATA.BIOGRAPHY.one_title_ru,
+            content_en: DATA.BIOGRAPHY.one_content_en,
+            content_ru: DATA.BIOGRAPHY.one_content_ru
+
+        }
+        const Niranjana_swami_bio = {
+            img : image,
+            title_en: DATA.BIOGRAPHY.two_title_en,
+            title_ru: DATA.BIOGRAPHY.two_title_ru,
+            content_en: DATA.BIOGRAPHY.two_content_en,
+            content_ru: DATA.BIOGRAPHY.two_content_ru
+        }
+        const isUserLogin = Auth.isUserAuthenticated();
+        this.setState({ isUserLogin, Prabhupada_swami_bio, Niranjana_swami_bio })
+
+    }
+    componentWillReceiveProps() {
         const isUserLogin = Auth.isUserAuthenticated();
         this.setState({ isUserLogin })
     }
@@ -78,6 +102,12 @@ export class Navigation extends Component {
                                                         {({ translate }) => translate('homePage')}
                                                     </Translate>
                                                 </Link>
+                                            </li>
+                                            <li className="rd-nav-item active"><a className="rd-nav-link">Biography</a>
+                                                <ul className="rd-menu rd-navbar-dropdown">
+                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} className="rd-dropdown-link">A.C. Bhaktivedanta Swami Prabhupada</Link></li>
+                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} className="rd-dropdown-link">Niranjana Swami</Link></li>
+                                                </ul>
                                             </li>
                                             {!this.state.isUserLogin ?
                                                 <li className="rd-nav-item active"><Link className="rd-nav-link" to="/lectures">Audio</Link>
