@@ -33,7 +33,7 @@ export class VideoDetails extends Component {
                                     <div className="row row-50 row-xxl-70 padTop flexDiv">
                                         {
                                             this.props.location.state.youtube.map((item, key) => {
-                                                return <div className="flexRow">
+                                                return <div key={key} className="flexRow">
                                                     <iframe className="iframeStyle"
                                                         src={item}>
                                                     </iframe>

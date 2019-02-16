@@ -5,7 +5,6 @@ import reactCookie from 'react-cookies';
 export class BiographyDetails extends Component {
     constructor(props) {
         super(props);
-        console.log('---->',props);
     }
 
     render() {
@@ -14,18 +13,18 @@ export class BiographyDetails extends Component {
         }
         return (
             <div>
-                <section class="section section-lg">
-                    <div class="container padLeftBlog">
-                        <div class="row row-50">
-                            <div class="col-lg-12">
-                                <article class="post-creative">
-                                    <h3 class="post-creative-title alignment padLeft">
-                                        {renderHTML(reactCookie.load('languageCode') === 'en'?this.props.location.state.title_en:this.props.location.state.title_ru)}
+                <section className="section section-lg">
+                    <div className="container padLeftBlog">
+                        <div className="row row-50">
+                            <div className="col-lg-12">
+                                <article className="post-creative">
+                                    <h3 className="post-creative-title alignment padLeft">
+                                        {renderHTML(reactCookie.load('languageCode') === 'en' ? this.props.location.state.title_en : this.props.location.state.title_ru)}
                                     </h3>
-                                    {renderHTML(reactCookie.load('languageCode') === 'en'?this.props.location.state.content_en:this.props.location.state.content_ru)}
+                                    {renderHTML(reactCookie.load('languageCode') === 'en' ? this.props.location.state.content_en : this.props.location.state.content_ru)}
                                 </article>
                             </div>
-                            <div class="col-lg-4">
+                            <div className="col-lg-4">
                             </div>
                         </div>
                     </div>

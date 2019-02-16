@@ -48,7 +48,7 @@ export class Navigation extends Component {
                                         {/* </div> */}
                                     </div>
                                 </div>
-                                <img src={banner} alt="" width="100%" height="100%" srcSet="../../../assets/images/banner.png 2x" />
+                                <img src={banner} alt="" width="100%" height="100%"/>
 
                             </div>
                             <div className="rd-navbar-main-outer menubanner">
@@ -59,8 +59,8 @@ export class Navigation extends Component {
                                     <div className="rd-navbar-nav-wrap" id="rd-navbar-nav-wrap-1">
 
                                         {/* <div className="rd-navbar-search" id="rd-navbar-search-1"> */}
-                                            {/* <button className="rd-navbar-search-toggle" data-rd-navbar-toggle="#rd-navbar-search-1"><span></span></button> */}
-                                            {/* <form className="rd-search" action="search-results.html" data-search-live="rd-search-results-live-1" method="GET">
+                                        {/* <button className="rd-navbar-search-toggle" data-rd-navbar-toggle="#rd-navbar-search-1"><span></span></button> */}
+                                        {/* <form className="rd-search" action="search-results.html" data-search-live="rd-search-results-live-1" method="GET">
                                                 <div className="form-wrap">
                                                     <label className="form-label" htmlFor="rd-navbar-search-form-input-1">Search...</label>
                                                     <input className="form-input rd-navbar-search-form-input" id="rd-navbar-search-form-input-1" type="text" name="s" autoComplete="off" />
@@ -72,41 +72,48 @@ export class Navigation extends Component {
 
                                         <ul className="rd-navbar-nav">
                                             <li className="rd-nav-item"><LanguageSwitch /></li>
-                                            <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">
-                                                <Translate>
-                                                    {({ translate }) => translate('homePage')}
-                                                </Translate>
-                                            </a></Link></li>
+                                            <li className="rd-nav-item active">
+                                                <Link className="rd-nav-link" to="/">
+                                                    <Translate>
+                                                        {({ translate }) => translate('homePage')}
+                                                    </Translate>
+                                                </Link>
+                                            </li>
                                             {!this.state.isUserLogin ?
-                                                <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Audio</a></Link>
+                                                <li className="rd-nav-item active"><Link className="rd-nav-link" to="/lectures">Audio</Link>
                                                     <ul className="rd-menu rd-navbar-dropdown">
-                                                        <li className="rd-dropdown-item"><Link to="/audio"><a className="rd-dropdown-link">Recent Audio</a></Link></li>
+                                                        <li className="rd-dropdown-item"><Link className="rd-dropdown-link" to="/audio">Recent Audio</Link></li>
                                                         <li className="rd-dropdown-item"><a className="rd-dropdown-link">Lectures</a></li>
                                                         <li className="rd-dropdown-item"><a className="rd-dropdown-link">Kirtan And Bhajan</a></li>
                                                     </ul>
                                                 </li>
                                                 : ''}
                                             {!this.state.isUserLogin ?
-                                                <li className="rd-nav-item active"><Link to="/lectures"><a className="rd-nav-link">Video</a></Link>
+                                                <li className="rd-nav-item active"><Link className="rd-nav-link" to="/lectures">Video</Link>
                                                     <ul className="rd-menu rd-navbar-dropdown">
-                                                        <li className="rd-dropdown-item"><Link to="/video"><a className="rd-dropdown-link" >Recent Video</a></Link></li>
-                                                        <li className="rd-dropdown-item"><Link to="/lectures"><a className="rd-dropdown-link">
+                                                        <li className="rd-dropdown-item"><Link className="rd-dropdown-link" to="/video">Recent Video</Link></li>
+                                                        <li className="rd-dropdown-item"><Link className="rd-dropdown-link" to="/lectures">
                                                             <Translate>
                                                                 {({ translate }) => translate('navLectures')}
-                                                            </Translate></a></Link></li>
+                                                            </Translate></Link>
+                                                        </li>
                                                         <li className="rd-dropdown-item"><a className="rd-dropdown-link" >Kirtan And Bhajan</a></li>
                                                     </ul>
                                                 </li>
                                                 : ''}
-                                            <li className="rd-nav-item active"><Link to="/blog"><a className="rd-nav-link"> <Translate>
-                                                {({ translate }) => translate('navBlog')}
-                                            </Translate></a></Link></li>
-                                            <li className="rd-nav-item active"><Link to="/calender"><a className="rd-nav-link">Calendar</a></Link></li>
-                                            <li className="rd-nav-item"><Link to="/booking"><a className="rd-nav-link">Booking</a></Link></li>
+                                            <li className="rd-nav-item active">
+                                                <Link className="rd-nav-link" to="/blog">
+                                                    <Translate>
+                                                        {({ translate }) => translate('navBlog')}
+                                                    </Translate>
+                                                </Link>
+                                            </li>
+                                            <li className="rd-nav-item active"><Link className="rd-nav-link" to="/calender">Calendar</Link></li>
+                                            <li className="rd-nav-item active"><Link className="rd-nav-link" to="/booking">Booking</Link></li>
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
-                                            {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link to="/"><a className="rd-nav-link">Admin</a></Link></li> : ''}
-                                            <li className="rd-nav-item"><Link to="/"><a className="rd-nav-link"><Login /></a></Link></li>
+                                            {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}
+                                            <li className="rd-nav-item"><Link className="rd-nav-link" to="/"><Login /></Link></li>
                                         </ul>
                                     </div>
                                 </div>

@@ -12,21 +12,21 @@ export class LectureDetails extends Component {
         }
         return (
             <div>
-                <section class="section section-lg">
-                    <div class="container">
-                        <div class="row row-50">
-                            <div class="col-lg-8">
-                                <article class="post-creative">
-                                    <h3 class="post-creative-title">
+                <section className="section section-lg">
+                    <div className="container">
+                        <div className="row row-50">
+                            <div className="col-lg-8">
+                                <article className="post-creative">
+                                    <h3 className="post-creative-title">
                                         {renderHTML(this.props.location.state.title.en)}
                                     </h3>
-                                    <ul class="post-creative-meta">
-                                        <li><span class="icon mdi mdi-calendar-clock"></span>
-                                            <time datetime="2018">
+                                    <ul className="post-creative-meta">
+                                        <li><span className="icon mdi mdi-calendar-clock"></span>
+                                            <time dateTime="2018">
                                                 {new Date(this.props.location.state.date).toDateString()}
                                             </time>
                                         </li>
-                                        <li><span class="icon mdi mdi-tag-multiple"></span><a>Lecture</a></li>
+                                        <li><span className="icon mdi mdi-tag-multiple"></span><a>Lecture</a></li>
                                     </ul>
                                 </article>
                                 <div>
@@ -50,21 +50,25 @@ export class LectureDetails extends Component {
                                         </tbody>
                                     </table>
                                     <div className="padTop">
-                                        {
-                                            this.props.location.state.youtube.map((item, key) => {
-                                                return <tr>
-                                                    <td>
-                                                        <iframe className="iframeStyle"
-                                                            src={item}>
-                                                        </iframe>
-                                                    </td>
-                                                </tr>
-                                            })
-                                        }
+                                        <table>
+                                            <tbody>
+                                                {
+                                                    this.props.location.state.youtube.map((item, key) => {
+                                                        return <tr key={key}>
+                                                            <td>
+                                                                <iframe className="iframeStyle"
+                                                                    src={item}>
+                                                                </iframe>
+                                                            </td>
+                                                        </tr>
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div className="col-lg-4">
                             </div>
                         </div>
                     </div>
