@@ -109,7 +109,7 @@ export class Navigation extends Component {
                                                     <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} className="rd-dropdown-link">Niranjana Swami</Link></li>
                                                 </ul>
                                             </li>
-                                            {!this.state.isUserLogin ?
+                                            {/* {!this.state.isUserLogin ?
                                                 <li className="rd-nav-item active"><Link className="rd-nav-link" to="/lectures">Audio</Link>
                                                     <ul className="rd-menu rd-navbar-dropdown">
                                                         <li className="rd-dropdown-item"><Link className="rd-dropdown-link" to="/audio">Recent Audio</Link></li>
@@ -130,7 +130,7 @@ export class Navigation extends Component {
                                                         <li className="rd-dropdown-item"><a className="rd-dropdown-link" >Kirtan And Bhajan</a></li>
                                                     </ul>
                                                 </li>
-                                                : ''}
+                                                : ''} */}
                                             <li className="rd-nav-item active">
                                                 <Link className="rd-nav-link" to="/blog">
                                                     <Translate>
