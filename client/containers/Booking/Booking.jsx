@@ -12,7 +12,8 @@ export class Booking extends Component {
         super(props);
         this.state = {
             user: '',
-            DarshanApproved: ''
+            DarshanApproved: '',
+            DarshanRequested: 'Darshan-15'
         }
         this.props.resetState();
     }
@@ -36,13 +37,24 @@ export class Booking extends Component {
     }
 
     handleDarshanApproved = (appointment) => {
+        let approvedFor = '';
+        let requestedFor = '';
         if (appointment.approved) {
-            let approvedFor = appointment.approvedFor;
+            approvedFor = appointment.approvedFor;
             approvedFor = approvedFor.replace('-', '');
-            this.setState({
-                DarshanApproved: approvedFor
-            })
         }
+        requestedFor = appointment.requestedFor;
+        this.setState({
+            DarshanApproved: approvedFor,
+            DarshanRequested: requestedFor
+        })
+
+    }
+
+    handleDarshanRequested = (event) => {
+        this.setState({
+            DarshanRequested: event.target.value
+        })
     }
 
     ApprovedText = () => {
@@ -52,7 +64,7 @@ export class Booking extends Component {
                 <div>Please accept our humble obeisances,</div>
                 <div>All glories to Srila Prabhupada!</div>
                 <div>&nbsp;</div>
-                <div>Your request for [number_of_minutes] darshan with His Holines Niranjana Swami is under review.&nbsp;</div>
+                <div>Your request for <span style={{ fontWeight: '400' }}>{this.state.DarshanRequested} minutes</span>  with His Holines Niranjana Swami is under review.&nbsp;</div>
                 <div>Once its is approved you will receive an email with further instructions.</div>
                 <div>&nbsp;</div>
                 <div>Your servants,</div>
@@ -87,7 +99,9 @@ export class Booking extends Component {
                                     <p className="bookingForm">Booking Form</p>
                                     <BookingForm
                                         user={this.state.user ? this.state.user : ''}
-                                        createAppointment={this.props.createAppointment} />
+                                        createAppointment={this.props.createAppointment}
+                                        handleDarshanRequested={this.handleDarshanRequested}
+                                        error={this.props.appointment.error} />
                                 </div>
                             </div>
                             :

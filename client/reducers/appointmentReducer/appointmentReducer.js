@@ -25,7 +25,7 @@ const appointmentReducer = (state = initialState, action) => {
             const error = action.payload.response.data.detail.detail.errmsg;
             state = {
                 ...state,
-                error: error ? error : 'Error Occured',
+                error: error ? error : 'Error Occured, Please try again',
                 loading: false,
                 isSubmitted: false,
                 appointmentData: ''
