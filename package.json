@@ -68,6 +68,7 @@
   "scripts": {
     "lint": "eslint .",
     "start": "webpack --config webpack.config.js && node keystone.js",
+    "build": "webpack --config webpack.config.js",
     "compile": "webpack --config webpack.config.js --hot"
   }
 }

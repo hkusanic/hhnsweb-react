@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+hooks:
+  AfterInstall:
+    - location: /home/ec2-user/scripts/build.sh
+      timeout: 300
+      runas: ec2-user
+  ApplicationStart:
+    - location: /home/ec2-user/scripts/start.sh
+      timeout: 300
+      runas: ec2-user
+  ApplicationStop:
+    - location: /home/ec2-user/scripts/stop.sh
+      timeout: 300
+      runas: ec2-user
