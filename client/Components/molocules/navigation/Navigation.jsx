@@ -17,7 +17,8 @@ export class Navigation extends Component {
         this.state = {
             isUserLogin: false,
             Prabhupada_swami_bio: '',
-            Niranjana_swami_bio: ''
+            Niranjana_swami_bio: '',
+            floatImage: '',
 
         }
     }
@@ -41,10 +42,27 @@ export class Navigation extends Component {
         const isUserLogin = Auth.isUserAuthenticated();
         this.setState({ isUserLogin, Prabhupada_swami_bio, Niranjana_swami_bio })
 
+        window.addEventListener('scroll', this.handleScroll);
+
     }
     componentWillReceiveProps() {
         const isUserLogin = Auth.isUserAuthenticated();
         this.setState({ isUserLogin })
+    }
+
+    componentWillMount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    handleScroll = (event) => {
+         if($('.rd-navbar--is-stuck')){
+           if($('.rd-navbar--is-stuck').length === 1){
+            this.setState({ floatImage: 'styleImage'  })
+           }
+           else {
+            this.setState({ floatImage: ''  })
+           }
+         }
     }
 
     render() {
@@ -77,7 +95,7 @@ export class Navigation extends Component {
                             </div>
                             <div className="rd-navbar-main-outer menubanner">
                                 <div className="menulogoDiv">
-                                    <img src={logo} className="menulogoImg" alt="" width="100%" height="100%" srcSet="../../../assets/images/Prabhupada.png 2x" />
+                                    <img src={logo} className={'menulogoImg' +' '+ this.state.floatImage} alt="" width="100%" height="100%" srcSet="../../../assets/images/Prabhupada.png 2x" />
                                 </div>
                                 <div className="rd-navbar-main">
                                     <div className="rd-navbar-nav-wrap" id="rd-navbar-nav-wrap-1">
