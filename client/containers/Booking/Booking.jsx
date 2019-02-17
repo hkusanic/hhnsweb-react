@@ -52,11 +52,11 @@ export class Booking extends Component {
                 <div>Please accept our humble obeisances,</div>
                 <div>All glories to Srila Prabhupada!</div>
                 <div>&nbsp;</div>
-                <div>Your request is under a review.&nbsp;</div>
+                <div>Your request for [number_of_minutes] darshan with His Holines Niranjana Swami is under review.&nbsp;</div>
                 <div>Once its is approved you will receive an email with further instructions.</div>
                 <div>&nbsp;</div>
                 <div>Your servants,</div>
-                <div>web-site administrators</div>
+                <div>Site administrators</div>
             </div>
         )
     }
