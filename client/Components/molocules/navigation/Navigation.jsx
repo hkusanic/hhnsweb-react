@@ -9,7 +9,8 @@ import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import { LanguageSwitch } from '../../atoms/LanguageSwitch/LanguageSwitch';
 import * as DATA from '../../../constants/biographies';
-import image from './../../../assets/images/3(1).png';
+import prabhupadaImage from './../../../assets/images/bio/hdgacbsp.jpg';
+import niranjanaSwamiImage from './../../../assets/images/bio/hhnrs.jpg';
 
 export class Navigation extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ export class Navigation extends Component {
 
     componentDidMount() {
         const Prabhupada_swami_bio = {
-            img : image,
+            img : prabhupadaImage,
             title_en: DATA.BIOGRAPHY.one_title_en,
             title_ru: DATA.BIOGRAPHY.one_title_ru,
             content_en: DATA.BIOGRAPHY.one_content_en,
@@ -33,7 +34,7 @@ export class Navigation extends Component {
 
         }
         const Niranjana_swami_bio = {
-            img : image,
+            img : niranjanaSwamiImage,
             title_en: DATA.BIOGRAPHY.two_title_en,
             title_ru: DATA.BIOGRAPHY.two_title_ru,
             content_en: DATA.BIOGRAPHY.two_content_en,

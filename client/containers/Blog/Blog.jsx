@@ -3,6 +3,7 @@ import SingleBlog from '../../Components/molocules/SingleBlog/SIngleBlog';
 import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
 import { getBlogs,getBlog } from '../../actions/blogActions';
+import blogHeaderImage from '../../assets/images/blog/blog_header.png';
 export class Blogs extends Component {
     constructor(props) {
         super(props);
@@ -39,7 +40,14 @@ export class Blogs extends Component {
 
     render() {
         return (
-            <div >
+            <div>
+				<section className="breadcrumbs-custom bg-image context-dark" style={{ backgroundImage: "url(" + blogHeaderImage + ")" }}>
+					<div className="breadcrumbs-custom-inner">
+						<div className="container breadcrumbs-custom-container">
+						</div>
+					</div>
+				</section>
+                
                 <section className="section section-lg">
                     <div className="container centerAlign">
                         <div className="row row-50 row-xxl-70">

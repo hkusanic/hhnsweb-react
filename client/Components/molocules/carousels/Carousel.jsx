@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import script from "../../../assets/script";
-import image1 from './../../../assets/images/_DSC1480.png';
-import image2 from './../../../assets/images/1(1).png';
-import image3 from './../../../assets/images/2.png';
-import image4 from './../../../assets/images/3(1).png';
-import image5 from './../../../assets/images/IMG_2735.jpg';
+import image1 from './../../../assets/images/carousel/1.png';
+import image2 from './../../../assets/images/carousel/2.png';
+import image3 from './../../../assets/images/carousel/3.png';
+import image4 from './../../../assets/images/carousel/4.jpg';
 import SingleCarousel from '../../atoms/SingleCarousel/singleCarousel';
 import Biography from '../Biography/Biography';
 
@@ -37,10 +36,6 @@ export class Carousel extends Component {
                         text="" />
                     <SingleCarousel
                         image={image4}
-                        heading=""
-                        text="" />
-                    <SingleCarousel
-                        image={image5}
                         heading=""
                         text="" />
                 </div>
