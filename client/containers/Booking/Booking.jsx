@@ -13,27 +13,32 @@ export class Booking extends Component {
         this.state = {
             user: '',
             DarshanApproved: '',
-            DarshanRequested: 'Darshan-15'
+            DarshanRequested: 'Darshan-15',
+            isUserLogin: false
         }
         this.props.resetState();
     }
     componentDidMount() {
         const user = Auth.getUserDetails();
+        const isUserLogin = Auth.isUserAuthenticated();
         if (user) {
             this.setState({
                 user: JSON.parse(user),
+                isUserLogin
             }, () => {
                 this.props.getAppointment(this.state.user.email);
             })
         }
     }
     componentWillReceiveProps(nextProps) {
+        const isUserLogin = Auth.isUserAuthenticated();
         if (this.props !== nextProps) {
             this.props = nextProps;
             if (this.props.appointment.appointmentData.Appointment) {
                 this.handleDarshanApproved(this.props.appointment.appointmentData.Appointment);
             }
         }
+        this.setState({isUserLogin})
     }
 
     handleDarshanApproved = (appointment) => {
@@ -84,44 +89,49 @@ export class Booking extends Component {
                     </section>
                 </div>
                 {
-                    this.props.appointment.isSubmitted ?
-                        <div className="requestDiv">
-                            <p className="Bookingsubmit">
-                                {this.ApprovedText()}</p>
-                        </div>
-                        :
-                        (!this.props.appointment.isSubmitted && !this.props.appointment.appointmentData && !this.props.appointment.appointmentData.Appointment) ?
-                            <div>
-                                {/* <div className="progressBarDiv">
+                    !this.state.isUserLogin ?
+
+                        (
+                            this.props.appointment.isSubmitted ?
+                                <div className="requestDiv">
+                                    <p className="Bookingsubmit">
+                                        {this.ApprovedText()}</p>
+                                </div>
+                                :
+                                (!this.props.appointment.isSubmitted && !this.props.appointment.appointmentData && !this.props.appointment.appointmentData.Appointment) ?
+                                    <div>
+                                        {/* <div className="progressBarDiv">
                                 <Progress percent={50} />
                             </div> */}
-                                <div className="bookingformDiv">
-                                    <p className="bookingForm">Booking Form</p>
-                                    <BookingForm
-                                        user={this.state.user ? this.state.user : ''}
-                                        createAppointment={this.props.createAppointment}
-                                        handleDarshanRequested={this.handleDarshanRequested}
-                                        error={this.props.appointment.error} />
-                                </div>
-                            </div>
-                            :
-                            (
-                                (this.props.appointment.appointmentData && this.props.appointment.appointmentData.Appointment && !this.props.appointment.appointmentData.Appointment.approved &&
-                                    !this.props.isSubmitted) ?
-                                    < div className="requestDiv">
-                                        <p className="Bookingsubmit">
-                                            {this.ApprovedText()}
-                                        </p>
+                                        <div className="bookingformDiv">
+                                            <p className="bookingForm">Booking Form</p>
+                                            <BookingForm
+                                                user={this.state.user ? this.state.user : ''}
+                                                createAppointment={this.props.createAppointment}
+                                                handleDarshanRequested={this.handleDarshanRequested}
+                                                error={this.props.appointment.error} />
+                                        </div>
                                     </div>
                                     :
-                                    <iframe
-                                        src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
-                                        id="ycbmiframeniranjanaswami"
-                                        className="bookingStyle"
-                                        frameBorder="0"
-                                        allowtransparency="true">
-                                    </iframe>
-                            )
+                                    (
+                                        (this.props.appointment.appointmentData && this.props.appointment.appointmentData.Appointment && !this.props.appointment.appointmentData.Appointment.approved &&
+                                            !this.props.isSubmitted) ?
+                                            < div className="requestDiv">
+                                                <p className="Bookingsubmit">
+                                                    {this.ApprovedText()}
+                                                </p>
+                                            </div>
+                                            :
+                                            <iframe
+                                                src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
+                                                id="ycbmiframeniranjanaswami"
+                                                className="bookingStyle"
+                                                frameBorder="0"
+                                                allowtransparency="true">
+                                            </iframe>
+                                    )
+                        )
+                        : ''
                 }
             </div >
         )
