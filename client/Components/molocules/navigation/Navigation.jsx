@@ -75,6 +75,7 @@ export class Navigation extends Component {
 
     handleBiographyClick = () => {
         $('.biography-submenu').removeClass('focus');
+        $('.biography-submenu').removeClass('opened');
     }
     
 
