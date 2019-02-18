@@ -37,14 +37,24 @@ export class Login extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.login !== this.props.login) {
       const isUserLogin = Auth.isUserAuthenticated();
-      this.setState({
-        error: nextProps.login.error,
-        regError: nextProps.login.regError,
-        isUserLogin
-      }, () =>{
-        location.reload();
-      })
+      if (!isUserLogin) {
+        this.setState({
+          error: nextProps.login.error,
+          regError: nextProps.login.regError,
+          isUserLogin
+        }, () => {
+          location.reload();
+        })
+
+      } else {
+        this.setState({
+          error: nextProps.login.error,
+          regError: nextProps.login.regError,
+          isUserLogin
+        })
+      }
     }
+
   }
 
   handleChange = (type, event) => {
@@ -63,7 +73,8 @@ export class Login extends Component {
     window.location.href = '/';
   }
 
-  signUP = () => {
+  signUP = (event) => {
+    event.preventDefault();
     if (!isNotEmpty(this.state.email_signup) || !isNotEmpty(this.state.password_signup) ||
       !isNotEmpty(this.state.firstName) || !isNotEmpty(this.state.lastName) ||
       !isNotEmpty(this.state.confirmPassword)) {
