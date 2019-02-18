@@ -92,19 +92,19 @@ export class Login extends Component {
             <ul className="list-inline-bordered">
 
               <li>
-                <li className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5">
+                <li className="rd-navbar-popup-toggle login-modal-1" data-rd-navbar-toggle="#rd-navbar-login-5">
                   <Translate>
                     {({ translate }) => translate('loginLabel')}
                   </Translate></li>
-                <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal" id="rd-navbar-login-5">
+                <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal login-modal-2" id="rd-navbar-login-5">
                   <h4>Log In</h4>
                   <LoginForm loginUser={this.props.loginUser} error={this.state.error} />
                   <p><Link to='/forgotPassword'>Forgot Password</Link></p>
                 </div>
               </li>
               <li>
-                <li className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-register-5">REGISTRATION</li>
-                <div className="rd-navbar-popup bg-gray-700 margin-left-register-modal" id="rd-navbar-register-5">
+                <li className="rd-navbar-popup-toggle register-modal-1" data-rd-navbar-toggle="#rd-navbar-register-5">REGISTRATION</li>
+                <div className="rd-navbar-popup bg-gray-700 margin-left-register-modal register-modal-2" id="rd-navbar-register-5">
                   <h4>Registration</h4>
                   <form className="rd-form rd-form-small">
                     <div className="form-wrap">

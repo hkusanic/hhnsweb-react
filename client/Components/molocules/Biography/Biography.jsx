@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SingleBiography from '../../atoms/SingleBiography/SingleBiography';
-import prabhupadaImage from './../../../assets/images/bio/hdgacbsp.jpg';
-import niranjanaSwamiImage from './../../../assets/images/bio/hhnrs.jpg';
+import prabhupadaImage from './../../../assets/images/bio/Prabhupada-Bio.png';
+import niranjanaSwamiImage from './../../../assets/images/bio/NRSBio.png';
 import * as DATA from '../../../constants/biographies';
 
 export class Biography extends Component {

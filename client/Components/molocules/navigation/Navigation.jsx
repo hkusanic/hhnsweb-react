@@ -9,8 +9,8 @@ import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import { LanguageSwitch } from '../../atoms/LanguageSwitch/LanguageSwitch';
 import * as DATA from '../../../constants/biographies';
-import prabhupadaImage from './../../../assets/images/bio/hdgacbsp.jpg';
-import niranjanaSwamiImage from './../../../assets/images/bio/hhnrs.jpg';
+import prabhupadaImage from './../../../assets/images/bio/Prabhupada-Bio.png';
+import niranjanaSwamiImage from './../../../assets/images/bio/NRSBio.png';
 
 export class Navigation extends Component {
     constructor(props) {
@@ -66,6 +66,21 @@ export class Navigation extends Component {
          }
     }
 
+    handleNavigationClick = () => {
+        $('.login-modal-2').removeClass('active');
+        if(!this.props.isLogin){
+            $('.login-modal-2').addClass('active');
+        }
+    }
+
+    handleBiographyClick = () => {
+        $('.biography-submenu').removeClass('focus');
+        $('.biography-submenu').removeClass('opened');
+    }
+    
+
+    
+
     render() {
         return (
             <div>
@@ -96,7 +111,7 @@ export class Navigation extends Component {
                             </div>
                             <div className="rd-navbar-main-outer menubanner">
                                 <div className="menulogoDiv">
-                                    <img src={logo} className={'menulogoImg' +' '+ this.state.floatImage} alt="" width="100%" height="100%" srcSet="../../../assets/images/Prabhupada.png 2x" />
+                                    <img src={logo} className={'menulogoImg' +' '+ this.state.floatImage} alt="" width="100%" height="100%" />
                                 </div>
                                 <div className="rd-navbar-main">
                                     <div className="rd-navbar-nav-wrap" id="rd-navbar-nav-wrap-1">
@@ -122,10 +137,10 @@ export class Navigation extends Component {
                                                     </Translate>
                                                 </Link>
                                             </li>
-                                            <li className="rd-nav-item active"><a className="rd-nav-link">Biography</a>
+                                            <li className="rd-nav-item active biography-submenu"><a className="rd-nav-link">Biography</a>
                                                 <ul className="rd-menu rd-navbar-dropdown">
-                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} className="rd-dropdown-link">A.C. Bhaktivedanta Swami Prabhupada</Link></li>
-                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} className="rd-dropdown-link">Niranjana Swami</Link></li>
+                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">A.C. Bhaktivedanta Swami Prabhupada</Link></li>
+                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">Niranjana Swami</Link></li>
                                                 </ul>
                                             </li>
                                             {/* {!this.state.isUserLogin ?
@@ -151,14 +166,14 @@ export class Navigation extends Component {
                                                 </li>
                                                 : ''} */}
                                             <li className="rd-nav-item active">
-                                                <Link className="rd-nav-link" to="/blog">
+                                                <Link className="rd-nav-link" to="/blog" onClick={this.handleNavigationClick}>
                                                     <Translate>
                                                         {({ translate }) => translate('navBlog')}
                                                     </Translate>
                                                 </Link>
                                             </li>
-                                            <li className="rd-nav-item active"><Link className="rd-nav-link" to="/calender">Calendar</Link></li>
-                                            <li className="rd-nav-item active"><Link className="rd-nav-link" to="/booking">Booking</Link></li>
+                                            <li className="rd-nav-item active"><Link className="rd-nav-link " to="/calender" onClick={this.handleNavigationClick}>Calendar</Link></li>
+                                            <li className="rd-nav-item active"><Link className="rd-nav-link" to="/booking" onClick={this.handleNavigationClick}>Booking</Link></li>
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
                                             {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}

@@ -31,21 +31,6 @@ export class ShellCompoenent extends Component {
         if (!this.state && !this.state.isUserLogin) {
             return <div>Loading.....</div>
         }
-        if (this.state.isUserLogin) {
-            return <section className="section section-md bg-gray-700 bgcolor">
-                <div className="container">
-                    <p className="loginheading loginWarning">Please login first to see the content </p>
-                    <div className="box-1">
-                        <h4 className="loginheading">
-                            <Translate>
-                                {({ translate }) => translate('loginLabel')}
-                            </Translate>
-                        </h4>
-                        <LoginForm loginUser={this.props.loginUser} error={this.state.error} />
-                    </div>
-                </div>
-            </section >
-        }
         return (
             <div>{this.props.children}</div>
         )
