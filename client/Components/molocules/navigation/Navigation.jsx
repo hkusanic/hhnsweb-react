@@ -9,8 +9,8 @@ import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import { LanguageSwitch } from '../../atoms/LanguageSwitch/LanguageSwitch';
 import * as DATA from '../../../constants/biographies';
-import prabhupadaImage from './../../../assets/images/bio/hdgacbsp.jpg';
-import niranjanaSwamiImage from './../../../assets/images/bio/hhnrs.jpg';
+import prabhupadaImage from './../../../assets/images/bio/Prabhupada-Bio.png';
+import niranjanaSwamiImage from './../../../assets/images/bio/NRSBio.png';
 
 export class Navigation extends Component {
     constructor(props) {
