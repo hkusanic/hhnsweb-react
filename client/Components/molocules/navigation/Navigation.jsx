@@ -72,6 +72,10 @@ export class Navigation extends Component {
             $('.login-modal-2').addClass('active');
         }
     }
+
+    handleBiographyClick = () => {
+        $('.biography-submenu').removeClass('focus');
+    }
     
 
     
@@ -132,10 +136,10 @@ export class Navigation extends Component {
                                                     </Translate>
                                                 </Link>
                                             </li>
-                                            <li className="rd-nav-item active"><a className="rd-nav-link">Biography</a>
+                                            <li className="rd-nav-item active biography-submenu"><a className="rd-nav-link">Biography</a>
                                                 <ul className="rd-menu rd-navbar-dropdown">
-                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} className="rd-dropdown-link">A.C. Bhaktivedanta Swami Prabhupada</Link></li>
-                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} className="rd-dropdown-link">Niranjana Swami</Link></li>
+                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">A.C. Bhaktivedanta Swami Prabhupada</Link></li>
+                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">Niranjana Swami</Link></li>
                                                 </ul>
                                             </li>
                                             {/* {!this.state.isUserLogin ?
