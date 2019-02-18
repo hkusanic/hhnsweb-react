@@ -19,7 +19,10 @@ function showing100Characters(sentence) {
 const SingleBiography = (props) => {
     return (
         <div className="col-md-6 wow-outer">
-            <article className="post-modern wow slideInLeft"><a className="post-modern-media" href="single-blog-post.html"><img src={props.img} alt="" width="571" height="353" /></a>
+            <article className="post-modern wow slideInLeft">
+                <Link className="post-modern-media" to={{ pathname: '/biograhyDetails', state: props }}>
+                    <img src={props.img} alt="" width="571" height="353" />
+                </Link>
                 <h4 className="post-modern-title">{reactCookie.load('languageCode') === 'en' ? props.title_en : props.title_ru}</h4>
                 {renderHTML(showing100Characters(reactCookie.load('languageCode') === 'en' ? props.content_en : props.content_ru))}
                 <Link className="button-winona post-modern-title" to={{ pathname: '/biograhyDetails', state: props }}>Read More...</Link>
