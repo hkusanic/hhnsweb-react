@@ -7,6 +7,10 @@ export class BiographyDetails extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0)
+      }
+
     render() {
         if (!this.props.location.state) {
             return <div>Error Occured..........</div>
