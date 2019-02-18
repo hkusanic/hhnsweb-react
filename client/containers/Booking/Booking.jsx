@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import banner from '../../assets/images/booking_banner.jpg';
+import banner from '../../assets/images/booking-v2.png';
 import "react-step-progress-bar/styles.css";
 import Progress from '../../Components/organisms/ProgressBar/ProgressBar';
 import BookingForm from '../../Components/organisms/Form/BookingForm';

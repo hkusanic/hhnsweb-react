@@ -57,7 +57,8 @@ export class Login extends Component {
 
   logoutSubmit = () => {
     this.props.logoutUser();
-    location.reload();
+    window.localStorage.clear();
+    window.location.href = '/';
   }
 
   signUP = () => {
