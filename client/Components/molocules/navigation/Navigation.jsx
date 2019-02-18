@@ -77,10 +77,8 @@ export class Navigation extends Component {
         $('.biography-submenu').removeClass('focus');
         $('.biography-submenu').removeClass('opened');
     }
-    
 
     
-
     render() {
         return (
             <div>
@@ -177,7 +175,7 @@ export class Navigation extends Component {
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
                                             {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}
-                                            <li className="rd-nav-item"><Link className="rd-nav-link" to="/"><Login /></Link></li>
+                                            <li className="rd-nav-item"><a className="rd-nav-link"><Login /></a></li>
                                         </ul>
                                     </div>
                                 </div>
