@@ -63,7 +63,7 @@ export class Home extends Component {
                     <Footer />
                 </div>
                 <div className="preloader">
-                    <div className="preloader-logo"><img src="images/logo-default-256x50.png" alt="" width="256" height="50" srcSet="images/logo-default-512x100.png 2x" />
+                    <div className="preloader-logo"><img src="images/logo-default-256x50.png" alt="" width="256" height="50" />
                     </div>
                     <div className="preloader-body">
                         <div id="loadingProgressG">

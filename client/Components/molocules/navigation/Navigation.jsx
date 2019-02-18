@@ -66,6 +66,16 @@ export class Navigation extends Component {
          }
     }
 
+    handleNavigationClick = () => {
+        $('.login-modal-2').removeClass('active');
+        if(!this.props.isLogin){
+            $('.login-modal-2').addClass('active');
+        }
+    }
+    
+
+    
+
     render() {
         return (
             <div>
@@ -96,7 +106,7 @@ export class Navigation extends Component {
                             </div>
                             <div className="rd-navbar-main-outer menubanner">
                                 <div className="menulogoDiv">
-                                    <img src={logo} className={'menulogoImg' +' '+ this.state.floatImage} alt="" width="100%" height="100%" srcSet="../../../assets/images/Prabhupada.png 2x" />
+                                    <img src={logo} className={'menulogoImg' +' '+ this.state.floatImage} alt="" width="100%" height="100%" />
                                 </div>
                                 <div className="rd-navbar-main">
                                     <div className="rd-navbar-nav-wrap" id="rd-navbar-nav-wrap-1">
@@ -151,14 +161,14 @@ export class Navigation extends Component {
                                                 </li>
                                                 : ''} */}
                                             <li className="rd-nav-item active">
-                                                <Link className="rd-nav-link" to="/blog">
+                                                <Link className="rd-nav-link" to="/blog" onClick={this.handleNavigationClick}>
                                                     <Translate>
                                                         {({ translate }) => translate('navBlog')}
                                                     </Translate>
                                                 </Link>
                                             </li>
-                                            <li className="rd-nav-item active"><Link className="rd-nav-link" to="/calender">Calendar</Link></li>
-                                            <li className="rd-nav-item active"><Link className="rd-nav-link" to="/booking">Booking</Link></li>
+                                            <li className="rd-nav-item active"><Link className="rd-nav-link " to="/calender" onClick={this.handleNavigationClick}>Calendar</Link></li>
+                                            <li className="rd-nav-item active"><Link className="rd-nav-link" to="/booking" onClick={this.handleNavigationClick}>Booking</Link></li>
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
                                             {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}
