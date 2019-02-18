@@ -77,10 +77,8 @@ export class Navigation extends Component {
         $('.biography-submenu').removeClass('focus');
         $('.biography-submenu').removeClass('opened');
     }
-    
 
     
-
     render() {
         return (
             <div>
