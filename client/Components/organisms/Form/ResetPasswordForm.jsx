@@ -45,11 +45,11 @@ export class ResetPassword extends Component {
 
     handleSavePassword = (event) => {
         event.preventDefault();
-        if (!isNotEmpty(this.state.password) && !isNotEmpty(this.state.confirmPassword)) {
+        if (!isNotEmpty(this.state.password) || !isNotEmpty(this.state.confirmPassword)) {
             this.setState({ error: '**Please fill all the details' })
         }
         else if (!isMatch(this.state.password, this.state.confirmPassword)) {
-            this.setState({ error: 'Plassword and confirm passowrd should match' });
+            this.setState({ error: 'Plassword and confirm password should match' });
         }
         else {
             const body = {
@@ -71,7 +71,7 @@ export class ResetPassword extends Component {
                     (Object.keys(this.props.AccessUser).length === 0 && this.props.resetError) ?
                         <div class="section-sm section-first accesIdError">Link is expired</div>
                         :
-                        (!this.props.isPasswordupdated ?<section class="section section-lg bg-gray-100">
+                        (!this.props.isPasswordupdated ? <section class="section section-lg bg-gray-100">
                             <div class="container">
                                 <div class="row justify-content-center">
                                     <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6">
@@ -107,8 +107,8 @@ export class ResetPassword extends Component {
                                 </div>
                             </div>
                         </section>
-                        : 
-                        <div className="accesIdError">Password is reset successfully</div>)
+                            :
+                            <div className="accesIdError">Password is reset successfully</div>)
                 }
             </div>
         </div>);
