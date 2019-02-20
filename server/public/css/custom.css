@@ -288,5 +288,12 @@
     .register-modal-1 {
         cursor: pointer;
     }
+    
+    .accesIdError {
+        text-align: center;
+        font-size: 25px;
+        font-weight: 400;
+        color: #e58842;
+    }
 
 

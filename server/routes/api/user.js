@@ -1,6 +1,27 @@
 var keystone = require('keystone');
 const async = require('async');
 var Email = require('keystone-email');
+var nodemailer = require('nodemailer');
+var EMAIL_CONFIG = require('../../constants/constant');
+
+var transporter = nodemailer.createTransport(EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig);
+
+function sendMail (from, to, subject, html) {
+
+	var mailOptions = createMailBody(from, to, subject, html);
+
+	return transporter.sendMail(mailOptions);
+}
+
+function createMailBody (from, to, subject, html) {
+	var mailOptions = {
+		from: from,
+		to: to,
+		subject: subject,
+		html: html,
+	};
+	return mailOptions;
+}
 
 exports.signin = function (req, res) {
 
@@ -135,37 +156,148 @@ exports.signup = function (req, res) {
 
 
 exports.forgotpassword = function (req, res) {
+	
+	const msg = {
+		to: req.body.email,
+		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
+		subject: '',
+		html: '',
+	};
 	if (!req.body.email) {
 		res.json({ error: { title: 'Email is Reqired', detail: 'Mandatory values are missing. Please check.' } });	
 	}
 
 	keystone.list('User').model.findOne().where('email', req.body.email).exec((err, userFound) => {
 		if (err) return res.json({ error: { title: 'Not able to reset password' } });
-		userFound.password = keystone.utils.randomString();
-		let userPassword = userFound.password = userFound.password.substring(userFound.password.length - 7, userFound.password.length);
-		userFound.save((err) => {
-			if (err) return res.json({ error: { title: 'Not able to reset password' } });			;
-			new Email('./templates/testemail.pug', {
-				transport: 'mailgun',
-			  }).send({}, {
-				apiKey: 'key-c836106c22729cdb1f80d4ba601e864c',
-				domain: 'sandbox965a1c0e2b714acab57623c5d878e8ca.mailgun.org',
-				to: 'shailendra@cronj.com',
-				from: {
-				  name: 'kiran',
-				  email: 'kiran.kulkarni@cronj.com',
-				},
-				subject: 'Password is reset and New password is - ' + userPassword,
-			  });
-			  res.json({
+		
+	 userFound.accessKeyId = keystone.utils.randomString();
+	 userFound.save((err) => {
+	  if (err) return res.json({ error: { title: 'Not able to reset password' } });			;
+	  msg.subject = 'Password Reset';
+	  msg.html = `
+	  <p>Hare Krishna,</p>
+	  <p>Please accept our humble obeisances.</p>
+	  <p>All glories to Srila Prabhupada!</p>
+	  <br/>
+	  <p>Please click on the following link <a href="${EMAIL_CONFIG.CONSTANTS.SITE_URL + '/reset-password?accessid=' + userFound.accessKeyId}">here </a>to reset your password</p>
+	  <br/>
+	  <p>Your servants always,</p>
+	  <p>Site administrators</p>
+	  `;
+
+	 
+	  sendMail(msg.from, userFound.email, msg.subject, msg.html)
+		.then((res) => {
+			console.log('email was sent', res);
+		})
+		.catch((err) => {
+			console.error(err);
+		});
+		  res.json({
 				success: true,
-			});
-		 
 		});
 	});
+});
 
 
 }
 
 
 
+exports.getuserbyaccessid = function (req, res) {
+	if (!req.body.accessid) {
+		res.json({ error: { title: 'Access Id is Required', detail: 'Mandatory values are missing. Please check.' } });	
+	}
+
+	keystone.list('User').model.findOne().where('accessKeyId', req.body.accessid).exec((err, userFound) => {
+		
+		if (err || !userFound) return res.json({ error: { title: 'Not able to find user' } });
+		res.json({
+			email: userFound.email,
+			success: true,
+		});
+	});
+
+}
+
+
+
+exports.resetpassword = function (req, res) {
+	const msg = {
+		to: req.body.email,
+		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
+		subject: '',
+		html: '',
+	};
+
+	if (!req.body.email || !req.body.accessid || !req.body.password) {
+		res.json({ error: { title: 'Email, Password and Accessid is Reqired', detail: 'Mandatory values are missing. Please check.' } });	
+	}
+
+	keystone.list('User').model.findOne().where('accessKeyId', req.body.accessid).exec((err, userFound) => {
+		if (err || !userFound) return res.json({ error: { title: 'Not able to find user' } });
+		keystone.list('User').model.findOne().where('email', req.body.email).exec((err, userFound) => {
+			if (err || !userFound) return res.json({ error: { title: 'Not able to reset password' } });
+			userFound.password = req.body.password;
+			let userPassword = userFound.password; 
+			userFound.accessKeyId = '';
+			userFound.save((err) => {
+				if (err) return res.json({ error: { title: 'Not able to reset password' } });			;
+				msg.subject = 'Your Password is Successfully Changed';
+				msg.html = `
+				<p>Hare Krishna,</p>
+				<p>Please accept our humble obeisances.</p>
+				<p>All glories to Srila Prabhupada!</p>
+				<br/>
+				<p>Your password is reset and the new password is - ${userPassword}</p>
+				<br/>
+				<p>Your servants always,</p>
+				<p>Site administrators</p>
+				`;
+		  
+			   
+				sendMail(msg.from, userFound.email, msg.subject, msg.html)
+				  .then((res) => {
+					  console.log('email was sent', res);
+				  })
+				  .catch((err) => {
+					  console.error(err);
+				  });
+				  res.json({
+					success: true,
+				});
+			 
+			});
+		});
+	
+	});
+
+	
+
+}
+
+
+exports.editprofile = function (req, res) {
+	
+	if (!req.body.firstName || !req.body.lastName || !req.body.mobileNumber) {
+		res.json({ error: { title: 'Required', detail: 'Mandatory values are missing. Please check.' } });	
+	}
+
+	keystone.list('User').model.findOne().where('email', req.user.email).exec((err, userFound) => {
+		if (err || !userFound) return res.json({ error: { title: 'Not able to reset password' } });
+	
+	userFound.name.first = req.body.firstName;
+	userFound.name.last = req.body.lastName;
+	userFound.mobileNumber = req.body.mobileNumber;
+	 
+	 userFound.save((err) => {
+	  if (err) return res.json({ error: { title: 'Not able to reset password' } });			;
+	  
+		  res.json({
+				success: true,
+		  });
+	});
+});
+
+
+}

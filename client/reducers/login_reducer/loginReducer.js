@@ -9,9 +9,13 @@ const initialState = {
     loginUser: {},
     checkedLogin: false,
     forgotPasswordSentEmail: false,
+    isPasswordupdated: false,
     error: "",
     regError: '',
-    forgotError: ''
+    forgotError: '',
+    resetError: '',
+    UpdatedError: '',
+    AccessUser: {},
 
 }
 
@@ -87,11 +91,46 @@ const loginReducer = (state = initialState, action) => {
                     forgotError: ''
                 }
             }
-            else if (response.error){
-                state ={
+            else if (response.error) {
+                state = {
                     ...state,
                     forgotError: response.error.title,
                     forgotPasswordSentEmail: false
+                }
+            }
+            break;
+
+        case types.GET_USER_BY_ACCESS_ID:
+            const reset_user = action.payload;
+            if (reset_user.data.error) {
+                state = {
+                    ...state,
+                    resetError: reset_user.data.error.title,
+                    AccessUser: {},
+                    isPasswordupdated: false
+                }
+            } else {
+                state = {
+                    ...state,
+                    AccessUser: reset_user.data,
+                    resetError: '',
+                    isPasswordupdated: false
+                }
+            }
+            break;
+
+        case types.RESET_PASSWORD:
+            const data = action.payload.data;
+            if (data.error) {
+                state = {
+                    ...state,
+                    isPasswordupdated: false,
+                    UpdatedError: data.error.title
+                }
+            } else {
+                state = {
+                    ...state,
+                    isPasswordupdated: data.success,
                 }
             }
             break;

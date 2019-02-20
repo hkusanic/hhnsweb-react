@@ -20,6 +20,16 @@ const utils = {
 	forgotPassword: (body) => {
 		let url = serverAddress + '/api/forgotpassword/';
 		return axios.post(url, body);
+	},
+
+	getUserByAccessId: (body) => {
+		let url = serverAddress + '/api/getuserbyaccessid/';
+		return axios.post(url, body);
+	},
+
+	resetPassword: (body) => {
+		let url = serverAddress + '/api/resetpassword';
+		return axios.post(url, body);
 	}
 }
 

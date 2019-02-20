@@ -25,6 +25,11 @@ exports = module.exports = function (app) {
 	app.post('/api/signup/', keystone.middleware.api, routes.api.user.signup);
 	app.post('/api/signout/', keystone.middleware.api, routes.api.user.signout);
 	app.post('/api/forgotpassword/', keystone.middleware.api, routes.api.user.forgotpassword);
+	app.post('/api/getuserbyaccessid/', keystone.middleware.api, routes.api.user.getuserbyaccessid);
+	app.post('/api/resetpassword/', keystone.middleware.api, routes.api.user.resetpassword);
+	app.post('/api/editprofile/', keystone.middleware.api, routes.api.user.editprofile);
+	
+	
 	// Set up the default app route to  http://localhost:3000/index.html
 	app.get('/*', function (req, res) {
 		keystone.set('updateDatabase', false);

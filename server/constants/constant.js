@@ -25,5 +25,6 @@ exports.CONSTANTS = {
     }
 
 
-}
+},
+      SITE_URL : 'http://3.94.20.19:3000'
 }
