@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { isMatch, isNotEmpty } from '../../../utils/validation';
+import { connect } from 'react-redux';
+import { getUserByAccessId, resetPassword } from '../../../actions/loginActions';
 
 export class ResetPassword extends Component {
     constructor(props) {
@@ -9,6 +11,10 @@ export class ResetPassword extends Component {
             confirmPassword: '',
             error: ''
         }
+    }
+
+    componentDidMount(){
+        console.log("props====>>>>", this.props);
     }
 
     handleChange = (type, event) => {
@@ -35,7 +41,7 @@ export class ResetPassword extends Component {
             console.log("reset password body ======>>>>>>", body);
         }
     }
-    
+
     render() {
         return (<div>
             <div class="section-sm section-first">
@@ -80,5 +86,18 @@ export class ResetPassword extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        ResetPassword: state.loginReducer
+    }
+};
 
-export default ResetPassword;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getUserByAccessId: (body) => { dispatch(getUserByAccessId(body)) },
+        resetPassword: (body) => { dispatch(resetPassword(body)) }
+
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

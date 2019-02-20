@@ -96,6 +96,20 @@ const loginReducer = (state = initialState, action) => {
             }
             break;
 
+        case types.GET_USER_BY_ACCESS_ID:
+            const reset_user = action.payload;
+            state = {
+                ...state
+            }
+            break;
+        
+        case types.RESET_PASSWORD:
+            const data = action.payload;
+            state ={
+                ...state
+            }
+            break;    
+
     }
     return state
 }

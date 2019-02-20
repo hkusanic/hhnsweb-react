@@ -40,12 +40,36 @@ export function signupUser(body) {
 export function forgotPassword(body) {
     return (dispatch) => {
         loginApi.forgotPassword(body)
-         .then((response) => {
-             dispatch(forgotPasswordAction(response.data))
-         })
-         .catch((err)=> {
-             console.log("error ======>>>>>>", err);
-         })
+            .then((response) => {
+                dispatch(forgotPasswordAction(response.data))
+            })
+            .catch((err) => {
+                console.log("error ======>>>>>>", err);
+            })
+    }
+}
+
+export function getUserByAccessId(body) {
+    return (dispatch) => {
+        loginApi.getUserByAccessId(body)
+            .then((response) => {
+                dispatch(getUserByAccessIdAction(response))
+            })
+            .catch((err) => {
+                console.log("error==========>>>>", err);
+            })
+    }
+}
+
+export function resetPassword(){
+    return (dispatch) => {
+        loginApi.resetPassword(body)
+            .then((response) => {
+                dispatch(resetPasswordAction(response))
+            })
+            .catch((err) => {
+                console.log("error========>>>>", err);
+            })
     }
 }
 
@@ -73,6 +97,20 @@ export function loginAction(data) {
 export function forgotPasswordAction(data) {
     return {
         type: types.FORGOT_PASSWORD,
+        payload: data
+    }
+}
+
+export function getUserByAccessIdAction(data) {
+    return {
+        type: types.GET_USER_BY_ACCESS_ID,
+        payload: data
+    }
+}
+
+export function resetPasswordAction(data) {
+    return {
+        type: types.RESET_PASSWORD,
         payload: data
     }
 }
