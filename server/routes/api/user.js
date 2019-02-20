@@ -284,10 +284,10 @@ exports.editprofile = function (req, res) {
 	}
 
 	keystone.list('User').model.findOne().where('email', req.user.email).exec((err, userFound) => {
-		if (err) return res.json({ error: { title: 'Not able to reset password' } });
+		if (err || !userFound) return res.json({ error: { title: 'Not able to reset password' } });
 	
-	userFound.firstName = req.body.firstName;
-	userFound.lastName = req.body.lastName;
+	userFound.name.first = req.body.firstName;
+	userFound.name.last = req.body.lastName;
 	userFound.mobileNumber = req.body.mobileNumber;
 	 
 	 userFound.save((err) => {
