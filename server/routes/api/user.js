@@ -179,7 +179,7 @@ exports.forgotpassword = function (req, res) {
 	  <p>Please accept our humble obeisances.</p>
 	  <p>All glories to Srila Prabhupada!</p>
 	  <br/>
-	  <p>Please click on the following link <a href="${EMAIL_CONFIG.CONSTANTS.SITE_URL + '/reset-password/?accessid=' + userFound.accessKeyId}">here </a>to reset your password</p>
+	  <p>Please click on the following link <a href="${EMAIL_CONFIG.CONSTANTS.SITE_URL + '/reset-password?accessid=' + userFound.accessKeyId}">here </a>to reset your password</p>
 	  <br/>
 	  <p>Your servants always,</p>
 	  <p>Site administrators</p>
