@@ -16,7 +16,7 @@ import AudioDetails from '../../Components/molocules/Audio/AudioDetails';
 import VideoDetails from '../../Components/molocules/Video/VideoDetails';
 import ForgotPassword from '../../Components/organisms/Form/ForgotPassword';
 import ShellCompoenent from '../../Components/organisms/ShellComponent/ShellComponent';
-
+import ResetPassword from '../../Components/organisms/Form/ResetPasswordForm';
 
 import {
     Route,
@@ -46,6 +46,7 @@ export class Home extends Component {
                     <Switch>
                         <Route exact path='/' component={Carousel} />
                         <Route path='/forgotPassword' component={ForgotPassword} />
+                        <Route path='/reset-password' component={ResetPassword} />
                         <Route path='/biograhyDetails' component={BiographyDetails} />
                         <ShellCompoenent>
                             <Route path='/blog' component={Blog} />
