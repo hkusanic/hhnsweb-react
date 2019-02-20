@@ -61,7 +61,7 @@ export function getUserByAccessId(body) {
     }
 }
 
-export function resetPassword(){
+export function resetPassword(body){
     return (dispatch) => {
         loginApi.resetPassword(body)
             .then((response) => {

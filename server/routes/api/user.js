@@ -210,7 +210,8 @@ exports.getuserbyaccessid = function (req, res) {
 	}
 
 	keystone.list('User').model.findOne().where('accessKeyId', req.body.accessid).exec((err, userFound) => {
-		if (err) return res.json({ error: { title: 'Not able to find user' } });
+		
+		if (err || !userFound) return res.json({ error: { title: 'Not able to find user' } });
 		res.json({
 			email: userFound.email,
 			success: true,
@@ -230,13 +231,13 @@ exports.resetpassword = function (req, res) {
 	};
 
 	if (!req.body.email || !req.body.accessid || !req.body.password) {
-		res.json({ error: { title: 'Email and Accessid is Reqired', detail: 'Mandatory values are missing. Please check.' } });	
+		res.json({ error: { title: 'Email, Password and Accessid is Reqired', detail: 'Mandatory values are missing. Please check.' } });	
 	}
 
 	keystone.list('User').model.findOne().where('accessKeyId', req.body.accessid).exec((err, userFound) => {
-		if (err) return res.json({ error: { title: 'Not able to find user' } });
+		if (err || !userFound) return res.json({ error: { title: 'Not able to find user' } });
 		keystone.list('User').model.findOne().where('email', req.body.email).exec((err, userFound) => {
-			if (err) return res.json({ error: { title: 'Not able to reset password' } });
+			if (err || !userFound) return res.json({ error: { title: 'Not able to reset password' } });
 			userFound.password = req.body.password;
 			let userPassword = userFound.password; 
 			userFound.accessKeyId = '';
