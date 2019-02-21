@@ -5,7 +5,7 @@ import { loginUser, logoutUser, checkLogin, signupUser, forgotPassword } from '.
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import { Link } from 'react-router-dom';
-import { isValidEmail, isNotEmpty, isMatch, isValidPhone } from '../../utils/validation';
+import { isValidEmail, isNotEmpty, isMatch, isValidPhone, onlyIntegers } from '../../utils/validation';
 import LoginForm from '../../Components/organisms/Form/LoginFrom';
 
 export class Login extends Component {
