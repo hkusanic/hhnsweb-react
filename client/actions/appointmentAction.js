@@ -4,12 +4,12 @@ import * as types from '../constants/index';
 export function createAppointment(body) {
     return (dispatch) => {
         appointmentApi.createAppointment(body)
-           .then((response) => {
-               dispatch(createAction(response.data))
-           })
-           .catch((err) => {
-            dispatch(createError(err))
-           })
+            .then((response) => {
+                dispatch(createAction(response.data))
+            })
+            .catch((err) => {
+                dispatch(createError(err))
+            })
     }
 }
 
@@ -27,28 +27,45 @@ export function createError(data) {
     }
 }
 
-export function getAppointment (parameter) {
+export function getAppointment(parameter) {
     return (dispatch) => {
         appointmentApi.getAppointment(parameter)
-        .then((response) => {
-            dispatch(getAppointmentAction(response.data))
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+            .then((response) => {
+                dispatch(getAppointmentAction(response.data))
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 }
 
+export function getBookingStatus(email) {
+    return (dispatch) => {
+        appointmentApi.getBookingStatus(email)
+            .then((response) => {
+                dispatch(getBookingStatusAction(response))
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+}
 
+export function getBookingStatusAction(data) {
+    return {
+        type: types.GET_BOOKING_STATUS,
+        payload: data
+    }
+}
 
-export function getAppointmentAction (data) {
+export function getAppointmentAction(data) {
     return {
         type: types.GET_APPOINTMENT,
         payload: data
     }
 }
 
-export function resetState(){
+export function resetState() {
     return {
         type: 'RESET_STATE'
     }

@@ -5,7 +5,7 @@ import Progress from '../../Components/organisms/ProgressBar/ProgressBar';
 import BookingForm from '../../Components/organisms/Form/BookingForm';
 import Auth from '../../utils/Auth';
 import { connect } from "react-redux";
-import { createAppointment, getAppointment, resetState } from '../../actions/appointmentAction';
+import { createAppointment, getAppointment, resetState, getBookingStatus } from '../../actions/appointmentAction';
 
 export class Booking extends Component {
     constructor(props) {
@@ -27,6 +27,7 @@ export class Booking extends Component {
                 isUserLogin
             }, () => {
                 this.props.getAppointment(this.state.user.email);
+                this.props.getBookingStatus(this.state.user.email)
             })
         }
     }
@@ -122,13 +123,15 @@ export class Booking extends Component {
                                                 </p>
                                             </div>
                                             :
+                                            (!this.props.appointment.isbooked ?
                                             <iframe
                                                 src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
                                                 id="ycbmiframeniranjanaswami"
                                                 className="bookingStyle"
                                                 frameBorder="0"
                                                 allowtransparency="true">
-                                            </iframe>
+                                            </iframe> 
+                                            :  <div class="section-sm section-first accesIdError">You have aleady booked meeting</div>)
                                     )
                         )
                         : ''
@@ -152,6 +155,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         getAppointment: (email) => {
             dispatch(getAppointment(email));
+        },
+        getBookingStatus: (email) => {
+            dispatch(getBookingStatus(email));
         },
         resetState: () => {
             dispatch(resetState());

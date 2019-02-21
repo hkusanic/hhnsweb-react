@@ -7,8 +7,11 @@ const utils = {
         return axios.post(url, body);
     },
     getAppointment : (parameter) => {
-        console.log('------->',parameter);
         let url = serverAddress + `/api/appointment/` + parameter;
+        return axios.get(url);
+    },
+    getBookingStatus : (email) => {
+        let url = serverAddress + `/api/booking/${email}`;
         return axios.get(url);
     }
 }
