@@ -42,8 +42,6 @@ export class Login extends Component {
           error: nextProps.login.error,
           regError: nextProps.login.regError,
           isUserLogin
-        }, () => {
-          location.reload();
         })
 
       } else {

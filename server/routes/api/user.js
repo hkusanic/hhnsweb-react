@@ -294,7 +294,14 @@ exports.editprofile = function (req, res) {
 	  if (err) return res.json({ error: { title: 'Not able to reset password' } });			;
 	  
 		  res.json({
-				success: true,
+			success: true,
+			loginUser: {
+				id: userFound.id,
+				email: userFound.email,
+				firstName: userFound.name.first,
+				last: userFound.name.last,
+				mobileNumber: userFound.mobileNumber,
+			}
 		  });
 	});
 });

@@ -1,20 +1,53 @@
 import React, { Component } from 'react';
 import { onlyIntegers, isNotEmpty, isValidPhone } from '../../../utils/validation';
-
-
+import { connect } from 'react-redux';
+import { editProfile } from '../../../actions/loginActions';
+import Auth from '../../../utils/Auth';
 export class UserProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            first: 'shailendra',
-            last: 'sahu',
-            email: 'shailendra@cronj.com',
+            first: '',
+            last: '',
+            email: '',
             mobileNumber: 9109568856,
             editing: true,
-            error: ''
+            error: '',
+            isUpdated: false
         }
     }
 
+    componentDidMount() {
+        this.setState({
+            editing : true,
+            isUpdated: false
+        }, () => {this.getUser()})
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // this.props = nextProps;
+        let editing = true;
+        if (!this.props.isProfileEdited && nextProps.isProfileEdited) {
+            editing = true;
+        }
+        if(nextProps.error){
+            editing = false;
+        }
+        this.setState({
+            editing,
+            error: nextProps.error,
+            isUpdated: nextProps.isProfileEdited
+        }, () => { this.getUser() })
+    }
+
+    getUser = () => {
+        const user = JSON.parse(Auth.getUserDetails());
+        this.setState({
+            first: user.firstName,
+            last: user.last,
+            email: user.email
+        })
+    }
     handleEditing = (event) => {
         event.preventDefault();
         this.setState({ editing: false })
@@ -31,9 +64,9 @@ export class UserProfile extends Component {
 
     handleEditProfile = () => {
         event.preventDefault();
-        if (!isNotEmpty(this.state.first) ||
-            !isNotEmpty(this.state.mobileNumber) ||
-            !isNotEmpty(this.state.last)) {
+        if (!this.state.first ||
+            !this.state.mobileNumber ||
+            !this.state.last) {
             this.setState({ error: '**Please fill all the fields' })
         }
         else if (!onlyIntegers(this.state.mobileNumber) || !isValidPhone(this.state.mobileNumber)) {
@@ -42,28 +75,31 @@ export class UserProfile extends Component {
         else {
             const body = {
                 mobileNumber: this.state.mobileNumber,
-                firstname: this.state.first,
-                lastname: this.state.last
+                firstName: this.state.first,
+                lastName: this.state.last
             }
-            console.log("body====>>>", body);
+            this.props.editProfile(body);
         }
     }
 
     render() {
+        if (!this.state && !this.state.email) {
+            return <div>Loading..</div>
+        }
         return (
             <div>
-                <section class="section section-lg bg-gray-100">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6">
-                                <h3 class="wow-outer text-center"><span class="wow slideInUp">User Profile</span></h3>
-                                <form style={{ paddingLeft: '10%' }} class="rd-form" data-form-type="contact" >
-                                    <div class="row row-10">
-                                        <div class="col-md-10 wow-outer">
-                                            <div class="form-wrap wow fadeSlideInUp">
-                                                <label class="form-label-outside" for="contact-first-name">First Name</label>
+                <section className="section bg-gray-100">
+                    <div className="container">
+                        <div className="row justify-content-center" style={{paddingTop: '2%'}}>
+                            <div className="col-sm-10 col-md-8 col-lg-7 col-xl-6">
+                                <h3 className="wow-outer text-center"><span className="wow slideInUp">User Profile</span></h3>
+                                <form style={{ paddingLeft: '10%' }} className="rd-form" data-form-type="contact" >
+                                    <div className="row row-10">
+                                        <div className="col-md-10 wow-outer">
+                                            <div className="form-wrap wow fadeSlideInUp">
+                                                <label className="form-label-outside" htmlFor="contact-first-name">First Name</label>
                                                 <input
-                                                    class="form-input"
+                                                    className="form-input"
                                                     style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
                                                     id="first-name"
                                                     type="text"
@@ -73,11 +109,11 @@ export class UserProfile extends Component {
                                                     onChange={() => { this.handleChange('first', event) }} />
                                             </div>
                                         </div>
-                                        <div class="col-md-10 wow-outer">
-                                            <div class="form-wrap wow fadeSlideInUp">
-                                                <label class="form-label-outside" for="contact-last-name">Last Name</label>
+                                        <div className="col-md-10 wow-outer">
+                                            <div className="form-wrap wow fadeSlideInUp">
+                                                <label className="form-label-outside" htmlFor="contact-last-name">Last Name</label>
                                                 <input
-                                                    class="form-input"
+                                                    className="form-input"
                                                     style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
                                                     id="last-name"
                                                     type="text"
@@ -87,11 +123,11 @@ export class UserProfile extends Component {
                                                     onChange={() => { this.handleChange('last', event) }} />
                                             </div>
                                         </div>
-                                        <div class="col-md-10 wow-outer">
-                                            <div class="form-wrap wow fadeSlideInUp">
-                                                <label class="form-label-outside" for="contact-email">E-mail</label>
+                                        <div className="col-md-10 wow-outer">
+                                            <div className="form-wrap wow fadeSlideInUp">
+                                                <label className="form-label-outside" htmlFor="contact-email">E-mail</label>
                                                 <input
-                                                    class="form-input"
+                                                    className="form-input"
                                                     style={{ backgroundColor: '#f6f6f6' }}
                                                     id="email"
                                                     type="email"
@@ -100,11 +136,11 @@ export class UserProfile extends Component {
                                                     value={this.state.email} />
                                             </div>
                                         </div>
-                                        <div class="col-md-10 wow-outer">
-                                            <div class="form-wrap wow fadeSlideInUp">
-                                                <label class="form-label-outside" for="contact-phone">Mobile Number</label>
+                                        <div className="col-md-10 wow-outer">
+                                            <div className="form-wrap wow fadeSlideInUp">
+                                                <label className="form-label-outside" htmlFor="contact-phone">Mobile Number</label>
                                                 <input
-                                                    class="form-input"
+                                                    className="form-input"
                                                     style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
                                                     id="contact-phone"
                                                     type="text"
@@ -115,16 +151,17 @@ export class UserProfile extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="group group-middle">
-                                        <div class="wow-outer">
+                                    <div className="group group-middle">
+                                        <div className="wow-outer">
                                             {
                                                 this.state.editing ?
-                                                    <button class="button button-primary button-winona" onClick={this.handleEditing} >Edit</button>
+                                                    <button className="button button-primary button-winona" onClick={this.handleEditing} >Edit</button>
                                                     :
-                                                    <button class="button button-primary button-winona" onClick={this.handleEditProfile} >Update</button>
+                                                    <button className="button button-primary button-winona" onClick={this.handleEditProfile} >Update</button>
                                             }
                                         </div>
                                     </div>
+                                     {this.state.isUpdated ? <p className="updateText">Your profile has been updated Successfully</p> : ''}
                                     <p className="loginError">{this.state.error}</p>
                                 </form>
                             </div>
@@ -136,4 +173,17 @@ export class UserProfile extends Component {
     }
 }
 
-export default UserProfile;
+const mapStateToProps = (state) => {
+    return {
+        error: state.loginReducer.error,
+        isProfileEdited: state.loginReducer.isProfileEdited
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        editProfile: (body) => { dispatch(editProfile(body)) }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

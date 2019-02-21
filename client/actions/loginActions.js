@@ -73,6 +73,18 @@ export function resetPassword(body){
     }
 }
 
+export function editProfile(body){
+    return (dispatch) => {
+        loginApi.editProfile(body)
+            .then((response) => {
+                dispatch(editProfileAction(response))
+            })
+            .catch((err) => {
+                console.log("error ======>>>>>>", err);
+            })
+    }
+}
+
 export function signupAction(data) {
     return {
         type: types.SIGNUP,
@@ -111,6 +123,13 @@ export function getUserByAccessIdAction(data) {
 export function resetPasswordAction(data) {
     return {
         type: types.RESET_PASSWORD,
+        payload: data
+    }
+}
+
+export function editProfileAction(data) {
+    return {
+        type: types.EDIT_PROFILE,
         payload: data
     }
 }

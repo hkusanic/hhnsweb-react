@@ -30,6 +30,11 @@ const utils = {
 	resetPassword: (body) => {
 		let url = serverAddress + '/api/resetpassword';
 		return axios.post(url, body);
+	},
+
+	editProfile: (body) => {
+		let url = serverAddress + '/api/editprofile/';
+		return axios.post(url, body);
 	}
 }
 

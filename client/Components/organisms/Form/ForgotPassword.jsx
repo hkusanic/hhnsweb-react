@@ -47,7 +47,7 @@ export class ForgotPassword extends Component {
     }
     render() {
         return (<div>
-            <div class="section-sm section-first">
+            <div>
                 <section class="section section-lg bg-gray-100">
                     <div class="container">
                         <div class="row justify-content-center">
