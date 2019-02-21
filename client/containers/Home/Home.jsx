@@ -17,6 +17,7 @@ import VideoDetails from '../../Components/molocules/Video/VideoDetails';
 import ForgotPassword from '../../Components/organisms/Form/ForgotPassword';
 import ShellCompoenent from '../../Components/organisms/ShellComponent/ShellComponent';
 import ResetPassword from '../../Components/organisms/Form/ResetPasswordForm';
+import UserProfile from '../../Components/molocules/Profile/UserProfile';
 
 import {
     Route,
@@ -59,6 +60,7 @@ export class Home extends Component {
                             <Route path='/audioDetails' component={AudioDetails} />
                             <Route path='/video' component={VideoList} />
                             <Route path='/videoDetails' component={VideoDetails} />
+                            <Route path='/profile' component={UserProfile} />
                         </ShellCompoenent>
                     </Switch>
                     <Footer />

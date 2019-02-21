@@ -182,6 +182,7 @@ export class Login extends Component {
             </ul>
             : <ul className="list-inline-bordered">
               <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>LOGOUT</button></li>
+              <li><button className="rd-navbar-popup-toggle"><Link to='/profile'>PROFILE</Link></button></li>
             </ul>}
         </div>
       </div>
