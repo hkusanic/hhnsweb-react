@@ -5,7 +5,7 @@ import { loginUser, logoutUser, checkLogin, signupUser, forgotPassword } from '.
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import { Link } from 'react-router-dom';
-import { isValidEmail, isNotEmpty, isMatch } from '../../utils/validation';
+import { isValidEmail, isNotEmpty, isMatch, isValidPhone } from '../../utils/validation';
 import LoginForm from '../../Components/organisms/Form/LoginFrom';
 
 export class Login extends Component {
@@ -17,6 +17,7 @@ export class Login extends Component {
       firstName: '',
       lastName: '',
       email_signup: '',
+      mobileNumber: '',
       password_signup: '',
       confirmPassword: '',
       error: '',
@@ -75,7 +76,7 @@ export class Login extends Component {
     event.preventDefault();
     if (!isNotEmpty(this.state.email_signup) || !isNotEmpty(this.state.password_signup) ||
       !isNotEmpty(this.state.firstName) || !isNotEmpty(this.state.lastName) ||
-      !isNotEmpty(this.state.confirmPassword)) {
+      !isNotEmpty(this.state.confirmPassword) || !isNotEmpty(this.state.mobileNumber) ) {
       this.setState({ regError: '**Please fill all the fields' })
     }
     else if (!isValidEmail(this.state.email_signup)) {
@@ -84,12 +85,16 @@ export class Login extends Component {
     else if (!isMatch(this.state.password_signup, this.state.confirmPassword)) {
       this.setState({ regError: '**Password and confirm password should match' })
     }
+    else if (!onlyIntegers(this.state.mobileNumber) || !isValidPhone(this.state.mobileNumber)) {
+      this.setState({ error: 'Please Enter Mobile Number Correctly' })
+  }
     else {
       const body = {
         email: this.state.email_signup,
         password: this.state.password_signup,
         firstname: this.state.firstName,
-        lastname: this.state.lastName
+        lastname: this.state.lastName,
+        mobileNumber: this.state.mobileNumber
       }
       this.props.signup(body);
     }
@@ -149,6 +154,15 @@ export class Login extends Component {
                         placeholder="E-mail"
                         data-constraints="@Email @Required"
                         onChange={() => { this.handleChange('email_signup', event) }} />
+                    </div>
+                    <div className="form-wrap">
+                      <input
+                        className="form-input"
+                        id="register-email-5"
+                        type="text"
+                        name="mobileNumber"
+                        placeholder="Mobile Number"
+                        onChange={() => { this.handleChange('mobileNumber', event) }} />
                     </div>
                     <div className="form-wrap">
                       <input

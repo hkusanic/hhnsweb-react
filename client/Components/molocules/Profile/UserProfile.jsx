@@ -10,7 +10,7 @@ export class UserProfile extends Component {
             first: '',
             last: '',
             email: '',
-            mobileNumber: 9109568856,
+            mobileNumber: '',
             editing: true,
             error: '',
             isUpdated: false
@@ -45,7 +45,8 @@ export class UserProfile extends Component {
         this.setState({
             first: user.firstName,
             last: user.last,
-            email: user.email
+            email: user.email,
+            mobileNumber: user.mobileNumber
         })
     }
     handleEditing = (event) => {
@@ -76,7 +77,8 @@ export class UserProfile extends Component {
             const body = {
                 mobileNumber: this.state.mobileNumber,
                 firstName: this.state.first,
-                lastName: this.state.last
+                lastName: this.state.last,
+                mobileNumber: this.state.mobileNumber
             }
             this.props.editProfile(body);
         }
