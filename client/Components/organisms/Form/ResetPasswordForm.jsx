@@ -31,7 +31,6 @@ export class ResetPassword extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.props = nextProps;
-        console.log("this.props===>>>>", this.props);
     }
 
     handleChange = (type, event) => {
@@ -63,10 +62,10 @@ export class ResetPassword extends Component {
 
     render() {
         if (!this.state && this.props) {
-            return <div class="section-sm section-first" style={{ textAlign: 'center' }}>Loading...</div>
+            return <div style={{ textAlign: 'center' }}>Loading...</div>
         }
         return (<div>
-            <div class="section-sm section-first">
+            <div>
                 {
                     (Object.keys(this.props.AccessUser).length === 0 && this.props.resetError) ?
                         <div class="section-sm section-first accesIdError">Link is expired</div>

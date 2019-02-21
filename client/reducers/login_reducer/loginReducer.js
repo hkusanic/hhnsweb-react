@@ -16,7 +16,7 @@ const initialState = {
     resetError: '',
     UpdatedError: '',
     AccessUser: {},
-
+    isProfileEdited: false
 }
 
 const loginReducer = (state = initialState, action) => {
@@ -131,6 +131,26 @@ const loginReducer = (state = initialState, action) => {
                 state = {
                     ...state,
                     isPasswordupdated: data.success,
+                }
+            }
+            break;
+
+        case types.EDIT_PROFILE:
+            const profileRespon = action.payload.data;
+            if (profileRespon.success) {
+                Auth.authenticateUser(profileRespon.success, profileRespon.loginUser);
+                {
+                    state = {
+                        ...state,
+                        isProfileEdited: true,
+                        error: ''
+                    }
+                }
+            } else if (profileRespon.error) {
+                state = {
+                    ...state,
+                    error: profileRespon.error.detail,
+                    isProfileEdited: false
                 }
             }
             break;

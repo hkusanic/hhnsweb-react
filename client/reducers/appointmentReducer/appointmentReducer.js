@@ -6,6 +6,7 @@ const initialState = {
     isSubmitted: false,
     error: '',
     success: false,
+    isbooked: false
 }
 
 const appointmentReducer = (state = initialState, action) => {
@@ -37,6 +38,20 @@ const appointmentReducer = (state = initialState, action) => {
                 ...state,
                 appointmentData: appointment,
                 success: true
+            }
+            break;
+        case types.GET_BOOKING_STATUS:
+            const bookingStatus = action.payload.data;
+            if(bookingStatus.error){
+                state = {
+                    ...state,
+                    isbooked: false
+                }
+            }else if(bookingStatus.Booking) {
+                state = {
+                    ...state,
+                    isbooked: true
+                }
             }
             break;
 

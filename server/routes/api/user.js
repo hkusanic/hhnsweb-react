@@ -48,7 +48,8 @@ exports.signin = function (req, res) {
 					id: user.id,
 					email: user.email,
 					firstName: user.name.first,
-					last: user.name.last
+					last: user.name.last,
+					mobileNumber: user.mobileNumber
 				}
 			});
 
@@ -84,12 +85,13 @@ exports.signup = function (req, res) {
 	async.series([
 		(cb) => {
 			console.log('1');
-			if (!req.body.firstname || !req.body.lastname || !req.body.email || !req.body.password) {
+			if (!req.body.firstname || !req.body.lastname || !req.body.email || !req.body.password || !req.body.mobileNumber) {
 				let list = [];
 				req.body.firstname === '' ? list.push('First name is missing.') : '';
 				req.body.lastname === '' ? list.push('Last name is missing.') : '';
 				req.body.email === '' ? list.push('Email is missing.') : '';
 				req.body.password === '' ? list.push('Password is missing.') : '';
+				req.body.mobileNumber === '' ? list.push('Mobile number is missing.') : '';
 
 				res.json({ error: { title: 'Error while creating new account', detail: 'Mandatory values are missing. Please check below for more details.' }, list: list });
 				return cb('true');
@@ -115,6 +117,7 @@ exports.signup = function (req, res) {
 					last: req.body.lastname,
 				},
 				email: req.body.email,
+				mobileNumber: req.body.mobileNumber,
 				password: req.body.password,
 			};
 
@@ -138,7 +141,8 @@ exports.signup = function (req, res) {
 						id: user.id,
 						email: user.email,
 						firstName: user.name.first,
-						last: user.name.last
+						last: user.name.last,
+						mobileNumber: user.mobileNumber
 					}
 				});
 			};
@@ -294,7 +298,14 @@ exports.editprofile = function (req, res) {
 	  if (err) return res.json({ error: { title: 'Not able to reset password' } });			;
 	  
 		  res.json({
-				success: true,
+			success: true,
+			loginUser: {
+				id: userFound.id,
+				email: userFound.email,
+				firstName: userFound.name.first,
+				last: userFound.name.last,
+				mobileNumber: userFound.mobileNumber,
+			}
 		  });
 	});
 });
