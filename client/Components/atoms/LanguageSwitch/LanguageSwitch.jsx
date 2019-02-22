@@ -14,8 +14,8 @@ export class LanguageSwitch extends Component {
 
     componentDidMount() {
         $(window).load(function() {
-            $("html, body").animate({ scrollTop: $(document).height() }, 20);
-            $("html, body").animate({ scrollTop: 0 }, "slow");
+           // $("html, body").animate({ scrollTop: $(document).height() }, 10);
+            $("html, body").animate({ scrollTop: 0 });
           });
     }
 

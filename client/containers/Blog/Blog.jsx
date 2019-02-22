@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getBlogs, getBlog } from '../../actions/blogActions';
 import blogHeaderImage from '../../assets/images/blog/blog_header.png';
 import Auth from "../../utils/Auth";
+import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 export class Blogs extends Component {
     constructor(props) {
@@ -48,7 +49,14 @@ export class Blogs extends Component {
     render() {
         return (
             <div>
-                <section className="breadcrumbs-custom bg-image context-dark" style={{ backgroundImage: "url(" + blogHeaderImage + ")" }}>
+                <section className="breadcrumbs-custom bg-image context-dark">
+                <Image cloudName="dinagauranga" publicId='blog_header' 
+                                      responsive
+                                      width="auto"
+                                    
+                                     >
+                                   
+                 </Image>
                     <div className="breadcrumbs-custom-inner">
                         <div className="container breadcrumbs-custom-container">
                         </div>

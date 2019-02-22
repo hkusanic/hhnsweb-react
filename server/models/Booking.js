@@ -26,7 +26,11 @@ Booking.add({
     lastName: { type: String},
     startsAt: { type: String},
     endsAt: { type: String},
-    date: { type: String }
+    dateCreated: {
+		type: Types.Date,
+		default: Date.now,
+	},
+
 });
 
 

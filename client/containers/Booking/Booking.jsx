@@ -6,7 +6,7 @@ import BookingForm from '../../Components/organisms/Form/BookingForm';
 import Auth from '../../utils/Auth';
 import { connect } from "react-redux";
 import { createAppointment, getAppointment, resetState, getBookingStatus } from '../../actions/appointmentAction';
-
+import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 export class Booking extends Component {
     constructor(props) {
         super(props);
@@ -82,7 +82,14 @@ export class Booking extends Component {
         return (
             <div>
                 <div>
-                    <section className="breadcrumbs-custom bg-image context-dark" style={{ backgroundImage: "url(" + banner + ")" }}>
+                    <section className="breadcrumbs-custom bg-image context-dark">
+                    <Image cloudName="dinagauranga" publicId='booking-v2'
+                                      responsive
+                                      width="auto"
+                                    
+                                     >
+                                 
+                    </Image>
                         <div className="breadcrumbs-custom-inner">
                             <div className="container breadcrumbs-custom-container">
                             </div>
