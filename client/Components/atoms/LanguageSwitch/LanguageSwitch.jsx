@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 import { setActiveLanguage, withLocalize } from 'react-localize-redux';
 import reactCookie from 'react-cookies';
+import { Translate } from 'react-localize-redux';
 
   
 
@@ -14,8 +15,8 @@ export class LanguageSwitch extends Component {
 
     componentDidMount() {
         $(window).load(function() {
-            $("html, body").animate({ scrollTop: $(document).height() }, 20);
-            $("html, body").animate({ scrollTop: 0 }, "slow");
+           // $("html, body").animate({ scrollTop: $(document).height() }, 10);
+            $("html, body").animate({ scrollTop: 0 });
           });
     }
 
@@ -37,10 +38,14 @@ export class LanguageSwitch extends Component {
             ()=> {
             if(currentLanguage !== 'en'){
             this.languageToggle('en');
-        }}} >en </a> |
+        }}} > <Translate>
+        {({ translate }) => translate('HOME.en')}
+    </Translate> </a> |
         <a  className={currentLanguage === 'ru' ? 'color-toggle' : 'color-toggle-cursor'} onClick={()=> {
             if(currentLanguage !== 'ru'){
-            this.languageToggle('ru')}}}> ru </a>
+            this.languageToggle('ru')}}}> <Translate>
+            {({ translate }) => translate('HOME.ru')}
+        </Translate> </a>
         </span>);
       }
 

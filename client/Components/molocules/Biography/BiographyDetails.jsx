@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
+import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 export class BiographyDetails extends Component {
     constructor(props) {
@@ -12,6 +13,7 @@ export class BiographyDetails extends Component {
       }
 
     render() {
+        console.log('------>', this.props.location.state.img);
         if (!this.props.location.state) {
             return <div>Error Occured..........</div>
         }
@@ -25,7 +27,14 @@ export class BiographyDetails extends Component {
                                     <h3 className="post-creative-title alignment padLeft">
                                         {renderHTML(reactCookie.load('languageCode') === 'en' ? this.props.location.state.title_en : this.props.location.state.title_ru)}
                                     </h3>
-                                    <img className="biodetailsImg" src={this.props.location.state.img} alt="" width="300" height="300" />
+                                    {/* <img className="biodetailsImg" src={this.props.location.state.img} alt="" width="300" height="300" />
+                                   */}
+                                    <Image cloudName="dinagauranga" publicId={this.props.location.state.img} dpr="auto"
+                                      responsive
+                                      width="auto"
+                                    
+                                     >
+                              </Image>
                                     {renderHTML(reactCookie.load('languageCode') === 'en' ? this.props.location.state.content_en : this.props.location.state.content_ru)}
                                 </article>
                             </div>

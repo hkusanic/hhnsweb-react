@@ -278,7 +278,7 @@
     }
 
     .styleImage {
-        margin-top: 2%;
+        margin: 0px !important;
     }
 
     .login-modal-1 {

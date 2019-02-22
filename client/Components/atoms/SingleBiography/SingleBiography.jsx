@@ -4,6 +4,7 @@ import {
     Link
 } from 'react-router-dom';
 import reactCookie from 'react-cookies';
+import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 function showing100Characters(sentence) {
     var result = sentence;
@@ -21,7 +22,13 @@ const SingleBiography = (props) => {
         <div className="col-md-6 wow-outer">
             <article className="post-modern wow slideInLeft">
                 <Link className="post-modern-media" to={{ pathname: '/biograhyDetails', state: props }}>
-                    <img src={props.img} alt="" width="571" height="353" />
+                <Image cloudName="dinagauranga" publicId={props.img} dpr="auto"
+                                      responsive
+                                      width="auto"
+                                    
+                                     >
+                                   <Transformation quality="auto" fetchFormat="auto" />
+                                  </Image>
                 </Link>
                 <h4 className="post-modern-title">{reactCookie.load('languageCode') === 'en' ? props.title_en : props.title_ru}</h4>
                 {renderHTML(showing100Characters(reactCookie.load('languageCode') === 'en' ? props.content_en : props.content_ru))}
