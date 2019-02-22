@@ -34,9 +34,7 @@ export class BiographyDetails extends Component {
                                       width="auto"
                                     
                                      >
-                                   <Transformation quality="auto" fetchFormat="auto" />
-                                   <Transformation border="3px_solid_rgb:00390b" radius="20" />
-                                    </Image>
+                              </Image>
                                     {renderHTML(reactCookie.load('languageCode') === 'en' ? this.props.location.state.content_en : this.props.location.state.content_ru)}
                                 </article>
                             </div>

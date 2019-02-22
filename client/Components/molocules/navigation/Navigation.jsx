@@ -145,14 +145,20 @@ export class Navigation extends Component {
                                             <li className="rd-nav-item active">
                                                 <Link className="rd-nav-link" to="/">
                                                     <Translate>
-                                                        {({ translate }) => translate('homePage')}
+                                                        {({ translate }) => translate('HOME.home')}
                                                     </Translate>
                                                 </Link>
                                             </li>
-                                            <li className="rd-nav-item active biography-submenu"><a className="rd-nav-link">Biography</a>
+                                            <li className="rd-nav-item active biography-submenu"><a className="rd-nav-link">  <Translate>
+                                                        {({ translate }) => translate('HOME.biography')}
+                                                    </Translate></a>
                                                 <ul className="rd-menu rd-navbar-dropdown">
-                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">A.C. Bhaktivedanta Swami Prabhupada</Link></li>
-                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">Niranjana Swami</Link></li>
+                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">  <Translate>
+                                                        {({ translate }) => translate('HOME.swami_prabhupada')}
+                                                    </Translate></Link></li>
+                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link"> <Translate>
+                                                        {({ translate }) => translate('HOME.niranjanaswami')}
+                                                    </Translate></Link></li>
                                                 </ul>
                                             </li>
                                             {/* {!this.state.isUserLogin ?
@@ -180,12 +186,16 @@ export class Navigation extends Component {
                                             <li className="rd-nav-item active">
                                                 <Link className="rd-nav-link" to="/blog" onClick={this.handleNavigationClick}>
                                                     <Translate>
-                                                        {({ translate }) => translate('navBlog')}
+                                                        {({ translate }) => translate('HOME.blog')}
                                                     </Translate>
                                                 </Link>
                                             </li>
-                                            <li className="rd-nav-item active"><Link className="rd-nav-link " to="/calender" onClick={this.handleNavigationClick}>Calendar</Link></li>
-                                            <li className="rd-nav-item active"><Link className="rd-nav-link" to="/booking" onClick={this.handleNavigationClick}>Booking</Link></li>
+                                            <li className="rd-nav-item active"><Link className="rd-nav-link " to="/calender" onClick={this.handleNavigationClick}> <Translate>
+                                                        {({ translate }) => translate('HOME.calendar')}
+                                                    </Translate></Link></li>
+                                            <li className="rd-nav-item active"><Link className="rd-nav-link" to="/booking" onClick={this.handleNavigationClick}> <Translate>
+                                                        {({ translate }) => translate('HOME.booking')}
+                                                    </Translate></Link></li>
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
                                             {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}

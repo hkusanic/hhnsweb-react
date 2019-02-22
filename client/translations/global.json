@@ -16,5 +16,40 @@
 	"navMeeting": ["Scheduele a meeting", "Назначь всречу"],
 	"navBlog": ["Blog", "Блог"],
 	"navContacts": ["Contacts", "контакты"],
-	"lecturesTitle": ["Lectures", "Лекции"]
+	"lecturesTitle": ["Lectures", "Лекции"],
+	"HOME":{
+		"iskcon_founder_text": ["ISKCON FOUNDER - Acarya A.C. Bhaktivedanta Swami Prabhupada", "Ачарья-основатель ИСККОН А.Ч. Бхактиведанта Свами Прабхупада"],
+		"en":["en" , "анг"],
+		"ru":["ru", "pyc"],
+		"home":["HOME", "ГЛАВНАЯ СТРАНИЦА"],
+		"biography": ["BIOGRAPHY", "БИОГРАФИЯ"],
+		"swami_prabhupada":["A.C. Bhaktivedanta Swami Prabhupada", "А.Ч. Бхактиведанта Свами Прабхупада"],
+		"niranjanaswami": ["H. H. Niranjana Swami", "Е. С. Ниранджана Свами"],
+		"blog": ["BLOG", "БЛОГ"],
+		"calendar": ["CALENDAR", "КАЛЕНДАРЬ"],
+		"booking": ["BOOKING", "ЗАПИСЬ"],
+		"login":["LOG IN", "АВТОРИЗОВАТЬСЯ"],
+		"Register": ["REGISTRATION", "РЕГИСТРАЦИЯ"],
+		"picture_message":["The Official Website H.H. Niranjana Swami", "Официальный сайт Е.С. Ниранджана Свами"],
+		"read_more": ["Read more..", "Читать дальше..."],
+		"official_website": ["The Official Website", "Официальный сайт"],
+		"h_h":["H.H. Niranjana Swami ", "Е.С. Ниранджана Свами"]
+
+	},
+	"FOOTER": {
+		"quick_links": ["Quick Links", "Быстрые ссылки"],
+		"vaishnava_dasa":["Vaishnava dasa","Вайшнава даса"],
+		"forum":["Forum", "Форум"],
+		"file_share": ["File Share", "Файловый ресурс"],
+		"contact_information": ["Contact Information", "Контактная информация"],
+		"copy_rights": ["2019 All Rights Reserved. His Holiness Niranjana Swami.", "2019 Все права защищены. Его Святейшество Ниранджана Свами"]
+	},
+	"LOGIN_FORM": {
+		"log_in": ["LOG IN", "ВХОД"],
+		"email": ["E-mail", "Почта"],
+		"password": ["Password", "Пароль"],
+		"login_button": ["LOG IN", "ВОЙТИ"],
+		"forgot_password": ["FORGOT PASSWORD", "ЗАБЫЛИ ПАРОЛЬ?"],
+		"please_fill":["**PLEASE FILL ALL THE FIELDS ", "**Пожалуйста заполните все поля"]
+	}
 }

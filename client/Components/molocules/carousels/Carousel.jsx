@@ -6,7 +6,7 @@ import image3 from './../../../assets/images/carousel/3.png';
 import image4 from './../../../assets/images/carousel/4.jpg';
 import SingleCarousel from '../../atoms/SingleCarousel/singleCarousel';
 import Biography from '../Biography/Biography';
-
+import { Translate } from 'react-localize-redux';
 export class Carousel extends Component {
     constructor(props) {
         super(props);
@@ -24,8 +24,12 @@ export class Carousel extends Component {
                 <div className="swiper-wrapper">
                     <SingleCarousel
                         image={image1}
-                        heading="The Official Website "
-                        text="H.H. Niranjana Swami" />
+                        heading={ <Translate>
+                            {({ translate }) => <h1>{translate("HOME.official_website")}</h1>}
+                          </Translate>}
+                        text={ <Translate>
+                            {({ translate }) => <h1>{translate("HOME.h_h")}</h1>}
+                          </Translate>} />
                     <SingleCarousel
                         image={image2}
                         heading=""

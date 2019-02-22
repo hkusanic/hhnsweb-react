@@ -24,8 +24,10 @@ Booking.add({
 	},
     firstName: { type: String},
     lastName: { type: String},
-    startsAt: { type: String},
-    endsAt: { type: String},
+	startsAt: { type: String},
+	startDate: {type:String},
+	endsAt: { type: String},
+	booking: {type: Boolean},
     dateCreated: {
 		type: Types.Date,
 		default: Date.now,
