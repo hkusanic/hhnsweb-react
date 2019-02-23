@@ -3,6 +3,7 @@ import { onlyIntegers, isNotEmpty, isValidPhone } from '../../../utils/validatio
 import { connect } from 'react-redux';
 import { editProfile } from '../../../actions/loginActions';
 import Auth from '../../../utils/Auth';
+import { Translate } from 'react-localize-redux';
 export class UserProfile extends Component {
     constructor(props) {
         super(props);
@@ -94,12 +95,16 @@ export class UserProfile extends Component {
                     <div className="container">
                         <div className="row justify-content-center" style={{paddingTop: '2%'}}>
                             <div className="col-sm-10 col-md-8 col-lg-7 col-xl-6">
-                                <h3 className="wow-outer text-center"><span className="wow slideInUp">User Profile</span></h3>
+                                <h3 className="wow-outer text-center"><span className="wow slideInUp">    <Translate>
+                                                        {({ translate }) => translate('USER_PROFILE.user_profile')}
+                                                    </Translate></span></h3>
                                 <form style={{ paddingLeft: '10%' }} className="rd-form" data-form-type="contact" >
                                     <div className="row row-10">
                                         <div className="col-md-10 wow-outer">
                                             <div className="form-wrap wow fadeSlideInUp">
-                                                <label className="form-label-outside" htmlFor="contact-first-name">First Name</label>
+                                                <label className="form-label-outside" htmlFor="contact-first-name"><Translate>
+                                                        {({ translate }) => translate('USER_PROFILE.first_name')}
+                                                    </Translate></label>
                                                 <input
                                                     className="form-input"
                                                     style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
@@ -113,7 +118,9 @@ export class UserProfile extends Component {
                                         </div>
                                         <div className="col-md-10 wow-outer">
                                             <div className="form-wrap wow fadeSlideInUp">
-                                                <label className="form-label-outside" htmlFor="contact-last-name">Last Name</label>
+                                                <label className="form-label-outside" htmlFor="contact-last-name"><Translate>
+                                                        {({ translate }) => translate('USER_PROFILE.last_name')}
+                                                    </Translate></label>
                                                 <input
                                                     className="form-input"
                                                     style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
@@ -127,7 +134,9 @@ export class UserProfile extends Component {
                                         </div>
                                         <div className="col-md-10 wow-outer">
                                             <div className="form-wrap wow fadeSlideInUp">
-                                                <label className="form-label-outside" htmlFor="contact-email">E-mail</label>
+                                                <label className="form-label-outside" htmlFor="contact-email"><Translate>
+                                                        {({ translate }) => translate('USER_PROFILE.email')}
+                                                    </Translate></label>
                                                 <input
                                                     className="form-input"
                                                     style={{ backgroundColor: '#f6f6f6' }}
@@ -140,7 +149,9 @@ export class UserProfile extends Component {
                                         </div>
                                         <div className="col-md-10 wow-outer">
                                             <div className="form-wrap wow fadeSlideInUp">
-                                                <label className="form-label-outside" htmlFor="contact-phone">Mobile Number</label>
+                                                <label className="form-label-outside" htmlFor="contact-phone"><Translate>
+                                                        {({ translate }) => translate('USER_PROFILE.mobile_number')}
+                                                    </Translate></label>
                                                 <input
                                                     className="form-input"
                                                     style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
@@ -157,14 +168,22 @@ export class UserProfile extends Component {
                                         <div className="wow-outer">
                                             {
                                                 this.state.editing ?
-                                                    <button className="button button-primary button-winona" onClick={this.handleEditing} >Edit</button>
+                                                    <button className="button button-primary button-winona" onClick={this.handleEditing} ><Translate>
+                                                    {({ translate }) => translate('USER_PROFILE.edit')}
+                                                </Translate></button>
                                                     :
                                                     <button className="button button-primary button-winona" onClick={this.handleEditProfile} >Update</button>
                                             }
                                         </div>
                                     </div>
-                                     {this.state.isUpdated ? <p className="updateText">Your profile has been updated Successfully</p> : ''}
-                                    <p className="loginError">{this.state.error}</p>
+                                     {this.state.isUpdated ? <p className="updateText"><Translate>
+                                                        {({ translate }) => translate('USER_PROFILE.your_profile_updated')}
+                                                    </Translate></p> : ''}
+                                    <p className="loginError">{this.state.error==='**Please fill all the fields'?<Translate>
+                                                        {({ translate }) => translate('USER_PROFILE.please_fill')}
+                                                    </Translate>:this.state.error==='Please Enter Mobile Number Correctly'?<Translate>
+                                                        {({ translate }) => translate('USER_PROFILE.please_enter_mobile')}
+                                                    </Translate>:null}</p>
                                 </form>
                             </div>
                         </div>
