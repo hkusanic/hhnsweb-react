@@ -63,5 +63,39 @@
 		"create_an_account": ["CREATE AN ACCOUNT", "СОЗДАТЬ АККАУНТ"],
 		"please_fill":["**PLEASE FILL ALL THE FIELDS ", "**Пожалуйста заполните все поля"]
 
+	},
+	"USER_PROFILE":{
+		"user_profile":["User Profile", "Аккаунт пользователя"],
+		"first_name": ["First Name", "Имя"],
+		"last_name": ["Last Name", "Фамилия"],
+		"email": ["E-mail","Почта"],
+		"mobile_number": ["Mobile Number", "Мобильный телефон"],
+		"edit":["EDIT","РЕДАКТИРОВАТЬ"],
+		"your_profile_updted": ["Your profile has been updated successfully", "Ваш аккаунт был успешно обновлён"],
+		"please_enter_mobile": ["Please enter mobile number correctly", "Пожалуйста, введите правильный номер мобильного телефона"],
+		"please_fill": ["**Please fill all the fields","**Пожалуйста, заполните все поля"]
+
+	},
+	"FORGOT_PASSWORD":{
+		"forgot_password":["FORGOT PASSWORD","ВОССТАНОВЛЕНИЕ ПАРОЛЯ"],
+		"enter_the_email":["Enter your e-mail to get the Password", "Введите свою почту чтобы получить письмо для восстановления"],
+		"your_email":["Your e-mail","Ваша почта"],
+		"submit":["SUBMIT", "ОТПРАВИТЬ"],
+		"please_check_email": ["Please check your email", "Пожалуйста, проверьте вашу почту"],
+		"please_enter_correct_address":["**Please enter correct email address","**Пожалуйста, введите правильный адрес электронной почты"],
+		"please_enter_email":["**Please enter the email","**Пожалуйста, введите адрес электронной почты"]
+
+	},
+	"RESET_PASSWORD":{
+		"reset_password": ["RESET PASSWORD","СБРОС ПАРОЛЯ"],
+		"password":["Password","Пароль"],
+		"confirm_password":["Confirm Password", "Подтвердите пароля"],
+		"save_password":["SAVE PASSWORD", "СОХРАНИТЬ ПАРОЛЬ"],
+		"password_confirm":["Password and confrim password should match", "Пароль и Подтверждение пароля должны совпадать"],
+		"please_fill":["**Please fill all the details","**Пожалуйста, заполните все данные"],
+		"password_reset": ["Password is reset successfully", "Пароль успешно сброшен"],
+		"link_expired": ["Link is expired", "Срок действия ссылки истек"]
+
+
 	}
 }
