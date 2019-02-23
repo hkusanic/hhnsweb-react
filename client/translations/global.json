@@ -51,5 +51,17 @@
 		"login_button": ["LOG IN", "ВОЙТИ"],
 		"forgot_password": ["FORGOT PASSWORD", "ЗАБЫЛИ ПАРОЛЬ?"],
 		"please_fill":["**PLEASE FILL ALL THE FIELDS ", "**Пожалуйста заполните все поля"]
+	},
+    "REGISTER_FORM":{
+		"registration": ["REGISTRATION","РЕГИСТРАЦИЯ"],
+		"first_name": ["FIRST NAME", "Имя"],
+		"last_name": ["LAST NAME", "Фамилия"],
+		"email": ["E-mail", "Почта"],
+		"mobile_number": ["Mobile Number", "Мобильный телефон"],
+		"password": ["Password", "Пароль"],
+		"confirm_password": ["Confirm Password", "Подтвердите пароль"],
+		"create_an_account": ["CREATE AN ACCOUNT", "СОЗДАТЬ АККАУНТ"],
+		"please_fill":["**PLEASE FILL ALL THE FIELDS ", "**Пожалуйста заполните все поля"]
+
 	}
 }
