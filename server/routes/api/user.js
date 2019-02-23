@@ -49,7 +49,8 @@ exports.signin = function (req, res) {
 					email: user.email,
 					firstName: user.name.first,
 					last: user.name.last,
-					mobileNumber: user.mobileNumber
+					mobileNumber: user.mobileNumber,
+					countryCode: user.countryCode
 				}
 			});
 
@@ -92,6 +93,7 @@ exports.signup = function (req, res) {
 				req.body.email === '' ? list.push('Email is missing.') : '';
 				req.body.password === '' ? list.push('Password is missing.') : '';
 				req.body.mobileNumber === '' ? list.push('Mobile number is missing.') : '';
+				req.body.countryCode === '' ? list.push('Country Code is missing.') : '';
 
 				res.json({ error: { title: 'Error while creating new account', detail: 'Mandatory values are missing. Please check below for more details.' }, list: list });
 				return cb('true');
@@ -118,6 +120,7 @@ exports.signup = function (req, res) {
 				},
 				email: req.body.email,
 				mobileNumber: req.body.mobileNumber,
+				countryCode: req.body.countryCode,
 				password: req.body.password,
 			};
 
@@ -142,7 +145,8 @@ exports.signup = function (req, res) {
 						email: user.email,
 						firstName: user.name.first,
 						last: user.name.last,
-						mobileNumber: user.mobileNumber
+						mobileNumber: user.mobileNumber,
+						countryCode: user.countryCode
 					}
 				});
 			};
@@ -283,7 +287,7 @@ exports.resetpassword = function (req, res) {
 
 exports.editprofile = function (req, res) {
 	
-	if (!req.body.firstName || !req.body.lastName || !req.body.mobileNumber) {
+	if (!req.body.firstName || !req.body.lastName || !req.body.mobileNumber ) {
 		res.json({ error: { title: 'Required', detail: 'Mandatory values are missing. Please check.' } });	
 	}
 
@@ -293,6 +297,7 @@ exports.editprofile = function (req, res) {
 	userFound.name.first = req.body.firstName;
 	userFound.name.last = req.body.lastName;
 	userFound.mobileNumber = req.body.mobileNumber;
+	userFound.countryCode = req.body.countryCode;
 	 
 	 userFound.save((err) => {
 	  if (err) return res.json({ error: { title: 'Not able to reset password' } });			;
@@ -305,6 +310,7 @@ exports.editprofile = function (req, res) {
 				firstName: userFound.name.first,
 				last: userFound.name.last,
 				mobileNumber: userFound.mobileNumber,
+				countryCode: userFound.countryCode
 			}
 		  });
 	});

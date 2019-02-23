@@ -5,8 +5,9 @@ import { loginUser, logoutUser, checkLogin, signupUser, forgotPassword } from '.
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import { Link } from 'react-router-dom';
-import { isValidEmail, isNotEmpty, isMatch, isValidPhone, onlyIntegers } from '../../utils/validation';
+import { isValidEmail, isNotEmpty, isMatch} from '../../utils/validation';
 import LoginForm from '../../Components/organisms/Form/LoginFrom';
+import IntlTelInput from 'react-intl-tel-input';
 
 export class Login extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ export class Login extends Component {
       lastName: '',
       email_signup: '',
       mobileNumber: '',
+      countryCode: '',
       password_signup: '',
       confirmPassword: '',
       error: '',
@@ -76,7 +78,7 @@ export class Login extends Component {
     event.preventDefault();
     if (!isNotEmpty(this.state.email_signup) || !isNotEmpty(this.state.password_signup) ||
       !isNotEmpty(this.state.firstName) || !isNotEmpty(this.state.lastName) ||
-      !isNotEmpty(this.state.confirmPassword) || !isNotEmpty(this.state.mobileNumber) ) {
+      !isNotEmpty(this.state.confirmPassword) || !isNotEmpty(this.state.mobileNumber)) {
       this.setState({ regError: '**Please fill all the fields' })
     }
     else if (!isValidEmail(this.state.email_signup)) {
@@ -85,21 +87,36 @@ export class Login extends Component {
     else if (!isMatch(this.state.password_signup, this.state.confirmPassword)) {
       this.setState({ regError: '**Password and confirm password should match' })
     }
-    else if (!onlyIntegers(this.state.mobileNumber) || !isValidPhone(this.state.mobileNumber)) {
-      this.setState({ error: 'Please Enter Mobile Number Correctly' })
-  }
     else {
       const body = {
         email: this.state.email_signup,
         password: this.state.password_signup,
         firstname: this.state.firstName,
         lastname: this.state.lastName,
-        mobileNumber: this.state.mobileNumber
+        mobileNumber: this.state.mobileNumber,
+        countryCode: this.state.countryCode
       }
       this.props.signup(body);
     }
   }
 
+  handle = (validate, number, data) => {
+    console.log(validate, number, data);
+    const countryCode = data.dialCode;
+    const mobileNumber = number;
+
+    if (!validate) {
+      this.setState({ error: 'Please Enter Mobile Number Correctly' })
+    } else {
+      this.setState({
+        mobileNumber,
+        countryCode,
+        error: '',
+      }, () => {
+        console.log(this.state.mobileNumber, this.state.countryCode)
+      })
+    }
+  }
 
   render() {
     return (
@@ -155,7 +172,7 @@ export class Login extends Component {
                         data-constraints="@Email @Required"
                         onChange={() => { this.handleChange('email_signup', event) }} />
                     </div>
-                    <div className="form-wrap">
+                    {/* <div className="form-wrap">
                       <input
                         className="form-input"
                         id="register-email-5"
@@ -163,6 +180,18 @@ export class Login extends Component {
                         name="mobileNumber"
                         placeholder="Mobile Number"
                         onChange={() => { this.handleChange('mobileNumber', event) }} />
+                    </div> */}
+                    <div className="form-wrap">
+                      <IntlTelInput
+                        containerClassName="intl-tel-input"
+                        defaultValue={this.state.mobileNumber}
+                        defaultCountry='india'
+                        autoHideDialCode={true}
+                        format={true}
+                        separateDialCode={true}
+                        inputClassName="form-control"
+                        onPhoneNumberChange={(validate, number, data) => { this.handle(validate, number, data) }}
+                      />
                     </div>
                     <div className="form-wrap">
                       <input

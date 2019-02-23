@@ -3,6 +3,8 @@ import { onlyIntegers, isNotEmpty, isValidPhone } from '../../../utils/validatio
 import { connect } from 'react-redux';
 import { editProfile } from '../../../actions/loginActions';
 import Auth from '../../../utils/Auth';
+import IntlTelInput from 'react-intl-tel-input';
+
 export class UserProfile extends Component {
     constructor(props) {
         super(props);
@@ -11,6 +13,7 @@ export class UserProfile extends Component {
             last: '',
             email: '',
             mobileNumber: '',
+            countryCode: '',
             editing: true,
             error: '',
             isUpdated: false
@@ -19,9 +22,9 @@ export class UserProfile extends Component {
 
     componentDidMount() {
         this.setState({
-            editing : true,
+            editing: true,
             isUpdated: false
-        }, () => {this.getUser()})
+        }, () => { this.getUser() })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -30,7 +33,7 @@ export class UserProfile extends Component {
         if (!this.props.isProfileEdited && nextProps.isProfileEdited) {
             editing = true;
         }
-        if(nextProps.error){
+        if (nextProps.error) {
             editing = false;
         }
         this.setState({
@@ -46,7 +49,8 @@ export class UserProfile extends Component {
             first: user.firstName,
             last: user.last,
             email: user.email,
-            mobileNumber: user.mobileNumber
+            mobileNumber: user.mobileNumber,
+            countryCode: user.countryCode
         })
     }
     handleEditing = (event) => {
@@ -70,20 +74,35 @@ export class UserProfile extends Component {
             !this.state.last) {
             this.setState({ error: '**Please fill all the fields' })
         }
-        else if (!onlyIntegers(this.state.mobileNumber) || !isValidPhone(this.state.mobileNumber)) {
-            this.setState({ error: 'Please Enter Mobile Number Correctly' })
-        }
         else {
             const body = {
                 mobileNumber: this.state.mobileNumber,
                 firstName: this.state.first,
                 lastName: this.state.last,
-                mobileNumber: this.state.mobileNumber
+                mobileNumber: this.state.mobileNumber,
+                countryCode: this.state.countryCode
             }
             this.props.editProfile(body);
         }
     }
 
+    handle = (validate, number, data) => {
+        console.log(validate, number, data);
+        const countryCode = data.dialCode;
+        const mobileNumber = number;
+
+        if (!validate) {
+            this.setState({ error: 'Please Enter Mobile Number Correctly' })
+        } else {
+            this.setState({
+                mobileNumber,
+                countryCode,
+                error: '',
+            }, ()=>{
+                console.log(this.state.mobileNumber, this.state.countryCode)
+            })
+        }
+    }
     render() {
         if (!this.state && !this.state.email) {
             return <div>Loading..</div>
@@ -92,10 +111,10 @@ export class UserProfile extends Component {
             <div>
                 <section className="section bg-gray-100">
                     <div className="container">
-                        <div className="row justify-content-center" style={{paddingTop: '2%'}}>
+                        <div className="row justify-content-center" style={{ paddingTop: '2%' }}>
                             <div className="col-sm-10 col-md-8 col-lg-7 col-xl-6">
                                 <h3 className="wow-outer text-center"><span className="wow slideInUp">User Profile</span></h3>
-                                <form style={{ paddingLeft: '10%' }} className="rd-form" data-form-type="contact" >
+                                <div style={{ paddingLeft: '10%' }} className="rd-form" data-form-type="contact" >
                                     <div className="row row-10">
                                         <div className="col-md-10 wow-outer">
                                             <div className="form-wrap wow fadeSlideInUp">
@@ -138,20 +157,36 @@ export class UserProfile extends Component {
                                                     value={this.state.email} />
                                             </div>
                                         </div>
-                                        <div className="col-md-10 wow-outer">
-                                            <div className="form-wrap wow fadeSlideInUp">
-                                                <label className="form-label-outside" htmlFor="contact-phone">Mobile Number</label>
-                                                <input
-                                                    className="form-input"
-                                                    style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
-                                                    id="contact-phone"
-                                                    type="text"
-                                                    name="phone"
-                                                    disabled={this.state.editing}
-                                                    value={this.state.mobileNumber}
-                                                    onChange={() => { this.handleChange('mobileNumber', event) }} />
+                                        {this.state.editing ?
+                                            <div className="col-md-10 wow-outer">
+                                                <div className="form-wrap wow fadeSlideInUp">
+                                                    <label className="form-label-outside" htmlFor="contact-phone">Mobile Number</label>
+                                                    <input
+                                                        className="form-input"
+                                                        style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
+                                                        id="contact-phone"
+                                                        type="text"
+                                                        name="phone"
+                                                        disabled={this.state.editing}
+                                                        value={this.state.mobileNumber}
+                                                        onChange={() => { this.handleChange('mobileNumber', event) }} />
+                                                </div>
                                             </div>
-                                        </div>
+                                            :
+                                            <div className="col-md-10 form-wrap">
+                                                    <label className="form-label-outside" htmlFor="contact-phone">Mobile Number</label>
+                                                    <IntlTelInput
+                                                        containerClassName="intl-tel-input"
+                                                        defaultValue={this.state.mobileNumber}
+                                                        defaultCountry='india'
+                                                        autoHideDialCode={true}
+                                                        format={true}
+                                                        separateDialCode={true}
+                                                        inputClassName="form-control"
+                                                        onPhoneNumberChange={(validate, number, data) => { this.handle(validate, number, data) }}
+                                                    />
+                                            </div>
+                                        }
                                     </div>
                                     <div className="group group-middle">
                                         <div className="wow-outer">
@@ -163,9 +198,9 @@ export class UserProfile extends Component {
                                             }
                                         </div>
                                     </div>
-                                     {this.state.isUpdated ? <p className="updateText">Your profile has been updated Successfully</p> : ''}
+                                    {this.state.isUpdated ? <p className="updateText">Your profile has been updated Successfully</p> : ''}
                                     <p className="loginError">{this.state.error}</p>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

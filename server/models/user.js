@@ -9,6 +9,7 @@ User.add({
 	name: { type: Types.Name, initial: true },
 	email: { type: String, initial: true, required: true, index: true },
 	mobileNumber: { type: String, initial: true },
+	countryCode: {type: String, initial: true},
 	password: { type: Types.Password, initial: true },
 	canAccessKeystone: { type: Boolean, initial: true },
 	accessKeyId: { type: String, initial: true },
