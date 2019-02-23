@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { isValidPhone, onlyIntegers, isNotEmpty } from '../../../utils/validation';
-
-
+import IntlTelInput from 'react-intl-tel-input';
 export class BookingForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mobileNumber: '',
+            mobileNumber: '9090909090',
             disciple: '',
             requestFor: 'Darshan-15',
             error: ''
@@ -25,7 +24,7 @@ export class BookingForm extends Component {
             || !isNotEmpty(this.state.disciple) || !isNotEmpty(this.state.requestFor)) {
             this.setState({ error: '**Please fill all the fields' })
         }
-        else if (!onlyIntegers(this.state.mobileNumber) || !isValidPhone(this.state.mobileNumber)) {
+        else if (!onlyIntegers(this.state.mobileNumber)) {
             this.setState({ error: 'Please Enter Mobile Number Correctly' })
         }
         else {
@@ -41,7 +40,7 @@ export class BookingForm extends Component {
 
     handleChange = (type, event) => {
         const value = event.target.value;
-        if(type === 'requestFor'){
+        if (type === 'requestFor') {
             this.props.handleDarshanRequested(event);
         }
         this.setState({
@@ -50,6 +49,7 @@ export class BookingForm extends Component {
             [type]: value
         })
     }
+
 
 
     render() {
@@ -86,7 +86,8 @@ export class BookingForm extends Component {
                             type="text"
                             placeholder="Mobile Number"
                             data-constraints="@Required"
-                            onChange={() => { this.handleChange('mobileNumber', event) }} />
+                            readOnly="readonly"
+                            value={this.props.user.mobileNumber} />
                     </div>
                     <div className="form-wrap">
                         <select className="form-input" onChange={() => { this.handleChange('requestFor', event) }} value={this.state.requestTime} placeholder="Please select Darshan Duration">
