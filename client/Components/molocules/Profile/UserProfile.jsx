@@ -202,9 +202,12 @@ export class UserProfile extends Component {
                                         <div className="wow-outer">
                                             {
                                                 this.state.editing ?
-                                                    <button className="button button-primary button-winona" onClick={this.handleEditing} ><Translate>
+                                                    <button className="button button-primary button-winona" onClick={this.handleEditing} >
+                                                    {/* <Translate>
                                                         {({ translate }) => translate('USER_PROFILE.edit')}
-                                                    </Translate></button>
+                                                    </Translate> */}
+                                                    Edit
+                                                    </button>
                                                     :
                                                     <button className="button button-primary button-winona" onClick={this.handleEditProfile} >Update</button>
                                             }

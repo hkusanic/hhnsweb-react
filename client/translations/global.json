@@ -71,7 +71,7 @@
 		"email": ["E-mail","Почта"],
 		"mobile_number": ["Mobile Number", "Мобильный телефон"],
 		"edit":["EDIT","РЕДАКТИРОВАТЬ"],
-		"your_profile_updted": ["Your profile has been updated successfully", "Ваш аккаунт был успешно обновлён"],
+		"your_profile_updated": ["Your profile has been updated successfully", "Ваш аккаунт был успешно обновлён"],
 		"please_enter_mobile": ["Please enter mobile number correctly", "Пожалуйста, введите правильный номер мобильного телефона"],
 		"please_fill": ["**Please fill all the fields","**Пожалуйста, заполните все поля"]
 
