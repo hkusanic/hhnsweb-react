@@ -120,7 +120,7 @@ export class Login extends Component {
         <Translate>
                     {({ translate }) => {
                        log_in = translate('LOGIN_FORM.log_in')
-                       forgot_password = translate('LOGIN_FORM.password')
+                       forgot_password = translate('LOGIN_FORM.forgot_password')
                        registration = translate('REGISTER_FORM.registration')
                        first_name = translate('REGISTER_FORM.first_name')
                        last_name = translate('REGISTER_FORM.last_name')
