@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { isValidEmail, isNotEmpty } from '../../../utils/validation';
+import { Translate } from 'react-localize-redux';
 
 export class LoginForm extends Component {
     constructor(props) {
@@ -44,8 +45,18 @@ export class LoginForm extends Component {
     }
 
     render() {
+
+        let log_in ='';
+        let password = '';
+        let email ='';
+
         return (
-            <form className="rd-form rd-form-small">
+            <Translate>
+            {({ translate }) => {
+               log_in = translate('LOGIN_FORM.log_in')
+               password = translate('LOGIN_FORM.password')
+               email = translate('REGISTER_FORM.email')
+            return <form className="rd-form rd-form-small">
                 <div className="form-wrap">
                     <input
                         className="form-input"
@@ -53,7 +64,7 @@ export class LoginForm extends Component {
                         name="email"
                         data-constraints="@Email @Required"
                         onChange={() => { this.handleChange('username', event) }}
-                        placeholder="E-mail" />
+                        placeholder={email} />
                 </div>
                 <div className="form-wrap">
                     <input
@@ -62,13 +73,16 @@ export class LoginForm extends Component {
                         name="password"
                         data-constraints="@Required"
                         onChange={() => { this.handleChange('password', event) }}
-                        placeholder="Password" />
+                        placeholder={password} />
                 </div>
                 <div className="form-wrap">
-                    <button className="button button-primary button-winona" onClick={this.loginSubmit}>Log in</button>
+                    <button className="button button-primary button-winona" onClick={this.loginSubmit}>{log_in}</button>
                 </div>
                 <p className="loginError">{this.state.error}</p>
             </form>
+            }}
+
+            </Translate>
         );
     }
 }

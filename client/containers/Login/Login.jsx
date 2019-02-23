@@ -5,8 +5,9 @@ import { loginUser, logoutUser, checkLogin, signupUser, forgotPassword } from '.
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import { Link } from 'react-router-dom';
-import { isValidEmail, isNotEmpty, isMatch, isValidPhone, onlyIntegers } from '../../utils/validation';
+import { isValidEmail, isNotEmpty, isMatch } from '../../utils/validation';
 import LoginForm from '../../Components/organisms/Form/LoginFrom';
+import IntlTelInput from 'react-intl-tel-input';
 
 export class Login extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ export class Login extends Component {
       lastName: '',
       email_signup: '',
       mobileNumber: '',
+      countryCode: '',
       password_signup: '',
       confirmPassword: '',
       error: '',
@@ -76,7 +78,7 @@ export class Login extends Component {
     event.preventDefault();
     if (!isNotEmpty(this.state.email_signup) || !isNotEmpty(this.state.password_signup) ||
       !isNotEmpty(this.state.firstName) || !isNotEmpty(this.state.lastName) ||
-      !isNotEmpty(this.state.confirmPassword) || !isNotEmpty(this.state.mobileNumber) ) {
+      !isNotEmpty(this.state.confirmPassword) || !isNotEmpty(this.state.mobileNumber)) {
       this.setState({ regError: '**Please fill all the fields' })
     }
     else if (!isValidEmail(this.state.email_signup)) {
@@ -85,119 +87,177 @@ export class Login extends Component {
     else if (!isMatch(this.state.password_signup, this.state.confirmPassword)) {
       this.setState({ regError: '**Password and confirm password should match' })
     }
-    else if (!onlyIntegers(this.state.mobileNumber) || !isValidPhone(this.state.mobileNumber)) {
-      this.setState({ error: 'Please Enter Mobile Number Correctly' })
-  }
     else {
       const body = {
         email: this.state.email_signup,
         password: this.state.password_signup,
         firstname: this.state.firstName,
         lastname: this.state.lastName,
-        mobileNumber: this.state.mobileNumber
+        mobileNumber: this.state.mobileNumber,
+        countryCode: this.state.countryCode
       }
       this.props.signup(body);
     }
   }
 
+  handle = (validate, number, data) => {
+    console.log(validate, number, data);
+    const countryCode = data.dialCode;
+    const mobileNumber = number;
+
+    if (!validate) {
+      this.setState({ error: 'Please Enter Mobile Number Correctly' })
+    } else {
+      this.setState({
+        mobileNumber,
+        countryCode,
+        error: '',
+      }, () => {
+        console.log(this.state.mobileNumber, this.state.countryCode)
+      })
+    }
+  }
 
   render() {
-    return (
-      <div>
-        <div className="rd-navbar-block">
-          {this.state.isUserLogin ?
-            <ul className="list-inline-bordered">
+    let log_in = '';
+    let forgot_password = '';
+    let registration = '';
+    let first_name = '';
+    let last_name = '';
+    let email = '';
+    let mobile_number = '';
+    let password = '';
+    let confirm_password = '';
+    let create_an_account = '';
 
-              <li>
-                <li className="rd-navbar-popup-toggle login-modal-1" data-rd-navbar-toggle="#rd-navbar-login-5">
-                  <Translate>
-                    {({ translate }) => translate('loginLabel')}
-                  </Translate></li>
-                <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal login-modal-2" id="rd-navbar-login-5">
-                  <h4>Log In</h4>
-                  <LoginForm loginUser={this.props.loginUser} error={this.state.error} />
-                  <p><Link to='/forgotPassword'>Forgot Password</Link></p>
-                </div>
-              </li>
-              <li>
-                <li className="rd-navbar-popup-toggle register-modal-1" data-rd-navbar-toggle="#rd-navbar-register-5">REGISTRATION</li>
-                <div className="rd-navbar-popup bg-gray-700 margin-left-register-modal register-modal-2" id="rd-navbar-register-5">
-                  <h4>Registration</h4>
-                  <form className="rd-form rd-form-small">
-                    <div className="form-wrap">
-                      <input
-                        className="form-input"
-                        id="register-firstName-5"
-                        type="text"
-                        name="firstname"
-                        placeholder="FirstName"
-                        data-constraints="@Required"
-                        onChange={() => { this.handleChange('firstName', event) }}
-                      />
+
+    return (
+
+      <div>
+        <Translate>
+          {({ translate }) => {
+            log_in = translate('LOGIN_FORM.log_in')
+            forgot_password = translate('LOGIN_FORM.forgot_password')
+            registration = translate('REGISTER_FORM.registration')
+            first_name = translate('REGISTER_FORM.first_name')
+            last_name = translate('REGISTER_FORM.last_name')
+            email = translate('REGISTER_FORM.email')
+            mobile_number = translate('REGISTER_FORM.mobile_number')
+            password = translate('REGISTER_FORM.password')
+            confirm_password = translate('REGISTER_FORM.confirm_password')
+            create_an_account = translate('REGISTER_FORM.create_an_account')
+            return <div className="rd-navbar-block">
+              {this.state.isUserLogin ?
+                <ul className="list-inline-bordered">
+
+                  <li>
+                    <li className="rd-navbar-popup-toggle login-modal-1" data-rd-navbar-toggle="#rd-navbar-login-5">
+
+                      {log_in}
+                    </li>
+                    <div className="rd-navbar-popup bg-gray-700 margin-left-login-modal login-modal-2" id="rd-navbar-login-5">
+                      <h4>
+                        {log_in}
+                      </h4>
+                      <LoginForm loginUser={this.props.loginUser} error={this.state.error} />
+                      <p><Link to='/forgotPassword'> {forgot_password}</Link></p>
                     </div>
-                    <div className="form-wrap">
-                      <input
-                        className="form-input"
-                        id="register-lastName-5"
-                        type="text"
-                        name="lastname"
-                        placeholder="LastName"
-                        data-constraints="@Required"
-                        onChange={() => { this.handleChange('lastName', event) }} />
+                  </li>
+                  <li>
+                    <li className="rd-navbar-popup-toggle register-modal-1" data-rd-navbar-toggle="#rd-navbar-register-5">
+                      {registration}
+                    </li>
+                    <div className="rd-navbar-popup bg-gray-700 margin-left-register-modal register-modal-2" id="rd-navbar-register-5">
+                      <h4> {registration}</h4>
+                      <form className="rd-form rd-form-small">
+                        <div className="form-wrap">
+                          <input
+                            className="form-input"
+                            id="register-firstName-5"
+                            type="text"
+                            name="firstname"
+                            placeholder={first_name}
+                            data-constraints="@Required"
+                            onChange={() => { this.handleChange('firstName', event) }}
+                          />
+                        </div>
+                        <div className="form-wrap">
+                          <input
+                            className="form-input"
+                            id="register-lastName-5"
+                            type="text"
+                            name="lastname"
+                            placeholder={last_name}
+                            data-constraints="@Required"
+                            onChange={() => { this.handleChange('lastName', event) }} />
+                        </div>
+                        <div className="form-wrap">
+                          <input
+                            className="form-input"
+                            id="register-email-5"
+                            type="email"
+                            name="email"
+                            placeholder={email}
+                            data-constraints="@Email @Required"
+                            onChange={() => { this.handleChange('email_signup', event) }} />
+                        </div>
+                        {/* <div className="form-wrap">
+                          <input
+                            className="form-input"
+                            id="register-email-5"
+                            type="text"
+                            name="mobileNumber"
+                            placeholder={mobile_number}
+                            onChange={() => { this.handleChange('mobileNumber', event) }} />
+                        </div> */}
+                        <div className="form-wrap">
+                          <IntlTelInput
+                            containerClassName="intl-tel-input"
+                            defaultValue={this.state.mobileNumber}
+                            defaultCountry='india'
+                            autoHideDialCode={true}
+                            format={true}
+                            separateDialCode={true}
+                            inputClassName="form-control"
+                            onPhoneNumberChange={(validate, number, data) => { this.handle(validate, number, data) }}
+                          />
+                        </div>
+                        <div className="form-wrap">
+                          <input
+                            className="form-input"
+                            id="register-password-5"
+                            type="password"
+                            name="password"
+                            placeholder={password}
+                            data-constraints="@Required"
+                            onChange={() => { this.handleChange('password_signup', event) }} />
+                        </div>
+                        <div className="form-wrap">
+                          <input
+                            className="form-input"
+                            id="register-password-confirm-5"
+                            type="password"
+                            name="password"
+                            placeholder={confirm_password}
+                            data-constraints="@Required"
+                            onChange={() => { this.handleChange('confirmPassword', event) }} />
+                        </div>
+                        <div className="form-wrap">
+                          <button className="button button-block button-primary-lighten button-winona" onClick={this.signUP}>{create_an_account}</button>
+                        </div>
+                      </form>
+                      <p className="loginError">{this.state.regError}</p>
                     </div>
-                    <div className="form-wrap">
-                      <input
-                        className="form-input"
-                        id="register-email-5"
-                        type="email"
-                        name="email"
-                        placeholder="E-mail"
-                        data-constraints="@Email @Required"
-                        onChange={() => { this.handleChange('email_signup', event) }} />
-                    </div>
-                    <div className="form-wrap">
-                      <input
-                        className="form-input"
-                        id="register-email-5"
-                        type="text"
-                        name="mobileNumber"
-                        placeholder="Mobile Number"
-                        onChange={() => { this.handleChange('mobileNumber', event) }} />
-                    </div>
-                    <div className="form-wrap">
-                      <input
-                        className="form-input"
-                        id="register-password-5"
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        data-constraints="@Required"
-                        onChange={() => { this.handleChange('password_signup', event) }} />
-                    </div>
-                    <div className="form-wrap">
-                      <input
-                        className="form-input"
-                        id="register-password-confirm-5"
-                        type="password"
-                        name="password"
-                        placeholder="Confirm Password"
-                        data-constraints="@Required"
-                        onChange={() => { this.handleChange('confirmPassword', event) }} />
-                    </div>
-                    <div className="form-wrap">
-                      <button className="button button-block button-primary-lighten button-winona" onClick={this.signUP}>Create an Account</button>
-                    </div>
-                  </form>
-                  <p className="loginError">{this.state.regError}</p>
-                </div>
-              </li>
-            </ul>
-            : <ul className="list-inline-bordered">
-              <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>LOGOUT</button></li>
-              <li><button className="rd-navbar-popup-toggle"><Link to='/profile'>PROFILE</Link></button></li>
-            </ul>}
-        </div>
-      </div>
+                  </li>
+                </ul>
+                : <ul className="list-inline-bordered">
+                  <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>LOGOUT</button></li>
+                  <li><button className="rd-navbar-popup-toggle"><Link to='/profile'>PROFILE</Link></button></li>
+                </ul>}
+            </div>;
+          }}
+        </Translate>
+      </div >
     );
   }
 }

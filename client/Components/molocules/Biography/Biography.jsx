@@ -18,8 +18,8 @@ export class Biography extends Component {
       <section className="section section-lg text-center">
         <div className="container">
           <div className="row row-50">
-            <SingleBiography img="NRSBio" title_en={DATA.BIOGRAPHY.one_title_en} title_ru={DATA.BIOGRAPHY.one_title_ru} content_en={DATA.BIOGRAPHY.one_content_en} content_ru={DATA.BIOGRAPHY.one_content_ru} />
-            <SingleBiography img="Prabhupada-Bio" title_en={DATA.BIOGRAPHY.two_title_en} title_ru={DATA.BIOGRAPHY.two_title_ru} content_en={DATA.BIOGRAPHY.two_content_en} content_ru={DATA.BIOGRAPHY.two_content_ru} />
+            <SingleBiography img="Prabhupada-Bio" title_en={DATA.BIOGRAPHY.one_title_en} title_ru={DATA.BIOGRAPHY.one_title_ru} content_en={DATA.BIOGRAPHY.one_content_en} content_ru={DATA.BIOGRAPHY.one_content_ru} />
+            <SingleBiography img="NRSBio" title_en={DATA.BIOGRAPHY.two_title_en} title_ru={DATA.BIOGRAPHY.two_title_ru} content_en={DATA.BIOGRAPHY.two_content_en} content_ru={DATA.BIOGRAPHY.two_content_ru} />
           </div>
         </div>
       </section>
