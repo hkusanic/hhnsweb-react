@@ -116,7 +116,7 @@ export class UserProfile extends Component {
                                 <h3 className="wow-outer text-center"><span className="wow slideInUp">    <Translate>
                                     {({ translate }) => translate('USER_PROFILE.user_profile')}
                                 </Translate></span></h3>
-                                <form style={{ paddingLeft: '10%' }} className="rd-form" data-form-type="contact" >
+                                <div style={{ paddingLeft: '10%' }} className="rd-form" data-form-type="contact" >
                                     <div className="row row-10">
                                         <div className="col-md-10 wow-outer">
                                             <div className="form-wrap wow fadeSlideInUp">
@@ -218,7 +218,7 @@ export class UserProfile extends Component {
                                     </Translate> : this.state.error === 'Please Enter Mobile Number Correctly' ? <Translate>
                                         {({ translate }) => translate('USER_PROFILE.please_enter_mobile')}
                                     </Translate> : null}</p>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
