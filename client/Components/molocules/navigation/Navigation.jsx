@@ -53,9 +53,9 @@ export class Navigation extends Component {
     }
 
     componentWillMount() {
-        window.removeEventListener('scroll', this.handleScroll);
-    }
-
+            window.removeEventListener('scroll', this.handleScroll);
+       }
+       
     handleScroll = (event) => {
          if($('.rd-navbar--is-stuck')){
            if($('.rd-navbar--is-stuck').length === 1){
@@ -141,7 +141,7 @@ export class Navigation extends Component {
                                         {/* </div> */}
 
                                         <ul className="rd-navbar-nav">
-                                            <li className="rd-nav-item"><LanguageSwitch /></li>
+                                            <li className="rd-nav-item hideMenu"><LanguageSwitch /></li>
                                             <li className="rd-nav-item active">
                                                 <Link className="rd-nav-link" to="/">
                                                     <Translate>
@@ -199,7 +199,7 @@ export class Navigation extends Component {
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
                                             {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}
-                                            <li className="rd-nav-item"><a className="rd-nav-link"><Login notActive={true} /></a></li>
+                                            <li className="rd-nav-item hideMenu"><a className="rd-nav-link"><Login notActive={true} /></a></li>
                                         </ul>
                                     </div>
                                 </div>

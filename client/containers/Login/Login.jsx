@@ -132,11 +132,11 @@ export class Login extends Component {
     let login_modal_1 = '';
     let login_modal_2 = '';
 
-    if(this.props.notActive){
+    if(!this.props.notActive){
       login_modal_1 = "rd-navbar-popup-toggle login-modal-1";
-      login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login  login-modal-2";
+      login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal  login-modal-2";
     }
-    else {
+    else if(this.props.notActive) {
       login_modal_1 = "rd-navbar-popup-toggle";
       login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal";
     }

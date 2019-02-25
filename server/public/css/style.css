@@ -10189,8 +10189,8 @@ html.tablet .ui-to-top {
 }
 
 .rd-navbar-fixed .rd-nav-item:hover .rd-nav-link, .rd-navbar-fixed .rd-nav-item.focus .rd-nav-link, .rd-navbar-fixed .rd-nav-item.active .rd-nav-link, .rd-navbar-fixed .rd-nav-item.opened .rd-nav-link {
-	color: #fff;
-	/* background: #ff830a; */
+	color: #ff830a;
+	background: #f6f6f6;
 }
 
 .rd-navbar-fixed .rd-nav-item:hover > .rd-navbar-submenu-toggle, .rd-navbar-fixed .rd-nav-item.focus > .rd-navbar-submenu-toggle, .rd-navbar-fixed .rd-nav-item.active > .rd-navbar-submenu-toggle, .rd-navbar-fixed .rd-nav-item.opened > .rd-navbar-submenu-toggle {
@@ -17890,6 +17890,12 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 		margin-left: -185%;	
 		margin-top: 120%; 
 	 }
+}
+
+@media (max-width: 1211px){
+	.hideMenu {
+		display: none !important;
+	}
 }
 
 
