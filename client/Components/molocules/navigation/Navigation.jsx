@@ -91,18 +91,18 @@ export class Navigation extends Component {
                                 <div className="rd-navbar-aside head ">
                                     <div className="rd-navbar-panel">
                                         <button className="rd-navbar-toggle" data-rd-navbar-toggle="#rd-navbar-nav-wrap-1"><span></span></button>
-                                        {/* <div style={{ width: '100%' }}>
+                                        <div style={{ width: '100%' }}>
                                             <div className="topMenu" style={{ float: 'right' }}>
                                                 <ul className="rd-navbar-nav">
-                                                    <li className="rd-nav-item"><Link to="/"><a className="rd-nav-link"><Login /></a></Link></li>
+                                                    <li className="rd-nav-item"><Link to="/"><a className="rd-nav-link"><Login notActive={false} /></a></Link></li>
                                                 </ul>
                                             </div>
                                             <div className="topMenu languageToggle" style={{ float: 'right' }}>
                                                 <ul className="rd-navbar-nav">
                                                     <li className="rd-nav-item"><LanguageSwitch /></li>
                                                 </ul>
-                                            </div> */}
-                                        {/* </div> */}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <Image cloudName="dinagauranga" publicId="banner1" dpr="auto"
@@ -199,7 +199,7 @@ export class Navigation extends Component {
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
                                             {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}
-                                            <li className="rd-nav-item"><a className="rd-nav-link"><Login /></a></li>
+                                            <li className="rd-nav-item"><a className="rd-nav-link"><Login notActive={true} /></a></li>
                                         </ul>
                                     </div>
                                 </div>

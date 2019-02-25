@@ -263,14 +263,14 @@
         
     }
 
-    @media(min-width: 990px){
+    @media(min-width: 1210px){
         .topMenu {
             visibility: collapse;
             height: 0px !important;
         }
     }
 
-    @media(max-width: 990px){
+    @media(max-width: 1210px){
         .languageToggle {
             padding-top: 12px;
             font-size: 18px;
