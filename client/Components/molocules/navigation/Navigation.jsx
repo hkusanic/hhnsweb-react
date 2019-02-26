@@ -44,7 +44,7 @@ export class Navigation extends Component {
         const isUserLogin = Auth.isUserAuthenticated();
         this.setState({ isUserLogin, Prabhupada_swami_bio, Niranjana_swami_bio })
 
-        window.addEventListener('scroll', this.handleScroll);
+        //window.addEventListener('scroll', this.handleScroll);
 
     }
     componentWillReceiveProps() {
@@ -53,9 +53,9 @@ export class Navigation extends Component {
     }
 
     componentWillMount() {
-        window.removeEventListener('scroll', this.handleScroll);
-    }
-
+            //window.removeEventListener('scroll', this.handleScroll);
+       }
+       
     handleScroll = (event) => {
          if($('.rd-navbar--is-stuck')){
            if($('.rd-navbar--is-stuck').length === 1){
@@ -91,18 +91,18 @@ export class Navigation extends Component {
                                 <div className="rd-navbar-aside head ">
                                     <div className="rd-navbar-panel">
                                         <button className="rd-navbar-toggle" data-rd-navbar-toggle="#rd-navbar-nav-wrap-1"><span></span></button>
-                                        {/* <div style={{ width: '100%' }}>
+                                        <div style={{ width: '100%' }}>
                                             <div className="topMenu" style={{ float: 'right' }}>
                                                 <ul className="rd-navbar-nav">
-                                                    <li className="rd-nav-item"><Link to="/"><a className="rd-nav-link"><Login /></a></Link></li>
+                                                    <li className="rd-nav-item"><li><a className="rd-nav-link"><Login notActive={false} /></a></li></li>
                                                 </ul>
                                             </div>
                                             <div className="topMenu languageToggle" style={{ float: 'right' }}>
                                                 <ul className="rd-navbar-nav">
                                                     <li className="rd-nav-item"><LanguageSwitch /></li>
                                                 </ul>
-                                            </div> */}
-                                        {/* </div> */}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <Image cloudName="dinagauranga" publicId="banner1" dpr="auto"
@@ -141,7 +141,7 @@ export class Navigation extends Component {
                                         {/* </div> */}
 
                                         <ul className="rd-navbar-nav">
-                                            <li className="rd-nav-item"><LanguageSwitch /></li>
+                                            <li className="rd-nav-item hideMenu"><LanguageSwitch /></li>
                                             <li className="rd-nav-item active">
                                                 <Link className="rd-nav-link" to="/">
                                                     <Translate>
@@ -199,7 +199,7 @@ export class Navigation extends Component {
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
                                             {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}
-                                            <li className="rd-nav-item"><a className="rd-nav-link"><Login /></a></li>
+                                            <li className="rd-nav-item hideMenu"><a className="rd-nav-link"><Login notActive={true} /></a></li>
                                         </ul>
                                     </div>
                                 </div>
