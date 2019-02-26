@@ -45,6 +45,8 @@ export class Login extends Component {
           error: nextProps.login.error,
           regError: nextProps.login.regError,
           isUserLogin
+        }, () => {
+          location.reload();
         })
 
       } else {
@@ -74,6 +76,10 @@ export class Login extends Component {
     window.location.href = '/';
   }
 
+  handleRemoveModal = () => {
+    $('.login-modal-2').removeClass('active');
+  }
+
   signUP = (event) => {
     event.preventDefault();
     if (!isNotEmpty(this.state.email_signup) || !isNotEmpty(this.state.password_signup) ||
@@ -101,7 +107,6 @@ export class Login extends Component {
   }
 
   handle = (validate, number, data) => {
-    console.log(validate, number, data);
     const countryCode = data.dialCode;
     const mobileNumber = number;
 
@@ -112,8 +117,6 @@ export class Login extends Component {
         mobileNumber,
         countryCode,
         error: '',
-      }, () => {
-        console.log(this.state.mobileNumber, this.state.countryCode)
       })
     }
   }
@@ -132,11 +135,11 @@ export class Login extends Component {
     let login_modal_1 = '';
     let login_modal_2 = '';
 
-    if(!this.props.notActive){
+    if (!this.props.notActive) {
       login_modal_1 = "rd-navbar-popup-toggle login-modal-1";
       login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal  login-modal-2";
     }
-    else if(this.props.notActive) {
+    else if (this.props.notActive) {
       login_modal_1 = "rd-navbar-popup-toggle login-modal-mb";
       login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal";
     }
@@ -171,7 +174,7 @@ export class Login extends Component {
                         {log_in}
                       </h4>
                       <LoginForm loginUser={this.props.loginUser} error={this.state.error} />
-                      <p><Link to='/forgotPassword'> {forgot_password}</Link></p>
+                      <p onClick={() => {this.handleRemoveModal()}}><Link to='/forgotPassword'> {forgot_password}</Link></p>
                     </div>
                   </li>
                   <li>
@@ -184,7 +187,7 @@ export class Login extends Component {
                         <div className="form-wrap">
                           <input
                             className="form-input"
-                            id="register-firstName-5"
+                            autoComplete="off"
                             type="text"
                             name="firstname"
                             placeholder={first_name}
@@ -195,7 +198,7 @@ export class Login extends Component {
                         <div className="form-wrap">
                           <input
                             className="form-input"
-                            id="register-lastName-5"
+                            autoComplete="off"
                             type="text"
                             name="lastname"
                             placeholder={last_name}
@@ -205,24 +208,16 @@ export class Login extends Component {
                         <div className="form-wrap">
                           <input
                             className="form-input"
-                            id="register-email-5"
+                            autoComplete="off"
                             type="email"
                             name="email"
                             placeholder={email}
                             data-constraints="@Email @Required"
                             onChange={() => { this.handleChange('email_signup', event) }} />
                         </div>
-                        {/* <div className="form-wrap">
-                          <input
-                            className="form-input"
-                            id="register-email-5"
-                            type="text"
-                            name="mobileNumber"
-                            placeholder={mobile_number}
-                            onChange={() => { this.handleChange('mobileNumber', event) }} />
-                        </div> */}
                         <div className="form-wrap">
                           <IntlTelInput
+                            id="registation_mobile_flag"
                             containerClassName="intl-tel-input"
                             defaultValue={this.state.mobileNumber}
                             defaultCountry='india'
@@ -236,7 +231,7 @@ export class Login extends Component {
                         <div className="form-wrap">
                           <input
                             className="form-input"
-                            id="register-password-5"
+                            autoComplete="off"
                             type="password"
                             name="password"
                             placeholder={password}
@@ -246,7 +241,7 @@ export class Login extends Component {
                         <div className="form-wrap">
                           <input
                             className="form-input"
-                            id="register-password-confirm-5"
+                            autoComplete="off"
                             type="password"
                             name="password"
                             placeholder={confirm_password}

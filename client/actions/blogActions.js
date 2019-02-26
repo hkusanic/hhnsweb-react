@@ -7,9 +7,7 @@ export function getBlogs(page) {
             .then((response) => {
                 dispatch(getBlogAction(response.data))
             })
-            .catch((err) => {
-                console.log(err);
-            })
+            .catch((err) => { console.error(err); });
     }
 }
 
@@ -26,9 +24,7 @@ export function getBlog(body) {
             .then((response) => {
                 dispatch(getAction(response.data))
             })
-            .catch((err) => {
-                console.log("error ====>>>", err);
-            })
+            .catch((err) => { console.error(err); });
     }
 }
 

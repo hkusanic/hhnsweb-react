@@ -13,7 +13,6 @@ export class BiographyDetails extends Component {
       }
 
     render() {
-        console.log('------>', this.props.location.state.img);
         if (!this.props.location.state) {
             return <div>Error Occured..........</div>
         }

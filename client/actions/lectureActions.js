@@ -7,9 +7,7 @@ export function getLectures(page) {
             .then((response) => {
                 dispatch(getLecturesAction(response.data))
             })
-            .catch((err) => {
-                console.log(err);
-            })
+            .catch((err) => { console.error(err); });
     }
 }
 

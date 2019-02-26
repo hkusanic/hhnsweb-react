@@ -60,6 +60,7 @@ export class LoginForm extends Component {
                 <div className="form-wrap">
                     <input
                         className="form-input"
+                        autoComplete="off"
                         type="email"
                         name="email"
                         data-constraints="@Email @Required"
@@ -69,6 +70,7 @@ export class LoginForm extends Component {
                 <div className="form-wrap">
                     <input
                         className="form-input"
+                        autoComplete="off"
                         type="password"
                         name="password"
                         data-constraints="@Required"

@@ -1,7 +1,15 @@
 import React from 'react';
+import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 const singleCarousel = (props) => {
-    return <div className="swiper-slide" data-slide-bg={props.image}>
+    let text = props.text;
+    return <div className="swiper-slide">
+     <Image cloudName="dinagauranga" publicId={props.image} dpr="auto"
+                                      responsive
+                                      width="auto"
+                                     >
+     <Transformation quality="auto" fetchFormat="auto" />
+     </Image>
         <div className="slide-inner">
             <div className="container">
                 <div className="swiper-slide-caption">

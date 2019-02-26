@@ -58,7 +58,6 @@ export class RegistrationForm extends Component {
                 <div className="form-wrap">
                     <input
                         className="form-input"
-                        id="register-firstName-5"
                         type="text"
                         name="firstname"
                         placeholder="FirstName"
@@ -69,7 +68,6 @@ export class RegistrationForm extends Component {
                 <div className="form-wrap">
                     <input
                         className="form-input"
-                        id="register-lastName-5"
                         type="text"
                         name="lastname"
                         placeholder="LastName"
@@ -79,7 +77,6 @@ export class RegistrationForm extends Component {
                 <div className="form-wrap">
                     <input
                         className="form-input"
-                        id="register-email-5"
                         type="email"
                         name="email"
                         placeholder="E-mail"
@@ -89,7 +86,6 @@ export class RegistrationForm extends Component {
                 <div className="form-wrap">
                     <input
                         className="form-input"
-                        id="register-password-5"
                         type="password"
                         name="password"
                         placeholder="Password"
@@ -99,7 +95,6 @@ export class RegistrationForm extends Component {
                 <div className="form-wrap">
                     <input
                         className="form-input"
-                        id="register-password-confirm-5"
                         type="password"
                         name="password"
                         placeholder="Confirm Password"

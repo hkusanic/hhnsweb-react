@@ -6,7 +6,6 @@ class Auth {
    * @param {string} token
    */
   static authenticateUser(session, user) {
-    console.log("user=====>>>>>", user);
 
     try {
       localStorage.setItem('session', session);

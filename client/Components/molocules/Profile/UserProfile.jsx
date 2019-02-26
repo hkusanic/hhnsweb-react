@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { onlyIntegers, isNotEmpty, isValidPhone } from '../../../utils/validation';
 import { connect } from 'react-redux';
 import { editProfile } from '../../../actions/loginActions';
 import Auth from '../../../utils/Auth';
@@ -28,7 +27,6 @@ export class UserProfile extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // this.props = nextProps;
         let editing = true;
         if (!this.props.isProfileEdited && nextProps.isProfileEdited) {
             editing = true;
@@ -87,7 +85,6 @@ export class UserProfile extends Component {
     }
 
     handle = (validate, number, data) => {
-        console.log(validate, number, data);
         const countryCode = data.dialCode;
         const mobileNumber = number;
 
@@ -98,8 +95,6 @@ export class UserProfile extends Component {
                 mobileNumber,
                 countryCode,
                 error: '',
-            }, () => {
-                console.log(this.state.mobileNumber, this.state.countryCode)
             })
         }
     }
