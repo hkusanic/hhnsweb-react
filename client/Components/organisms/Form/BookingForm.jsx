@@ -92,6 +92,7 @@ export class BookingForm extends Component {
                     <div className="form-wrap">
                         <input
                             className="form-input"
+                            autoComplete="off"
                             type="text"
                             placeholder={first_name}
                             readOnly="readonly"
@@ -100,6 +101,9 @@ export class BookingForm extends Component {
                     <div className="form-wrap">
                         <input
                             className="form-input"
+                            autoComplete="off"                            autoComplete="off"
+                            autoComplete="off"
+
                             type="text"
                             readOnly="readonly"
                             placeholder={last_name}
@@ -108,6 +112,7 @@ export class BookingForm extends Component {
                     <div className="form-wrap">
                         <input
                             className="form-input"
+                            autoComplete="off"
                             type="email"
                             readOnly="readonly"
                             placeholder="E-mail"
@@ -116,6 +121,7 @@ export class BookingForm extends Component {
                     <div className="form-wrap">
                         <input
                             className="form-input"
+                            autoComplete="off"
                             type="text"
                             placeholder={mobile_number}
                             data-constraints="@Required"

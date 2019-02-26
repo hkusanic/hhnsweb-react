@@ -104,6 +104,7 @@ export class ResetPassword extends Component {
                                                     <div class="form-wrap" style={{ paddingTop: '3%', paddingBottom: '3%' }}>
                                                         <input
                                                             class="form-input"
+                                                            autoComplete="off"
                                                             type="password"
                                                             name="password"
                                                             placeholder={password}
@@ -112,6 +113,7 @@ export class ResetPassword extends Component {
                                                     <div class="form-wrap" style={{ paddingTop: '3%', paddingBottom: '3%' }}>
                                                         <input
                                                             class="form-input"
+                                                            autoComplete="off"
                                                             type="password"
                                                             name="ConfirmPassword"
                                                             placeholder={confirm_password}

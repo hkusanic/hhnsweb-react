@@ -66,7 +66,7 @@ export class ForgotPassword extends Component {
                                               {!this.state.submitting ?
                                                   <form class="rd-form form-inline wow fadeIn" data-wow-delay=".2s" data-form-output="form-output-global" data-form-type="subscribe">
                                                       <div class="form-wrap">
-                                                          <input class="form-input" id="subscribe-form-1-email" type="email" name="email" onChange={() => { this.handleEmail(event) }} placeholder={your_email} data-constraints="@Email @Required" />
+                                                        <input class="form-input" autoComplete="off" type="email" name="email" onChange={() => { this.handleEmail(event) }} placeholder={your_email} data-constraints="@Email @Required" />
                                                       </div>
                                                       <div class="form-button">
                                                           <button class="button button-primary button-winona" onClick={this.handleSubmit}><Translate>

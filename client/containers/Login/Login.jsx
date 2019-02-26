@@ -181,7 +181,7 @@ export class Login extends Component {
                         <div className="form-wrap">
                           <input
                             className="form-input"
-                            id="register-firstName-5"
+                            autoComplete="off"
                             type="text"
                             name="firstname"
                             placeholder={first_name}
@@ -192,7 +192,7 @@ export class Login extends Component {
                         <div className="form-wrap">
                           <input
                             className="form-input"
-                            id="register-lastName-5"
+                            autoComplete="off"
                             type="text"
                             name="lastname"
                             placeholder={last_name}
@@ -202,7 +202,7 @@ export class Login extends Component {
                         <div className="form-wrap">
                           <input
                             className="form-input"
-                            id="register-email-5"
+                            autoComplete="off"
                             type="email"
                             name="email"
                             placeholder={email}
@@ -211,6 +211,7 @@ export class Login extends Component {
                         </div>
                         <div className="form-wrap">
                           <IntlTelInput
+                            id="registation_mobile_flag"
                             containerClassName="intl-tel-input"
                             defaultValue={this.state.mobileNumber}
                             defaultCountry='india'
@@ -224,7 +225,7 @@ export class Login extends Component {
                         <div className="form-wrap">
                           <input
                             className="form-input"
-                            id="register-password-5"
+                            autoComplete="off"
                             type="password"
                             name="password"
                             placeholder={password}
@@ -234,7 +235,7 @@ export class Login extends Component {
                         <div className="form-wrap">
                           <input
                             className="form-input"
-                            id="register-password-confirm-5"
+                            autoComplete="off"
                             type="password"
                             name="password"
                             placeholder={confirm_password}
