@@ -23,25 +23,22 @@ export class Carousel extends Component {
             <section className="swiper-container swiper-slider swiper-slider-light bg-gray-700" data-loop="true" data-autoplay="5000" data-simulate-touch="false" data-custom-slide-effect="inter-leave-effect" data-inter-leave-offset="-.5">
                 <div className="swiper-wrapper">
                     <SingleCarousel
-                        image={image1}
+                        image="Home_Page-carousel_picture_portrait_no_logo"
                         heading={ <Translate>
                             {({ translate }) => <h1>{translate("HOME.official_website")}</h1>}
                           </Translate>}
                         text={ <Translate>
                             {({ translate }) => <h1>{translate("HOME.h_h")}</h1>}
                           </Translate>} />
-                    <SingleCarousel
-                        image={image2}
+                          <SingleCarousel
+                        image="Home_Page-carousel_picture-abhishek_no_logo"
                         heading=""
                         text="" />
                     <SingleCarousel
-                        image={image3}
+                        image="Home_Page-carousel_picture_kirtan_no_logo"
                         heading=""
                         text="" />
-                    <SingleCarousel
-                        image={image4}
-                        heading=""
-                        text="" />
+                
                 </div>
                 <div className="swiper-pagination-outer container alignment">
                     <div className="swiper-pagination swiper-pagination-modern swiper-pagination-marked" data-index-bullet="true"></div>

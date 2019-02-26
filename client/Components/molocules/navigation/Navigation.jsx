@@ -26,6 +26,7 @@ export class Navigation extends Component {
     }
 
     componentDidMount() {
+
         const Prabhupada_swami_bio = {
             img : 'Prabhupada-Bio',
             title_en: DATA.BIOGRAPHY.one_title_en,
@@ -44,24 +45,31 @@ export class Navigation extends Component {
         const isUserLogin = Auth.isUserAuthenticated();
         this.setState({ isUserLogin, Prabhupada_swami_bio, Niranjana_swami_bio })
 
-        //window.addEventListener('scroll', this.handleScroll);
+        // setInterval(() => {
+        //        (this.handleScroll(), 1000);
+        // });
 
     }
+
+
+
     componentWillReceiveProps() {
         const isUserLogin = Auth.isUserAuthenticated();
         this.setState({ isUserLogin })
     }
 
-    componentWillMount() {
+    componentWillUnMount() {
             //window.removeEventListener('scroll', this.handleScroll);
        }
        
     handleScroll = (event) => {
          if($('.rd-navbar--is-stuck')){
            if($('.rd-navbar--is-stuck').length === 1){
+            if(this.state.floatImage === '')
             this.setState({ floatImage: 'styleImage'  })
            }
            else {
+            if(this.state.floatImage === 'styleImage')
             this.setState({ floatImage: ''  })
            }
          }
