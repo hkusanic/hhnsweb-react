@@ -21,12 +21,13 @@ export class Navigation extends Component {
             Prabhupada_swami_bio: '',
             Niranjana_swami_bio: '',
             floatImage: '',
+            index: '1'
 
         }
     }
 
     componentDidMount() {
-
+        console.log("component reload==========>>>>>>>");
         const Prabhupada_swami_bio = {
             img: 'Prabhupada-Bio',
             title_en: DATA.BIOGRAPHY.one_title_en,
@@ -77,14 +78,19 @@ export class Navigation extends Component {
 
     handleNavigationClick = () => {
         $('.login-modal-2').removeClass('active');
+        $('.register-modal-2').removeClass('active');
         if (!this.props.isLogin) {
             $('.login-modal-2').addClass('active');
-             $('.rd-navbar-toggle').removeClass('active');
+            $('.rd-navbar-toggle').removeClass('active');
+            $('.rd-navbar-nav-wrap').removeClass('active');
+             
         }
     }
 
     handleRemoveModal = () => {
         $('.login-modal-2').removeClass('active');
+        $('.rd-navbar-nav-wrap').removeClass('active');
+        $('.register-modal-2').removeClass('active');
         $('.rd-navbar-toggle').removeClass('active');
     }
 
@@ -92,7 +98,6 @@ export class Navigation extends Component {
         $('.biography-submenu').removeClass('focus');
         $('.biography-submenu').removeClass('opened');
     }
-
 
     render() {
         return (
@@ -156,21 +161,21 @@ export class Navigation extends Component {
 
                                         <ul className="rd-navbar-nav">
                                             <li onClick={()=> {this.handleRemoveModal()}} className="rd-nav-item hideMenu"><LanguageSwitch /></li>
-                                            <li onClick={()=> {this.handleRemoveModal()}} className="rd-nav-item active">
+                                            <li className="rd-nav-item active">
                                                 <Link className="rd-nav-link" to="/">
                                                     <Translate>
                                                         {({ translate }) => translate('HOME.home')}
                                                     </Translate>
                                                 </Link>
                                             </li>
-                                            <li onClick={()=> {this.handleRemoveModal()}} className="rd-nav-item active biography-submenu"><a className="rd-nav-link">  <Translate>
+                                            <li className="rd-nav-item biography-submenu active"><a className="rd-nav-link">  <Translate>
                                                 {({ translate }) => translate('HOME.biography')}
                                             </Translate></a>
                                                 <ul className="rd-menu rd-navbar-dropdown">
-                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">  <Translate>
+                                                    <li onClick={()=> {this.handleRemoveModal()}} className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">  <Translate>
                                                         {({ translate }) => translate('HOME.swami_prabhupada')}
                                                     </Translate></Link></li>
-                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link"> <Translate>
+                                                    <li onClick={()=> {this.handleRemoveModal()}} className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link"> <Translate>
                                                         {({ translate }) => translate('HOME.niranjanaswami')}
                                                     </Translate></Link></li>
                                                 </ul>
@@ -207,12 +212,12 @@ export class Navigation extends Component {
                                             <li className="rd-nav-item active"><Link className="rd-nav-link " to="/calender" onClick={this.handleNavigationClick}> <Translate>
                                                 {({ translate }) => translate('HOME.calendar')}
                                             </Translate></Link></li>
-                                            <li className="rd-nav-item active"><Link className="rd-nav-link" to="/booking" onClick={this.handleNavigationClick}> <Translate>
+                                            <li onClick={()=> {this.handleRemoveModal('5')}} className="rd-nav-item active"><Link className="rd-nav-link" to="/booking" onClick={this.handleNavigationClick}> <Translate>
                                                 {({ translate }) => translate('HOME.booking')}
                                             </Translate></Link></li>
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
-                                            {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}
+                                            {this.props.isAdmin && this.props.isLogin ? <li  className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}
                                             <li className="rd-nav-item hideMenu"><a className="rd-nav-link"><Login notActive={true} /></a></li>
                                         </ul>
                                     </div>
