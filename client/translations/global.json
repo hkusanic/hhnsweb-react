@@ -95,7 +95,22 @@
 		"please_fill":["**Please fill all the details","**Пожалуйста, заполните все данные"],
 		"password_reset": ["Password is reset successfully", "Пароль успешно сброшен"],
 		"link_expired": ["Link is expired", "Срок действия ссылки истек"]
-
-
+	},
+	"BOOKING": {
+		"booking_form": ["Booking Form", "Форма записи на даршан"],
+		"first_name": ["First Name", "Имя"],
+		"last_name": ["Last Name", "Фамилия"],
+		"email": ["E-mail", "Почта"],
+		"mobile_number": ["Mobile Number", "Мобильный телефон"],
+		"min_15": ["15 min", "15 мин"],
+		"min_30": ["30 min", "30 мин"],
+		"min_45": ["45 min", "45 мин"],
+		"min_60": ["60 min", "60 мин"],
+		"are_you_disciple": ["Are you a disciple of HH Niranjana Swami?","Являетесь ли вы учеником Ниранджаны Свами?"],
+		"no": ["no", "Нет"],
+		"disciple": ["Disciple", "Ученик"],
+		"aspiring_disciple": ["Aspiring Disciple", "Кандидат в ученики"],
+		"submit": ["SUBMIT","ОТПРАВИТЬ"],
+		"you_have_already_booked": ["You have already booked meeting", "Вы уже записались на встречу"]
 	}
 }

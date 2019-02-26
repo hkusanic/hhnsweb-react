@@ -137,7 +137,7 @@ export class Login extends Component {
       login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal  login-modal-2";
     }
     else if(this.props.notActive) {
-      login_modal_1 = "rd-navbar-popup-toggle";
+      login_modal_1 = "rd-navbar-popup-toggle login-modal-mb";
       login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal";
     }
 

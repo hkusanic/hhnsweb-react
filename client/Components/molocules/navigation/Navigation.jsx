@@ -44,7 +44,7 @@ export class Navigation extends Component {
         const isUserLogin = Auth.isUserAuthenticated();
         this.setState({ isUserLogin, Prabhupada_swami_bio, Niranjana_swami_bio })
 
-        window.addEventListener('scroll', this.handleScroll);
+        //window.addEventListener('scroll', this.handleScroll);
 
     }
     componentWillReceiveProps() {
@@ -53,7 +53,7 @@ export class Navigation extends Component {
     }
 
     componentWillMount() {
-            window.removeEventListener('scroll', this.handleScroll);
+            //window.removeEventListener('scroll', this.handleScroll);
        }
        
     handleScroll = (event) => {
@@ -94,7 +94,7 @@ export class Navigation extends Component {
                                         <div style={{ width: '100%' }}>
                                             <div className="topMenu" style={{ float: 'right' }}>
                                                 <ul className="rd-navbar-nav">
-                                                    <li className="rd-nav-item"><Link to="/"><a className="rd-nav-link"><Login notActive={false} /></a></Link></li>
+                                                    <li className="rd-nav-item"><li><a className="rd-nav-link"><Login notActive={false} /></a></li></li>
                                                 </ul>
                                             </div>
                                             <div className="topMenu languageToggle" style={{ float: 'right' }}>

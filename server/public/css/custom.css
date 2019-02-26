@@ -284,6 +284,10 @@
     .login-modal-1 {
         cursor: pointer;
     }
+
+    .login-modal-mb {
+        cursor: pointer;
+    }
     
     .register-modal-1 {
         cursor: pointer;
