@@ -7,6 +7,8 @@ import Auth from '../../utils/Auth';
 import { connect } from "react-redux";
 import { createAppointment, getAppointment, resetState, getBookingStatus } from '../../actions/appointmentAction';
 import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
+import reactCookie from 'react-cookies';
+import { Translate } from 'react-localize-redux';
 export class Booking extends Component {
     constructor(props) {
         super(props);
@@ -64,6 +66,7 @@ export class Booking extends Component {
     }
 
     ApprovedText = () => {
+        if(reactCookie.load('languageCode') === 'en'){
         return (
             <div>
                 <p>Dear <span style={{ fontWeight: '400' }}>{this.state.user.firstName} {this.state.user.last}</span>,</p>
@@ -77,6 +80,23 @@ export class Booking extends Component {
                 <div>Site administrators</div>
             </div>
         )
+    }
+    else{
+        return (
+            <div>
+                <p>Дорогой <span style={{ fontWeight: '400' }}>{this.state.user.firstName} {this.state.user.last}</span>,</p>
+                <div>Пожалуйста, примите наши смиренные поклоны,</div>
+                <div>Вся слава Шриле Прабхупаде!</div>
+                <div>&nbsp;</div>
+                <div>Ваш запрос на <span style={{ fontWeight: '400' }}>{this.state.DarshanRequested} Даршан</span> с Его Святейшеством Ниранджаной Свами находится на рассмотрении.&nbsp;</div>
+                <div>Как только он будет одобрен, вы получите письмо с дальнейшими инструкциями.</div>
+                <div>&nbsp;</div>
+                <div>Ваши слуги,</div>
+                <div>Администраторы сайта</div>
+            </div>
+        )
+
+    }
     }
     render() {
         return (
@@ -112,7 +132,9 @@ export class Booking extends Component {
                                 <Progress percent={50} />
                             </div> */}
                                         <div className="bookingformDiv">
-                                            <p className="bookingForm">Booking Form</p>
+                                            <p className="bookingForm"><Translate>
+                                            {({ translate }) => translate('BOOKING.booking_form')}
+                                            </Translate></p>
                                             <BookingForm
                                                 user={this.state.user ? this.state.user : ''}
                                                 createAppointment={this.props.createAppointment}
@@ -138,7 +160,9 @@ export class Booking extends Component {
                                                 frameBorder="0"
                                                 allowtransparency="true">
                                             </iframe> 
-                                            :  <div class="section-sm section-first accesIdError">You have aleady booked meeting</div>)
+                                            :  <div class="section-sm section-first accesIdError"> <Translate>
+                                            {({ translate }) => translate('BOOKING.you_have_already_booked')}
+                                        </Translate></div>)
                                     )
                         )
                         : ''

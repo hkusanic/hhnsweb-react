@@ -104,6 +104,7 @@ export class UserProfile extends Component {
         }
     }
     render() {
+        let edit = '';
         if (!this.state && !this.state.email) {
             return <div>Loading..</div>
         }
@@ -199,19 +200,27 @@ export class UserProfile extends Component {
                                         }
                                     </div>
                                     <div className="group group-middle">
-                                        <div className="wow-outer">
-                                            {
-                                                this.state.editing ?
-                                                    <button className="button button-primary button-winona" onClick={this.handleEditing} >
-                                                    {/* <Translate>
-                                                        {({ translate }) => translate('USER_PROFILE.edit')}
-                                                    </Translate> */}
-                                                    Edit
-                                                    </button>
-                                                    :
-                                                    <button className="button button-primary button-winona" onClick={this.handleEditProfile} >Update</button>
-                                            }
-                                        </div>
+                                    { <Translate>
+                                                        {({ translate }) => {
+                                                           edit =  translate('USER_PROFILE.edit')
+                                                           return   <div className="wow-outer">
+                                                           {
+                                                               
+                                                               this.state.editing ?
+                                                                   <button className="button button-primary button-winona" onClick={this.handleEditing} >
+                                                                  
+                                                                   {edit}
+                                                                   </button>
+                                                                   :
+                                                                   <button className="button button-primary button-winona" onClick={this.handleEditProfile} >Update</button>
+                                                           }
+                                                       </div>;
+                                                        }
+                                                        }
+                                                    </Translate>
+                                    }
+                                                     
+                                      
                                     </div>
                                     {this.state.isUpdated ? <p className="updateText"><Translate>
                                         {({ translate }) => translate('USER_PROFILE.your_profile_updated')}
