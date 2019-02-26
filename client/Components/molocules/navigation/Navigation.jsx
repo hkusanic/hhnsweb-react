@@ -46,9 +46,7 @@ export class Navigation extends Component {
         const isUserLogin = Auth.isUserAuthenticated();
         this.setState({ isUserLogin, Prabhupada_swami_bio, Niranjana_swami_bio })
 
-        // setInterval(() => {
-        //        (this.handleScroll(), 1000);
-        // });
+        //window.addEventListener('scroll', this.handleScroll);
 
     }
 
@@ -59,7 +57,7 @@ export class Navigation extends Component {
         this.setState({ isUserLogin })
     }
 
-    componentWillUnMount() {
+    componentWillMount() {
             //window.removeEventListener('scroll', this.handleScroll);
        }
        
@@ -217,7 +215,7 @@ export class Navigation extends Component {
                                             </Translate></Link></li>
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
-                                            {this.props.isAdmin && this.props.isLogin ? <li  className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}
+                                            {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}
                                             <li className="rd-nav-item hideMenu"><a className="rd-nav-link"><Login notActive={true} /></a></li>
                                         </ul>
                                     </div>
