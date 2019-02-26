@@ -33,9 +33,7 @@ export function getAppointment(parameter) {
             .then((response) => {
                 dispatch(getAppointmentAction(response.data))
             })
-            .catch((err) => {
-                console.log(err);
-            })
+            .catch({/** */})
     }
 }
 
@@ -45,9 +43,7 @@ export function getBookingStatus(email) {
             .then((response) => {
                 dispatch(getBookingStatusAction(response))
             })
-            .catch((err) => {
-                console.log(err);
-            })
+            .catch({/** */})
     }
 }
 

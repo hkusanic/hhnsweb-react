@@ -7,9 +7,7 @@ export function loginUser(credential) {
             .then((response) => {
                 dispatch(loginAction(response.data))
             })
-            .catch((err) => {
-                console.log("error ====>>>", err);
-            })
+            .catch({/** */})
     }
 }
 
@@ -19,9 +17,7 @@ export function logoutUser() {
             .then((response) => {
                 dispatch(logoutAction(response.data))
             })
-            .catch((err) => {
-                console.log("error =====>>>", err);
-            })
+            .catch({/** */})
     }
 }
 
@@ -31,9 +27,7 @@ export function signupUser(body) {
             .then((response) => {
                 dispatch(signupAction(response.data))
             })
-            .catch((err) => {
-                console.log("error =====>>>>", err);
-            })
+            .catch({/** */})
     }
 }
 
@@ -43,9 +37,7 @@ export function forgotPassword(body) {
             .then((response) => {
                 dispatch(forgotPasswordAction(response.data))
             })
-            .catch((err) => {
-                console.log("error ======>>>>>>", err);
-            })
+            .catch({/** */})
     }
 }
 
@@ -55,9 +47,7 @@ export function getUserByAccessId(body) {
             .then((response) => {
                 dispatch(getUserByAccessIdAction(response))
             })
-            .catch((err) => {
-                console.log("error==========>>>>", err);
-            })
+            .catch({/** */})
     }
 }
 
@@ -67,9 +57,7 @@ export function resetPassword(body){
             .then((response) => {
                 dispatch(resetPasswordAction(response))
             })
-            .catch((err) => {
-                console.log("error========>>>>", err);
-            })
+            .catch({/** */})
     }
 }
 
@@ -79,9 +67,7 @@ export function editProfile(body){
             .then((response) => {
                 dispatch(editProfileAction(response))
             })
-            .catch((err) => {
-                console.log("error ======>>>>>>", err);
-            })
+            .catch({/** */})
     }
 }
 

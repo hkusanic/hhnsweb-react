@@ -101,7 +101,6 @@ export class Login extends Component {
   }
 
   handle = (validate, number, data) => {
-    console.log(validate, number, data);
     const countryCode = data.dialCode;
     const mobileNumber = number;
 
@@ -112,8 +111,6 @@ export class Login extends Component {
         mobileNumber,
         countryCode,
         error: '',
-      }, () => {
-        console.log(this.state.mobileNumber, this.state.countryCode)
       })
     }
   }
@@ -212,15 +209,6 @@ export class Login extends Component {
                             data-constraints="@Email @Required"
                             onChange={() => { this.handleChange('email_signup', event) }} />
                         </div>
-                        {/* <div className="form-wrap">
-                          <input
-                            className="form-input"
-                            id="register-email-5"
-                            type="text"
-                            name="mobileNumber"
-                            placeholder={mobile_number}
-                            onChange={() => { this.handleChange('mobileNumber', event) }} />
-                        </div> */}
                         <div className="form-wrap">
                           <IntlTelInput
                             containerClassName="intl-tel-input"

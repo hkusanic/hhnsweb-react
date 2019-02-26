@@ -10,7 +10,6 @@ const initialState = {
 }
 
 const appointmentReducer = (state = initialState, action) => {
-    console.log("action ====>>>", action);
     switch (action.type) {
         case types.CREATE_APPOINTMENT:
             const data = action.payload.Appointment;
