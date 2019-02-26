@@ -14,7 +14,7 @@ let Booking = new keystone.List('Booking', {
 });
 
 Booking.add({
-    email: {
+	email: {
 		type: String,
 		initial: true,
 		required: true,
@@ -22,19 +22,29 @@ Booking.add({
 		index: true,
 		default: '',
 	},
-    firstName: { type: String},
-    lastName: { type: String},
-	startsAt: { type: String},
-	startDate: {type:String},
-	endsAt: { type: String},
-	booking: {type: Boolean},
-    dateCreated: {
+	firstName: {
+		type: String,
+	},
+	lastName: {
+		type: String,
+	},
+	startsAt: {
+		type: String,
+	},
+	startDate: {
+		type: String,
+	},
+	endsAt: {
+		type: String,
+	},
+	booking: {
+		type: Boolean,
+	},
+	dateCreated: {
 		type: Types.Date,
 		default: Date.now,
 	},
 
 });
-
-
 
 Booking.register();
