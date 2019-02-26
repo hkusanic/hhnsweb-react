@@ -30,7 +30,6 @@ exports.list = function (req, res) {
 
 
 exports.get = function (req, res) {
-	
 	Blog.model.findOne().where({ uuid: req.body.uuid }).exec(function (err, item) {
 		if (err) return res.apiError('database error', err);
 		if (!item) return res.apiError('not found');

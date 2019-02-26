@@ -1,9 +1,6 @@
 const keystone = require('keystone');
-const mongoose = require('mongoose');
 const Types = keystone.Field.Types;
-var Email = require('keystone-email');
 var EMAIL_CONFIG = require('../constants/constant');
-const sgMail = require('@sendgrid/mail');
 var nodemailer = require('nodemailer');
 
 var transporter = nodemailer.createTransport(EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig);

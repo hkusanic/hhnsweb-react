@@ -30,9 +30,14 @@ exports = module.exports = function (app) {
 	app.post('/api/editprofile/', keystone.middleware.api, routes.api.user.editprofile);
 	app.post('/api/booking/bookingcreated/', keystone.middleware.api, routes.api.booking.bookingcreated);
 	app.get('/api/booking/:email', keystone.middleware.api, routes.api.booking.get);
-	
-	
-	
+
+	// File Upload Routes
+	app.get('/api/fileupload/list', keystone.middleware.api, routes.api.fileupload.list);
+	app.get('/api/fileupload/:id', keystone.middleware.api, routes.api.fileupload.get);
+	app.all('/api/fileupload/:id/update', keystone.middleware.api, routes.api.fileupload.update);
+	app.all('/api/fileupload/create', keystone.middleware.api, routes.api.fileupload.create);
+	app.get('/api/fileupload/:id/remove', keystone.middleware.api, routes.api.fileupload.remove);
+
 	// Set up the default app route to  http://localhost:3000/index.htmli
 	app.get('/*', function (req, res) {
 		keystone.set('updateDatabase', false);
