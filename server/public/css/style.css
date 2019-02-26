@@ -10194,7 +10194,8 @@ html.tablet .ui-to-top {
 }
 
 .rd-navbar-fixed .rd-nav-item:hover > .rd-navbar-submenu-toggle, .rd-navbar-fixed .rd-nav-item.focus > .rd-navbar-submenu-toggle, .rd-navbar-fixed .rd-nav-item.active > .rd-navbar-submenu-toggle, .rd-navbar-fixed .rd-nav-item.opened > .rd-navbar-submenu-toggle {
-	color: #fff;
+	/* color: #fff; */
+	color: #ff830a;
 }
 
 .rd-navbar-fixed .rd-nav-link {
@@ -10214,8 +10215,8 @@ html.tablet .ui-to-top {
 .rd-navbar-fixed .rd-navbar-dropdown > li.focus > a,
 .rd-navbar-fixed .rd-navbar-dropdown > li.active > a,
 .rd-navbar-fixed .rd-navbar-dropdown > li.opened > a {
-	color: #fff;
-	background: #ff830a;
+	color: #ff830a;
+	background: #f6f6f6;
 }
 
 .rd-navbar-fixed .rd-navbar-megamenu .rd-megamenu-title {
@@ -11158,7 +11159,8 @@ html.rd-navbar-fixed-linked .page {
 .rd-navbar-thin.rd-navbar-static .rd-nav-link:hover,
 .rd-navbar-thin.rd-navbar-static .rd-nav-link:hover ~ .rd-navbar-submenu-toggle,
 .rd-navbar-thin.rd-navbar-static .rd-navbar-search-toggle:hover {
-	color: #ffb770;
+	/* color: #ffb770; */
+	color: #f6f6f6;
 }
 
 .rd-navbar-thin.rd-navbar-static .rd-menu {

@@ -74,6 +74,10 @@ export class Login extends Component {
     window.location.href = '/';
   }
 
+  handleRemoveModal = () => {
+    $('.login-modal-2').removeClass('active');
+  }
+
   signUP = (event) => {
     event.preventDefault();
     if (!isNotEmpty(this.state.email_signup) || !isNotEmpty(this.state.password_signup) ||
@@ -129,11 +133,11 @@ export class Login extends Component {
     let login_modal_1 = '';
     let login_modal_2 = '';
 
-    if(!this.props.notActive){
+    if (!this.props.notActive) {
       login_modal_1 = "rd-navbar-popup-toggle login-modal-1";
       login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal  login-modal-2";
     }
-    else if(this.props.notActive) {
+    else if (this.props.notActive) {
       login_modal_1 = "rd-navbar-popup-toggle login-modal-mb";
       login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal";
     }
@@ -168,7 +172,7 @@ export class Login extends Component {
                         {log_in}
                       </h4>
                       <LoginForm loginUser={this.props.loginUser} error={this.state.error} />
-                      <p><Link to='/forgotPassword'> {forgot_password}</Link></p>
+                      <p onClick={() => {this.handleRemoveModal()}}><Link to='/forgotPassword'> {forgot_password}</Link></p>
                     </div>
                   </li>
                   <li>
