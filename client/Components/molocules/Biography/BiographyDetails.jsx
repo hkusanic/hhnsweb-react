@@ -29,8 +29,10 @@ export class BiographyDetails extends Component {
                                     {/* <img className="biodetailsImg" src={this.props.location.state.img} alt="" width="300" height="300" />
                                    */}
                                     <Image cloudName="dinagauranga" publicId={this.props.location.state.img} dpr="auto"
-                                      responsive
-                                      width="auto"
+                                          dpr="auto"
+                                          responsive
+                                          width="auto"
+                                          crop="scale"
                                     
                                      >
                               </Image>

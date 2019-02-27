@@ -9317,6 +9317,17 @@ html.tablet .ui-to-top {
 	transform: scale3d(1, 1, 1);
 }
 
+.rd-navbar-popup-toggle:hover{
+	color: #ff830a !important;
+}
+
+.rd-navbar-popup-toggle:focus {
+	color: #ff830a !important;
+}
+.rd-navbar-popup-toggle.opened {
+	color: #ff830a !important;
+}
+
 @media (min-width: 400px) {
 	.rd-navbar-popup {
 		width: 370px;
@@ -9406,10 +9417,13 @@ html.tablet .ui-to-top {
 }
 
 .rd-navbar-static .rd-nav-item.active .rd-nav-link {
-	color: #ff830a;
+	/* color: #ff830a; */
 	background: transparent;
 }
 
+.rd-nav-item.active  {
+	color: #ff830a;
+}
 .rd-navbar-static .rd-nav-item.active > .rd-navbar-submenu-toggle {
 	color: #ff830a;
 }

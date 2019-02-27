@@ -23,8 +23,10 @@ export class Calender extends Component {
             <div>
                 <section className="breadcrumbs-custom bg-image context-dark">
                 <Image cloudName="dinagauranga" publicId='calendar_header' 
-                                      responsive
-                                      width="auto"
+                                         dpr="auto"
+                                         responsive
+                                         width="auto"
+                                         crop="scale"
                                      >
                                  
                  </Image>

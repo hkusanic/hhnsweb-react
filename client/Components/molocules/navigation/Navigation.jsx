@@ -21,7 +21,7 @@ export class Navigation extends Component {
             Prabhupada_swami_bio: '',
             Niranjana_swami_bio: '',
             floatImage: '',
-            index: '1'
+            index: 1
 
         }
     }
@@ -74,18 +74,27 @@ export class Navigation extends Component {
          }
     }
 
-    handleNavigationClick = () => {
+    handleNavigationClick = (index) => {
+        if(index){
+            this.setState({
+                index
+            })
+        }
         $('.login-modal-2').removeClass('active');
         $('.register-modal-2').removeClass('active');
         if (!this.props.isLogin) {
             $('.login-modal-2').addClass('active');
             $('.rd-navbar-toggle').removeClass('active');
-            $('.rd-navbar-nav-wrap').removeClass('active');
-             
+            $('.rd-navbar-nav-wrap').removeClass('active');    
         }
     }
 
-    handleRemoveModal = () => {
+    handleRemoveModal = (index) => {
+        if(index){
+            this.setState({
+                index
+            })
+        }
         $('.login-modal-2').removeClass('active');
         $('.rd-navbar-nav-wrap').removeClass('active');
         $('.register-modal-2').removeClass('active');
@@ -123,8 +132,10 @@ export class Navigation extends Component {
                                     </div>
                                 </div>
                                 <Image cloudName="dinagauranga" publicId="banner1" dpr="auto"
-                                    responsive
-                                    width="auto"
+                                       dpr="auto"
+                                       responsive
+                                       width="auto"
+                                       crop="scale"
                                 >
                                     <Transformation quality="auto" fetchFormat="auto" />
                                 </Image>
@@ -135,8 +146,10 @@ export class Navigation extends Component {
                                     {/* <img src={logo} className={'menulogoImg' +' '+ this.state.floatImage} alt="" width="100%" height="100%" />
                                    */}
                                     <Image className={'menulogoImg' + ' ' + this.state.floatImage} cloudName="dinagauranga" publicId="logo" dpr="auto"
-                                        responsive
-                                        width="auto"
+                                          dpr="auto"
+                                          responsive
+                                          width="auto"
+                                         
                                     >
                                         <Transformation quality="auto" fetchFormat="auto" />
                                     </Image>
@@ -158,15 +171,16 @@ export class Navigation extends Component {
                                         {/* </div> */}
 
                                         <ul className="rd-navbar-nav">
-                                            <li onClick={()=> {this.handleRemoveModal()}} className="rd-nav-item hideMenu"><LanguageSwitch /></li>
-                                            <li className="rd-nav-item active">
-                                                <Link className="rd-nav-link" to="/">
+                                            <li className="rd-nav-item hideMenu"><LanguageSwitch /></li>
+                                            <li onClick={()=> {this.handleRemoveModal(1)}}   className="rd-nav-item">
+                                                <Link className={`rd-nav-link ${this.state.index === 1 ? 'active1' : '' } `} to="/">
                                                     <Translate>
                                                         {({ translate }) => translate('HOME.home')}
                                                     </Translate>
                                                 </Link>
                                             </li>
-                                            <li className="rd-nav-item biography-submenu active"><a className="rd-nav-link">  <Translate>
+                                            <li onClick={()=> {this.handleRemoveModal(2)}}  className="rd-nav-item biography-submenu">
+                                            <a className={`rd-nav-link ${this.state.index === 2 ? 'active1' : '' } `}>  <Translate>
                                                 {({ translate }) => translate('HOME.biography')}
                                             </Translate></a>
                                                 <ul className="rd-menu rd-navbar-dropdown">
@@ -200,22 +214,22 @@ export class Navigation extends Component {
                                                     </ul>
                                                 </li>
                                                 : ''} */}
-                                            <li className="rd-nav-item active">
-                                                <Link className="rd-nav-link" to="/blog" onClick={this.handleNavigationClick}>
+                                            <li className="rd-nav-item">
+                                                <Link className={`rd-nav-link ${this.state.index === 3 ? 'active1' : '' } `} to="/blog" onClick={() => {this.handleNavigationClick(3)}}>
                                                     <Translate>
                                                         {({ translate }) => translate('HOME.blog')}
                                                     </Translate>
                                                 </Link>
                                             </li>
-                                            <li className="rd-nav-item active"><Link className="rd-nav-link " to="/calender" onClick={this.handleNavigationClick}> <Translate>
+                                            <li className="rd-nav-item"><Link className={`rd-nav-link ${this.state.index === 4 ? 'active1' : '' } `} to="/calender" onClick={() => {this.handleNavigationClick(4)}}> <Translate>
                                                 {({ translate }) => translate('HOME.calendar')}
                                             </Translate></Link></li>
-                                            <li onClick={()=> {this.handleRemoveModal('5')}} className="rd-nav-item active"><Link className="rd-nav-link" to="/booking" onClick={this.handleNavigationClick}> <Translate>
+                                            <li onClick={()=> {this.handleRemoveModal(5)}} className="rd-nav-item"><Link className={`rd-nav-link ${this.state.index === 5 ? 'active1' : '' } `} to="/booking" onClick={() => {this.handleNavigationClick(5)}}> <Translate>
                                                 {({ translate }) => translate('HOME.booking')}
                                             </Translate></Link></li>
                                             {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
                                             <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
-                                            {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item active"><Link className="rd-nav-link" to="/">Admin</Link></li> : ''}
+                                            {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item"><Link className={`rd-nav-link ${this.state.index === 6 ? 'active1' : '' } `} to="/">Admin</Link></li> : ''}
                                             <li className="rd-nav-item hideMenu"><a className="rd-nav-link"><Login notActive={true} /></a></li>
                                         </ul>
                                     </div>

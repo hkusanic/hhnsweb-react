@@ -5,8 +5,10 @@ const singleCarousel = (props) => {
     let text = props.text;
     return <div className="swiper-slide">
      <Image cloudName="dinagauranga" publicId={props.image} dpr="auto"
-                                      responsive
-                                      width="auto"
+                                         dpr="auto"
+                                         responsive
+                                         width="auto"
+                                         crop="scale"
                                      >
      <Transformation quality="auto" fetchFormat="auto" />
      </Image>
