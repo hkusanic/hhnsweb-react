@@ -7,7 +7,7 @@ export function loginUser(credential) {
             .then((response) => {
                 dispatch(loginAction(response.data))
             })
-            .catch({/** */})
+            .catch((err) => { console.error(err); });
     }
 }
 
@@ -17,7 +17,7 @@ export function logoutUser() {
             .then((response) => {
                 dispatch(logoutAction(response.data))
             })
-            .catch({/** */})
+            .catch((err) => { console.error(err); });
     }
 }
 
@@ -27,7 +27,7 @@ export function signupUser(body) {
             .then((response) => {
                 dispatch(signupAction(response.data))
             })
-            .catch({/** */})
+            .catch((err) => { console.error(err); });
     }
 }
 
@@ -37,7 +37,7 @@ export function forgotPassword(body) {
             .then((response) => {
                 dispatch(forgotPasswordAction(response.data))
             })
-            .catch({/** */})
+            .catch((err) => { console.error(err); });
     }
 }
 
@@ -47,7 +47,7 @@ export function getUserByAccessId(body) {
             .then((response) => {
                 dispatch(getUserByAccessIdAction(response))
             })
-            .catch({/** */})
+            .catch((err) => { console.error(err); });
     }
 }
 
@@ -57,7 +57,7 @@ export function resetPassword(body){
             .then((response) => {
                 dispatch(resetPasswordAction(response))
             })
-            .catch({/** */})
+            .catch((err) => { console.error(err); });
     }
 }
 
@@ -67,7 +67,7 @@ export function editProfile(body){
             .then((response) => {
                 dispatch(editProfileAction(response))
             })
-            .catch({/** */})
+            .catch((err) => { console.error(err); });
     }
 }
 
