@@ -123,8 +123,10 @@ export class Navigation extends Component {
                                     </div>
                                 </div>
                                 <Image cloudName="dinagauranga" publicId="banner1" dpr="auto"
-                                    responsive
-                                    width="auto"
+                                       dpr="auto"
+                                       responsive
+                                       width="auto"
+                                       crop="scale"
                                 >
                                     <Transformation quality="auto" fetchFormat="auto" />
                                 </Image>
@@ -135,8 +137,10 @@ export class Navigation extends Component {
                                     {/* <img src={logo} className={'menulogoImg' +' '+ this.state.floatImage} alt="" width="100%" height="100%" />
                                    */}
                                     <Image className={'menulogoImg' + ' ' + this.state.floatImage} cloudName="dinagauranga" publicId="logo" dpr="auto"
-                                        responsive
-                                        width="auto"
+                                          dpr="auto"
+                                          responsive
+                                          width="auto"
+                                         
                                     >
                                         <Transformation quality="auto" fetchFormat="auto" />
                                     </Image>

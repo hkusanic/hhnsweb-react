@@ -104,8 +104,10 @@ export class Booking extends Component {
                 <div>
                     <section className="breadcrumbs-custom bg-image context-dark">
                     <Image cloudName="dinagauranga" publicId='booking-v2'
+                                      dpr="auto"
                                       responsive
                                       width="auto"
+                                      crop="scale"
                                     
                                      >
                                  
