@@ -162,7 +162,7 @@ export class Login extends Component {
             create_an_account = translate('REGISTER_FORM.create_an_account')
             return <div className="rd-navbar-block">
               {this.state.isUserLogin ?
-                <ul className="list-inline-bordered">
+                <ul className="list-inline-bordered" style={{color: '#122e44' }}>
 
                   <li>
                     <li className={login_modal_1} data-rd-navbar-toggle="#rd-navbar-login-5">
