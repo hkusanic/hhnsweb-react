@@ -2,7 +2,7 @@ const keystone = require('keystone');
 const Types = keystone.Field.Types;
 const randToken = require('rand-token');
 
-let audioStorage = new keystone.Storage({
+let pdfStorage = new keystone.Storage({
 	adapter: require('keystone-storage-adapter-s3'),
 	label: 'Audio File',
 	track: {
@@ -12,11 +12,11 @@ let audioStorage = new keystone.Storage({
 		updatedAt: true,
 	},
 	s3: {
-		key: process.env.AWS_KEY, // 's3-key', // required; defaults to process.env.S3_KEY
-		secret: process.env.AWS_SECRET, // 'secret', // required; defaults to process.env.S3_SECRET
-		bucket: process.env.AWS_BUCKET, // 'mybucket', // required; defaults to process.env.S3_BUCKET
-		region: process.env.AWS_REGION, // 'ap-southeast-2', // optional; defaults to process.env.S3_REGION, or if that's not specified, us-east-1
-		path: process.env.AWS_AUDIO_PATH, // '/profilepics', // optional; defaults to "/"
+		key: 'AKIAI2ICVCZ55BAN5C2A', // 's3-key', // required; defaults to process.env.S3_KEY
+		secret: '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', // 'secret', // required; defaults to process.env.S3_SECRET
+		bucket: 'hhnsweb-bucket', // 'mybucket', // required; defaults to process.env.S3_BUCKET
+		region: 'us-east-1', // 'ap-southeast-2', // optional; defaults to process.env.S3_REGION, or if that's not specified, us-east-1
+		path: '/audio', // '/profilepics', // optional; defaults to "/"
 		// publicUrl: 'https://xxxxxx.cloudfront.net', // optional; sets a custom domain for public urls - see below for details
 		uploadParams: { // optional; add S3 upload params; see below for details
 			ACL: 'public-read-write',
@@ -31,7 +31,7 @@ let audioStorage = new keystone.Storage({
 	},
 });
 
-let AudioFile = new keystone.List('AudioFile', {
+let PdfFile = new keystone.List('PdfFIle', {
 	autokey: {
 		path: 'slug',
 		from: 'name _id',
@@ -43,7 +43,7 @@ let AudioFile = new keystone.List('AudioFile', {
 	// defaultSort: '-date',
 });
 
-AudioFile.add({
+PdfFile.add({
 	name: {
 		type: String,
 		initial: true,
@@ -51,7 +51,7 @@ AudioFile.add({
 		unique: true,
 		index: true,
 		noedit: true,
-		label: 'Audio File Name',
+		label: 'Pdf File Name',
 	},
 	title_en: {
 		type: String,
@@ -95,22 +95,22 @@ AudioFile.add({
 	},
 	file: {
 		type: Types.File,
-		storage: audioStorage,
-		note: 'Upload Audio File To Amazon Web Services',
+		storage: pdfStorage,
+		note: 'Upload Pdf File To Amazon Web Services',
 		initial: true,
 		createInline: true,
-		allowedTypes: ['mp3', 'wav'],
+		allowedTypes: ['pdf'],
 		label: 'Audio File',
 	},
 	version: { type: Types.Number, default: 1, hidden: true },
 	state: { type: Types.Select, options: 'draft, published, archived', default: 'published', index: true },
 });
 
-AudioFile.relationship({ path: 'blogs', ref: 'Blog', refPath: 'audio_files' });
+PdfFile.relationship({ path: 'blogs', ref: 'Blog', refPath: 'audio_files' });
 
-AudioFile.defaultColumns = 'name, language|15%, state|10%'; // 'name, date|15%';
+PdfFile.defaultColumns = 'name, language|15%, state|10%'; // 'name, date|15%';
 
-AudioFile.schema.pre('save', function (next) {
+PdfFile.schema.pre('save', function (next) {
 	try {
 		let self = this;
 		// Use the original filename as the title.
@@ -119,7 +119,7 @@ AudioFile.schema.pre('save', function (next) {
 		} else {
 			self.title = randToken.generate(16);
 		}
-		AudioFile.model.findOne({
+		PdfFile.model.findOne({
 			name: self.title,
 		})
 			.where('state', 'published')
@@ -141,7 +141,7 @@ AudioFile.schema.pre('save', function (next) {
 	}
 });
 
-AudioFile.schema.post('save', function (err, doc, next) {
+PdfFile.schema.post('save', function (err, doc, next) {
 	try {
 		if (err) {
 			console.log(err);
@@ -155,7 +155,7 @@ AudioFile.schema.post('save', function (err, doc, next) {
 	}
 });
 
-AudioFile.schema.post('validate', function (err, doc, next) {
+PdfFile.schema.post('validate', function (err, doc, next) {
 	try {
 		if (err) {
 			console.log(err);
@@ -169,4 +169,4 @@ AudioFile.schema.post('validate', function (err, doc, next) {
 	}
 });
 
-AudioFile.register();
+PdfFile.register();

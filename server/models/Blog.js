@@ -68,7 +68,6 @@ Blog.add({
 Blog.defaultColumns = 'title_en, date|15%, needs_translation|10%';
 
 Blog.schema.pre('save', function (next) {
-	console.log('---BLOG PRE SAVE---');
 	next();
 });
 

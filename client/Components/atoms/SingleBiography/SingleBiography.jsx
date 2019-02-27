@@ -23,8 +23,10 @@ const SingleBiography = (props) => {
             <article className="post-modern wow slideInLeft">
                 <Link className="post-modern-media" to={{ pathname: '/biograhyDetails', state: props }}>
                 <Image cloudName="dinagauranga" publicId={props.img} dpr="auto"
-                                      responsive
-                                      width="auto"
+                                         dpr="auto"
+                                         responsive
+                                         width="auto"
+                                         crop="scale"
                                     
                                      >
                                    <Transformation quality="auto" fetchFormat="auto" />

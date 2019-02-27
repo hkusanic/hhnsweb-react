@@ -132,8 +132,10 @@ export class Navigation extends Component {
                                     </div>
                                 </div>
                                 <Image cloudName="dinagauranga" publicId="banner1" dpr="auto"
-                                    responsive
-                                    width="auto"
+                                       dpr="auto"
+                                       responsive
+                                       width="auto"
+                                       crop="scale"
                                 >
                                     <Transformation quality="auto" fetchFormat="auto" />
                                 </Image>
@@ -144,8 +146,10 @@ export class Navigation extends Component {
                                     {/* <img src={logo} className={'menulogoImg' +' '+ this.state.floatImage} alt="" width="100%" height="100%" />
                                    */}
                                     <Image className={'menulogoImg' + ' ' + this.state.floatImage} cloudName="dinagauranga" publicId="logo" dpr="auto"
-                                        responsive
-                                        width="auto"
+                                          dpr="auto"
+                                          responsive
+                                          width="auto"
+                                         
                                     >
                                         <Transformation quality="auto" fetchFormat="auto" />
                                     </Image>
@@ -180,10 +184,10 @@ export class Navigation extends Component {
                                                 {({ translate }) => translate('HOME.biography')}
                                             </Translate></a>
                                                 <ul className="rd-menu rd-navbar-dropdown">
-                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">  <Translate>
+                                                    <li onClick={()=> {this.handleRemoveModal()}} className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">  <Translate>
                                                         {({ translate }) => translate('HOME.swami_prabhupada')}
                                                     </Translate></Link></li>
-                                                    <li className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link"> <Translate>
+                                                    <li onClick={()=> {this.handleRemoveModal()}} className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link"> <Translate>
                                                         {({ translate }) => translate('HOME.niranjanaswami')}
                                                     </Translate></Link></li>
                                                 </ul>

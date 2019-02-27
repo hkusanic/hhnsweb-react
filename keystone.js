@@ -3,7 +3,7 @@ let keystone = require('keystone');
 if (process.env.NODE_ENV === undefined && process.env.NODE_ENV !== 'production') {
 	console.log('---LOADING ENV VARIABLES---');
 	require('dotenv').load();
-	// console.dir(process.env);
+	console.dir(process.env);
 }
 
 // Set up our keystone instance
