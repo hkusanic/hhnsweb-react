@@ -3,9 +3,8 @@ import SingleBlog from '../../Components/molocules/SingleBlog/SIngleBlog';
 import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
 import { getBlogs, getBlog } from '../../actions/blogActions';
-import blogHeaderImage from '../../assets/images/blog/blog_header.png';
 import Auth from "../../utils/Auth";
-import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
+import { Translate } from 'react-localize-redux';
 
 export class Blogs extends Component {
     constructor(props) {
@@ -49,43 +48,38 @@ export class Blogs extends Component {
     render() {
         return (
             <div>
-                <section className="breadcrumbs-custom bg-image context-dark">
-                <Image cloudName="dinagauranga" publicId='blog_header' 
-                                      responsive
-                                      width="auto"
-                                    
-                                     >
-                                   
-                 </Image>
-                    <div className="breadcrumbs-custom-inner">
-                        <div className="container breadcrumbs-custom-container">
-                        </div>
-                    </div>
+                <section className="bg-gray-100">
+                    <img src="https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png" />
                 </section>
                 {
                     !this.state.isUserLogin ?
-                    <section className="section section-lg">
-                        <div className="container centerAlign">
-                            <div className="row row-50 row-xxl-70">
-                                {this.state.blogs.map((item, key) => {
-                                    return <SingleBlog blog={item} key={key} />
-                                })}
+                        <section>
+                            <div style={{ textAlign: 'center' }}>
+                                <p className="bookingForm">
+                                    <Translate>{({ translate }) => translate('HOME.blog')}</Translate>
+                                </p>
                             </div>
-                            <Pagination
-                                className="paginationStyle"
-                                innerClass='pagination'
-                                activeClass='page-item active'
-                                itemClass='page-item'
-                                linkClass='page-link button-winona'
-                                activePage={this.state.currentPage}
-                                itemsCountPerPage={4}
-                                totalItemsCount={this.state.totalItem}
-                                pageRangeDisplayed={5}
-                                onChange={this.handlePageChange}
-                            />
-                        </div>
-                    </section>
-                    : ''
+                            <div className="container centerAlign">
+                                <div className="row row-50 row-xxl-70">
+                                    {this.state.blogs.map((item, key) => {
+                                        return <SingleBlog blog={item} key={key} />
+                                    })}
+                                </div>
+                                <Pagination
+                                    className="paginationStyle"
+                                    innerClass='pagination'
+                                    activeClass='page-item active'
+                                    itemClass='page-item'
+                                    linkClass='page-link button-winona'
+                                    activePage={this.state.currentPage}
+                                    itemsCountPerPage={4}
+                                    totalItemsCount={this.state.totalItem}
+                                    pageRangeDisplayed={5}
+                                    onChange={this.handlePageChange}
+                                />
+                            </div>
+                        </section>
+                        : ''
                 }
             </div>
         )

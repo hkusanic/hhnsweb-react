@@ -105,11 +105,12 @@ export class UserProfile extends Component {
         }
         return (
             <div>
-                <section className="section bg-gray-100">
+                <section className="bg-gray-100">
+                    <img src='https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v3_HJGhLISIV.png' />
                     <div className="container">
                         <div className="row justify-content-center" style={{ paddingTop: '2%' }}>
                             <div className="col-sm-10 col-md-8 col-lg-7 col-xl-6">
-                                <h3 className="wow-outer text-center"><span className="wow slideInUp">    <Translate>
+                                <h3 className="wow-outer text-center userColor"><span className="wow slideInUp">    <Translate>
                                     {({ translate }) => translate('USER_PROFILE.user_profile')}
                                 </Translate></span></h3>
                                 <div style={{ paddingLeft: '10%' }} className="rd-form" data-form-type="contact" >
@@ -195,27 +196,27 @@ export class UserProfile extends Component {
                                         }
                                     </div>
                                     <div className="group group-middle">
-                                    { <Translate>
-                                                        {({ translate }) => {
-                                                           edit =  translate('USER_PROFILE.edit')
-                                                           return   <div className="wow-outer">
-                                                           {
-                                                               
-                                                               this.state.editing ?
-                                                                   <button className="button button-primary button-winona" onClick={this.handleEditing} >
-                                                                  
-                                                                   {edit}
-                                                                   </button>
-                                                                   :
-                                                                   <button className="button button-primary button-winona" onClick={this.handleEditProfile} >Update</button>
-                                                           }
-                                                       </div>;
-                                                        }
-                                                        }
-                                                    </Translate>
-                                    }
-                                                     
-                                      
+                                        {<Translate>
+                                            {({ translate }) => {
+                                                edit = translate('USER_PROFILE.edit')
+                                                return <div className="wow-outer">
+                                                    {
+
+                                                        this.state.editing ?
+                                                            <button className="button button-primary button-winona" onClick={this.handleEditing} >
+
+                                                                {edit}
+                                                            </button>
+                                                            :
+                                                            <button className="button button-primary button-winona" onClick={this.handleEditProfile} >Update</button>
+                                                    }
+                                                </div>;
+                                            }
+                                            }
+                                        </Translate>
+                                        }
+
+
                                     </div>
                                     {this.state.isUpdated ? <p className="updateText"><Translate>
                                         {({ translate }) => translate('USER_PROFILE.your_profile_updated')}

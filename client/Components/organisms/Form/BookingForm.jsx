@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { isValidPhone, onlyIntegers, isNotEmpty } from '../../../utils/validation';
-import IntlTelInput from 'react-intl-tel-input';
+import {onlyIntegers, isNotEmpty } from '../../../utils/validation';
 import { Translate } from 'react-localize-redux';
 export class BookingForm extends Component {
     constructor(props) {
@@ -68,7 +67,9 @@ export class BookingForm extends Component {
         let aspiring_disciple = '';
         let submit = '';
 
-
+        if(!this.props.user){
+            return <div style={{ textAlign: 'center' }}>Loading...</div>
+        }
         return (
             <div id="rd-navbar-register-5">
               <Translate>
@@ -101,9 +102,7 @@ export class BookingForm extends Component {
                     <div className="form-wrap">
                         <input
                             className="form-input"
-                            autoComplete="off"                            autoComplete="off"
                             autoComplete="off"
-
                             type="text"
                             readOnly="readonly"
                             placeholder={last_name}
@@ -176,8 +175,6 @@ export class BookingForm extends Component {
                 </form>
                    }
                 }
-                                      
-
 </Translate>
             </div>
 

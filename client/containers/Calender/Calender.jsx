@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import * as DATA from '../../constants/credentials';
-import calendarHeaderImage from '../../assets/images/calendar/calendar_header.png';
 import Auth from "../../utils/Auth";
-import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
+import { Translate } from 'react-localize-redux';
 
 export class Calender extends Component {
     constructor(props) {
@@ -21,23 +20,17 @@ export class Calender extends Component {
         let srcGoogle = 'https://calendar.google.com/calendar/embed?src=' + DATA.GOOGLE_CREDENTIALS.USER + '%40' + DATA.GOOGLE_CREDENTIALS.EMAIL_DOMAIN + '&ctz=Asia%2FKolkata';
         return (
             <div>
-                <section className="breadcrumbs-custom bg-image context-dark">
-                <Image cloudName="dinagauranga" publicId='calendar_header' 
-                                         dpr="auto"
-                                         responsive
-                                         width="auto"
-                                         crop="scale"
-                                     >
-                                 
-                 </Image>
-                    <div className="breadcrumbs-custom-inner">
-                        <div className="container breadcrumbs-custom-container">
-                        </div>
-                    </div>
+                <section className="bg-gray-100">
+                    <img src="https://ik.imagekit.io/gcwjdmqwwznjl/Calendar_Page_copy_B1kq-PHUN.png" />
                 </section>
                 {
                     !this.state.isUserLogin ?
                         <div className="align">
+                            <div style={{ textAlign: 'center' }}>
+                                <p className="bookingForm">
+                                    <Translate>{({ translate }) => translate('HOME.calendar')}</Translate>
+                                </p>
+                            </div>
                             <iframe src={srcGoogle}
                                 style={{ frameBorder: "0", Scrolling: "no" }}
                                 className="calenderStyle">
@@ -45,6 +38,7 @@ export class Calender extends Component {
                         </div>
                         : ''
                 }
+
             </div>
         )
     }
