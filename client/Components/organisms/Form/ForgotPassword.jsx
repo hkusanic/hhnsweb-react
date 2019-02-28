@@ -57,8 +57,9 @@ export class ForgotPassword extends Component {
                 {({ translate }) => {
                     your_email = translate('FORGOT_PASSWORD.your_email')
                     return <div>
-                        <section class="section section-lg bg-gray-100">
-                            <div class="container">
+                        <section class="bg-gray-100">
+                            <img src='https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v3_HJGhLISIV.png' />
+                            <div class="container" style={{paddingTop:'2em'}}>
                                 <div class="row justify-content-center">
                                     <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6">
                                         <h3 class="wow-outer text-center"><span class="wow slideInUp"><Translate>
@@ -83,14 +84,14 @@ export class ForgotPassword extends Component {
                                             {({ translate }) => translate('FORGOT_PASSWORD.please_check_email')}
                                         </Translate></span></p> : ''}
                                         <p className="loginError">
-                                            {this.state.error === '**Please enter the email' ? 
-                                            <Translate>
-                                                {({ translate }) => translate('FORGOT_PASSWORD.please_enter_email')}
-                                            </Translate> : 
-                                            (this.state.error === '**Please enter correct email address' ? 
-                                            <Translate>
-                                                {({ translate }) => translate('FORGOT_PASSWORD.please_enter_correct_address')}
-                                            </Translate> : null)}
+                                            {this.state.error === '**Please enter the email' ?
+                                                <Translate>
+                                                    {({ translate }) => translate('FORGOT_PASSWORD.please_enter_email')}
+                                                </Translate> :
+                                                (this.state.error === '**Please enter correct email address' ?
+                                                    <Translate>
+                                                        {({ translate }) => translate('FORGOT_PASSWORD.please_enter_correct_address')}
+                                                    </Translate> : null)}
                                         </p>
                                     </div>
                                 </div>

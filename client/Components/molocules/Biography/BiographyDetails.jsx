@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
-import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 export class BiographyDetails extends Component {
     constructor(props) {
@@ -26,16 +25,7 @@ export class BiographyDetails extends Component {
                                     <h3 className="post-creative-title alignment padLeft">
                                         {renderHTML(reactCookie.load('languageCode') === 'en' ? this.props.location.state.title_en : this.props.location.state.title_ru)}
                                     </h3>
-                                    {/* <img className="biodetailsImg" src={this.props.location.state.img} alt="" width="300" height="300" />
-                                   */}
-                                    <Image cloudName="dinagauranga" publicId={this.props.location.state.img} dpr="auto"
-                                          dpr="auto"
-                                          responsive
-                                          width="auto"
-                                          crop="scale"
-                                    
-                                     >
-                              </Image>
+                                     <img src={this.props.location.state.img}/>
                                     {renderHTML(reactCookie.load('languageCode') === 'en' ? this.props.location.state.content_en : this.props.location.state.content_ru)}
                                 </article>
                             </div>

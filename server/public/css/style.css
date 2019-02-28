@@ -10909,7 +10909,7 @@ html.rd-navbar-fixed-linked .page {
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-aside,
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-main {
 	max-width: 1170px;
-	margin-left: auto;
+	/* margin-left: auto; */
 	margin-right: auto;
 }
 
@@ -17898,12 +17898,12 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 
 @media (min-width: 1211px) and (max-width: 4400px){
 	.margin-left-login-modal {
-		margin-left: -150%;
+		margin-left: -215%;
     	margin-top: 120%;
 	 
 	 }	
 	 .margin-left-register-modal {
-		margin-left: -185%;	
+		margin-left: -260%;	
 		margin-top: 120%; 
 	 }
 }

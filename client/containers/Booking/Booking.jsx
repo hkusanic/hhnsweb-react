@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import banner from '../../assets/images/booking-v2.png';
 import "react-step-progress-bar/styles.css";
 import Progress from '../../Components/organisms/ProgressBar/ProgressBar';
 import BookingForm from '../../Components/organisms/Form/BookingForm';
 import Auth from '../../utils/Auth';
 import { connect } from "react-redux";
 import { createAppointment, getAppointment, resetState, getBookingStatus } from '../../actions/appointmentAction';
-import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 import reactCookie from 'react-cookies';
 import { Translate } from 'react-localize-redux';
 export class Booking extends Component {
@@ -41,7 +39,7 @@ export class Booking extends Component {
                 this.handleDarshanApproved(this.props.appointment.appointmentData.Appointment);
             }
         }
-        this.setState({isUserLogin})
+        this.setState({ isUserLogin })
     }
 
     handleDarshanApproved = (appointment) => {
@@ -66,56 +64,44 @@ export class Booking extends Component {
     }
 
     ApprovedText = () => {
-        if(reactCookie.load('languageCode') === 'en'){
-        return (
-            <div>
-                <p>Dear <span style={{ fontWeight: '400' }}>{this.state.user.firstName} {this.state.user.last}</span>,</p>
-                <div>Please accept our humble obeisances,</div>
-                <div>All glories to Srila Prabhupada!</div>
-                <div>&nbsp;</div>
-                <div>Your request for <span style={{ fontWeight: '400' }}>{this.state.DarshanRequested} minutes</span>  with His Holines Niranjana Swami is under review.&nbsp;</div>
-                <div>Once its is approved you will receive an email with further instructions.</div>
-                <div>&nbsp;</div>
-                <div>Your servants,</div>
-                <div>Site administrators</div>
-            </div>
-        )
-    }
-    else{
-        return (
-            <div>
-                <p>Дорогой <span style={{ fontWeight: '400' }}>{this.state.user.firstName} {this.state.user.last}</span>,</p>
-                <div>Пожалуйста, примите наши смиренные поклоны,</div>
-                <div>Вся слава Шриле Прабхупаде!</div>
-                <div>&nbsp;</div>
-                <div>Ваш запрос на <span style={{ fontWeight: '400' }}>{this.state.DarshanRequested} Даршан</span> с Его Святейшеством Ниранджаной Свами находится на рассмотрении.&nbsp;</div>
-                <div>Как только он будет одобрен, вы получите письмо с дальнейшими инструкциями.</div>
-                <div>&nbsp;</div>
-                <div>Ваши слуги,</div>
-                <div>Администраторы сайта</div>
-            </div>
-        )
+        if (reactCookie.load('languageCode') === 'en') {
+            return (
+                <div>
+                    <p>Dear <span style={{ fontWeight: '400' }}>{this.state.user.firstName} {this.state.user.last}</span>,</p>
+                    <div>Please accept our humble obeisances,</div>
+                    <div>All glories to Srila Prabhupada!</div>
+                    <div>&nbsp;</div>
+                    <div>Your request for <span style={{ fontWeight: '400' }}>{this.state.DarshanRequested} minutes</span>  with His Holines Niranjana Swami is under review.&nbsp;</div>
+                    <div>Once its is approved you will receive an email with further instructions.</div>
+                    <div>&nbsp;</div>
+                    <div>Your servants,</div>
+                    <div>Site administrators</div>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div>
+                    <p>Дорогой <span style={{ fontWeight: '400' }}>{this.state.user.firstName} {this.state.user.last}</span>,</p>
+                    <div>Пожалуйста, примите наши смиренные поклоны,</div>
+                    <div>Вся слава Шриле Прабхупаде!</div>
+                    <div>&nbsp;</div>
+                    <div>Ваш запрос на <span style={{ fontWeight: '400' }}>{this.state.DarshanRequested} Даршан</span> с Его Святейшеством Ниранджаной Свами находится на рассмотрении.&nbsp;</div>
+                    <div>Как только он будет одобрен, вы получите письмо с дальнейшими инструкциями.</div>
+                    <div>&nbsp;</div>
+                    <div>Ваши слуги,</div>
+                    <div>Администраторы сайта</div>
+                </div>
+            )
 
-    }
+        }
     }
     render() {
         return (
             <div>
                 <div>
-                    <section className="breadcrumbs-custom bg-image context-dark">
-                    <Image cloudName="dinagauranga" publicId='booking-v2'
-                                      dpr="auto"
-                                      responsive
-                                      width="auto"
-                                      crop="scale"
-                                    
-                                     >
-                                 
-                    </Image>
-                        <div className="breadcrumbs-custom-inner">
-                            <div className="container breadcrumbs-custom-container">
-                            </div>
-                        </div>
+                    <section className="bg-gray-100">
+                        <img src="https://ik.imagekit.io/gcwjdmqwwznjl/booking-v2_Byg2cTbrLN.png" />
                     </section>
                 </div>
                 {
@@ -130,12 +116,15 @@ export class Booking extends Component {
                                 :
                                 (!this.props.appointment.isSubmitted && !this.props.appointment.appointmentData && !this.props.appointment.appointmentData.Appointment) ?
                                     <div>
-                                        {/* <div className="progressBarDiv">
-                                <Progress percent={50} />
-                            </div> */}
+                                        {
+                                            /* <div className="progressBarDiv">
+                                                   <Progress percent={50} />
+                                                 </div> 
+                                            */
+                                        }
                                         <div className="bookingformDiv">
                                             <p className="bookingForm"><Translate>
-                                            {({ translate }) => translate('BOOKING.booking_form')}
+                                                {({ translate }) => translate('BOOKING.booking_form')}
                                             </Translate></p>
                                             <BookingForm
                                                 user={this.state.user ? this.state.user : ''}
@@ -155,16 +144,16 @@ export class Booking extends Component {
                                             </div>
                                             :
                                             (!this.props.appointment.isbooked ?
-                                            <iframe
-                                                src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
-                                                id="ycbmiframeniranjanaswami"
-                                                className="bookingStyle"
-                                                frameBorder="0"
-                                                allowtransparency="true">
-                                            </iframe> 
-                                            :  <div class="section-sm section-first accesIdError"> <Translate>
-                                            {({ translate }) => translate('BOOKING.you_have_already_booked')}
-                                        </Translate></div>)
+                                                <iframe
+                                                    src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
+                                                    id="ycbmiframeniranjanaswami"
+                                                    className="bookingStyle"
+                                                    frameBorder="0"
+                                                    allowtransparency="true">
+                                                </iframe>
+                                                : <div class="section-sm section-first accesIdError"> <Translate>
+                                                    {({ translate }) => translate('BOOKING.you_have_already_booked')}
+                                                </Translate></div>)
                                     )
                         )
                         : ''

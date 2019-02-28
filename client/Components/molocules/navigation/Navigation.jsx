@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import Login from './../../../containers/Login/Login';
 import {
-    Link
+    Link, Redirect
 } from 'react-router-dom';
-import logo from '../../../assets/images/logo.png';
-import banner from '../../../assets/images/header.png';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import { LanguageSwitch } from '../../atoms/LanguageSwitch/LanguageSwitch';
 import * as DATA from '../../../constants/biographies';
-import prabhupadaImage from './../../../assets/images/bio/Prabhupada-Bio.png';
-import niranjanaSwamiImage from './../../../assets/images/bio/NRSBio.png';
-import { Image, Video, Transformation, CloudinaryContext } from 'cloudinary-react';
 
 export class Navigation extends Component {
     constructor(props) {
@@ -21,15 +16,15 @@ export class Navigation extends Component {
             Prabhupada_swami_bio: '',
             Niranjana_swami_bio: '',
             floatImage: '',
-            index: 1
-
+            index: 1,
+            redirect: false,
+            login: false
         }
     }
 
     componentDidMount() {
-        console.log("component reload==========>>>>>>>");
         const Prabhupada_swami_bio = {
-            img: 'Prabhupada-Bio',
+            img: 'https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png',
             title_en: DATA.BIOGRAPHY.one_title_en,
             title_ru: DATA.BIOGRAPHY.one_title_ru,
             content_en: DATA.BIOGRAPHY.one_content_en,
@@ -37,7 +32,7 @@ export class Navigation extends Component {
 
         }
         const Niranjana_swami_bio = {
-            img: 'NRSBio',
+            img: 'https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png',
             title_en: DATA.BIOGRAPHY.two_title_en,
             title_ru: DATA.BIOGRAPHY.two_title_ru,
             content_en: DATA.BIOGRAPHY.two_content_en,
@@ -51,6 +46,13 @@ export class Navigation extends Component {
     }
 
 
+    handleRedirect = () => {
+        this.setState({ redirect: !this.state.redirect })
+    }
+
+    handleLogin = () => {
+        this.setState({ login: !this.state.login })
+    }
 
     componentWillReceiveProps() {
         const isUserLogin = Auth.isUserAuthenticated();
@@ -58,24 +60,24 @@ export class Navigation extends Component {
     }
 
     componentWillMount() {
-            //window.removeEventListener('scroll', this.handleScroll);
-       }
-       
+        //window.removeEventListener('scroll', this.handleScroll);
+    }
+
     handleScroll = (event) => {
-         if($('.rd-navbar--is-stuck')){
-           if($('.rd-navbar--is-stuck').length === 1){
-            if(this.state.floatImage === '')
-            this.setState({ floatImage: 'styleImage'  })
-           }
-           else {
-            if(this.state.floatImage === 'styleImage')
-            this.setState({ floatImage: ''  })
-           }
-         }
+        if ($('.rd-navbar--is-stuck')) {
+            if ($('.rd-navbar--is-stuck').length === 1) {
+                if (this.state.floatImage === '')
+                    this.setState({ floatImage: 'styleImage' })
+            }
+            else {
+                if (this.state.floatImage === 'styleImage')
+                    this.setState({ floatImage: '' })
+            }
+        }
     }
 
     handleNavigationClick = (index) => {
-        if(index){
+        if (index) {
             this.setState({
                 index
             })
@@ -85,12 +87,12 @@ export class Navigation extends Component {
         if (!this.props.isLogin) {
             $('.login-modal-2').addClass('active');
             $('.rd-navbar-toggle').removeClass('active');
-            $('.rd-navbar-nav-wrap').removeClass('active');    
+            $('.rd-navbar-nav-wrap').removeClass('active');
         }
     }
 
     handleRemoveModal = (index) => {
-        if(index){
+        if (index) {
             this.setState({
                 index
             })
@@ -110,7 +112,6 @@ export class Navigation extends Component {
         return (
             <div>
                 <header className="section page-header">
-
                     <div className="rd-navbar-wrap">
                         <nav className="rd-navbar rd-navbar-corporate" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
                             <div className="rd-navbar-aside-outer banner outSideBanner banner1">
@@ -131,109 +132,69 @@ export class Navigation extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <Image cloudName="dinagauranga" publicId="banner1" dpr="auto"
-                                       dpr="auto"
-                                       responsive
-                                       width="auto"
-                                       crop="scale"
-                                >
-                                    <Transformation quality="auto" fetchFormat="auto" />
-                                </Image>
-
+                                <img src="https://ik.imagekit.io/gcwjdmqwwznjl/banner1_HyhqTWrIE.png" />
                             </div>
                             <div className="rd-navbar-main-outer menubanner">
                                 <div className="menulogoDiv">
-                                    {/* <img src={logo} className={'menulogoImg' +' '+ this.state.floatImage} alt="" width="100%" height="100%" />
-                                   */}
-                                    <Image className={'menulogoImg' + ' ' + this.state.floatImage} cloudName="dinagauranga" publicId="logo" dpr="auto"
-                                          dpr="auto"
-                                          responsive
-                                          width="auto"
-                                         
-                                    >
-                                        <Transformation quality="auto" fetchFormat="auto" />
-                                    </Image>
-
+                                    <img className={'menulogoImg' + ' ' + this.state.floatImage} src="https://ik.imagekit.io/gcwjdmqwwznjl/logo_S1yq6Zr8N.png" />
                                 </div>
                                 <div className="rd-navbar-main">
-                                    <div className="rd-navbar-nav-wrap" id="rd-navbar-nav-wrap-1">
-
-                                        {/* <div className="rd-navbar-search" id="rd-navbar-search-1"> */}
-                                        {/* <button className="rd-navbar-search-toggle" data-rd-navbar-toggle="#rd-navbar-search-1"><span></span></button> */}
-                                        {/* <form className="rd-search" action="search-results.html" data-search-live="rd-search-results-live-1" method="GET">
-                                                <div className="form-wrap">
-                                                    <label className="form-label" htmlFor="rd-navbar-search-form-input-1">Search...</label>
-                                                    <input className="form-input rd-navbar-search-form-input" id="rd-navbar-search-form-input-1" type="text" name="s" autoComplete="off" />
-                                                    <div className="rd-search-results-live" id="rd-search-results-live-1"></div>
-                                                </div>
-                                                <button className="rd-search-form-submit fa-search" type="submit"></button>
-                                            </form> */}
-                                        {/* </div> */}
-
+                                    <div className="rd-navbar-nav-wrap padTopMenu" id="rd-navbar-nav-wrap-1">
                                         <ul className="rd-navbar-nav">
                                             <li className="rd-nav-item hideMenu"><LanguageSwitch /></li>
-                                            <li onClick={()=> {this.handleRemoveModal(1)}}   className="rd-nav-item">
-                                                <Link className={`rd-nav-link ${this.state.index === 1 ? 'active1' : '' } `} to="/">
-                                                    <Translate>
-                                                        {({ translate }) => translate('HOME.home')}
-                                                    </Translate>
+                                            <li onClick={() => { this.handleRemoveModal(1) }} className="rd-nav-item">
+                                                <Link className={`rd-nav-link ${this.state.index === 1 ? 'active1' : ''} `} to="/">
+                                                    <Translate>{({ translate }) => translate('HOME.home')}</Translate>
                                                 </Link>
                                             </li>
-                                            <li onClick={()=> {this.handleRemoveModal(2)}}  className="rd-nav-item biography-submenu">
-                                            <a className={`rd-nav-link ${this.state.index === 2 ? 'active1' : '' } `}>  <Translate>
-                                                {({ translate }) => translate('HOME.biography')}
-                                            </Translate></a>
+                                            <li onClick={() => { this.handleRemoveModal(2) }} className="rd-nav-item biography-submenu">
+                                                <a className={`rd-nav-link ${this.state.index === 2 ? 'active1' : ''} `}>
+                                                    <Translate>{({ translate }) => translate('HOME.biography')}</Translate>
+                                                </a>
                                                 <ul className="rd-menu rd-navbar-dropdown">
-                                                    <li onClick={()=> {this.handleRemoveModal()}} className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">  <Translate>
-                                                        {({ translate }) => translate('HOME.swami_prabhupada')}
-                                                    </Translate></Link></li>
-                                                    <li onClick={()=> {this.handleRemoveModal()}} className="rd-dropdown-item"><Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link"> <Translate>
-                                                        {({ translate }) => translate('HOME.niranjanaswami')}
-                                                    </Translate></Link></li>
+                                                    <li onClick={() => { this.handleRemoveModal() }} className="rd-dropdown-item">
+                                                        <Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">
+                                                            <Translate>{({ translate }) => translate('HOME.swami_prabhupada')}</Translate>
+                                                        </Link>
+                                                    </li>
+                                                    <li onClick={() => { this.handleRemoveModal() }} className="rd-dropdown-item">
+                                                        <Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">
+                                                            <Translate>{({ translate }) => translate('HOME.niranjanaswami')}</Translate>
+                                                        </Link>
+                                                    </li>
                                                 </ul>
                                             </li>
-                                            {/* {!this.state.isUserLogin ?
-                                                <li className="rd-nav-item active"><Link className="rd-nav-link" to="/lectures">Audio</Link>
-                                                    <ul className="rd-menu rd-navbar-dropdown">
-                                                        <li className="rd-dropdown-item"><Link className="rd-dropdown-link" to="/audio">Recent Audio</Link></li>
-                                                        <li className="rd-dropdown-item"><a className="rd-dropdown-link">Lectures</a></li>
-                                                        <li className="rd-dropdown-item"><a className="rd-dropdown-link">Kirtan And Bhajan</a></li>
-                                                    </ul>
-                                                </li>
-                                                : ''}
-                                            {!this.state.isUserLogin ?
-                                                <li className="rd-nav-item active"><Link className="rd-nav-link" to="/lectures">Video</Link>
-                                                    <ul className="rd-menu rd-navbar-dropdown">
-                                                        <li className="rd-dropdown-item"><Link className="rd-dropdown-link" to="/video">Recent Video</Link></li>
-                                                        <li className="rd-dropdown-item"><Link className="rd-dropdown-link" to="/lectures">
-                                                            <Translate>
-                                                                {({ translate }) => translate('navLectures')}
-                                                            </Translate></Link>
-                                                        </li>
-                                                        <li className="rd-dropdown-item"><a className="rd-dropdown-link" >Kirtan And Bhajan</a></li>
-                                                    </ul>
-                                                </li>
-                                                : ''} */}
                                             <li className="rd-nav-item">
-                                                <Link className={`rd-nav-link ${this.state.index === 3 ? 'active1' : '' } `} to="/blog" onClick={() => {this.handleNavigationClick(3)}}>
-                                                    <Translate>
-                                                        {({ translate }) => translate('HOME.blog')}
-                                                    </Translate>
+                                                <Link className={`rd-nav-link ${this.state.index === 3 ? 'active1' : ''} `} to="/blog" onClick={() => { this.handleNavigationClick(3) }}>
+                                                    <Translate>{({ translate }) => translate('HOME.blog')}</Translate>
                                                 </Link>
                                             </li>
-                                            <li className="rd-nav-item"><Link className={`rd-nav-link ${this.state.index === 4 ? 'active1' : '' } `} to="/calender" onClick={() => {this.handleNavigationClick(4)}}> <Translate>
-                                                {({ translate }) => translate('HOME.calendar')}
-                                            </Translate></Link></li>
-                                            <li onClick={()=> {this.handleRemoveModal(5)}} className="rd-nav-item"><Link className={`rd-nav-link ${this.state.index === 5 ? 'active1' : '' } `} to="/booking" onClick={() => {this.handleNavigationClick(5)}}> <Translate>
-                                                {({ translate }) => translate('HOME.booking')}
-                                            </Translate></Link></li>
-                                            {/* <li className="rd-nav-item active" ><a className="rd-nav-link">Transcriptions</a></li>
-                                            <li className="rd-nav-item active"><a className="rd-nav-link">Summaries</a></li> */}
-                                            {this.props.isAdmin && this.props.isLogin ? <li className="rd-nav-item"><Link className={`rd-nav-link ${this.state.index === 6 ? 'active1' : '' } `} to="/">Admin</Link></li> : ''}
-                                            <li className="rd-nav-item hideMenu"><a className="rd-nav-link"><Login notActive={true} /></a></li>
+                                            <li className="rd-nav-item">
+                                                <Link className={`rd-nav-link ${this.state.index === 4 ? 'active1' : ''} `} to="/calender" onClick={() => { this.handleNavigationClick(4) }}>
+                                                    <Translate>{({ translate }) => translate('HOME.calendar')}</Translate>
+                                                </Link>
+                                            </li>
+                                            <li className="rd-nav-item">
+                                                <Link className={`rd-nav-link ${this.state.index === 5 ? 'active1' : ''} `} to="/booking" onClick={() => { this.handleNavigationClick(5) }}>
+                                                    <Translate>{({ translate }) => translate('HOME.booking')}</Translate>
+                                                </Link>
+                                            </li>
+                                            {
+                                                this.props.isAdmin && this.props.isLogin ?
+                                                    <li className="rd-nav-item">
+                                                        <Link className={`rd-nav-link ${this.state.index === 6 ? 'active1' : ''} `} to="/">Admin</Link>
+                                                    </li> : ''
+                                            }
+                                            <li className="rd-nav-item hideMenu">
+                                                <a className="rd-nav-link">
+                                                    <Login notActive={true} handleRedirect={this.handleRedirect} handleLogin={this.handleLogin} />
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
+                                {this.state.redirect ? <Redirect to='/registration' /> : ''}
+                                {this.state.login ? <Redirect to='/' /> : ''}
                             </div>
                         </nav>
                     </div>

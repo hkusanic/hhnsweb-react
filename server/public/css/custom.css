@@ -308,4 +308,13 @@
     .active1 {
         color: #ff830a !important;
     }
-
+    .padTopMenu{
+        padding-top: 1%;
+    }
+    .textCarousel {
+        padding-left: 0px !important;
+        margin-left: 10px;
+    }
+    .userColor {
+        color: #eb7217;
+    }
