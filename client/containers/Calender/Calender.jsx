@@ -17,7 +17,7 @@ export class Calender extends Component {
     }
 
     render() {
-        let srcGoogle = 'https://calendar.google.com/calendar/embed?src=' + DATA.GOOGLE_CREDENTIALS.USER + '%40' + DATA.GOOGLE_CREDENTIALS.EMAIL_DOMAIN + '&ctz=Asia%2FKolkata';
+        let srcGoogle = 'https://calendar.google.com/calendar/embed?src=cvl1euujuo4p9dgqnhnfqqt2vg%40group.calendar.google.com&ctz=America%2FNew_York';
         return (
             <div>
                 <section className="bg-gray-100">

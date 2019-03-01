@@ -100,6 +100,7 @@ export class UserProfile extends Component {
     }
     render() {
         let edit = '';
+        let save = '';
         if (!this.state && !this.state.email) {
             return <div>Loading..</div>
         }
@@ -168,15 +169,26 @@ export class UserProfile extends Component {
                                                     <label className="form-label-outside" htmlFor="contact-phone"><Translate>
                                                         {({ translate }) => translate('USER_PROFILE.mobile_number')}
                                                     </Translate></label>
-                                                    <input
-                                                        className="form-input"
-                                                        style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
-                                                        id="contact-phone"
-                                                        type="text"
-                                                        name="phone"
-                                                        disabled={this.state.editing}
-                                                        value={this.state.mobileNumber}
-                                                        onChange={() => { this.handleChange('mobileNumber', event) }} />
+                                                    <div className="displayDiv">
+                                                        <div className="mobCodeDiv"><input
+                                                            className="form-input"
+                                                            style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
+                                                            id="contact-phone"
+                                                            type="text"
+                                                            name="phone"
+                                                            disabled={this.state.editing}
+                                                            value={this.state.countryCode} />
+                                                        </div>
+                                                        <div className="mobNoDiv"><input
+                                                            className="form-input"
+                                                            style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
+                                                            id="contact-phone"
+                                                            type="text"
+                                                            name="phone"
+                                                            disabled={this.state.editing}
+                                                            value={this.state.mobileNumber} />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             :
@@ -199,16 +211,18 @@ export class UserProfile extends Component {
                                         {<Translate>
                                             {({ translate }) => {
                                                 edit = translate('USER_PROFILE.edit')
+                                                save = translate('USER_PROFILE.save')
                                                 return <div className="wow-outer">
                                                     {
 
                                                         this.state.editing ?
                                                             <button className="button button-primary button-winona" onClick={this.handleEditing} >
-
                                                                 {edit}
                                                             </button>
                                                             :
-                                                            <button className="button button-primary button-winona" onClick={this.handleEditProfile} >Update</button>
+                                                            <button className="button button-primary button-winona" onClick={this.handleEditProfile} >
+                                                                {save}
+                                                            </button>
                                                     }
                                                 </div>;
                                             }

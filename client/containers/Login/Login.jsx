@@ -70,6 +70,7 @@ export class Login extends Component {
   }
 
   logoutSubmit = () => {
+    this.props.handleTabIndex(1);
     this.props.logoutUser();
     window.localStorage.clear();
     window.location.href = '/';
@@ -127,10 +128,11 @@ export class Login extends Component {
     let first_name = '';
     let last_name = '';
     let email = '';
-    let mobile_number = '';
     let password = '';
     let confirm_password = '';
     let create_an_account = '';
+    let profile = '';
+    let logout = '';
     let login_modal_1 = '';
     let login_modal_2 = '';
     let res_modal_1 = '';
@@ -159,10 +161,11 @@ export class Login extends Component {
             first_name = translate('REGISTER_FORM.first_name')
             last_name = translate('REGISTER_FORM.last_name')
             email = translate('REGISTER_FORM.email')
-            mobile_number = translate('REGISTER_FORM.mobile_number')
             password = translate('REGISTER_FORM.password')
             confirm_password = translate('REGISTER_FORM.confirm_password')
             create_an_account = translate('REGISTER_FORM.create_an_account')
+            profile = translate('HOME.profile')
+            logout = translate('HOME.log_out')
             return <div className="rd-navbar-block">
               {this.state.isUserLogin ?
                 <ul className="list-inline-bordered" style={{color: '#122e44' }}>
@@ -261,8 +264,12 @@ export class Login extends Component {
                   </li>
                 </ul>
                 : <ul className="list-inline-bordered" style={{color: '#122e44' }}>
-                  <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>LOGOUT</button></li>
-                  <li><button className="rd-navbar-popup-toggle"><Link to='/profile'>PROFILE</Link></button></li>
+                  <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>{logout}</button></li>
+                  <li>
+                    <button className="rd-navbar-popup-toggle">
+                      <Link to='/profile'>{profile}</Link>
+                      </button>
+                  </li>
                 </ul>}
             </div>;
           }}

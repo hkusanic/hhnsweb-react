@@ -318,3 +318,14 @@
     .userColor {
         color: #eb7217;
     }
+    .displayDiv {
+        display: flex
+    }
+    .mobCodeDiv {
+        width: 20%;
+    }
+    .mobNoDiv {
+        width: 80%;
+    }
+  
+  
