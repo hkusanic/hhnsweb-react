@@ -50,9 +50,14 @@ export class Footer extends Component {
                 </div>
                 <div className="footer-linked-aside">
                     <div className="container">
-                        <p className="rights"><span>&copy;&nbsp;</span><span className="copyright-year"></span><span>&nbsp;</span><span><Translate>
+                        <p className="rights">
+                            <span>&copy;&nbsp;</span><span>&nbsp;</span>
+                            <span>
+                                <Translate>
                                     {({ translate }) => translate('FOOTER.copy_rights')}
-                                                    </Translate></span></p>
+                                </Translate>
+                            </span>
+                        </p>
                     </div>
                 </div>
             </footer>

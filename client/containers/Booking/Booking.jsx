@@ -101,7 +101,7 @@ export class Booking extends Component {
             <div>
                 <div>
                     <section className="bg-gray-100">
-                        <img src="https://ik.imagekit.io/gcwjdmqwwznjl/booking-v2_Byg2cTbrLN.png" />
+                        <img src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v1_BJC5u2LU4.png" />
                     </section>
                 </div>
                 {
@@ -145,7 +145,7 @@ export class Booking extends Component {
                                             :
                                             (!this.props.appointment.isbooked ?
                                                 <iframe
-                                                    src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
+                                                    src={`${this.state.user.youbookme_url}${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
                                                     id="ycbmiframeniranjanaswami"
                                                     className="bookingStyle"
                                                     frameBorder="0"

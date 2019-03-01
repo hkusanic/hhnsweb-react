@@ -30,9 +30,11 @@
 		"booking": ["BOOKING", "ЗАПИСЬ"],
 		"login":["LOG IN", "АВТОРИЗОВАТЬСЯ"],
 		"Register": ["REGISTRATION", "РЕГИСТРАЦИЯ"],
+		"log_out": ["LOGOUT", "ВЫЙТИ"],
+		"profile": ["PROFILE",  "ПРОФИЛЬ"],
 		"picture_message":["The Official Website H.H. Niranjana Swami", "Официальный сайт Е.С. Ниранджана Свами"],
 		"read_more": ["Read more..", "Читать дальше..."],
-		"official_website": ["The Official Website", "Официальный сайт"],
+		"official_website": ["The Official Website of", "Официальный сайт"],
 		"h_h":["H.H. Niranjana Swami ", "Е.С. Ниранджана Свами"]
 
 	},
@@ -71,6 +73,7 @@
 		"email": ["E-mail","Почта"],
 		"mobile_number": ["Mobile Number", "Мобильный телефон"],
 		"edit":["EDIT","РЕДАКТИРОВАТЬ"],
+		"save": ["SAVE", "СОХРАНИТЬ"],
 		"your_profile_updated": ["Your profile has been updated successfully", "Ваш аккаунт был успешно обновлён"],
 		"please_enter_mobile": ["Please enter mobile number correctly", "Пожалуйста, введите правильный номер мобильного телефона"],
 		"please_fill": ["**Please fill all the fields","**Пожалуйста, заполните все поля"]

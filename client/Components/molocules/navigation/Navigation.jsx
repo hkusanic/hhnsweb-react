@@ -39,7 +39,11 @@ export class Navigation extends Component {
             content_ru: DATA.BIOGRAPHY.two_content_ru
         }
         const isUserLogin = Auth.isUserAuthenticated();
-        this.setState({ isUserLogin, Prabhupada_swami_bio, Niranjana_swami_bio })
+        let tabIndex = sessionStorage.getItem('tabIndex');
+        if (tabIndex) {
+            tabIndex = parseInt(tabIndex, 10);
+        }
+        this.setState({ isUserLogin, Prabhupada_swami_bio, Niranjana_swami_bio, index: tabIndex ? tabIndex : 1 })
 
         //window.addEventListener('scroll', this.handleScroll);
 
@@ -77,11 +81,7 @@ export class Navigation extends Component {
     }
 
     handleNavigationClick = (index) => {
-        if (index) {
-            this.setState({
-                index
-            })
-        }
+        this.handleTabIndex(index)
         $('.login-modal-2').removeClass('active');
         $('.register-modal-2').removeClass('active');
         if (!this.props.isLogin) {
@@ -92,15 +92,18 @@ export class Navigation extends Component {
     }
 
     handleRemoveModal = (index) => {
-        if (index) {
-            this.setState({
-                index
-            })
-        }
+        this.handleTabIndex(index)
         $('.login-modal-2').removeClass('active');
         $('.rd-navbar-nav-wrap').removeClass('active');
         $('.register-modal-2').removeClass('active');
         $('.rd-navbar-toggle').removeClass('active');
+    }
+
+    handleTabIndex = (index) => {
+        if (index) {
+            this.setState({ index })
+        }
+        sessionStorage.setItem('tabIndex', index);
     }
 
     handleBiographyClick = () => {
@@ -121,7 +124,17 @@ export class Navigation extends Component {
                                         <div style={{ width: '100%' }}>
                                             <div className="topMenu" style={{ float: 'right' }}>
                                                 <ul className="rd-navbar-nav">
-                                                    <li className="rd-nav-item"><li><a className="rd-nav-link"><Login notActive={false} /></a></li></li>
+                                                    <li className="rd-nav-item">
+                                                        <li>
+                                                            <a className="rd-nav-link">
+                                                                <Login
+                                                                    notActive={false}
+                                                                    handleRedirect={this.handleRedirect}
+                                                                    handleLogin={this.handleLogin}
+                                                                    handleTabIndex={this.handleTabIndex} />
+                                                            </a>
+                                                        </li>
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <div className="topMenu languageToggle" style={{ float: 'right' }}>
@@ -138,7 +151,7 @@ export class Navigation extends Component {
                                 <div className="menulogoDiv">
                                     <img className={'menulogoImg' + ' ' + this.state.floatImage} src="https://ik.imagekit.io/gcwjdmqwwznjl/logo_S1yq6Zr8N.png" />
                                 </div>
-                                <div className="rd-navbar-main">
+                                <div className="rd-navbar-main MenuPad">
                                     <div className="rd-navbar-nav-wrap padTopMenu" id="rd-navbar-nav-wrap-1">
                                         <ul className="rd-navbar-nav">
                                             <li className="rd-nav-item hideMenu"><LanguageSwitch /></li>
@@ -147,17 +160,17 @@ export class Navigation extends Component {
                                                     <Translate>{({ translate }) => translate('HOME.home')}</Translate>
                                                 </Link>
                                             </li>
-                                            <li onClick={() => { this.handleRemoveModal(2) }} className="rd-nav-item biography-submenu">
+                                            <li className="rd-nav-item biography-submenu">
                                                 <a className={`rd-nav-link ${this.state.index === 2 ? 'active1' : ''} `}>
                                                     <Translate>{({ translate }) => translate('HOME.biography')}</Translate>
                                                 </a>
                                                 <ul className="rd-menu rd-navbar-dropdown">
-                                                    <li onClick={() => { this.handleRemoveModal() }} className="rd-dropdown-item">
+                                                    <li onClick={() => { this.handleRemoveModal(2) }} className="rd-dropdown-item">
                                                         <Link to={{ pathname: '/biograhyDetails', state: this.state.Prabhupada_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">
                                                             <Translate>{({ translate }) => translate('HOME.swami_prabhupada')}</Translate>
                                                         </Link>
                                                     </li>
-                                                    <li onClick={() => { this.handleRemoveModal() }} className="rd-dropdown-item">
+                                                    <li onClick={() => { this.handleRemoveModal(2) }} className="rd-dropdown-item">
                                                         <Link to={{ pathname: '/biograhyDetails', state: this.state.Niranjana_swami_bio }} onClick={this.handleBiographyClick} className="rd-dropdown-link">
                                                             <Translate>{({ translate }) => translate('HOME.niranjanaswami')}</Translate>
                                                         </Link>
@@ -187,7 +200,11 @@ export class Navigation extends Component {
                                             }
                                             <li className="rd-nav-item hideMenu">
                                                 <a className="rd-nav-link">
-                                                    <Login notActive={true} handleRedirect={this.handleRedirect} handleLogin={this.handleLogin} />
+                                                    <Login
+                                                        notActive={true}
+                                                        handleRedirect={this.handleRedirect}
+                                                        handleLogin={this.handleLogin}
+                                                        handleTabIndex={this.handleTabIndex} />
                                                 </a>
                                             </li>
                                         </ul>
@@ -201,7 +218,6 @@ export class Navigation extends Component {
                 </header>
             </div>)
     }
-
 }
 
 export default Navigation;
