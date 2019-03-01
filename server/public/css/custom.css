@@ -327,5 +327,8 @@
     .mobNoDiv {
         width: 80%;
     }
+    .carouselFont {
+        font-family: "Roboto_New" !important;
+    }
   
   
