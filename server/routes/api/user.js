@@ -50,7 +50,8 @@ exports.signin = function (req, res) {
 					firstName: user.name.first,
 					last: user.name.last,
 					mobileNumber: user.mobileNumber,
-					countryCode: user.countryCode
+					countryCode: user.countryCode,
+					youbookme_url: process.env.YOUBOOKME_URL,
 				}
 			});
 
@@ -146,7 +147,9 @@ exports.signup = function (req, res) {
 						firstName: user.name.first,
 						last: user.name.last,
 						mobileNumber: user.mobileNumber,
-						countryCode: user.countryCode
+						countryCode: user.countryCode,
+				       	youbookme_url: process.env.YOUBOOKME_URL,
+
 					}
 				});
 			};
@@ -310,7 +313,8 @@ exports.editprofile = function (req, res) {
 				firstName: userFound.name.first,
 				last: userFound.name.last,
 				mobileNumber: userFound.mobileNumber,
-				countryCode: userFound.countryCode
+				countryCode: userFound.countryCode,
+				youbookme_url: process.env.YOUBOOKME_URL,
 			}
 		  });
 	});

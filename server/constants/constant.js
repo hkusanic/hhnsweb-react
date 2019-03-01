@@ -1,30 +1,30 @@
 exports.CONSTANTS = {
    
     EMAIL_CONFIG_APPOINTMENT: {
-        API_KEY: 'key-c836106c22729cdb1f80d4ba601e864c',
-        DOMAIN: 'sandbox965a1c0e2b714acab57623c5d878e8ca.mailgun.org',
-        FROM_NAME: 'H.H. Niranjana Swami',
-        FROM_EMAIL: 'kiran.kulkarni@cronj.com',
-        SUBJECT : 'Appointment approved by H.H. Niranjana Swami',
-        SENDGRID_API_KEY: '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',
-        SENDGRID_HTML:'<strong>You can visit</strong>',
+        API_KEY: process.env.MAILGUN_API_KEY,
+        DOMAIN: process.env.MAIL_GUN_DOMAIN,
+        FROM_NAME: process.env.EMAIL_FROM_NAME,
+        FROM_EMAIL: process.env.EMAIL_FROM_EMAIL,
+        SUBJECT : process.env.EMAIL_SUBJECT,
+        SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+        SENDGRID_HTML: process.env.SENDGRID_HTML,
         NODE_MAILER : {
             mail: {
               smtpConfig: {
-                host: 'smtp.gmail.com',
-                port: 465,
-                secure: true, // use SSL 
+                host: process.env.NODE_MAIL_SMTP,
+                port: process.env.NODE_MAIL_PORT,
+                secure: process.env.NODE_MAIL_SECURE, // use SSL 
                 auth: {
           
-                  user: 'hhnsweb@gmail.com',
-                  pass: 'hhns_2019'
+                  user: process.env.NODE_MAIL_USER,
+                  pass: process.env.NODE_MAIL_PASSWORD,
                 }
               },
-              sender: '"HHNS" <hhnsweb@gmail.com>' // sender address 
+              sender: process.env.NODE_MAIL_SENDER, // sender address 
             }
     }
 
 
 },
-      SITE_URL : 'http://3.94.20.19:3000'
+      SITE_URL : process.env.SITE_URL
 }

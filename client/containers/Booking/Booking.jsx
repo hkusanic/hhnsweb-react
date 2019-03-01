@@ -145,7 +145,7 @@ export class Booking extends Component {
                                             :
                                             (!this.props.appointment.isbooked ?
                                                 <iframe
-                                                    src={`https://nrs15.youcanbook.me/?service=${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
+                                                    src={`${this.state.user.youbookme_url}${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
                                                     id="ycbmiframeniranjanaswami"
                                                     className="bookingStyle"
                                                     frameBorder="0"
