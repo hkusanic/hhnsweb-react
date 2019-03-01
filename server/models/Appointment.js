@@ -82,7 +82,7 @@ Appointment.schema.pre('save', function (next) {
 
 Appointment.schema.post('save', function (data, next) {
 
-	const siteUrl = 'http://3.94.20.19:3000/booking';
+	const siteUrl = EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.SITE_URL;
 
 	const msg = {
 		to: data.email,
