@@ -17,7 +17,8 @@ export class Calender extends Component {
     }
 
     render() {
-        let srcGoogle = 'https://calendar.google.com/calendar/embed?src=cvl1euujuo4p9dgqnhnfqqt2vg%40group.calendar.google.com&ctz=America%2FNew_York';
+		let srcGoogle = 'https://calendar.google.com/calendar/embed?src=cvl1euujuo4p9dgqnhnfqqt2vg%40group.calendar.google.com&ctz=America%2FNew_York';
+		let srcGoogleAvailability = 'https://calendar.google.com/calendar/embed?src=s6huen1msdhpf4309kb9fatog4%40group.calendar.google.com&ctz=Asia%2FKolkata';
         return (
             <div>
                 <section className="bg-gray-100">
@@ -34,7 +35,22 @@ export class Calender extends Component {
                             <iframe src={srcGoogle}
                                 style={{ frameBorder: "0", Scrolling: "no" }}
                                 className="calenderStyle">
-                            </iframe>
+                            </iframe> 
+                        </div>
+                        : ''
+				}
+                {
+                    !this.state.isUserLogin ?
+                        <div className="align">
+                            <div style={{ textAlign: 'center' }}>
+                                <p className="bookingForm">
+                                    <Translate>{({ translate }) => translate('HOME.availability')}</Translate>
+                                </p>
+                            </div>
+                            <iframe src={srcGoogleAvailability}
+                                style={{ frameBorder: "0", Scrolling: "no" }}
+                                className="calenderStyle">
+                            </iframe> 
                         </div>
                         : ''
                 }
