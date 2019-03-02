@@ -96,6 +96,46 @@ export class Booking extends Component {
 
         }
     }
+   
+    alreadyBookedText = () => {
+        if (reactCookie.load('languageCode') === 'en') {
+            return (
+                <div>
+                <p>Hare Krishna</p>
+
+                <p>We see that you have a confirmed request for Darshan with H.H. Niranjana Swami.</p>
+                
+                <p>At this time we are not allowing multiple bookings.</p>
+                
+                <p>Thank you.</p>
+                
+                <p>Your servants,</p>
+                
+                <p>Site Administrators</p>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div>
+                <p>Харе Кришна</p>
+
+                <p>Мы видим, что у вас есть подтвержденный запрос на даршан с Его Святейшеством Ниранджаной Свами.</p>
+                
+                <p>В настоящее время не возможо сделать несколько бронирований.</p>
+                
+                <p>Спасибо.</p>
+                
+                <p>Ваши слуги,</p>
+                
+                <p>Администраторы сайта</p>
+                </div>
+            )
+
+        }
+    }
+
+
     render() {
         return (
             <div>
@@ -151,9 +191,7 @@ export class Booking extends Component {
                                                     frameBorder="0"
                                                     allowtransparency="true">
                                                 </iframe>
-                                                : <div class="section-sm section-first accesIdError"> <Translate>
-                                                    {({ translate }) => translate('BOOKING.you_have_already_booked')}
-                                                </Translate></div>)
+                                                : <div class="section-sm section-first accesIdError"> {this.alreadyBookedText()}</div>)
                                     )
                         )
                         : ''

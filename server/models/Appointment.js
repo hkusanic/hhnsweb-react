@@ -82,7 +82,7 @@ Appointment.schema.pre('save', function (next) {
 
 Appointment.schema.post('save', function (data, next) {
 
-	const siteUrl = EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.SITE_URL;
+	const siteUrl = EMAIL_CONFIG.CONSTANTS.SITE_URL;
 
 	const msg = {
 		to: data.email,
