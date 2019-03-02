@@ -1,14 +1,6 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
-const dotenv = require('dotenv');
-
-const env = dotenv.config().parsed;
-// reduce it to a nice object, the same as before
-const envKeys = Object.keys(env).reduce((prev, next) => {
-	prev[`process.env.${next}`] = JSON.stringify(env[next]);
-	return prev;
-}, {});
 
 module.exports = {
 	// Since webpack 4 we will need to set in what mode webpack is running
@@ -114,7 +106,4 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.jsx', '.scss'],
 	},
-	plugins: [
-		new webpack.DefinePlugin(envKeys),
-	],
 };
