@@ -64,7 +64,9 @@
 		"password": ["Password", "Пароль"],
 		"confirm_password": ["Confirm Password", "Подтвердите пароль"],
 		"create_an_account": ["CREATE AN ACCOUNT", "СОЗДАТЬ АККАУНТ"],
-		"please_fill":["**PLEASE FILL ALL THE FIELDS ", "**Пожалуйста заполните все поля"]
+		"please_fill":["**PLEASE FILL ALL THE FIELDS ", "**Пожалуйста заполните все поля"],
+		"your_profile": ["Your profile has been created","Ваш профиль был создан"],
+		"hare_krishna":["Hare Krishna","Харе Кришна"]
 
 	},
 	"USER_PROFILE":{
