@@ -1,6 +1,6 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-var path = require('path');
+const path = require('path');
 
 module.exports = {
 	// Since webpack 4 we will need to set in what mode webpack is running
@@ -27,7 +27,7 @@ module.exports = {
 						'react',
 						'env',
 						'es2015',
-						'babel-preset-stage-0'
+						'babel-preset-stage-0',
 					],
 					cacheDirectory: true,
 					plugins: ['react-hot-loader/babel']
@@ -38,15 +38,15 @@ module.exports = {
 			test: /\.scss$/,
 			use: ExtractTextPlugin.extract({
 				fallback: 'style-loader',
-				use: ['css-loader', 'sass-loader']
+				use: ['css-loader', 'sass-loader'],
 			}),
 		},
 		{
 			test: /\.less$/,
 			use: ExtractTextPlugin.extract({
 				fallback: 'style-loader',
-				use: ['css-loader?importLoaders=1', 'postcss-loader', 'less-loader']
-			})
+				use: ['css-loader?importLoaders=1', 'postcss-loader', 'less-loader'],
+			}),
 		},
 		{
 			test: /\.css$/,
@@ -58,8 +58,8 @@ module.exports = {
 				loader: 'file-loader',
 				options: {
 
-				}
-			}]
+				},
+			}],
 		},
 		{
 			test: /\.(ttf|eot|woff|woff2)$/,

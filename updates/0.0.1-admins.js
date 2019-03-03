@@ -13,7 +13,6 @@ exports.create = {
 		{ 'name.first': 'Hari-katha', 'name.last': 'dasa', 'email': 'hrvoje.kusanic@hotmail.com', 'mobileNumber': '+41786904834', 'password': 'Test01!', 'canAccessKeystone': true },
 		{ 'name.first': 'Shailendra', 'name.last': 'sahu', 'email': 'shailendra@cronj.com', 'password': 'cronj123@', 'canAccessKeystone': false },
 		{ 'name.first': 'Kiran', 'name.last': 'Kulkarni', 'email': 'kiran.kulkarni@cronj.com', 'password': '12345', 'canAccessKeystone': false },
-
 	],
 };
 
