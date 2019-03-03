@@ -26,5 +26,6 @@ exports.CONSTANTS = {
 
 
 },
-      SITE_URL : process.env.SITE_URL
+      SITE_URL : process.env.SITE_URL,
+      APPROVAL_EMAILS: process.env.APPROVAL_EMAILS ? process.env.APPROVAL_EMAILS.split(',') : '',
 }
