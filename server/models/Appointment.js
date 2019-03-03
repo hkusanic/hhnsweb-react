@@ -107,7 +107,7 @@ Appointment.schema.post('save', function (data, next) {
 		<br/>
 		<p>Your request for "${data.approvedFor}" has been approved.</p>
 		<p>However, you still need to select the available time-slot.</p>
-		<p>To do so, please click on the following link <a href="${siteUrl.replace(':3000', '')}">here</a></p>
+		<p>To do so, please click on the following link <a href="${siteUrl}/booking">here</a></p>
 		<br/>
 		<p>Your servants always,</p>
 		<p>Site administrators</p>
