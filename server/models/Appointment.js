@@ -91,6 +91,13 @@ Appointment.schema.post('save', function (data, next) {
 		html: '',
 	};
 
+	const msgApproval = {
+		to: data.email,
+		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
+		subject: '',
+		html: '',
+	};
+
 	if (data.approved && data.canceled === false) {
 		msg.subject = 'Approved - Request for darshan with H.H. Niranjana Swami';
 		msg.html = `
@@ -119,6 +126,34 @@ Appointment.schema.post('save', function (data, next) {
 		<p>Your servants always,</p>
 		<p>Site administrators</p>
 		`;
+
+		msgApproval.subject = `Approval Request from ${data.email}`;
+		msgApproval.html = `
+		<p>Dear Guru Maharaja,<br />
+		<br />PAMHO. AGTSP.
+		<br /><br />
+		You have received a request from ${data.email} for "${data.requestedFor}" mins.
+		<br /><br />Please approve/cancel the request.
+		<br /><br />Thank you.
+		<br /><br />Your servants,
+		<br />Site Administrators</p>
+		`;
+		
+		for(let i = 0; i < EMAIL_CONFIG.CONSTANTS.APPROVAL_EMAILS.length; i++) {
+
+ 		setTimeout(function(){
+			sendMail(msgApproval.from, EMAIL_CONFIG.CONSTANTS.APPROVAL_EMAILS[i], msgApproval.subject, msgApproval.html)
+			.then((res) => {
+				console.log('email was sent', res);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+
+		},10000);
+	
+}
+
 	}
 	else if (data.canceled === true) {
 		msg.subject = 'Declined - Request for darshan with H.H. Niranjana Swami';
