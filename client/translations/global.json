@@ -67,7 +67,8 @@
 		"create_an_account": ["CREATE AN ACCOUNT", "СОЗДАТЬ АККАУНТ"],
 		"please_fill":["**PLEASE FILL ALL THE FIELDS ", "**Пожалуйста заполните все поля"],
 		"your_profile": ["Your profile has been created","Ваш профиль был создан"],
-		"hare_krishna":["Hare Krishna","Харе Кришна"]
+		"hare_krishna":["Hare Krishna","Харе Кришна"],
+		"registation_msg": ["Thank you for registering your profile.", "Спасибо за регистрацию вашего профайла"]
 
 	},
 	"USER_PROFILE":{

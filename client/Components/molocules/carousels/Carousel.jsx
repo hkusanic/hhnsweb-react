@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import script from "../../../assets/script";
 import SingleCarousel from '../../atoms/SingleCarousel/singleCarousel';
 import Biography from '../Biography/Biography';
-import { Translate } from 'react-localize-redux';
+import Announcement from '../../organisms/Announcement/Announcement';
 export class Carousel extends Component {
     constructor(props) {
         super(props);
@@ -36,6 +36,7 @@ export class Carousel extends Component {
                     </div>
                 </section>
                 <Biography></Biography>
+                <Announcement />
             </div>
 
         );
