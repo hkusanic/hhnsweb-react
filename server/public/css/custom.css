@@ -333,5 +333,17 @@
     .MenuPad {
         padding-left: 3% !important;
     }
+    .announcementDiv {
+        text-align: left;
+        margin-left: 17%;
+        margin-right: 10%;
+    }
+
+    .announcementDiv a {
+        color: #e58842;
+    }
+    .fontWeight{
+        font-weight: 500;
+    }
   
   

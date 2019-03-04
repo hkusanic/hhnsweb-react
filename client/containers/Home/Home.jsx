@@ -19,6 +19,7 @@ import ShellCompoenent from '../../Components/organisms/ShellComponent/ShellComp
 import ResetPassword from '../../Components/organisms/Form/ResetPasswordForm';
 import UserProfile from '../../Components/molocules/Profile/UserProfile';
 import Registration from '../../Components/molocules/Registration/Registration';
+import Announcement from '../../Components/organisms/Announcement/Announcement';
 
 import {
     Route,
@@ -65,6 +66,7 @@ export class Home extends Component {
                             <Route path='/profile' component={UserProfile} />
                         </ShellCompoenent>
                     </Switch>
+                    <Announcement />
                     <Footer />
                 </div>
                 <div className="preloader">
