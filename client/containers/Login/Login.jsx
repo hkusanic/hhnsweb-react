@@ -140,15 +140,15 @@ export class Login extends Component {
    
     if (!this.props.notActive) {
       login_modal_1 = "rd-navbar-popup-toggle login-modal-1";
-      login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal  login-modal-2";
+      login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal login-modal-2";
       res_modal_1 = 'rd-navbar-popup-toggle register-modal-1';
       res_modal_2 = 'rd-navbar-popup bg-gray-700 margin-left-register-modal register-modal-2';
        }
     else if (this.props.notActive) {
       login_modal_1 = "rd-navbar-popup-toggle login-modal-mb";
-      login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal";
+      login_modal_2 = "rd-navbar-popup bg-gray-700";
       res_modal_1 = 'rd-navbar-popup-toggle register-modal-1';
-      res_modal_2 = 'rd-navbar-popup bg-gray-700 margin-left-register-modal';
+      res_modal_2 = 'rd-navbar-popup bg-gray-700 ';
         }
 
     return (

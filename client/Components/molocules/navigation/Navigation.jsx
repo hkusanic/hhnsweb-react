@@ -112,13 +112,14 @@ export class Navigation extends Component {
     }
 
     render() {
+        const maxWidth = window.screen.width;
         return (
             <div>
                 <header className="section page-header">
                     <div className="rd-navbar-wrap">
                         <nav className="rd-navbar rd-navbar-corporate" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
                             <div className="rd-navbar-aside-outer banner outSideBanner banner1">
-                                <div className="rd-navbar-aside head ">
+                                {maxWidth <= 1210 ? <div className="rd-navbar-aside head ">
                                     <div className="rd-navbar-panel">
                                         <button className="rd-navbar-toggle" data-rd-navbar-toggle="#rd-navbar-nav-wrap-1"><span></span></button>
                                         <div style={{ width: '100%' }}>
@@ -145,6 +146,7 @@ export class Navigation extends Component {
                                         </div>
                                     </div>
                                 </div>
+                                    : ''}
                                 <img src="https://ik.imagekit.io/gcwjdmqwwznjl/banner1_HyhqTWrIE.png" />
                             </div>
                             <div className="rd-navbar-main-outer menubanner">
@@ -201,7 +203,7 @@ export class Navigation extends Component {
                                             <li className="rd-nav-item hideMenu">
                                                 <a className="rd-nav-link">
                                                     <Login
-                                                        notActive={true}
+                                                        notActive={false}
                                                         handleRedirect={this.handleRedirect}
                                                         handleLogin={this.handleLogin}
                                                         handleTabIndex={this.handleTabIndex} />

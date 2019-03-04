@@ -17902,7 +17902,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 	 margin-left: -100px;
  }
 
-@media (min-width: 1211px) and (max-width: 4400px){
+/* @media (min-width: 1211px) and (max-width: 4400px){
 	.margin-left-login-modal {
 		margin-left: -215%;
     	margin-top: 120%;
@@ -17912,7 +17912,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 		margin-left: -260%;	
 		margin-top: 120%; 
 	 }
-}
+} */
 
 @media (max-width: 1211px){
 	.hideMenu {
