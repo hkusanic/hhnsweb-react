@@ -36,7 +36,8 @@
 		"picture_message":["The Official Website H.H. Niranjana Swami", "Официальный сайт Е.С. Ниранджана Свами"],
 		"read_more": ["Read more..", "Читать дальше..."],
 		"official_website": ["The Official Website of", "Официальный сайт"],
-		"h_h":["H.H. Niranjana Swami ", "Е.С. Ниранджана Свами"]
+		"h_h":["H.H. Niranjana Swami ", "Е.С. Ниранджана Свами"],
+		"announcement": ["Announcement", "объявление"]
 
 	},
 	"FOOTER": {
@@ -65,8 +66,10 @@
 		"confirm_password": ["Confirm Password", "Подтвердите пароль"],
 		"create_an_account": ["CREATE AN ACCOUNT", "СОЗДАТЬ АККАУНТ"],
 		"please_fill":["**PLEASE FILL ALL THE FIELDS ", "**Пожалуйста заполните все поля"],
-		"your_profile": ["Your profile has been created","Ваш профиль был создан"],
-		"hare_krishna":["Hare Krishna","Харе Кришна"]
+		"hare_krishna":["Hare Krishna","Харе Кришна"],
+		"registation_msg": ["Thank you for registering your profile.", "Спасибо за регистрацию вашего профайла"],
+		"correct_email": ["**Please enter the correct email address", "Пожалуйста, введите правильный адрес электронной почты"],
+		"password_match": ["**Password and confirm password should match", "Пароль и Подтверждение пароля должны совпадать"]
 
 	},
 	"USER_PROFILE":{
