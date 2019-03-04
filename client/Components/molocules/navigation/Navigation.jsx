@@ -45,7 +45,7 @@ export class Navigation extends Component {
         }
         this.setState({ isUserLogin, Prabhupada_swami_bio, Niranjana_swami_bio, index: tabIndex ? tabIndex : 1 })
 
-        //window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('scroll', this.handleScroll);
 
     }
 
@@ -64,7 +64,7 @@ export class Navigation extends Component {
     }
 
     componentWillMount() {
-        //window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('scroll', this.handleScroll);
     }
 
     handleScroll = (event) => {
