@@ -7,12 +7,12 @@ export class Announcement extends Component {
     announcement = () => {
         if (reactCookie.load('languageCode') === 'en') {
             return (
-                <div>
+                <div className="padTop">
                     <p className="fontWeight">Hare Krishna!</p>
 
                     <p align="justify">
-                        For devotees who are visiting Mayapura between March 13- March 22 and wish to have darshan of Niranjana Swami during that time, we have created this website <a href="http://booking.niranjanswami.net" target="_blank">http://booking.niranjanswami.net</a> to arrange individual meetings.
-                        <span className="fontWeight">This is the only way to request a meeting with Niranjana Swami during this visit.</span>
+                        For devotees who are visiting Mayapura between March 13-March 22 and wish to have darshan of Niranjana Swami during that time, we have created this website <a href="http://booking.niranjanswami.net" target="_blank">http://booking.niranjanswami.net</a> to arrange individual meetings.
+                        <span className="fontWeight"> This is the only way to request a meeting with Niranjana Swami during this visit.</span>
                     </p>
 
                     <p align="justify">
@@ -27,7 +27,7 @@ export class Announcement extends Component {
             );
         } else {
             return (
-                <div>
+                <div className="padTop">
                     <p className="fontWeight">Харе Кришна!</p>
 
                     <p align="justify">
@@ -52,7 +52,7 @@ export class Announcement extends Component {
         return (
             <section class="section-lg text-center bg-gray-100">
                 <div class="container">
-                    <h3 class="wow-outer"><span class="wow slideInUp">
+                    <h3 class="wow-outer"><span class="wow slideInUp bookingForm">
                         <Translate>
                             {({ translate }) => translate('HOME.announcement')}
                         </Translate></span></h3>
