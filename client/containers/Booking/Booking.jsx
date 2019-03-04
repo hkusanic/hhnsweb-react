@@ -19,6 +19,7 @@ export class Booking extends Component {
         this.props.resetState();
     }
     componentDidMount() {
+        window.scrollTo(0,0);
         const user = Auth.getUserDetails();
         const isUserLogin = Auth.isUserAuthenticated();
         if (user) {
@@ -68,11 +69,11 @@ export class Booking extends Component {
             return (
                 <div>
                     <p>Dear <span style={{ fontWeight: '400' }}>{this.state.user.firstName} {this.state.user.last}</span>,</p>
-                    <div>Please accept our humble obeisances,</div>
-                    <div>All glories to Srila Prabhupada!</div>
+                    <div><br/>Please accept our humble obeisances,</div>
+                    <div><br/>All glories to Srila Prabhupada!</div>
                     <div>&nbsp;</div>
-                    <div>Your request for <span style={{ fontWeight: '400' }}>{this.state.DarshanRequested} minutes</span>  with His Holines Niranjana Swami is under review.&nbsp;</div>
-                    <div>Once its is approved you will receive an email with further instructions.</div>
+                    <div>Your request for <span style={{ fontWeight: '400' }}>{this.state.DarshanRequested} minutes</span>  with His Holiness Niranjana Swami is under review.&nbsp;</div>
+                    <div>Once it is approved you will receive an email with further instructions.</div>
                     <div>&nbsp;</div>
                     <div>Your servants,</div>
                     <div>Site administrators</div>
@@ -83,8 +84,8 @@ export class Booking extends Component {
             return (
                 <div>
                     <p>Дорогой <span style={{ fontWeight: '400' }}>{this.state.user.firstName} {this.state.user.last}</span>,</p>
-                    <div>Пожалуйста, примите наши смиренные поклоны,</div>
-                    <div>Вся слава Шриле Прабхупаде!</div>
+                    <div><br/>Пожалуйста, примите наши смиренные поклоны,</div>
+                    <div><br/>Вся слава Шриле Прабхупаде!</div>
                     <div>&nbsp;</div>
                     <div>Ваш запрос на <span style={{ fontWeight: '400' }}>{this.state.DarshanRequested} Даршан</span> с Его Святейшеством Ниранджаной Свами находится на рассмотрении.&nbsp;</div>
                     <div>Как только он будет одобрен, вы получите письмо с дальнейшими инструкциями.</div>
@@ -133,6 +134,10 @@ export class Booking extends Component {
             )
 
         }
+    }
+
+    loadingIframeCompleted = ()=>{
+        window.scrollTo(0,0);
     }
 
 
@@ -187,6 +192,7 @@ export class Booking extends Component {
                                                 <iframe
                                                     src={`${this.state.user.youbookme_url}${this.state.DarshanApproved}&skipHeaderFooter=true&noframe=true`}
                                                     id="ycbmiframeniranjanaswami"
+                                                    onLoad={()=>this.loadingIframeCompleted()}
                                                     className="bookingStyle"
                                                     frameBorder="0"
                                                     allowtransparency="true">
