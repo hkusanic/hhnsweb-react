@@ -66,9 +66,10 @@
 		"confirm_password": ["Confirm Password", "Подтвердите пароль"],
 		"create_an_account": ["CREATE AN ACCOUNT", "СОЗДАТЬ АККАУНТ"],
 		"please_fill":["**PLEASE FILL ALL THE FIELDS ", "**Пожалуйста заполните все поля"],
-		"your_profile": ["Your profile has been created","Ваш профиль был создан"],
 		"hare_krishna":["Hare Krishna","Харе Кришна"],
-		"registation_msg": ["Thank you for registering your profile.", "Спасибо за регистрацию вашего профайла"]
+		"registation_msg": ["Thank you for registering your profile.", "Спасибо за регистрацию вашего профайла"],
+		"correct_email": ["**Please enter the correct email address", "Пожалуйста, введите правильный адрес электронной почты"],
+		"password_match": ["**Password and confirm password should match", "Пароль и Подтверждение пароля должны совпадать"]
 
 	},
 	"USER_PROFILE":{

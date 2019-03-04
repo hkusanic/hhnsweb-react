@@ -85,13 +85,13 @@ export class Login extends Component {
     if (!isNotEmpty(this.state.email_signup) || !isNotEmpty(this.state.password_signup) ||
       !isNotEmpty(this.state.firstName) || !isNotEmpty(this.state.lastName) ||
       !isNotEmpty(this.state.confirmPassword) || !isNotEmpty(this.state.mobileNumber)) {
-      this.setState({ regError: '**Please fill all the fields' })
+      this.setState({ regError: <Translate>{({ translate }) => translate('REGISTER_FORM.please_fill')}</Translate> })
     }
     else if (!isValidEmail(this.state.email_signup)) {
-      this.setState({ regError: '**Please enter the correct email address' })
+      this.setState({ regError: <Translate>{({ translate }) => translate('REGISTER_FORM.correct_email')}</Translate> })
     }
     else if (!isMatch(this.state.password_signup, this.state.confirmPassword)) {
-      this.setState({ regError: '**Password and confirm password should match' })
+      this.setState({ regError: <Translate>{({ translate }) => translate('REGISTER_FORM.password_match')}</Translate> })
     }
     else {
       const body = {
@@ -198,7 +198,6 @@ export class Login extends Component {
                             type="text"
                             name="firstname"
                             placeholder={first_name}
-                            data-constraints="@Required"
                             onChange={() => { this.handleChange('firstName', event) }}
                           />
                         </div>
@@ -209,7 +208,6 @@ export class Login extends Component {
                             type="text"
                             name="lastname"
                             placeholder={last_name}
-                            data-constraints="@Required"
                             onChange={() => { this.handleChange('lastName', event) }} />
                         </div>
                         <div className="form-wrap">
@@ -219,7 +217,6 @@ export class Login extends Component {
                             type="email"
                             name="email"
                             placeholder={email}
-                            data-constraints="@Email @Required"
                             onChange={() => { this.handleChange('email_signup', event) }} />
                         </div>
                         <div className="form-wrap">
@@ -242,7 +239,6 @@ export class Login extends Component {
                             type="password"
                             name="password"
                             placeholder={password}
-                            data-constraints="@Required"
                             onChange={() => { this.handleChange('password_signup', event) }} />
                         </div>
                         <div className="form-wrap">
@@ -252,7 +248,6 @@ export class Login extends Component {
                             type="password"
                             name="password"
                             placeholder={confirm_password}
-                            data-constraints="@Required"
                             onChange={() => { this.handleChange('confirmPassword', event) }} />
                         </div>
                         <div className="form-wrap">
