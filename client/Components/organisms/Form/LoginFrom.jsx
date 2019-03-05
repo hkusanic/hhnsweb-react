@@ -30,10 +30,10 @@ export class LoginForm extends Component {
     loginSubmit = (event) => {
         event.preventDefault();
         if (!isNotEmpty(this.state.username) || !isNotEmpty(this.state.password)) {
-            this.setState({ error: '**Please fill all the fields' })
+            this.setState({ error:  <Translate>{({ translate }) => translate('REGISTER_FORM.please_fill')}</Translate>  })
         }
         else if (!isValidEmail(this.state.username)) {
-            this.setState({ error: '**Please enter the correct email address' })
+            this.setState({ error: <Translate>{({ translate }) => translate('REGISTER_FORM.correct_email')}</Translate> })
         }
         else if (this.state.username && this.state.password) {
             const body = {
@@ -63,7 +63,6 @@ export class LoginForm extends Component {
                         autoComplete="off"
                         type="email"
                         name="email"
-                        data-constraints="@Email @Required"
                         onChange={() => { this.handleChange('username', event) }}
                         placeholder={email} />
                 </div>
@@ -73,7 +72,6 @@ export class LoginForm extends Component {
                         autoComplete="off"
                         type="password"
                         name="password"
-                        data-constraints="@Required"
                         onChange={() => { this.handleChange('password', event) }}
                         placeholder={password} />
                 </div>

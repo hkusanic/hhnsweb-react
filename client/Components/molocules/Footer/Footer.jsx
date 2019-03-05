@@ -42,7 +42,7 @@ export class Footer extends Component {
                                 <hr />
                                 <ul className="list-sm">
                                     <li className="object-inline"><span className="icon icon-md mdi mdi-map-marker text-gray-700"></span><a className="link-default" href="#">1683 Main Street, East Hartford, CT 06183</a></li>
-                                    <li className="object-inline"><span className="icon icon-md mdi mdi-email text-gray-700"></span><a className="link-default" href="mailto:#">feedback@niranjanaswami.net</a></li>
+                                    <li className="object-inline"><span className="icon icon-md mdi mdi-email text-gray-700"></span><a className="link-default" href="mailto:#">dgd@niranjanaswami.net</a></li>
                                 </ul>
                             </div>
                         </div>
