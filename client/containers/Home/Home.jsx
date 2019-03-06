@@ -19,6 +19,7 @@ import ShellCompoenent from '../../Components/organisms/ShellComponent/ShellComp
 import ResetPassword from '../../Components/organisms/Form/ResetPasswordForm';
 import UserProfile from '../../Components/molocules/Profile/UserProfile';
 import Registration from '../../Components/molocules/Registration/Registration';
+import AppointmentListing from '../../Components/molocules/AppointmentListing/AppointmentListing';
 
 import {
     Route,
@@ -51,6 +52,8 @@ export class Home extends Component {
                         <Route path='/reset-password' component={ResetPassword} />
                         <Route path='/biograhyDetails' component={BiographyDetails} />
                         <Route path='/registration' component={Registration} />
+                        <Route path='/appointmentList' component={AppointmentListing} />
+
                         <ShellCompoenent>
                             <Route path='/blog' component={Blog} />
                             <Route path='/booking' component={Booking} />
