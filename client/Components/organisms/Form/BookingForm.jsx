@@ -5,7 +5,6 @@ export class BookingForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mobileNumber: '9090909090',
             disciple: '',
             requestFor: 'Darshan-15',
             error: ''
@@ -20,17 +19,20 @@ export class BookingForm extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        if (!isNotEmpty(this.props.user.email) || !isNotEmpty(this.state.mobileNumber)
+        if (!isNotEmpty(this.props.user.email)
             || !isNotEmpty(this.state.disciple) || !isNotEmpty(this.state.requestFor)) {
             this.setState({ error: '**Please fill all the fields' })
         }
-        else if (!onlyIntegers(this.state.mobileNumber)) {
-            this.setState({ error: 'Please Enter Mobile Number Correctly' })
-        }
         else {
+            const mobileNumber = this.props.user.countryCode + this.props.user.mobileNumber
+            let without_words_Numbers = null;
+            if(mobileNumber){
+                without_words_Numbers = mobileNumber.replace(/\D/g, '');                
+                without_words_Numbers = parseInt(without_words_Numbers, 10);
+            }
             const body = {
                 "email": this.props.user.email,
-                "mobileNumber": this.state.mobileNumber,
+                "mobileNumber": without_words_Numbers,
                 "disciple": this.state.disciple,
                 "requestedFor": this.state.requestFor
             }
