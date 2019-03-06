@@ -200,6 +200,12 @@ export class Navigation extends Component {
                                                         <Link className={`rd-nav-link ${this.state.index === 6 ? 'active1' : ''} `} to="/">Admin</Link>
                                                     </li> : ''
                                             }
+                                            <li className="rd-nav-item">
+                                                <Link className={`rd-nav-link ${this.state.index === 7 ? 'active1' : ''} `} to="/contact" onClick={() => { this.handleRemoveModal(7) }} >
+                                                    <Translate>{({ translate }) => translate('HOME.contacts')}</Translate>
+
+                                                </Link>
+                                            </li>
                                             <li className="rd-nav-item hideMenu">
                                                 <a className="rd-nav-link">
                                                     <Login
