@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Translate } from 'react-localize-redux';
-import { isValidEmail, isNotEmpty } from '../../../utils/validation';
+import { isValidEmail, isNotEmpty, onlyIntegers } from '../../../utils/validation';
 import { connect } from "react-redux";
 import { contactUs } from '../../../actions/loginActions';
 
@@ -56,6 +56,9 @@ export class Contact extends Component {
         }
         else if (!isValidEmail(this.state.email)) {
             this.setState({ error: <Translate>{({ translate }) => translate('REGISTER_FORM.correct_email')}</Translate> })
+        }
+        else if(!onlyIntegers(this.state.mobileNumber)){
+            this.setState({error: <Translate>{({ translate }) => translate('USER_PROFILE.please_enter_mobile')}</Translate>})
         }
         else {
             const body = {
