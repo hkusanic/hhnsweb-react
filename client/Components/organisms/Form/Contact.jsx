@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Translate } from 'react-localize-redux';
 import { isValidEmail, isNotEmpty } from '../../../utils/validation';
+import { connect } from "react-redux";
+import { contactUs } from '../../../actions/loginActions';
 
 export class Contact extends Component {
     constructor(props) {
@@ -11,7 +13,28 @@ export class Contact extends Component {
             email: '',
             mobileNumber: '',
             message: '',
-            error: ''
+            error: '',
+            sendMessageSuccessfull: ''
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(!this.props.isContactSubmitted && nextProps.isContactSubmitted){
+            this.setState({
+                firstName: '',
+                lastName: '',
+                email: '',
+                mobileNumber: '',
+                message: '',
+                error: '',
+                sendMessageSuccessfull: 'Your message has been sent successfully'
+            })
+        }
+        if(nextProps.error){
+            this.setState({
+                error: nextProps.error,
+                sendMessageSuccessfull: ''
+            })
         }
     }
     handleChange = (type, event) => {
@@ -19,6 +42,7 @@ export class Contact extends Component {
         this.setState({
             ...this.state,
             error: '',
+            sendMessageSuccessfull: '',
             [type]: value
         })
     }
@@ -32,17 +56,17 @@ export class Contact extends Component {
         }
         else if (!isValidEmail(this.state.email)) {
             this.setState({ error: <Translate>{({ translate }) => translate('REGISTER_FORM.correct_email')}</Translate> })
-          }
-          else {
+        }
+        else {
             const body = {
-              email: this.state.email,
-              firstName: this.state.firstName,
-              lastName: this.state.lastName,
-              mobileNumber: this.state.mobileNumber,
-              message: this.state.message,
+                email_ref: this.state.email,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                phone: this.state.mobileNumber,
+                message: this.state.message,
             }
-            console.log("contact body ====>>>>>", body);
-          }
+            this.props.contactUs(body);
+        }
     }
 
 
@@ -137,6 +161,7 @@ export class Contact extends Component {
                                             </div>
                                         </form>
                                         <p className="loginError">{this.state.error}</p>
+                                        <p className="contactHeading" style={{fontSize: '24px'}}>{this.state.sendMessageSuccessfull}</p>
                                     </div>
                                 </div>
                             </div>
@@ -148,5 +173,21 @@ export class Contact extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        error: state.loginReducer.contactError,
+        isContactSubmitted: state.loginReducer.isContactSubmitted
+    };
+};
 
-export default Contact;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        contactUs: (body) => {
+            dispatch(contactUs(body));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);
+
+// export default Contact;

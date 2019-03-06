@@ -6,6 +6,7 @@ export const REQ_RESET_PASSWORD = 'REQ_RESET_PASSWORD';
 export const SIGNUP = 'SIGNUP'
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
+export const CONTACT_US = 'CONTACT_US';
 
 //Blog Constants
 export const GET_BLOGS = 'GET_BLOGS';
