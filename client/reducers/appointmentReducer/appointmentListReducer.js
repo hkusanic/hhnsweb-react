@@ -4,11 +4,11 @@ const initialState = {
     userList: [],
     appointmentList: [],
     loading: false,
+    isUpdated: false,
     error: ''
 }
 
 const appointmentListingReducer = (state = initialState, action) => {
-    console.log("actioon =====>>>>>", action);
     switch (action.type) {
         case types.GET_USER_LIST:
             state = {
@@ -23,6 +23,22 @@ const appointmentListingReducer = (state = initialState, action) => {
                 appointmentList: action.payload.data.appointments
             }
             break;
+        
+        case types.UPDATE_APPOINTMENT:
+        const result = action.payload.data.Appointment;
+            if(result){
+                state = {
+                    ...state,
+                    isUpdated: true
+                }    
+            }
+            else {
+                state = {
+                    ...state,
+                    isUpdated: false
+                }       
+            }
+            break;
 
         case "RESET_STATE":
             state = {
@@ -30,6 +46,7 @@ const appointmentListingReducer = (state = initialState, action) => {
                 userList: [],
                 appointmentList: [],
                 loading: false,
+                isUpdated: false,
                 error: ''
             }
     }

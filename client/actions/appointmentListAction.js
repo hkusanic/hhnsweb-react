@@ -25,6 +25,18 @@ export function getAppointmentList() {
     }
 }
 
+export function updateAppointment(email, body) {
+    return (dispatch) => {
+        appointmentListingApi.updateAppointment(email, body)
+            .then((response) => {
+                dispatch(updateAppointmentAction(response))
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+}
+
 export function getUserListAction(data) {
     return {
         type: types.GET_USER_LIST,
@@ -35,6 +47,13 @@ export function getUserListAction(data) {
 export function getAppointmentListAction(data) {
     return {
         type: types.GET_APPOINTMENT_LIST,
+        payload: data
+    }
+}
+
+export function updateAppointmentAction(data){
+    return {
+        type: types.UPDATE_APPOINTMENT,
         payload: data
     }
 }
