@@ -37,8 +37,9 @@ exports.create = function(req, res) {
 
 
 exports.update = function(req, res) {
-	Appointment.model.findById(req.params.id).exec(function(err, item) {
-		
+
+	Appointment.model.findOne({email: req.params.id }).exec(function(err, item) {
+
 		if (err) return res.apiError('database error', err);
 		if (!item) return res.apiError('not found');
 		
