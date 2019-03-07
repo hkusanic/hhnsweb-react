@@ -23,6 +23,22 @@ function createMailBody (from, to, subject, html) {
 	return mailOptions;
 }
 
+exports.list = function (req, res) {
+	// Querying the data this works similarly to the Mongo db.collection.find() method
+	keystone.list('User').model.find(function (err, items) {
+		// Make sure we are handling errors
+		if (err) return res.apiError('database error', err);
+		res.apiResponse({
+			// Filter page by
+			users: items,
+		});
+
+	// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
+	// This is handy if we want to speed up loading times once our recipe collection grows
+	}).limit(Number(req.query.limit));
+};
+
+
 exports.signin = function (req, res) {
 
 	if (!req.body.username || !req.body.password) return res.json({ success: false });

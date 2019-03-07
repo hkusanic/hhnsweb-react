@@ -5,6 +5,7 @@ import loginReducer from './login_reducer/loginReducer';
 import blogReducer from './blogReducer/blogReducer';
 import lectureReducer from './lectureReducer/lectureReducer';
 import appointmentReducer from './appointmentReducer/appointmentReducer';
+import appointmentListingReducer from './appointmentReducer/appointmentListReducer';
 import { routerReducer } from 'react-router-redux';
 
 
@@ -15,6 +16,7 @@ const reducers = combineReducers({
 	blogReducer: blogReducer,
 	lectureReducer: lectureReducer,
 	appointmentReducer: appointmentReducer,
+	appointmentListingReducer: appointmentListingReducer,
 	routing: routerReducer
 });
 
