@@ -4,6 +4,21 @@ var Appointment = keystone.list('Appointment');
 
 
 
+exports.list = function (req, res) {
+	// Querying the data this works similarly to the Mongo db.collection.find() method
+	Appointment.model.find(function (err, items) {
+		// Make sure we are handling errors
+		if (err) return res.apiError('database error', err);
+		res.apiResponse({
+			// Filter page by
+			appointments: items,
+		});
+
+	// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
+	// This is handy if we want to speed up loading times once our recipe collection grows
+	}).limit(Number(req.query.limit));
+};
+
 exports.create = function(req, res) {
 	
 	var item = new Appointment.model(),
@@ -22,8 +37,9 @@ exports.create = function(req, res) {
 
 
 exports.update = function(req, res) {
-	Appointment.model.findById(req.params.id).exec(function(err, item) {
-		
+
+	Appointment.model.findOne({email: req.params.id }).exec(function(err, item) {
+
 		if (err) return res.apiError('database error', err);
 		if (!item) return res.apiError('not found');
 		

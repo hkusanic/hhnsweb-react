@@ -31,6 +31,10 @@ exports = module.exports = function (app) {
 	app.post('/api/booking/bookingcreated/', keystone.middleware.api, routes.api.booking.bookingcreated);
 	app.get('/api/booking/:email', keystone.middleware.api, routes.api.booking.get);
 	app.post('/api/contactus/', keystone.middleware.api, routes.api.contactus.create);
+	app.get('/api/user/', keystone.middleware.api, routes.api.user.list);
+	app.get('/api/appointment/', keystone.middleware.api, routes.api.appointment.list);
+
+
 
 	// File Upload Routes
 	app.get('/api/fileupload/list', keystone.middleware.api, routes.api.fileupload.list);
