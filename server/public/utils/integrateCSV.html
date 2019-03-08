@@ -44,11 +44,13 @@
         var errorData = [];
         var firstData = Papa.parse(csvFirstData, { header: true, skipEmptyLines: true });
         var secondData = Papa.parse(csvSecondData, { header: true, skipEmptyLines: true });
-        for (let i = 0; i < firstData.data.length; i++) {
-            for (let j = 0; j < secondData.data.length ; j++) {
+        for (let j = 0; j < secondData.data.length; j++) {
+            for (let i = 0; i < firstData.data.length ; i++) {
                 if (firstData.data[i]['Date'].trim() === secondData.data[j]['Date'].trim() &&
-                    firstData.data[i]['Field7_link'].trim() === secondData.data[j]['Link'].trim() &&
-                    firstData.data[i]['Downloads'].trim() === secondData.data[j]['Downloads'].trim()) {
+                    firstData.data[i]['Field7_link'].trim() === secondData.data[j]['Link'].trim()
+                    //  &&
+                    // firstData.data[i]['Downloads'].trim() === secondData.data[j]['Downloads'].trim()
+                    ) {
                     item = {};
                     item['title_en'] = firstData.data[i]['Title'];
                     item['title_ru'] = secondData.data[j]['Заголовок'];
@@ -75,12 +77,14 @@
                     break;
                 }
                 else {
-                    if(j === secondData.data.length - 2){
-                        errorData.push(firstData.data[i]);
+                    if(i === firstData.data.length - 2){
+                        errorData.push(secondData.data[j]);
                     }
                 }
             }
         }
+        console.log("Error object =====>>>>", jsonObj);
+
         console.log("Error object =====>>>>", errorData);
 
         DownloadCSV(jsonObj);
