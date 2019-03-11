@@ -31,7 +31,7 @@ export class AudioDetails extends Component {
                                 </article>
                                 <div className="audioStyle">
                                     <audio controls>
-                                        <source src={renderHTML(this.props.location.state.audio)} type="audio/mpeg" />
+                                        <source src={renderHTML(this.props.location.state.audio_link)} type="audio/mpeg" />
                                     </audio>
                                 </div>
                                 <div>

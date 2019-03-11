@@ -180,6 +180,16 @@ export class Navigation extends Component {
                                                 </ul>
                                             </li>
                                             <li className="rd-nav-item">
+                                                <Link className={`rd-nav-link ${this.state.index === 10 ? 'active1' : ''} `} to="/audio" onClick={() => { this.handleNavigationClick(10) }}>
+                                                    <Translate>{({ translate }) => translate('HOME.audio')}</Translate>
+                                                </Link>
+                                            </li>
+                                            <li className="rd-nav-item">
+                                                <Link className={`rd-nav-link ${this.state.index === 11 ? 'active1' : ''} `} to="/video" onClick={() => { this.handleNavigationClick(11) }}>
+                                                    <Translate>{({ translate }) => translate('HOME.video')}</Translate>
+                                                </Link>
+                                            </li>
+                                            <li className="rd-nav-item">
                                                 <Link className={`rd-nav-link ${this.state.index === 3 ? 'active1' : ''} `} to="/blog" onClick={() => { this.handleNavigationClick(3) }}>
                                                     <Translate>{({ translate }) => translate('HOME.blog')}</Translate>
                                                 </Link>

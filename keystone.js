@@ -20,7 +20,7 @@ keystone.init({
 	// Updates provide an easy way to seed your database,
 	// transition data when your models change,
 	// or run transformation scripts against your database.
-	'auto update': true,
+	'auto update': false,
 	// The url for your MongoDB connection
 	'mongo': 'mongodb://localhost/keystonereactcms',
 	// Whether to enable built-in authentication for Keystone's Admin UI,
