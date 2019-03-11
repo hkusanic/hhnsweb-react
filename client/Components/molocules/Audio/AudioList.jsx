@@ -4,6 +4,7 @@ import Pagination from 'react-js-pagination';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getLectures } from '../../../actions/lectureActions';
+import * as queryString from 'query-string';
 
 export class AudioList extends Component {
     constructor(props) {
@@ -17,12 +18,14 @@ export class AudioList extends Component {
     }
 
     componentDidMount() {
+        const values = queryString.parse(location.search)
         this.setState({
             lectures: this.props.lecturesDetails.lectures,
             currentPage: this.props.lecturesDetails.currentPage,
             totalItem: this.props.lecturesDetails.totalLectures
         })
-        this.props.getLectures(1);
+        console.log('======>',values);
+        this.props.getLectures({page:1,event:values.event,topic:values.topic,title:values.title});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -34,7 +37,9 @@ export class AudioList extends Component {
     }
 
     handlePageChange = (pageNumber) => {
-        this.props.getLectures(pageNumber);
+        const values = queryString.parse(location.search)
+        console.log('======>',values);
+        this.props.getLectures({page:pageNumber,event:values.event,topic:values.topic,title:values.title});
     }
 
     showing100Characters = (sentence) => {
@@ -67,7 +72,7 @@ export class AudioList extends Component {
                                             <td className="titleColor"> <Link to={{ pathname: '/audioDetails', state: item }}>{renderHTML(item.title.en)}</Link></td>
                                             <td>
                                                 <audio controls>
-                                                    <source src={renderHTML(item.audio)} type="audio/mpeg" />
+                                                    <source src={renderHTML(item.audio_link)} type="audio/mpeg" />
                                                 </audio>
                                             </td>
                                             <td>{item.downloads}</td>
@@ -85,7 +90,7 @@ export class AudioList extends Component {
                             itemClass='page-item'
                             linkClass='page-link button-winona'
                             activePage={this.state.currentPage}
-                            itemsCountPerPage={4}
+                            itemsCountPerPage={20}
                             totalItemsCount={this.state.totalItem}
                             pageRangeDisplayed={5}
                             onChange={this.handlePageChange}

@@ -3,9 +3,13 @@ import serverAddress from './config';
 
 
 const utils = {
-    getlectures : (pageNumber) => {
-        const page = pageNumber || 1;
-        let url = serverAddress + `/api/lecture?page=${page}`;
+    getlectures : (body) => {
+        const page = body.page || 1;
+        const event = body.event || '';
+        const topic = body.topic || '';
+        const title = body.title || '';
+       
+        let url = serverAddress + `/api/lecture?page=${page}${event ? '&event=' + event : ''}${topic ? '&topic=' + topic : ''}${title ? '&title=' + title : ''}`;
         return axios.get(url);
     }
 }
