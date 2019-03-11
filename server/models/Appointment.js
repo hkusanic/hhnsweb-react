@@ -36,12 +36,6 @@ let Appointment = new keystone.List('Appointment', {
 });
 
 Appointment.add({
-	firstName: {
-		type: String,
-	},
-	lastName: {
-		type: String,
-	},
 	email: {
 		type: String,
 		initial: true,
@@ -82,15 +76,14 @@ Appointment.add({
 	},
 });
 
-Appointment.defaultColumns = 'firstName|25%, lastName|25%, email|20%, dateCreated|10%, approved|10%, canceled|10%';
+Appointment.defaultColumns = 'title_en, date|15%, needs_translation|10%';
 
 Appointment.schema.pre('save', function (next) {
 	next();
-
 });
 
 Appointment.schema.post('save', function (data, next) {
-console.log('---APOINTMENT SAVE---');
+
 	const siteUrl = EMAIL_CONFIG.CONSTANTS.SITE_URL;
 
 	const msg = {
@@ -106,8 +99,6 @@ console.log('---APOINTMENT SAVE---');
 		subject: '',
 		html: '',
 	};
-
-	
 
 	if (data.approved && data.canceled === false) {
 		msg.subject = 'Approved - Request for darshan with H.H. Niranjana Swami';
@@ -152,18 +143,18 @@ console.log('---APOINTMENT SAVE---');
 		
 		for(let i = 0; i < EMAIL_CONFIG.CONSTANTS.APPROVAL_EMAILS.length; i++) {
 
-			setTimeout(function(){
-				sendMail(msgApproval.from, EMAIL_CONFIG.CONSTANTS.APPROVAL_EMAILS[i], msgApproval.subject, msgApproval.html)
-				.then((res) => {
-					console.log('email was sent', res);
-				})
-				.catch((err) => {
-					console.error(err);
-				});
+ 		setTimeout(function(){
+			sendMail(msgApproval.from, EMAIL_CONFIG.CONSTANTS.APPROVAL_EMAILS[i], msgApproval.subject, msgApproval.html)
+			.then((res) => {
+				console.log('email was sent', res);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
 
-			},10000);
+		},10000);
 	
-		}
+}
 
 	}
 	else if (data.canceled === true) {
@@ -188,19 +179,7 @@ console.log('---APOINTMENT SAVE---');
 			console.error(err);
 		});
 
-	let User = keystone.list('User');
-	if ((data.firstName === undefined || data.firstName === '') && (data.lastName === undefined || data.lastName === '')) {
-		User.model.findOne({ email: data.email }).exec(function (err, item) {
-			data.firstName = item._doc.name.first;
-			data.lastName = item._doc.name.last;
-			data.save();
-			next();
-		});
-		next();
-	}
-	else {
-		next();
-	}
+	next();
 });
 
 Appointment.schema.post('validate', function (err, next) {
