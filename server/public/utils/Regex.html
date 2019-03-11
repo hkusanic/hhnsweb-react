@@ -18,7 +18,7 @@
         reader.onload = function (event1) {
             var csvData = event1.target.result;
             var data = Papa.parse(csvData, { header: true, skipEmptyLines: true });
-            for (let i = 0; i < data.data.length - 1; i++) {
+            for (let i = 0; i < data.data.length; i++) {
                 item = {}
                 item["Title"] = data.data[i]['Title'];
                 item["Title_link"] = data.data[i]['Title_link'];
@@ -39,17 +39,19 @@
                 item["Field7_link"] = "";
                 item["Field1"] = data.data[i]['Field1'];
                 item["SoundCloud"] = data.data[i]['SoundCloud'];
-                var str = data.data[i]['Field7_link'];
 
-                var patt = /<a href="(.*?)"/g;
-                while (match = patt.exec(str)) {
-                    item["Field7_link"] = match[1];
+                var str = data.data[i]['Field7_link'];
+                var regex = /soundFile.*mp3/;
+                var matches = str.match(regex);
+                if (matches[0]) {
+                    item["Field7_link"] = matches[0].replace('soundFile=', '');
                     jsonObj.push(item);
                 }
+                console.log("matches======>>>", item["Field7_link"]);
             }
             DownloadCSV(jsonObj);
         };
-        
+
         reader.onerror = function () {
             alert("unable to read " + file.fileName);
         }

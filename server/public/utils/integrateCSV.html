@@ -47,16 +47,15 @@
         for (let i = 0; i < firstData.data.length; i++) {
             for (let j = 0; j < secondData.data.length ; j++) {
                 if (firstData.data[i]['Date'].trim() === secondData.data[j]['Date'].trim() &&
-                    firstData.data[i]['Field7_link'].trim() === secondData.data[j]['Link'].trim() 
+                    firstData.data[i]['Field10_link'].trim() === secondData.data[j]['Link'].trim() 
                     // &&
                     // firstData.data[i]['Downloads'].trim() === secondData.data[j]['Downloads'].trim()
                     ) {
                     item = {};
                     item['title_en'] = firstData.data[i]['Title'];
                     item['title_ru'] = secondData.data[j]['Заголовок'];
-                    item['title_link'] = firstData.data[i]['Title_link']
-                    item['date'] = firstData.data[i]['Date'];
-                    item['publishTime'] = firstData.data[i]['PublishTime'];
+                    item['created_date'] = firstData.data[i]['Date'];
+                    item['published_date'] = firstData.data[i]['PublishTime'];
                     item['author'] = firstData.data[i]['Author'];
                     item['translation_en'] = firstData.data[i]['Translation'];
                     item['translation_ru'] = secondData.data[j]['Translation'];
@@ -67,12 +66,11 @@
                     item['part'] = firstData.data[i]['Part'];
                     item['chapter'] = firstData.data[i]['chapter'];
                     item['verse'] = firstData.data[i]['Verse'];
-                    item['field10_link'] = firstData.data[i]['Field10_link'];
+                    item['download_link'] = firstData.data[i]['Field10_link'];
                     item['duration'] = firstData.data[i]['Duration'];
                     item['downloads'] = firstData.data[i]['Downloads'];
                     item['audio_link'] = firstData.data[i]['Field7_link'];
-                    item['field1'] = firstData.data[i]['Field1'];
-                    item['soundCloud'] = firstData.data[i]['SoundCloud'];
+                    item['soundCloud_link'] = firstData.data[i]['SoundCloud'];
                     jsonObj.push(item);
                     break;
                 }
@@ -83,7 +81,7 @@
                 }
             }
         }        
-        console.log("Error object =====>>>>",jsonObj);
+        console.log("Final object =====>>>>",JSON.stringify(jsonObj));
         console.log("Error object =====>>>>", errorData);
 
         DownloadCSV(jsonObj);
@@ -94,7 +92,7 @@
         var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         var csvURL = null;
         if (navigator.msSaveBlob) {
-            csvURL = navigator.msSaveBlob(csvData, 'Integrated.csv');
+            csvURL = navigator.msSaveBlob(csvData, 'IntegratedAudio.csv');
         }
         else {
             csvURL = window.URL.createObjectURL(csvData);
