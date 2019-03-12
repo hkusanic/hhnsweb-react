@@ -3,11 +3,13 @@ import SingleLecture from '../../Components/molocules/SingleLecture/SingleLectur
 import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
 import { getLectures } from '../../actions/lectureActions';
+import Auth from '../../utils/Auth';
 
 export class Lectures extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isUserLogin: true,
             totalItem: null,
             currentPage: null,
             page: null,
@@ -15,15 +17,17 @@ export class Lectures extends Component {
         }
     }
     componentDidMount() {
+        const isUserLogin = Auth.isUserAuthenticated();
         this.setState({
             lectures: this.props.lecturesDetails.lectures,
             currentPage: this.props.lecturesDetails.currentPage,
-            totalItem: this.props.lecturesDetails.totalLectures
+            totalItem: this.props.lecturesDetails.totalLectures,
+            isUserLogin
         })
         this.props.getLectures(1);
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         this.setState({
             lectures: nextProps.lecturesDetails.lectures,
             currentPage: nextProps.lecturesDetails.currentPage,
@@ -47,14 +51,18 @@ export class Lectures extends Component {
     render() {
         return (
             <div>
-                <section className="section section-lg">
-                    <div className="container">
-                        <div className="row row-50 row-xxl-70">
-                            {this.state.lectures.map((item, key) => {
-                                return <SingleLecture lecture={item} key={key} />
-                            })}
-                        </div>
-                        {/* <div className="table-responsive wow fadeIn">
+                <section className="bg-gray-100">
+                    <img src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png" />
+                </section>
+                {
+                    !this.state.isUserLogin ?
+                        <div className="container">
+                            <div className="row row-50 row-xxl-70">
+                                {this.state.lectures.map((item, key) => {
+                                    return <SingleLecture lecture={item} key={key} />
+                                })}
+                            </div>
+                            {/* <div className="table-responsive wow fadeIn">
                             <table className="table table-hover table-job-positions">
                                 <thead>
                                     <tr>
@@ -76,20 +84,21 @@ export class Lectures extends Component {
                                 </tbody>
                             </table>
                         </div> */}
-                        <Pagination
-                            className="paginationStyle"
-                            innerClass='pagination'
-                            activeClass='page-item active'
-                            itemClass='page-item'
-                            linkClass='page-link button-winona'
-                            activePage={this.state.currentPage}
-                            itemsCountPerPage={4}
-                            totalItemsCount={this.state.totalItem}
-                            pageRangeDisplayed={5}
-                            onChange={this.handlePageChange}
-                        />
-                    </div>
-                </section>
+                            <Pagination
+                                className="paginationStyle"
+                                innerClass='pagination'
+                                activeClass='page-item active'
+                                itemClass='page-item'
+                                linkClass='page-link button-winona'
+                                activePage={this.state.currentPage}
+                                itemsCountPerPage={4}
+                                totalItemsCount={this.state.totalItem}
+                                pageRangeDisplayed={5}
+                                onChange={this.handlePageChange}
+                            />
+                        </div>
+                        : ''
+                }
             </div>
         )
     }

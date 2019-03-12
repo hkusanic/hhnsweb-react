@@ -12,7 +12,7 @@ export class Navigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isUserLogin: false,
+            isUserLogin: true,
             Prabhupada_swami_bio: '',
             Niranjana_swami_bio: '',
             floatImage: '',
@@ -84,7 +84,7 @@ export class Navigation extends Component {
         this.handleTabIndex(index)
         $('.login-modal-2').removeClass('active');
         $('.register-modal-2').removeClass('active');
-        if (!this.props.isLogin) {
+        if (this.state.isUserLogin) {
             $('.login-modal-2').addClass('active');
             $('.rd-navbar-toggle').removeClass('active');
             $('.rd-navbar-nav-wrap').removeClass('active');
@@ -210,12 +210,6 @@ export class Navigation extends Component {
                                                         <Link className={`rd-nav-link ${this.state.index === 6 ? 'active1' : ''} `} to="/">Admin</Link>
                                                     </li> : ''
                                             }
-                                            <li className="rd-nav-item">
-                                                <Link className={`rd-nav-link ${this.state.index === 7 ? 'active1' : ''} `} to="/contact" onClick={() => { this.handleRemoveModal(7) }} >
-                                                    <Translate>{({ translate }) => translate('HOME.contacts')}</Translate>
-
-                                                </Link>
-                                            </li>
                                             <li className="rd-nav-item hideMenu">
                                                 <a className="rd-nav-link">
                                                     <Login

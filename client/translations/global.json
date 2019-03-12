@@ -38,7 +38,9 @@
 		"read_more": ["Read more..", "Читать дальше..."],
 		"official_website": ["The Official Website of", "Официальный сайт"],
 		"h_h":["H.H. Niranjana Swami ", "Е.С. Ниранджана Свами"],
-		"announcement": ["Announcement", "объявление"]
+		"announcement": ["Announcement", "объявление"],
+		"audio":["Audio", "аудио"],
+		"video": ["video", "видео"]
 
 	},
 	"FOOTER": {

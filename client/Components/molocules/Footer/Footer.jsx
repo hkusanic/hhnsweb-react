@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Translate } from 'react-localize-redux';
-
+import { Link } from 'react-router-dom';
 export class Footer extends Component {
     constructor(props) {
         super(props);
@@ -16,29 +16,34 @@ export class Footer extends Component {
                         <div className="row row-50">
                             <div className="col-lg-8">
                                 <h4><Translate>
-                                {({ translate }) => translate('FOOTER.quick_links')}
-                                                    </Translate></h4>
+                                    {({ translate }) => translate('FOOTER.quick_links')}
+                                </Translate></h4>
                                 <hr className="offset-right-1" />
                                 <div className="row row-20">
                                     <div className="col-6 col-sm-3">
                                         <ul className="list list-xs">
+                                            <li>
+                                                <Link to="/contact">
+                                                    <Translate>{({ translate }) => translate('HOME.contacts')}</Translate>
+                                                </Link>
+                                            </li>
                                             <li><a href="https://vaishnava-dasnrs.wixsite.com/page-of-vaishnava"><Translate>
-                                                        {({ translate }) => translate('FOOTER.vaishnava_dasa')}
-                                                    </Translate></a></li>
+                                                {({ translate }) => translate('FOOTER.vaishnava_dasa')}
+                                            </Translate></a></li>
                                             <li><a href="http://forum.niranjanaswami.com/"><Translate>
-                                                        {({ translate }) => translate('FOOTER.forum')}
-                                                    </Translate></a></li>
+                                                {({ translate }) => translate('FOOTER.forum')}
+                                            </Translate></a></li>
                                             <li><a href="https://fileshare.niranjanaswami.net/?key=3662d52d8035628a76fdac5f2366e26a567"><Translate>
-                                                        {({ translate }) => translate('FOOTER.file_share')}
-                                                    </Translate></a></li>
+                                                {({ translate }) => translate('FOOTER.file_share')}
+                                            </Translate></a></li>
                                         </ul>
-                                    </div>                                    
+                                    </div>
                                 </div>
                             </div>
                             <div className="col-md-7 col-lg-4">
                                 <h4><Translate>
                                     {({ translate }) => translate('FOOTER.contact_information')}
-                                                    </Translate></h4>
+                                </Translate></h4>
                                 <hr />
                                 <ul className="list-sm">
                                     <li className="object-inline"><span className="icon icon-md mdi mdi-map-marker text-gray-700"></span><a className="link-default" href="#">1683 Main Street, East Hartford, CT 06183</a></li>
