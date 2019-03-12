@@ -4,6 +4,7 @@ import Pagination from 'react-js-pagination';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getLectures } from '../../../actions/lectureActions';
+import { Translate } from 'react-localize-redux';
 import Auth from '../../../utils/Auth';
 export class VideoList extends Component {
     constructor(props) {
@@ -58,6 +59,11 @@ export class VideoList extends Component {
                 {
                     !this.state.isUserLogin ?
                         <div>
+                            <div style={{ textAlign: 'center' }}>
+                                <p className="bookingForm">
+                                    <Translate>{({ translate }) => translate('HOME.video')}</Translate>
+                                </p>
+                            </div>
                             <div className="container">
                                 <div className="table-responsive wow fadeIn">
                                     <table className="table table-hover table-job-positions">
@@ -71,7 +77,7 @@ export class VideoList extends Component {
                                             {this.state.lectures.map((item, key) => {
                                                 return <tr key={key}>
                                                     <td className="titleColor"><Link to={{ pathname: '/videoDetails', state: item }}>{renderHTML(item.title.en)}</Link></td>
-                                                    <td className="padLeft">60</td>
+                                                    <td>60</td>
                                                 </tr>
                                             })}
                                         </tbody>

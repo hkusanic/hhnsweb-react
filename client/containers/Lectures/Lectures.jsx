@@ -4,6 +4,7 @@ import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
 import { getLectures } from '../../actions/lectureActions';
 import Auth from '../../utils/Auth';
+import { Translate } from 'react-localize-redux';
 
 export class Lectures extends Component {
     constructor(props) {
@@ -57,6 +58,11 @@ export class Lectures extends Component {
                 {
                     !this.state.isUserLogin ?
                         <div className="container">
+                            <div style={{ textAlign: 'center' }}>
+                                <p className="bookingForm">
+                                    <Translate>{({ translate }) => translate('lecturesTitle')}</Translate>
+                                </p>
+                            </div>
                             <div className="row row-50 row-xxl-70">
                                 {this.state.lectures.map((item, key) => {
                                     return <SingleLecture lecture={item} key={key} />

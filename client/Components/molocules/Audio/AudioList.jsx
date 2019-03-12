@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { getLectures } from '../../../actions/lectureActions';
 import * as queryString from 'query-string';
 import Auth from '../../../utils/Auth';
+import { Translate } from 'react-localize-redux';
+
 export class AudioList extends Component {
     constructor(props) {
         super(props);
@@ -62,6 +64,11 @@ export class AudioList extends Component {
                 {
                     !this.state.isUserLogin ?
                         <div>
+                            <div style={{ textAlign: 'center' }}>
+                                <p className="bookingForm">
+                                    <Translate>{({ translate }) => translate('HOME.audio')}</Translate>
+                                </p>
+                            </div>
                             <div className="container">
                                 <div className="table-responsive wow fadeIn">
                                     <table className="table table-hover table-job-positions">

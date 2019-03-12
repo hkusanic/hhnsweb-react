@@ -8,7 +8,12 @@ export class Photos extends Component {
     render() {
         return (
             <div>
-                <section className="section section-lg oh text-center text-sm-left">
+                <section className="oh text-center text-sm-left padBottom">
+                    <div style={{ textAlign: 'center' }}>
+                        <p className="bookingForm">
+                            Photos
+                        </p>
+                    </div>
                     <div className="container">
                         <div className="isotope isotope-responsive row">
                             <div className="col-sm-6 col-lg-4 isotope-item">

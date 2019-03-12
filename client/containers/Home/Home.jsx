@@ -23,11 +23,11 @@ import Contact from '../../Components/organisms/Form/Contact';
 import AppointmentListing from '../../Components/molocules/AppointmentListing/AppointmentListing';
 import Photos from '../../Components/molocules/Photos/Photos';
 import Gallery from '../../Components/molocules/Gallery/Gallery';
+import ScrollToTop from '../../Components/atoms/ScrollToTop/ScrollToTop';
 import {
     Route,
     Switch
 } from 'react-router-dom'
-
 
 export class Home extends Component {
     constructor(props) {
@@ -49,28 +49,30 @@ export class Home extends Component {
                 <div className="page">
                     <Navigation />
                     <Switch>
-                        <Route exact path='/' component={Carousel} />
-                        <Route path='/forgotPassword' component={ForgotPassword} />
-                        <Route path='/reset-password' component={ResetPassword} />
-                        <Route path='/biograhyDetails' component={BiographyDetails} />
-                        <Route path='/registration' component={Registration} />
-                        <Route path='/contact' component={Contact} />
-                        <Route path='/appointmentList' component={AppointmentListing} />
-                        <Route path='/photos' component={Photos} />
-                        <Route path='/gallery' component={Gallery} />
-                        <ShellCompoenent>
-                            <Route path='/blog' component={Blog} />
-                            <Route path='/booking' component={Booking} />
-                            <Route path='/calender' component={Calender} />
-                            <Route path='/lectures' component={Lectures} />
-                            <Route path='/blogDetails' component={BlogDetails} />
-                            <Route path='/lectureDetails' component={LectureDetails} />
-                            <Route path='/audio' component={AudioList} />
-                            <Route path='/audioDetails' component={AudioDetails} />
-                            <Route path='/video' component={VideoList} />
-                            <Route path='/videoDetails' component={VideoDetails} />
-                            <Route path='/profile' component={UserProfile} />
-                        </ShellCompoenent>
+                        <ScrollToTop>
+                            <Route exact path='/' component={Carousel} />
+                            <Route path='/forgotPassword' component={ForgotPassword} />
+                            <Route path='/reset-password' component={ResetPassword} />
+                            <Route path='/biograhyDetails' component={BiographyDetails} />
+                            <Route path='/registration' component={Registration} />
+                            <Route path='/contact' component={Contact} />
+                            <Route path='/appointmentList' component={AppointmentListing} />
+                            <Route path='/photos' component={Photos} />
+                            <Route path='/gallery' component={Gallery} />
+                            <ShellCompoenent>
+                                <Route path='/blog' component={Blog} />
+                                <Route path='/booking' component={Booking} />
+                                <Route path='/calender' component={Calender} />
+                                <Route path='/lectures' component={Lectures} />
+                                <Route path='/blogDetails' component={BlogDetails} />
+                                <Route path='/lectureDetails' component={LectureDetails} />
+                                <Route path='/audio' component={AudioList} />
+                                <Route path='/audioDetails' component={AudioDetails} />
+                                <Route path='/video' component={VideoList} />
+                                <Route path='/videoDetails' component={VideoDetails} />
+                                <Route path='/profile' component={UserProfile} />
+                            </ShellCompoenent>
+                        </ScrollToTop>
                     </Switch>
                     <Footer />
                 </div>

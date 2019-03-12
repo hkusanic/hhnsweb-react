@@ -362,5 +362,7 @@
         margin-top: 5%;
         overflow-x: scroll;
     }
-  
+    .padBottom {
+        padding-bottom: 4em;
+    }
 
