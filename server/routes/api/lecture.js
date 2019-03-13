@@ -24,3 +24,28 @@ exports.list = function (req, res) {
 	// This is handy if we want to speed up loading times once our recipe collection grows
 	});
 };
+
+exports.bylocation = function (req, res) {
+	Lecture.model.aggregate([
+		{ $lookup: {
+			from: 'locations',
+			localField: 'location',
+			foreignField: '_id',
+			as: 'location',
+		},
+		},
+		{ $match: { 'location.title': req.params.location } },
+	])
+		.exec((err, result) => {
+			if (err) {
+				console.log(err);
+				next(err);
+			}
+			else {
+				console.dir(result);
+				res.apiResponse({
+					lectures: result,
+				});
+			}
+		});
+};
