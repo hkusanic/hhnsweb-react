@@ -29,7 +29,8 @@ export class AudioList extends Component {
             totalItem: this.props.lecturesDetails.totalLectures,
             isUserLogin
         })
-        this.props.getLectures({ page: 1, event: values.event, topic: values.topic, title: values.title });
+        console.log('======>',values);
+        this.props.getLectures({page:1,event:values.event,topic:values.topic,title:values.title,verse: values.verse});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -42,7 +43,8 @@ export class AudioList extends Component {
 
     handlePageChange = (pageNumber) => {
         const values = queryString.parse(location.search)
-        this.props.getLectures({ page: pageNumber, event: values.event, topic: values.topic, title: values.title });
+        console.log('======>',values);
+        this.props.getLectures({page:pageNumber,event:values.event,topic:values.topic,title:values.title,verse: values.verse});
     }
 
     showing100Characters = (sentence) => {

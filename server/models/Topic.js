@@ -2,37 +2,37 @@ const keystone = require('keystone');
 const mongoose = require('mongoose');
 const Types = keystone.Field.Types;
 
-let Location = new keystone.List('Location', {
+let Topic = new keystone.List('Topic', {
 	autokey: { path: 'slug', from: 'title _id', unique: true },
 	map: { name: 'title' },
 });
 
-Location.add({
+Topic.add({
 	title: { type: String, initial: true, required: true, unique: true, index: true, default: '' },
 
 });
 
- //Location.relationship({ ref: 'Lecture', path: 'Lecture.en.location' });
- //Location.relationship({ path: 'location', ref: 'Lecture', refPath: 'ru.location' });
+ //Topic.relationship({ path: 'en.topic', ref: 'Lecture', refPath: 'en.topic' });
+ //Topic.relationship({ path: 'ru.topic', ref: 'Lecture', refPath: 'ru.topic' });
 // Lecture.schema.add({ data: mongoose.Schema.Types.Mixed }); // you can add mongoose types like this.. but they should be defined outside .add()
 
-Location.schema.pre('save', function (next) {
+Topic.schema.pre('save', function (next) {
 	next();
 });
 
-Location.schema.post('save', function (next) {
+Topic.schema.post('save', function (next) {
 	// next();
 });
 
-Location.schema.post('validate', function (err, next) {
+Topic.schema.post('validate', function (err, next) {
 	next();
 });
 
-Location.schema.virtual('commentCount').get(function () {
+Topic.schema.virtual('commentCount').get(function () {
 	return this.comments.length;
 });
 
-Location.schema.pre('remove', function (next) {
+Topic.schema.pre('remove', function (next) {
 	next();
 	// const comment = mongoose.model('comment'); // this is how you load other models to avoid circular reference with import
 
@@ -40,8 +40,8 @@ Location.schema.pre('remove', function (next) {
 	// 	.then(() => next()); // remove array of commenets
 });
 
-Location.schema.post('remove', function (next) {
+Topic.schema.post('remove', function (next) {
 	next();
 });
 
-Location.register();
+Topic.register();

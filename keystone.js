@@ -15,12 +15,13 @@ keystone.init({
 		'./server/public',
 		'./uploads',
 	],
+	'file limit': '50MB',
 	// Keystone includes an updates framework,
 	// which you can enable by setting the auto update option to true.
 	// Updates provide an easy way to seed your database,
 	// transition data when your models change,
 	// or run transformation scripts against your database.
-	'auto update': false,
+	'auto update': true,
 	// The url for your MongoDB connection
 	'mongo': 'mongodb://localhost/keystonereactcms',
 	// Whether to enable built-in authentication for Keystone's Admin UI,
