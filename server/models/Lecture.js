@@ -2,36 +2,60 @@ const keystone = require('keystone');
 const Types = keystone.Field.Types;
 
 let Lecture = new keystone.List('Lecture', {
-	autokey: { path: 'slug', from: 'title.en _id' },
-	map: { name: 'title' },
+	autokey: { path: 'slug', from: 'uuid', unique: true },
+	map: { name: 'uuid' },
 	defaultSort: '-date',
 });
 
 Lecture.add({
-	title: {
-		en: { label: 'Lecture Title (EN)', type: String, initial: true, required: true, index: true, default: '' },
-		ru: { label: 'Lecture Title (RU)', type: String, initial: true, required: true, index: true, default: '' },
-	},
-	type: { type: String },
-	date: { type: Types.Date, default: Date.now },
-	publishDate: { type: String },
-	event: { type: String },
-	topic_en: { type: String },
-	topic_ru: {type: String},
-	translation_en: { type: String },
-	translation_ru: { type: String },
-	part: { type: String },
-    verse: {type: String},
-	location: { type: Types.Relationship, ref: 'Location', index: true },
-	youtube: { type: Types.TextArray },
-	audio_link: { type: Types.Url },
+	uuid: { type: String, unique: true, index:true},
+	created_date: { type: Types.Date, default: Date.now },
+	published_date: { type: String },
 	duration: { type: String },
 	downloads: { type: Types.Number },
-	field1: {type: String},
-    link: {type: String},
+	audio_link: { type: Types.Url },
+	soundcloud_link: {type: Types.Url},
+	service :{type:String},
+    dub :{type:String},
 	comments: {	type: Types.Relationship,	ref: 'Comment', many: true },
 	tags: {	type: Types.Relationship, ref: 'Tag', many: true },
-	slug: { type: String, index: true },
+	publish_in_book :{type:String},
+	transcribe :{type:String},
+	translation_required: { type:Boolean, default:true},
+	youtube: { type: Types.TextArray },
+	part: { type: String },
+	chapter: {type: String},
+	verse: {type: String},
+	en:{
+	title:{type:String},
+	event: { type: String},
+	topic:{type: String},
+	transcription: {
+		text: {type: Types.Text},
+		attachment: {type: Types.Url}
+	},
+	location: {type: String},
+	summary: {
+		text: {type: Types.Text},
+		attachment: {type: Types.Url}
+	}
+	},
+	ru:{
+		title:{type:String},
+		event: { type: String},
+		topic:{type: String},
+		transcription: {
+			text: {type: Types.Text},
+			attachment: {type: Types.Url}
+		},
+		location: {type: String},
+		summary: {
+			text: {type: Types.Text},
+			attachment: {type: Types.Url}
+		}
+   }
+	
+	
 });
 
 // Lecture.schema.add({ data: mongoose.Schema.Types.Mixed }); // you can add mongoose types like this.. but they should be defined outside .add()

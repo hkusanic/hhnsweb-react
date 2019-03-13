@@ -25,7 +25,7 @@ export class AudioList extends Component {
             totalItem: this.props.lecturesDetails.totalLectures
         })
         console.log('======>',values);
-        this.props.getLectures({page:1,event:values.event,topic:values.topic,title:values.title});
+        this.props.getLectures({page:1,event:values.event,topic:values.topic,title:values.title,verse: values.verse});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -39,7 +39,7 @@ export class AudioList extends Component {
     handlePageChange = (pageNumber) => {
         const values = queryString.parse(location.search)
         console.log('======>',values);
-        this.props.getLectures({page:pageNumber,event:values.event,topic:values.topic,title:values.title});
+        this.props.getLectures({page:pageNumber,event:values.event,topic:values.topic,title:values.title,verse: values.verse});
     }
 
     showing100Characters = (sentence) => {
@@ -56,6 +56,81 @@ export class AudioList extends Component {
         return (
             <div>
                 <section className="section section-lg text-center">
+                      <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post">
+                      <div style={{"marginLeft": "10px","margin-right": "10px"}} class="row row-10">
+                        <div class="col-md-3">
+                          <div class="form-wrap">
+                            <label class="form-label-outside" for="contact-2-first-name">Title</label>
+                            <input class="form-input" id="contact-2-first-name" type="text" name="title" data-constraints="@Required"/>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-wrap">
+                            <label class="form-label-outside" for="contact-2-last-name">Author</label>
+                            <input class="form-input" id="contact-2-last-name" type="text" name="topic" data-constraints="@Required"/>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-wrap">
+                            <label class="form-label-outside" for="contact-2-email">Translation</label>
+                            <input class="form-input" id="contact-2-email" type="email" name="translation" data-constraints="@Email @Required"/>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-wrap">
+                            <label class="form-label-outside" for="contact-2-phone">Location</label>
+                            <input class="form-input" id="contact-2-phone" type="text" name="location" data-constraints="@PhoneNumber"/>
+                          </div>
+                        </div>
+                      
+                      </div>
+                      <div style={{"marginLeft": "10px","margin-right": "10px"}} class="row row-10">
+                        <div class="col-md-3">
+                          <div class="form-wrap">
+                            <label class="form-label-outside" for="contact-2-first-name">Topic</label>
+                            <input class="form-input" id="contact-2-first-name" type="text" name="topic" data-constraints="@Required"/>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-wrap">
+                            <label class="form-label-outside" for="contact-2-last-name">Song</label>
+                            <input class="form-input" id="contact-2-last-name" type="text" name="song" data-constraints="@Required"/>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-wrap">
+                            <label class="form-label-outside" for="contact-2-email">Chapter</label>
+                            <input class="form-input" id="contact-2-email" type="email" name="chapter" data-constraints="@Email @Required"/>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-wrap">
+                            <label class="form-label-outside" for="contact-2-phone">Verse</label>
+                            <input class="form-input" id="contact-2-phone" type="text" name="verse" data-constraints="@PhoneNumber"/>
+                          </div>
+                        </div>
+                      
+                      </div>
+                      <div style={{"marginLeft": "10px","margin-right": "10px"}} class="row row-10">
+                        <div class="col-md-3">
+                          <div class="form-wrap">
+                            <label class="form-label-outside" for="contact-2-first-name">Event</label>
+                            <input class="form-input" id="contact-2-first-name" type="text" name="event" data-constraints="@Required"/>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-wrap">
+                            <label class="form-label-outside" for="contact-2-last-name">Date</label>
+                            <input class="form-input" id="contact-2-last-name" type="text" name="date" data-constraints="@Required"/>
+                          </div>
+                        </div>
+                        <div style={{"marginTop":"25px"}}class="col-md-3">
+                        <button class="button button-primary button-winona" type="submit">Search</button>
+                      
+                        </div>
+                      </div>
+                    
+            </form>
                     <div className="container">
                         <div className="table-responsive wow fadeIn">
                             <table className="table table-hover table-job-positions">
