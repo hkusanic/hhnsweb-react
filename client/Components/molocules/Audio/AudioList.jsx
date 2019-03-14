@@ -7,7 +7,7 @@ import { getLectures } from '../../../actions/lectureActions';
 import * as queryString from 'query-string';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
-
+import SearchFilter from '../SeachFilter/SearchFilter';
 export class AudioList extends Component {
     constructor(props) {
         super(props);
@@ -71,6 +71,7 @@ export class AudioList extends Component {
                                     <Translate>{({ translate }) => translate('HOME.audio')}</Translate>
                                 </p>
                             </div>
+                            <SearchFilter />
                             <div className="container">
                                 <div className="table-responsive wow fadeIn">
                                     <table className="table table-hover table-job-positions">
@@ -84,7 +85,7 @@ export class AudioList extends Component {
                                         <tbody>
                                             {this.state.lectures.map((item, key) => {
                                                 return <tr key={key}>
-                                                    <td className="titleColor"> <Link to={{ pathname: '/audioDetails', state: item }}>{renderHTML(item.title.en)}</Link></td>
+                                                    <td className="titleColor"> <Link to={{ pathname: '/audioDetails', state: item }}>{renderHTML(item.en.title)}</Link></td>
                                                     <td>
                                                         <audio controls>
                                                             <source src={renderHTML(item.audio_link)} type="audio/mpeg" />
@@ -112,7 +113,8 @@ export class AudioList extends Component {
                                 />
                             </div>
                         </div>
-                        : ''
+                        : 
+                        null
                 }
 
             </div>
