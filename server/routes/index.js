@@ -18,10 +18,17 @@ exports = module.exports = function (app) {
 	app.all('/api/appointment/create', keystone.middleware.api, routes.api.appointment.create);
 	app.get('/api/appointment/:id', keystone.middleware.api, routes.api.appointment.get);
 	app.get('/api/page/', keystone.middleware.api, routes.api.page.list);
+	app.get('/api/topic/', keystone.middleware.api, routes.api.topic.list);
+	app.get('/api/location/', keystone.middleware.api, routes.api.location.list);
+	app.get('/api/event/', keystone.middleware.api, routes.api.event.list);
 	app.post('/api/blog/find/', keystone.middleware.api, routes.api.blog.get);
 	app.get('/api/blog/', keystone.middleware.api, routes.api.blog.list);
 	app.get('/api/lecture/', keystone.middleware.api, routes.api.lecture.list);
 	app.post('/api/lecture/createBulk/', keystone.middleware.api, routes.api.lecture.createBulk);
+	app.post('/api/lecture/updateBulk/', keystone.middleware.api, routes.api.lecture.updateBulk);
+	app.all('/api/lecture/:id/update', keystone.middleware.api, routes.api.lecture.update);
+	app.post('/api/lecture/:id/remove', keystone.middleware.api, routes.api.lecture.remove);
+	app.post('/api/lecture/', keystone.middleware.api, routes.api.lecture.create);
 	app.post('/api/signin/', keystone.middleware.api, routes.api.user.signin);
 	app.post('/api/signup/', keystone.middleware.api, routes.api.user.signup);
 	app.post('/api/signout/', keystone.middleware.api, routes.api.user.signout);
