@@ -82,7 +82,7 @@ exports.list = function (req, res) {
 				'$options': 'i'
 			}
 		};
-		if (rreq.cookies.language === 'en')
+		if (req.cookies.language === 'en')
 			topic_query = {
 				"en.topic": {
 					$regex: ".*" + req.query.topic + ".*",

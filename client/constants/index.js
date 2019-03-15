@@ -12,9 +12,6 @@ export const CONTACT_US = "CONTACT_US";
 export const GET_BLOGS = "GET_BLOGS";
 export const GET_BLOG = "GET_BLOG";
 
-//Lecture Constants
-export const GET_LECTURES = "GET_LECTURES";
-
 //Appoitment Constants
 export const CREATE_APPOINTMENT = "CREATE_APPOINTMENT";
 export const CREATE_APPOINTMENT_ERROR = "CREATE_APPOINTMENT_ERROR";
@@ -32,3 +29,5 @@ export const UPDATE_APPOINTMENT = "UPDATE_APPOINTMENT";
 export const GET_EVENTS = "GET_EVENTS";
 export const GET_LOCATIONS = "GET_LOCATIONS";
 export const GET_TOPIC = "GET_TOPIC";
+
+export const SEARCH_LECTURE = "SEARCH_LECTURE"; 

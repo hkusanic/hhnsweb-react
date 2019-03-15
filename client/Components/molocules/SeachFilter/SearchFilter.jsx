@@ -15,7 +15,13 @@ export class SearchFilter extends Component {
 			location: "",
 			topic: "",
 			years: [],
-			year: ""
+			year: "",
+			title: "",
+			author: "",
+			translation: "",
+			verse: "",
+			chapter: "",
+			songs: ""
 		};
 	}
 
@@ -27,9 +33,9 @@ export class SearchFilter extends Component {
 		this.setState({ years });
 	}
 
-	renderOptions = (item, key) => {
+	renderOptions = (item, key, type) => {
 		return (
-			<Dropdown.Item bsPrefix="dropdown-item" key={key}>
+			<Dropdown.Item bsPrefix="dropdown-item" key={key} onSelect={()=>this.handleChange(type, item.title)}>
 				{item.title}
 			</Dropdown.Item>
 		);
@@ -44,15 +50,21 @@ export class SearchFilter extends Component {
 	};
 
 	handleChange = (type, value) => {
-		alert("clicked");
-		console.log("type, value=====>>>", type, value);
+		this.setState({
+			...this.state,
+			[type]: value
+		});
+	};
+
+	handleTextChange = (type, event) => {
+		const value = event.target.value;
 		this.setState({
 			...this.state,
 			[type]: value
 		}, () => {
-			console.log("this.state======>>>", this.state);
-		});
-	};
+			console.log("this.state======>>>>>>", this.state);
+		})
+	}
 
 	getYearsList = (startYear, endYear) => {
 		startYear = typeof startYear == "undefined" ? 1980 : startYear;
@@ -63,6 +75,22 @@ export class SearchFilter extends Component {
 		return years;
 	};
 
+	handleSearchData = () => {
+		const body = {
+			event: this.state.event,
+			location: this.state.location,
+			topic: this.state.topic,
+			year: this.state.year,
+			title: this.state.title,
+			author: this.state.author,
+			translation: this.state.translation,
+			verse: this.state.verse,
+			chapter: this.state.chapter,
+			songs: this.state.songs
+		}
+		this.props.searchData(body);
+	}
+
 	render() {
 		if (!this.props.searchFilterReducer.events.length > 0) {
 			return <div>Loading...</div>;
@@ -71,16 +99,16 @@ export class SearchFilter extends Component {
 			<div>
 				<div className="container filterDiv titleDiv">
 					<div className="titleSearch">
-						<input className="form-input" type="text" placeholder="Title" />
+						<input className="form-input" type="text" placeholder="Title" onChange={(event) =>this.handleTextChange('title', event)} />
 					</div>
 					<div className="titleSearch">
-						<input className="form-input" type="text" placeholder="Songs" />
+						<input className="form-input" type="text" placeholder="Songs" onChange={(event) => this.handleTextChange('songs', event)} />
 					</div>
 					<div className="titleSearch">
-						<input className="form-input" type="text" placeholder="Chapter" />
+						<input className="form-input" type="text" placeholder="Chapter" onChange={(event) => this.handleTextChange('chapter', event)} />
 					</div>
 					<div className="titleSearch">
-						<input className="form-input" type="text" placeholder="Verse" />
+						<input className="form-input" type="text" placeholder="Verse" onChange={(event) => this.handleTextChange('verse', event)} />
 					</div>
 				</div>
 				<div className="container filterDiv titleDiv">
@@ -106,7 +134,7 @@ export class SearchFilter extends Component {
 					</div>
 					<div className="filter">
 						<Dropdown bsPrefix="dropdown">
-							<Dropdown.Toggle variant="success">Location</Dropdown.Toggle>
+							<Dropdown.Toggle variant="success">{this.state.location ? this.state.location : 'Select Location' }</Dropdown.Toggle>
 
 							<Dropdown.Menu className="dropdown-menu">
 								{this.props.searchFilterReducer.locations.length > 0
@@ -120,7 +148,7 @@ export class SearchFilter extends Component {
 					<div className="filter">
 						<Dropdown bsPrefix="dropdown">
 							<Dropdown.Toggle bsPrefix="dropdown-toggle" variant="success">
-								Topic
+							{this.state.topic ? this.state.topic : 'Select Topic' }
 							</Dropdown.Toggle>
 
 							<Dropdown.Menu className="dropdown-menu">
@@ -137,7 +165,7 @@ export class SearchFilter extends Component {
 				<div className="container filterDiv titleDiv">
 					<div className="filter">
 						<Dropdown bsPrefix="dropdown">
-							<Dropdown.Toggle variant="success">Event</Dropdown.Toggle>
+							<Dropdown.Toggle variant="success">{this.state.event ? this.state.event : 'Select Event' }</Dropdown.Toggle>
 
 							<Dropdown.Menu className="dropdown-menu">
 								{this.props.searchFilterReducer.events.length > 0
@@ -150,7 +178,7 @@ export class SearchFilter extends Component {
 					</div>
 					<div className="filter">
 						<Dropdown bsPrefix="dropdown">
-							<Dropdown.Toggle variant="success">Date</Dropdown.Toggle>
+							<Dropdown.Toggle variant="success">{this.state.year ? this.state.year : 'Select Year' }</Dropdown.Toggle>
 
 							<Dropdown.Menu>
 								{this.state.years.length > 0
@@ -162,7 +190,7 @@ export class SearchFilter extends Component {
 						</Dropdown>
 					</div>
 					<div className="form-wrap btnDiv">
-						<button className="button button-block button-primary-lighten button-winona">
+						<button className="button button-block button-primary-lighten button-winona" onClick={this.handleSearchData}>
 							Search
 						</button>
 					</div>
