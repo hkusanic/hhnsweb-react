@@ -3,20 +3,34 @@ import serverAddress from './config';
 
 
 const utils = {
-    getlectures : (body) => {
+    searchLecture: (body) => {
         const page = body.page || 1;
-        const event = body.event || '';
-        const topic = body.topic || '';
         const title = body.title || '';
-        const verse = body.verse || '';
-   
-       
-        let url = serverAddress + `/api/lecture?page=${page}${event ? '&event=' + event : ''}
-                 ${topic ? '&topic=' + topic : ''}
+        const songs = body.songs || '';
+        const chapter = body.chapter || '';
+        const verse = body.verse || ''; 
+        const author = body.author || '';
+        const translation = body.translation || ''; 
+        const location = body.location || '';
+        const topic = body.topic || '';
+        const event = body.event || '';
+        const year = body.year || '';
+
+        let url = serverAddress + `/api/lecture?page=${page}${title ? '&title=' + title : ''}
+                 ${songs ? '&songs=' + songs : ''}
+                 ${chapter ? '&chapter=' + chapter : ''}
+                 ${verse ? '&verse=' + verse : ''}
                  ${title ? '&title=' + title : ''}
-                 ${verse ? '&verse=' + verse : ''}`;
+                 ${author ? '&author=' + author : ''}
+                 ${title ? '&title=' + title : ''}
+                 ${translation ? '&translation=' + translation : ''}
+                 ${location ? '&location=' + location : ''}
+                 ${topic ? '&topic=' + topic : ''}
+                 ${event ? '&event=' + event : ''}
+                 ${year ? '&year=' + year : ''}`;
         return axios.get(url);
     }
+
 }
 
 export default utils;
