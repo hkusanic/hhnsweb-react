@@ -82,7 +82,7 @@ exports.list = function (req, res) {
 				'$options': 'i'
 			}
 		};
-		if (rreq.cookies.language === 'en')
+		if (req.cookies.language === 'en')
 			topic_query = {
 				"en.topic": {
 					$regex: ".*" + req.query.topic + ".*",
@@ -125,11 +125,83 @@ exports.list = function (req, res) {
 		query.push(event_query);
 	}
 
+	if (req.query.chapter) {
+		let chapter_query = {
+			"chapter": {
+				$regex: ".*" + req.query.chapter + ".*",
+				'$options': 'i'
+			}
+		};
+		if (req.cookies.language === 'en')
+			event_query = {
+				"chapter": {
+					$regex: ".*" + req.query.chapter + ".*",
+					'$options': 'i'
+				}
+			};
+		if (req.cookies.language === 'ru')
+			event_query = {
+				"chapter": {
+					$regex: ".*" + req.query.chapter + ".*",
+					'$options': 'i'
+				}
+			};
+
+		query.push(chapter_query);
+	}
+
+	if (req.query.song) {
+		let song_query = {
+			"song": {
+				$regex: ".*" + req.query.song + ".*",
+				'$options': 'i'
+			}
+		};
+		if (req.cookies.language === 'en')
+		song_query = {
+				"song": {
+					$regex: ".*" + req.query.song + ".*",
+					'$options': 'i'
+				}
+			};
+		if (req.cookies.language === 'ru')
+		song_query = {
+				"song": {
+					$regex: ".*" + req.query.song + ".*",
+					'$options': 'i'
+				}
+			};
+
+		query.push(song_query);
+	}
+
+	if (req.query.transcriptions) {
+		let transcription_query = { "en.transcription.text" : { $exists: true } };
+		
+		if (req.cookies.language === 'en')
+		transcription_query =  { "en.transcription.text" : { $exists: true } };
+		if (req.cookies.language === 'ru')
+		transcription_query =  { "ru.transcription.text" : { $exists: true } };
+
+		query.push(transcription_query);
+	}
+
+	if (req.query.summaries) {
+		let summaries_query = { "en.summary.text" : { $exists: true } };
+		
+		if (req.cookies.language === 'en')
+		summaries_query =  { "en.summary.text" : { $exists: true } };
+		if (req.cookies.language === 'ru')
+		summaries_query =  { "ru.summary.text" : { $exists: true } };
+
+
+		query.push(summaries_query);
+	}
 
 
 	let filters = {};
 
-	if (req.query.event || req.query.topic || req.query.title || req.query.verse || req.query.location) {
+	if (query.length > 0) {
 		filters = {
 			"$and": query
 		}
