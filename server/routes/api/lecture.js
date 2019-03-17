@@ -176,23 +176,23 @@ exports.list = function (req, res) {
 	}
 
 	if (req.query.transcriptions) {
-		let transcription_query = { "en.transcription.text" : { $exists: true } };
+		let transcription_query ={"en.transcription.text" : {"$exists" : true, "$ne" : ""}}
 		
 		if (req.cookies.language === 'en')
-		transcription_query =  { "en.transcription.text" : { $exists: true } };
+		transcription_query = {"en.transcription.text" : {"$exists" : true, "$ne" : ""}}
 		if (req.cookies.language === 'ru')
-		transcription_query =  { "ru.transcription.text" : { $exists: true } };
+		transcription_query = {"ru.transcription.text" : {"$exists" : true, "$ne" : ""}}
 
 		query.push(transcription_query);
 	}
 
 	if (req.query.summaries) {
-		let summaries_query = { "en.summary.text" : { $exists: true } };
+		let summaries_query = {"en.summary.text" : {"$exists" : true, "$ne" : ""}}
 		
 		if (req.cookies.language === 'en')
-		summaries_query =  { "en.summary.text" : { $exists: true } };
+		summaries_query =  {"en.summary.text" : {"$exists" : true, "$ne" : ""}}
 		if (req.cookies.language === 'ru')
-		summaries_query =  { "ru.summary.text" : { $exists: true } };
+		summaries_query =  {"en.summary.text" : {"$exists" : true, "$ne" : ""}}
 
 
 		query.push(summaries_query);

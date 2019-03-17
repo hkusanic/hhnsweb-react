@@ -3,6 +3,7 @@ const async = require('async');
 var Email = require('keystone-email');
 var nodemailer = require('nodemailer');
 var EMAIL_CONFIG = require('../../constants/constant');
+let logger = require('./../../logger/logger');
 
 var transporter = nodemailer.createTransport(EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig);
 
@@ -25,9 +26,17 @@ function createMailBody (from, to, subject, html) {
 
 exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
+	logger.info({
+		req: req
+	}, "API list users");
 	keystone.list('User').model.find(function (err, items) {
 		// Make sure we are handling errors
-		if (err) return res.apiError('database error', err);
+		if (err) {
+			logger.error({
+				error: err
+			}, "API list users");
+			return res.apiError('database error', err);
+		}
 		res.apiResponse({
 			// Filter page by
 			users: items,
@@ -40,12 +49,18 @@ exports.list = function (req, res) {
 
 
 exports.signin = function (req, res) {
+	logger.info({
+		req: req
+	}, "API signin user");
 
 	if (!req.body.username || !req.body.password) return res.json({ success: false });
 
 	keystone.list('User').model.findOne({ email: req.body.username }).exec(function (err, user) {
 
 		if (err || !user) {
+			logger.error({
+				error: err
+			}, "API signin user");
 			return res.json({
 				success: false,
 				session: false,
@@ -72,6 +87,9 @@ exports.signin = function (req, res) {
 			});
 
 		}, function (err) {
+			logger.error({
+				error: err
+			}, "API signin user");
 
 			return res.json({
 				success: true,
@@ -99,6 +117,10 @@ exports.signout = function (req, res) {
 
 
 exports.signup = function (req, res) {
+
+	logger.info({
+		req: req
+	}, "API signup user");
 
 	async.series([
 		(cb) => {
@@ -150,7 +172,12 @@ exports.signup = function (req, res) {
 		}],
 		(err) => {
 
-			if (err) console.log('ERROR');
+			if (err) {
+				logger.error({
+					error: err
+				}, "API signup user");
+				console.log('ERROR');
+			}
 			let onSuccess = function (user) {
 				res.json({
 					success: true,
@@ -171,6 +198,9 @@ exports.signup = function (req, res) {
 			};
 
 			let onFail = function (e) {
+				logger.error({
+					error: e
+				}, "API signup user");
 				res.json({ error: { title: 'Sign up error', detail: 'There was a problem signing you up, please try again' } });
 				console.log('ERROR');
 			};
@@ -183,7 +213,9 @@ exports.signup = function (req, res) {
 
 
 exports.forgotpassword = function (req, res) {
-	
+	logger.info({
+		req: req
+	}, "API forgotpassword");
 	const msg = {
 		to: req.body.email,
 		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
@@ -195,11 +227,21 @@ exports.forgotpassword = function (req, res) {
 	}
 
 	keystone.list('User').model.findOne().where('email', req.body.email).exec((err, userFound) => {
-		if (err) return res.json({ error: { title: 'Not able to reset password' } });
+		if (err) {
+			logger.error({
+				error: err
+			}, "API forgotpassword");
+			return res.json({ error: { title: 'Not able to reset password' } });
+		}
 		
 	 userFound.accessKeyId = keystone.utils.randomString();
 	 userFound.save((err) => {
-	  if (err) return res.json({ error: { title: 'Not able to reset password' } });			;
+	  if (err) {
+		logger.error({
+			error: err
+		}, "API forgotpassword");
+		  return res.json({ error: { title: 'Not able to reset password' } });	
+	  	}		;
 	  msg.subject = 'Password Reset';
 	  msg.html = `
 	  <p>Hare Krishna,</p>
@@ -218,6 +260,9 @@ exports.forgotpassword = function (req, res) {
 			console.log('email was sent', res);
 		})
 		.catch((err) => {
+			logger.error({
+				error: err
+			}, "API forgotpassword");
 			console.error(err);
 		});
 		  res.json({
@@ -238,7 +283,12 @@ exports.getuserbyaccessid = function (req, res) {
 
 	keystone.list('User').model.findOne().where('accessKeyId', req.body.accessid).exec((err, userFound) => {
 		
-		if (err || !userFound) return res.json({ error: { title: 'Not able to find user' } });
+		if (err || !userFound) {
+			logger.error({
+				error: err
+			}, "API getuserbyaccessid");
+			return res.json({ error: { title: 'Not able to find user' } });
+		}
 		res.json({
 			email: userFound.email,
 			success: true,
@@ -262,14 +312,29 @@ exports.resetpassword = function (req, res) {
 	}
 
 	keystone.list('User').model.findOne().where('accessKeyId', req.body.accessid).exec((err, userFound) => {
-		if (err || !userFound) return res.json({ error: { title: 'Not able to find user' } });
+		if (err || !userFound) {
+			logger.error({
+				error: err
+			}, "API resetpassword");
+			return res.json({ error: { title: 'Not able to find user' } });
+		}
 		keystone.list('User').model.findOne().where('email', req.body.email).exec((err, userFound) => {
-			if (err || !userFound) return res.json({ error: { title: 'Not able to reset password' } });
+			if (err || !userFound) {
+				logger.error({
+					error: err
+				}, "API resetpassword");
+				return res.json({ error: { title: 'Not able to reset password' } });
+			}
 			userFound.password = req.body.password;
 			let userPassword = userFound.password; 
 			userFound.accessKeyId = '';
 			userFound.save((err) => {
-				if (err) return res.json({ error: { title: 'Not able to reset password' } });			;
+				if (err) {
+					logger.error({
+						error: err
+					}, "API resetpassword");
+					return res.json({ error: { title: 'Not able to reset password' } });
+				}			;
 				msg.subject = 'Your Password is Successfully Changed';
 				msg.html = `
 				<p>Hare Krishna,</p>
@@ -288,6 +353,9 @@ exports.resetpassword = function (req, res) {
 					  console.log('email was sent', res);
 				  })
 				  .catch((err) => {
+					logger.error({
+						error: err
+					}, "API resetpassword");
 					  console.error(err);
 				  });
 				  res.json({
@@ -311,7 +379,12 @@ exports.editprofile = function (req, res) {
 	}
 
 	keystone.list('User').model.findOne().where('email', req.user.email).exec((err, userFound) => {
-		if (err || !userFound) return res.json({ error: { title: 'Not able to reset password' } });
+		if (err || !userFound) {
+			logger.error({
+				error: err
+			}, "API editprofile");
+			return res.json({ error: { title: 'Not able to reset password' } });
+		}
 	
 	userFound.name.first = req.body.firstName;
 	userFound.name.last = req.body.lastName;
@@ -319,7 +392,12 @@ exports.editprofile = function (req, res) {
 	userFound.countryCode = req.body.countryCode;
 	 
 	 userFound.save((err) => {
-	  if (err) return res.json({ error: { title: 'Not able to reset password' } });			;
+	  if (err) {
+		logger.error({
+			error: err
+		}, "API editprofile");
+		  return res.json({ error: { title: 'Not able to reset password' } });
+	}			;
 	  
 		  res.json({
 			success: true,

@@ -1,4 +1,5 @@
 var keystone = require('keystone');
+let logger = require('./../../logger/logger');
 
 /**
  * List Page
@@ -13,11 +14,19 @@ var BlogGet = keystone.get('Blog');
 // More about keystone api here: https://gist.github.com/JedWatson/9741171
 exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
+	logger.info({
+		req: req
+	}, "API list blog");
 	Blog.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
 	}).exec(function (err, items) {
-		if (err) return res.apiError('database error', err);
+		if (err) {
+			logger.error({
+				error: err
+			}, "API list blog");
+			return res.apiError('database error', err);
+		}
 		res.apiResponse({
 			// Filter page by
 			blog: items,
@@ -30,9 +39,22 @@ exports.list = function (req, res) {
 
 
 exports.get = function (req, res) {
+	logger.info({
+		req: req
+	}, "API get blog");
 	Blog.model.findOne().where({ uuid: req.body.uuid }).exec(function (err, item) {
-		if (err) return res.apiError('database error', err);
-		if (!item) return res.apiError('not found');
+		if (err) {
+			logger.error({
+				error: err
+			}, "API get blog");
+			return res.apiError('database error', err);
+		}
+		if (!item) {
+			logger.error({
+				error: 'item not found'
+			}, "API get blog");
+			return res.apiError('not found');
+		}
 		res.apiResponse({
 			blog: item,
 		});
