@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import renderHTML from "react-render-html";
-import Pagination from "react-js-pagination";
-import { Link } from "react-router-dom";
+import Auth from "../../../utils/Auth";
 import { connect } from "react-redux";
 import { searchLecture } from "../../../actions/lectureActions";
-import Auth from "../../../utils/Auth";
-import { Translate } from "react-localize-redux";
+import { Link } from "react-router-dom";
+import renderHTML from "react-render-html";
+import Pagination from "react-js-pagination";
 import SearchFilter from "../SeachFilter/SearchFilter";
-export class AudioList extends Component {
+
+export class Summaries extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -15,7 +15,7 @@ export class AudioList extends Component {
 			totalItem: null,
 			currentPage: null,
 			page: null,
-			lectures: [],
+			summaries: [],
 			body: {}
 		};
 	}
@@ -23,38 +23,17 @@ export class AudioList extends Component {
 	componentDidMount() {
 		const isUserLogin = Auth.isUserAuthenticated();
 		this.setState({
-			lectures: this.props.lecturesDetails.lectures,
-			currentPage: this.props.lecturesDetails.currentPage,
-			totalItem: this.props.lecturesDetails.totalLectures,
 			isUserLogin
 		});
-		this.props.searchLecture({ page: 1 });
+		this.props.searchLecture({ page: 1, summaries: true });
 	}
-
 	componentWillReceiveProps(nextProps) {
 		this.setState({
-			lectures: nextProps.lecturesDetails.lectures,
+			summaries: nextProps.lecturesDetails.lectures,
 			currentPage: nextProps.lecturesDetails.currentPage,
 			totalItem: nextProps.lecturesDetails.totalLectures
 		});
 	}
-
-	handlePageChange = pageNumber => {
-		let body = Object.assign({}, this.state.body);
-		body.page = pageNumber;
-		this.props.searchLecture(body);
-	};
-
-	showing100Characters = sentence => {
-		var result = sentence;
-		var resultArray = result.split(" ");
-		if (resultArray.length > 10) {
-			resultArray = resultArray.slice(0, 10);
-			result = resultArray.join(" ") + "...";
-		}
-		return result;
-	};
-
 	searchData = body => {
 		this.setState({ body }, () => {
 			this.props.searchLecture(body);
@@ -70,16 +49,12 @@ export class AudioList extends Component {
 				{!this.state.isUserLogin ? (
 					<div>
 						<div style={{ textAlign: "center" }}>
-							<p className="bookingForm">
-								<Translate>
-									{({ translate }) => translate("HOME.audio")}
-								</Translate>
-							</p>
+							<p className="bookingForm">Summaries</p>
 						</div>
 						<SearchFilter searchData={this.searchData} />
 						<div className="container">
 							<div className="table-responsive wow fadeIn">
-								{this.state.lectures.length > 0 ? (
+								{this.state.summaries.length > 0 ? (
 									<table className="table table-hover table-job-positions">
 										<thead>
 											<tr>
@@ -89,7 +64,7 @@ export class AudioList extends Component {
 											</tr>
 										</thead>
 										<tbody>
-											{this.state.lectures.map((item, key) => {
+											{this.state.summaries.map((item, key) => {
 												return (
 													<tr key={key}>
 														<td className="titleColor">
@@ -159,4 +134,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(AudioList);
+)(Summaries);

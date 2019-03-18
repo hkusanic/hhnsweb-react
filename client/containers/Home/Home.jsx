@@ -24,6 +24,8 @@ import AppointmentListing from '../../Components/molocules/AppointmentListing/Ap
 import Photos from '../../Components/molocules/Photos/Photos';
 import Gallery from '../../Components/molocules/Gallery/Gallery';
 import ScrollToTop from '../../Components/atoms/ScrollToTop/ScrollToTop';
+import Summaries from '../../Components/molocules/Summaries/Summaries';
+import Transcritpion from '../../Components/molocules/Transcriptions/Transcriptions';
 import {
     Route,
     Switch
@@ -71,6 +73,8 @@ export class Home extends Component {
                                 <Route path='/video' component={VideoList} />
                                 <Route path='/videoDetails' component={VideoDetails} />
                                 <Route path='/profile' component={UserProfile} />
+                                <Route path='/transcriptions' component={Transcritpion} />
+                                <Route path='/summaries' component={Summaries} />
                             </ShellCompoenent>
                         </ScrollToTop>
                     </Switch>

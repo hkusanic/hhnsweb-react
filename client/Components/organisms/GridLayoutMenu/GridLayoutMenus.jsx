@@ -10,13 +10,16 @@ export class GridLayoutMenus extends React.Component {
     }
     componentDidMount(){
         const isUserLogin = Auth.isUserAuthenticated();
-        this.setState({isUserLogin})
+        this.setState({isUserLogin},()=>{
+            console.log("user login ====>>>>>", this.state.isUserLogin)
+        })
     }
 
     handleNavigationClick = () => {
         $('.login-modal-2').removeClass('active');
         $('.register-modal-2').removeClass('active');
         if (this.state.isUserLogin) {
+            alert("hello");
             $('.login-modal-2').addClass('active');
             $('.rd-navbar-toggle').removeClass('active');
             $('.rd-navbar-nav-wrap').removeClass('active');
@@ -35,8 +38,8 @@ export class GridLayoutMenus extends React.Component {
                             <SingleGridMenu handleNavigationClick={this.handleNavigationClick} image='images/tour-4-270x200.jpg' menu="Lectures" link="/lectures" />
                             <SingleGridMenu handleNavigationClick={this.handleNavigationClick} image='images/tour-5-270x200.jpg' menu="Audio" link="/audio" />
                             <SingleGridMenu handleNavigationClick={this.handleNavigationClick} image='images/tour-6-270x200.jpg' menu="Video" link="/video" />
-                            <SingleGridMenu image='images/tour-7-270x200.jpg' menu="Transcriptions" link="/contact" />
-                            <SingleGridMenu image='images/tour-8-270x200.jpg' menu="Summaries" link="/contact" />
+                            <SingleGridMenu handleNavigationClick={this.handleNavigationClick} image='images/tour-7-270x200.jpg' menu="Transcriptions" link="/transcriptions" />
+                            <SingleGridMenu handleNavigationClick={this.handleNavigationClick} image='images/tour-8-270x200.jpg' menu="Summaries" link="/summaries" />
                         </div>
                     </div>
                 </section>

@@ -3,7 +3,7 @@ import renderHTML from 'react-render-html';
 import Pagination from 'react-js-pagination';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getLectures } from '../../../actions/lectureActions';
+import { searchLecture } from '../../../actions/lectureActions';
 import { Translate } from 'react-localize-redux';
 import Auth from '../../../utils/Auth';
 export class VideoList extends Component {
@@ -26,7 +26,7 @@ export class VideoList extends Component {
             totalItem: this.props.lecturesDetails.totalLectures,
             isUserLogin
         })
-        this.props.getLectures(1);
+        this.props.searchLecture({page : 1});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -38,7 +38,7 @@ export class VideoList extends Component {
     }
 
     handlePageChange = (pageNumber) => {
-        this.props.getLectures(pageNumber);
+        this.props.searchLecture({page: pageNumber});
     }
 
     showing100Characters = (sentence) => {
@@ -76,7 +76,7 @@ export class VideoList extends Component {
                                         <tbody>
                                             {this.state.lectures.map((item, key) => {
                                                 return <tr key={key}>
-                                                    <td className="titleColor"><Link to={{ pathname: '/videoDetails', state: item }}>{renderHTML(item.title.en)}</Link></td>
+                                                    <td className="titleColor"><Link to={{ pathname: '/videoDetails', state: item }}>{renderHTML(item.en.title)}</Link></td>
                                                     <td>60</td>
                                                 </tr>
                                             })}
@@ -114,8 +114,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getLectures: (page) => {
-            dispatch(getLectures(page));
+        searchLecture: (body) => {
+            dispatch(searchLecture(body));
         }
     }
 }

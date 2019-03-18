@@ -17,12 +17,12 @@ export class VideoDetails extends Component {
                             <div class="col-lg-12">
                                 <article class="post-creative">
                                     <h3 class="post-creative-title">
-                                        {renderHTML(this.props.location.state.title.en)}
+                                        {renderHTML(this.props.location.state.en.title)}
                                     </h3>
                                     <ul class="post-creative-meta">
                                         <li><span class="icon mdi mdi-calendar-clock"></span>
                                             <time datetime="2018">
-                                                {new Date(this.props.location.state.date).toDateString()}
+                                                {new Date(this.props.location.state.created_date).toDateString()}
                                             </time>
                                         </li>
                                         <li><span class="icon mdi mdi-tag-multiple"></span><a>Lecture</a></li>
@@ -31,7 +31,8 @@ export class VideoDetails extends Component {
                                 <div>
 
                                     <div className="row row-50 row-xxl-70 padTop flexDiv">
-                                        {
+                                        { 
+                                            this.props.location.state.youtube ? 
                                             this.props.location.state.youtube.map((item, key) => {
                                                 return <div key={key} className="flexRow">
                                                     <iframe className="iframeStyle"
@@ -40,6 +41,7 @@ export class VideoDetails extends Component {
                                                 </div>
 
                                             })
+                                            : null
                                         }
                                     </div>
                                     {/* <div className="row row-50 row-xxl-70">
