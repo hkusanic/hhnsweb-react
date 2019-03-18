@@ -147,7 +147,7 @@ export class Navigation extends Component {
                                     </div>
                                 </div>
                                     : ''}
-                                <img src="https://ik.imagekit.io/gcwjdmqwwznjl/banner1_HyhqTWrIE.png" />
+                                <img className="img-banner-width" src="https://ik.imagekit.io/gcwjdmqwwznjl/banner1_HyhqTWrIE.png" />
                             </div>
                             <div className="rd-navbar-main-outer menubanner">
                                 <div className="menulogoDiv">

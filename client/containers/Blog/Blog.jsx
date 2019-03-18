@@ -49,7 +49,7 @@ export class Blogs extends Component {
         return (
             <div>
                 <section className="bg-gray-100">
-                    <img src="https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png" />
+                    <img  className="img-banner-width" src="https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png" />
                 </section>
                 {
                     !this.state.isUserLogin ?

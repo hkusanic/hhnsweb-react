@@ -53,7 +53,7 @@ export class Lectures extends Component {
         return (
             <div>
                 <section className="bg-gray-100">
-                    <img src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png" />
+                    <img  className="img-banner-width" src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png" />
                 </section>
                 {
                     !this.state.isUserLogin ?

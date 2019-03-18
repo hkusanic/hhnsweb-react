@@ -145,7 +145,7 @@ export class Booking extends Component {
             <div>
                 <div>
                     <section className="bg-gray-100">
-                        <img src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v1_BJC5u2LU4.png" />
+                        <img  className="img-banner-width" src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v1_BJC5u2LU4.png" />
                     </section>
                 </div>
                 {

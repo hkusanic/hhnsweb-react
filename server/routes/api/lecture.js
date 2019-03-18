@@ -192,10 +192,21 @@ exports.list = function (req, res) {
 		if (req.cookies.language === 'en')
 		summaries_query =  {"en.summary.text" : {"$exists" : true, "$ne" : ""}}
 		if (req.cookies.language === 'ru')
-		summaries_query =  {"en.summary.text" : {"$exists" : true, "$ne" : ""}}
+		summaries_query =  {"ru.summary.text" : {"$exists" : true, "$ne" : ""}}
 
 
 		query.push(summaries_query);
+	}
+
+	if (req.query.year) {
+		let year_query = {
+			"published_date": {
+				$regex: ".*" + req.query.year + ".*",
+				'$options': 'i'
+			}
+		};
+
+		query.push(year_query);
 	}
 
 

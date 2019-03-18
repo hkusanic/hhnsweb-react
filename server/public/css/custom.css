@@ -434,3 +434,9 @@
         background-color: #db8d4e !important;
         color: white;
     }
+
+    @media (min-width: 1440px) and (max-width:2560px){
+        .img-banner-width {
+            width: 2560px !important;
+        }
+    }
