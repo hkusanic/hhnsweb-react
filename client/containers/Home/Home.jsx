@@ -26,6 +26,8 @@ import Gallery from '../../Components/molocules/Gallery/Gallery';
 import ScrollToTop from '../../Components/atoms/ScrollToTop/ScrollToTop';
 import Summaries from '../../Components/molocules/Summaries/Summaries';
 import Transcritpion from '../../Components/molocules/Transcriptions/Transcriptions';
+import TranscriptionDetails from '../../Components/molocules/Transcriptions/TranscriptionsDetails';
+import SummariesDetails from '../../Components/molocules/Summaries/SummariesDetails';
 import {
     Route,
     Switch
@@ -75,6 +77,8 @@ export class Home extends Component {
                                 <Route path='/profile' component={UserProfile} />
                                 <Route path='/transcriptions' component={Transcritpion} />
                                 <Route path='/summaries' component={Summaries} />
+                                <Route path='/summariesDetails' component={SummariesDetails} />
+                                <Route path='/transcriptionDetails' component={TranscriptionDetails} />
                             </ShellCompoenent>
                         </ScrollToTop>
                     </Switch>

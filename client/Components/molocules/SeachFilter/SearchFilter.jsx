@@ -58,6 +58,7 @@ export class SearchFilter extends Component {
 	};
 
 	handleChange = (type, value) => {
+		value = value.toString().trim();
 		this.setState({
 			...this.state,
 			[type]: value
@@ -65,14 +66,11 @@ export class SearchFilter extends Component {
 	};
 
 	handleTextChange = (type, event) => {
-		const value = event.target.value;
+		const value = event.target.value.toString().trim();
 		this.setState(
 			{
 				...this.state,
 				[type]: value
-			},
-			() => {
-				console.log("this.state======>>>>>>", this.state);
 			}
 		);
 	};
