@@ -1,13 +1,13 @@
 const keystone = require('keystone');
 const Types = keystone.Field.Types;
 
-let Lecture = new keystone.List('Lecture', {
+let Kirtan = new keystone.List('Kirtan', {
 	autokey: { path: 'slug', from: 'uuid', unique: true },
 	map: { name: 'uuid' },
 	defaultSort: '-published_date',
 });
 
-Lecture.add({
+Kirtan.add({
 	uuid: { type: String, unique: true, index:true},
 	created_date: { type: Types.Date, default: Date.now },
 	published_date: { type: String },
@@ -23,23 +23,23 @@ Lecture.add({
 	transcribe :{type:String},
 	translation_required: { type:Boolean, default:true},
 	youtube: { type: Types.TextArray },
-	part: { type: String },
-	chapter: {type: String},
-	verse: {type: String},
+    type: {
+		type: Types.Select,
+		options: ['Kirtan', 'Bhajan'],
+		default: 'Kirtan',
+	},
 	en:{
 	title:{type:String},
 	event: { type: String},
 	topic:{type: String},
 	transcription: {
 		text: {type: Types.Text},
-		attachment_name: {type: String},
-		attachment_link: {type: Types.Url}
+		attachment: {type: Types.Url}
 	},
 	location: {type: String},
 	summary: {
 		text: {type: Types.Text},
-		attachment_name: {type: String},
-		attachment_link: {type: Types.Url}
+		attachment: {type: Types.Url}
 	}
 	},
 	ru:{
@@ -48,39 +48,37 @@ Lecture.add({
 		topic:{type: String},
 		transcription: {
 			text: {type: Types.Text},
-			attachment_name: {type: String},
-			attachment_link: {type: Types.Url}
+			attachment: {type: Types.Url}
 		},
 		location: {type: String},
 		summary: {
 			text: {type: Types.Text},
-			attachment_name: {type: String},
-			attachment_link: {type: Types.Url}
+			attachment: {type: Types.Url}
 		}
    }
 	
 	
 });
 
-// Lecture.schema.add({ data: mongoose.Schema.Types.Mixed }); // you can add mongoose types like this.. but they should be defined outside .add()
+// Kirtan.schema.add({ data: mongoose.Schema.Types.Mixed }); // you can add mongoose types like this.. but they should be defined outside .add()
 
-Lecture.schema.pre('save', function (next) {
+Kirtan.schema.pre('save', function (next) {
 	next();
 });
 
-Lecture.schema.post('save', function (next) {
+Kirtan.schema.post('save', function (next) {
 	// next();
 });
 
-Lecture.schema.post('validate', function (err, next) {
+Kirtan.schema.post('validate', function (err, next) {
 	next();
 });
 
-Lecture.schema.virtual('commentCount').get(function () {
+Kirtan.schema.virtual('commentCount').get(function () {
 	return this.comments.length;
 });
 
-Lecture.schema.pre('remove', function (next) {
+Kirtan.schema.pre('remove', function (next) {
 	next();
 	// const comment = mongoose.model('comment'); // this is how you load other models to avoid circular reference with import
 
@@ -88,8 +86,8 @@ Lecture.schema.pre('remove', function (next) {
 	// 	.then(() => next()); // remove array of commenets
 });
 
-Lecture.schema.post('remove', function (next) {
+Kirtan.schema.post('remove', function (next) {
 	next();
 });
 
-Lecture.register();
+Kirtan.register();

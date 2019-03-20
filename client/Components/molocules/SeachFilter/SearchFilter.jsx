@@ -75,6 +75,22 @@ export class SearchFilter extends Component {
 		);
 	};
 
+	reset = ()=>{
+        this.setState({
+			event: "",
+			location: "",
+			topic: "",
+			//years: [],
+			year: "",
+			title: "",
+			author: "",
+			translation: "",
+			verse: "",
+			chapter: "",
+			songs: ""
+		});
+    }
+
 	getYearsList = (startYear, endYear) => {
 		startYear = typeof startYear == "undefined" ? 1980 : startYear;
 		var years = [];
@@ -168,7 +184,7 @@ export class SearchFilter extends Component {
 					<div className="filter">
 						<Dropdown bsPrefix="dropdown">
 							<Dropdown.Toggle variant="success">
-								{this.state.location ? this.state.location : "Select Location"}
+								{this.state.location ? this.state.location : "Location"}
 							</Dropdown.Toggle>
 
 							<Dropdown.Menu className="dropdown-menu">
@@ -183,7 +199,7 @@ export class SearchFilter extends Component {
 					<div className="filter">
 						<Dropdown bsPrefix="dropdown">
 							<Dropdown.Toggle bsPrefix="dropdown-toggle" variant="success">
-								{this.state.topic ? this.state.topic : "Select Topic"}
+								{this.state.topic ? this.state.topic : "Topic"}
 							</Dropdown.Toggle>
 
 							<Dropdown.Menu className="dropdown-menu">
@@ -201,10 +217,10 @@ export class SearchFilter extends Component {
 					<div className="filter">
 						<Dropdown bsPrefix="dropdown">
 							<Dropdown.Toggle variant="success">
-								{this.state.event ? this.state.event : "Select Event"}
+								{this.state.event ? this.state.event : "Event"}
 							</Dropdown.Toggle>
 
-							<Dropdown.Menu className="dropdown-menu">
+							<Dropdown.Menu style={{"maxHeight": "10em !important"}} className="dropdown-menu">
 								{this.props.searchFilterReducer.events.length > 0
 									? this.props.searchFilterReducer.events.map((item, key) =>
 											this.renderOptions(item, key, "event")
@@ -216,10 +232,10 @@ export class SearchFilter extends Component {
 					<div className="filter">
 						<Dropdown bsPrefix="dropdown">
 							<Dropdown.Toggle variant="success">
-								{this.state.year ? this.state.year : "Select Year"}
+								{this.state.year ? this.state.year : "Year"}
 							</Dropdown.Toggle>
 
-							<Dropdown.Menu>
+							<Dropdown.Menu style={{"maxHeight": "10em !important"}}>
 								{this.state.years.length > 0
 									? this.state.years.map((item, key) =>
 											this.renderYearsList(item, key, "year")
@@ -229,13 +245,23 @@ export class SearchFilter extends Component {
 						</Dropdown>
 					</div>
 					<div className="form-wrap btnDiv">
-						<button
+						<button style={{"padding": "0px","height":"40px"}}
 							className="button button-block button-primary-lighten button-winona"
 							onClick={this.handleSearchData}
 						>
 							Search
 						</button>
+						
 					</div>
+					<div className="form-wrap btnDiv">
+					
+					<button style={{"padding": "0px","height":"40px"}}
+							className="button button-block button-primary-lighten button-winona"
+							onClick={this.reset}
+						>
+							Reset
+						</button>
+						</div>
 				</div>
 			</div>
 		);
