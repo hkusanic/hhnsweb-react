@@ -76,6 +76,8 @@ Appointment.add({
 	},
 });
 
+Appointment.defaultColumns = 'title_en, date|15%, needs_translation|10%';
+
 Appointment.schema.pre('save', function (next) {
 	next();
 });
