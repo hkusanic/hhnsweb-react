@@ -79,12 +79,12 @@ export class Summaries extends Component {
 						<div className="container">
 							<div className="table-responsive wow fadeIn">
 								{this.state.summaries.length > 0 ? (
-									<table className="table table-hover table-job-positions dataDiv">
+									<table className="table table-hover table-job-positions videoTable">
 										<tbody>
 											{this.state.summaries.map((item, key) => {
 												return (
 													<tr key={key}>
-														<td className="titleColor" style={{textAlign: 'left', paddingLeft: '0% !important'}}>
+														<td className="titleColor dataRowAlign">
 															{" "}
 															<Link
 																to={{ pathname: "/summariesDetails", state: item }}
@@ -105,18 +105,22 @@ export class Summaries extends Component {
 							</div>
 						</div>
 						<div className="padLeft">
-							<Pagination
-								className="paginationStyle"
-								innerClass="pagination"
-								activeClass="page-item active"
-								itemClass="page-item"
-								linkClass="page-link button-winona"
-								activePage={this.state.currentPage}
-								itemsCountPerPage={20}
-								totalItemsCount={this.state.totalItem}
-								pageRangeDisplayed={5}
-								onChange={this.handlePageChange}
-							/>
+						{
+							this.state.summaries.length > 0 ? 
+								<Pagination
+									className="paginationStyle"
+									innerClass="pagination"
+									activeClass="page-item active"
+									itemClass="page-item"
+									linkClass="page-link button-winona"
+									activePage={this.state.currentPage}
+									itemsCountPerPage={20}
+									totalItemsCount={this.state.totalItem}
+									pageRangeDisplayed={5}
+									onChange={this.handlePageChange}
+								/>
+							: null
+						}		
 						</div>
 					</div>
 				) : null}

@@ -91,12 +91,12 @@ export class AudioList extends Component {
 					  </p>
 						</div>
 						<div className="container">
-						<Collapse isOpened={!this.state.iconSearch}>
-						<SearchFilter searchData={this.searchData} />
-                       </Collapse>
+							<Collapse isOpened={!this.state.iconSearch}>
+								<SearchFilter searchData={this.searchData} />
+                    	    </Collapse>
 							<div className="table-responsive wow fadeIn">
 								{this.state.lectures.length > 0 ? (
-									<table className="table table-hover table-job-positions">
+									<table className="table table-hover table-job-positions videoTable">
 										<thead>
 											<tr>
 												<th className="align">Title</th>
@@ -108,7 +108,7 @@ export class AudioList extends Component {
 											{this.state.lectures.map((item, key) => {
 												return (
 													<tr key={key}>
-														<td className="titleColor">
+														<td className="titleColor dataRowAlign">
 															{" "}
 															<Link
 																to={{ pathname: "/audioDetails", state: item }}

@@ -42,8 +42,6 @@ exports = module.exports = function (app) {
 	app.get('/api/user/', keystone.middleware.api, routes.api.user.list);
 	app.get('/api/appointment/', keystone.middleware.api, routes.api.appointment.list);
 
-	app.get('/api/lecture/:location', keystone.middleware.api, routes.api.lecture.bylocation);
-
 	// File Upload Routes
 	app.get('/api/fileupload/list', keystone.middleware.api, routes.api.fileupload.list);
 	app.get('/api/fileupload/:id', keystone.middleware.api, routes.api.fileupload.get);

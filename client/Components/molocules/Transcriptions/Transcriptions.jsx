@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import renderHTML from "react-render-html";
 import Pagination from "react-js-pagination";
 import reactCookie from 'react-cookies';
+import SearchFilter from "../SeachFilter/SearchFilter";
+import {Collapse} from 'react-collapse';
+
 
 export class Transcritpion extends Component {
 	constructor(props) {
@@ -16,6 +19,7 @@ export class Transcritpion extends Component {
 			currentPage: null,
 			page: null,
 			transcriptions: [],
+			iconSearch: true,
 			body: {
 				page: 1, 
 				transcriptions: true
@@ -45,7 +49,21 @@ export class Transcritpion extends Component {
 		this.props.searchLecture(body);
 	};
 
+	onClickIcon= (value) =>{
+		this.setState({iconSearch : value});
+	}
+
+	searchData = body => {
+		body.transcriptions = true;
+		this.setState({ body }, () => {
+			this.props.searchLecture(body);
+		});
+	};
+
 	render() {
+		let class_icon_search = this.state.iconSearch? 'icon-search fa fa-search': 'display-none-icon';
+		let class_icon_close = this.state.iconSearch? 'display-none-icon': 'icon-search fa fa-close';
+	
 		return (
 			<div>
 				<section className="bg-gray-100">
@@ -54,17 +72,24 @@ export class Transcritpion extends Component {
 				{!this.state.isUserLogin ? (
 					<div>
 						<div style={{ textAlign: "center" }}>
-							<p className="bookingForm">Transcriptions</p>
+							<p className="bookingForm">
+								Transcriptions
+								<i onClick={()=>this.onClickIcon(false)} className={class_icon_search}  aria-hidden="true"></i>
+								<i onClick={()=>this.onClickIcon(true)} className={class_icon_close}  aria-hidden="true"></i>
+							</p>
 						</div>
 						<div className="container">
+							<Collapse isOpened={!this.state.iconSearch}>
+								<SearchFilter searchData={this.searchData} />
+                    	    </Collapse>
 							<div className="table-responsive wow fadeIn">
 								{this.state.transcriptions.length > 0 ? (
-									<table className="table table-hover table-job-positions dataDiv">
+									<table className="table table-hover table-job-positions videoTable">
 										<tbody>
 											{this.state.transcriptions.map((item, key) => {
 												return (
 													<tr key={key}>
-														<td className="titleColor" style={{textAlign: 'left', paddingLeft: '0% !important'}}>
+														<td className="titleColor dataRowAlign">
 															{" "}
 															<Link
 																to={{ pathname: "/transcriptionDetails", state: item }}
@@ -85,18 +110,22 @@ export class Transcritpion extends Component {
 							</div>
 						</div>
 						<div className="padLeft">
-							<Pagination
-								className="paginationStyle"
-								innerClass="pagination"
-								activeClass="page-item active"
-								itemClass="page-item"
-								linkClass="page-link button-winona"
-								activePage={this.state.currentPage}
-								itemsCountPerPage={20}
-								totalItemsCount={this.state.totalItem}
-								pageRangeDisplayed={5}
-								onChange={this.handlePageChange}
-							/>
+							{
+								this.state.transcriptions.length > 0 ? 
+									<Pagination
+										className="paginationStyle"
+										innerClass="pagination"
+										activeClass="page-item active"
+										itemClass="page-item"
+										linkClass="page-link button-winona"
+										activePage={this.state.currentPage}
+										itemsCountPerPage={20}
+										totalItemsCount={this.state.totalItem}
+										pageRangeDisplayed={5}
+										onChange={this.handlePageChange}
+									/>
+								:null
+							}
 						</div>
 					</div>
 				) : null}

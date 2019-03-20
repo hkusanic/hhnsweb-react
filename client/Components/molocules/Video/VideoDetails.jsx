@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
+import { Translate } from 'react-localize-redux';
 
 export class VideoDetails extends Component {
     constructor(props) {
@@ -27,12 +28,14 @@ export class VideoDetails extends Component {
                                                 {new Date(this.props.location.state.created_date).toDateString()}
                                             </time>
                                         </li>
-                                        <li><span class="icon mdi mdi-tag-multiple"></span><a>Video</a></li>
+                                        <li><span class="icon mdi mdi-tag-multiple">
+                                            </span><a><Translate>{({ translate }) => translate('HOME.video')}</Translate></a>
+                                        </li>
                                     </ul>
                                 </article>
                                 <div>
 
-                                    <div className="row row-50 row-xxl-70 padTop flexDiv">
+                                    <div className="row row-50 row-xxl-70 padTop flexDiv padLeftRow">
                                         { 
                                             this.props.location.state.youtube ? 
                                             this.props.location.state.youtube.map((item, key) => {

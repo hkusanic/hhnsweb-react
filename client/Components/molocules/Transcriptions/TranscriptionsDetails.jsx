@@ -39,12 +39,13 @@ export class TranscriptionDetails extends Component {
 											<a>Transcription</a>
 										</li>
 									</ul>
-									<div>{renderHTML(
-										reactCookie.load("languageCode") === "en"
-											? this.props.location.state.en.transcription.text
-											: this.props.location.state.ru.transcription.text
-                                    )}
-                                    </div>
+									<div>
+										{renderHTML(
+											reactCookie.load("languageCode") === "en"
+												? this.props.location.state.en.transcription.text
+												: this.props.location.state.ru.transcription.text
+										)}
+									</div>
 								</article>
 								<div>
 									<table className="datatable">
@@ -69,11 +70,35 @@ export class TranscriptionDetails extends Component {
 											<tr>
 												<td>
 													<b>
+														<span>Attachment</span> :
+													</b>
+												</td>
+												<td className="padLeftRow">
+													<a
+														href={
+															this.props.location.state.en.transcription
+																.attachment_link
+														}
+													>
+														<span>
+															{
+																this.props.location.state.en.transcription
+																	.attachment_name
+															}
+														</span>
+													</a>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<b>
 														<span>Event</span> :
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load('languageCode') === 'en' ? this.props.location.state.en.event : this.props.location.state.ru.event}
+													{reactCookie.load("languageCode") === "en"
+														? this.props.location.state.en.event
+														: this.props.location.state.ru.event}
 												</td>
 											</tr>
 											<tr>
@@ -93,7 +118,9 @@ export class TranscriptionDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load('languageCode') === 'en' ? this.props.location.state.en.location : this.props.location.state.ru.location}
+													{reactCookie.load("languageCode") === "en"
+														? this.props.location.state.en.location
+														: this.props.location.state.ru.location}
 												</td>
 											</tr>
 											<tr>
@@ -113,9 +140,11 @@ export class TranscriptionDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load('languageCode') === 'en' ? this.props.location.state.en.topic : this.props.location.state.ru.topic}
+													{reactCookie.load("languageCode") === "en"
+														? this.props.location.state.en.topic
+														: this.props.location.state.ru.topic}
 												</td>
-											</tr>
+											</tr>f
 										</tbody>
 									</table>
 								</div>
