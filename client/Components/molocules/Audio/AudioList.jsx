@@ -7,6 +7,7 @@ import { searchLecture } from "../../../actions/lectureActions";
 import Auth from "../../../utils/Auth";
 import { Translate } from "react-localize-redux";
 import SearchFilter from "../SeachFilter/SearchFilter";
+import {Collapse} from 'react-collapse';
 export class AudioList extends Component {
 	constructor(props) {
 		super(props);
@@ -16,7 +17,8 @@ export class AudioList extends Component {
 			currentPage: null,
 			page: null,
 			lectures: [],
-			body: {}
+			body: {},
+			iconSearch: true
 		};
 	}
 
@@ -61,7 +63,14 @@ export class AudioList extends Component {
 		});
 	};
 
+	onClickIcon= (value) =>{
+		this.setState({iconSearch : value});
+	}
+
 	render() {
+		let class_icon_search = this.state.iconSearch? 'icon-search fa fa-search': 'display-none-icon';
+		let class_icon_close = this.state.iconSearch? 'display-none-icon': 'icon-search fa fa-close';
+	
 		return (
 			<div>
 				<section className="bg-gray-100">
@@ -74,10 +83,15 @@ export class AudioList extends Component {
 								<Translate>
 									{({ translate }) => translate("HOME.audio")}
 								</Translate>
-							</p>
+								<i onClick={()=>this.onClickIcon(false)} className={class_icon_search}  aria-hidden="true"></i>
+								<i onClick={()=>this.onClickIcon(true)} className={class_icon_close}  aria-hidden="true"></i>
+					 
+					  </p>
 						</div>
-						<SearchFilter searchData={this.searchData} />
 						<div className="container">
+						<Collapse isOpened={!this.state.iconSearch}>
+						<SearchFilter searchData={this.searchData} />
+                       </Collapse>
 							<div className="table-responsive wow fadeIn">
 								{this.state.lectures.length > 0 ? (
 									<table className="table table-hover table-job-positions">
