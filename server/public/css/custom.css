@@ -500,3 +500,22 @@
         .display-none-icon{
             display: none;
         }
+    .dataDiv {
+        width: 80% !important;
+        margin-left: 15% !important;
+    }
+    .dataUL {
+        padding-bottom: 2em !important;
+    }
+    .dataTitle {
+        max-width: 100% !important;
+    }
+
+    .datatable tr td {
+        padding-top: 1em;
+    }
+    
+    .datatable tr td b span {
+        width: 85px;
+        display: inline-block;
+    }

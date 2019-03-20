@@ -15,7 +15,10 @@ export class Transcritpion extends Component {
 			currentPage: null,
 			page: null,
 			transcriptions: [],
-			body: {}
+			body: {
+				page: 1, 
+				transcriptions: true
+			}
 		};
 	}
 
@@ -24,7 +27,7 @@ export class Transcritpion extends Component {
 		this.setState({
 			isUserLogin
 		});
-		this.props.searchLecture({ page: 1, transcriptions: true });
+		this.props.searchLecture(this.state.body);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -34,6 +37,12 @@ export class Transcritpion extends Component {
 			totalItem: nextProps.lecturesDetails.totalLectures
 		});
 	}
+
+	handlePageChange = pageNumber => {
+		let body = Object.assign({}, this.state.body);
+		body.page = pageNumber;
+		this.props.searchLecture(body);
+	};
 
 	render() {
 		return (
@@ -49,35 +58,19 @@ export class Transcritpion extends Component {
 						<div className="container">
 							<div className="table-responsive wow fadeIn">
 								{this.state.transcriptions.length > 0 ? (
-									<table className="table table-hover table-job-positions">
-										<thead>
-											<tr>
-												<th className="align">Title</th>
-												<th className="padLeft">Player</th>
-												<th>Downloads</th>
-											</tr>
-										</thead>
+									<table className="table table-hover table-job-positions dataDiv">
 										<tbody>
 											{this.state.transcriptions.map((item, key) => {
 												return (
 													<tr key={key}>
-														<td className="titleColor">
+														<td className="titleColor" style={{textAlign: 'left', paddingLeft: '0% !important'}}>
 															{" "}
 															<Link
-																to={{ pathname: "/audioDetails", state: item }}
+																to={{ pathname: "/transcriptionDetails", state: item }}
 															>
 																{renderHTML(item.en.title)}
 															</Link>
 														</td>
-														<td>
-															<audio controls>
-																<source
-																	src={renderHTML(item.audio_link)}
-																	type="audio/mpeg"
-																/>
-															</audio>
-														</td>
-														<td>{item.downloads}</td>
 													</tr>
 												);
 											})}

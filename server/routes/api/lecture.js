@@ -18,7 +18,7 @@ exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	let query = [];
 
-
+	
 	if (req.query.title) {
 		let title = {
 			"en.title": {
@@ -26,14 +26,14 @@ exports.list = function (req, res) {
 				'$options': 'i'
 			}
 		};
-		if (req.cookies.language === 'en')
+		if (req.cookies.languageCode === 'en')
 			title = {
 				"en.title": {
 					$regex: ".*" + req.query.title + ".*",
 					'$options': 'i'
 				}
 			};
-		if (req.cookies.language === 'ru')
+		if (req.cookies.languageCode === 'ru')
 			title = {
 				"ru.title": {
 					$regex: ".*" + req.query.title + ".*",
@@ -58,14 +58,14 @@ exports.list = function (req, res) {
 				'$options': 'i'
 			}
 		};
-		if (req.cookies.language === 'en')
+		if (req.cookies.languageCode === 'en')
 			location = {
 				"en.location": {
 					$regex: ".*" + req.query.location + ".*",
 					'$options': 'i'
 				}
 			};
-		if (req.cookies.language === 'ru')
+		if (req.cookies.languageCode === 'ru')
 			location = {
 				"ru.location": {
 					$regex: ".*" + req.query.location + ".*",
@@ -82,14 +82,14 @@ exports.list = function (req, res) {
 				'$options': 'i'
 			}
 		};
-		if (req.cookies.language === 'en')
+		if (req.cookies.languageCode === 'en')
 			topic_query = {
 				"en.topic": {
 					$regex: ".*" + req.query.topic + ".*",
 					'$options': 'i'
 				}
 			};
-		if (req.cookies.language === 'ru')
+		if (req.cookies.languageCode === 'ru')
 			topic_query = {
 				"ru.topic": {
 					$regex: ".*" + req.query.topic + ".*",
@@ -107,14 +107,14 @@ exports.list = function (req, res) {
 				'$options': 'i'
 			}
 		};
-		if (req.cookies.language === 'en')
+		if (req.cookies.languageCode === 'en')
 			event_query = {
 				"en.event": {
 					$regex: ".*" + req.query.event + ".*",
 					'$options': 'i'
 				}
 			};
-		if (req.cookies.language === 'ru')
+		if (req.cookies.languageCode === 'ru')
 			event_query = {
 				"ru.event": {
 					$regex: ".*" + req.query.event + ".*",
@@ -132,14 +132,14 @@ exports.list = function (req, res) {
 				'$options': 'i'
 			}
 		};
-		if (req.cookies.language === 'en')
+		if (req.cookies.languageCode === 'en')
 			event_query = {
 				"chapter": {
 					$regex: ".*" + req.query.chapter + ".*",
 					'$options': 'i'
 				}
 			};
-		if (req.cookies.language === 'ru')
+		if (req.cookies.languageCode === 'ru')
 			event_query = {
 				"chapter": {
 					$regex: ".*" + req.query.chapter + ".*",
@@ -157,14 +157,14 @@ exports.list = function (req, res) {
 				'$options': 'i'
 			}
 		};
-		if (req.cookies.language === 'en')
+		if (req.cookies.languageCode === 'en')
 		song_query = {
 				"song": {
 					$regex: ".*" + req.query.song + ".*",
 					'$options': 'i'
 				}
 			};
-		if (req.cookies.language === 'ru')
+		if (req.cookies.languageCode === 'ru')
 		song_query = {
 				"song": {
 					$regex: ".*" + req.query.song + ".*",
@@ -178,9 +178,9 @@ exports.list = function (req, res) {
 	if (req.query.transcriptions) {
 		let transcription_query ={"en.transcription.text" : {"$exists" : true, "$ne" : ""}}
 		
-		if (req.cookies.language === 'en')
+		if (req.cookies.languageCode === 'en')
 		transcription_query = {"en.transcription.text" : {"$exists" : true, "$ne" : ""}}
-		if (req.cookies.language === 'ru')
+		if (req.cookies.languageCode === 'ru')
 		transcription_query = {"ru.transcription.text" : {"$exists" : true, "$ne" : ""}}
 
 		query.push(transcription_query);
@@ -189,9 +189,9 @@ exports.list = function (req, res) {
 	if (req.query.summaries) {
 		let summaries_query = {"en.summary.text" : {"$exists" : true, "$ne" : ""}}
 		
-		if (req.cookies.language === 'en')
+		if (req.cookies.languageCode === 'en')
 		summaries_query =  {"en.summary.text" : {"$exists" : true, "$ne" : ""}}
-		if (req.cookies.language === 'ru')
+		if (req.cookies.languageCode === 'ru')
 		summaries_query =  {"ru.summary.text" : {"$exists" : true, "$ne" : ""}}
 
 

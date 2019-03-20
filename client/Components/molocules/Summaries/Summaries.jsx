@@ -16,7 +16,10 @@ export class Summaries extends Component {
 			currentPage: null,
 			page: null,
 			summaries: [],
-			body: {}
+			body: {
+				page: 1, 
+				summaries: true
+			}
 		};
 	}
 
@@ -25,7 +28,7 @@ export class Summaries extends Component {
 		this.setState({
 			isUserLogin
 		});
-		this.props.searchLecture({ page: 1, summaries: true });
+		this.props.searchLecture(this.state.body);
 	}
 	componentWillReceiveProps(nextProps) {
 		this.setState({
@@ -35,9 +38,16 @@ export class Summaries extends Component {
 		});
 	}
 	searchData = body => {
+		body.summaries = true;
 		this.setState({ body }, () => {
 			this.props.searchLecture(body);
 		});
+	};
+
+	handlePageChange = pageNumber => {
+		let body = Object.assign({}, this.state.body);
+		body.page = pageNumber;
+		this.props.searchLecture(body);
 	};
 
 	render() {
@@ -55,35 +65,19 @@ export class Summaries extends Component {
 						<div className="container">
 							<div className="table-responsive wow fadeIn">
 								{this.state.summaries.length > 0 ? (
-									<table className="table table-hover table-job-positions">
-										<thead>
-											<tr>
-												<th className="align">Title</th>
-												<th className="padLeft">Player</th>
-												<th>Downloads</th>
-											</tr>
-										</thead>
+									<table className="table table-hover table-job-positions dataDiv">
 										<tbody>
 											{this.state.summaries.map((item, key) => {
 												return (
 													<tr key={key}>
-														<td className="titleColor">
+														<td className="titleColor" style={{textAlign: 'left', paddingLeft: '0% !important'}}>
 															{" "}
 															<Link
-																to={{ pathname: "/audioDetails", state: item }}
+																to={{ pathname: "/summariesDetails", state: item }}
 															>
-																{renderHTML(item.en.title)}
+																{renderHTML(item.ru.title)}
 															</Link>
 														</td>
-														<td>
-															<audio controls>
-																<source
-																	src={renderHTML(item.audio_link)}
-																	type="audio/mpeg"
-																/>
-															</audio>
-														</td>
-														<td>{item.downloads}</td>
 													</tr>
 												);
 											})}
