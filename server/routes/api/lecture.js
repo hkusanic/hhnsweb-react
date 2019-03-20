@@ -198,6 +198,16 @@ exports.list = function (req, res) {
 		query.push(summaries_query);
 	}
 
+	if (req.query.video) {
+		let video_query = {"youtube" : {"$exists" : true, "$ne" : []}}
+		if (req.cookies.languageCode === 'en')
+			video_query =  {"youtube" : {"$exists" : true, "$ne" : []}}
+		if (req.cookies.languageCode === 'ru')
+			video_query =  {"youtube" : {"$exists" : true, "$ne" : []}}
+
+		query.push(video_query);
+	}
+
 	if (req.query.year) {
 		let year_query = {
 			"published_date": {

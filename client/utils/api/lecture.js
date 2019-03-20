@@ -16,6 +16,7 @@ const utils = {
 		const year = body.year || "";
 		const transcriptions = body.transcriptions || false;
 		const summaries = body.summaries || false;
+		const video = body.video || false;
 		let url =
 			serverAddress +
 			"/api/lecture?page=" +
@@ -24,13 +25,15 @@ const utils = {
 			(location ? "&location=" + location : "") +
 			(event ? "&event=" + event : "") +
 			(title ? "&title=" + title : "") +
+			(verse ? "&verse=" + verse : "") +
 			(topic ? "&topic=" + topic : "") +
 			(transcriptions ? "&transcriptions=" + transcriptions : "") +
 			(summaries ? "&summaries=" + summaries : "") +
 			(songs ? "&songs=" + songs : "") +
 			(chapter ? "&chapter=" + chapter : "") +
 			(author ? "&author=" + author : "") +
-			(translation ? "&translation=" + translation : "");
+			(translation ? "&translation=" + translation : "") +
+			(video ? "&video=" + video : "");
 
 		return axios.get(url);
 	}

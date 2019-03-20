@@ -26,7 +26,7 @@ export class VideoList extends Component {
             totalItem: this.props.lecturesDetails.totalLectures,
             isUserLogin
         })
-        this.props.searchLecture({page : 1});
+        this.props.searchLecture({page : 1, video: true});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -38,7 +38,7 @@ export class VideoList extends Component {
     }
 
     handlePageChange = (pageNumber) => {
-        this.props.searchLecture({page: pageNumber});
+        this.props.searchLecture({page: pageNumber, video: true});
     }
 
     showing100Characters = (sentence) => {
@@ -92,7 +92,7 @@ export class VideoList extends Component {
                                     itemClass='page-item'
                                     linkClass='page-link button-winona'
                                     activePage={this.state.currentPage}
-                                    itemsCountPerPage={4}
+                                    itemsCountPerPage={20}
                                     totalItemsCount={this.state.totalItem}
                                     pageRangeDisplayed={5}
                                     onChange={this.handlePageChange}
