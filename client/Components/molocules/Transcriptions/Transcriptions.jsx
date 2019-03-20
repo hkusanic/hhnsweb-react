@@ -5,6 +5,7 @@ import { searchLecture } from "../../../actions/lectureActions";
 import { Link } from "react-router-dom";
 import renderHTML from "react-render-html";
 import Pagination from "react-js-pagination";
+import reactCookie from 'react-cookies';
 
 export class Transcritpion extends Component {
 	constructor(props) {
@@ -68,7 +69,7 @@ export class Transcritpion extends Component {
 															<Link
 																to={{ pathname: "/transcriptionDetails", state: item }}
 															>
-																{renderHTML(item.en.title)}
+																{renderHTML(reactCookie.load('languageCode') === 'en' ? item.en.title : item.ru.title)}
 															</Link>
 														</td>
 													</tr>

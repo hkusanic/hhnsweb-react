@@ -73,7 +73,7 @@ export class TranscriptionDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.en.event}
+													{reactCookie.load('languageCode') === 'en' ? this.props.location.state.en.event : this.props.location.state.ru.event}
 												</td>
 											</tr>
 											<tr>
@@ -93,7 +93,7 @@ export class TranscriptionDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.en.location}
+													{reactCookie.load('languageCode') === 'en' ? this.props.location.state.en.location : this.props.location.state.ru.location}
 												</td>
 											</tr>
 											<tr>
@@ -113,7 +113,7 @@ export class TranscriptionDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.en.topic}
+													{reactCookie.load('languageCode') === 'en' ? this.props.location.state.en.topic : this.props.location.state.ru.topic}
 												</td>
 											</tr>
 										</tbody>
