@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import renderHTML from "react-render-html";
 import Pagination from "react-js-pagination";
 import SearchFilter from "../SeachFilter/SearchFilter";
+import {Collapse} from 'react-collapse';
+import reactCookie from 'react-cookies';
 
 export class Summaries extends Component {
 	constructor(props) {
@@ -16,6 +18,7 @@ export class Summaries extends Component {
 			currentPage: null,
 			page: null,
 			summaries: [],
+			iconSearch: true,
 			body: {
 				page: 1, 
 				summaries: true
@@ -50,7 +53,13 @@ export class Summaries extends Component {
 		this.props.searchLecture(body);
 	};
 
+	onClickIcon= (value) =>{
+		this.setState({iconSearch : value});
+	}
+
 	render() {
+		let class_icon_search = this.state.iconSearch? 'icon-search fa fa-search': 'display-none-icon';
+		let class_icon_close = this.state.iconSearch? 'display-none-icon': 'icon-search fa fa-close';
 		return (
 			<div>
 				<section className="bg-gray-100">
@@ -59,9 +68,14 @@ export class Summaries extends Component {
 				{!this.state.isUserLogin ? (
 					<div>
 						<div style={{ textAlign: "center" }}>
-							<p className="bookingForm">Summaries</p>
+							<p className="bookingForm">Summaries
+								<i onClick={()=>this.onClickIcon(false)} className={class_icon_search}  aria-hidden="true"></i>
+								<i onClick={()=>this.onClickIcon(true)} className={class_icon_close}  aria-hidden="true"></i>
+							</p>
 						</div>
+						<Collapse isOpened={!this.state.iconSearch}>
 						<SearchFilter searchData={this.searchData} />
+                       </Collapse>
 						<div className="container">
 							<div className="table-responsive wow fadeIn">
 								{this.state.summaries.length > 0 ? (
@@ -75,7 +89,7 @@ export class Summaries extends Component {
 															<Link
 																to={{ pathname: "/summariesDetails", state: item }}
 															>
-																{renderHTML(item.ru.title)}
+																{renderHTML(reactCookie.load('languageCode') === 'en' ? item.en.title :item.ru.title)}
 															</Link>
 														</td>
 													</tr>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
+import reactCookie from 'react-cookies';
 
 export class AudioDetails extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ export class AudioDetails extends Component {
                             <div className="col-lg-12">
                                 <article className="post-creative">
                                     <h3 className="post-creative-title">
-                                        {renderHTML(this.props.location.state.en.title)}
+                                        {renderHTML(reactCookie.load('languageCode') === 'en' ? this.props.location.state.en.title : this.props.location.state.ru.title)}
                                     </h3>
                                     <ul className="post-creative-meta">
                                         <li><span className="icon mdi mdi-calendar-clock"></span>
@@ -38,19 +39,19 @@ export class AudioDetails extends Component {
                                     <table className="maintable">
                                         <tbody>
                                             <tr>
-                                                <td><b><span>Event</span> :</b></td><td className="padLeftRow">{this.props.location.state.en.event}</td>
+                                                <td><b><span>Event</span> :</b></td><td className="padLeftRow">{reactCookie.load('languageCode') === 'en' ? this.props.location.state.en.event : this.props.location.state.ru.event}</td>
                                             </tr>
                                             <tr>
                                                 <td><b><span>Durations</span> :</b></td  ><td className="padLeftRow">{this.props.location.state.duration}</td>
                                             </tr>
                                             <tr>
-                                                <td><b><span>Location</span> :</b></td ><td className="padLeftRow">{this.props.location.state.en.location}</td>
+                                                <td><b><span>Location</span> :</b></td ><td className="padLeftRow">{reactCookie.load('languageCode') === 'en' ? this.props.location.state.en.location : this.props.location.state.ru.topic}</td>
                                             </tr>
                                             <tr>
                                                 <td><b><span>Download</span> :</b></td><td className="padLeftRow">{this.props.location.state.downloads}</td>
                                             </tr>
                                             <tr>
-                                                <td><b><span>Topic</span> :</b></td><td className="padLeftRow">{this.props.location.state.en.topic}</td>
+                                                <td><b><span>Topic</span> :</b></td><td className="padLeftRow">{reactCookie.load('languageCode') === 'en' ? this.props.location.state.en.topic : this.props.location.state.ru.topic}</td>
                                             </tr>
                                         </tbody>
                                     </table>

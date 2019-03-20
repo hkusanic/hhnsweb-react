@@ -8,6 +8,8 @@ import Auth from "../../../utils/Auth";
 import { Translate } from "react-localize-redux";
 import SearchFilter from "../SeachFilter/SearchFilter";
 import {Collapse} from 'react-collapse';
+import reactCookie from 'react-cookies';
+
 export class AudioList extends Component {
 	constructor(props) {
 		super(props);
@@ -111,7 +113,7 @@ export class AudioList extends Component {
 															<Link
 																to={{ pathname: "/audioDetails", state: item }}
 															>
-																{renderHTML(item.en.title)}
+																{renderHTML(reactCookie.load('languageCode') === 'en' ? item.en.title : item.ru.title)}
 															</Link>
 														</td>
 														<td>

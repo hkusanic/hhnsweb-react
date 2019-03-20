@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { searchLecture } from '../../../actions/lectureActions';
 import { Translate } from 'react-localize-redux';
 import Auth from '../../../utils/Auth';
+import reactCookie from 'react-cookies';
+
 export class VideoList extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +16,9 @@ export class VideoList extends Component {
             totalItem: null,
             currentPage: null,
             page: null,
-            lectures: []
+            lectures: [],
+            iconSearch: true
+
         }
     }
 
@@ -50,6 +54,11 @@ export class VideoList extends Component {
         }
         return result;
     }
+
+    onClickIcon= (value) =>{
+		this.setState({iconSearch : value});
+    }
+    
     render() {
         return (
             <div>
@@ -76,7 +85,7 @@ export class VideoList extends Component {
                                         <tbody>
                                             {this.state.lectures.map((item, key) => {
                                                 return <tr key={key}>
-                                                    <td className="titleColor"><Link to={{ pathname: '/videoDetails', state: item }}>{renderHTML(item.en.title)}</Link></td>
+                                                    <td className="titleColor"><Link to={{ pathname: '/videoDetails', state: item }}>{renderHTML(reactCookie.load('languageCode') === 'en' ? item.en.title : item.ru.title)}</Link></td>
                                                     <td>60</td>
                                                 </tr>
                                             })}

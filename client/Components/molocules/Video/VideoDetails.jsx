@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
+import reactCookie from 'react-cookies';
+
 export class VideoDetails extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +19,7 @@ export class VideoDetails extends Component {
                             <div class="col-lg-12">
                                 <article class="post-creative">
                                     <h3 class="post-creative-title">
-                                        {renderHTML(this.props.location.state.en.title)}
+                                        {renderHTML(reactCookie.load('languageCode') === 'en' ? this.props.location.state.en.title : this.props.location.state.ru.title)}
                                     </h3>
                                     <ul class="post-creative-meta">
                                         <li><span class="icon mdi mdi-calendar-clock"></span>
@@ -25,7 +27,7 @@ export class VideoDetails extends Component {
                                                 {new Date(this.props.location.state.created_date).toDateString()}
                                             </time>
                                         </li>
-                                        <li><span class="icon mdi mdi-tag-multiple"></span><a>Lecture</a></li>
+                                        <li><span class="icon mdi mdi-tag-multiple"></span><a>Video</a></li>
                                     </ul>
                                 </article>
                                 <div>
