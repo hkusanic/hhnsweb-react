@@ -39,7 +39,7 @@ export class Calender extends Component {
                         </div>
                         : ''
 				}
-                {
+                {/* {
                     !this.state.isUserLogin ?
                         <div className="align">
                             <div style={{ textAlign: 'center' }}>
@@ -53,7 +53,7 @@ export class Calender extends Component {
                             </iframe> 
                         </div>
                         : ''
-                }
+                } */}
 
             </div>
         )

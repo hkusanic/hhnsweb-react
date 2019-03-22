@@ -152,7 +152,11 @@ export class AudioList extends Component {
 							/>
 						</div>
 					</div>
-				) : null}
+				) : 
+				<div style={{ textAlign: "center" }}>
+					<p className="bookingForm">Please Log in to Continue</p>
+				</div>
+				}
 			</div>
 		);
 	}
