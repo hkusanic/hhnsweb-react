@@ -9,9 +9,10 @@ let Lecture = new keystone.List('Lecture', {
 
 Lecture.add({
 	uuid: { type: String, unique: true, index:true},
-	created_date: { type: Types.Date, default: Date.now },
+	created_date: { type: String },
 	published_date: { type: String },
 	duration: { type: String },
+	author: {type: String},
 	downloads: { type: Types.Number },
 	audio_link: { type: Types.Url },
 	soundcloud_link: {type: Types.Url},
