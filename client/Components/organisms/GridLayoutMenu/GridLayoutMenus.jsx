@@ -14,13 +14,17 @@ export class GridLayoutMenus extends React.Component {
     }
 
     handleNavigationClick = () => {
-        $('.login-modal-2').removeClass('active');
-        $('.register-modal-2').removeClass('active');
-        if (this.state.isUserLogin) {
-            $('.login-modal-2').addClass('active');
-            $('.rd-navbar-toggle').removeClass('active');
-            $('.rd-navbar-nav-wrap').removeClass('active');
-        }
+        setTimeout(()=>{
+            $('.login-modal-2').removeClass('active');
+            $('.register-modal-2').removeClass('active');
+            if (this.state.isUserLogin) {
+                $('.login-modal-2').addClass('active');
+                $('.rd-navbar-toggle').removeClass('active');
+                $('.rd-navbar-nav-wrap').removeClass('active');
+            }
+
+        },500)
+      
     }
 
     render() {
