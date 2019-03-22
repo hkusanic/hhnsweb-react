@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SingleLecture from '../../Components/molocules/SingleLecture/SingleLecture';
 import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
-import { getLectures } from '../../actions/lectureActions';
+import { searchLecture } from '../../actions/lectureActions';
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 
@@ -25,7 +25,7 @@ export class Lectures extends Component {
             totalItem: this.props.lecturesDetails.totalLectures,
             isUserLogin
         })
-        this.props.getLectures(1);
+        this.props.searchLecture({page: 1});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -37,7 +37,7 @@ export class Lectures extends Component {
     }
 
     handlePageChange = (pageNumber) => {
-        this.props.getLectures(pageNumber);
+        this.props.searchLecture({page: pageNumber});
     }
 
     showing100Characters = (sentence) => {
@@ -97,13 +97,16 @@ export class Lectures extends Component {
                                 itemClass='page-item'
                                 linkClass='page-link button-winona'
                                 activePage={this.state.currentPage}
-                                itemsCountPerPage={4}
+                                itemsCountPerPage={20}
                                 totalItemsCount={this.state.totalItem}
                                 pageRangeDisplayed={5}
                                 onChange={this.handlePageChange}
                             />
                         </div>
-                        : ''
+                        : 
+                        <div style={{ textAlign: "center" }}>
+                            <p className="bookingForm">Please Log in to Continue</p>
+                        </div>
                 }
             </div>
         )
@@ -118,8 +121,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getLectures: (page) => {
-            dispatch(getLectures(page));
+        searchLecture: (page) => {
+            dispatch(searchLecture(page));
         }
     }
 }

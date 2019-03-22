@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
 import {
     Link
-} from 'react-router-dom'
+} from 'react-router-dom';
+import reactCookie from "react-cookies";
+
 export class SingleLecture extends Component {
     constructor(props) {
         super(props);
@@ -16,11 +18,15 @@ export class SingleLecture extends Component {
             <div className="col-md-6 scaleFadeInWrap">
                 <div className="wow scaleFadeIn" data-wow-delay=".1s">
                     <article className="post-modern">
-                        <h4 className="post-modern-title"><Link to={{ pathname: '/lectureDetails', state:this.props.lecture }}>{renderHTML(this.props.lecture.title.en)}</Link></h4>
+                        <h4 className="post-modern-title"><Link to={{ pathname: '/lectureDetails', state:this.props.lecture }}>{renderHTML(this.props.lecture.en.title)}</Link></h4>
                         <ul className="post-modern-meta">
-                            <li>{this.props.lecture.event}</li>
                             <li>
-                                { this.props.lecture.date ? new Date(this.props.lecture.date).toDateString() : ""}
+                                {reactCookie.load("languageCode") === "en"
+                                ? this.props.lecture.en.event
+                                : this.props.lecture.ru.event}
+                            </li>
+                            <li>
+                                { this.props.lecture.created_date ? new Date(this.props.lecture.created_date).toDateString() : ""}
                             </li>
                         </ul>
                     </article>
