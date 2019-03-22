@@ -79,6 +79,7 @@ export class TranscriptionDetails extends Component {
 															this.props.location.state.en.transcription
 																.attachment_link
 														}
+														target="_blank"
 													>
 														<span>
 															{
@@ -101,6 +102,54 @@ export class TranscriptionDetails extends Component {
 														: this.props.location.state.ru.event}
 												</td>
 											</tr>
+											{this.props.location.state.part ? (
+												<tr>
+													<td>
+														<b>
+															<span>Part</span> :
+														</b>
+													</td>
+													<td className="padLeftRow">
+														{this.props.location.state.part}
+													</td>
+												</tr>
+											) : null}
+											{this.props.location.state.chapter ? (
+												<tr>
+													<td>
+														<b>
+															<span>Chapter</span> :
+														</b>
+													</td>
+													<td className="padLeftRow">
+														{this.props.location.state.chapter}
+													</td>
+												</tr>
+											) : null}
+											{this.props.location.state.verse ? (
+												<tr>
+													<td>
+														<b>
+															<span>Verse</span> :
+														</b>
+													</td>
+													<td className="padLeftRow">
+														{this.props.location.state.verse}
+													</td>
+												</tr>
+											) : null}
+											{this.props.location.state.author ? (
+												<tr>
+													<td>
+														<b>
+															<span>Author</span> :
+														</b>
+													</td>
+													<td className="padLeftRow">
+														{this.props.location.state.author}
+													</td>
+												</tr>
+											) : null}
 											<tr>
 												<td>
 													<b>
@@ -126,7 +175,7 @@ export class TranscriptionDetails extends Component {
 											<tr>
 												<td>
 													<b>
-														<span>Download</span> :
+														<span>Downloads</span> :
 													</b>
 												</td>
 												<td className="padLeftRow">
@@ -144,7 +193,7 @@ export class TranscriptionDetails extends Component {
 														? this.props.location.state.en.topic
 														: this.props.location.state.ru.topic}
 												</td>
-											</tr>f
+											</tr>
 										</tbody>
 									</table>
 								</div>

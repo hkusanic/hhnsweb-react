@@ -80,6 +80,11 @@ export class Summaries extends Component {
 							<div className="table-responsive wow fadeIn">
 								{this.state.summaries.length > 0 ? (
 									<table className="table table-hover table-job-positions videoTable">
+										 <thead>
+                                            <tr>
+                                                <th className="align">Title</th>
+                                            </tr>
+                                        </thead>
 										<tbody>
 											{this.state.summaries.map((item, key) => {
 												return (

@@ -10,16 +10,13 @@ export class GridLayoutMenus extends React.Component {
     }
     componentDidMount(){
         const isUserLogin = Auth.isUserAuthenticated();
-        this.setState({isUserLogin},()=>{
-            console.log("user login ====>>>>>", this.state.isUserLogin)
-        })
+        this.setState({isUserLogin})
     }
 
     handleNavigationClick = () => {
         $('.login-modal-2').removeClass('active');
         $('.register-modal-2').removeClass('active');
         if (this.state.isUserLogin) {
-            alert("hello");
             $('.login-modal-2').addClass('active');
             $('.rd-navbar-toggle').removeClass('active');
             $('.rd-navbar-nav-wrap').removeClass('active');
