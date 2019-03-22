@@ -15,7 +15,7 @@ keystone.init({
 		'./server/public',
 		'./uploads',
 	],
-	'file limit': '50MB',
+	'file limit': '150MB',
 	// Keystone includes an updates framework,
 	// which you can enable by setting the auto update option to true.
 	// Updates provide an easy way to seed your database,
@@ -69,7 +69,7 @@ keystone.init({
 				var json;
 
 				if (xhr.status !== 200) {
-					failure('HTTP Error: ' + xhr.status);
+					failure('=HTTP Error: ' + xhr.status);
 					return;
 				}
 
