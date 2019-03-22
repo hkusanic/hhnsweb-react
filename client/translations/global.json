@@ -42,7 +42,9 @@
 		"audio":["Audio", "аудио"],
 		"video": ["Video", "видео"],
 		"Transcriptions":["Transcriptions", "Транскрипции"],
-		"Summaries": ["Summaries", "Конспекты"]
+		"Summaries": ["Summaries", "Конспекты"],
+		"kirtan": ["Kirtan", "киртан"]
+
 
 	},
 	"FOOTER": {

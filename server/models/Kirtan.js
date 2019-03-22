@@ -9,7 +9,7 @@ let Kirtan = new keystone.List('Kirtan', {
 
 Kirtan.add({
 	uuid: { type: String, unique: true, index:true},
-	created_date: { type: Types.Date, default: Date.now },
+	created_date: { type: String },
 	published_date: { type: String },
 	duration: { type: String },
 	downloads: { type: Types.Number },

@@ -169,7 +169,7 @@ exports.list = function (req, res) {
 
 	if (req.query.year) {
 		let year_query = {
-			"published_date": {
+			"created_date": {
 				$regex: ".*" + req.query.year + ".*",
 				'$options': 'i'
 			}
