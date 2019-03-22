@@ -29,7 +29,7 @@ export class SearchFilter extends Component {
 		this.props.getEvents();
 		this.props.getLocations();
 		this.props.getTopics();
-		const years = this.getYearsList(1980, 2080);
+		const years = this.getYearsList(1980);
 		this.setState({ years });
 	}
 
@@ -91,10 +91,11 @@ export class SearchFilter extends Component {
 		});
     }
 
-	getYearsList = (startYear, endYear) => {
-		startYear = typeof startYear == "undefined" ? 1980 : startYear;
-		var years = [];
-		for (var i = startYear; i <= endYear; i++) {
+	getYearsList = (endYear) => {
+		let date = new Date();
+        let current_year = date.getFullYear();
+    	var years = [];
+		for (let i = current_year; i >= endYear; i--) {
 			years.push(i);
 		}
 		return years;
@@ -255,7 +256,7 @@ export class SearchFilter extends Component {
 					</div>
 					<div className="form-wrap btnDiv">
 					
-					<button style={{"padding": "0px","height":"40px"}}
+					<button style={{"padding": "0px","height":"40px","marginLeft": "32px"}}
 							className="button button-block button-primary-lighten button-winona"
 							onClick={this.reset}
 						>

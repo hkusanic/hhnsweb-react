@@ -5,6 +5,7 @@ const Types = keystone.Field.Types;
 let Location = new keystone.List('Location', {
 	autokey: { path: 'slug', from: 'title _id', unique: true },
 	map: { name: 'title' },
+	defaultSort: 'title',
 });
 
 Location.add({

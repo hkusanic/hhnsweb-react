@@ -5,6 +5,7 @@ const Types = keystone.Field.Types;
 let Topic = new keystone.List('Topic', {
 	autokey: { path: 'slug', from: 'title _id', unique: true },
 	map: { name: 'title' },
+	defaultSort: 'title',
 });
 
 Topic.add({
