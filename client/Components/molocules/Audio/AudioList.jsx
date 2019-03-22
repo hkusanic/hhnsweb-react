@@ -20,7 +20,8 @@ export class AudioList extends Component {
 			page: null,
 			lectures: [],
 			body: {},
-			iconSearch: true
+			iconSearch: true,
+			isSearch: false,
 		};
 	}
 
@@ -60,7 +61,8 @@ export class AudioList extends Component {
 	};
 
 	searchData = body => {
-		this.setState({ body }, () => {
+		this.setState({ body, isSearch: true
+		}, () => {
 			this.props.searchLecture(body);
 		});
 	};
@@ -132,7 +134,9 @@ export class AudioList extends Component {
 									</table>
 								) : (
 									<div style={{ textAlign: "center" }}>
-										<p className="bookingForm">No Records Found</p>
+										<p className="bookingForm">
+										  {this.state.isSearch ? 'No Record Found' : 'Hare Krishna...'}
+										</p>
 									</div>
 								)}
 							</div>
@@ -154,7 +158,7 @@ export class AudioList extends Component {
 					</div>
 				) : 
 				<div style={{ textAlign: "center" }}>
-					<p className="bookingForm">Please Log in to Continue</p>
+					<p className="bookingForm">Please Log in to continue</p>
 				</div>
 				}
 			</div>

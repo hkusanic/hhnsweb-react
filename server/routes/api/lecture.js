@@ -187,12 +187,12 @@ exports.list = function (req, res) {
 	}
 
 	if (req.query.summaries) {
-		let summaries_query = {"en.summary.text" : {"$exists" : true, "$ne" : ""}}
+		let summaries_query = {"ru.summary.text" : {"$exists" : true, "$ne" : ""}}
 		
-		if (req.cookies.languageCode === 'en')
-		summaries_query =  {"en.summary.text" : {"$exists" : true, "$ne" : ""}}
-		if (req.cookies.languageCode === 'ru')
-		summaries_query =  {"ru.summary.text" : {"$exists" : true, "$ne" : ""}}
+		// if (req.cookies.languageCode === 'en')
+		// summaries_query =  {"en.summary.text" : {"$exists" : true, "$ne" : ""}}
+		// if (req.cookies.languageCode === 'ru')
+		// summaries_query =  {"ru.summary.text" : {"$exists" : true, "$ne" : ""}}
 
 
 		query.push(summaries_query);

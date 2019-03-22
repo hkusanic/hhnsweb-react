@@ -26,7 +26,7 @@
 		"swami_prabhupada":["A.C. Bhaktivedanta Swami Prabhupada", "А.Ч. Бхактиведанта Свами Прабхупада"],
 		"niranjanaswami": ["H. H. Niranjana Swami", "Е. С. Ниранджана Свами"],
 		"blog": ["BLOG", "БЛОГ"],
-    "calendar": ["CALENDAR", "КАЛЕНДАРЬ"],
+    "calendar": ["Calender", "КАЛЕНДАРЬ"],
     "availability": ["AVAILABILITY", "ДОСТУПНОСТЬ"],
 		"booking": ["BOOKING", "ЗАПИСЬ"],
 		"contacts": ["Contacts", "контакты"],
@@ -40,7 +40,9 @@
 		"h_h":["H.H. Niranjana Swami ", "Е.С. Ниранджана Свами"],
 		"announcement": ["Announcement", "объявление"],
 		"audio":["Audio", "аудио"],
-		"video": ["Video", "видео"]
+		"video": ["Video", "видео"],
+		"Transcriptions":["Transcriptions", "Транскрипции"],
+		"Summaries": ["Summaries", "Конспекты"]
 
 	},
 	"FOOTER": {
