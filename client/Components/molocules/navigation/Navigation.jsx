@@ -12,7 +12,7 @@ export class Navigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isUserLogin: false,
+            isUserLogin: true,
             Prabhupada_swami_bio: '',
             Niranjana_swami_bio: '',
             floatImage: '',
@@ -84,7 +84,7 @@ export class Navigation extends Component {
         this.handleTabIndex(index)
         $('.login-modal-2').removeClass('active');
         $('.register-modal-2').removeClass('active');
-        if (!this.props.isLogin) {
+        if (this.state.isUserLogin) {
             $('.login-modal-2').addClass('active');
             $('.rd-navbar-toggle').removeClass('active');
             $('.rd-navbar-nav-wrap').removeClass('active');
@@ -147,7 +147,7 @@ export class Navigation extends Component {
                                     </div>
                                 </div>
                                     : ''}
-                                <img src="https://ik.imagekit.io/gcwjdmqwwznjl/banner1_HyhqTWrIE.png" />
+                                <img className="img-banner-width" src="https://ik.imagekit.io/gcwjdmqwwznjl/banner1_HyhqTWrIE.png" />
                             </div>
                             <div className="rd-navbar-main-outer menubanner">
                                 <div className="menulogoDiv">
@@ -178,6 +178,16 @@ export class Navigation extends Component {
                                                         </Link>
                                                     </li>
                                                 </ul>
+                                            </li>
+                                            <li className="rd-nav-item">
+                                                <Link className={`rd-nav-link ${this.state.index === 10 ? 'active1' : ''} `} to="/audio" onClick={() => { this.handleNavigationClick(10) }}>
+                                                    <Translate>{({ translate }) => translate('HOME.audio')}</Translate>
+                                                </Link>
+                                            </li>
+                                            <li className="rd-nav-item">
+                                                <Link className={`rd-nav-link ${this.state.index === 11 ? 'active1' : ''} `} to="/video" onClick={() => { this.handleNavigationClick(11) }}>
+                                                    <Translate>{({ translate }) => translate('HOME.video')}</Translate>
+                                                </Link>
                                             </li>
                                             <li className="rd-nav-item">
                                                 <Link className={`rd-nav-link ${this.state.index === 3 ? 'active1' : ''} `} to="/blog" onClick={() => { this.handleNavigationClick(3) }}>

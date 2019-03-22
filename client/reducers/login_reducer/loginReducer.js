@@ -16,6 +16,8 @@ const initialState = {
     resetError: '',
     UpdatedError: '',
     AccessUser: {},
+    contactError: '',
+    isContactSubmitted: false,
     isProfileEdited: false
 }
 
@@ -150,6 +152,23 @@ const loginReducer = (state = initialState, action) => {
                     ...state,
                     error: profileRespon.error.detail,
                     isProfileEdited: false
+                }
+            }
+            break;
+
+        case types.CONTACT_US:
+            const contactPayload = action.payload.data;
+            if (contactPayload.contactus) {
+                state = {
+                    ...state,
+                    isContactSubmitted: true
+                }
+            }
+            else {
+                state = {
+                    ...state,
+                    isContactSubmitted: false,
+                    error: 'Some Error Occured'
                 }
             }
             break;

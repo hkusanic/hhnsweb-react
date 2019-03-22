@@ -18,9 +18,19 @@ exports = module.exports = function (app) {
 	app.all('/api/appointment/create', keystone.middleware.api, routes.api.appointment.create);
 	app.get('/api/appointment/:id', keystone.middleware.api, routes.api.appointment.get);
 	app.get('/api/page/', keystone.middleware.api, routes.api.page.list);
+	app.get('/api/topic/', keystone.middleware.api, routes.api.topic.list);
+	app.get('/api/location/', keystone.middleware.api, routes.api.location.list);
+	app.get('/api/event/', keystone.middleware.api, routes.api.event.list);
 	app.post('/api/blog/find/', keystone.middleware.api, routes.api.blog.get);
 	app.get('/api/blog/', keystone.middleware.api, routes.api.blog.list);
 	app.get('/api/lecture/', keystone.middleware.api, routes.api.lecture.list);
+	app.post('/api/lecture/createBulk/', keystone.middleware.api, routes.api.lecture.createBulk);
+	app.post('/api/kirtan/createBulk/', keystone.middleware.api, routes.api.kirtan.createBulk);
+	app.get('/api/kirtan/', keystone.middleware.api, routes.api.kirtan.list);
+	app.post('/api/lecture/updateBulk/', keystone.middleware.api, routes.api.lecture.updateBulk);
+	app.all('/api/lecture/:id/update', keystone.middleware.api, routes.api.lecture.update);
+	app.post('/api/lecture/:id/remove', keystone.middleware.api, routes.api.lecture.remove);
+	app.post('/api/lecture/', keystone.middleware.api, routes.api.lecture.create);
 	app.post('/api/signin/', keystone.middleware.api, routes.api.user.signin);
 	app.post('/api/signup/', keystone.middleware.api, routes.api.user.signup);
 	app.post('/api/signout/', keystone.middleware.api, routes.api.user.signout);
@@ -30,10 +40,9 @@ exports = module.exports = function (app) {
 	app.post('/api/editprofile/', keystone.middleware.api, routes.api.user.editprofile);
 	app.post('/api/booking/bookingcreated/', keystone.middleware.api, routes.api.booking.bookingcreated);
 	app.get('/api/booking/:email', keystone.middleware.api, routes.api.booking.get);
+	app.post('/api/contactus/', keystone.middleware.api, routes.api.contactus.create);
 	app.get('/api/user/', keystone.middleware.api, routes.api.user.list);
 	app.get('/api/appointment/', keystone.middleware.api, routes.api.appointment.list);
-
-	app.get('/api/lecture/:location', keystone.middleware.api, routes.api.lecture.bylocation);
 
 	// File Upload Routes
 	app.get('/api/fileupload/list', keystone.middleware.api, routes.api.fileupload.list);

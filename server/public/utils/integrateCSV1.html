@@ -1,0 +1,128 @@
+<html>
+
+<head>Script Parser</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
+<script>
+
+    window.onload = function () {
+        document.getElementById('firstCSV').addEventListener('change', uploadfirst, false)
+        document.getElementById('secongCSV').addEventListener('change', uploadsecond, false)
+
+    };
+    var csvFirstData;
+    var csvSecondData;
+    function uploadfirst(event) {
+        jsonObj = [];
+        var data = null;
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function (event1) {
+            csvFirstData = event1.target.result;
+        };
+        reader.onerror = function () {
+            alert("unable to read " + file.fileName);
+        }
+    }
+
+    function uploadsecond(event) {
+        jsonObj = [];
+        var data = null;
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function (event1) {
+            csvSecondData = event1.target.result;
+        };
+        reader.onerror = function () {
+            alert("unable to read " + file.fileName);
+        }
+    }
+
+    function download() {
+        var jsonObj = [];
+        var errorData = [];
+        var secondData = Papa.parse(csvFirstData, { header: true, skipEmptyLines: true });
+        var firstData = Papa.parse(csvSecondData, { header: true, skipEmptyLines: true });
+        for (let i = 0; i < firstData.data.length; i++) {
+                let count = true;
+            for (let j = 0; j < secondData.data.length ; j++) {
+                if (firstData.data[i]['Date'].trim() === secondData.data[j]['Date'].trim() &&
+                    firstData.data[i]['Link'].trim() === secondData.data[j]['Field10_link'].trim() 
+                    // &&
+                    // firstData.data[i]['Downloads'].trim() === secondData.data[j]['Downloads'].trim()
+                    ) {
+                    count = false;
+                    item = {};
+                    item['title_en'] = firstData.data[i]['Title'];
+                    item['title_ru'] = secondData.data[j]['Заголовок'];
+                    item['created_date'] = firstData.data[i]['Date'];
+                    item['published_date'] = firstData.data[i]['PublishTime'];
+                    item['author'] = firstData.data[i]['Author'];
+                    item['translation_en'] = firstData.data[i]['Translation'];
+                    item['translation_ru'] = secondData.data[j]['Translation'];
+                    item['event'] = firstData.data[i]['Event'];
+                    item['location'] = firstData.data[i]['Location'];
+                    item['topic_en'] = firstData.data[i]['Topic'];
+                    item['topic_ru'] = secondData.data[j]['Topic'];
+                    item['part'] = firstData.data[i]['Part'];
+                    item['chapter'] = firstData.data[i]['chapter'];
+                    item['verse'] = firstData.data[i]['Verse'];
+                    item['download_link'] = firstData.data[i]['Field10_link'];
+                    item['duration'] = firstData.data[i]['Duration'];
+                    item['downloads'] = firstData.data[i]['Downloads'];
+                    item['audio_link'] = firstData.data[i]['Field7_link'];
+                    item['field1'] = firstData.data[i]['Field1'];
+                    item['soundCloud_link'] = firstData.data[i]['SoundCloud'];
+                    jsonObj.push(item);
+                    
+                }
+                else {
+                    if(count){
+                        if(j === secondData.data.length - 2){
+                            errorData.push(firstData.data[i]);
+                        }
+                    }
+                }
+            }
+        }
+        console.log("Error object =====>>>>", JSON.stringify(jsonObj));
+        console.log("Error object =====>>>>", errorData);
+
+        DownloadCSV(jsonObj);
+    }
+    function DownloadCSV(jsonData) {
+        var csv = Papa.unparse(jsonData);
+
+        var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var csvURL = null;
+        if (navigator.msSaveBlob) {
+            csvURL = navigator.msSaveBlob(csvData, 'IntegratedAudio.csv');
+        }
+        else {
+            csvURL = window.URL.createObjectURL(csvData);
+        }
+        var tempLink = document.createElement('a');
+        tempLink.href = csvURL;
+        tempLink.setAttribute('download', 'Integrated.csv');
+        tempLink.click();
+    }
+</script>
+
+<body>
+    <div>
+        <h1>Parser</h1>
+        <div>
+            <label>Upload English CSV : <input id="firstCSV" type="file" name="files" accept=".csv" /></label>
+            <a id="downloadAnchorElem" style="display:none"></a>
+        </div>
+
+        <div>
+            <label>Upload Raussain CSV : <input id="secongCSV" type="file" name="files" accept=".csv" /></label>
+        </div>
+
+        <div><button onclick={download()}>download Data CSV</button></div>
+    </div>
+</body>
+
+</html>

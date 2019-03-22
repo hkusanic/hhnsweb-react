@@ -35,6 +35,11 @@ const utils = {
 	editProfile: (body) => {
 		let url = serverAddress + '/api/editprofile/';
 		return axios.post(url, body);
+	},
+
+	contactUs: (body) => {
+		let url = serverAddress + '/api/contactus/';
+		return axios.post(url, body);
 	}
 }
 

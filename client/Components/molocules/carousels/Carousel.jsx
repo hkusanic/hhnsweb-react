@@ -3,6 +3,7 @@ import script from "../../../assets/script";
 import SingleCarousel from '../../atoms/SingleCarousel/singleCarousel';
 import Biography from '../Biography/Biography';
 import Announcement from '../../organisms/Announcement/Announcement';
+import GridLayoutMenus from '../../organisms/GridLayoutMenu/GridLayoutMenus';
 export class Carousel extends Component {
     constructor(props) {
         super(props);
@@ -36,6 +37,7 @@ export class Carousel extends Component {
                     </div>
                 </section>
                 <Biography></Biography>
+                <GridLayoutMenus />
                 <Announcement />
             </div>
 

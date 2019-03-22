@@ -29,6 +29,7 @@
     "calendar": ["CALENDAR", "КАЛЕНДАРЬ"],
     "availability": ["AVAILABILITY", "ДОСТУПНОСТЬ"],
 		"booking": ["BOOKING", "ЗАПИСЬ"],
+		"contacts": ["Contacts", "контакты"],
 		"login":["LOG IN", "АВТОРИЗОВАТЬСЯ"],
 		"Register": ["REGISTRATION", "РЕГИСТРАЦИЯ"],
 		"log_out": ["LOGOUT", "ВЫЙТИ"],
@@ -37,7 +38,9 @@
 		"read_more": ["Read more..", "Читать дальше..."],
 		"official_website": ["The Official Website of", "Официальный сайт"],
 		"h_h":["H.H. Niranjana Swami ", "Е.С. Ниранджана Свами"],
-		"announcement": ["Announcement", "объявление"]
+		"announcement": ["Announcement", "объявление"],
+		"audio":["Audio", "аудио"],
+		"video": ["Video", "видео"]
 
 	},
 	"FOOTER": {
@@ -121,5 +124,14 @@
 		"aspiring_disciple": ["Aspiring Disciple", "Кандидат в ученики"],
 		"submit": ["SUBMIT","ОТПРАВИТЬ"],
 		"you_have_already_booked": ["You have already booked meeting", "Вы уже записались на встречу"]
+	},
+	"CONTACT": {
+		"contact_us": ["Contact Us", "связаться с нами"],
+		"first_name": ["First Name", "Имя"],
+		"last_name": ["Last Name", "Фамилия"],
+		"email": ["E-mail", "Почта"],
+		"mobile_number": ["Mobile Number", "Мобильный телефон"],
+		"message": ["Your Message", "твое сообщение"],
+		"send_message": ["Send Message","Отправить сообщение"]
 	}
 }

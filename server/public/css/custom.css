@@ -4,6 +4,7 @@
 
 .padLeft {
     padding-left: 10% !important;
+    margin-left: 9% !important;
 }
 
 .padLeftRow {
@@ -351,6 +352,10 @@
         padding-bottom: 2em;
         margin-right: 5%;
     }
+    .contactHeading {
+        text-align: center;
+        color: #e58842;
+    }
     .appointmentList {
         width: 100%;
         max-width: 100%;
@@ -358,5 +363,167 @@
         margin-top: 5%;
         overflow-x: scroll;
     }
-  
+    .padBottom {
+        padding-bottom: 4em;
+    }
 
+    .filter{
+        padding-left: 2em;
+        padding-right: 2em;
+        width: 25%;
+    }
+    .filterDiv {
+        display: flex;
+        flex-direction: row;
+    }
+    .dropdown {
+        /* background-color: #e58842 */
+    }
+    .dropdown button {
+        width: 100%;
+        /* color: white; */
+        background-color: white !important;
+        border: 1px solid;
+        border: 1px solid #c5c6cd;
+        font-weight: 100;
+        border-radius: 0px;
+        font-size: 14px;
+        font-weight: 300; 
+    }
+    .dropdown div {
+        width: 100%;
+        max-height: 20em !important;
+        background-color: #f1f3f4 !important;
+        transform: none !important;
+        margin-top: 17% !important;
+    }
+    /* .dropdown-toggle::after {
+        margin-left: 8.255em !important;
+    } */
+
+    .titleSearch {
+        padding-right: 2em;
+        width: 25%;
+        padding-left: 2em;
+    }
+    .titleSearch input {
+        border-radius: 0px !important;
+        max-height: 38px !important;
+        min-height: 38px !important;
+    }
+    .titleDiv {
+        margin-top: 2em !important;
+    }
+    .btnDiv {
+        width: 22%;
+        margin-top: 0px !important;
+        padding-left: 2.8%;
+    }
+    .btnDiv button {
+        background-color: #e58842 !important;
+        border-radius: 0px !important;
+    }
+    .dropdown-item{
+        font-weight: 100 !important;
+        background-color: #f1f3f4 !important;
+    }
+    .dropdown-menu{
+        overflow-y: scroll !important;
+        overflow-wrap: break-word;
+    }
+    .dropdown-item:hover {
+        background-color: #db8d4e !important;
+        color: white;
+    }
+
+    @media (min-width: 1440px) and (max-width:2560px){
+        .img-banner-width {
+            width: 2560px !important;
+        }
+    }
+
+    .Collapsible {
+        background-color: white; }
+      
+      .Collapsible__contentInner {
+        padding: 10px;
+        border: 1px solid #ebebeb;
+        border-top: 0; }
+        .Collapsible__contentInner p {
+          margin-bottom: 10px;
+          font-size: 14px;
+          line-height: 20px; }
+          .Collapsible__contentInner p:last-child {
+            margin-bottom: 0; }
+      
+      .Collapsible__trigger {
+        display: block;
+        font-weight: 400;
+        text-decoration: none;
+        color: #333333;
+        position: relative;
+        border: 1px solid white;
+        padding: 10px;
+        background: #ff830a;
+        color: white; }
+        .Collapsible__trigger:after {
+          font-family: 'FontAwesome';
+          content: '\f107';
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          display: block;
+          transition: transform 300ms; }
+        .Collapsible__trigger.is-open:after {
+          transform: rotateZ(180deg); }
+        .Collapsible__trigger.is-disabled {
+          opacity: 0.5;
+          background-color: grey; }
+      
+      .CustomTriggerCSS {
+        background-color: lightcoral;
+        transition: background-color 200ms ease; }
+      
+      .CustomTriggerCSS--open {
+        background-color: darkslateblue; }
+      
+      .Collapsible__custom-sibling {
+        padding: 5px;
+        font-size: 12px;
+        background-color: #CBB700;
+        color: black; }
+
+        .icon-search {
+            font-size: 24px; 
+            margin-left: 5px
+        }
+
+        .display-none-icon{
+            display: none;
+        }
+    .dataDiv {
+        width: 80% !important;
+        margin-left: 15% !important;
+    }
+    .dataUL {
+        padding-bottom: 2em !important;
+    }
+    .dataTitle {
+        max-width: 100% !important;
+    }
+
+    .datatable tr td {
+        padding-top: 1em;
+    }
+    
+    .datatable tr td b span {
+        width: 85px;
+        display: inline-block;
+    }
+    .dataRowAlign {
+        text-align: left !important;
+    }
+    .videoTable{
+        width: 80% !important;
+        margin-left: 10% !important;
+    }

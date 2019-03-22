@@ -1,21 +1,22 @@
-import lectureApi from '../utils/api/lecture';
-import * as types from '../constants/index';
+import lectureApi from "../utils/api/lecture";
+import * as types from "../constants/index";
 
-export function getLectures (page) {
-	return (dispatch) => {
-		lectureApi.getlectures(page)
-			.then((response) => {
-				dispatch(getLecturesAction(response.data));
+export function searchLecture(body) {
+	return dispatch => {
+		lectureApi
+			.searchLecture(body)
+			.then(response => {
+				dispatch(searchLectureAction(response));
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.error(err);
 			});
 	};
 }
 
-export function getLecturesAction (data) {
+export function searchLectureAction(data) {
 	return {
-		type: types.GET_LECTURES,
-		payload: data,
+		type: types.SEARCH_LECTURE,
+		payload: data
 	};
 }

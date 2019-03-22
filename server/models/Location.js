@@ -5,6 +5,7 @@ const Types = keystone.Field.Types;
 let Location = new keystone.List('Location', {
 	autokey: { path: 'slug', from: 'title _id', unique: true },
 	map: { name: 'title' },
+	defaultSort: 'title',
 });
 
 Location.add({
@@ -12,7 +13,8 @@ Location.add({
 
 });
 
-Location.relationship({ path: 'lecture', ref: 'Lecture', refPath: 'location' });
+ //Location.relationship({ ref: 'Lecture', path: 'Lecture.en.location' });
+ //Location.relationship({ path: 'location', ref: 'Lecture', refPath: 'ru.location' });
 // Lecture.schema.add({ data: mongoose.Schema.Types.Mixed }); // you can add mongoose types like this.. but they should be defined outside .add()
 
 Location.schema.pre('save', function (next) {

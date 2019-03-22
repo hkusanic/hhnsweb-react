@@ -85,6 +85,18 @@ export function editProfile (body) {
 	};
 }
 
+export function contactUs (body) {
+	return (dispatch) => {
+		loginApi.contactUs(body)
+			.then((response) => {
+				dispatch(contactUsAction(response));
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+	}
+}
+
 export function signupAction (data) {
 	return {
 		type: types.SIGNUP,
@@ -132,6 +144,13 @@ export function editProfileAction (data) {
 		type: types.EDIT_PROFILE,
 		payload: data,
 	};
+}
+
+export function contactUsAction(data) {
+	return {
+		type: types.CONTACT_US,
+		payload: data
+	}
 }
 
 export function checkLogin () {
