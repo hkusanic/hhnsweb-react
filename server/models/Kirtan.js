@@ -19,42 +19,25 @@ Kirtan.add({
     dub :{type:String},
 	comments: {	type: Types.Relationship,	ref: 'Comment', many: true },
 	tags: {	type: Types.Relationship, ref: 'Tag', many: true },
-	publish_in_book :{type:String},
-	transcribe :{type:String},
 	translation_required: { type:Boolean, default:true},
 	youtube: { type: Types.TextArray },
     type: {
 		type: Types.Select,
 		options: ['Kirtan', 'Bhajan'],
 		default: 'Kirtan',
-	},
+    },
+    artist:{type:String},
 	en:{
 	title:{type:String},
 	event: { type: String},
 	topic:{type: String},
-	transcription: {
-		text: {type: Types.Text},
-		attachment: {type: Types.Url}
-	},
 	location: {type: String},
-	summary: {
-		text: {type: Types.Text},
-		attachment: {type: Types.Url}
-	}
 	},
 	ru:{
 		title:{type:String},
 		event: { type: String},
 		topic:{type: String},
-		transcription: {
-			text: {type: Types.Text},
-			attachment: {type: Types.Url}
-		},
 		location: {type: String},
-		summary: {
-			text: {type: Types.Text},
-			attachment: {type: Types.Url}
-		}
    }
 	
 	

@@ -12,5 +12,5 @@ exports.list = function (req, res) {
 		
 			topic: items,
 		});
-	});
+	}).sort('title');
 };

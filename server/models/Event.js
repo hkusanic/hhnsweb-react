@@ -5,6 +5,7 @@ const Types = keystone.Field.Types;
 let Event = new keystone.List('Event', {
 	autokey: { path: 'slug', from: 'title _id', unique: true },
 	map: { name: 'title' },
+	defaultSort: 'title',
 });
 
 Event.add({

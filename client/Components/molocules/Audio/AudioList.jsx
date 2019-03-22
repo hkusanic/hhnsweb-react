@@ -100,23 +100,22 @@ export class AudioList extends Component {
 										<thead>
 											<tr>
 												<th className="align">Title</th>
-												<th className="padLeft">Player</th>
-												<th>Downloads</th>
+												<th className="align">Downloads</th>
 											</tr>
 										</thead>
 										<tbody>
 											{this.state.lectures.map((item, key) => {
 												return (
 													<tr key={key}>
-														<td className="titleColor dataRowAlign">
+														<td className="titleColor">
 															{" "}
 															<Link
 																to={{ pathname: "/audioDetails", state: item }}
 															>
 																{renderHTML(reactCookie.load('languageCode') === 'en' ? item.en.title : item.ru.title)}
 															</Link>
-														</td>
-														<td>
+															<br/>
+															<br/>
 															<audio controls>
 																<source
 																	src={renderHTML(item.audio_link)}
@@ -124,6 +123,7 @@ export class AudioList extends Component {
 																/>
 															</audio>
 														</td>
+													
 														<td>{item.downloads}</td>
 													</tr>
 												);
