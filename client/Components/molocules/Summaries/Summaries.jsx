@@ -8,6 +8,7 @@ import Pagination from "react-js-pagination";
 import SearchFilter from "../SeachFilter/SearchFilter";
 import {Collapse} from 'react-collapse';
 import reactCookie from 'react-cookies';
+import { Translate } from 'react-localize-redux';
 
 export class Summaries extends Component {
 	constructor(props) {
@@ -22,7 +23,8 @@ export class Summaries extends Component {
 			body: {
 				page: 1, 
 				summaries: true
-			}
+			},
+			isSearch: false
 		};
 	}
 
@@ -42,7 +44,7 @@ export class Summaries extends Component {
 	}
 	searchData = body => {
 		body.summaries = true;
-		this.setState({ body }, () => {
+		this.setState({ body, isSearch: true }, () => {
 			this.props.searchLecture(body);
 		});
 	};
@@ -68,7 +70,8 @@ export class Summaries extends Component {
 				{!this.state.isUserLogin ? (
 					<div>
 						<div style={{ textAlign: "center" }}>
-							<p className="bookingForm">Summaries
+							<p className="bookingForm">
+								<Translate>{({ translate }) => translate('HOME.Summaries')}</Translate>
 								<i onClick={()=>this.onClickIcon(false)} className={class_icon_search}  aria-hidden="true"></i>
 								<i onClick={()=>this.onClickIcon(true)} className={class_icon_close}  aria-hidden="true"></i>
 							</p>
@@ -104,7 +107,9 @@ export class Summaries extends Component {
 									</table>
 								) : (
 									<div style={{ textAlign: "center" }}>
-										<p className="bookingForm">No Records Found</p>
+										<p className="bookingForm">
+										  {this.state.isSearch ? 'No Record Found' : 'Hare Krishna...'}
+										</p>
 									</div>
 								)}
 							</div>
@@ -130,7 +135,7 @@ export class Summaries extends Component {
 					</div>
 				) : 
 				<div style={{ textAlign: "center" }}>
-					<p className="bookingForm">Please Log in to Continue</p>
+					<p className="bookingForm">Please Log in to continue</p>
 				</div>
 				}
 			</div>

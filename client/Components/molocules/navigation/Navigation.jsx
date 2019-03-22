@@ -195,13 +195,13 @@ export class Navigation extends Component {
                                                 </Link>
                                             </li>
                                             <li className="rd-nav-item">
-                                                <Link className={`rd-nav-link ${this.state.index === 4 ? 'active1' : ''} `} to="/calender" onClick={() => { this.handleNavigationClick(4) }}>
-                                                    <Translate>{({ translate }) => translate('HOME.calendar')}</Translate>
+                                                <Link className={`rd-nav-link ${this.state.index === 4 ? 'active1' : ''} `} to="/transcriptions" onClick={() => { this.handleNavigationClick(4) }}>
+                                                    <Translate>{({ translate }) => translate('HOME.Transcriptions')}</Translate>
                                                 </Link>
                                             </li>
                                             <li className="rd-nav-item">
-                                                <Link className={`rd-nav-link ${this.state.index === 5 ? 'active1' : ''} `} to="/booking" onClick={() => { this.handleNavigationClick(5) }}>
-                                                    <Translate>{({ translate }) => translate('HOME.booking')}</Translate>
+                                                <Link className={`rd-nav-link ${this.state.index === 5 ? 'active1' : ''} `} to="/summaries" onClick={() => { this.handleNavigationClick(5) }}>
+                                                    <Translate>{({ translate }) => translate('HOME.Summaries')}</Translate>
                                                 </Link>
                                             </li>
                                             {

@@ -8,6 +8,7 @@ import Pagination from "react-js-pagination";
 import reactCookie from 'react-cookies';
 import SearchFilter from "../SeachFilter/SearchFilter";
 import {Collapse} from 'react-collapse';
+import { Translate } from 'react-localize-redux';
 
 
 export class Transcritpion extends Component {
@@ -23,7 +24,8 @@ export class Transcritpion extends Component {
 			body: {
 				page: 1, 
 				transcriptions: true
-			}
+			},
+			isSearch: false
 		};
 	}
 
@@ -55,7 +57,7 @@ export class Transcritpion extends Component {
 
 	searchData = body => {
 		body.transcriptions = true;
-		this.setState({ body }, () => {
+		this.setState({ body, isSearch: true}, () => {
 			this.props.searchLecture(body);
 		});
 	};
@@ -73,7 +75,7 @@ export class Transcritpion extends Component {
 					<div>
 						<div style={{ textAlign: "center" }}>
 							<p className="bookingForm">
-								Transcriptions
+								<Translate>{({ translate }) => translate('HOME.Transcriptions')}</Translate>
 								<i onClick={()=>this.onClickIcon(false)} className={class_icon_search}  aria-hidden="true"></i>
 								<i onClick={()=>this.onClickIcon(true)} className={class_icon_close}  aria-hidden="true"></i>
 							</p>
@@ -109,7 +111,9 @@ export class Transcritpion extends Component {
 									</table>
 								) : (
 									<div style={{ textAlign: "center" }}>
-										<p className="bookingForm">No Records Found</p>
+										<p className="bookingForm">
+										  {this.state.isSearch ? 'No Record Found' : 'Hare Krishna...'}
+										</p>
 									</div>
 								)}
 							</div>
@@ -135,7 +139,7 @@ export class Transcritpion extends Component {
 					</div>
 				) :
 				<div style={{ textAlign: "center" }}>
-					<p className="bookingForm">Please Log in to Continue</p>
+					<p className="bookingForm">Please Log in to continue</p>
 				</div>
 				}
 			</div>

@@ -19,8 +19,12 @@ export class VideoList extends Component {
             currentPage: null,
             page: null,
             videos: [],
-            iconSearch: true
-
+            iconSearch: true,
+            isSearch: false,
+            body : {
+                page : 1,
+                video: true
+            }
         }
     }
 
@@ -32,7 +36,7 @@ export class VideoList extends Component {
             totalItem: this.props.lecturesDetails.totalLectures,
             isUserLogin
         })
-        this.props.searchLecture({page : 1, video: true});
+        this.props.searchLecture(this.state.body);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -44,7 +48,9 @@ export class VideoList extends Component {
     }
 
     handlePageChange = (pageNumber) => {
-        this.props.searchLecture({page: pageNumber, video: true});
+        let body = Object.assign({}, this.state.body);
+		body.page = pageNumber;
+		this.props.searchLecture(body);
     }
 
     showing100Characters = (sentence) => {
@@ -63,7 +69,8 @@ export class VideoList extends Component {
     
     searchData = body => {
 		body.video = true;
-		this.setState({ body }, () => {
+		this.setState({ body, isSearch: false
+        }, () => {
 			this.props.searchLecture(body);
 		});
     };
@@ -110,7 +117,9 @@ export class VideoList extends Component {
                                     : 
                                     (
                                         <div style={{ textAlign: "center" }}>
-                                            <p className="bookingForm">No Records Found</p>
+                                            <p className="bookingForm">No Records Found</p><p className="bookingForm">
+										        {this.state.isSearch ? 'No Record Found' : 'Hare Krishna...'}
+										    </p>
                                         </div>
                                     )}
                                 </div>
@@ -137,7 +146,7 @@ export class VideoList extends Component {
                         </div>
                         : 
                         <div style={{ textAlign: "center" }}>
-					        <p className="bookingForm">Please Log in to Continue</p>
+					        <p className="bookingForm">Please Log in to continue</p>
 				        </div>
                 }
             </div>
