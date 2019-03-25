@@ -23,7 +23,6 @@ export class GridLayoutMenus extends React.Component {
                 $('.rd-navbar-toggle').removeClass('active');
                 $('.rd-navbar-nav-wrap').removeClass('active');
             }
-
         },500)
       
     }
@@ -59,18 +58,20 @@ export class GridLayoutMenus extends React.Component {
                                 menu="Gallery" 
                                 link="/gallery" />
                             <SingleGridMenu 
+                                handleNavigationClick={this.handleNavigationClick} 
                                 image='images/tour-2-270x200.jpg' 
                                 menu={<p><Translate>{({ translate }) => translate('HOME.calendar')}</Translate></p>} 
                                 link="/calender" />
-                            <SingleGridMenu 
-                                image='images/tour-3-270x200.jpg' 
-                                menu="Books" 
-                                link="/" />
                             <SingleGridMenu 
                                 handleNavigationClick={this.handleNavigationClick} 
                                 image='images/tour-4-270x200.jpg' 
                                 menu={<p><Translate>{({ translate }) => translate('lecturesTitle')}</Translate></p>} 
                                 link="/lectures" />
+                            <SingleGridMenu 
+                                handleNavigationClick={this.handleNavigationClick} 
+                                image='images/tour-3-270x200.jpg' 
+                                menu="Kirtan" 
+                                link="/kirtan" />
                             
                         </div>
                     </div>
