@@ -33,21 +33,21 @@
                 item["Part"] = data.data[i]['Part'];
                 item["Chapter"] = data.data[i]['Chapter'];
                 item["Verse"] = data.data[i]['Verse'];
-                item["Field10_link"] = data.data[i]['Field10_link'];
+                item["audio_link"] = data.data[i]['audio_link'];
                 item["Duration"] = data.data[i]['Duration'];
                 item["Downloads"] = data.data[i]['Downloads'];
                 item["Field7_link"] = "";
                 item["Field1"] = data.data[i]['Field1'];
                 item["SoundCloud"] = data.data[i]['SoundCloud'];
 
-                var str = data.data[i]['Field7_link'];
+                var str = data.data[i]['audio_link'];
                 var regex = /soundFile.*mp3/;
                 var matches = str.match(regex);
                 if (matches[0]) {
-                    item["Field7_link"] = matches[0].replace('soundFile=', '');
+                    item["audio_link"] = matches[0].replace('soundFile=', '');
                     jsonObj.push(item);
                 }
-                console.log("matches======>>>", item["Field7_link"]);
+                console.log("matches======>>>", item["audio_link"]);
             }
             DownloadCSV(jsonObj);
         };

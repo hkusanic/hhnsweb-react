@@ -11,7 +11,7 @@ export class AudioDetails extends Component {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
-		return (
+	 	return (
 			<div>
 				<section className="section section-lg">
 					<div className="container">

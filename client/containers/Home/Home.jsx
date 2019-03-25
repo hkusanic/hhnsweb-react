@@ -30,6 +30,8 @@ import TranscriptionDetails from '../../Components/molocules/Transcriptions/Tran
 import SummariesDetails from '../../Components/molocules/Summaries/SummariesDetails';
 import Kirtan from '../../Components/molocules/Kirtan/Kirtan';
 import KirtanDetails from '../../Components/molocules/Kirtan/KirtanDetails';
+import MKV from '../../Components/molocules/MKV/mkv';
+
 import {
     Route,
     Switch
@@ -83,6 +85,7 @@ export class Home extends Component {
                                 <Route path='/transcriptionDetails' component={TranscriptionDetails} />
                                 <Route path='/kirtan' component={Kirtan} />
                                 <Route path='/kirtanDetails' component={KirtanDetails} />
+                                <Route path='/mkv' component={MKV} />
                             </ShellCompoenent>
                         </ScrollToTop>
                     </Switch>

@@ -63,6 +63,10 @@ export class GridLayoutMenus extends React.Component {
                                 menu={<p><Translate>{({ translate }) => translate('HOME.calendar')}</Translate></p>} 
                                 link="/calender" />
                             <SingleGridMenu 
+                                image='images/tour-3-270x200.jpg' 
+                                menu="MKV" 
+                                link="/mkv" />
+                            <SingleGridMenu 
                                 handleNavigationClick={this.handleNavigationClick} 
                                 image='images/tour-4-270x200.jpg' 
                                 menu={<p><Translate>{({ translate }) => translate('lecturesTitle')}</Translate></p>} 
