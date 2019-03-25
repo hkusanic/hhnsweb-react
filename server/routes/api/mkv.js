@@ -10,120 +10,15 @@ let logger = require('./../../logger/logger');
 
 
 
-var Kirtan = keystone.list('Kirtan');
+var Mkv = keystone.list('Mkv');
 
 // Creating the API end point
 // More about keystone api here: https://gist.github.com/JedWatson/9741171
 exports.list = function (req, res) {
-	// Querying the data this works similarly to the Mongo db.collection.find() method
-	let query = [];
-
-	
-	if (req.query.title) {
-		let title = {
-			"en.title": {
-				$regex: ".*" + req.query.title + ".*",
-				'$options': 'i'
-			}
-		};
-		if (req.cookies.languageCode === 'en')
-			title = {
-				"en.title": {
-					$regex: ".*" + req.query.title + ".*",
-					'$options': 'i'
-				}
-			};
-		if (req.cookies.languageCode === 'ru')
-			title = {
-				"ru.title": {
-					$regex: ".*" + req.query.title + ".*",
-					'$options': 'i'
-				}
-			};
-
-		query.push(title);
-	}
-
-	if (req.query.location) {
-		let location = {
-			"en.location": {
-				$regex: ".*" + req.query.location + ".*",
-				'$options': 'i'
-			}
-		};
-		if (req.cookies.languageCode === 'en')
-			location = {
-				"en.location": {
-					$regex: ".*" + req.query.location + ".*",
-					'$options': 'i'
-				}
-			};
-		if (req.cookies.languageCode === 'ru')
-			location = {
-				"ru.location": {
-					$regex: ".*" + req.query.location + ".*",
-					'$options': 'i'
-				}
-			};
-
-		query.push(location);
-	}
-	if (req.query.topic) {
-		let topic_query = {
-			"en.topic": {
-				$regex: ".*" + req.query.topic + ".*",
-				'$options': 'i'
-			}
-		};
-		if (req.cookies.languageCode === 'en')
-			topic_query = {
-				"en.topic": {
-					$regex: ".*" + req.query.topic + ".*",
-					'$options': 'i'
-				}
-			};
-		if (req.cookies.languageCode === 'ru')
-			topic_query = {
-				"ru.topic": {
-					$regex: ".*" + req.query.topic + ".*",
-					'$options': 'i'
-				}
-			};
-
-		query.push(topic_query)
-
-	}
-	if (req.query.event) {
-		let event_query = {
-			"en.event": {
-				$regex: ".*" + req.query.event + ".*",
-				'$options': 'i'
-			}
-		};
-		if (req.cookies.languageCode === 'en')
-			event_query = {
-				"en.event": {
-					$regex: ".*" + req.query.event + ".*",
-					'$options': 'i'
-				}
-			};
-		if (req.cookies.languageCode === 'ru')
-			event_query = {
-				"ru.event": {
-					$regex: ".*" + req.query.event + ".*",
-					'$options': 'i'
-				}
-			};
-
-		query.push(event_query);
-	}
-
-
-
 
 	if (req.query.year) {
 		let year_query = {
-			"published_date": {
+			"year": {
 				$regex: ".*" + req.query.year + ".*",
 				'$options': 'i'
 			}
@@ -144,8 +39,8 @@ exports.list = function (req, res) {
 
 	logger.info({
 		req: req
-	}, "API list kirtan");
-	Kirtan.paginate({
+	}, "API list mkv");
+	Mkv.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
 		filters: filters
@@ -153,12 +48,12 @@ exports.list = function (req, res) {
 		if (err) {
 			logger.error({
 				error: err
-			}, "API list kirtan");
+			}, "API list mkv");
 			return res.apiError('database error', err);
 		}
 		return res.apiResponse({
 			success: true,
-			kirtan: items,
+			mkv: items,
 			total: items.results.length,
 
 		});
@@ -170,22 +65,22 @@ exports.list = function (req, res) {
 
 exports.create = function (req, res) {
     
-	var item = new Kirtan.model(),
+	var item = new Mkv.model(),
 		data = (req.method == 'POST') ? req.body : req.query;
 		logger.info({
 			req: req
-		}, "API create kirtan");
+		}, "API create mkv");
 	item.getUpdateHandler(req).process(data, function (err) {
 
 		if (err) {
 			logger.error({
 				error: err
-			}, "API create kirtan");
+			}, "API create mkv");
 			return res.apiError('error', err);
 		}
 
 		res.apiResponse({
-			Kirtan: item
+			Mkv: item
 		});
 
 	});
@@ -195,18 +90,18 @@ exports.create = function (req, res) {
 exports.createBulk = function (req, res) {
     logger.info({
 		req: req
-	}, "API createBulk kirtan");
+	}, "API createBulk mkv");
 	keystone.createItems({
-	      Kirtan: req.body
+	      Mkv: req.body
 	}, function (err, stats) {
 		if (err) {
 			logger.error({
 				error: err
-			}, "API createBulk kirtan");
+			}, "API createBulk mkv");
 			return res.apiError('error', err);
 		}
 		return res.apiResponse({
-			Kirtan: true
+			Mkv: true
 		});
 	});
 }
@@ -216,11 +111,11 @@ exports.createBulk = function (req, res) {
 exports.updateBulk = function (req, res) {
 	logger.info({
 		req: req
-	}, "API updateBulk kirtan");
+	}, "API updateBulk mkv");
 	if (!req.body) {
 		logger.error({
 			error: 'No Data'
-		}, "API updateBulk kirtan");
+		}, "API updateBulk mkv");
 		res.json({
 			error: {
 				title: 'Data is Reqired',
@@ -230,20 +125,20 @@ exports.updateBulk = function (req, res) {
 	}
 	let data = req.body;
 	for (let i = 0; i < data.length; i++) {
-		Kirtan.model.findOne({
+		Mkv.model.findOne({
 			uuid: data[i].uuid
 		}).exec(function (err, item) {
 
 			if (err) {
 				logger.error({
 					error: err
-				}, "API updateBulk kirtan");
+				}, "API updateBulk mkv");
 				return res.apiError('database error', err);
 			}
 			if (!item) {
 				logger.error({
 					error: 'No Item'
-				}, "API updateBulk kirtan");
+				}, "API updateBulk mkv");
 				return res.apiError('not found');
 			}
 
@@ -252,12 +147,12 @@ exports.updateBulk = function (req, res) {
 				if (err) {
 					logger.error({
 						error: err
-					}, "API updateBulk kirtan");
+					}, "API updateBulk mkv");
 					return res.apiError('create error', err);
 				}
 
 				res.apiResponse({
-					Kirtan: item
+					Mkv: item
 				});
 
 			});
@@ -269,22 +164,22 @@ exports.updateBulk = function (req, res) {
 exports.update = function (req, res) {
 	logger.info({
 		req: req
-	}, "API update kirtan");
+	}, "API update mkv");
 	let data = req.body;
-	Kirtan.model.findOne({
+	Mkv.model.findOne({
 		uuid: req.body.id
 	}).exec(function (err, item) {
 
 		if (err) {
 			logger.error({
 				error: err
-			}, "API update kirtan");
+			}, "API update mkv");
 			return res.apiError('database error', err);
 		}
 		if (!item) {
 			logger.error({
 				error: 'No Item'
-			}, "API update kirtan");
+			}, "API update mkv");
 			return res.apiError('not found');
 		}
 
@@ -293,12 +188,12 @@ exports.update = function (req, res) {
 			if (err) {
 				logger.error({
 					error: err
-				}, "API update kirtan");
+				}, "API update mkv");
 				return res.apiError('create error', err);
 			}
 
 			res.apiResponse({
-				Kirtan: item
+				Mkv: item
 			});
 
 		});
@@ -310,19 +205,19 @@ exports.update = function (req, res) {
 exports.remove = function (req, res) {
 	logger.info({
 		req: req
-	}, "API remove kirtan");
-	Kirtan.model.findById(req.params.id).exec(function (err, item) {
+	}, "API remove mkv");
+	Mkv.model.findById(req.params.id).exec(function (err, item) {
 
 		if (err) {
 			logger.error({
 				error: err
-			}, "API remove kirtan");
+			}, "API remove mkv");
 			return res.apiError('database error', err);
 		}
 		if (!item) {
 			logger.error({
 				error: 'No Item'
-			}, "API remove kirtan");
+			}, "API remove mkv");
 			return res.apiError('not found');
 		}
 
@@ -330,12 +225,12 @@ exports.remove = function (req, res) {
 			if (err) {
 				logger.error({
 					error: err
-				}, "API remove kirtan");
+				}, "API remove mkv");
 				return res.apiError('database error', err);
 			}
 
 			return res.apiResponse({
-				Kirtan: true
+				Mkv: true
 			});
 		});
 
