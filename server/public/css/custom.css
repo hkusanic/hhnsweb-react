@@ -559,9 +559,23 @@
     .imgMkv {
         margin-left: 20% !important
     }
-    .tabPadLeft {
-        padding-left: 10% !important;
-    }
+
     .marginLeft{
         margin-left: -10% !important;
+    }
+    .tabImg{
+        width: 200px !important;
+        height: 200px !important;
+    }
+    .tabLeft {
+        margin-left: 0% !important;
+    }
+    .yearList{
+        padding-left: 7% !important;
+        padding-right: 7% !important;
+    }
+    @media (min-width: 770px){
+        .tabPadLeft {
+            padding-left: 10% !important;
+        }
     }

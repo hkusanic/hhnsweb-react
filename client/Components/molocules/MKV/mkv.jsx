@@ -20,7 +20,7 @@ export class MKV extends Component {
 					<p className="bookingForm">MKV</p>
 				</div>
 				<section className="text-center">
-					<div className="container">
+					<div className="container yearList">
 						<div className="row offset-top-2">
 							{this.state.array.map((item, key) => {
 								return (
@@ -40,6 +40,7 @@ export class MKV extends Component {
 								);
 							})}
 						</div>
+						
 					</div>
 				</section>
 				{this.state.showTabs ? (
@@ -51,7 +52,7 @@ export class MKV extends Component {
 										className="tabs-custom tabs-horizontal tabs-line"
 										id="tabs-1"
 									>
-										<ul className="nav nav-tabs alignment marginLeft">
+										<ul className="nav nav-tabs tabLeft">
 											<li className="nav-item" role="presentation">
 												<a
 													className="nav-link active"
@@ -73,39 +74,91 @@ export class MKV extends Component {
 										</ul>
 										<div className="tab-content">
 											<div className="tab-pane fade show active" id="tabs-1-1">
-												<div class="col-sm-6 col-lg-3 wow-outer">
-													<article class="thumbnail-light wow slideInLeft">
-														<a class="thumbnail-light-media" href="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha.pdf" target="_blank">
-															<img
-																class="thumbnail-light-image"
-																src="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha_Cover.jpg"
-																alt=""
-																width="270"
-																height="300"
-															/>
-														</a>
-														<h5 class="thumbnail-light-title">
-															<a href="single-service.html">Mountain Tours</a>
-														</h5>
-													</article>
+												<div className="row row-50 row-lg-70 offset-top-2">
+													<div className="col-sm-6 col-lg-3 wow-outer">
+														<article className="thumbnail-light wow slideInLeft">
+															<a
+																className="thumbnail-light-media"
+																href="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha.pdf"
+																target="_blank"
+															>
+																<img
+																	className="thumbnail-light-image tabImg"
+																	src="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha_Cover.jpg"
+																	alt=""
+																	width="270"
+																	height="300"
+																/>
+															</a>
+															<h5 className="thumbnail-light-title">
+																<a href="single-service.html">Mountain Tours</a>
+															</h5>
+														</article>
+													</div>
+													<div className="col-sm-6 col-lg-3 wow-outer">
+														<article className="thumbnail-light wow slideInLeft">
+															<a
+																className="thumbnail-light-media"
+																href="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha.pdf"
+																target="_blank"
+															>
+																<img
+																	className="thumbnail-light-image tabImg"
+																	src="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha_Cover.jpg"
+																	alt=""
+																	width="270"
+																	height="300"
+																/>
+															</a>
+															<h5 className="thumbnail-light-title">
+																<a href="single-service.html">Mountain Tours</a>
+															</h5>
+														</article>
+													</div>
 												</div>
 											</div>
 											<div className="tab-pane fade" id="tabs-1-2">
-												<div class="col-sm-6 col-lg-3 wow-outer">
-													<article class="thumbnail-light wow slideInLeft">
-														<a class="thumbnail-light-media" href="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha.pdf" target="_blank">
-															<img
-																class="thumbnail-light-image"
-																src="https://nrs-site.s3.amazonaws.com/mkv/2003/Eng/2003_01_MKV_Cover.jpg"
-																alt=""
-																width="270"
-																height="300"
-															/>
-														</a>
-														<h5 class="thumbnail-light-title">
-															<a href="single-service.html">Mountain Tours</a>
-														</h5>
-													</article>
+												<div className="row row-50 row-lg-70 offset-top-2">
+													<div className="col-sm-6 col-lg-3 wow-outer">
+														<article className="thumbnail-light wow slideInLeft">
+															<a
+																className="thumbnail-light-media"
+																href="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha.pdf"
+																target="_blank"
+															>
+																<img
+																	className="thumbnail-light-image tabImg"
+																	src="https://nrs-site.s3.amazonaws.com/mkv/2003/Eng/2003_01_MKV_Cover.jpg"
+																	alt=""
+																	width="270"
+																	height="300"
+																/>
+															</a>
+															<h5 className="thumbnail-light-title">
+																<a href="single-service.html">Mountain Tours</a>
+															</h5>
+														</article>
+													</div>
+													<div className="col-sm-6 col-lg-3 wow-outer">
+														<article className="thumbnail-light wow slideInLeft">
+															<a
+																className="thumbnail-light-media tabImg"
+																href="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha.pdf"
+																target="_blank"
+															>
+																<img
+																	className="thumbnail-light-image tabImg"
+																	src="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha_Cover.jpg"
+																	alt=""
+																	width="270"
+																	height="300"
+																/>
+															</a>
+															<h5 className="thumbnail-light-title">
+																<a href="single-service.html">Mountain Tours</a>
+															</h5>
+														</article>
+													</div>
 												</div>
 											</div>
 										</div>
