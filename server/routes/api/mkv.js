@@ -16,11 +16,11 @@ var Mkv = keystone.list('Mkv');
 // More about keystone api here: https://gist.github.com/JedWatson/9741171
 exports.list = function (req, res) {
 
+     let query = [];
 	if (req.query.year) {
 		let year_query = {
 			"year": {
 				$regex: ".*" + req.query.year + ".*",
-				'$options': 'i'
 			}
 		};
 
