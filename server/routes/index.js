@@ -29,6 +29,7 @@ exports = module.exports = function (app) {
 	app.post('/api/location/createBulk/', keystone.middleware.api, routes.api.location.createBulk);
 	app.post('/api/location/create/', keystone.middleware.api, routes.api.location.create);
 	app.post('/api/kirtan/createBulk/', keystone.middleware.api, routes.api.kirtan.createBulk);
+	app.post('/api/mkv/createBulk/', keystone.middleware.api, routes.api.mkv.createBulk);
 	app.post('/api/kirtan/create/', keystone.middleware.api, routes.api.kirtan.create);
 	app.get('/api/kirtan/', keystone.middleware.api, routes.api.kirtan.list);
 	app.get('/api/mkv/', keystone.middleware.api, routes.api.mkv.list);
