@@ -31,3 +31,7 @@ export const GET_LOCATIONS = "GET_LOCATIONS";
 export const GET_TOPIC = "GET_TOPIC";
 
 export const SEARCH_LECTURE = "SEARCH_LECTURE"; 
+
+export const SEARCH_KIRTAN = "SEARCH_KIRTAN"; 
+
+export const GET_MKV = "GET_MKV"; 

@@ -178,10 +178,10 @@ exports.list = function (req, res) {
 	if (req.query.transcriptions) {
 		let transcription_query ={"en.transcription.text" : {"$exists" : true, "$ne" : ""}}
 		
-		if (req.cookies.languageCode === 'en')
-		transcription_query = {"en.transcription.text" : {"$exists" : true, "$ne" : ""}}
-		if (req.cookies.languageCode === 'ru')
-		transcription_query = {"ru.transcription.text" : {"$exists" : true, "$ne" : ""}}
+		// if (req.cookies.languageCode === 'en')
+		// transcription_query = {"en.transcription.text" : {"$exists" : true, "$ne" : ""}}
+		// if (req.cookies.languageCode === 'ru')
+		// transcription_query = {"ru.transcription.text" : {"$exists" : true, "$ne" : ""}}
 
 		query.push(transcription_query);
 	}

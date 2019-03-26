@@ -43,7 +43,7 @@ export class TranscriptionDetails extends Component {
 										{renderHTML(
 											reactCookie.load("languageCode") === "en"
 												? this.props.location.state.en.transcription.text
-												: this.props.location.state.ru.transcription.text
+												: this.props.location.state.en.transcription.text
 										)}
 									</div>
 								</article>
@@ -169,7 +169,7 @@ export class TranscriptionDetails extends Component {
 												<td className="padLeftRow">
 													{reactCookie.load("languageCode") === "en"
 														? this.props.location.state.en.location
-														: this.props.location.state.ru.location}
+														: this.props.location.state.en.location}
 												</td>
 											</tr>
 											<tr>

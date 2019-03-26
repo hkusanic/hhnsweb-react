@@ -42,7 +42,7 @@ export class SummariesDetails extends Component {
 									<div>
 										{renderHTML(
 											reactCookie.load("languageCode") === "en"
-												? this.props.location.state.en.summary.text
+												? this.props.location.state.ru.summary.text
 												: this.props.location.state.ru.summary.text
 										)}
 									</div>

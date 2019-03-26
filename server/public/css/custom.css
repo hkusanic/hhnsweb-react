@@ -527,3 +527,58 @@
         width: 80% !important;
         margin-left: 10% !important;
     }
+    .kirtanTable{
+        width: 60% !important;
+        margin-left: 20% !important;
+    }
+    .padkirtanLeft {
+        padding-left: 17% !important;
+        margin-left: 10% !important;
+    }
+    .OuterDiv{
+        height: 50px;
+        max-width: 15% !important;
+        border: 1px solid;
+        text-align: center;
+        align-items: center;
+        border-radius: 10px;
+        margin-left: 5% !important;
+        margin-top: 2% !important;
+        margin-bottom: 2% !important;
+        cursor: pointer;
+    }
+    .outer {
+        background-color: rgba(211, 211, 211, 0.8) !important;
+    }
+    .articleDiv {
+        text-align: center !important;
+        align-items: center;
+        margin-left: 35%;
+        margin-top: 9%;
+    }
+    .singleMkvTitle {
+        margin-left: 10% !important;
+    }
+    .imgMkv {
+        margin-left: 20% !important
+    }
+
+    .marginLeft{
+        margin-left: -10% !important;
+    }
+    .tabImg{
+        width: 100% !important;
+        height: 200px !important;
+    }
+    .tabLeft {
+        margin-left: 0% !important;
+    }
+    .yearList{
+        padding-left: 7% !important;
+        padding-right: 7% !important;
+    }
+    @media (min-width: 770px){
+        .tabPadLeft {
+            padding-left: 10% !important;
+        }
+    }

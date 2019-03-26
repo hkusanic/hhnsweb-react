@@ -2,16 +2,13 @@ import React, { Component } from "react";
 import renderHTML from "react-render-html";
 import reactCookie from "react-cookies";
 
-export class AudioDetails extends Component {
+export class KirtanDetails extends Component {
 	constructor(props) {
 		super(props);
 	}
 
 	render() {
-		if (!this.props.location.state) {
-			return <div>Error Occured..........</div>;
-		}
-	 	return (
+		return (
 			<div>
 				<section className="section section-lg">
 					<div className="container">
@@ -36,7 +33,7 @@ export class AudioDetails extends Component {
 										</li>
 										<li>
 											<span className="icon mdi mdi-tag-multiple" />
-											<a>Lecture</a>
+											<a>Kirtan</a>
 										</li>
 									</ul>
 								</article>
@@ -63,42 +60,6 @@ export class AudioDetails extends Component {
 														: this.props.location.state.ru.event}
 												</td>
 											</tr>
-											{this.props.location.state.part ? (
-												<tr>
-													<td>
-														<b>
-															<span>Part</span> :
-														</b>
-													</td>
-													<td className="padLeftRow">
-														{this.props.location.state.part}
-													</td>
-												</tr>
-											) : null}
-											{this.props.location.state.chapter ? (
-												<tr>
-													<td>
-														<b>
-															<span>Chapter</span> :
-														</b>
-													</td>
-													<td className="padLeftRow">
-														{this.props.location.state.chapter}
-													</td>
-												</tr>
-											) : null}
-											{this.props.location.state.verse ? (
-												<tr>
-													<td>
-														<b>
-															<span>Verse</span> :
-														</b>
-													</td>
-													<td className="padLeftRow">
-														{this.props.location.state.verse}
-													</td>
-												</tr>
-											) : null}
 											{this.props.location.state.author ? (
 												<tr>
 													<td>
@@ -167,4 +128,4 @@ export class AudioDetails extends Component {
 	}
 }
 
-export default AudioDetails;
+export default KirtanDetails;
