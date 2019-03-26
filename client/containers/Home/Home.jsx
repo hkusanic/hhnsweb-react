@@ -31,8 +31,6 @@ import SummariesDetails from '../../Components/molocules/Summaries/SummariesDeta
 import Kirtan from '../../Components/molocules/Kirtan/Kirtan';
 import KirtanDetails from '../../Components/molocules/Kirtan/KirtanDetails';
 import MKV from '../../Components/molocules/MKV/mkv';
-import SingleMKV from '../../Components/atoms/singleMKV/singleMKV';
-import MKVImage from '../../Components/atoms/singleMKV/mkvImage';
 
 import {
     Route,
@@ -88,8 +86,6 @@ export class Home extends Component {
                                 <Route path='/kirtan' component={Kirtan} />
                                 <Route path='/kirtanDetails' component={KirtanDetails} />
                                 <Route path='/mkv' component={MKV} />
-                                <Route path='/singlemkv' component={SingleMKV} />
-                                <Route path='/mkvImage' component={MKVImage} />
                             </ShellCompoenent>
                         </ScrollToTop>
                     </Switch>
