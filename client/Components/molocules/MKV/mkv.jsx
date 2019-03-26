@@ -1,16 +1,32 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getMkv } from "../../../actions/mkv";
 export class MKV extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			showTabs: false,
-			array: [2002, 2003, 2004, 2005, 2011, 2012, 2013, 2014]
+			array: [],
+			selectedMkv: {}
 		};
 	}
-	handleShowTabs = () => {
-		this.setState({ showTabs: true });
+
+	componentDidMount() {
+		this.props.getMkv({});
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			array: nextProps.mkv.mkv
+		});
+	}
+	handleShowTabs = item => {
+		this.setState({ showTabs: true, selectedMkv: item.item });
 	};
 	render() {
+		if (!(this.state.array.length > 0)) {
+			return <p>Loading...</p>;
+		}
 		return (
 			<div>
 				<section className="bg-gray-100">
@@ -26,21 +42,18 @@ export class MKV extends Component {
 								return (
 									<div
 										key={key}
-										className="col-sm-6 wow-outer OuterDiv"
-										onClick={() => {
-											this.handleShowTabs();
-										}}
+										className={this.state.selectedMkv.year === item.year ? "col-sm-6 wow-outer OuterDiv outer" : "col-sm-6 wow-outer OuterDiv"}
+										onClick={() => this.handleShowTabs({ item })}
 									>
 										<article className="articleDiv wow slideInLeft">
 											<div className="tour-default-caption">
-												<p className="titleColor">{item}</p>
+												<p className="titleColor">{item.year}</p>
 											</div>
 										</article>
 									</div>
 								);
 							})}
 						</div>
-						
 					</div>
 				</section>
 				{this.state.showTabs ? (
@@ -79,40 +92,20 @@ export class MKV extends Component {
 														<article className="thumbnail-light wow slideInLeft">
 															<a
 																className="thumbnail-light-media"
-																href="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha.pdf"
+																href={this.state.selectedMkv.en.issue_path}
 																target="_blank"
 															>
 																<img
 																	className="thumbnail-light-image tabImg"
-																	src="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha_Cover.jpg"
+																	src={this.state.selectedMkv.en.issue_cover}
 																	alt=""
 																	width="270"
 																	height="300"
 																/>
 															</a>
-															<h5 className="thumbnail-light-title">
-																<a href="single-service.html">Mountain Tours</a>
-															</h5>
-														</article>
-													</div>
-													<div className="col-sm-6 col-lg-3 wow-outer">
-														<article className="thumbnail-light wow slideInLeft">
-															<a
-																className="thumbnail-light-media"
-																href="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha.pdf"
-																target="_blank"
-															>
-																<img
-																	className="thumbnail-light-image tabImg"
-																	src="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha_Cover.jpg"
-																	alt=""
-																	width="270"
-																	height="300"
-																/>
-															</a>
-															<h5 className="thumbnail-light-title">
-																<a href="single-service.html">Mountain Tours</a>
-															</h5>
+															<p className="titleColor">
+																{this.state.selectedMkv.en.issue_name}
+															</p>
 														</article>
 													</div>
 												</div>
@@ -123,40 +116,20 @@ export class MKV extends Component {
 														<article className="thumbnail-light wow slideInLeft">
 															<a
 																className="thumbnail-light-media"
-																href="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha.pdf"
+																href={this.state.selectedMkv.ru.issue_path}
 																target="_blank"
 															>
 																<img
 																	className="thumbnail-light-image tabImg"
-																	src="https://nrs-site.s3.amazonaws.com/mkv/2003/Eng/2003_01_MKV_Cover.jpg"
+																	src={this.state.selectedMkv.ru.issue_cover}
 																	alt=""
 																	width="270"
 																	height="300"
 																/>
 															</a>
-															<h5 className="thumbnail-light-title">
-																<a href="single-service.html">Mountain Tours</a>
-															</h5>
-														</article>
-													</div>
-													<div className="col-sm-6 col-lg-3 wow-outer">
-														<article className="thumbnail-light wow slideInLeft">
-															<a
-																className="thumbnail-light-media tabImg"
-																href="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha.pdf"
-																target="_blank"
-															>
-																<img
-																	className="thumbnail-light-image tabImg"
-																	src="https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha_Cover.jpg"
-																	alt=""
-																	width="270"
-																	height="300"
-																/>
-															</a>
-															<h5 className="thumbnail-light-title">
-																<a href="single-service.html">Mountain Tours</a>
-															</h5>
+															<p className="titleColor">
+																{this.state.selectedMkv.ru.issue_name}
+															</p>
 														</article>
 													</div>
 												</div>
@@ -173,4 +146,21 @@ export class MKV extends Component {
 	}
 }
 
-export default MKV;
+const mapStateToProps = state => {
+	return {
+		mkv: state.mkvReducer
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		getMkv: body => {
+			dispatch(getMkv(body));
+		}
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(MKV);

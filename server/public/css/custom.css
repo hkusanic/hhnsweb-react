@@ -547,6 +547,9 @@
         margin-bottom: 2% !important;
         cursor: pointer;
     }
+    .outer {
+        background-color: rgba(211, 211, 211, 0.8) !important;
+    }
     .articleDiv {
         text-align: center !important;
         align-items: center;
@@ -564,7 +567,7 @@
         margin-left: -10% !important;
     }
     .tabImg{
-        width: 200px !important;
+        width: 100% !important;
         height: 200px !important;
     }
     .tabLeft {

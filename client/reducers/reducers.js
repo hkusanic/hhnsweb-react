@@ -8,6 +8,7 @@ import appointmentReducer from "./appointmentReducer/appointmentReducer";
 import appointmentListingReducer from "./appointmentReducer/appointmentListReducer";
 import searchFilterReducer from "./searchFilter/searchFilter";
 import kirtanReducer from "./kirtanReducer/kirtanReducer";
+import mkvReducer from "./mkvReducer/mkvReducer";
 import { routerReducer } from "react-router-redux";
 
 const reducers = combineReducers({
@@ -20,6 +21,7 @@ const reducers = combineReducers({
 	appointmentListingReducer: appointmentListingReducer,
 	searchFilterReducer: searchFilterReducer,
 	kirtanReducer: kirtanReducer,
+	mkvReducer: mkvReducer,
 	routing: routerReducer
 });
 
