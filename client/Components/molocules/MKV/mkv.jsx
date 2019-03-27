@@ -42,7 +42,11 @@ export class MKV extends Component {
 								return (
 									<div
 										key={key}
-										className={this.state.selectedMkv.year === item.year ? "col-sm-6 wow-outer OuterDiv outer" : "col-sm-6 wow-outer OuterDiv"}
+										className={
+											this.state.selectedMkv.year === item.year
+												? "col-sm-6 wow-outer OuterDiv outer"
+												: "col-sm-6 wow-outer OuterDiv"
+										}
 										onClick={() => this.handleShowTabs({ item })}
 									>
 										<article className="articleDiv wow slideInLeft">
@@ -81,56 +85,104 @@ export class MKV extends Component {
 													href="#tabs-1-2"
 													data-toggle="tab"
 												>
-													Russain
+													Russian
 												</a>
 											</li>
 										</ul>
 										<div className="tab-content">
 											<div className="tab-pane fade show active" id="tabs-1-1">
 												<div className="row row-50 row-lg-70 offset-top-2">
-													<div className="col-sm-6 col-lg-3 wow-outer">
-														<article className="thumbnail-light wow slideInLeft">
-															<a
-																className="thumbnail-light-media"
-																href={this.state.selectedMkv.en.issue_path}
-																target="_blank"
-															>
-																<img
-																	className="thumbnail-light-image tabImg"
-																	src={this.state.selectedMkv.en.issue_cover}
-																	alt=""
-																	width="270"
-																	height="300"
-																/>
-															</a>
-															<p className="titleColor">
-																{this.state.selectedMkv.en.issue_name}
-															</p>
-														</article>
+													<div class="col-sm-6 col-lg-4 isotope-item">
+														<a
+															class="thumbnail-modern thumbnail-modern-lg"
+															href={this.state.selectedMkv.en.issue1.issue_path}
+															target="_blank"
+															data-lightgallery="item"
+														>
+															<img
+																class="thumbnail-modern-image"
+																src={
+																	this.state.selectedMkv.en.issue1.issue_cover
+																}
+																alt=""
+																width="390"
+																height="576"
+															/>
+															{/* <div class="thumbnail-modern-caption">
+																<span class="icon mdi mdi-magnify"> </span>
+															</div> */}
+															<div class="thumbnail-modern-dummy" />
+														</a>
+													</div>
+													<div class="col-sm-6 col-lg-4 isotope-item">
+														<a
+															class="thumbnail-modern thumbnail-modern-lg"
+															href={this.state.selectedMkv.en.issue2.issue_path}
+															target="_blank"
+															data-lightgallery="item"
+														>
+															<img
+																class="thumbnail-modern-image"
+																src={
+																	this.state.selectedMkv.en.issue2.issue_cover
+																}
+																alt=""
+																width="390"
+																height="576"
+															/>
+															{/* <div class="thumbnail-modern-caption">
+																<span class="icon mdi mdi-magnify"> </span>
+															</div> */}
+															<div class="thumbnail-modern-dummy" />
+														</a>
 													</div>
 												</div>
 											</div>
 											<div className="tab-pane fade" id="tabs-1-2">
 												<div className="row row-50 row-lg-70 offset-top-2">
-													<div className="col-sm-6 col-lg-3 wow-outer">
-														<article className="thumbnail-light wow slideInLeft">
-															<a
-																className="thumbnail-light-media"
-																href={this.state.selectedMkv.ru.issue_path}
-																target="_blank"
-															>
-																<img
-																	className="thumbnail-light-image tabImg"
-																	src={this.state.selectedMkv.ru.issue_cover}
-																	alt=""
-																	width="270"
-																	height="300"
-																/>
-															</a>
-															<p className="titleColor">
-																{this.state.selectedMkv.ru.issue_name}
-															</p>
-														</article>
+													<div class="col-sm-6 col-lg-4 isotope-item">
+														<a
+															class="thumbnail-modern thumbnail-modern-lg"
+															href={this.state.selectedMkv.ru.issue1.issue_path}
+															target="_blank"
+															data-lightgallery="item"
+														>
+															<img
+																class="thumbnail-modern-image"
+																src={
+																	this.state.selectedMkv.ru.issue1.issue_cover
+																}
+																alt=""
+																width="390"
+																height="576"
+															/>
+															{/* <div class="thumbnail-modern-caption">
+																<span class="icon mdi mdi-magnify"> </span>
+															</div> */}
+															<div class="thumbnail-modern-dummy" />
+														</a>
+													</div>
+													<div class="col-sm-6 col-lg-4 isotope-item">
+														<a
+															class="thumbnail-modern thumbnail-modern-lg"
+															href={this.state.selectedMkv.ru.issue2.issue_path}
+															target="_blank"
+															data-lightgallery="item"
+														>
+															<img
+																class="thumbnail-modern-image"
+																src={
+																	this.state.selectedMkv.ru.issue2.issue_cover
+																}
+																alt=""
+																width="390"
+																height="576"
+															/>
+															{/* <div class="thumbnail-modern-caption">
+																<span class="icon mdi mdi-magnify"> </span>
+															</div> */}
+															<div class="thumbnail-modern-dummy" />
+														</a>
 													</div>
 												</div>
 											</div>

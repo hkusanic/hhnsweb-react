@@ -4,16 +4,32 @@
     "creation_date": "",
     "year": "2002",
     "en": {
-      "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha.pdf",
-      "issue_name": "2002_01_Guru Katha_Cover",
-      "issue_cover": "https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_Guru Katha_Cover.jpg",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_01_MKV.pdf",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2002_01_MKV_Cover_ryg7JGt_V.jpg",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2002/Eng/2002_02_MKV.pdf",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2002_02_MKV_Cover_HJjryGFOE.jpg",
+        "issue_contents": ""
+      }
     },
     "ru": {
-      "issue_path": "",
-      "issue_name": "",
-      "issue_cover": "",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     }
   },
   {
@@ -21,16 +37,32 @@
     "creation_date": "",
     "year": "2003",
     "en": {
-      "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2003/Eng/2003_01_MKV.pdf",
-      "issue_name": "2003_01_MKV_Cover",
-      "issue_cover": "https://nrs-site.s3.amazonaws.com/mkv/2003/Eng/2003_01_MKV_Cover.jpg",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2003/Eng/2003_01_MKV.pdf",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2003_01_MKV_Cover_SJDNgGFON.jpg",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     },
     "ru": {
-      "issue_path": "",
-      "issue_name": "",
-      "issue_cover": "",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     }
   },
   {
@@ -38,16 +70,32 @@
     "creation_date": "",
     "year": "2004",
     "en": {
-      "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2004/Eng/2004_01_MKV.pdf",
-      "issue_name": "2004_01_MKV_Cover",
-      "issue_cover": "https://nrs-site.s3.amazonaws.com/mkv/2004/Eng/2004_01_MKV_Cover.jpg",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2004/Eng/2004_01_MKV.pdf",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2004_01_MKV_Cover_BkZA1GFdV.jpg",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     },
     "ru": {
-      "issue_path": "",
-      "issue_name": "",
-      "issue_cover": "",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     }
   },
   {
@@ -55,16 +103,32 @@
     "creation_date": "",
     "year": "2010",
     "en": {
-      "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2010/Eng/2010_01_MKV.pdf",
-      "issue_name": "2010_01_MKV_Cover",
-      "issue_cover": "https://nrs-site.s3.amazonaws.com/mkv/2010/Eng/2010_01_MKV_Cover.jpg",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2010/Eng/2010_01_MKV.pdf",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2010_01_MKV_Cover_Hk6YJzYdE.jpg",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2010/Eng/2010_02_MKV.pdf",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2010_02_MKV_Cover_Bk_oyMtd4.jpg",
+        "issue_contents": ""
+      }
     },
     "ru": {
-      "issue_path": "",
-      "issue_name": "",
-      "issue_cover": "",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     }
   },
   {
@@ -72,16 +136,32 @@
     "creation_date": "",
     "year": "2011",
     "en": {
-      "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2011/Eng/2011_02_MKV.pdf",
-      "issue_name": "2011_02_MKV_Cover",
-      "issue_cover": "https://nrs-site.s3.amazonaws.com/mkv/2011/Eng/2011_02_MKV_Cover.jpg",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2011_01_MKV_Cover_H1dwlfKdE.jpg",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2011/Eng/2011_02_MKV.pdf",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2011_02_MKV_Cover_B1sOgMYO4.jpg",
+        "issue_contents": ""
+      }
     },
     "ru": {
-      "issue_path": "",
-      "issue_name": "",
-      "issue_cover": "",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     }
   },
   {
@@ -89,16 +169,32 @@
     "creation_date": "",
     "year": "2012",
     "en": {
-      "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2012/Eng/2012_01_MKV.pdf",
-      "issue_name": "2012_01_MKV_Cover",
-      "issue_cover": "https://nrs-site.s3.amazonaws.com/mkv/2012/Eng/2012_01_MKV_Cover.jpg",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2012/Eng/2012_01_MKV.pdf",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2012_01_MKV_Cover_BkABlztON.jpg",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     },
     "ru": {
-      "issue_path": "",
-      "issue_name": "",
-      "issue_cover": "",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     }
   },
   {
@@ -106,16 +202,32 @@
     "creation_date": "",
     "year": "2013",
     "en": {
-      "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2013/Eng/2013_01_MKV.pdf",
-      "issue_name": "2013_01_MKV_Cover",
-      "issue_cover": "https://nrs-site.s3.amazonaws.com/mkv/2013/Eng/2013_01_MKV_Cover.jpg",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2013/Eng/2013_01_MKV.pdf",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2013_01_MKV_Cover_SyRKxfFO4.jpg",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2013/Eng/2013_02_MKV.pdf",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2013_02_MKV_Cover_HJKsgMt_V.jpg",
+        "issue_contents": ""
+      }
     },
     "ru": {
-      "issue_path": "",
-      "issue_name": "",
-      "issue_cover": "",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     }
   },
   {
@@ -123,16 +235,32 @@
     "creation_date": "",
     "year": "2018",
     "en": {
-      "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2018/Eng/2018_01_MKV.pdf",
-      "issue_name": "2018_01_MKV_Cover",
-      "issue_cover": "https://nrs-site.s3.amazonaws.com/mkv/2018/Eng/2018_01_MKV_Cover.jpg",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "https://nrs-site.s3.amazonaws.com/mkv/2018/Eng/2018_01_MKV.pdf",
+        "issue_name": "",
+        "issue_cover": "https://ik.imagekit.io/gcwjdmqwwznjl/2018_01_MKV_Cover_HJx_JzFuN.jpg",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     },
     "ru": {
-      "issue_path": "",
-      "issue_name": "",
-      "issue_cover": "",
-      "issue_contents": ""
+      "issue1": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      },
+      "issue2": {
+        "issue_path": "",
+        "issue_name": "",
+        "issue_cover": "",
+        "issue_contents": ""
+      }
     }
   }
 ]
