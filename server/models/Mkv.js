@@ -12,17 +12,33 @@ Mkv.add({
 	creation_date: { type: Types.Date, default: Date.now },
     year:  {type: String},
 	en:{
+    issue1:  {
 	issue_path:{type:Types.Url},
     issue_name: {type: String},
     issue_cover: {type: Types.Url},
     issue_contents :{type: String}
-	},
-	ru:{
-        issue_path:{type:Types.Url},
-        issue_name: { type: String},
-        issue_cover: {type: Types.Url},
-        issue_contents :{type: String}
-   }
+        },
+    issue2:  {
+     issue_path:{type:Types.Url},
+     issue_name: {type: String},
+     issue_cover: {type: Types.Url},
+     issue_contents :{type: String}
+    }
+},
+   ru:{
+   issue1:  {
+  issue_path:{type:Types.Url},
+  issue_name: {type: String},
+  issue_cover: {type: Types.Url},
+  issue_contents :{type: String}
+      },
+   issue2:  {
+   issue_path:{type:Types.Url},
+   issue_name: {type: String},
+   issue_cover: {type: Types.Url},
+   issue_contents :{type: String}
+  }
+},
 });
 
 
