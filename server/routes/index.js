@@ -36,6 +36,7 @@ exports = module.exports = function (app) {
 	app.post('/api/mkv/create/', keystone.middleware.api, routes.api.mkv.create);
 	app.post('/api/lecture/updateBulk/', keystone.middleware.api, routes.api.lecture.updateBulk);
 	app.all('/api/lecture/:id/update', keystone.middleware.api, routes.api.lecture.update);
+	app.all('/api/lecture/updateCounters', keystone.middleware.api, routes.api.lecture.updateCounters);
 	app.post('/api/lecture/:id/remove', keystone.middleware.api, routes.api.lecture.remove);
 	app.post('/api/lecture/', keystone.middleware.api, routes.api.lecture.create);
 	app.post('/api/signin/', keystone.middleware.api, routes.api.user.signin);

@@ -13,7 +13,6 @@ Lecture.add({
 	published_date: { type: String },
 	duration: { type: String },
 	author: {type: String},
-	downloads: { type: Types.Number },
 	audio_link: { type: Types.Url },
 	soundcloud_link: {type: Types.Url},
 	service :{type:String},
@@ -58,6 +57,16 @@ Lecture.add({
 			attachment_name: {type: String},
 			attachment_link: {type: Types.Url}
 		}
+   },
+   counters:{
+	audio_page_view: { type: Types.Number, default:0 },
+	audio_play_count: { type: Types.Number,  default:0 },
+	downloads: { type: Types.Number,default:0 },
+	video_page_view: { type: Types.Number,  default:0 },
+	transcription_view: { type: Types.Number,  default:0 },
+	summary_view: { type: Types.Number,  default:0 },
+	transcription_view: { type: Types.Number,  default:0 },
+	summary_view: { type: Types.Number,  default:0 },
    }
 	
 	

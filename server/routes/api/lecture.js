@@ -393,6 +393,76 @@ exports.update = function (req, res) {
 	});
 }
 
+exports.updateCounters = function (req, res) {
+	logger.info({
+		req: req
+	}, "API update lecture");
+	let data = req.body;
+	Lecture.model.findOne({
+		uuid: req.body.uuid
+	}).exec(function (err, item) {
+
+		if (err) {
+			logger.error({
+				error: err
+			}, "API update lecture");
+			return res.apiError('database error', err);
+		}
+		if (!item) {
+			logger.error({
+				error: 'No Item'
+			}, "API update lecture");
+			return res.apiError('not found');
+		}
+
+		let obj = {};
+
+		if(req.body.audio_page_view){
+			item.counters.audio_page_view = item.audio_page_view + 1;
+		}
+		if(req.body.audio_play_count){
+			item.counters.audio_play_count = item.audio_play_count + 1;
+		}
+		if(req.body.audio_play_count){
+			item.counters.audio_play_count = item.audio_play_count + 1;
+		}
+		if(req.body.youtube_count){
+			item.counters.youtube_count = item.youtube_count + 1;
+		}
+		if(req.body.en_transcription_view){
+			item.counters.transcription_view = item.en.transcription.transcription_view+ 1;
+		}
+		if(req.body.ru_transcription_view){
+			item.counters.transcription_view = item.ru.transcription.transcription_view + 1;
+		}
+		if(req.body.en_summary_view){
+			item.counters.summary_view =item.en.summary.summary_view  + 1;
+		}
+		if(req.body.ru_summary_view){
+			item.counters.summary_view = item.ru.summary.summary_view   + 1;
+		}
+		if(req.body.downloads){
+			item.counters.downloads = item.downloads + 1;
+		}
+
+		item.getUpdateHandler(req).process(item, function (err) {
+
+			if (err) {
+				logger.error({
+					error: err
+				}, "API update lecture");
+				return res.apiError('create error', err);
+			}
+
+			res.apiResponse({
+				Lecture: item
+			});
+
+		});
+
+	});
+}
+
 
 exports.remove = function (req, res) {
 	logger.info({
