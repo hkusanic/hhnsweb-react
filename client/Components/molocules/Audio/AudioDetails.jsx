@@ -59,14 +59,18 @@ export class AudioDetails extends Component {
 									</ul>
 								</article>
 								<div className="audioStyle">
-									<audio controls
+									<audio controls controlsList="nodownload"
 									 onPlay ={() => {this.updateAudioCount()}}>
 										<source
 											src={renderHTML(this.props.location.state.audio_link)}
 											type="audio/mpeg"
 										/>
 									</audio>
+								
+									<a href={this.props.location.state.audio_link} download="download"><i style={{"cursor":"pointer","fontSize": "28px"}}  class="fa fa-download" aria-hidden="true"></i></a>											
+					  
 								</div>
+							
 								<div>
 									<table className="maintable">
 										<tbody>
