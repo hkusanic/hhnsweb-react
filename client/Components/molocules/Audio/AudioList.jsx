@@ -118,15 +118,18 @@ export class AudioList extends Component {
 															</Link>
 															<br/>
 															<br/>
-															<audio controls>
+															<audio controls controlsList="nodownload">
 																<source
 																	src={renderHTML(item.audio_link)}
 																	type="audio/mpeg"
 																/>
 															</audio>
+															
 														</td>
+														
 													
-														<td>{item.downloads}</td>
+														<td>{item.downloads}      <a href={item.audio_link} download="download"><i style={{"cursor":"pointer"}}  class="fa fa-download" aria-hidden="true"></i></a>											
+					</td>
 													</tr>
 												);
 											})}

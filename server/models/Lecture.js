@@ -17,8 +17,6 @@ Lecture.add({
 	soundcloud_link: {type: Types.Url},
 	service :{type:String},
     dub :{type:String},
-	comments: {	type: Types.Relationship,	ref: 'Comment', many: true },
-	tags: {	type: Types.Relationship, ref: 'Tag', many: true },
 	publish_in_book :{type:String},
 	transcribe :{type:String},
 	translation_required: { type:Boolean, default:true},

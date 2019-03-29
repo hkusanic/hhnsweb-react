@@ -2,40 +2,40 @@ const keystone = require('keystone');
 const mongoose = require('mongoose');
 const Types = keystone.Field.Types;
 
-let Comment = new keystone.List('Comment', {
+let Replies = new keystone.List('Replies', {
 	autokey: { path: 'slug', from: 'dateCreated _id', unique: true },
 	map: { name: 'message' },
 	defaultSort: '-dateCreated',
 });
 
-Comment.add({
+Replies.add({
 	uuid:{ type: String, unique: true, index:true},
 	message: { type: String, initial: true, required: true, unique: true, index: true, default: '' },
 	author_name: { type: String },
 	author_email: { type: String },
-	lecture_uuid: {type: String},
+	comment_uuid: {type: String},
 	approved: {type: Boolean},
 	dateCreated: { type: Types.Date, default: Date.now },
 });
 
-Comment.schema.pre('save', function (next) {
+Replies.schema.pre('save', function (next) {
 	next();
 });
 
-Comment.schema.post('save', function (next) {
+Replies.schema.post('save', function (next) {
 	// next();
 });
 
-Comment.schema.post('validate', function (err, next) {
+Replies.schema.post('validate', function (err, next) {
 	next();
 });
 
-Comment.schema.pre('remove', function (next) {
+Replies.schema.pre('remove', function (next) {
 	next();
 });
 
-Comment.schema.post('remove', function (next) {
+Replies.schema.post('remove', function (next) {
 	next();
 });
 
-Comment.register();
+Replies.register();
