@@ -63,10 +63,10 @@ Lecture.add({
 	audio_play_count: { type: Types.Number,  default:0 },
 	downloads: { type: Types.Number,default:0 },
 	video_page_view: { type: Types.Number,  default:0 },
-	transcription_view: { type: Types.Number,  default:0 },
-	summary_view: { type: Types.Number,  default:0 },
-	transcription_view: { type: Types.Number,  default:0 },
-	summary_view: { type: Types.Number,  default:0 },
+	en_transcription_view: { type: Types.Number,  default:0 },
+	en_summary_view: { type: Types.Number,  default:0 },
+	ru_transcription_view: { type: Types.Number,  default:0 },
+	ru_summary_view: { type: Types.Number,  default:0 },
    }
 	
 	

@@ -416,33 +416,30 @@ exports.updateCounters = function (req, res) {
 		}
 
 		let obj = {};
-
+		
 		if(req.body.audio_page_view){
-			item.counters.audio_page_view = item.audio_page_view + 1;
+			item.counters.audio_page_view = item.counters.audio_page_view + 1;
 		}
 		if(req.body.audio_play_count){
-			item.counters.audio_play_count = item.audio_play_count + 1;
+			item.counters.audio_play_count = item.counters.audio_play_count + 1;
 		}
-		if(req.body.audio_play_count){
-			item.counters.audio_play_count = item.audio_play_count + 1;
-		}
-		if(req.body.youtube_count){
-			item.counters.youtube_count = item.youtube_count + 1;
+		if(req.body.video_page_view){
+			item.counters.video_page_view = item.counters.video_page_view + 1;
 		}
 		if(req.body.en_transcription_view){
-			item.counters.transcription_view = item.en.transcription.transcription_view+ 1;
+			item.counters.en_transcription_view = item.counters.en_transcription_view+ 1;
 		}
 		if(req.body.ru_transcription_view){
-			item.counters.transcription_view = item.ru.transcription.transcription_view + 1;
+			item.counters.ru_transcription_view = item.counters.ru_transcription_view + 1;
 		}
 		if(req.body.en_summary_view){
-			item.counters.summary_view =item.en.summary.summary_view  + 1;
+			item.counters.en_summary_view =item.counters.en_summary_view + 1;
 		}
 		if(req.body.ru_summary_view){
-			item.counters.summary_view = item.ru.summary.summary_view   + 1;
+			item.counters.ru_summary_view = item.counters.ru_summary_view  + 1;
 		}
 		if(req.body.downloads){
-			item.counters.downloads = item.downloads + 1;
+			item.counters.downloads = item.counters.downloads + 1;
 		}
 
 		item.getUpdateHandler(req).process(item, function (err) {

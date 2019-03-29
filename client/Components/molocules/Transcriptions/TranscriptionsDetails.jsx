@@ -1,10 +1,24 @@
 import React, { Component } from "react";
 import renderHTML from "react-render-html";
 import reactCookie from "react-cookies";
+import { connect } from "react-redux";
+import { updateCounters } from "../../../actions/lectureActions";
 
 export class TranscriptionDetails extends Component {
 	constructor(props) {
 		super(props);
+	}
+
+	componentDidMount() {
+		let body = {
+			uuid: this.props.location.state.uuid
+		};
+		if (reactCookie.load("languageCode") === "en") {
+			body.en_transcription_view = true;
+		} else {
+			body.ru_transcription_view = true;
+		}
+		this.props.updateCounters(body);
 	}
 
 	render() {
@@ -207,4 +221,20 @@ export class TranscriptionDetails extends Component {
 	}
 }
 
-export default TranscriptionDetails;
+const mapStateToProps = state => {
+	return {
+		Count: state.lectureReducer.Count
+	};
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		updateCounters: body => {
+			dispatch(updateCounters(body));
+		}
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(TranscriptionDetails);

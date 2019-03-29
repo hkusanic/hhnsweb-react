@@ -1,12 +1,30 @@
 import React, { Component } from "react";
 import renderHTML from "react-render-html";
 import reactCookie from "react-cookies";
+import { connect } from "react-redux";
+import { updateCounters } from "../../../actions/lectureActions";
+
 
 export class AudioDetails extends Component {
 	constructor(props) {
 		super(props);
 	}
 
+	componentDidMount(){
+		const body = {
+			uuid: this.props.location.state.uuid,
+			audio_page_view: true
+		}
+		this.props.updateCounters(body)
+	}
+
+	updateAudioCount = () => {
+		const body = {
+			uuid: this.props.location.state.uuid,
+			audio_play_count: true
+		}
+		this.props.updateCounters(body);
+	}
 	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
@@ -41,7 +59,8 @@ export class AudioDetails extends Component {
 									</ul>
 								</article>
 								<div className="audioStyle">
-									<audio controls>
+									<audio controls
+									 onPlay ={() => {this.updateAudioCount()}}>
 										<source
 											src={renderHTML(this.props.location.state.audio_link)}
 											type="audio/mpeg"
@@ -140,7 +159,7 @@ export class AudioDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.downloads}
+													{this.props.location.state.counters.downloads}
 												</td>
 											</tr>
 											<tr>
@@ -167,4 +186,20 @@ export class AudioDetails extends Component {
 	}
 }
 
-export default AudioDetails;
+const mapStateToProps = state => {
+	return {
+		Count: state.lectureReducer.Count
+	};
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		updateCounters: body => {
+			dispatch(updateCounters(body));
+		}
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(AudioDetails);

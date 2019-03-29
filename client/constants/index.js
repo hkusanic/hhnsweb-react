@@ -35,3 +35,5 @@ export const SEARCH_LECTURE = "SEARCH_LECTURE";
 export const SEARCH_KIRTAN = "SEARCH_KIRTAN"; 
 
 export const GET_MKV = "GET_MKV"; 
+
+export const UPDATE_COUNTERS = "UPDATE_COUNTERS";
