@@ -13201,6 +13201,7 @@ button.swiper-pagination-bullet {
 .tabs-custom .nav-link.active {
 	cursor: default;
 	border: 0;
+	background-color: rgba(211, 211, 211, 0.8) !important;
 }
 
 .tab-content > .tab-pane {
@@ -13252,6 +13253,8 @@ button.swiper-pagination-bullet {
 		color: #fff;
 		background: #ff830a;
 		border-color: #ff830a;
+		background-color: red !important;
+
 	}
 }
 
@@ -13373,11 +13376,12 @@ button.swiper-pagination-bullet {
 	}
 	.tabs-horizontal.tabs-line .nav-link {
 		position: relative;
-		padding: 0 0 13px 0;
+		/* padding: 0 0 13px 0; */
 		font-size: 20px;
 		background-color: transparent;
 		color: #9b9b9b;
 		border: 0;
+		width: 200px;
 	}
 	.tabs-horizontal.tabs-line .nav-link::after {
 		content: '';

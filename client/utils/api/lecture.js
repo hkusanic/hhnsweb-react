@@ -36,6 +36,11 @@ const utils = {
 			(video ? "&video=" + video : "");
 
 		return axios.get(url);
+	},
+
+	updateCounters: body => {
+		let url = serverAddress + "/api/lecture/updateCounters";
+		return axios.post(url, body);
 	}
 };
 

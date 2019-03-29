@@ -2,12 +2,22 @@ import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { Translate } from 'react-localize-redux';
+import { connect } from "react-redux";
+import { updateCounters } from "../../../actions/lectureActions";
 
 export class VideoDetails extends Component {
     constructor(props) {
         super(props);
     }
-
+    
+    componentDidMount(){
+		const body = {
+			uuid: this.props.location.state.uuid,
+			video_page_view: true
+		}
+		this.props.updateCounters(body)
+    }
+    
     render() {
         if (!this.props.location.state) {
             return <div>Error Occured..........</div>
@@ -64,5 +74,22 @@ export class VideoDetails extends Component {
     }
 }
 
-export default VideoDetails;
+const mapStateToProps = state => {
+	return {
+		Count: state.lectureReducer.Count
+	};
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		updateCounters: body => {
+			dispatch(updateCounters(body));
+		}
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(VideoDetails);
+
 

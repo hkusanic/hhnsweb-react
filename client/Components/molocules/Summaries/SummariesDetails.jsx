@@ -1,11 +1,25 @@
 import React, { Component } from "react";
 import renderHTML from "react-render-html";
 import reactCookie from "react-cookies";
+import { connect } from "react-redux";
+import { updateCounters } from "../../../actions/lectureActions";
 
 export class SummariesDetails extends Component {
 	constructor(props) {
 		super(props);
 	}
+	componentDidMount() {
+		let body = {
+			uuid: this.props.location.state.uuid
+		};
+		if (reactCookie.load("languageCode") === "en") {
+			body.en_summary_view = true;
+		} else {
+			body.ru_summary_view = true;
+		}
+		this.props.updateCounters(body);
+	}
+
 
 	render() {
 		if (!this.props.location.state) {
@@ -178,4 +192,20 @@ export class SummariesDetails extends Component {
 	}
 }
 
-export default SummariesDetails;
+const mapStateToProps = state => {
+	return {
+		Count: state.lectureReducer.Count
+	};
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		updateCounters: body => {
+			dispatch(updateCounters(body));
+		}
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(SummariesDetails);

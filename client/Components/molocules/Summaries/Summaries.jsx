@@ -86,6 +86,7 @@ export class Summaries extends Component {
 										 <thead>
                                             <tr>
                                                 <th className="align">Title</th>
+																								<th className="align">View</th>
                                             </tr>
                                         </thead>
 										<tbody>
@@ -99,6 +100,9 @@ export class Summaries extends Component {
 															>
 																{renderHTML(reactCookie.load('languageCode') === 'en' ? item.en.title :item.ru.title)}
 															</Link>
+														</td>
+														<td>
+															{reactCookie.load('languageCode') === 'en' ? item.counters.en_summary_view :item.counters.ru_summary_view}
 														</td>
 													</tr>
 												);

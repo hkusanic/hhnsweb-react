@@ -3,7 +3,7 @@ import renderHTML from "react-render-html";
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { searchLecture } from "../../../actions/lectureActions";
+import { searchLecture, updateCounters } from "../../../actions/lectureActions";
 import Auth from "../../../utils/Auth";
 import { Translate } from "react-localize-redux";
 import SearchFilter from "../SeachFilter/SearchFilter";
@@ -112,7 +112,7 @@ export class AudioList extends Component {
 														<td className="titleColor">
 															{" "}
 															<Link
-																to={{ pathname: "/audioDetails", state: item }}
+																to={{ pathname: "/audioDetails", state:item }}
 															>
 																{renderHTML(reactCookie.load('languageCode') === 'en' ? item.en.title : item.ru.title)}
 															</Link>
@@ -128,9 +128,9 @@ export class AudioList extends Component {
 														</td>
 														
 													
-														<td>{item.downloads}      <a href={item.audio_link} download="download"><i style={{"cursor":"pointer"}}  class="fa fa-download" aria-hidden="true"></i></a>											
+														<td>{item.counters.downloads}      <a href={item.audio_link} download="download"><i style={{"cursor":"pointer"}}  class="fa fa-download" aria-hidden="true"></i></a>											
 					</td>
-													</tr>
+												</tr>
 												);
 											})}
 										</tbody>
@@ -179,6 +179,9 @@ const mapDispatchToProps = dispatch => {
 	return {
 		searchLecture: body => {
 			dispatch(searchLecture(body));
+		},
+		updateCounters: body => {
+			dispatch(updateCounters(body));
 		}
 	};
 };
