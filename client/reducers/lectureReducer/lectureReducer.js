@@ -1,12 +1,12 @@
-import * as types from "../../constants/index";
+import * as types from '../../constants/index';
 
 const initialState = {
 	lectures: [],
 	currentPage: 1,
-	totalLectures: "",
+	totalLectures: '',
 	isCompleted: false,
-	error: "",
-	Count: '',
+	error: '',
+	Count: false,
 };
 
 const lectureReducer = (state = initialState, action) => {
@@ -18,12 +18,14 @@ const lectureReducer = (state = initialState, action) => {
 				lectures: data.results,
 				totalLectures: data.total,
 				currentPage: data.currentPage,
-				isCompleted: true
+				isCompleted: true,
+				Count: false,
 			};
 			break;
 		case types.UPDATE_COUNTERS:
 			state = {
-				...state
+				...state,
+				Count: true,
 			};
 			break;
 	}
