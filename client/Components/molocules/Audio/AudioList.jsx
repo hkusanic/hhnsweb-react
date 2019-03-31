@@ -172,7 +172,7 @@ export class AudioList extends Component {
 															<a href={item.audio_link} onClick={() => {this.handleUpdate(item)}} download="download">
 																<i
 																	style={{ cursor: 'pointer' }}
-																	class="fa fa-download"
+																	className="fa fa-download"
 																	aria-hidden="true"
 																/>
 															</a>

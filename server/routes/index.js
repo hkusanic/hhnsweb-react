@@ -74,6 +74,8 @@ exports = module.exports = function (app) {
 					<head>
 						<title>H.H. Niranjana Swami - Official web-site</title>
 						<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Work+Sans:300,500,700,800%7COswald:300,400,500">
+						<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+						<link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
 						<link rel="stylesheet" href="../css/bootstrap.css">
 						<link rel="stylesheet" href="../css/fonts.css">
 						<link rel="stylesheet" href="../css/custom.css">
