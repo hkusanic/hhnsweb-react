@@ -1,44 +1,52 @@
-import React, { Component } from "react";
-import renderHTML from "react-render-html";
-import reactCookie from "react-cookies";
-import { connect } from "react-redux";
-import { updateCounters } from "../../../actions/lectureActions";
-
+import React, { Component } from 'react';
+import renderHTML from 'react-render-html';
+import reactCookie from 'react-cookies';
+import { connect } from 'react-redux';
+import { updateCounters } from '../../../actions/lectureActions';
 
 export class AudioDetails extends Component {
 	constructor(props) {
 		super(props);
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		const body = {
 			uuid: this.props.location.state.uuid,
-			audio_page_view: true
-		}
-		this.props.updateCounters(body)
+			audio_page_view: true,
+		};
+		this.props.updateCounters(body);
 	}
 
 	updateAudioCount = () => {
 		const body = {
 			uuid: this.props.location.state.uuid,
-			audio_play_count: true
+			audio_play_count: true,
+		};
+		this.props.updateCounters(body);
+	};
+
+	handleUpdate = (uuid) => {
+		const body = {
+			uuid: uuid,
+			downloads: true
 		}
 		this.props.updateCounters(body);
 	}
+	
 	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
-	 	return (
+		return (
 			<div>
 				<section className="section section-lg">
 					<div className="container">
-						<div style={{ paddingLeft: "15%" }} className="row row-100">
+						<div style={{ paddingLeft: '15%' }} className="row row-100">
 							<div className="col-lg-12">
 								<article className="post-creative">
 									<h3 className="post-creative-title">
 										{renderHTML(
-											reactCookie.load("languageCode") === "en"
+											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.en.title
 												: this.props.location.state.ru.title
 										)}
@@ -59,18 +67,32 @@ export class AudioDetails extends Component {
 									</ul>
 								</article>
 								<div className="audioStyle">
-									<audio controls controlsList="nodownload"
-									 onPlay ={() => {this.updateAudioCount()}}>
+									<audio
+										controls
+										controlsList="nodownload"
+										onPlay={() => {
+											this.updateAudioCount();
+										}}
+									>
 										<source
 											src={renderHTML(this.props.location.state.audio_link)}
 											type="audio/mpeg"
 										/>
 									</audio>
-								
-									<a href={this.props.location.state.audio_link} download="download"><i style={{"cursor":"pointer","fontSize": "28px"}}  class="fa fa-download" aria-hidden="true"></i></a>											
-					  
+
+									<a
+										href={this.props.location.state.audio_link}
+										onClick={() => {this.handleUpdate(this.props.location.state.uuid)}}
+										download="download"
+									>
+										<i
+											style={{ cursor: 'pointer', fontSize: '28px' }}
+											class="fa fa-download"
+											aria-hidden="true"
+										/>
+									</a>
 								</div>
-							
+
 								<div>
 									<table className="maintable">
 										<tbody>
@@ -81,7 +103,7 @@ export class AudioDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.event
 														: this.props.location.state.ru.event}
 												</td>
@@ -151,7 +173,7 @@ export class AudioDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.location
 														: this.props.location.state.ru.location}
 												</td>
@@ -173,7 +195,7 @@ export class AudioDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.topic
 														: this.props.location.state.ru.topic}
 												</td>
@@ -192,14 +214,14 @@ export class AudioDetails extends Component {
 
 const mapStateToProps = state => {
 	return {
-		Count: state.lectureReducer.Count
+		Count: state.lectureReducer.Count,
 	};
 };
 const mapDispatchToProps = dispatch => {
 	return {
 		updateCounters: body => {
 			dispatch(updateCounters(body));
-		}
+		},
 	};
 };
 

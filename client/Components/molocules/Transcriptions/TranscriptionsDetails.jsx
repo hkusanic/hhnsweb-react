@@ -1,19 +1,23 @@
-import React, { Component } from "react";
-import renderHTML from "react-render-html";
-import reactCookie from "react-cookies";
-import { connect } from "react-redux";
-import { updateCounters } from "../../../actions/lectureActions";
+import React from 'react';
+import ReactQuill from 'react-quill';
+import renderHTML from 'react-render-html';
+import reactCookie from 'react-cookies';
+import { connect } from 'react-redux';
+import { updateCounters } from '../../../actions/lectureActions';
 
-export class TranscriptionDetails extends Component {
-	constructor(props) {
+export class TranscriptionDetails extends React.Component {
+	constructor (props) {
 		super(props);
+		this.state = {
+			text: '',
+		};
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		let body = {
-			uuid: this.props.location.state.uuid
+			uuid: this.props.location.state.uuid,
 		};
-		if (reactCookie.load("languageCode") === "en") {
+		if (reactCookie.load('languageCode') === 'en') {
 			body.en_transcription_view = true;
 		} else {
 			body.ru_transcription_view = true;
@@ -21,7 +25,7 @@ export class TranscriptionDetails extends Component {
 		this.props.updateCounters(body);
 	}
 
-	render() {
+	render () {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -34,7 +38,7 @@ export class TranscriptionDetails extends Component {
 								<article className="post-creative">
 									<h3 className="post-creative-title dataTitle">
 										{renderHTML(
-											reactCookie.load("languageCode") === "en"
+											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.en.title
 												: this.props.location.state.ru.title
 										)}
@@ -55,7 +59,7 @@ export class TranscriptionDetails extends Component {
 									</ul>
 									<div>
 										{renderHTML(
-											reactCookie.load("languageCode") === "en"
+											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.en.transcription.text
 												: this.props.location.state.en.transcription.text
 										)}
@@ -111,7 +115,7 @@ export class TranscriptionDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.event
 														: this.props.location.state.ru.event}
 												</td>
@@ -181,7 +185,7 @@ export class TranscriptionDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.location
 														: this.props.location.state.en.location}
 												</td>
@@ -193,7 +197,7 @@ export class TranscriptionDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.downloads}
+													{this.props.location.state.counters.downloads}
 												</td>
 											</tr>
 											<tr>
@@ -203,13 +207,68 @@ export class TranscriptionDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.topic
 														: this.props.location.state.ru.topic}
 												</td>
 											</tr>
 										</tbody>
 									</table>
+								</div>
+								<div className="commentContainer">
+									<form className="rd-form">
+										<div className="row row-10">
+											<div className="col-md-6 wow-outer">
+												<div className="form-wrap wow fadeSlideInUp">
+													<label htmlFor="contact-first-name">
+														<b>User Name</b>
+													</label>
+													<input
+														className="form-input inputBox"
+														type="text"
+														name="name"
+													/>
+												</div>
+											</div>
+											<div className="col-md-6 wow-outer" />
+											<div className="col-md-6 wow-outer">
+												<div className="form-wrap wow fadeSlideInUp">
+													<label htmlFor="contact-email">
+														<b>Subject</b>
+													</label>
+													<input
+														className="form-input inputBox"
+														type="email"
+														name="email"
+													/>
+												</div>
+											</div>
+											<div className="col-md-6 wow-outer" />
+											<div className="col-12 wow-outer">
+												<div className="form-wrap wow fadeSlideInUp">
+													<label htmlFor="contact-message">
+														<b>Comment</b>
+													</label>
+													<ReactQuill
+														className="commentBox"
+														value={this.state.text}
+														onChange={() => {
+															console.log('state===>>', this.state.text);
+														}}
+													/>
+												</div>
+											</div>
+										</div>
+										<div className="group group-middle">
+											<div className="wow-outer">
+												<button
+													className="button button-primary button-winona"
+													onClick={this.handelSaveMessage}
+												><span>Comment</span>
+												</button>
+											</div>
+										</div>
+									</form>
 								</div>
 							</div>
 							<div className="col-lg-4" />
@@ -223,14 +282,14 @@ export class TranscriptionDetails extends Component {
 
 const mapStateToProps = state => {
 	return {
-		Count: state.lectureReducer.Count
+		Count: state.lectureReducer.Count,
 	};
 };
 const mapDispatchToProps = dispatch => {
 	return {
 		updateCounters: body => {
 			dispatch(updateCounters(body));
-		}
+		},
 	};
 };
 

@@ -577,6 +577,20 @@
         padding-left: 7% !important;
         padding-right: 7% !important;
     }
+
+    .commentBox {
+        height: 250px !important;
+        width: 80% !important;
+    }
+
+    .inputBox {
+        width: 70% !important;
+    }
+
+    .commentContainer {
+        padding-top: 5em;
+    }
+
     @media (min-width: 770px){
         .tabPadLeft {
             padding-left: 10% !important;
