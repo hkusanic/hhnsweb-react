@@ -28,8 +28,10 @@ exports = module.exports = function (app) {
 	app.post('/api/lecture/create/', keystone.middleware.api, routes.api.lecture.create);
 	app.post('/api/comment/create/', keystone.middleware.api, routes.api.comment.create);
 	app.get('/api/comment/', keystone.middleware.api, routes.api.comment.list);
+	app.post('/api/comment/:id/remove', keystone.middleware.api, routes.api.comment.remove);
 	app.get('/api/replies/create', keystone.middleware.api, routes.api.replies.create);
 	app.get('/api/replies/', keystone.middleware.api, routes.api.replies.list);
+	app.post('/api/replies/:id/remove', keystone.middleware.api, routes.api.replies.remove);
 	app.post('/api/location/createBulk/', keystone.middleware.api, routes.api.location.createBulk);
 	app.post('/api/location/create/', keystone.middleware.api, routes.api.location.create);
 	app.post('/api/kirtan/createBulk/', keystone.middleware.api, routes.api.kirtan.createBulk);
@@ -62,7 +64,7 @@ exports = module.exports = function (app) {
 	app.all('/api/fileupload/:id/update', keystone.middleware.api, routes.api.fileupload.update);
 	app.all('/api/fileupload/create', keystone.middleware.api, routes.api.fileupload.create);
 	app.get('/api/fileupload/:id/remove', keystone.middleware.api, routes.api.fileupload.remove);
-
+    app.options('/api*', function(req, res) { res.send(200); });
 	// Set up the default app route to  http://localhost:3000/index.htmli
 	app.get('/*', function (req, res) {
 		keystone.set('updateDatabase', false);

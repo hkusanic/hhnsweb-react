@@ -18,24 +18,5 @@ Comment.add({
 	dateCreated: { type: Types.Date, default: Date.now },
 });
 
-Comment.schema.pre('save', function (next) {
-	next();
-});
-
-Comment.schema.post('save', function (next) {
-	// next();
-});
-
-Comment.schema.post('validate', function (err, next) {
-	next();
-});
-
-Comment.schema.pre('remove', function (next) {
-	next();
-});
-
-Comment.schema.post('remove', function (next) {
-	next();
-});
 
 Comment.register();
