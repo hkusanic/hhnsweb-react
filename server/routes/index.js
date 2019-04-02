@@ -29,6 +29,7 @@ exports = module.exports = function (app) {
 	app.post('/api/comment/create/', keystone.middleware.api, routes.api.comment.create);
 	app.get('/api/comment/', keystone.middleware.api, routes.api.comment.list);
 	app.post('/api/comment/:id/remove', keystone.middleware.api, routes.api.comment.remove);
+	app.post('/api/replies/:id/removeByCommentId', keystone.middleware.api, routes.api.replies.removeByCommentId);
 	app.get('/api/replies/create', keystone.middleware.api, routes.api.replies.create);
 	app.get('/api/replies/', keystone.middleware.api, routes.api.replies.list);
 	app.post('/api/replies/:id/remove', keystone.middleware.api, routes.api.replies.remove);
