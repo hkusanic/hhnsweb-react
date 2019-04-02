@@ -51,3 +51,39 @@ exports.create = function (req, res) {
 
 	});
 };
+
+
+exports.remove = function (req, res) {
+	logger.info({
+		req: req,
+	}, 'API remove replies');
+	Replies.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
+
+		if (err) {
+			logger.error({
+				error: err,
+			}, 'API remove replies');
+			return res.apiError('database error', err);
+		}
+		if (!item) {
+			logger.error({
+				error: 'No Item',
+			}, 'API remove replies');
+			return res.apiError('not found');
+		}
+
+		item.remove(function (err) {
+			if (err) {
+				logger.error({
+					error: err,
+				}, 'API remove replies');
+				return res.apiError('database error', err);
+			}
+
+			return res.apiResponse({
+				Reply: true,
+			});
+		});
+
+	});
+};

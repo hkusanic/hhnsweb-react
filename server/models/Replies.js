@@ -17,24 +17,4 @@ Replies.add({
 	dateCreated: { type: Types.Date, default: Date.now },
 });
 
-Replies.schema.pre('save', function (next) {
-	next();
-});
-
-Replies.schema.post('save', function (next) {
-	// next();
-});
-
-Replies.schema.post('validate', function (err, next) {
-	next();
-});
-
-Replies.schema.pre('remove', function (next) {
-	next();
-});
-
-Replies.schema.post('remove', function (next) {
-	next();
-});
-
 Replies.register();
