@@ -40,7 +40,7 @@ const utils = {
 	contactUs: (body) => {
 		let url = serverAddress + '/api/contactus/';
 		return axios.post(url, body);
-	}
-}
+	},
+};
 
 export default utils;

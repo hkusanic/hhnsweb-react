@@ -1,7 +1,7 @@
-import mkvApi from "../utils/api/mkv";
-import * as types from "../constants/index";
+import mkvApi from '../utils/api/mkv';
+import * as types from '../constants/index';
 
-export function getMkv(body) {
+export function getMkv (body) {
 	return dispatch => {
 		mkvApi
 			.getMkv(body)
@@ -14,9 +14,9 @@ export function getMkv(body) {
 	};
 }
 
-export function getMkvAction(data) {
+export function getMkvAction (data) {
 	return {
 		type: types.GET_MKV,
-		payload: data
+		payload: data,
 	};
 }
