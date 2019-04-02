@@ -1,5 +1,4 @@
 const keystone = require('keystone');
-const mongoose = require('mongoose');
 const Types = keystone.Field.Types;
 
 let Comment = new keystone.List('Comment', {
@@ -9,12 +8,12 @@ let Comment = new keystone.List('Comment', {
 });
 
 Comment.add({
-	uuid:{ type: String, unique: true, index:true},
-	message: { type: String, initial: true, required: true, unique: true, index: true, default: '' },
+	uuid: { type: String, unique: true, index: true },
+	message: { type: String, initial: true, required: true, index: true, default: '' },
 	author_name: { type: String },
 	author_email: { type: String },
-	lecture_uuid: {type: String},
-	approved: {type: Boolean},
+	lecture_uuid: { type: String },
+	approved: { type: Boolean },
 	dateCreated: { type: Types.Date, default: Date.now },
 });
 

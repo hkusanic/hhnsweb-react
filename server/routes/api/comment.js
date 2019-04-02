@@ -5,21 +5,21 @@ let logger = require('./../../logger/logger');
 var Comment = keystone.list('Comment');
 
 exports.list = function (req, res) {
-	
+
 	logger.info({
-		req: req
-	}, "API get comment");
+		req: req,
+	}, 'API get comment');
 	Comment.model.find().where({ lecture_uuid: req.query.uuid, approved: true }).exec(function (err, item) {
 		if (err) {
 			logger.error({
-				error: err
-			}, "API get comment");
+				error: err,
+			}, 'API get comment');
 			return res.apiError('database error', err);
 		}
 		if (!item) {
 			logger.error({
-				error: 'item not found'
-			}, "API get comment");
+				error: 'item not found',
+			}, 'API get comment');
 			return res.apiError('not found');
 		}
 		res.apiResponse({
@@ -29,38 +29,35 @@ exports.list = function (req, res) {
 };
 
 
-
-
 exports.create = function (req, res) {
-    
-	var item = new Comment.model(),
-		data = (req.method == 'POST') ? req.body : req.query;
-		logger.info({
-			req: req
-		}, "API create comment");
+
+	var item = new Comment.model();
+	var data = (req.method === 'POST') ? req.body : req.query;
+	logger.info({
+		req: req,
+	}, 'API create comment');
 	item.getUpdateHandler(req).process(data, function (err) {
 
 		if (err) {
 			logger.error({
-				error: err
-			}, "API create comment");
+				error: err,
+			}, 'API create comment');
 			return res.apiError('error', err);
 		}
 
 		res.apiResponse({
-			Comment: item
+			Comment: item,
 		});
 
 	});
-}
-
+};
 
 
 exports.remove = function (req, res) {
 	logger.info({
 		req: req,
 	}, 'API remove comment');
-	Comment.model.findOne({uuid: req.params.id }).exec(function(err, item) {
+	Comment.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
 
 		if (err) {
 			logger.error({

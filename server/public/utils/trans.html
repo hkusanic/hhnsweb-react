@@ -1,0 +1,163 @@
+<html>
+
+<head>Script Parser</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
+<!-- <script src="http://wzrd.in/standalone/uuid%2Fv1@latest"></script> -->
+<script>
+
+    window.onload = function () {
+        document.getElementById('firstCSV').addEventListener('change', uploadfirst, false)
+        document.getElementById('secongCSV').addEventListener('change', uploadsecond, false)
+
+    };
+    var csvFirstData;
+    var csvSecondData;
+    function uploadfirst(event) {
+        jsonObj = [];
+        var data = null;
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function (event1) {
+            csvFirstData = event1.target.result;
+        };
+        reader.onerror = function () {
+            alert("unable to read " + file.fileName);
+        }
+    }
+
+    function uploadsecond(event) {
+        jsonObj = [];
+        var data = null;
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function (event1) {
+            csvSecondData = event1.target.result;
+        };
+        reader.onerror = function () {
+            alert("unable to read " + file.fileName);
+        }
+    }
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    function download() {
+        var jsonObj = [];
+        var errorData = [];
+        var firstData = Papa.parse(csvFirstData, { header: true, skipEmptyLines: true });
+        var secondData = Papa.parse(csvSecondData, { header: true, skipEmptyLines: true });
+        for (let i = 0; i < firstData.data.length; i++) {
+            let count = true;
+            let item = {}
+            // console.log(firstData.data[i]);
+            item['uuid'] = uuidv4();
+            item['needs_translation'] = true
+            item['created_date'] = firstData.data[i]['created_date'];
+            item['published_date'] = firstData.data[i]['published_date'];
+            item['author'] = firstData.data[i]['author'];
+            item['part'] = firstData.data[i]['part'];
+            item['chapter'] = firstData.data[i]['chapter'];
+            item['verse'] = firstData.data[i]['verse'];
+            item['download_link'] = firstData.data[i]['download_link'];
+            item['lecture_link'] = firstData.data[i]['lecture_link'];
+            item['duration'] = firstData.data[i]['duration'];
+            item['downloads'] = firstData.data[i]['downloads'];
+            item['audio_link'] = firstData.data[i]['audio_link'];
+            item['soundCloud_link'] = firstData.data[i]['soundCloud_link'];
+            item['title_en'] = firstData.data[i]['title_en'];
+            item['event_en'] = firstData.data[i]['event_en'];
+            item['topic_en'] =firstData.data[i]['topic_en'];
+            item['translation_en'] = firstData.data[i]['translation_en'],
+            item['location_en'] = firstData.data[i]['location_en'],
+            item['title_ru'] = firstData.data[i]['title_ru'];
+            item['event_ru'] = firstData.data[i]['event_ru'];
+            item['topic_ru'] =firstData.data[i]['topic_ru'];
+            item['translation_ru'] = firstData.data[i]['translation_ru'],
+            item['location_ru'] = firstData.data[i]['location_ru'];
+            item['transcription_en_text']  = '';
+            item['transcription_en_attachment_name']  = '';
+            item['transcription_en_attachment_link']  = '';
+            item['transcription_ru_text']  = '';
+            item['transcription_ru_attachment_name']  = '';
+            item['transcription_ru_attachment_link']  = '';
+            item['summary_en_text']  = '';
+            item['summary_en_attachment_name']  = '';
+            item['summary_en_attachment_link']  = '';
+            item['summary_ru_text']  = '';
+            item['summary_ru_attachment_name']  = '';
+            item['summary_ru_attachment_link']  = '';
+
+            // var str = firstData.data[i]['audio_link'];
+            
+            //     var regex = /soundFile.*mp3/;
+            //     var matches = str.match(regex);
+            //     if(matches !== null){
+            //         if (matches[0]) {
+            //             item["audio_link"] = matches[0].replace('soundFile=', '');
+            //         }
+
+            //     }
+            
+            for (let j = 0; j < secondData.data.length; j++) {
+                if (
+                //     firstData.data[i]['duration'].trim() === secondData.data[j]['Duration'].trim()
+                //  &&
+                // firstData.data[i]['created_date'].trim() === secondData.data[j]['Date'].trim() 
+                // &&
+                firstData.data[i]['title_en'].trim() === secondData.data[j]['Original-Title'].trim()
+                ) {
+                    item['transcription_en_text']  = secondData.data[j]['Transcription'];
+                    item['transcription_en_attachment_name']  = secondData.data[j]['Attachment-Name'];
+                    item['transcription_en_attachment_link']  = secondData.data[j]['Attachment-Link']; 
+                    console.log("item ===>>>", item)
+                    // jsonObj.push(item);
+                }
+            }
+            jsonObj.push(item);
+
+        }
+                console.log("Final result =====>>>>",jsonObj);
+
+        // console.log("Final result =====>>>>",JSON.stringify(jsonObj));
+        DownloadCSV(jsonObj);
+    }
+    function DownloadCSV(jsonData) {
+        var csv = Papa.unparse(jsonData);
+
+        var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var csvURL = null;
+        if (navigator.msSaveBlob) {
+            csvURL = navigator.msSaveBlob(csvData, '222.csv');
+        }
+        else {
+            csvURL = window.URL.createObjectURL(csvData);
+        }
+        var tempLink = document.createElement('a');
+        tempLink.href = csvURL;
+        tempLink.setAttribute('download', '222.csv');
+        tempLink.click();
+    }
+</script>
+
+<body>
+    <div>
+        <h1>Parser</h1>
+        <div>
+            <label>Upload English CSV : <input id="firstCSV" type="file" name="files" accept=".csv" /></label>
+            <a id="downloadAnchorElem" style="display:none"></a>
+        </div>
+
+        <div>
+            <label>Upload Raussain CSV : <input id="secongCSV" type="file" name="files" accept=".csv" /></label>
+        </div>
+
+        <div><button onclick={download()}>download Data CSV</button></div>
+    </div>
+</body>
+
+</html>

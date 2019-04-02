@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
 import { updateCounters } from '../../../actions/lectureActions';
+import Comments from '../Comments/Comments';
 
 export class TranscriptionDetails extends React.Component {
 	constructor (props) {
@@ -215,61 +215,7 @@ export class TranscriptionDetails extends React.Component {
 										</tbody>
 									</table>
 								</div>
-								<div className="commentContainer">
-									<form className="rd-form">
-										<div className="row row-10">
-											<div className="col-md-6 wow-outer">
-												<div className="form-wrap wow fadeSlideInUp">
-													<label htmlFor="contact-first-name">
-														<b>User Name</b>
-													</label>
-													<input
-														className="form-input inputBox"
-														type="text"
-														name="name"
-													/>
-												</div>
-											</div>
-											<div className="col-md-6 wow-outer" />
-											<div className="col-md-6 wow-outer">
-												<div className="form-wrap wow fadeSlideInUp">
-													<label htmlFor="contact-email">
-														<b>Subject</b>
-													</label>
-													<input
-														className="form-input inputBox"
-														type="email"
-														name="email"
-													/>
-												</div>
-											</div>
-											<div className="col-md-6 wow-outer" />
-											<div className="col-12 wow-outer">
-												<div className="form-wrap wow fadeSlideInUp">
-													<label htmlFor="contact-message">
-														<b>Comment</b>
-													</label>
-													<ReactQuill
-														className="commentBox"
-														value={this.state.text}
-														onChange={() => {
-															console.log('state===>>', this.state.text);
-														}}
-													/>
-												</div>
-											</div>
-										</div>
-										<div className="group group-middle">
-											<div className="wow-outer">
-												<button
-													className="button button-primary button-winona"
-													onClick={this.handelSaveMessage}
-												><span>Comment</span>
-												</button>
-											</div>
-										</div>
-									</form>
-								</div>
+								<Comments lecture_uuid={this.props.location.state.uuid}/>
 							</div>
 							<div className="col-lg-4" />
 						</div>

@@ -65,7 +65,7 @@ exports = module.exports = function (app) {
 	app.all('/api/fileupload/:id/update', keystone.middleware.api, routes.api.fileupload.update);
 	app.all('/api/fileupload/create', keystone.middleware.api, routes.api.fileupload.create);
 	app.get('/api/fileupload/:id/remove', keystone.middleware.api, routes.api.fileupload.remove);
-    app.options('/api*', function(req, res) { res.send(200); });
+	app.options('/api*', function (req, res) { res.send(200); });
 	// Set up the default app route to  http://localhost:3000/index.htmli
 	app.get('/*', function (req, res) {
 		keystone.set('updateDatabase', false);
