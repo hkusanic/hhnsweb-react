@@ -43,13 +43,13 @@ export class AudioList extends Component {
 			totalItem: nextProps.lecturesDetails.totalLectures,
 		});
 		if(nextProps.lecturesDetails.Count){
-			const page = localStorage.getItem('lecture_page');
+			const page = sessionStorage.getItem('lecture_page') || 1 ;
 			this.props.searchLecture({page});
 		}
 	}
 
 	handlePageChange = pageNumber => {
-		localStorage.setItem('lecture_page', pageNumber);
+		sessionStorage.setItem('lecture_page', pageNumber);
 		let body = Object.assign({}, this.state.body);
 		body.page = pageNumber;
 		this.props.searchLecture(body);

@@ -3,6 +3,7 @@ import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
 import { updateCounters } from '../../../actions/lectureActions';
+// eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 
 export class TranscriptionDetails extends React.Component {
