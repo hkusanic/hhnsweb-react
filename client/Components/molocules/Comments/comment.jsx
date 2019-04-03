@@ -1,13 +1,8 @@
 import React from 'react';
+import moment from 'moment';
 import Replies from './Replies.jsx';
 import MathJax from 'react-mathjax-preview';
 import commetsApi from '../../../utils/api/comment';
-
-// import ReactQuill, { Quill } from 'react-quill';
-// import ImageResize from 'quill-image-resize-module';
-// Quill.register('modules/ImageResize', ImageResize);
-// import moment from 'moment';
-
 class Comment extends React.Component {
 	constructor(props) {
 		super(props);
@@ -20,7 +15,6 @@ class Comment extends React.Component {
 				['clean'],
 				['table'],
 			],
-			// ImageResize: {},
 		};
 		this.state = {
 			reply: false,
@@ -34,7 +28,6 @@ class Comment extends React.Component {
 		commetsApi
 			.getReplies({ comment_uuid: this.props.comment.uuid })
 			.then(response => {
-				console.log('response =====>>>', response);
 				const replies = response.data.replies;
 				this.setState({ replies });
 			});
@@ -44,17 +37,17 @@ class Comment extends React.Component {
 		commetsApi
 			.getReplies({ comment_uuid: this.props.comment.uuid })
 			.then(response => {
-				console.log('response =====>>>', response);
 				const replies = response.data.replies;
 				this.setState({ replies });
 			});
 	}
 
 	handleReply = () => {
-		this.setState({
-			reply: true,
-		});
+		let reply = this.state.reply;
+		reply = !reply;
+		this.setState({ reply, commentReply: '' });
 	};
+
 	handleReplyChange = event => {
 		const value = event.target.value;
 		this.setState({
@@ -96,6 +89,19 @@ class Comment extends React.Component {
 		});
 	};
 
+	handleDeleteComment = () => {
+		this.props.deleteComment(this.props.comment.uuid);
+	};
+
+	checkUserEmail = () => {
+		if (this.props.comment.author_email && this.props.userEmail) {
+			if (this.props.comment.author_email === this.props.userEmail) {
+				return true;
+			}
+		}
+		return false;
+	};
+
 	render() {
 		if (!this.state && !this.state.replies.length > 0) {
 			return <div>Loading...</div>;
@@ -117,7 +123,13 @@ class Comment extends React.Component {
 										{this.props.comment.author_name}
 									</span>
 									<span> commented on </span>
-									<span>{this.props.comment.dateCreated}</span>
+									<span>
+										&nbsp;
+										{moment(
+											this.props.comment.dateCreated,
+											'YYYYMMDDTHHmmssZ'
+										).format('h:mm a, MMMM Do YYYY')}
+									</span>
 									<div className="comment_report posRight">
 										<button className="button button-primary button-winona commentBtn">
 											Report
@@ -128,23 +140,6 @@ class Comment extends React.Component {
 							<div className="comments-block blockHeight">
 								<MathJax math={this.props.comment.message} />
 							</div>
-
-							{/* {this.state.editing ? (
-								<ReactQuill
-									ref="editor"
-									value={this.state.updatedComment}
-									theme="snow"
-									modules={this.modules}
-									onChange={this.handleUpdateComment}
-								/>
-							) : (
-								<div className="comments-block">
-									<MathJax math={this.props.commentData.comment} />
-								</div>
-							)} */}
-							{/* <div className="reply-btnholder">
-		 		      	 	 	<span onClick={this.props.reply}><i className="fa fa-mail-reply"></i></span>
-		 		      	 	 </div>  */}
 							{this.state.reply ? (
 								<textarea
 									className="reply_textbox"
@@ -155,11 +150,9 @@ class Comment extends React.Component {
 									onChange={this.handleReplyChange}
 									rows="2"
 								/>
-							) : (
-								''
-							)}
+							) : null}
 
-							<div style={{ margin: '10px 0 0 0' }}>
+							<div style={{ margin: '0 0 20px 0' }}>
 								<button
 									className="button button-primary button-winona commentBtn"
 									onClick={this.handleShowAllReplies}
@@ -175,14 +168,21 @@ class Comment extends React.Component {
 									style={{ margin: '0 0 0 10px' }}
 									onClick={this.handleReply}
 								>
-									<span>Reply</span>
+									{this.state.reply ? (
+										<span>Discard reply</span>
+									) : (
+										<span>Reply</span>
+									)}
 								</button>
-								<button
-									className="button button-primary button-winona commentBtn"
-									style={{ margin: '0 0 0 10px' }}
-								>
-									<span>Delete</span>
-								</button>
+								{this.checkUserEmail() ? (
+									<button
+										className="button button-primary button-winona commentBtn"
+										style={{ margin: '0 0 0 10px' }}
+										onClick={this.handleDeleteComment}
+									>
+										<span>Delete</span>
+									</button>
+								) : null}
 								{this.state.reply && this.state.commentReply.length > 0 ? (
 									<button
 										className="button button-primary button-winona commentBtn"
@@ -191,49 +191,13 @@ class Comment extends React.Component {
 									>
 										Submit Reply
 									</button>
-								) : (
-									''
-								)}
+								) : null}
 							</div>
 							{this.state.showAllReplies &&
 							this.state.replies &&
 							this.state.replies.length > 0 ? (
 								<Replies repliesArray={this.state.replies} />
 							) : null}
-							{!this.state.showAllReplies &&
-							this.state.replies &&
-							this.state.replies.length > 0 ? (
-								<Replies repliesArray={this.state.replies.slice(0, 1)} />
-							) : null}
-							{/* {this.props.commentData.showAllReplies ? (
-								<div className="reply-block" style={{ margin: '10px 0 0 0' }}>
-									<Replies
-										repliesArray={this.props.commentData.replies}
-										reportCommentOrReply={this.props.reportCommentOrReply}
-										isReportCommentOrReply={this.props.isReportCommentOrReply}
-									/>
-								</div>
-							) : (
-								<span />
-							)} */}
-
-							{/* {this.props.latestReply
-							&& this.props.latestReply.length
-							&& !this.props.commentData.showAllReplies ? (
-									this.props.latestReply[0].comment_type == 'reply' ? (
-										<div className="reply-block" style={{ margin: '10px 0 0 0' }}>
-											<Replies
-												repliesArray={this.props.latestReply}
-												reportCommentOrReply={this.props.reportCommentOrReply}
-												isReportCommentOrReply={this.props.isReportCommentOrReply}
-											/>
-										</div>
-									) : (
-										<span />
-									)
-								) : (
-									<span />
-								)} */}
 						</div>
 					</div>
 				</div>

@@ -215,6 +215,9 @@ export class TranscriptionDetails extends React.Component {
 										</tbody>
 									</table>
 								</div>
+								<div>
+									<p className="bookingForm">Comments</p>
+								</div>
 								<Comments lecture_uuid={this.props.location.state.uuid}/>
 							</div>
 							<div className="col-lg-4" />

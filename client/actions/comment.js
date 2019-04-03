@@ -20,6 +20,9 @@ export function getReplies (uuid) {
 			.getReplies(uuid)
 			.then(response => {
 				dispatch(getRepliesAction(response));
+			})
+			.catch(err => {
+				console.error(err);
 			});
 	};
 }
@@ -30,6 +33,9 @@ export function createCommet (body) {
 			.createComment(body)
 			.then(response => {
 				dispatch(createCommentAction(response));
+			})
+			.catch(err => {
+				console.error(err);
 			});
 	};
 }
@@ -40,6 +46,33 @@ export function createReply (body) {
 			.createReply(body)
 			.then(response => {
 				dispatch(createReplyAction(response));
+			})
+			.catch(err => {
+				console.error(err);
+			});
+	};
+}
+
+export function deleteComment (uuid) {
+	return dispatch => {
+		commetsApi.deleteComment(uuid)
+			.then(response => {
+				dispatch(deleteCommentAction(response));
+			})
+			.catch(err => {
+				console.error(err);
+			});
+	};
+}
+
+export function deleteReply (uuid) {
+	return dispatch => {
+		commetsApi.deleteReply(uuid)
+			.then(response => {
+				dispatch();
+			})
+			.catch(err => {
+				console.log(err);
 			});
 	};
 }
@@ -69,5 +102,25 @@ export function createReplyAction (data) {
 	return {
 		type: types.CREATE_REPLIES,
 		payload: data,
+	};
+}
+
+export function deleteCommentAction (data) {
+	return {
+		type: types.DELETE_COMMENT,
+		payload: data,
+	};
+}
+
+export function deleteReplyAction (data) {
+	return {
+		type: types.DELETE_REPLY,
+		payload: data,
+	};
+}
+
+export function resetState () {
+	return {
+		type: 'RESET_STATE',
 	};
 }

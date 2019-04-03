@@ -23,6 +23,16 @@ const utils = {
 		let url = serverAddress + '/api/replies/?uuid=' + comment_uuid;
 		return axios.get(url);
 	},
+
+	deleteComment: (uuid) => {
+		let url = serverAddress + '/api/comment/' + uuid + '/remove';
+		return axios.post(url);
+	},
+
+	deleteReply: (uuid) => {
+		let url = serverAddress + '/api/replies/' + uuid + '/remove';
+		return axios.post(url);
+	},
 };
 
 export default utils;

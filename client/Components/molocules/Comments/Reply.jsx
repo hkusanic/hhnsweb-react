@@ -27,7 +27,7 @@ class Reply extends React.Component {
 									{moment(
 										this.props.replyItems.dateCreated,
 										'YYYYMMDDTHHmmssZ'
-									).format('MMMM Do YYYY, h:mm a')}
+									).format('h:mm a, MMMM Do YYYY')}
 								</span>
 							</b>
 						</div>
