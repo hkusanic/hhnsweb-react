@@ -16,6 +16,8 @@ keystone.init({
 		'./uploads',
 	],
 	'file limit': '150MB',
+	'cors allow origin': true,
+	'api allow origin':true,
 	// Keystone includes an updates framework,
 	// which you can enable by setting the auto update option to true.
 	// Updates provide an easy way to seed your database,
@@ -115,7 +117,6 @@ keystone.init({
 
 // Load your project's Models
 keystone.import('./server/models');
-
 // Add routes
 keystone.set('routes', require('./server/routes'));
 

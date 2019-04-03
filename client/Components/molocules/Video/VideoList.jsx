@@ -104,12 +104,14 @@ export class VideoList extends Component {
                                         <thead>
                                             <tr>
                                                 <th className="align">Title</th>
+                                                <th className="align">View</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {this.state.videos.map((item, key) => {
                                                 return <tr key={key}>
                                                     <td className="titleColor dataRowAlign"><Link to={{ pathname: '/videoDetails', state: item }}>{renderHTML(reactCookie.load('languageCode') === 'en' ? item.en.title : item.ru.title)}</Link></td>
+                                                    <td>{item.counters.video_page_view}</td>
                                                    </tr>
                                             })}
                                         </tbody>

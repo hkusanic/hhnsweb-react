@@ -1,13 +1,29 @@
-import React, { Component } from "react";
-import renderHTML from "react-render-html";
-import reactCookie from "react-cookies";
+import React from 'react';
+import renderHTML from 'react-render-html';
+import reactCookie from 'react-cookies';
+import { connect } from 'react-redux';
+import { updateCounters } from '../../../actions/lectureActions';
+// eslint-disable-next-line no-unused-vars
+import Comments from '../Comments/Comments';
 
-export class SummariesDetails extends Component {
-	constructor(props) {
+export class SummariesDetails extends React.Component {
+	constructor (props) {
 		super(props);
 	}
+	componentDidMount () {
+		let body = {
+			uuid: this.props.location.state.uuid,
+		};
+		if (reactCookie.load('languageCode') === 'en') {
+			body.en_summary_view = true;
+		} else {
+			body.ru_summary_view = true;
+		}
+		this.props.updateCounters(body);
+	}
 
-	render() {
+
+	render () {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -20,7 +36,7 @@ export class SummariesDetails extends Component {
 								<article className="post-creative">
 									<h3 className="post-creative-title dataTitle">
 										{renderHTML(
-											reactCookie.load("languageCode") === "en"
+											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.en.title
 												: this.props.location.state.ru.title
 										)}
@@ -41,7 +57,7 @@ export class SummariesDetails extends Component {
 									</ul>
 									<div>
 										{renderHTML(
-											reactCookie.load("languageCode") === "en"
+											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.ru.summary.text
 												: this.props.location.state.ru.summary.text
 										)}
@@ -152,7 +168,7 @@ export class SummariesDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.downloads}
+													{this.props.location.state.counters.downloads}
 												</td>
 											</tr>
 											<tr>
@@ -168,6 +184,10 @@ export class SummariesDetails extends Component {
 										</tbody>
 									</table>
 								</div>
+								<div>
+									<p className="bookingForm">Comments</p>
+								</div>
+								<Comments lecture_uuid={this.props.location.state.uuid}/>
 							</div>
 							<div className="col-lg-4" />
 						</div>
@@ -178,4 +198,20 @@ export class SummariesDetails extends Component {
 	}
 }
 
-export default SummariesDetails;
+const mapStateToProps = state => {
+	return {
+		Count: state.lectureReducer.Count,
+	};
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		updateCounters: body => {
+			dispatch(updateCounters(body));
+		},
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(SummariesDetails);

@@ -90,6 +90,7 @@ export class Transcritpion extends Component {
 										 <thead>
                                             <tr>
                                                 <th className="align">Title</th>
+																								<th className="align">View</th>
                                             </tr>
                                         </thead>
 										<tbody>
@@ -103,6 +104,9 @@ export class Transcritpion extends Component {
 															>
 																{renderHTML(reactCookie.load('languageCode') === 'en' ? item.en.title : item.ru.title)}
 															</Link>
+														</td>
+														<td>
+															{reactCookie.load('languageCode') === 'en' ? item.counters.en_transcription_view :item.counters.ru_transcription_view}
 														</td>
 													</tr>
 												);

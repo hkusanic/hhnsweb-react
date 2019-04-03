@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SingleLecture from '../../Components/molocules/SingleLecture/SingleLecture';
 import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
-import { searchLecture } from '../../actions/lectureActions';
+import { searchLecture, updateCounters } from '../../actions/lectureActions';
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 
@@ -123,6 +123,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         searchLecture: (page) => {
             dispatch(searchLecture(page));
+        },
+        updateCounters: (body) => {
+            dispatch(updateCounters(body));
         }
     }
 }

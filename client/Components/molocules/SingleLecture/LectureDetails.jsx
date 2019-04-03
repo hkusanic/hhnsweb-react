@@ -1,13 +1,15 @@
-import React, { Component } from "react";
-import renderHTML from "react-render-html";
-import reactCookie from "react-cookies";
+/* eslint-disable no-unused-vars */
+import React from 'react';
+import renderHTML from 'react-render-html';
+import reactCookie from 'react-cookies';
+import Comments from '../Comments/Comments';
 
-export class LectureDetails extends Component {
-	constructor(props) {
+export class LectureDetails extends React.Component {
+	constructor (props) {
 		super(props);
 	}
 
-	render() {
+	render () {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -19,9 +21,11 @@ export class LectureDetails extends Component {
 							<div className="col-lg-8">
 								<article className="post-creative">
 									<h3 className="post-creative-title">
-										{renderHTML(reactCookie.load("languageCode") === "en"
-														? this.props.location.state.en.event
-														: this.props.location.state.ru.event)}
+										{renderHTML(
+											reactCookie.load('languageCode') === 'en'
+												? this.props.location.state.en.event
+												: this.props.location.state.ru.event
+										)}
 									</h3>
 									<ul className="post-creative-meta">
 										<li>
@@ -48,7 +52,7 @@ export class LectureDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.event
 														: this.props.location.state.ru.event}
 												</td>
@@ -118,7 +122,7 @@ export class LectureDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.location
 														: this.props.location.state.ru.location}
 												</td>
@@ -140,7 +144,7 @@ export class LectureDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.topic
 														: this.props.location.state.ru.topic}
 												</td>
@@ -162,6 +166,10 @@ export class LectureDetails extends Component {
 											</tbody>
 										</table>
 									</div>
+									<div>
+										<p className="bookingForm">Comments</p>
+									</div>
+									<Comments lecture_uuid={this.props.location.state.uuid} />
 								</div>
 							</div>
 							<div className="col-lg-4" />
