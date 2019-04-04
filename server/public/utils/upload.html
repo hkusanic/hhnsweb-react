@@ -1,0 +1,52 @@
+<html>
+<head>
+
+
+
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script>
+    function uploads3() {
+        const file = document.getElementById("file").files[0];  //Video file.
+        const fileName = file.name;
+        const fileType = file.type;
+$.ajax({
+    type: "GET",
+    url: `http://localhost:3000/api/blog/generateUploadUrl?name=folder1/${fileName}&type=${fileType}`,
+    success:  (data) => {
+        
+        console.log('-------->',data);
+    
+    uploadFileToS3UsingPresignedUrl(data.presignedUrl, file)},
+    error: function(){ alert("failed"); }
+});
+
+    }
+    
+function uploadFileToS3UsingPresignedUrl(presignedUrl, file) {
+    $.ajax({
+    type: "PUT",
+    url: presignedUrl,
+    data: file,
+    headers: {
+                'Content-Type': file.type,
+                'reportProgress': true
+            },
+    processData : false,
+    success:  (data) => {console.log('success')},
+    error: function(){ console.log('sdfsdfsd'); }
+});
+    }
+    
+    
+    </script>
+    
+</head>
+
+<input type="file" id="file" onchange="uploads3()" name="file">
+
+
+
+</html>
