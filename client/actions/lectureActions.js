@@ -1,7 +1,7 @@
-import lectureApi from "../utils/api/lecture";
-import * as types from "../constants/index";
+import lectureApi from '../utils/api/lecture';
+import * as types from '../constants/index';
 
-export function searchLecture(body) {
+export function searchLecture (body) {
 	return dispatch => {
 		lectureApi
 			.searchLecture(body)
@@ -14,7 +14,7 @@ export function searchLecture(body) {
 	};
 }
 
-export function updateCounters(body) {
+export function updateCounters (body) {
 	return dispatch => {
 		lectureApi
 			.updateCounters(body)
@@ -27,16 +27,16 @@ export function updateCounters(body) {
 	};
 }
 
-export function searchLectureAction(data) {
+export function searchLectureAction (data) {
 	return {
 		type: types.SEARCH_LECTURE,
-		payload: data
+		payload: data,
 	};
 }
 
-export function updateCountersAction(data) {
+export function updateCountersAction (data) {
 	return {
 		type: types.UPDATE_COUNTERS,
-		payload: data
+		payload: data,
 	};
 }

@@ -6,6 +6,8 @@ import {
 	getReplies,
 	createCommet,
 	createReply,
+	deleteComment,
+	resetState,
 } from '../../../actions/comment';
 import Comment from './comment';
 
@@ -19,6 +21,7 @@ export class Comments extends React.Component {
 			comment: '',
 			comments: [],
 		};
+		this.props.resetState();
 	}
 	componentDidMount() {
 		const user = JSON.parse(localStorage.getItem('user'));
@@ -27,7 +30,6 @@ export class Comments extends React.Component {
 				user,
 			},
 			() => {
-                console.log("user===>>", this.state.user);
 				this.props.getComments({
 					lecture_uuid: this.props.lecture_uuid,
 				});
@@ -37,8 +39,8 @@ export class Comments extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (
-			!this.props.commentReducer.isCommentSubmitedd &&
-			nextProps.commentReducer.isCommentSubmitedd
+			!this.props.commentReducer.isCommentSubmited &&
+			nextProps.commentReducer.isCommentSubmited
 		) {
 			this.setState(
 				{
@@ -52,6 +54,14 @@ export class Comments extends React.Component {
 					});
 				}
 			);
+		}
+		if (
+			!this.props.commentReducer.isCommentDeleted &&
+			nextProps.commentReducer.isCommentDeleted
+		) {
+			this.props.getComments({
+				lecture_uuid: this.props.lecture_uuid,
+			});
 		}
 	}
 	handleSubject = event => {
@@ -91,22 +101,27 @@ export class Comments extends React.Component {
 			approved: true,
 		};
 		this.props.createCommet(body);
-    };
+	};
 
 	render() {
-        if(!this.state.user){
-            return <div>Loading...</div>;
-        }
+		if (!this.state.user) {
+			return <div>Loading...</div>;
+		}
 		return (
 			<div>
 				<div>
 					{this.props.commentReducer.comments.map(comment => {
-						return <Comment 
-									comment={comment}
-									replies={this.props.commentReducer.replies} 
-									user={this.state.user}
-									createReply={this.props.createReply}
-									getReplies={this.props.getReplies} />;
+						return (
+							<Comment
+								comment={comment}
+								replies={this.props.commentReducer.replies}
+								user={this.state.user}
+								createReply={this.props.createReply}
+								getReplies={this.props.getReplies}
+								deleteComment={this.props.deleteComment}
+								userEmail={this.state.user.email}
+							/>
+						);
 					})}
 				</div>
 				<div className="commentContainer">
@@ -118,12 +133,14 @@ export class Comments extends React.Component {
 										<b>User Name</b>
 									</label>
 									<input
-                                        className="form-input inputBox"
-                                        style={{ backgroundColor: '#f6f6f6' }}
+										className="form-input inputBox"
+										style={{ backgroundColor: '#f6f6f6' }}
 										type="text"
-                                        name="name"
-                                        readOnly= {true}
-										value={`${this.state.user.firstName} ${this.state.user.last}`}  
+										name="name"
+										readOnly={true}
+										value={`${this.state.user.firstName} ${
+											this.state.user.last
+										}`}
 										onChange={event => {
 											this.handleUsername(event);
 										}}
@@ -199,6 +216,12 @@ const mapDispatchToProps = dispatch => {
 		},
 		createReply: body => {
 			dispatch(createReply(body));
+		},
+		deleteComment: uuid => {
+			dispatch(deleteComment(uuid));
+		},
+		resetState: () => {
+			dispatch(resetState());
 		},
 	};
 };

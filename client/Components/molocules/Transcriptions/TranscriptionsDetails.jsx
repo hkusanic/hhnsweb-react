@@ -3,6 +3,7 @@ import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
 import { updateCounters } from '../../../actions/lectureActions';
+// eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 
 export class TranscriptionDetails extends React.Component {
@@ -214,6 +215,9 @@ export class TranscriptionDetails extends React.Component {
 											</tr>
 										</tbody>
 									</table>
+								</div>
+								<div>
+									<p className="bookingForm">Comments</p>
 								</div>
 								<Comments lecture_uuid={this.props.location.state.uuid}/>
 							</div>

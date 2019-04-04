@@ -3,6 +3,8 @@ import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
 import { updateCounters } from '../../../actions/lectureActions';
+import Comments from '../Comments/Comments';
+
 
 export class AudioDetails extends Component {
 	constructor(props) {
@@ -37,7 +39,7 @@ export class AudioDetails extends Component {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
-		return (
+	 	return (
 			<div>
 				<section className="section section-lg">
 					<div className="container">
@@ -203,6 +205,10 @@ export class AudioDetails extends Component {
 										</tbody>
 									</table>
 								</div>
+								<div>
+									<p className="bookingForm">Comments</p>
+								</div>
+								<Comments lecture_uuid={this.props.location.state.uuid}/>
 							</div>
 						</div>
 					</div>

@@ -13,13 +13,10 @@ class Replies extends React.Component {
 	}
 	render () {
 		return (
-			<div className="reply-holder">
+			<div className="reply-holder replyDiv">
 				{this.props.repliesArray && this.props.repliesArray.length > 0
 					? this.props.repliesArray.map(item => (
-						<Reply
-							key={this.keyCount++}
-							replyItems={item}
-						/>
+						<Reply key={this.keyCount++} replyItems={item} />
 					  ))
 					: 'No Replies has been given'}
 			</div>

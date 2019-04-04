@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
 import { updateCounters } from '../../../actions/lectureActions';
+// eslint-disable-next-line no-unused-vars
+import Comments from '../Comments/Comments';
 
-export class SummariesDetails extends Component {
+export class SummariesDetails extends React.Component {
 	constructor (props) {
 		super(props);
 	}
@@ -182,6 +184,10 @@ export class SummariesDetails extends Component {
 										</tbody>
 									</table>
 								</div>
+								<div>
+									<p className="bookingForm">Comments</p>
+								</div>
+								<Comments lecture_uuid={this.props.location.state.uuid}/>
 							</div>
 							<div className="col-lg-4" />
 						</div>
