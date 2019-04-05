@@ -35,7 +35,8 @@ function uploadFileToS3UsingPresignedUrl(presignedUrl, file) {
                 'reportProgress': true
             },
     processData : false,
-    success:  (data) => {console.log('success')},
+    success:  (data) => {
+        console.log(data)},
     error: function(){ console.log('sdfsdfsd'); }
 });
     }

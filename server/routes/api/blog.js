@@ -39,11 +39,12 @@ function generatePresignedUrl(type = 'upload', fileDetails, s3, config) {
     const commonOptions = {
         Bucket: process.env.bucket,
         Key: myKey,
-        Expires: 100000,
+		Expires: 100000,
+		ACL: 'public-read'
     };
     const options = {
         upload: Object.assign({}, commonOptions, { ContentType: fileType }),
-        download: Object.assign({}, commonOptions),
+		download: Object.assign({}, commonOptions),
     };
     return s3.getSignedUrl(urlType[type], options[type]);
 }
@@ -78,13 +79,39 @@ exports.generateUploadUrl = (req, res) => {
     const s3 = generateS3Object();
     const options = {
         signedUrlExpireSeconds: 100000,
-        bucket: process.env.bucket,
+		bucket: process.env.bucket,
+		ACL: 'public-read'
     };
     const url = generatePresignedUrl('upload', req.query, s3, options);
     return res.json({
         presignedUrl: url,
     });
 };
+
+exports.deleteFile= (req, res) => {
+    var bucketInstance = new AWS.S3();
+    var params = {
+		Bucket: process.env.bucket,
+		Delete: { // required
+			Objects: [ // required
+			  {
+				Key: req.query.filename // required
+			  }
+			],
+		  }
+    };
+    bucketInstance.deleteObjects(params, function (err, data) {
+        if (data) {
+			return res.apiResponse({
+				data: data,
+				success: true
+			});
+        }
+        else {
+			return res.apiError('not found/deleted',err);
+        }
+    });
+}
 
 
 // Creating the API end point
@@ -136,4 +163,26 @@ exports.get = function (req, res) {
 			blog: item,
 		});
 	});
+};
+
+
+exports.getblogbyid = function (req, res) {
+	if (!req.body.uuid) {
+		res.json({ error: { title: 'Id is Required', detail: 'Mandatory values are missing. Please check.' } });
+	}
+
+	Blog.model.findOne().where('uuid', req.body.uuid).exec((err, blog) => {
+
+		if (err || !blog) {
+			logger.error({
+				error: err,
+			}, 'API getblogbyid');
+			return res.json({ error: { title: 'Not able to find blog' } });
+		}
+		res.json({
+			blog: blog,
+			success: true,
+		});
+	});
+
 };

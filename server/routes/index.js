@@ -25,6 +25,7 @@ exports = module.exports = function (app) {
 	app.get('/api/event/', keystone.middleware.api, routes.api.event.list);
 	app.post('/api/blog/find/', keystone.middleware.api, routes.api.blog.get);
 	app.get('/api/blog/', keystone.middleware.api, routes.api.blog.list);
+	app.post('/api/blog/getblogbyid/', keystone.middleware.api, routes.api.blog.getblogbyid);
 	app.get('/api/lecture/', keystone.middleware.api, routes.api.lecture.list);
 	app.post('/api/lecture/createBulk/', keystone.middleware.api, routes.api.lecture.createBulk);
 	app.post('/api/lecture/create/', keystone.middleware.api, routes.api.lecture.create);
@@ -61,7 +62,7 @@ exports = module.exports = function (app) {
 	app.get('/api/user/', keystone.middleware.api, routes.api.user.list);
 	app.get('/api/appointment/', keystone.middleware.api, routes.api.appointment.list);
 	app.get('/api/blog/generateUploadUrl/', keystone.middleware.api, routes.api.blog.generateUploadUrl);
-
+    app.get('/api/blog/deleteFile/', keystone.middleware.api, routes.api.blog.deleteFile);
 	// File Upload Routes
 	app.get('/api/fileupload/list', keystone.middleware.api, routes.api.fileupload.list);
 	app.get('/api/fileupload/:id', keystone.middleware.api, routes.api.fileupload.get);
