@@ -63,7 +63,7 @@ exports = module.exports = function (app) {
 	app.get('/api/user/', keystone.middleware.api, routes.api.user.list);
 	app.get('/api/appointment/', keystone.middleware.api, routes.api.appointment.list);
 	app.get('/api/blog/generateUploadUrl/', keystone.middleware.api, routes.api.blog.generateUploadUrl);
-    app.get('/api/blog/deleteFile/', keystone.middleware.api, routes.api.blog.deleteFile);
+	app.get('/api/blog/deleteFile/', keystone.middleware.api, routes.api.blog.deleteFile);
 	// File Upload Routes
 	app.get('/api/fileupload/list', keystone.middleware.api, routes.api.fileupload.list);
 	app.get('/api/fileupload/:id', keystone.middleware.api, routes.api.fileupload.get);
@@ -71,8 +71,8 @@ exports = module.exports = function (app) {
 	app.all('/api/fileupload/create', keystone.middleware.api, routes.api.fileupload.create);
 	app.get('/api/fileupload/:id/remove', keystone.middleware.api, routes.api.fileupload.remove);
 	app.options('/api*', function (req, res) { res.send(200); });
-	
-	//app.post('/api/blog/generateUploadUrl', multipartMiddleware,routes.api.blog.generateUploadUrl );
+
+	// app.post('/api/blog/generateUploadUrl', multipartMiddleware,routes.api.blog.generateUploadUrl );
 	// Set up the default app route to  http://localhost:3000/index.htmli
 	app.get('/*', function (req, res) {
 		keystone.set('updateDatabase', false);
