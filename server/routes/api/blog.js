@@ -228,3 +228,78 @@ exports.getblogbyid = function (req, res) {
 	});
 
 };
+
+exports.update = function(req, res) {
+	logger.info({
+		req: req
+	}, "API update blog");
+
+	Blog.model.findOne({uuid: req.params.id }).exec(function(err, item) {
+
+		if (err) {
+			logger.error({
+				error: err
+			}, "API update blog");
+			return res.apiError('database error', err);
+		}
+		if (!item) {
+			logger.error({
+				error: 'Item not found'
+			}, "API update blog");
+			return res.apiError('not found');
+		}
+		
+		var data = (req.method == 'POST') ? req.body : req.query;
+		
+		item.getUpdateHandler(req).process(data, function(err) {
+			
+			if (err) {
+				logger.error({
+					error: err
+				}, "API update blog");
+				return res.apiError('create error', err);
+			}
+			
+			res.apiResponse({
+				Blog: item
+			});
+			
+		});
+		
+	});
+}
+
+exports.remove = function (req, res) {
+	logger.info({
+		req: req,
+	}, 'API remove blog');
+	Blog.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
+
+		if (err) {
+			logger.error({
+				error: err,
+			}, 'API remove blog');
+			return res.apiError('database error', err);
+		}
+		if (!item) {
+			logger.error({
+				error: 'No Item',
+			}, 'API remove blog');
+			return res.apiError('not found');
+		}
+
+		item.remove(function (err) {
+			if (err) {
+				logger.error({
+					error: err,
+				}, 'API remove blog');
+				return res.apiError('database error', err);
+			}
+
+			return res.apiResponse({
+				Blog: true,
+			});
+		});
+
+	});
+};
