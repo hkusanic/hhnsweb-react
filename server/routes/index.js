@@ -27,6 +27,8 @@ exports = module.exports = function (app) {
 	app.get('/api/blog/', keystone.middleware.api, routes.api.blog.list);
 	app.post('/api/blog/getblogbyid/', keystone.middleware.api, routes.api.blog.getblogbyid);
 	app.post('/api/blog/create/', keystone.middleware.api, routes.api.blog.create);
+	app.all('/api/blog/:id/update', keystone.middleware.api, routes.api.blog.update);
+	app.post('/api/blog/:id/remove', keystone.middleware.api, routes.api.blog.remove);
 	app.get('/api/lecture/', keystone.middleware.api, routes.api.lecture.list);
 	app.post('/api/lecture/createBulk/', keystone.middleware.api, routes.api.lecture.createBulk);
 	app.post('/api/lecture/create/', keystone.middleware.api, routes.api.lecture.create);
