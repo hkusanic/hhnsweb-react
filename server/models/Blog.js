@@ -82,24 +82,4 @@ Blog.add({
 
 Blog.defaultColumns = 'title_en, date|15%, needs_translation|10%';
 
-Blog.schema.pre('save', function (next) {
-	next();
-});
-
-Blog.schema.post('save', function (blog, next) {
-	next();
-});
-
-Blog.schema.post('validate', function (err, next) {
-	next();
-});
-
-Blog.schema.pre('remove', function (next) {
-	next();
-});
-
-Blog.schema.post('remove', function (next) {
-	next();
-});
-
 Blog.register();

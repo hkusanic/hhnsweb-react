@@ -30,22 +30,22 @@ function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
 
 	const myKey = fileDetails.name;
 	const fileType = fileDetails.type;
-	
-    const urlType = {
-        upload: 'putObject',
-        download: 'getObject',
-    };
-    const commonOptions = {
-        Bucket: process.env.bucket,
-        Key: myKey,
+
+	const urlType = {
+		upload: 'putObject',
+		download: 'getObject',
+	};
+	const commonOptions = {
+		Bucket: process.env.bucket,
+		Key: myKey,
 		Expires: 100000,
-		ACL: 'public-read'
-    };
-    const options = {
-        upload: Object.assign({}, commonOptions, { ContentType: fileType }),
+		ACL: 'public-read',
+	};
+	const options = {
+		upload: Object.assign({}, commonOptions, { ContentType: fileType }),
 		download: Object.assign({}, commonOptions),
-    };
-    return s3.getSignedUrl(urlType[type], options[type]);
+	};
+	return s3.getSignedUrl(urlType[type], options[type]);
 }
 
 /**
@@ -67,50 +67,50 @@ function generateS3Object (awsConfig) {
 
 
 exports.generateUploadUrl = (req, res) => {
-    let isError = false;
-    const errors = [];
-    if (!req.query.name) { isError = true; handleErr('noVideoName', errors); }
-    if (!req.query.type) { isError = true; handleErr('noVideoType', errors); }
-    if (isError) {
-        logger.error({ err: errors });
-        return res.status(400).json({ errors });
-    }
-    const s3 = generateS3Object();
-    const options = {
-        signedUrlExpireSeconds: 100000,
+	let isError = false;
+	const errors = [];
+	if (!req.query.name) { isError = true; handleErr('noVideoName', errors); }
+	if (!req.query.type) { isError = true; handleErr('noVideoType', errors); }
+	if (isError) {
+		logger.error({ err: errors });
+		return res.status(400).json({ errors });
+	}
+	const s3 = generateS3Object();
+	const options = {
+		signedUrlExpireSeconds: 100000,
 		bucket: process.env.bucket,
-		ACL: 'public-read'
-    };
-    const url = generatePresignedUrl('upload', req.query, s3, options);
-    return res.json({
-        presignedUrl: url,
-    });
+		ACL: 'public-read',
+	};
+	const url = generatePresignedUrl('upload', req.query, s3, options);
+	return res.json({
+		presignedUrl: url,
+	});
 };
 
-exports.deleteFile= (req, res) => {
-    var bucketInstance = new AWS.S3();
-    var params = {
+exports.deleteFile = (req, res) => {
+	var bucketInstance = new AWS.S3();
+	var params = {
 		Bucket: process.env.bucket,
 		Delete: { // required
 			Objects: [ // required
 			  {
-				Key: req.query.filename // required
-			  }
+					Key: req.query.filename, // required
+			  },
 			],
-		  }
-    };
-    bucketInstance.deleteObjects(params, function (err, data) {
-        if (data) {
+		  },
+	};
+	bucketInstance.deleteObjects(params, function (err, data) {
+		if (data) {
 			return res.apiResponse({
 				data: data,
-				success: true
+				success: true,
 			});
-        }
-        else {
-			return res.apiError('not found/deleted',err);
-        }
-    });
-}
+		}
+		else {
+			return res.apiError('not found/deleted', err);
+		}
+	});
+};
 
 
 // Creating the API end point
@@ -229,45 +229,45 @@ exports.getblogbyid = function (req, res) {
 
 };
 
-exports.update = function(req, res) {
+exports.update = function (req, res) {
 	logger.info({
-		req: req
-	}, "API update blog");
+		req: req,
+	}, 'API update blog');
 
-	Blog.model.findOne({uuid: req.params.id }).exec(function(err, item) {
+	Blog.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
 
 		if (err) {
 			logger.error({
-				error: err
-			}, "API update blog");
+				error: err,
+			}, 'API update blog');
 			return res.apiError('database error', err);
 		}
 		if (!item) {
 			logger.error({
-				error: 'Item not found'
-			}, "API update blog");
+				error: 'Item not found',
+			}, 'API update blog');
 			return res.apiError('not found');
 		}
-		
-		var data = (req.method == 'POST') ? req.body : req.query;
-		
-		item.getUpdateHandler(req).process(data, function(err) {
-			
+
+		var data = (req.method === 'POST') ? req.body : req.query;
+
+		item.getUpdateHandler(req).process(data, function (err) {
+
 			if (err) {
 				logger.error({
-					error: err
-				}, "API update blog");
+					error: err,
+				}, 'API update blog');
 				return res.apiError('create error', err);
 			}
-			
+
 			res.apiResponse({
-				Blog: item
+				Blog: item,
 			});
-			
+
 		});
-		
+
 	});
-}
+};
 
 exports.remove = function (req, res) {
 	logger.info({
