@@ -388,6 +388,7 @@ exports.updateBulk = function (req, res) {
 };
 
 exports.update = function (req, res) {
+	console.log('body inside update ===>>', req.body);
 	logger.info(
 		{
 			req: req,
@@ -395,9 +396,7 @@ exports.update = function (req, res) {
 		'API update lecture'
 	);
 	Lecture.model
-		.findOne({
-			uuid: req.body.id,
-		})
+		.findOne({ uuid: req.params.id })
 		.exec(function (err, item) {
 			if (err) {
 				logger.error(
@@ -561,9 +560,9 @@ exports.getlecturebyid = function (req, res) {
 		res.json({ error: { title: 'Id is Required', detail: 'Mandatory values are missing. Please check.' } });
 	}
 
-	Lecture.model.findOne().where('uuid', req.body.uuid).exec((err, blog) => {
+	Lecture.model.findOne().where('uuid', req.body.uuid).exec((err, lecture) => {
 
-		if (err || !blog) {
+		if (err || !lecture) {
 			logger.error({
 				error: err,
 			}, 'API getlecturebyid');
