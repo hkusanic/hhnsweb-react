@@ -518,7 +518,7 @@ exports.remove = function (req, res) {
 		},
 		'API remove lecture'
 	);
-	Lecture.model.findById(req.params.id).exec(function (err, item) {
+	Lecture.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
 		if (err) {
 			logger.error(
 				{
@@ -554,4 +554,25 @@ exports.remove = function (req, res) {
 			});
 		});
 	});
+};
+
+exports.getlecturebyid = function (req, res) {
+	if (!req.body.uuid) {
+		res.json({ error: { title: 'Id is Required', detail: 'Mandatory values are missing. Please check.' } });
+	}
+
+	Lecture.model.findOne().where('uuid', req.body.uuid).exec((err, blog) => {
+
+		if (err || !blog) {
+			logger.error({
+				error: err,
+			}, 'API getlecturebyid');
+			return res.json({ error: { title: 'Not able to find lecture' } });
+		}
+		res.json({
+			lecture: lecture,
+			success: true,
+		});
+	});
+
 };

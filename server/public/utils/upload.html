@@ -26,6 +26,7 @@ $.ajax({
     }
     
 function uploadFileToS3UsingPresignedUrl(presignedUrl, file) {
+    console.log('======>', file);
     $.ajax({
     type: "PUT",
     url: presignedUrl,
