@@ -52,7 +52,7 @@ exports = module.exports = function (app) {
 	app.all('/api/lecture/updateCounters', keystone.middleware.api, routes.api.lecture.updateCounters);
 	app.post('/api/lecture/:id/remove', keystone.middleware.api, routes.api.lecture.remove);
 	app.post('/api/lecture/', keystone.middleware.api, routes.api.lecture.create);
-	app.post('/api/lecture/getblogbyid/', keystone.middleware.api, routes.api.blog.getlecturebyid);
+	app.post('/api/lecture/getblogbyid/', keystone.middleware.api, routes.api.lecture.getlecturebyid);
 	app.post('/api/signin/', keystone.middleware.api, routes.api.user.signin);
 	app.post('/api/signup/', keystone.middleware.api, routes.api.user.signup);
 	app.post('/api/signout/', keystone.middleware.api, routes.api.user.signout);
