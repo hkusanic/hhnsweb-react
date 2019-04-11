@@ -9,6 +9,22 @@ let logger = require('./../../logger/logger');
 
 var Lecture = keystone.list('Lecture');
 
+function todayDate(){
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1; //January is 0!
+
+var yyyy = today.getFullYear();
+if (dd < 10) {
+  dd = '0' + dd;
+} 
+if (mm < 10) {
+  mm = '0' + mm;
+} 
+var today = yyyy  + '-' + dd + '-' + mm;
+return today
+}
+
 // Creating the API end point
 // More about keystone api here: https://gist.github.com/JedWatson/9741171
 exports.list = function (req, res) {
@@ -229,6 +245,17 @@ exports.list = function (req, res) {
 		query.push(year_query);
 	}
 
+	if (req.query.date) {
+		let year_query = {
+			created_date: {
+				$regex: '.*' + req.query.date + '.*',
+				$options: 'i',
+			},
+		};
+
+		query.push(year_query);
+	}
+
 	let filters = {};
 
 	if (query.length > 0) {
@@ -247,7 +274,7 @@ exports.list = function (req, res) {
 		page: req.query.page || 1,
 		perPage: 20,
 		filters: filters,
-	}).exec(function (err, items) {
+	}).sort('-created_date').exec(function (err, items) {
 		if (err) {
 			logger.error(
 				{
@@ -270,6 +297,7 @@ exports.list = function (req, res) {
 exports.create = function (req, res) {
 	var item = new Lecture.model();
 	var data = req.method === 'POST' ? req.body : req.query;
+	data.created_date = data.created_date?data.created_date:todayDate();
 	logger.info(
 		{
 			req: req,

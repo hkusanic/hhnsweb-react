@@ -4,7 +4,7 @@ const Types = keystone.Field.Types;
 let Lecture = new keystone.List('Lecture', {
 	autokey: { path: 'slug', from: 'uuid', unique: true },
 	map: { name: 'uuid' },
-	defaultSort: '-published_date',
+	defaultSort: '-created_date',
 });
 
 Lecture.add({
