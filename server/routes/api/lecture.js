@@ -21,7 +21,7 @@ if (dd < 10) {
 if (mm < 10) {
   mm = '0' + mm;
 } 
-var today = yyyy  + '-' + dd + '-' + mm;
+var today = yyyy  + '-' + mm + '-' + dd;
 return today
 }
 
@@ -246,14 +246,26 @@ exports.list = function (req, res) {
 	}
 
 	if (req.query.date) {
-		let year_query = {
+		let date_query = {
 			created_date: {
 				$regex: '.*' + req.query.date + '.*',
 				$options: 'i',
 			},
 		};
 
-		query.push(year_query);
+		query.push(date_query);
+	}
+	
+	let createdDateSort = '-created_date';
+	
+	if (req.query.createdDateSort) {
+		if(req.query.createdDateSort === 'asc'){
+			createdDateSort = 'created_date';
+		}
+		else{
+			createdDateSort = '-created_date';
+		}
+	
 	}
 
 	let filters = {};
@@ -274,7 +286,7 @@ exports.list = function (req, res) {
 		page: req.query.page || 1,
 		perPage: 20,
 		filters: filters,
-	}).sort('-created_date').exec(function (err, items) {
+	}).sort(createdDateSort).exec(function (err, items) {
 		if (err) {
 			logger.error(
 				{

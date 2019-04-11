@@ -31,13 +31,13 @@ Lecture.add({
 		transcription: {
 			text: { type: Types.Text },
 			attachment_name: { type: String },
-			attachment_link: { type: Types.Url },
+			attachment_link: { type: Types.TextArray },
 		},
 		location: { type: String },
 		summary: {
 			text: { type: Types.Text },
 			attachment_name: { type: String },
-			attachment_link: { type: Types.Url },
+			attachment_link: { type: Types.TextArray },
 		},
 	},
 	ru: {
@@ -47,13 +47,13 @@ Lecture.add({
 		transcription: {
 			text: { type: Types.Text },
 			attachment_name: { type: String },
-			attachment_link: { type: Types.Url },
+			attachment_link: { type: Types.TextArray },
 		},
 		location: { type: String },
 		summary: {
 			text: { type: Types.Text },
 			attachment_name: { type: String },
-			attachment_link: { type: Types.Url },
+			attachment_link: { type:Types.TextArray},
 		},
 	},
 	counters: {
