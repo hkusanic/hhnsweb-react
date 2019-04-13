@@ -1,72 +1,69 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import Auth from '../../../utils/Auth';
+// import reactCookie from 'react-cookies';
+import { getGalleries } from '../../../actions/gallery';
 
-export class Gallery extends Component {
-    constructor(props) {
-        super(props);
-    }
+export class Gallery extends React.Component {
+	constructor (props) {
+		super(props);
+		this.state = {
+			isUserLogin: false,
+		};
+	}
+	componentDidMount () {
+		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({
+			isUserLogin,
+		});
+		this.props.getGalleries();
+	}
 
-    render() {
-        return (
-            <div>
-                <section className="oh text-center text-sm-left padBottom">
-                    <div style={{ textAlign: 'center' }}>
-                        <p className="bookingForm">
-                            Gallery
-                        </p>
-                    </div>
-                    <div className="container">
-                        <div className="isotope isotope-responsive row">
-                            <div className="col-sm-6 col-lg-4 isotope-item" data-filter="Type 3">
-                                <a className="thumbnail-modern" href="images/gallery-original-1.jpg" data-lightgallery="item"><img className="thumbnail-modern-image" src="images/grid-layout-1-370x256.jpg" alt="" width="370" height="256" />
-                                    <div className="thumbnail-modern-caption"><span className="icon mdi mdi-magnify"> </span></div>
-                                    <div className="thumbnail-modern-dummy"></div></a>
-                            </div>
-                            <div className="col-sm-6 col-lg-4 isotope-item" data-filter="Type 2">
-                                <a className="thumbnail-modern" href="images/gallery-original-2.jpg" data-lightgallery="item"><img className="thumbnail-modern-image" src="images/grid-layout-2-370x256.jpg" alt="" width="370" height="256" />
-                                    <div className="thumbnail-modern-caption"><span className="icon mdi mdi-magnify"> </span></div>
-                                    <div className="thumbnail-modern-dummy"></div></a>
-                            </div>
-                            <div className="col-sm-6 col-lg-4 isotope-item" data-filter="Type 1">
-                                <a className="thumbnail-modern" href="images/gallery-original-3.jpg" data-lightgallery="item"><img className="thumbnail-modern-image" src="images/grid-layout-3-370x256.jpg" alt="" width="370" height="256" />
-                                    <div className="thumbnail-modern-caption"><span className="icon mdi mdi-magnify"> </span></div>
-                                    <div className="thumbnail-modern-dummy"></div></a>
-                            </div>
-                            <div className="col-sm-6 col-lg-4 isotope-item" data-filter="Type 2">
-                                <a className="thumbnail-modern" href="images/gallery-original-4.jpg" data-lightgallery="item"><img className="thumbnail-modern-image" src="images/grid-layout-4-370x256.jpg" alt="" width="370" height="256" />
-                                    <div className="thumbnail-modern-caption"><span className="icon mdi mdi-magnify"> </span></div>
-                                    <div className="thumbnail-modern-dummy"></div></a>
-                            </div>
-                            <div className="col-sm-6 col-lg-4 isotope-item" data-filter="Type 3">
-                                <a className="thumbnail-modern" href="images/gallery-original-5.jpg" data-lightgallery="item"><img className="thumbnail-modern-image" src="images/grid-layout-5-370x256.jpg" alt="" width="370" height="256" />
-                                    <div className="thumbnail-modern-caption"><span className="icon mdi mdi-magnify"> </span></div>
-                                    <div className="thumbnail-modern-dummy"></div></a>
-                            </div>
-                            <div className="col-sm-6 col-lg-4 isotope-item" data-filter="Type 1">
-                                <a className="thumbnail-modern" href="images/gallery-original-6.jpg" data-lightgallery="item"><img className="thumbnail-modern-image" src="images/grid-layout-6-370x256.jpg" alt="" width="370" height="256" />
-                                    <div className="thumbnail-modern-caption"><span className="icon mdi mdi-magnify"> </span></div>
-                                    <div className="thumbnail-modern-dummy"></div></a>
-                            </div>
-                            <div className="col-sm-6 col-lg-4 isotope-item" data-filter="Type 3">
-                                <a className="thumbnail-modern" href="images/gallery-original-7.jpg" data-lightgallery="item"><img className="thumbnail-modern-image" src="images/grid-layout-7-370x256.jpg" alt="" width="370" height="256" />
-                                    <div className="thumbnail-modern-caption"><span className="icon mdi mdi-magnify"> </span></div>
-                                    <div className="thumbnail-modern-dummy"></div></a>
-                            </div>
-                            <div className="col-sm-6 col-lg-4 isotope-item" data-filter="Type 1">
-                                <a className="thumbnail-modern" href="images/gallery-original-8.jpg" data-lightgallery="item"><img className="thumbnail-modern-image" src="images/grid-layout-8-370x256.jpg" alt="" width="370" height="256" />
-                                    <div className="thumbnail-modern-caption"><span className="icon mdi mdi-magnify"> </span></div>
-                                    <div className="thumbnail-modern-dummy"></div></a>
-                            </div>
-                            <div className="col-sm-6 col-lg-4 isotope-item" data-filter="Type 2">
-                                <a className="thumbnail-modern" href="images/gallery-original-9.jpg" data-lightgallery="item"><img className="thumbnail-modern-image" src="images/grid-layout-9-370x256.jpg" alt="" width="370" height="256" />
-                                    <div className="thumbnail-modern-caption"><span className="icon mdi mdi-magnify"> </span></div>
-                                    <div className="thumbnail-modern-dummy"></div></a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        )
-    }
+	render () {
+		return (
+			<div>
+				<section class="section-lg text-center bg-gray-100">
+					<div class="container">
+						<div class="row row-50 row-lg-70 offset-top-2">
+							<div class="col-sm-6 col-lg-3 wow-outer">
+								<article
+									class="tour-default wow slideInLeft"
+									data-wow-delay=".1s"
+								>
+									<img
+										src="https://nrs-site.s3.amazonaws.com/styles/gallery_images/s3/default_images/004.jpg?itok=xizRm1w6"
+										alt=""
+										width="200"
+										height="200"
+									/>
+									<div class="tour-default-caption">
+										<h5 class="tour-default-title">Title</h5>
+									</div>
+								</article>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		);
+	}
 }
 
-export default Gallery;
+const mapStateToProps = state => {
+	return {
+		galleryReducer: state.galleryReducer,
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		getGalleries: () => {
+			dispatch(getGalleries());
+		},
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Gallery);

@@ -53,15 +53,15 @@ export class GridLayoutMenus extends React.Component {
                                 image='images/tour-8-270x200.jpg' 
                                 menu={<p><Translate>{({ translate }) => translate('HOME.Summaries')}</Translate></p>} 
                                 link="/summaries" />
-                            {/* <SingleGridMenu 
+                            <SingleGridMenu 
                                 image='images/tour-1-270x200.jpg' 
                                 menu="Gallery" 
-                                link="/gallery" /> */}
-                            <SingleGridMenu 
+                                link="/gallery" />
+                            {/* <SingleGridMenu 
                                 handleNavigationClick={this.handleNavigationClick} 
                                 image='images/tour-2-270x200.jpg' 
                                 menu={<p><Translate>{({ translate }) => translate('HOME.calendar')}</Translate></p>} 
-                                link="/calender" />
+                                link="/calender" /> */}
                             <SingleGridMenu 
                                 image='images/tour-3-270x200.jpg' 
                                 menu="MKV" 
