@@ -10,6 +10,8 @@ import searchFilterReducer from './searchFilter/searchFilter';
 import kirtanReducer from './kirtanReducer/kirtanReducer';
 import mkvReducer from './mkvReducer/mkvReducer';
 import commentReducer from './commentReducer/commentReducer';
+import galleryReducer from './galleryReducer/galleryReducer';
+
 import { routerReducer } from 'react-router-redux';
 
 const reducers = combineReducers({
@@ -24,6 +26,7 @@ const reducers = combineReducers({
 	kirtanReducer: kirtanReducer,
 	mkvReducer: mkvReducer,
 	commentReducer: commentReducer,
+	galleryReducer: galleryReducer,
 	routing: routerReducer,
 });
 

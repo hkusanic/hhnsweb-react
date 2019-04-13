@@ -44,3 +44,5 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const CREATE_REPLIES = 'CREATE_REPLIES';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const DELETE_REPLY = 'DELETE_REPLY';
+
+export const GET_GALLERY = 'GET_GALLERY';
