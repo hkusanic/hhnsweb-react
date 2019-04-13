@@ -1,9 +1,32 @@
 var keystone = require('keystone');
 let logger = require('./../../logger/logger');
-
+var GALLERY_LIST = require('../../constants/constant');
 
 var Gallery = keystone.list('Gallery');
 
+
+exports.list = function (req, res) {
+	// Querying the data this works similarly to the Mongo db.collection.find() method
+	 logger.info({
+		req: req
+	}, "API list gallery");
+	Gallery.model.find(function (err, items) {
+		// Make sure we are handling errors
+		if (err) {
+			logger.error({
+				error: err
+			}, "API list gallery");
+			return res.apiError('database error', err);
+		}
+		res.apiResponse({
+			// Filter page by
+			gallery: items,
+		});
+
+	// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
+	// This is handy if we want to speed up loading times once our recipe collection grows
+	}).limit(Number(req.query.limit));
+};
 
 exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
@@ -87,3 +110,47 @@ exports.remove = function (req, res) {
 
 	});
 };
+
+exports.getGalleryByGallery = function (req, res) {
+
+	logger.info({
+		req: req,
+	}, 'API get gallery');
+	Gallery.model.find().where({ gallery: req.body.gallery}).exec(function (err, item) {
+		if (err) {
+			logger.error({
+				error: err,
+			}, 'API get gallery');
+			return res.apiError('database error', err);
+		}
+		if (!item) {
+			logger.error({
+				error: 'item not found',
+			}, 'API get gallery');
+			return res.apiError('not found');
+		}
+		res.apiResponse({
+			gallery: item,
+		});
+	});
+};
+
+
+
+exports.getStaticGallery = function (req, res) {
+
+	logger.info({
+		req: req,
+	}, 'API get static gallery');
+	
+	    if(GALLERY_LIST.CONSTANTS.GALLERY){
+		res.apiResponse({
+			gallery: GALLERY_LIST.CONSTANTS.GALLERY,
+		});
+	    }
+		else{
+			return res.apiError('not found');
+		}
+};
+	
+
