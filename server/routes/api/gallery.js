@@ -8,14 +8,14 @@ var Gallery = keystone.list('Gallery');
 exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	 logger.info({
-		req: req
-	}, "API list gallery");
+		req: req,
+	}, 'API list gallery');
 	Gallery.model.find(function (err, items) {
 		// Make sure we are handling errors
 		if (err) {
 			logger.error({
-				error: err
-			}, "API list gallery");
+				error: err,
+			}, 'API list gallery');
 			return res.apiError('database error', err);
 		}
 		res.apiResponse({

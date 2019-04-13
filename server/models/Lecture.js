@@ -53,7 +53,7 @@ Lecture.add({
 		summary: {
 			text: { type: Types.Text },
 			attachment_name: { type: String },
-			attachment_link: { type:Types.TextArray},
+			attachment_link: { type: Types.TextArray },
 		},
 	},
 	counters: {

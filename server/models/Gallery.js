@@ -8,12 +8,12 @@ let Gallery = new keystone.List('Gallery', {
 });
 
 Gallery.add({
-    uuid:{ type: String,  index: true },
-    title: { type: String,  index: true },
-    comment_uuid: { type: String},
-	date:{ type: String },
-    gallery: { type: String },
-    photos : {type: Types.TextArray}
+	uuid: { type: String, index: true },
+	title: { type: String, index: true },
+	comment_uuid: { type: String },
+	date: { type: String },
+	gallery: { type: String },
+	photos: { type: Types.TextArray },
 });
 
 
