@@ -16,6 +16,16 @@ const utils = {
 		let url = serverAddress + '/api/gallery/:' + { uuid } + '/remove';
 		return axios.post(url);
 	},
+
+	getStaticGalleryList: () => {
+		let url = serverAddress + '/api/gallery/getStaticGallery';
+		return axios.get(url);
+	},
+
+	getSubGalleryByGallery: body => {
+		let url = serverAddress + '/api/gallery/getGalleryByGallery/';
+		return axios.post(url, body);
+	},
 };
 
 export default utils;
