@@ -6,10 +6,12 @@ import Footer from '../../Components/molocules/Footer/Footer';
 import Blog from '../../containers/Blog/Blog';
 import Calender from '../../containers/Calender/Calender';
 import Lectures from '../../containers/Lectures/Lectures';
+import Quotes from '../../containers/Quote/Quote';
 import Booking from '../../containers/Booking/Booking';
 import BlogDetails from '../../Components/molocules/SingleBlog/BlogDetails';
 import BiographyDetails from '../../Components/molocules/Biography/BiographyDetails';
 import LectureDetails from '../../Components/molocules/SingleLecture/LectureDetails';
+import QuoteDetails from '../../Components/molocules/SingleQuote/QuoteDetails';
 import AudioList from './../../Components/molocules/Audio/AudioList';
 import VideoList from '../../Components/molocules/Video/VideoList';
 import AudioDetails from '../../Components/molocules/Audio/AudioDetails';
@@ -52,56 +54,58 @@ export class Home extends Component {
 		script();
 	}
 
-	render () {
-		return (
-			<div>
-				<div className="page">
-					<Navigation />
-					<Switch>
-						<ScrollToTop>
-							<Route exact path="/" component={Carousel} />
-							<Route path="/forgotPassword" component={ForgotPassword} />
-							<Route path="/reset-password" component={ResetPassword} />
-							<Route path="/biograhyDetails" component={BiographyDetails} />
-							<Route path="/registration" component={Registration} />
-							<Route path="/contact" component={Contact} />
-							<Route path="/appointmentList" component={AppointmentListing} />
-							<Route path="/photos" component={Photos} />
-							<Route path="/gallery" component={Gallery} />
-							<Route path="/subGallery" component={SubGallery} />
-							<ShellCompoenent>
-								<Route path="/blog" component={Blog} />
-								<Route path="/booking" component={Booking} />
-								<Route path="/calender" component={Calender} />
-								<Route path="/lectures" component={Lectures} />
-								<Route path="/blogDetails" component={BlogDetails} />
-								<Route path="/lectureDetails" component={LectureDetails} />
-								<Route path="/audio" component={AudioList} />
-								<Route path="/audioDetails" component={AudioDetails} />
-								<Route path="/video" component={VideoList} />
-								<Route path="/videoDetails" component={VideoDetails} />
-								<Route path="/profile" component={UserProfile} />
-								<Route path="/transcriptions" component={Transcritpion} />
-								<Route path="/summaries" component={Summaries} />
-								<Route path="/summariesDetails" component={SummariesDetails} />
-								<Route path="/transcriptionDetails" component={TranscriptionDetails} />
-								<Route path="/kirtan" component={Kirtan} />
-								<Route path="/kirtanDetails" component={KirtanDetails} />
-								<Route path="/mkv" component={MKV} />
-							</ShellCompoenent>
-						</ScrollToTop>
-					</Switch>
-					<Footer />
-				</div>
-				<div className="preloader">
-					<div className="preloader-logo"><img src="images/logo-default-256x50.png" alt="" width="256" height="50" />
-					</div>
-					<div className="preloader-body">
-						<div id="loadingProgressG">
-							<div className="loadingProgressG" id="loadingProgressG_1"></div>
-						</div>
-					</div>
-				</div>
+    render() {
+        return (
+            <div>
+                <div className="page">
+                    <Navigation />
+                    <Switch>
+                        <ScrollToTop>
+                            <Route exact path='/' component={Carousel} />
+                            <Route path='/forgotPassword' component={ForgotPassword} />
+                            <Route path='/reset-password' component={ResetPassword} />
+                            <Route path='/biograhyDetails' component={BiographyDetails} />
+                            <Route path='/registration' component={Registration} />
+                            <Route path='/contact' component={Contact} />
+                            <Route path='/appointmentList' component={AppointmentListing} />
+                            <Route path='/photos' component={Photos} />
+                            <Route path='/gallery' component={Gallery} />
+                            <Route path="/subGallery" component={SubGallery} />
+                            <ShellCompoenent>
+                                <Route path='/blog' component={Blog} />
+                                <Route path='/booking' component={Booking} />
+                                <Route path='/calender' component={Calender} />
+                                <Route path='/lectures' component={Lectures} />
+                                <Route path='/quotes' component={Quotes} />
+                                <Route path='/blogDetails' component={BlogDetails} />
+                                <Route path='/quoteDetails' component={QuoteDetails} />
+                                <Route path='/lectureDetails' component={LectureDetails} />
+                                <Route path='/audio' component={AudioList} />
+                                <Route path='/audioDetails' component={AudioDetails} />
+                                <Route path='/video' component={VideoList} />
+                                <Route path='/videoDetails' component={VideoDetails} />
+                                <Route path='/profile' component={UserProfile} />
+                                <Route path='/transcriptions' component={Transcritpion} />
+                                <Route path='/summaries' component={Summaries} />
+                                <Route path='/summariesDetails' component={SummariesDetails} />
+                                <Route path='/transcriptionDetails' component={TranscriptionDetails} />
+                                <Route path='/kirtan' component={Kirtan} />
+                                <Route path='/kirtanDetails' component={KirtanDetails} />
+                                <Route path='/mkv' component={MKV} />
+                            </ShellCompoenent>
+                        </ScrollToTop>
+                    </Switch>
+                    <Footer />
+                </div>
+                <div className="preloader">
+                    <div className="preloader-logo"><img src="images/logo-default-256x50.png" alt="" width="256" height="50" />
+                    </div>
+                    <div className="preloader-body">
+                        <div id="loadingProgressG">
+                            <div className="loadingProgressG" id="loadingProgressG_1"></div>
+                        </div>
+                    </div>
+                </div>
 
 				<div className="snackbars" id="form-output-global"></div>
 			</div>

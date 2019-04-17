@@ -137,5 +137,8 @@
 		"mobile_number": ["Mobile Number", "Мобильный телефон"],
 		"message": ["Your Message", "твое сообщение"],
 		"send_message": ["Send Message","Отправить сообщение"]
+	},
+	"QUOTE": {
+		"quote": ["Quotes", "цитаты"]
 	}
 }
