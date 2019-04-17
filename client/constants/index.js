@@ -48,3 +48,5 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const DELETE_REPLY = 'DELETE_REPLY';
 
 export const GET_GALLERY = 'GET_GALLERY';
+export const GET_STATIC_GALLERY = 'GET_STATIC_GALLERY';
+export const GET_SUB_GALLERY = 'GET_SUB_GALLERY';
