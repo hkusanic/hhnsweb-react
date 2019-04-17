@@ -26,6 +26,7 @@ export class Photos extends Component {
 											<a
 												className="thumbnail-corporate thumbnail-corporate-light"
 												href={item}
+												target="_blank"
 												data-lightgallery="item"
 											>
 												<img

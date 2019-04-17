@@ -14,6 +14,7 @@ Gallery.add({
 	date: { type: String },
 	gallery: { type: String },
 	photos: { type: Types.TextArray },
+	publish_date: { type: String },
 });
 
 

@@ -31,14 +31,14 @@ exports.list = function (req, res) {
 exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	 logger.info({
-		req: req
-	}, "API list gallery");
+		req: req,
+	}, 'API list gallery');
 	Gallery.model.find(function (err, items) {
 		// Make sure we are handling errors
 		if (err) {
 			logger.error({
-				error: err
-			}, "API list gallery");
+				error: err,
+			}, 'API list gallery');
 			return res.apiError('database error', err);
 		}
 		res.apiResponse({
@@ -116,7 +116,7 @@ exports.getGalleryByGallery = function (req, res) {
 	logger.info({
 		req: req,
 	}, 'API get gallery');
-	Gallery.model.find().where({ gallery: req.body.gallery}).exec(function (err, item) {
+	Gallery.model.find().where({ gallery: req.body.gallery }).sort('-date').exec(function (err, item) {
 		if (err) {
 			logger.error({
 				error: err,
@@ -135,22 +135,41 @@ exports.getGalleryByGallery = function (req, res) {
 	});
 };
 
+exports.getGallerybyid = function (req, res) {
+	if (!req.body.uuid) {
+		res.json({ error: { title: 'Id is Required', detail: 'Mandatory values are missing. Please check.' } });
+	}
 
+	Gallery.model.findOne().where('uuid', req.body.uuid).exec((err, item) => {
+
+		if (err || !item) {
+			logger.error({
+				error: err,
+			}, 'API getGallerybyid');
+			return res.json({ error: { title: 'Not able to find gallery' } });
+		}
+		res.json({
+			gallery: item,
+			success: true,
+		});
+	});
+
+};
 
 exports.getStaticGallery = function (req, res) {
 
 	logger.info({
 		req: req,
 	}, 'API get static gallery');
-	
-	    if(GALLERY_LIST.CONSTANTS.GALLERY){
+
+	    if (GALLERY_LIST.CONSTANTS.GALLERY) {
 		res.apiResponse({
 			gallery: GALLERY_LIST.CONSTANTS.GALLERY,
 		});
 	    }
-		else{
-			return res.apiError('not found');
-		}
+	else {
+		return res.apiError('not found');
+	}
 };
-	
+
 
