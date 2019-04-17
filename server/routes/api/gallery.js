@@ -172,4 +172,44 @@ exports.getStaticGallery = function (req, res) {
 	}
 };
 
+exports.update = function (req, res) {
+	logger.info({
+		req: req,
+	}, 'API update gallery');
+
+	Gallery.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
+
+		if (err) {
+			logger.error({
+				error: err,
+			}, 'API update gallery');
+			return res.apiError('database error', err);
+		}
+		if (!item) {
+			logger.error({
+				error: 'Item not found',
+			}, 'API update gallery');
+			return res.apiError('not found');
+		}
+
+		var data = (req.method === 'POST') ? req.body : req.query;
+
+		item.getUpdateHandler(req).process(data, function (err) {
+
+			if (err) {
+				logger.error({
+					error: err,
+				}, 'API update gallery');
+				return res.apiError('create error', err);
+			}
+
+			res.apiResponse({
+				Gallery: item,
+			});
+
+		});
+
+	});
+};
+
 
