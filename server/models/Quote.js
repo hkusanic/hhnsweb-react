@@ -8,7 +8,7 @@ let Quote = new keystone.List('Quote', {
 });
 
 Quote.add({
-    uuid:{ type: String,  index: true },
+    uuid:{ type: String,  index: true, unique: true },
     date: { type: String },
     type: { type: String},
     en:{

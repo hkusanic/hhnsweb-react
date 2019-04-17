@@ -4,6 +4,7 @@ import loadingRecipes from './recipe_actions/loading_recipes.js';
 import loginReducer from './login_reducer/loginReducer';
 import blogReducer from './blogReducer/blogReducer';
 import lectureReducer from './lectureReducer/lectureReducer';
+import quoteReducer from './quoteReducer/quoteReducer';
 import appointmentReducer from './appointmentReducer/appointmentReducer';
 import appointmentListingReducer from './appointmentReducer/appointmentListReducer';
 import searchFilterReducer from './searchFilter/searchFilter';
@@ -20,6 +21,7 @@ const reducers = combineReducers({
 	loginReducer: loginReducer,
 	blogReducer: blogReducer,
 	lectureReducer: lectureReducer,
+	quoteReducer: quoteReducer,
 	appointmentReducer: appointmentReducer,
 	appointmentListingReducer: appointmentListingReducer,
 	searchFilterReducer: searchFilterReducer,

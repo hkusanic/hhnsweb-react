@@ -6,10 +6,12 @@ import Footer from '../../Components/molocules/Footer/Footer';
 import Blog from '../../containers/Blog/Blog';
 import Calender from '../../containers/Calender/Calender';
 import Lectures from '../../containers/Lectures/Lectures';
+import Quotes from '../../containers/Quote/Quote';
 import Booking from '../../containers/Booking/Booking';
 import BlogDetails from '../../Components/molocules/SingleBlog/BlogDetails';
 import BiographyDetails from '../../Components/molocules/Biography/BiographyDetails';
 import LectureDetails from '../../Components/molocules/SingleLecture/LectureDetails';
+import QuoteDetails from '../../Components/molocules/SingleQuote/QuoteDetails';
 import AudioList from './../../Components/molocules/Audio/AudioList';
 import VideoList from '../../Components/molocules/Video/VideoList';
 import AudioDetails from '../../Components/molocules/Audio/AudioDetails';
@@ -72,7 +74,9 @@ export class Home extends Component {
                                 <Route path='/booking' component={Booking} />
                                 <Route path='/calender' component={Calender} />
                                 <Route path='/lectures' component={Lectures} />
+                                <Route path='/quotes' component={Quotes} />
                                 <Route path='/blogDetails' component={BlogDetails} />
+                                <Route path='/quoteDetails' component={QuoteDetails} />
                                 <Route path='/lectureDetails' component={LectureDetails} />
                                 <Route path='/audio' component={AudioList} />
                                 <Route path='/audioDetails' component={AudioDetails} />

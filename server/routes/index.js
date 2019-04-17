@@ -37,6 +37,9 @@ exports = module.exports = function (app) {
 	app.post('/api/comment/:id/remove', keystone.middleware.api, routes.api.comment.remove);
 	app.post('/api/gallery/create/', keystone.middleware.api, routes.api.gallery.create);
 	app.get('/api/gallery/', keystone.middleware.api, routes.api.gallery.list);
+	app.post('/api/quote/:id/remove', keystone.middleware.api, routes.api.quote.remove);
+	app.post('/api/quote/create/', keystone.middleware.api, routes.api.quote.create);
+	app.get('/api/quote/', keystone.middleware.api, routes.api.quote.list);
 	app.post('/api/gallery/getGalleryByGallery/', keystone.middleware.api, routes.api.gallery.getGalleryByGallery);
 	app.get('/api/gallery/getStaticGallery/', keystone.middleware.api, routes.api.gallery.getStaticGallery);
 	app.post('/api/gallery/:id/remove', keystone.middleware.api, routes.api.gallery.remove);

@@ -32,6 +32,8 @@ export const GET_TOPIC = 'GET_TOPIC';
 
 export const SEARCH_LECTURE = 'SEARCH_LECTURE';
 
+export const SEARCH_QUOTE = 'SEARCH_QUOTE';
+
 export const SEARCH_KIRTAN = 'SEARCH_KIRTAN';
 
 export const GET_MKV = 'GET_MKV';
