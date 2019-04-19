@@ -3,6 +3,21 @@ let logger = require('./../../logger/logger');
 var quote_LIST = require('../../constants/constant');
 
 var Quote = keystone.list('Quote');
+function todayDate(){
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+      dd = '0' + dd;
+    } 
+    if (mm < 10) {
+      mm = '0' + mm;
+    } 
+    var today = yyyy  + '-' + mm + '-' + dd;
+    return today
+    }
 
 exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
@@ -15,7 +30,7 @@ exports.list = function (req, res) {
 	Quote.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
-	}).exec(function (err, items) {
+	}).sort('-date').exec(function (err, items) {
 		if (err) {
 			logger.error(
 				{
@@ -39,7 +54,8 @@ exports.list = function (req, res) {
 exports.create = function (req, res) {
 
 	var item = new Quote.model();
-	var data = (req.method === 'POST') ? req.body : req.query;
+    var data = (req.method === 'POST') ? req.body : req.query;
+    data.date = data.date?data.date:todayDate();
 	logger.info({
 		req: req,
 	}, 'API create quote');
@@ -58,6 +74,69 @@ exports.create = function (req, res) {
 
 	});
 };
+
+exports.getquotebyid = function (req, res) {
+	if (!req.body.uuid) {
+		res.json({ error: { title: 'Id is Required', detail: 'Mandatory values are missing. Please check.' } });
+	}
+
+	Quote.model.findOne().where('uuid', req.body.uuid).exec((err, quote) => {
+
+		if (err || !quote) {
+			logger.error({
+				error: err,
+			}, 'API getblogbyid');
+			return res.json({ error: { title: 'Not able to find quote' } });
+		}
+		res.json({
+			blog: quote,
+			success: true,
+		});
+	});
+
+};
+
+
+exports.update = function (req, res) {
+	logger.info({
+		req: req,
+	}, 'API update blog');
+
+	Quote.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
+
+		if (err) {
+			logger.error({
+				error: err,
+			}, 'API update quote');
+			return res.apiError('database error', err);
+		}
+		if (!item) {
+			logger.error({
+				error: 'Item not found',
+			}, 'API update quote');
+			return res.apiError('not found');
+		}
+
+		var data = (req.method === 'POST') ? req.body : req.query;
+
+		item.getUpdateHandler(req).process(data, function (err) {
+
+			if (err) {
+				logger.error({
+					error: err,
+				}, 'API update quote');
+				return res.apiError('create error', err);
+			}
+
+			res.apiResponse({
+				Quote: item,
+			});
+
+		});
+
+	});
+};
+
 
 
 exports.remove = function (req, res) {
