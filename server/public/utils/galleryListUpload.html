@@ -45,7 +45,9 @@
 		for (let i = 0; i < a.length; i++) {
 			let temp = {};
 			temp.uuid = uuidv4();
-			temp.name = a[i];
+			temp.name_en = a[i];
+			temp.name_ru = a[i];
+			temp.date = new Date().toLocaleDateString()
 			$.ajax({
 				type: 'POST',
 				url: `http://localhost:3000/api/gallerylist/create/`,

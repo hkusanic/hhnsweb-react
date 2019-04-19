@@ -9,12 +9,14 @@ let Gallery = new keystone.List('Gallery', {
 
 Gallery.add({
 	uuid: { type: String, index: true },
-	title: { type: String, index: true },
+	title_en: { type: String, index: true },
+	title_ru: { type: String, index: true },
 	comment_uuid: { type: String },
 	date: { type: String },
 	gallery: { type: String },
 	photos: { type: Types.TextArray },
 	publish_date: { type: String },
+	translation_required: { type: Boolean, default: true },
 });
 
 
