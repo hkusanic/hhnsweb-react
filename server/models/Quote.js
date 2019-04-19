@@ -10,16 +10,18 @@ let Quote = new keystone.List('Quote', {
 Quote.add({
     uuid:{ type: String,  index: true, unique: true },
     date: { type: String },
-    type: { type: String},
+    language:{ type: String },
     en:{
     body:{ type: String },
     title:{ type: String },
+    topic: { type: String },
     author:{ type: String }
     },
     ru:{
         body:{ type: String },
         title:{ type: String },
-        author:{ type: String }
+        author:{ type: String },
+        topic: { type: String },
     }
 
 });

@@ -38,12 +38,16 @@ exports = module.exports = function (app) {
 	app.post('/api/gallery/create/', keystone.middleware.api, routes.api.gallery.create);
 	app.get('/api/gallerylist/', keystone.middleware.api, routes.api.gallerylist.list);
 	app.post('/api/gallerylist/create/', keystone.middleware.api, routes.api.gallerylist.create);
+	app.post('/api/quotetopiclist/create/', keystone.middleware.api, routes.api.quotetopiclist.create);
+	app.get('/api/quotetopiclist/', keystone.middleware.api, routes.api.quotetopiclist.list);
+	app.get('/api/gallery/', keystone.middleware.api, routes.api.gallery.list);
 	app.post('/api/gallerylist/:id/remove', keystone.middleware.api, routes.api.gallerylist.remove);
-	app.get('/api/gallery/', keystone.middleware.api, routes.api.gallerylist.list);
 	app.post('/api/gallery/:id/update', keystone.middleware.api, routes.api.gallery.update);
 	app.post('/api/quote/:id/remove', keystone.middleware.api, routes.api.quote.remove);
 	app.post('/api/quote/create/', keystone.middleware.api, routes.api.quote.create);
 	app.get('/api/quote/', keystone.middleware.api, routes.api.quote.list);
+	app.post('/api/quote/getquotebyid/', keystone.middleware.api, routes.api.quote.getquotebyid);
+	app.all('/api/quote/:id/update', keystone.middleware.api, routes.api.quote.update);
 	app.post('/api/gallery/getGalleryByGallery/', keystone.middleware.api, routes.api.gallery.getGalleryByGallery);
 	app.get('/api/gallery/getStaticGallery/', keystone.middleware.api, routes.api.gallerylist.list);
 	app.post('/api/gallery/getgallerybyid/', keystone.middleware.api, routes.api.gallery.getGallerybyid);
