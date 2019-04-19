@@ -36,10 +36,12 @@ exports = module.exports = function (app) {
 	app.get('/api/comment/', keystone.middleware.api, routes.api.comment.list);
 	app.post('/api/comment/:id/remove', keystone.middleware.api, routes.api.comment.remove);
 	app.post('/api/gallery/create/', keystone.middleware.api, routes.api.gallery.create);
+	app.get('/api/gallerylist/', keystone.middleware.api, routes.api.gallerylist.list);
 	app.post('/api/gallerylist/create/', keystone.middleware.api, routes.api.gallerylist.create);
 	app.post('/api/quotetopiclist/create/', keystone.middleware.api, routes.api.quotetopiclist.create);
 	app.get('/api/quotetopiclist/', keystone.middleware.api, routes.api.quotetopiclist.list);
 	app.get('/api/gallery/', keystone.middleware.api, routes.api.gallery.list);
+	app.post('/api/gallerylist/:id/remove', keystone.middleware.api, routes.api.gallerylist.remove);
 	app.post('/api/gallery/:id/update', keystone.middleware.api, routes.api.gallery.update);
 	app.post('/api/quote/:id/remove', keystone.middleware.api, routes.api.quote.remove);
 	app.post('/api/quote/create/', keystone.middleware.api, routes.api.quote.create);
@@ -47,7 +49,7 @@ exports = module.exports = function (app) {
 	app.post('/api/quote/getquotebyid/', keystone.middleware.api, routes.api.quote.getquotebyid);
 	app.all('/api/quote/:id/update', keystone.middleware.api, routes.api.quote.update);
 	app.post('/api/gallery/getGalleryByGallery/', keystone.middleware.api, routes.api.gallery.getGalleryByGallery);
-	app.get('/api/gallery/getStaticGallery/', keystone.middleware.api, routes.api.gallery.getStaticGallery);
+	app.get('/api/gallery/getStaticGallery/', keystone.middleware.api, routes.api.gallerylist.list);
 	app.post('/api/gallery/getgallerybyid/', keystone.middleware.api, routes.api.gallery.getGallerybyid);
 	app.post('/api/gallery/:id/remove', keystone.middleware.api, routes.api.gallery.remove);
 	app.post('/api/replies/:id/removeByCommentId', keystone.middleware.api, routes.api.replies.removeByCommentId);
