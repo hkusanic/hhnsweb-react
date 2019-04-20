@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getSubGalleryByGallery } from '../../../actions/gallery';
+import reactCookie from 'react-cookies';
 
 export class SubGallery extends React.Component {
 	constructor (props) {
@@ -10,7 +11,7 @@ export class SubGallery extends React.Component {
 	}
 	componentDidMount () {
 		const body = {
-			gallery: this.props.location.state,
+			gallery: reactCookie.load('languageCode') === 'en' ? this.props.location.state.name_en : this.props.location.state.name_ru,
 		};
 		console.log('uudi ====>>>', this.props.location.state);
 		this.props.getSubGalleryByGallery(body);
@@ -48,7 +49,7 @@ export class SubGallery extends React.Component {
 												<div class="tour-default-caption">
 													<h5 class="tour-default-title">
 														<Link to={{ pathname: '/photos', state: item }}>
-															{item.title}
+															{reactCookie.load('languageCode') === 'en' ? item.title_en : item.title_ru}
 														</Link>
 													</h5>
 												</div>
