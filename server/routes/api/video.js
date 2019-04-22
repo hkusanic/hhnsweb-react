@@ -1,8 +1,8 @@
 var keystone = require('keystone');
 let logger = require('./../../logger/logger');
-var quote_LIST = require('../../constants/constant');
+var video_LIST = require('../../constants/constant');
 
-var Quote = keystone.list('Quote');
+var Video = keystone.list('Video');
 function todayDate(){
     var today = new Date();
     var dd = today.getDate();
@@ -25,9 +25,9 @@ exports.list = function (req, res) {
 		{
 			req: req,
 		},
-		'API list Quote'
+		'API list Video'
 	);
-	Quote.paginate({
+	Video.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
 	}).sort('-date').exec(function (err, items) {
@@ -36,60 +36,60 @@ exports.list = function (req, res) {
 				{
 					error: err,
 				},
-				'API list Quote'
+				'API list Video'
 			);
 			return res.apiError('database error', err);
 		}
 		res.apiResponse({
 			// Filter page by
-			quote: items,
+			video: items,
 		});
 
 		// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
-		// This is handy if we want to speed up loading times once our Quote collection grows
+		// This is handy if we want to speed up loading times once our Video collection grows
 	});
 };
 
 
 exports.create = function (req, res) {
 
-	var item = new Quote.model();
+	var item = new Video.model();
     var data = (req.method === 'POST') ? req.body : req.query;
     data.date = data.date?data.date:todayDate();
 	logger.info({
 		req: req,
-	}, 'API create quote');
+	}, 'API create video');
 	item.getUpdateHandler(req).process(data, function (err) {
 
 		if (err) {
 			logger.error({
 				error: err,
-			}, 'API create quote');
+			}, 'API create video');
 			return res.apiError('error', err);
 		}
 
 		res.apiResponse({
-			quote: item,
+			video: item,
 		});
 
 	});
 };
 
-exports.getquotebyid = function (req, res) {
+exports.getvideobyid = function (req, res) {
 	if (!req.body.uuid) {
 		res.json({ error: { title: 'Id is Required', detail: 'Mandatory values are missing. Please check.' } });
 	}
 
-	Quote.model.findOne().where('uuid', req.body.uuid).exec((err, quote) => {
+	Video.model.findOne().where('uuid', req.body.uuid).exec((err, video) => {
 
-		if (err || !quote) {
+		if (err || !video) {
 			logger.error({
 				error: err,
 			}, 'API getblogbyid');
-			return res.json({ error: { title: 'Not able to find quote' } });
+			return res.json({ error: { title: 'Not able to find video' } });
 		}
 		res.json({
-			quote: quote,
+			video: video,
 			success: true,
 		});
 	});
@@ -102,18 +102,18 @@ exports.update = function (req, res) {
 		req: req,
 	}, 'API update blog');
 
-	Quote.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
+	Video.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
 
 		if (err) {
 			logger.error({
 				error: err,
-			}, 'API update quote');
+			}, 'API update video');
 			return res.apiError('database error', err);
 		}
 		if (!item) {
 			logger.error({
 				error: 'Item not found',
-			}, 'API update quote');
+			}, 'API update video');
 			return res.apiError('not found');
 		}
 
@@ -124,12 +124,12 @@ exports.update = function (req, res) {
 			if (err) {
 				logger.error({
 					error: err,
-				}, 'API update quote');
+				}, 'API update video');
 				return res.apiError('create error', err);
 			}
 
 			res.apiResponse({
-				Quote: item,
+				Video: item,
 			});
 
 		});
@@ -142,19 +142,19 @@ exports.update = function (req, res) {
 exports.remove = function (req, res) {
 	logger.info({
 		req: req,
-	}, 'API remove quote');
-	Quote.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
+	}, 'API remove video');
+	Video.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
 
 		if (err) {
 			logger.error({
 				error: err,
-			}, 'API remove quote');
+			}, 'API remove video');
 			return res.apiError('database error', err);
 		}
 		if (!item) {
 			logger.error({
 				error: 'No Item',
-			}, 'API remove quote');
+			}, 'API remove video');
 			return res.apiError('not found');
 		}
 
@@ -162,12 +162,12 @@ exports.remove = function (req, res) {
 			if (err) {
 				logger.error({
 					error: err,
-				}, 'API remove quote');
+				}, 'API remove video');
 				return res.apiError('database error', err);
 			}
 
 			return res.apiResponse({
-				quote: true,
+				video: true,
 			});
 		});
 

@@ -1,28 +1,28 @@
 const keystone = require('keystone');
 const Types = keystone.Field.Types;
 
-let Quote = new keystone.List('Quote', {
-	autokey: { path: 'slug', from: 'date _id', unique: true },
-	map: { name: 'date' },
+let Video = new keystone.List('Quote', {
+	autokey: { path: 'slug', from: 'uuid _id', unique: true },
+	map: { name: 'uuid' },
 	defaultSort: '-date',
 });
 
-Quote.add({
+ video.add({
     uuid:{ type: String,  index: true, unique: true },
     date: { type: String },
     language:{ type: String },
-    needs_translation: {type:  Boolean,  default: true },
+    type: {type: String},
     en:{
-    body:{ type: String },
     title:{ type: String },
-    topic: { type: String },
-    author:{ type: String }
+    event: { type: String },
+    author:{ type: String },
+    location: {type: String}
     },
     ru:{
-        body:{ type: String },
         title:{ type: String },
+        event:{ type: String },
         author:{ type: String },
-        topic: { type: String },
+        location: {type: String}
     }
 
 });
