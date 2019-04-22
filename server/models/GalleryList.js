@@ -8,13 +8,16 @@ let GalleryList = new keystone.List('GalleryList', {
 });
 
 GalleryList.add({
-    uuid: { type: String, initial: true,
+	uuid: {
+		type: String,
+		initial: true,
 		required: true,
 		unique: true,
-		index: true },
-    name: {type: String,initial: true,required: true,
-		unique: true,},
+		index: true,
+	},
+	date: { type: String },
+	name_en: { type: String, initial: true, unique: true },
+	name_ru: { type: String, initial: true, unique: true },
 });
-
 
 GalleryList.register();

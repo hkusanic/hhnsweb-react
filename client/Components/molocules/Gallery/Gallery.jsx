@@ -7,6 +7,8 @@ import {
 	getStaticGalleryList,
 	getSubGalleryByGallery,
 } from '../../../actions/gallery';
+import reactCookie from 'react-cookies';
+
 
 export class Gallery extends React.Component {
 	constructor (props) {
@@ -54,7 +56,7 @@ export class Gallery extends React.Component {
 														<Link
 															to={{ pathname: '/subGallery', state: item }}
 														>
-															{item}
+															{reactCookie.load('languageCode') === 'en' ? item.name_en : item.name_ru}
 														</Link>
 													</h5>
 												</div>
