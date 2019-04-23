@@ -51,7 +51,7 @@ exports = module.exports = function (app) {
 	app.post('/api/video/:id/remove', keystone.middleware.api, routes.api.video.remove);
 	app.post('/api/video/create/', keystone.middleware.api, routes.api.video.create);
 	app.get('/api/video/', keystone.middleware.api, routes.api.video.list);
-	app.post('/api/video/getquotebyid/', keystone.middleware.api, routes.api.video.getquotebyid);
+	app.post('/api/video/getquotebyid/', keystone.middleware.api, routes.api.video.getvideobyid);
 	app.all('/api/video/:id/update', keystone.middleware.api, routes.api.video.update);
 	app.post('/api/gallery/getGalleryByGallery/', keystone.middleware.api, routes.api.gallery.getGalleryByGallery);
 	app.get('/api/gallery/getStaticGallery/', keystone.middleware.api, routes.api.gallerylist.list);

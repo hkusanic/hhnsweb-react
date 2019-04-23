@@ -16,8 +16,8 @@ GalleryList.add({
 		index: true,
 	},
 	date: { type: String },
-	name_en: { type: String, initial: true, unique: true },
-	name_ru: { type: String, initial: true, unique: true },
+	name_en: { type: String, initial: true },
+	name_ru: { type: String, initial: true },
 });
 
 GalleryList.register();
