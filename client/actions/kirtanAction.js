@@ -1,7 +1,7 @@
-import kirtanApi from "../utils/api/kirtan";
-import * as types from "../constants/index";
+import kirtanApi from '../utils/api/kirtan';
+import * as types from '../constants/index';
 
-export function searchKirtan(body) {
+export function searchKirtan (body) {
 	return dispatch => {
 		kirtanApi
 			.searchKirtan(body)
@@ -14,9 +14,9 @@ export function searchKirtan(body) {
 	};
 }
 
-export function searchKirtanAction(data) {
+export function searchKirtanAction (data) {
 	return {
 		type: types.SEARCH_KIRTAN,
-		payload: data
+		payload: data,
 	};
 }

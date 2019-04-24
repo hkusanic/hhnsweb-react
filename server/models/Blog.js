@@ -63,28 +63,23 @@ Blog.add({
 		type: String,
 		hidden: true,
 	},
+	files: {
+		type: Types.TextArray,
+	},
+	tags_en: {
+		type: String,
+		label: 'Tags_en',
+	},
+	tags_ru: {
+		type: String,
+		label: 'Tags_ru',
+	},
+	language: {
+		type: String,
+		label: 'Language',
+	},
 });
 
 Blog.defaultColumns = 'title_en, date|15%, needs_translation|10%';
-
-Blog.schema.pre('save', function (next) {
-	next();
-});
-
-Blog.schema.post('save', function (blog, next) {
-	next();
-});
-
-Blog.schema.post('validate', function (err, next) {
-	next();
-});
-
-Blog.schema.pre('remove', function (next) {
-	next();
-});
-
-Blog.schema.post('remove', function (next) {
-	next();
-});
 
 Blog.register();

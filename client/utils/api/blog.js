@@ -3,15 +3,15 @@ import serverAddress from './config';
 
 
 const utils = {
-    getBlogs : (pageNumber) => {
-        const page = pageNumber || 1;
-        let url = serverAddress + `/api/blog?page=${page}`;
-        return axios.get(url);
-    },
-    getBlog : (body) => {
-        let url = serverAddress + `/api/blog/find/`;
-        return axios.post(url, body);
-    }
-}
+	getBlogs: (pageNumber) => {
+		const page = pageNumber || 1;
+		let url = serverAddress + `/api/blog?page=${page}`;
+		return axios.get(url);
+	},
+	getBlog: (body) => {
+		let url = serverAddress + `/api/blog/find/`;
+		return axios.post(url, body);
+	},
+};
 
 export default utils;
