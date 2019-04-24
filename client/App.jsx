@@ -1,6 +1,6 @@
+import { hot } from 'react-hot-loader';
 import React, { Component } from 'react';
 import Home from './containers/Home/Home';
-import { hot } from 'react-hot-loader';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { withLocalize, setActiveLanguage } from 'react-localize-redux';
 import globalTranslations from './translations/global.json';

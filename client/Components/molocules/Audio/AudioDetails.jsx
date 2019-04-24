@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+// import { Breadcrumb, BreadcrumbItem } from 'react-bootstrap';
+import { Link, withRouter } from 'react-router-dom';
 import { updateCounters } from '../../../actions/lectureActions';
 import Comments from '../Comments/Comments';
-
 
 export class AudioDetails extends Component {
 	constructor(props) {
@@ -14,7 +16,7 @@ export class AudioDetails extends Component {
 	componentDidMount() {
 		const body = {
 			uuid: this.props.location.state.uuid,
-			audio_page_view: true,
+			audio_page_view: true
 		};
 		this.props.updateCounters(body);
 	}
@@ -22,7 +24,7 @@ export class AudioDetails extends Component {
 	updateAudioCount = () => {
 		const body = {
 			uuid: this.props.location.state.uuid,
-			audio_play_count: true,
+			audio_play_count: true
 		};
 		this.props.updateCounters(body);
 	};
@@ -31,19 +33,40 @@ export class AudioDetails extends Component {
 		const body = {
 			uuid: uuid,
 			downloads: true
-		}
+		};
 		this.props.updateCounters(body);
-	}
-	
+	};
+
+	goBack = () => {
+		// console.log(this.props.history);
+		this.props.history.goBack();
+	};
+
 	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
-	 	return (
+
+		console.log(this.props.history);
+
+		return (
 			<div>
 				<section className="section section-lg">
 					<div className="container">
-						<div style={{ paddingLeft: '15%' }} className="row row-100">
+						
+						{/* <Breadcrumb tag="nav" listTag="div">
+							<Link to={this.props.history.location.pathname}>
+								<BreadcrumbItem tag="a" href="">
+									Audio
+								</BreadcrumbItem>
+                <BreadcrumbItem tag="a" href="">
+									Audio
+								</BreadcrumbItem>
+							</Link>
+						</Breadcrumb> */}
+
+            <div style={{ paddingLeft: '15%' }} className="row row-100">
+            <button onClick={this.goBack}>Back</button>
 							<div className="col-lg-12">
 								<article className="post-creative">
 									<h3 className="post-creative-title">
@@ -53,6 +76,7 @@ export class AudioDetails extends Component {
 												: this.props.location.state.ru.title
 										)}
 									</h3>
+
 									<ul className="post-creative-meta">
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
@@ -74,8 +98,7 @@ export class AudioDetails extends Component {
 										controlsList="nodownload"
 										onPlay={() => {
 											this.updateAudioCount();
-										}}
-									>
+										}}>
 										<source
 											src={renderHTML(this.props.location.state.audio_link)}
 											type="audio/mpeg"
@@ -84,9 +107,10 @@ export class AudioDetails extends Component {
 
 									<a
 										href={this.props.location.state.audio_link}
-										onClick={() => {this.handleUpdate(this.props.location.state.uuid)}}
-										download="download"
-									>
+										onClick={() => {
+											this.handleUpdate(this.props.location.state.uuid);
+										}}
+										download="download">
 										<i
 											style={{ cursor: 'pointer', fontSize: '28px' }}
 											class="fa fa-download"
@@ -208,7 +232,7 @@ export class AudioDetails extends Component {
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>
-								<Comments lecture_uuid={this.props.location.state.uuid}/>
+								<Comments lecture_uuid={this.props.location.state.uuid} />
 							</div>
 						</div>
 					</div>
@@ -218,16 +242,16 @@ export class AudioDetails extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
-		Count: state.lectureReducer.Count,
+		Count: state.lectureReducer.Count
 	};
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
-		updateCounters: body => {
+		updateCounters: (body) => {
 			dispatch(updateCounters(body));
-		},
+		}
 	};
 };
 

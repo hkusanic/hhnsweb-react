@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
 import Pagination from 'react-js-pagination';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { searchLecture, updateCounters } from '../../../actions/lectureActions';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
@@ -21,41 +23,46 @@ export class AudioList extends Component {
 			lectures: [],
 			body: {},
 			iconSearch: true,
-			isSearch: false,
+			isSearch: false
 		};
 	}
 
 	componentDidMount() {
+		console.log(this.props.location);
+
 		const isUserLogin = Auth.isUserAuthenticated();
 		this.setState({
 			lectures: this.props.lecturesDetails.lectures,
 			currentPage: this.props.lecturesDetails.currentPage,
 			totalItem: this.props.lecturesDetails.totalLectures,
-			isUserLogin,
+			isUserLogin
 		});
-		this.props.searchLecture({ page : 1 });
+
+		const page = this.props.lecturesDetails.currentPage || 1;
+
+		this.props.searchLecture({ page: page });
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
 			lectures: nextProps.lecturesDetails.lectures,
 			currentPage: nextProps.lecturesDetails.currentPage,
-			totalItem: nextProps.lecturesDetails.totalLectures,
+			totalItem: nextProps.lecturesDetails.totalLectures
 		});
-		if(nextProps.lecturesDetails.Count){
-			const page = sessionStorage.getItem('lecture_page') || 1 ;
-			this.props.searchLecture({page});
+		if (nextProps.lecturesDetails.Count) {
+			const page = sessionStorage.getItem('lecture_page') || 1;
+			this.props.searchLecture({ page });
 		}
 	}
 
-	handlePageChange = pageNumber => {
+	handlePageChange = (pageNumber) => {
 		sessionStorage.setItem('lecture_page', pageNumber);
 		let body = Object.assign({}, this.state.body);
 		body.page = pageNumber;
 		this.props.searchLecture(body);
 	};
 
-	showing100Characters = sentence => {
+	showing100Characters = (sentence) => {
 		var result = sentence;
 		var resultArray = result.split(' ');
 		if (resultArray.length > 10) {
@@ -65,13 +72,13 @@ export class AudioList extends Component {
 		return result;
 	};
 
-	searchData = body => {
+	searchData = (body) => {
 		this.setState({ body, isSearch: true }, () => {
 			this.props.searchLecture(body);
 		});
 	};
 
-	onClickIcon = value => {
+	onClickIcon = (value) => {
 		this.setState({ iconSearch: value });
 	};
 
@@ -79,19 +86,26 @@ export class AudioList extends Component {
 		const body = {
 			uuid: item.uuid,
 			downloads: true
-		}
+		};
 		this.props.updateCounters(body);
-	}
+	};
 
 	updateAudioPlayCount = (uuid) => {
 		const body = {
 			uuid: uuid,
 			audio_play_count: true
-		}
+		};
 		this.props.updateCounters(body);
-	}
+	};
+
+	goHome = () => {
+		this.props.history.push('/');
+		// this.props.location.state.handleNavigationClick(1);
+		// window.sessionStorage.setItem('tabIndex', 1);
+	};
 
 	render() {
+		this.props.history.location.currentPage = this.state.currentPage;
 		let class_icon_search = this.state.iconSearch
 			? 'icon-search fa fa-search'
 			: 'display-none-icon';
@@ -130,6 +144,17 @@ export class AudioList extends Component {
 							<Collapse isOpened={!this.state.iconSearch}>
 								<SearchFilter searchData={this.searchData} />
 							</Collapse>
+
+							<button onClick={this.goHome}>Home</button>
+
+							{/* <Breadcrumb tag="nav" listTag="div">
+								<Link to={`/${this.props.history.location.pathname}`}>
+									<BreadcrumbItem tag="a" href="">
+										Audio
+									</BreadcrumbItem>
+								</Link>
+							</Breadcrumb> */}
+
 							<div className="table-responsive wow fadeIn">
 								{this.state.lectures.length > 0 ? (
 									<table className="table table-hover table-job-positions videoTable">
@@ -146,8 +171,7 @@ export class AudioList extends Component {
 														<td className="titleColor">
 															{' '}
 															<Link
-																to={{ pathname: '/audioDetails', state: item }}
-															>
+																to={{ pathname: '/audioDetails', state: item }}>
 																{renderHTML(
 																	reactCookie.load('languageCode') === 'en'
 																		? item.en.title
@@ -156,10 +180,12 @@ export class AudioList extends Component {
 															</Link>
 															<br />
 															<br />
-															<audio 
-																controls 
+															<audio
+																controls
 																controlsList="nodownload"
-																onPlay ={() => {this.updateAudioPlayCount(item.uuid)}}>
+																onPlay={() => {
+																	this.updateAudioPlayCount(item.uuid);
+																}}>
 																<source
 																	src={renderHTML(item.audio_link)}
 																	type="audio/mpeg"
@@ -169,7 +195,12 @@ export class AudioList extends Component {
 
 														<td>
 															{item.counters.downloads}{' '}
-															<a href={item.audio_link} onClick={() => {this.handleUpdate(item)}} download="download">
+															<a
+																href={item.audio_link}
+																onClick={() => {
+																	this.handleUpdate(item);
+																}}
+																download="download">
 																<i
 																	style={{ cursor: 'pointer' }}
 																	className="fa fa-download"
@@ -200,7 +231,7 @@ export class AudioList extends Component {
 								activeClass="page-item active"
 								itemClass="page-item"
 								linkClass="page-link button-winona"
-								activePage={this.state.currentPage}
+								activePage={this.props.lecturesDetails.currentPage}
 								itemsCountPerPage={20}
 								totalItemsCount={this.state.totalItem}
 								pageRangeDisplayed={5}
@@ -218,20 +249,20 @@ export class AudioList extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
-		lecturesDetails: state.lectureReducer,
+		lecturesDetails: state.lectureReducer
 	};
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
-		searchLecture: body => {
+		searchLecture: (body) => {
 			dispatch(searchLecture(body));
 		},
-		updateCounters: body => {
+		updateCounters: (body) => {
 			dispatch(updateCounters(body));
-		},
+		}
 	};
 };
 
