@@ -28,7 +28,7 @@ export class AudioList extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props.location);
+		// console.log(this.props.location);
 
 		const isUserLogin = Auth.isUserAuthenticated();
 		this.setState({
@@ -38,9 +38,9 @@ export class AudioList extends Component {
 			isUserLogin
 		});
 
-		const page = this.props.lecturesDetails.currentPage || 1;
+		this.state.body.page = this.props.lecturesDetails.currentPage || 1;
 
-		this.props.searchLecture({ page: page });
+		this.props.searchLecture(this.state.body);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -50,8 +50,8 @@ export class AudioList extends Component {
 			totalItem: nextProps.lecturesDetails.totalLectures
 		});
 		if (nextProps.lecturesDetails.Count) {
-			const page = sessionStorage.getItem('lecture_page') || 1;
-			this.props.searchLecture({ page });
+			this.state.body.page = sessionStorage.getItem('lecture_page') || 1;
+			this.props.searchLecture(this.state.body);
 		}
 	}
 

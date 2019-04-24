@@ -18,7 +18,12 @@ export class VideoDetails extends React.Component {
 			video_page_view: true,
 		};
 		this.props.updateCounters(body);
-	}
+  }
+  
+  goBack = () => {
+		// console.log(this.props.history);
+		this.props.history.goBack();
+	};
 
 	render () {
 		if (!this.props.location.state) {
@@ -29,6 +34,7 @@ export class VideoDetails extends React.Component {
 				<section class="section section-lg">
 					<div class="container padTop">
 						<div class="row row-50">
+            <button onClick={this.goBack}>Back</button>
 							<div class="col-lg-12">
 								<article class="post-creative">
 									<h3 class="post-creative-title">
