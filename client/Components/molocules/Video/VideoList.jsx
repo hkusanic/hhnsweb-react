@@ -3,7 +3,10 @@ import renderHTML from 'react-render-html';
 import Pagination from 'react-js-pagination';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { searchLecture } from '../../../actions/lectureActions';
+import {
+	searchLecture,
+	searchLectureVideo
+} from '../../../actions/lectureActions';
 import { Translate } from 'react-localize-redux';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
@@ -30,34 +33,39 @@ export class VideoList extends Component {
 
 	componentDidMount() {
 		const isUserLogin = Auth.isUserAuthenticated();
+
+		let body = { ...this.state.body };
+		body.page = this.props.lecturesDetails.videoCurrentPage || 1;
+		body.video = true;
+
 		this.setState({
 			videos: this.props.lecturesDetails.lectures,
-			currentPage: this.props.lecturesDetails.currentPage,
 			totalItem: this.props.lecturesDetails.totalLectures,
 			isUserLogin
-    });
-    
-		this.state.body.page = this.props.lecturesDetails.currentPage || 1;
+		});
 
-		this.props.searchLecture(this.state.body);
+		this.props.searchLecture(body);
 	}
 
 	componentWillReceiveProps(nextProps) {
+		let body = { ...this.state.body };
+		body.page = nextProps.lecturesDetails.videoCurrentPage;
+		body.video = true;
+
 		this.setState({
 			videos: nextProps.lecturesDetails.lectures,
-			currentPage: nextProps.lecturesDetails.currentPage,
 			totalItem: nextProps.lecturesDetails.totalLectures
-    });
-    if (nextProps.lecturesDetails.Count) {
-			this.state.body.page = sessionStorage.getItem('lecture_page') || 1;
-			this.props.searchLecture(this.state.body);
+		});
+
+		if (nextProps.lecturesDetails.Count) {
+			this.props.searchLecture(body);
 		}
 	}
 
 	handlePageChange = (pageNumber) => {
-    sessionStorage.setItem('lecture_page', pageNumber);
-		let body = Object.assign({}, this.state.body);
+		let body = { ...this.state.body };
 		body.page = pageNumber;
+		body.video = true;
 		this.props.searchLecture(body);
 	};
 
@@ -80,9 +88,9 @@ export class VideoList extends Component {
 		this.setState({ body, isSearch: false }, () => {
 			this.props.searchLecture(body);
 		});
-  };
-  
-  goHome = () => {
+	};
+
+	goHome = () => {
 		this.props.history.push('/');
 		// this.props.location.state.handleNavigationClick(1);
 		// window.sessionStorage.setItem('tabIndex', 1);
@@ -126,9 +134,9 @@ export class VideoList extends Component {
 						<div className="container">
 							<Collapse isOpened={!this.state.iconSearch}>
 								<SearchFilter searchData={this.searchData} />
-              </Collapse>
-              
-              <button onClick={this.goHome}>Home</button>
+							</Collapse>
+
+							<button onClick={this.goHome}>Home</button>
 
 							<div className="table-responsive wow fadeIn videoTable">
 								{this.state.videos.length > 0 ? (
@@ -179,7 +187,7 @@ export class VideoList extends Component {
 									activeClass="page-item active"
 									itemClass="page-item"
 									linkClass="page-link button-winona"
-									activePage={this.state.currentPage}
+									activePage={this.props.lecturesDetails.videoCurrentPage}
 									itemsCountPerPage={20}
 									totalItemsCount={this.state.totalItem}
 									pageRangeDisplayed={5}
@@ -207,7 +215,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		searchLecture: (body) => {
-			dispatch(searchLecture(body));
+			dispatch(searchLectureVideo(body));
 		}
 	};
 };

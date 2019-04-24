@@ -24,7 +24,11 @@ export class TranscriptionDetails extends React.Component {
 			body.ru_transcription_view = true;
 		}
 		this.props.updateCounters(body);
-	}
+  }
+  goBack = () => {
+		// console.log(this.props.history);
+		this.props.history.goBack();
+	};
 
 	render () {
 		if (!this.props.location.state) {
@@ -35,7 +39,8 @@ export class TranscriptionDetails extends React.Component {
 				<section className="section section-lg">
 					<div className="container padLeftBlog">
 						<div className="row row-50">
-							<div className="col-lg-12">
+              <div className="col-lg-12">
+              <button onClick={this.goBack}>Back</button>
 								<article className="post-creative">
 									<h3 className="post-creative-title dataTitle">
 										{renderHTML(

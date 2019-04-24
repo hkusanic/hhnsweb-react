@@ -47,7 +47,7 @@ export class AudioDetails extends Component {
 			return <div>Error Occured..........</div>;
 		}
 
-		console.log(this.props.history);
+		// console.log(this.props.history);
 
 		return (
 			<div>

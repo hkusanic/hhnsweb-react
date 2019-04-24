@@ -28,9 +28,11 @@ export class AudioList extends Component {
 	}
 
 	componentDidMount() {
-		// console.log(this.props.location);
-
 		const isUserLogin = Auth.isUserAuthenticated();
+
+		let body = { ...this.state.body };
+		body.page = this.props.lecturesDetails.currentPage || 1;
+
 		this.setState({
 			lectures: this.props.lecturesDetails.lectures,
 			currentPage: this.props.lecturesDetails.currentPage,
@@ -38,25 +40,25 @@ export class AudioList extends Component {
 			isUserLogin
 		});
 
-		this.state.body.page = this.props.lecturesDetails.currentPage || 1;
-
-		this.props.searchLecture(this.state.body);
+		this.props.searchLecture(body);
 	}
 
 	componentWillReceiveProps(nextProps) {
+		let body = { ...this.state.body };
+		body.page = nextProps.lecturesDetails.currentPage;
+
 		this.setState({
 			lectures: nextProps.lecturesDetails.lectures,
 			currentPage: nextProps.lecturesDetails.currentPage,
 			totalItem: nextProps.lecturesDetails.totalLectures
 		});
+
 		if (nextProps.lecturesDetails.Count) {
-			this.state.body.page = sessionStorage.getItem('lecture_page') || 1;
-			this.props.searchLecture(this.state.body);
+			this.props.searchLecture(body);
 		}
 	}
 
 	handlePageChange = (pageNumber) => {
-		sessionStorage.setItem('lecture_page', pageNumber);
 		let body = Object.assign({}, this.state.body);
 		body.page = pageNumber;
 		this.props.searchLecture(body);

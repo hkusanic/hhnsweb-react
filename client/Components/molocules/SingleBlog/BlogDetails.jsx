@@ -4,13 +4,17 @@ import reactCookie from 'react-cookies';
 // eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 
-
 export class BlogDetails extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
 
-	render () {
+	goBack = () => {
+		// console.log(this.props.history);
+		this.props.history.goBack();
+	};
+
+	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -21,6 +25,7 @@ export class BlogDetails extends React.Component {
 						<div className="row row-50">
 							<div className="col-lg-12">
 								<article className="post-creative">
+									<button onClick={this.goBack}>Back</button>
 									<h3 className="post-creative-title alignment padLeft">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'

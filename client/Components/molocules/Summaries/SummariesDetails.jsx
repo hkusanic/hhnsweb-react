@@ -7,12 +7,12 @@ import { updateCounters } from '../../../actions/lectureActions';
 import Comments from '../Comments/Comments';
 
 export class SummariesDetails extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
-	componentDidMount () {
+	componentDidMount() {
 		let body = {
-			uuid: this.props.location.state.uuid,
+			uuid: this.props.location.state.uuid
 		};
 		if (reactCookie.load('languageCode') === 'en') {
 			body.en_summary_view = true;
@@ -22,8 +22,11 @@ export class SummariesDetails extends React.Component {
 		this.props.updateCounters(body);
 	}
 
+	goBack = () => {
+		this.props.history.goBack();
+	};
 
-	render () {
+	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -33,6 +36,7 @@ export class SummariesDetails extends React.Component {
 					<div className="container padLeftBlog">
 						<div className="row row-50">
 							<div className="col-lg-12">
+								<button onClick={this.goBack}>Back</button>
 								<article className="post-creative">
 									<h3 className="post-creative-title dataTitle">
 										{renderHTML(
@@ -187,7 +191,7 @@ export class SummariesDetails extends React.Component {
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>
-								<Comments lecture_uuid={this.props.location.state.uuid}/>
+								<Comments lecture_uuid={this.props.location.state.uuid} />
 							</div>
 							<div className="col-lg-4" />
 						</div>
@@ -198,16 +202,16 @@ export class SummariesDetails extends React.Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
-		Count: state.lectureReducer.Count,
+		Count: state.lectureReducer.Count
 	};
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
-		updateCounters: body => {
+		updateCounters: (body) => {
 			dispatch(updateCounters(body));
-		},
+		}
 	};
 };
 
