@@ -62,6 +62,9 @@ exports = module.exports = function (app) {
 	app.post('/api/mkv/createBulk/', keystone.middleware.api, routes.api.mkv.createBulk);
 	app.post('/api/kirtan/create/', keystone.middleware.api, routes.api.kirtan.create);
 	app.get('/api/kirtan/', keystone.middleware.api, routes.api.kirtan.list);
+	app.post('/api/kirtan/:id/remove', keystone.middleware.api, routes.api.kirtan.remove);
+	app.all('/api/kirtan/:id/update', keystone.middleware.api, routes.api.kirtan.update);
+	app.post('/api/kirtan/getkirtanbyid/', keystone.middleware.api, routes.api.kirtan.getKirtanbyid);
 	app.get('/api/mkv/', keystone.middleware.api, routes.api.mkv.list);
 	app.post('/api/mkv/create/', keystone.middleware.api, routes.api.mkv.create);
 	app.post('/api/lecture/updateBulk/', keystone.middleware.api, routes.api.lecture.updateBulk);
