@@ -137,6 +137,7 @@ exports.list = function (req, res) {
 		};
 	}
 
+	let createdDateSort = '-created_date';
 
 	logger.info({
 		req: req,
@@ -145,7 +146,7 @@ exports.list = function (req, res) {
 		page: req.query.page || 1,
 		perPage: 20,
 		filters: filters,
-	}).exec(function (err, items) {
+	}).sort(createdDateSort).exec(function (err, items) {
 		if (err) {
 			logger.error({
 				error: err,
@@ -266,9 +267,7 @@ exports.update = function (req, res) {
 		req: req,
 	}, 'API update kirtan');
 	let data = req.body;
-	Kirtan.model.findOne({
-		uuid: req.body.id,
-	}).exec(function (err, item) {
+	Kirtan.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
 
 		if (err) {
 			logger.error({
@@ -306,7 +305,7 @@ exports.remove = function (req, res) {
 	logger.info({
 		req: req,
 	}, 'API remove kirtan');
-	Kirtan.model.findById(req.params.id).exec(function (err, item) {
+	Kirtan.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
 
 		if (err) {
 			logger.error({
@@ -335,4 +334,25 @@ exports.remove = function (req, res) {
 		});
 
 	});
+};
+
+exports.getKirtanbyid = function (req, res) {
+	if (!req.body.uuid) {
+		res.json({ error: { title: 'Id is Required', detail: 'Mandatory values are missing. Please check.' } });
+	}
+
+	Kirtan.model.findOne().where('uuid', req.body.uuid).exec((err, item) => {
+
+		if (err || !item) {
+			logger.error({
+				error: err,
+			}, 'API getGallerybyid');
+			return res.json({ error: { title: 'Not able to find kirtan' } });
+		}
+		res.json({
+			kirtan: item,
+			success: true,
+		});
+	});
+
 };

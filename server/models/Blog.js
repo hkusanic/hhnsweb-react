@@ -23,9 +23,12 @@ Blog.add({
 		label: 'Title Russian',
 	},
 	date: {
-		type: Types.Date,
-		default: Date.now,
-		label: 'Date Created',
+		type: String,
+		label: 'Date',
+	},
+	publish_date: {
+		type: String,
+		label: 'Publish Date',
 	},
 	author: {
 		type: String,

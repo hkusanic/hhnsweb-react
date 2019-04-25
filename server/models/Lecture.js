@@ -39,6 +39,7 @@ Lecture.add({
 			attachment_name: { type: String },
 			attachment_link: { type: Types.TextArray },
 		},
+		translation: { type: String },
 	},
 	ru: {
 		title: { type: String },
@@ -55,6 +56,7 @@ Lecture.add({
 			attachment_name: { type: String },
 			attachment_link: { type: Types.TextArray },
 		},
+		translation: { type: String },
 	},
 	counters: {
 		audio_page_view: { type: Types.Number, default: 0 },
