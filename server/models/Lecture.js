@@ -68,6 +68,7 @@ Lecture.add({
 		ru_transcription_view: { type: Types.Number, default: 0 },
 		ru_summary_view: { type: Types.Number, default: 0 },
 	},
+	audit: {type: Types.TextArray }
 
 
 });
