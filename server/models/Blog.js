@@ -81,11 +81,7 @@ Blog.add({
 		type: String,
 		label: 'Language',
 	},
-	audit: {
-		authors: { type: Types.TextArray },
-		dates: { type: Types.TextArray },
-	 },
-	 audit: {type: Types.TextArray }
+	audit: { type: Types.TextArray },
 });
 
 Blog.defaultColumns = 'title_en, date|15%, needs_translation|10%';
