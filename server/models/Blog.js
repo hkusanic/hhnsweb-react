@@ -23,9 +23,12 @@ Blog.add({
 		label: 'Title Russian',
 	},
 	date: {
-		type: Types.Date,
-		default: Date.now,
-		label: 'Date Created',
+		type: String,
+		label: 'Date',
+	},
+	publish_date: {
+		type: String,
+		label: 'Publish Date',
 	},
 	author: {
 		type: String,
@@ -78,6 +81,7 @@ Blog.add({
 		type: String,
 		label: 'Language',
 	},
+	audit: { type: Types.TextArray },
 });
 
 Blog.defaultColumns = 'title_en, date|15%, needs_translation|10%';

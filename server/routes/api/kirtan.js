@@ -267,9 +267,7 @@ exports.update = function (req, res) {
 		req: req,
 	}, 'API update kirtan');
 	let data = req.body;
-	Kirtan.model.findOne({
-		uuid: req.body.id,
-	}).exec(function (err, item) {
+	Kirtan.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
 
 		if (err) {
 			logger.error({
