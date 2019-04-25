@@ -8,24 +8,24 @@ let Quote = new keystone.List('Quote', {
 });
 
 Quote.add({
-    uuid:{ type: String,  index: true, unique: true },
-    date: { type: String },
-    language:{ type: String },
-    needs_translation: {type:  Boolean,  default: true },
-    en:{
-    body:{ type: String },
-    title:{ type: String },
-    topic: { type: String },
-    author:{ type: String }
+	uuid: { type: String, index: true, unique: true },
+	date: { type: String },
+	published_date: { type: String },
+	language: { type: String },
+	needs_translation: { type: Boolean, default: true },
+	en: {
+		body: { type: String },
+		title: { type: String },
+		topic: { type: String },
+		author: { type: String },
+	},
+	ru: {
+		body: { type: String },
+		title: { type: String },
+		author: { type: String },
+		topic: { type: String },
     },
-    ru:{
-        body:{ type: String },
-        title:{ type: String },
-        author:{ type: String },
-        topic: { type: String },
-    }
-
+    audit: {type: Types.TextArray }
 });
-
 
 Quote.register();
