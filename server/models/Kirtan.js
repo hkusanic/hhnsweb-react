@@ -38,7 +38,8 @@ Kirtan.add({
 		event: { type: String},
 		topic:{type: String},
 		location: {type: String},
-   }
+   },
+   audit: {type: Types.TextArray }
 	
 	
 });

@@ -23,7 +23,11 @@ Quote.add({
         title:{ type: String },
         author:{ type: String },
         topic: { type: String },
-    }
+    },
+    audit: {
+        authors: { type: Types.TextArray },
+        dates: { type: Types.TextArray },
+     }
 
 });
 
