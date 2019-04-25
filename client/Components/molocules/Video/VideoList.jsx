@@ -12,6 +12,7 @@ import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import Auth from '../../../utils/Auth';
 import reactCookie from 'react-cookies';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 export class VideoList extends Component {
 	constructor(props) {
@@ -90,12 +91,6 @@ export class VideoList extends Component {
 		});
 	};
 
-	goHome = () => {
-		this.props.history.push('/');
-		// this.props.location.state.handleNavigationClick(1);
-		// window.sessionStorage.setItem('tabIndex', 1);
-	};
-
 	render() {
 		let class_icon_search = this.state.iconSearch
 			? 'icon-search fa fa-search'
@@ -136,47 +131,63 @@ export class VideoList extends Component {
 								<SearchFilter searchData={this.searchData} />
 							</Collapse>
 
-							<button onClick={this.goHome}>Home</button>
+							<div className="row justify-content-center align-items-center">
+								<div className="col-lg-10">
+									<Breadcrumb>
+										<Link to=" " onClick={() => this.props.history.push('/')}>
+											<Breadcrumb.Item>Home</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;<Breadcrumb.Item active>Video</Breadcrumb.Item>
+									</Breadcrumb>
+								</div>
+							</div>
 
-							<div className="table-responsive wow fadeIn videoTable">
-								{this.state.videos.length > 0 ? (
-									<table className="table table-hover table-job-positions">
-										<thead>
-											<tr>
-												<th className="align">Title</th>
-												<th className="align">View</th>
-											</tr>
-										</thead>
-										<tbody>
-											{this.state.videos.map((item, key) => {
-												return (
-													<tr key={key}>
-														<td className="titleColor dataRowAlign">
-															<Link
-																to={{ pathname: '/videoDetails', state: item }}>
-																{renderHTML(
-																	reactCookie.load('languageCode') === 'en'
-																		? item.en.title
-																		: item.ru.title
-																)}
-															</Link>
-														</td>
-														<td>{item.counters.video_page_view}</td>
+							<div className="row">
+								<div className="col-lg-12">
+									<div className="table-responsive wow fadeIn videoTable">
+										{this.state.videos.length > 0 ? (
+											<table className="table table-hover table-job-positions">
+												<thead>
+													<tr>
+														<th className="align">Title</th>
+														<th className="align">View</th>
 													</tr>
-												);
-											})}
-										</tbody>
-									</table>
-								) : (
-									<div style={{ textAlign: 'center' }}>
-										<p className="bookingForm">No Records Found</p>
-										<p className="bookingForm">
-											{this.state.isSearch
-												? 'No Record Found'
-												: 'Hare Krishna...'}
-										</p>
+												</thead>
+												<tbody>
+													{this.state.videos.map((item, key) => {
+														return (
+															<tr key={key}>
+																<td className="titleColor dataRowAlign">
+																	<Link
+																		to={{
+																			pathname: '/videoDetails',
+																			state: item
+																		}}>
+																		{renderHTML(
+																			reactCookie.load('languageCode') === 'en'
+																				? item.en.title
+																				: item.ru.title
+																		)}
+																	</Link>
+																</td>
+																<td>{item.counters.video_page_view}</td>
+															</tr>
+														);
+													})}
+												</tbody>
+											</table>
+										) : (
+											<div style={{ textAlign: 'center' }}>
+												<p className="bookingForm">No Records Found</p>
+												<p className="bookingForm">
+													{this.state.isSearch
+														? 'No Record Found'
+														: 'Hare Krishna...'}
+												</p>
+											</div>
+										)}
 									</div>
-								)}
+								</div>
 							</div>
 						</div>
 						<div className="padLeft">

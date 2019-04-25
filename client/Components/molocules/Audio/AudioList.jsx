@@ -4,13 +4,13 @@ import Pagination from 'react-js-pagination';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { searchLecture, updateCounters } from '../../../actions/lectureActions';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import reactCookie from 'react-cookies';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 export class AudioList extends Component {
 	constructor(props) {
@@ -100,12 +100,6 @@ export class AudioList extends Component {
 		this.props.updateCounters(body);
 	};
 
-	goHome = () => {
-		this.props.history.push('/');
-		// this.props.location.state.handleNavigationClick(1);
-		// window.sessionStorage.setItem('tabIndex', 1);
-	};
-
 	render() {
 		this.props.history.location.currentPage = this.state.currentPage;
 		let class_icon_search = this.state.iconSearch
@@ -147,84 +141,92 @@ export class AudioList extends Component {
 								<SearchFilter searchData={this.searchData} />
 							</Collapse>
 
-							<button onClick={this.goHome}>Home</button>
-
-							{/* <Breadcrumb tag="nav" listTag="div">
-								<Link to={`/${this.props.history.location.pathname}`}>
-									<BreadcrumbItem tag="a" href="">
-										Audio
-									</BreadcrumbItem>
-								</Link>
-							</Breadcrumb> */}
-
-							<div className="table-responsive wow fadeIn">
-								{this.state.lectures.length > 0 ? (
-									<table className="table table-hover table-job-positions videoTable">
-										<thead>
-											<tr>
-												<th className="align">Title</th>
-												<th className="align">Downloads</th>
-											</tr>
-										</thead>
-										<tbody>
-											{this.state.lectures.map((item, key) => {
-												return (
-													<tr key={key}>
-														<td className="titleColor">
-															{' '}
-															<Link
-																to={{ pathname: '/audioDetails', state: item }}>
-																{renderHTML(
-																	reactCookie.load('languageCode') === 'en'
-																		? item.en.title
-																		: item.ru.title
-																)}
-															</Link>
-															<br />
-															<br />
-															<audio
-																controls
-																controlsList="nodownload"
-																onPlay={() => {
-																	this.updateAudioPlayCount(item.uuid);
-																}}>
-																<source
-																	src={renderHTML(item.audio_link)}
-																	type="audio/mpeg"
-																/>
-															</audio>
-														</td>
-
-														<td>
-															{item.counters.downloads}{' '}
-															<a
-																href={item.audio_link}
-																onClick={() => {
-																	this.handleUpdate(item);
-																}}
-																download="download">
-																<i
-																	style={{ cursor: 'pointer' }}
-																	className="fa fa-download"
-																	aria-hidden="true"
-																/>
-															</a>
-														</td>
-													</tr>
-												);
-											})}
-										</tbody>
-									</table>
-								) : (
-									<div style={{ textAlign: 'center' }}>
-										<p className="bookingForm">
-											{this.state.isSearch
-												? 'No Record Found'
-												: 'Hare Krishna...'}
-										</p>
-									</div>
-								)}
+							<div className="row justify-content-center align-items-center">
+								<div className="col-lg-10">
+									<Breadcrumb>
+										<Link to=" " onClick={() => this.props.history.push('/')}>
+											<Breadcrumb.Item>Home</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;<Breadcrumb.Item active>Audio</Breadcrumb.Item>
+									</Breadcrumb>
+								</div>
 							</div>
+							<div className="row">
+								<div className="col-lg-12">
+									<div className="table-responsive wow fadeIn">
+										{this.state.lectures.length > 0 ? (
+											<table className="table table-hover table-job-positions videoTable">
+												<thead>
+													<tr>
+														<th className="align">Title</th>
+														<th className="align">Downloads</th>
+													</tr>
+												</thead>
+												<tbody>
+													{this.state.lectures.map((item, key) => {
+														return (
+															<tr key={key}>
+																<td className="titleColor">
+																	{' '}
+																	<Link
+																		to={{
+																			pathname: '/audioDetails',
+																			state: item
+																		}}>
+																		{renderHTML(
+																			reactCookie.load('languageCode') === 'en'
+																				? item.en.title
+																				: item.ru.title
+																		)}
+																	</Link>
+																	<br />
+																	<br />
+																	<audio
+																		controls
+																		controlsList="nodownload"
+																		onPlay={() => {
+																			this.updateAudioPlayCount(item.uuid);
+																		}}>
+																		<source
+																			src={renderHTML(item.audio_link)}
+																			type="audio/mpeg"
+																		/>
+																	</audio>
+																</td>
+
+																<td>
+																	{item.counters.downloads}{' '}
+																	<a
+																		href={item.audio_link}
+																		onClick={() => {
+																			this.handleUpdate(item);
+																		}}
+																		download="download">
+																		<i
+																			style={{ cursor: 'pointer' }}
+																			className="fa fa-download"
+																			aria-hidden="true"
+																		/>
+																	</a>
+																</td>
+															</tr>
+														);
+													})}
+												</tbody>
+											</table>
+										) : (
+											<div style={{ textAlign: 'center' }}>
+												<p className="bookingForm">
+													{this.state.isSearch
+														? 'No Record Found'
+														: 'Hare Krishna...'}
+												</p>
+											</div>
+										)}
+									</div>
+								</div>
+							</div>
+							{/* </div> */}
 						</div>
 						<div className="padLeft">
 							<Pagination

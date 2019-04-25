@@ -3,29 +3,31 @@ import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { Translate } from 'react-localize-redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { updateCounters } from '../../../actions/lectureActions';
 // eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 export class VideoDetails extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		const body = {
 			uuid: this.props.location.state.uuid,
-			video_page_view: true,
+			video_page_view: true
 		};
 		this.props.updateCounters(body);
-  }
-  
-  goBack = () => {
+	}
+
+	goBack = () => {
 		// console.log(this.props.history);
 		this.props.history.goBack();
 	};
 
-	render () {
+	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -33,10 +35,20 @@ export class VideoDetails extends React.Component {
 			<div>
 				<section class="section section-lg">
 					<div class="container padTop">
-						<div class="row row-50">
-            <button onClick={this.goBack}>Back</button>
+						<div style={{ paddingLeft: '15%' }} className="row row-100">
 							<div class="col-lg-12">
 								<article class="post-creative">
+									<Breadcrumb>
+										<Link to=" " onClick={() => this.props.history.push('/')}>
+											<Breadcrumb.Item>Home</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;
+										<Link to=" " onClick={() => this.props.history.goBack()}>
+											<Breadcrumb.Item>Video</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;<Breadcrumb.Item active>Video Details</Breadcrumb.Item>
+									</Breadcrumb>
+
 									<h3 class="post-creative-title">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
@@ -67,11 +79,11 @@ export class VideoDetails extends React.Component {
 									<div className="row row-50 row-xxl-70 padTop flexDiv padLeftRow">
 										{this.props.location.state.youtube
 											? this.props.location.state.youtube.map((item, key) => {
-												return (
-													<div key={key} className="flexRow">
-														<iframe className="iframeStyle" src={item} />
-													</div>
-												);
+													return (
+														<div key={key} className="flexRow">
+															<iframe className="iframeStyle" src={item} />
+														</div>
+													);
 											  })
 											: null}
 									</div>
@@ -92,16 +104,16 @@ export class VideoDetails extends React.Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
-		Count: state.lectureReducer.Count,
+		Count: state.lectureReducer.Count
 	};
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
-		updateCounters: body => {
+		updateCounters: (body) => {
 			dispatch(updateCounters(body));
-		},
+		}
 	};
 };
 

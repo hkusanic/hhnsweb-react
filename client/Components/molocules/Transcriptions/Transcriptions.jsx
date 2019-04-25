@@ -13,6 +13,8 @@ import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import { Translate } from 'react-localize-redux';
 
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
 export class Transcritpion extends Component {
 	constructor(props) {
 		super(props);
@@ -103,52 +105,68 @@ export class Transcritpion extends Component {
 							<Collapse isOpened={!this.state.iconSearch}>
 								<SearchFilter searchData={this.searchData} />
 							</Collapse>
-							<div className="table-responsive wow fadeIn">
-								{this.state.transcriptions.length > 0 ? (
-									<table className="table table-hover table-job-positions videoTable">
-										<thead>
-											<tr>
-												<th className="align">Title</th>
-												<th className="align">View</th>
-											</tr>
-										</thead>
-										<tbody>
-											{this.state.transcriptions.map((item, key) => {
-												return (
-													<tr key={key}>
-														<td className="titleColor dataRowAlign">
-															{' '}
-															<Link
-																to={{
-																	pathname: '/transcriptionDetails',
-																	state: item
-																}}>
-																{renderHTML(
-																	reactCookie.load('languageCode') === 'en'
-																		? item.en.title
-																		: item.ru.title
-																)}
-															</Link>
-														</td>
-														<td>
-															{reactCookie.load('languageCode') === 'en'
-																? item.counters.en_transcription_view
-																: item.counters.ru_transcription_view}
-														</td>
+
+							<div className="row justify-content-center align-items-center">
+								<div className="col-lg-10">
+									<Breadcrumb>
+										<Link to=" " onClick={() => this.props.history.push('/')}>
+											<Breadcrumb.Item>Home</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;<Breadcrumb.Item active>Transcriptions</Breadcrumb.Item>
+									</Breadcrumb>
+								</div>
+							</div>
+
+							<div className="row">
+								<div className="col-lg-12">
+									<div className="table-responsive wow fadeIn">
+										{this.state.transcriptions.length > 0 ? (
+											<table className="table table-hover table-job-positions videoTable">
+												<thead>
+													<tr>
+														<th className="align">Title</th>
+														<th className="align">View</th>
 													</tr>
-												);
-											})}
-										</tbody>
-									</table>
-								) : (
-									<div style={{ textAlign: 'center' }}>
-										<p className="bookingForm">
-											{this.state.isSearch
-												? 'No Record Found'
-												: 'Hare Krishna...'}
-										</p>
+												</thead>
+												<tbody>
+													{this.state.transcriptions.map((item, key) => {
+														return (
+															<tr key={key}>
+																<td className="titleColor dataRowAlign">
+																	{' '}
+																	<Link
+																		to={{
+																			pathname: '/transcriptionDetails',
+																			state: item
+																		}}>
+																		{renderHTML(
+																			reactCookie.load('languageCode') === 'en'
+																				? item.en.title
+																				: item.ru.title
+																		)}
+																	</Link>
+																</td>
+																<td>
+																	{reactCookie.load('languageCode') === 'en'
+																		? item.counters.en_transcription_view
+																		: item.counters.ru_transcription_view}
+																</td>
+															</tr>
+														);
+													})}
+												</tbody>
+											</table>
+										) : (
+											<div style={{ textAlign: 'center' }}>
+												<p className="bookingForm">
+													{this.state.isSearch
+														? 'No Record Found'
+														: 'Hare Krishna...'}
+												</p>
+											</div>
+										)}
 									</div>
-								)}
+								</div>
 							</div>
 						</div>
 						<div className="padLeft">

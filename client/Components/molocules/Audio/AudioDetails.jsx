@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-// import { Breadcrumb, BreadcrumbItem } from 'react-bootstrap';
-import { Link, withRouter } from 'react-router-dom';
+
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
+import { Link } from 'react-router-dom';
 import { updateCounters } from '../../../actions/lectureActions';
 import Comments from '../Comments/Comments';
 
@@ -37,11 +38,6 @@ export class AudioDetails extends Component {
 		this.props.updateCounters(body);
 	};
 
-	goBack = () => {
-		// console.log(this.props.history);
-		this.props.history.goBack();
-	};
-
 	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
@@ -52,23 +48,22 @@ export class AudioDetails extends Component {
 		return (
 			<div>
 				<section className="section section-lg">
-					<div className="container">
-						
-						{/* <Breadcrumb tag="nav" listTag="div">
-							<Link to={this.props.history.location.pathname}>
-								<BreadcrumbItem tag="a" href="">
-									Audio
-								</BreadcrumbItem>
-                <BreadcrumbItem tag="a" href="">
-									Audio
-								</BreadcrumbItem>
-							</Link>
-						</Breadcrumb> */}
-
-            <div style={{ paddingLeft: '15%' }} className="row row-100">
-            <button onClick={this.goBack}>Back</button>
+					<div className="container padTop">
+						<div style={{ paddingLeft: '15%' }} className="row row-100">
 							<div className="col-lg-12">
 								<article className="post-creative">
+									<Breadcrumb>
+										<Link to=" " onClick={() => this.props.history.push('/')}>
+											<Breadcrumb.Item>Home</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;
+										<Link to=" " onClick={() => this.props.history.goBack()}>
+											<Breadcrumb.Item>Audio</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;
+										<Breadcrumb.Item active>Audio Details</Breadcrumb.Item>
+									</Breadcrumb>
+
 									<h3 className="post-creative-title">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
@@ -76,7 +71,6 @@ export class AudioDetails extends Component {
 												: this.props.location.state.ru.title
 										)}
 									</h3>
-
 									<ul className="post-creative-meta">
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />

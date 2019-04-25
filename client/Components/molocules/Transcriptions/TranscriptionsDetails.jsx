@@ -6,17 +6,20 @@ import { updateCounters } from '../../../actions/lectureActions';
 // eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { Link } from 'react-router-dom';
+
 export class TranscriptionDetails extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
-			text: '',
+			text: ''
 		};
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		let body = {
-			uuid: this.props.location.state.uuid,
+			uuid: this.props.location.state.uuid
 		};
 		if (reactCookie.load('languageCode') === 'en') {
 			body.en_transcription_view = true;
@@ -24,13 +27,9 @@ export class TranscriptionDetails extends React.Component {
 			body.ru_transcription_view = true;
 		}
 		this.props.updateCounters(body);
-  }
-  goBack = () => {
-		// console.log(this.props.history);
-		this.props.history.goBack();
-	};
+	}
 
-	render () {
+	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -39,9 +38,22 @@ export class TranscriptionDetails extends React.Component {
 				<section className="section section-lg">
 					<div className="container padLeftBlog">
 						<div className="row row-50">
-              <div className="col-lg-12">
-              <button onClick={this.goBack}>Back</button>
+							<div className="col-lg-12">
 								<article className="post-creative">
+									<Breadcrumb>
+										<Link to=" " onClick={() => this.props.history.push('/')}>
+											<Breadcrumb.Item>Home</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;
+										<Link to=" " onClick={() => this.props.history.goBack()}>
+											<Breadcrumb.Item>Transcriptions</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;
+										<Breadcrumb.Item active>
+											Transcriptions Details
+										</Breadcrumb.Item>
+									</Breadcrumb>
+
 									<h3 className="post-creative-title dataTitle">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
@@ -103,8 +115,7 @@ export class TranscriptionDetails extends React.Component {
 															this.props.location.state.en.transcription
 																.attachment_link
 														}
-														target="_blank"
-													>
+														target="_blank">
 														<span>
 															{
 																this.props.location.state.en.transcription
@@ -224,7 +235,7 @@ export class TranscriptionDetails extends React.Component {
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>
-								<Comments lecture_uuid={this.props.location.state.uuid}/>
+								<Comments lecture_uuid={this.props.location.state.uuid} />
 							</div>
 							<div className="col-lg-4" />
 						</div>
@@ -235,16 +246,16 @@ export class TranscriptionDetails extends React.Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
-		Count: state.lectureReducer.Count,
+		Count: state.lectureReducer.Count
 	};
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
-		updateCounters: body => {
+		updateCounters: (body) => {
 			dispatch(updateCounters(body));
-		},
+		}
 	};
 };
 

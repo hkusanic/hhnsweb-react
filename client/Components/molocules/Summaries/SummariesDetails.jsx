@@ -6,6 +6,10 @@ import { updateCounters } from '../../../actions/lectureActions';
 // eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
+import { Link } from 'react-router-dom';
+
 export class SummariesDetails extends React.Component {
 	constructor(props) {
 		super(props);
@@ -22,10 +26,6 @@ export class SummariesDetails extends React.Component {
 		this.props.updateCounters(body);
 	}
 
-	goBack = () => {
-		this.props.history.goBack();
-	};
-
 	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
@@ -36,8 +36,19 @@ export class SummariesDetails extends React.Component {
 					<div className="container padLeftBlog">
 						<div className="row row-50">
 							<div className="col-lg-12">
-								<button onClick={this.goBack}>Back</button>
 								<article className="post-creative">
+									<Breadcrumb>
+										<Link to=" " onClick={() => this.props.history.push('/')}>
+											<Breadcrumb.Item>Home</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;
+										<Link to=" " onClick={() => this.props.history.goBack()}>
+											<Breadcrumb.Item>Summaries</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;
+										<Breadcrumb.Item active>Summary Details</Breadcrumb.Item>
+									</Breadcrumb>
+
 									<h3 className="post-creative-title dataTitle">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'

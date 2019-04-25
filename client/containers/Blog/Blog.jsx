@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import SingleBlog from '../../Components/molocules/SingleBlog/SIngleBlog';
 import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
 import { getBlogs, getBlog } from '../../actions/blogActions';
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 export class Blogs extends Component {
 	constructor(props) {
@@ -64,6 +66,13 @@ export class Blogs extends Component {
 							</p>
 						</div>
 						<div className="container centerAlign">
+							<Breadcrumb>
+								<Link to=" " onClick={() => this.props.history.push('/')}>
+									<Breadcrumb.Item>Home</Breadcrumb.Item>
+								</Link>
+								&nbsp;/&nbsp;<Breadcrumb.Item active>Blog</Breadcrumb.Item>
+							</Breadcrumb>
+
 							<div className="row row-50 row-xxl-70">
 								{this.state.blogs.map((item, key) => {
 									return <SingleBlog blog={item} key={key} />;
