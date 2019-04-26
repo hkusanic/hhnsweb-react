@@ -25,8 +25,8 @@ Quote.add({
 		title: { type: String },
 		author: { type: String },
 		topic: { type: String },
-    },
-    audit: {type: Types.TextArray }
+	},
+	audit: { type: Types.TextArray },
 });
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

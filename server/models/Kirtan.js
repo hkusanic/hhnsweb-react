@@ -42,7 +42,7 @@ Kirtan.add({
 		location: { type: String },
 		body: { type: String },
 	},
-	audit: {type: Types.TextArray }
+	audit: { type: Types.TextArray },
 });
 
 // Kirtan.schema.add({ data: mongoose.Schema.Types.Mixed }); // you can add mongoose types like this.. but they should be defined outside .add()
