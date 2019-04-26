@@ -23,7 +23,8 @@ let Video = new keystone.List('Video', {
         event:{ type: String },
         author:{ type: String },
         location: {type: String}
-    }
+    },
+    audit: {type: Types.TextArray }
 
 });
 
