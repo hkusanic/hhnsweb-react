@@ -37,6 +37,8 @@ import MKV from '../../Components/molocules/MKV/mkv';
 
 import { Route, Switch } from 'react-router-dom';
 
+import 'antd/dist/antd.css';
+
 export class Home extends Component {
 	constructor(props) {
 		super(props);
