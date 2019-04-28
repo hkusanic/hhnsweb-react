@@ -26,7 +26,7 @@ Video.add({
 		location: { type: String },
 	},
 	urls: { type: Types.TextArray },
-
+	audit: { type: Types.TextArray },
 });
 
 
