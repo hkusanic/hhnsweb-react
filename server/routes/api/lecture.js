@@ -335,7 +335,6 @@ exports.lectureDownload = function(req, res){
 		// 		console.log('EXCELLENT');
 		// 	}
 		// }, function(response){
-		// 	console.log(".......");
 		// 	console.log(response);
 		// });
 		res.apiResponse({
