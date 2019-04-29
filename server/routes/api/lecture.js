@@ -1,6 +1,15 @@
 var keystone = require('keystone');
 let logger = require('./../../logger/logger');
 
+const Fs = require('fs');
+const Path = require('path');
+const Axios = require('axios');
+
+const zlib = require('zlib');
+// const zipFolder = require('zip-folder');
+const zipFolder = require('zip-a-folder');
+//const zip = require('bestzip');
+
 /**
  * List Page
  */
@@ -12,6 +21,7 @@ var Lecture = keystone.list('Lecture');
 // Creating the API end point
 // More about keystone api here: https://gist.github.com/JedWatson/9741171
 exports.list = function (req, res) {
+	
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	let query = [];
 
@@ -265,6 +275,136 @@ exports.list = function (req, res) {
 		// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
 		// This is handy if we want to speed up loading times once our recipe collection grows
 	});
+};
+
+// Lecture Download
+
+exports.lectureDownload = function(req, res){
+
+	var dir = "/home/system6/Desktop/hhnsweb-react/server/routes/api/files/nrs-lectures-"+req.body.year;
+	var zipPath = "/home/system6/Desktop/hhnsweb-react/server/routes/api/files/";
+	if (!Fs.existsSync(dir)){
+		Fs.mkdirSync(dir);
+	}
+
+	
+
+	async function download() {
+		const url = req.body.url;
+
+		const path = Path.resolve(__dirname, 'files/nrs-lectures-'+req.body.year,  req.body.title + '.mp3');
+	
+		const response = await Axios({
+			method: 'GET',
+			url : url,
+			responseType: 'stream',
+		});
+	
+		response.data.pipe(Fs.createWriteStream(path));
+	
+		return new Promise((resolve, reject) => {
+			response.data.on('end', () => {
+				resolve();
+			});
+	
+			response.data.on('error', err => {
+				reject(err);
+			});
+		});
+	}
+	
+	download().then(() => {
+		console.log("Download finished..");
+
+		if (!Fs.existsSync(dir)){
+			Fs.mkdirSync(dir);
+		}
+
+		// filename = dir + "/" + req.body.title +".mp3",
+		// //filename = zipPath + "/" + req.body.year,
+		// compress = zlib.createGzip(), //Compressing
+		// decompress = zlib.createGunzip(), //decompressing
+		// readstream = Fs.createReadStream(filename);
+		// compressfile(filename);
+
+		// zipFolder(zipPath, zipPath + req.body.year + '.zip', function(err) {
+		// 	console.log("getting....................");
+		// 	if(err) {
+		// 		console.log('oh no!', err);
+		// 	} else {
+		// 		console.log('EXCELLENT');
+		// 	}
+		// }, function(response){
+		// 	console.log(".......");
+		// 	console.log(response);
+		// });
+		res.apiResponse({
+			data: "Downloaded Successfully",
+		});
+	}, (err) => {
+		console.log("error");
+		res.apiResponse({
+			data: err,
+		});
+	});
+
+    function compressfile(filename){
+        var newfilename = filename+".gz",
+        writestream = Fs.createWriteStream(newfilename);
+        readstream.pipe(compress).pipe(writestream);
+    }
+
+    // if(/.gz$/i.test(filename)==true){
+    //     decompressfile(filename);
+    // }
+    // else{
+	// 	compressfile(filename);
+	// }
+
+}
+
+// Lecture Download
+
+exports.lectureZip = function (req, res) {
+	console.log(req.body);
+
+	// zipFolder(req.body.FolderPath, req.body.zipPath, function(err) {
+	// 	console.log("getting....................");
+	// 	if(err) {
+	// 		console.log('oh no!', err);
+	// 	} else {
+	// 		console.log('EXCELLENT');
+	// 	}
+	// }, function(response){
+	// 	console.log(".......");
+	// 	console.log(response);
+	// });
+
+	zipFolder.zipFolder(req.body.Source, req.body.Destination, function(err){
+		if(err){
+			console.log('Something went wrong!', err);
+		}
+		res.apiResponse({
+			data: 'all done!',
+		});
+	}, function(response){
+		console.log(response);
+
+	});
+
+	// zip({
+	// 	source: req.body.Source,
+	// 	destination: req.body.Destination
+	//   }).then(function(response) {
+	// 	console.log('all done!', response);
+	// 	res.apiResponse({
+	// 		data: 'all done!',
+	// 	});
+	//   }).catch(function(err) {
+	// 	console.error(err.stack);
+	// 	//process.exit(1);
+	//   });
+
 };
 
 exports.create = function (req, res) {

@@ -1,6 +1,17 @@
 var keystone = require('keystone');
 let modelHelper = require('../helpers/modelHelper');
+var cors = require('cors');
 
+
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'example.com');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+
+// app.use(allowCrossDomain);
 
 // Then to get access to our API route we will use importer
 var importRoutes = keystone.importer(__dirname);
@@ -11,6 +22,10 @@ var routes = {
 
 // Export our app routes
 exports = module.exports = function (app) {
+
+	const cors = require('cors');
+	app.use(cors());
+	
 	// Get access to the API route in our app
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
 	app.all('/api/appointment/:id/update', keystone.middleware.api, routes.api.appointment.update);
@@ -23,7 +38,19 @@ exports = module.exports = function (app) {
 	app.get('/api/event/', keystone.middleware.api, routes.api.event.list);
 	app.post('/api/blog/find/', keystone.middleware.api, routes.api.blog.get);
 	app.get('/api/blog/', keystone.middleware.api, routes.api.blog.list);
+
 	app.get('/api/lecture/', keystone.middleware.api, routes.api.lecture.list);
+	
+	// Mp3 Download
+	app.post('/api/lectureDownload/', keystone.middleware.api, routes.api.lecture.lectureDownload);
+	// Mp3 Download
+
+	// Folder Compress
+
+	app.post('/api/lectureZip/', keystone.middleware.api, routes.api.lecture.lectureZip);
+
+	// Folder Compress
+
 	app.post('/api/lecture/createBulk/', keystone.middleware.api, routes.api.lecture.createBulk);
 	app.post('/api/lecture/create/', keystone.middleware.api, routes.api.lecture.create);
 	app.post('/api/comment/create/', keystone.middleware.api, routes.api.comment.create);

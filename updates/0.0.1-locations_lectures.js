@@ -1,4 +1,4 @@
-// exports.create = {
+ exports.create = {
 // 	Location: [
 // 		{ title: 'Boston',  __ref: 'Boston' },
 // 		{ title: 'Lithuania', __ref: 'Lithuania' },
@@ -152,4 +152,4 @@
 		// },
 
 	//]
-}
+ }

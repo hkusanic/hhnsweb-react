@@ -14,6 +14,7 @@ exports.list = function (req, res) {
 	Page.model.find(function (err, items) {
 		// Make sure we are handling errors
 		if (err) return res.apiError('database error', err);
+		console.log(res);
 		res.apiResponse({
 			// Filter page by
 			page: items,

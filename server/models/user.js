@@ -7,7 +7,7 @@ let User = new keystone.List('User');
 // Then we gonna add the fields
 User.add({
 	name: { type: Types.Name, initial: true },
-	userName: { type: String, initial: true, required: true },
+	userName: { type: String, initial: true },
 	email: { type: String, initial: true, required: true, index: true },
 	mobileNumber: { type: String, initial: true },
 	countryCode: {type: String, initial: true},
