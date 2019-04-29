@@ -7,6 +7,7 @@ let Content = new keystone.List('Content', {
 	defaultSort: '-date_created',
 });
 
+
 Content.add({
 	uuid: { type: String, unique: true, index: true },
     content_uuid: { type: String},
