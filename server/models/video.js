@@ -8,25 +8,26 @@ let Video = new keystone.List('Video', {
 	defaultSort: '-date',
 });
 
- Video.add({
-    uuid:{ type: String,  index: true, unique: true },
-    date: { type: String },
-    language:{ type: String },
-    type: {type: String},
-    en:{
-    title:{ type: String },
-    event: { type: String },
-    author:{ type: String },
-    location: {type: String}
-    },
-    ru:{
-        title:{ type: String },
-        event:{ type: String },
-        author:{ type: String },
-        location: {type: String}
-    },
-    audit: {type: Types.TextArray }
-
+Video.add({
+	uuid: { type: String, index: true, unique: true },
+	date: { type: String },
+	published_date: { type: String },
+	language: { type: String },
+	type: { type: String },
+	author: { type: String },
+	translation_required: { type: Boolean, default: true },
+	en: {
+		title: { type: String },
+		event: { type: String },
+		location: { type: String },
+	},
+	ru: {
+		title: { type: String },
+		event: { type: String },
+		location: { type: String },
+	},
+	urls: { type: Types.TextArray },
+	audit: { type: Types.TextArray },
 });
 
 function uuidv4() {
