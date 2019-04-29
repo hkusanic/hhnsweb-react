@@ -33,6 +33,10 @@ const utils = {
 		let url = serverAddress + '/api/replies/' + uuid + '/remove';
 		return axios.post(url);
 	},
+	deleteReplyByCommentId: (uuid) => {
+		let url = serverAddress + '/api/replies/' + uuid + '/removeByCommentId';
+		return axios.post(url);
+	},
 };
 
 export default utils;

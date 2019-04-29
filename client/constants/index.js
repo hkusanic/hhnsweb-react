@@ -32,6 +32,8 @@ export const GET_TOPIC = 'GET_TOPIC';
 
 export const SEARCH_LECTURE = 'SEARCH_LECTURE';
 
+export const SEARCH_QUOTE = 'SEARCH_QUOTE';
+
 export const SEARCH_KIRTAN = 'SEARCH_KIRTAN';
 
 export const GET_MKV = 'GET_MKV';
@@ -44,3 +46,7 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const CREATE_REPLIES = 'CREATE_REPLIES';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const DELETE_REPLY = 'DELETE_REPLY';
+
+export const GET_GALLERY = 'GET_GALLERY';
+export const GET_STATIC_GALLERY = 'GET_STATIC_GALLERY';
+export const GET_SUB_GALLERY = 'GET_SUB_GALLERY';

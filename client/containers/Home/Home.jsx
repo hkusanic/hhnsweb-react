@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import script from "../../assets/script.js"
+import script from '../../assets/script.js';
 import Navigation from '../../Components/molocules/navigation/Navigation';
 import Carousel from '../../Components/molocules/carousels/Carousel';
 import Footer from '../../Components/molocules/Footer/Footer';
 import Blog from '../../containers/Blog/Blog';
 import Calender from '../../containers/Calender/Calender';
 import Lectures from '../../containers/Lectures/Lectures';
+import Quotes from '../../containers/Quote/Quote';
 import Booking from '../../containers/Booking/Booking';
 import BlogDetails from '../../Components/molocules/SingleBlog/BlogDetails';
 import BiographyDetails from '../../Components/molocules/Biography/BiographyDetails';
 import LectureDetails from '../../Components/molocules/SingleLecture/LectureDetails';
+import QuoteDetails from '../../Components/molocules/SingleQuote/QuoteDetails';
 import AudioList from './../../Components/molocules/Audio/AudioList';
 import VideoList from '../../Components/molocules/Video/VideoList';
 import AudioDetails from '../../Components/molocules/Audio/AudioDetails';
@@ -23,6 +25,7 @@ import Contact from '../../Components/organisms/Form/Contact';
 import AppointmentListing from '../../Components/molocules/AppointmentListing/AppointmentListing';
 import Photos from '../../Components/molocules/Photos/Photos';
 import Gallery from '../../Components/molocules/Gallery/Gallery';
+import SubGallery from '../../Components/molocules/Gallery/SubGallery';
 import ScrollToTop from '../../Components/atoms/ScrollToTop/ScrollToTop';
 import Summaries from '../../Components/molocules/Summaries/Summaries';
 import Transcritpion from '../../Components/molocules/Transcriptions/Transcriptions';
@@ -33,23 +36,23 @@ import KirtanDetails from '../../Components/molocules/Kirtan/KirtanDetails';
 import MKV from '../../Components/molocules/MKV/mkv';
 
 import {
-    Route,
-    Switch
-} from 'react-router-dom'
+	Route,
+	Switch,
+} from 'react-router-dom';
 
 export class Home extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLogin: false,
-            isAdmin: false,
-            userId: ''
-        }
-    }
+	constructor (props) {
+		super(props);
+		this.state = {
+			isLogin: false,
+			isAdmin: false,
+			userId: '',
+		};
+	}
 
-    componentDidMount() {
-        script();
-    }
+	componentDidMount () {
+		script();
+	}
 
     render() {
         return (
@@ -67,12 +70,15 @@ export class Home extends Component {
                             <Route path='/appointmentList' component={AppointmentListing} />
                             <Route path='/photos' component={Photos} />
                             <Route path='/gallery' component={Gallery} />
+                            <Route path="/subGallery" component={SubGallery} />
                             <ShellCompoenent>
                                 <Route path='/blog' component={Blog} />
                                 <Route path='/booking' component={Booking} />
                                 <Route path='/calender' component={Calender} />
                                 <Route path='/lectures' component={Lectures} />
+                                <Route path='/quotes' component={Quotes} />
                                 <Route path='/blogDetails' component={BlogDetails} />
+                                <Route path='/quoteDetails' component={QuoteDetails} />
                                 <Route path='/lectureDetails' component={LectureDetails} />
                                 <Route path='/audio' component={AudioList} />
                                 <Route path='/audioDetails' component={AudioDetails} />
@@ -101,10 +107,10 @@ export class Home extends Component {
                     </div>
                 </div>
 
-                <div className="snackbars" id="form-output-global"></div>
-            </div>
-        )
-    }
+				<div className="snackbars" id="form-output-global"></div>
+			</div>
+		);
+	}
 }
 
 export default Home;

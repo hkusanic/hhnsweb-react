@@ -18,6 +18,22 @@ const zipFolder = require('zip-a-folder');
 
 var Lecture = keystone.list('Lecture');
 
+function todayDate () {
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; // January is 0!
+
+	var yyyy = today.getFullYear();
+	if (dd < 10) {
+		dd = '0' + dd;
+	}
+	if (mm < 10) {
+		mm = '0' + mm;
+	}
+	var today = yyyy + '-' + mm + '-' + dd;
+	return today;
+}
+
 // Creating the API end point
 // More about keystone api here: https://gist.github.com/JedWatson/9741171
 exports.list = function (req, res) {
@@ -239,6 +255,29 @@ exports.list = function (req, res) {
 		query.push(year_query);
 	}
 
+	if (req.query.date) {
+		let date_query = {
+			created_date: {
+				$regex: '.*' + req.query.date + '.*',
+				$options: 'i',
+			},
+		};
+
+		query.push(date_query);
+	}
+
+	let createdDateSort = '-created_date';
+
+	if (req.query.createdDateSort) {
+		if (req.query.createdDateSort === 'asc') {
+			createdDateSort = 'created_date';
+		}
+		else {
+			createdDateSort = '-created_date';
+		}
+
+	}
+
 	let filters = {};
 
 	if (query.length > 0) {
@@ -257,7 +296,7 @@ exports.list = function (req, res) {
 		page: req.query.page || 1,
 		perPage: 20,
 		filters: filters,
-	}).exec(function (err, items) {
+	}).sort(createdDateSort).exec(function (err, items) {
 		if (err) {
 			logger.error(
 				{
@@ -409,6 +448,7 @@ exports.lectureZip = function (req, res) {
 exports.create = function (req, res) {
 	var item = new Lecture.model();
 	var data = req.method === 'POST' ? req.body : req.query;
+	data.created_date = data.created_date ? data.created_date:todayDate();
 	logger.info(
 		{
 			req: req,
@@ -527,6 +567,7 @@ exports.updateBulk = function (req, res) {
 };
 
 exports.update = function (req, res) {
+	console.log('body inside update ===>>', req.body);
 	logger.info(
 		{
 			req: req,
@@ -534,9 +575,7 @@ exports.update = function (req, res) {
 		'API update lecture'
 	);
 	Lecture.model
-		.findOne({
-			uuid: req.body.id,
-		})
+		.findOne({ uuid: req.params.id })
 		.exec(function (err, item) {
 			if (err) {
 				logger.error(
@@ -657,7 +696,7 @@ exports.remove = function (req, res) {
 		},
 		'API remove lecture'
 	);
-	Lecture.model.findById(req.params.id).exec(function (err, item) {
+	Lecture.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
 		if (err) {
 			logger.error(
 				{
@@ -693,4 +732,25 @@ exports.remove = function (req, res) {
 			});
 		});
 	});
+};
+
+exports.getlecturebyid = function (req, res) {
+	if (!req.body.uuid) {
+		res.json({ error: { title: 'Id is Required', detail: 'Mandatory values are missing. Please check.' } });
+	}
+
+	Lecture.model.findOne().where('uuid', req.body.uuid).exec((err, lecture) => {
+
+		if (err || !lecture) {
+			logger.error({
+				error: err,
+			}, 'API getlecturebyid');
+			return res.json({ error: { title: 'Not able to find lecture' } });
+		}
+		res.json({
+			lecture: lecture,
+			success: true,
+		});
+	});
+
 };
