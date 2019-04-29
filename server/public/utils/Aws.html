@@ -1,15 +1,15 @@
-<html>
+<!-- <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
 <script>
-	function uploads3() {
+	/*function uploads3() {
 		const file = document.getElementById("file").files[0]; //Video file.
 		const fileName = file.name;
 		const fileType = file.type;
 		console.log(fileType);
 		$.ajax({
 			type: "GET",
-			url: `http://localhost:3000/api/blog/generateUploadUrl?name=folder1/${fileName}&type=${fileType}`,
+			url: `http://localhost:3000/api/blog/generateUploadUrl?name=mp3files/${fileName}&type=${fileType}`,
 			success: (data) => {
 				console.log('-------->',data);
 				uploadFileToS3UsingPresignedUrl(data.presignedUrl, file)
@@ -20,6 +20,7 @@
 		});
 	}
 	function uploadFileToS3UsingPresignedUrl(presignedUrl, file) {
+	
 		console.log('======>', file);
 		$.ajax({
 			type: "PUT",
@@ -31,18 +32,149 @@
 			},
 			processData : false,
 			success: (data) => {
-				console.log(data)
+				console.log("Done..",data)
 			},
 			error: function() { 
 				console.log('sdfsdfsd'); 
 			}
 		});
-	}
+	}*/
 </script>
-</head>
+<!-- </head>
 
 <input type="file" id="file" onchange="uploads3()" name="file">
 
+</html> -->
 
 
-</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File Upload Example in AngularJS</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+
+<body ng-app="fupApp">
+
+    <div ng-controller="fupController">
+        <input type="file" id="file" name="file" multiple
+            onchange="angular.element(this).scope().getFileDetails(this)" />
+
+        <input type="button" ng-click="BulkUpload()" value="Upload" />
+
+        <!--ADD A PROGRESS BAR ELEMENT.-->
+         <!-- <p><progress id="pro" value="0"></progress></p> -->
+    </div>
+    
+</body>
+
+<script>
+        var myApp = angular.module('fupApp', []);
+    
+        myApp.controller('fupController', function ($scope, $q, $http) {
+    
+            // GET THE FILE INFORMATION.
+            $scope.getFileDetails = function (e) {          
+    
+                $scope.files = [];
+                $scope.$apply(function () {
+    
+                    // STORE THE FILE OBJECT IN AN ARRAY.
+                    for (var i = 0; i < e.files.length; i++) {
+                        $scope.files.push(e.files[i])
+                    }
+
+                    console.log($scope.files);
+    
+                });
+            };
+
+            $scope.BulkUpload = function(){
+
+                var resultArray = [];
+
+                for(var i=0; i< $scope.files.length; i++){
+                    resultArray.push(UploadFiles($scope.files[i].name, $scope.files[i].type, $scope.files[i]));
+
+                    if(i == $scope.files.length - 1){
+                        $q.all(resultArray).then(function(response){
+                            console.log(response);
+                        }, function(error){
+                            console.log(error);
+                        });
+                    }
+                    
+                }
+
+                
+                
+            };
+
+            function UploadFiles(fileName, fileType, fileObj){
+				var successStatus = [];
+				// $http.get("http://localhost:3000/api/blog/generateUploadUrl?name=mp3files/$"+ fileName + "&type=$" + fileType +"/").then(function(response){
+				// 	console.log(response);
+					
+				// 		uploadFileToS3UsingPresignedUrl(data.presignedUrl, fileObj)
+					
+					
+				// }, function(error){
+				// 	console.log(error);
+				// });
+
+				$.ajax({
+					type: "GET",
+					url: `http://localhost:3000/api/blog/generateUploadUrl?name=mp3files/${fileName}&type=${fileType}`,
+					success: (data) => {
+						console.log('-------->',data);
+						uploadFileToS3UsingPresignedUrl(data.presignedUrl, fileObj)
+						var successStatus = [{status : 200}]
+						
+					},
+					error: function(){ 
+						alert("failed"); 
+						var successStatus = [{status : 200}]
+					}
+				});
+
+				return successStatus;
+            };
+
+            function uploadFileToS3UsingPresignedUrl(presignedUrl, file) {
+
+                var deffer = $q.defer();
+
+                try {
+                    console.log('======>', file);
+                    $.ajax({
+                        type: "PUT",
+                        url: presignedUrl,
+                        data: file,
+                        headers: {
+                            'Content-Type': file.type,
+                            'reportProgress': true
+                        },
+                        processData : false,
+                        success: (data) => {
+                            console.log("Done..",data);
+                            deffer.resolve(data);
+                        },
+                        error: function() { 
+                            console.log('sdfsdfsd'); 
+                            deffer.reject("err");
+                        }
+                    });
+                }
+                catch (err) {
+                    deffer.reject(err);
+                }
+                return deffer.promise;
+                
+            };
+    
+            
+        });
+    </script>
+    </html>
