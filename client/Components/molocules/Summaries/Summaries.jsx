@@ -147,7 +147,7 @@ export class Summaries extends Component {
 			? 'display-none-icon'
 			: 'icon-search fa fa-close';
 
-		console.log('summ ====> ', this.props.lecturesDetails.lectures);
+		// console.log('summ ====> ', this.props.lecturesDetails.lectures);
 
 		return (
 			<div>
@@ -157,7 +157,7 @@ export class Summaries extends Component {
 				{!this.state.isUserLogin ? (
 					<div>
 						<div style={{ textAlign: 'center' }}>
-							<p className="bookingForm">
+							<p className="">
 								<Translate>
 									{({ translate }) => translate('HOME.Summaries')}
 								</Translate>
@@ -173,10 +173,11 @@ export class Summaries extends Component {
 								/>
 							</p>
 						</div>
-						<Collapse isOpened={!this.state.iconSearch}>
-							<SearchFilter searchData={this.searchData} />
-						</Collapse>
 						<div className="container">
+							<Collapse isOpened={!this.state.iconSearch}>
+								<SearchFilter searchData={this.searchData} />
+							</Collapse>
+
 							<div className="row justify-content-center align-items-center">
 								<div className="col-lg-10">
 									<Breadcrumb>

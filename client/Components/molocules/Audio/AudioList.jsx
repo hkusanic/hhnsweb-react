@@ -3,7 +3,7 @@ import renderHTML from 'react-render-html';
 // import Pagination from 'react-js-pagination';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Table } from 'antd';
+import { Table, Icon, Button } from 'antd';
 
 import { searchLecture, updateCounters } from '../../../actions/lectureActions';
 import Auth from '../../../utils/Auth';
@@ -14,60 +14,56 @@ import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 const columns = [
-  {
-    title: 'Title',
-    dataIndex: renderHTML(
-      reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
-    ),
-    render: (text, record, index) => (
-      <Link
-        to={{
-          pathname: '/audioDetails',
-          state: record
-        }}>
-        {renderHTML(
-          reactCookie.load('languageCode') === 'en'
-            ? record.en.title
-            : record.ru.title
-        )}
-      </Link>
-    )
-  },
-  {
-    title: 'Audio',
-    dataIndex: 'audio_link',
-    render: (text, record, index) => (
-      <audio
-        controls
-        controlsList="nodownload"
-        onPlay={() => {
-          this.updateAudioPlayCount(record.uuid);
-        }}>
-        <source src={renderHTML(record.audio_link)} type="audio/mpeg" />
-      </audio>
-    )
-  },
-  {
-    title: 'Downloads',
-    dataIndex: 'counters.downloads',
-    render: (text, record, index) => (
-      <React.Fragment>
-        {record.counters.downloads}{' '}
-        <a
-          href={record.audio_link}
-          onClick={() => {
-            this.handleUpdate(record);
-          }}
-          download="download">
-          <i
-            style={{ cursor: 'pointer' }}
-            className="fa fa-download"
-            aria-hidden="true"
-          />
-        </a>
-      </React.Fragment>
-    )
-  }
+	{
+		title: 'Title',
+		dataIndex: renderHTML(
+			reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+		),
+		render: (text, record, index) => (
+			<Link
+				to={{
+					pathname: '/audioDetails',
+					state: record
+				}}>
+				{renderHTML(
+					reactCookie.load('languageCode') === 'en'
+						? record.en.title
+						: record.ru.title
+				)}
+			</Link>
+		)
+	},
+	{
+		title: 'Audio',
+		dataIndex: 'audio_link',
+		render: (text, record, index) => (
+			<audio
+				controls
+				controlsList="nodownload"
+				onPlay={() => {
+					this.updateAudioPlayCount(record.uuid);
+				}}>
+				<source src={renderHTML(record.audio_link)} type="audio/mpeg" />
+			</audio>
+		)
+	},
+	{
+		title: 'Downloads',
+		dataIndex: 'counters.downloads',
+		render: (text, record, index) => (
+			<React.Fragment>
+				{record.counters.downloads}{' '}
+				<a
+					href={record.audio_link}
+					onClick={() => {
+						this.handleUpdate(record);
+					}}
+					download="download">
+					<Icon type="cloud-download" style={{ fontSize: '1.5rem' }} />
+				</a>
+			</React.Fragment>
+		)
+	}
 ];
 
 const defaultPageSize = 20;
@@ -117,8 +113,8 @@ export class AudioList extends Component {
 		pagination.total = this.props.lecturesDetails.totalLectures;
 		pagination.defaultPageSize = defaultPageSize;
 		pagination.current = this.props.lecturesDetails.currentPage || 1;
-    // console.log('pagination from cdm: ', pagination);
-    
+		// console.log('pagination from cdm: ', pagination);
+
 		this.setState({
 			lectures: this.props.lecturesDetails.lectures,
 			currentPage: this.props.lecturesDetails.currentPage,
@@ -209,8 +205,6 @@ export class AudioList extends Component {
 
 		// console.log('lectures from state: ', this.state.lectures);
 
-		
-
 		return (
 			<div>
 				<section className="bg-gray-100">
@@ -221,28 +215,7 @@ export class AudioList extends Component {
 				</section>
 				{!this.state.isUserLogin ? (
 					<div>
-						<div style={{ textAlign: 'center' }}>
-							<p className="bookingForm">
-								<Translate>
-									{({ translate }) => translate('HOME.audio')}
-								</Translate>
-								<i
-									onClick={() => this.onClickIcon(false)}
-									className={class_icon_search}
-									aria-hidden="true"
-								/>
-								<i
-									onClick={() => this.onClickIcon(true)}
-									className={class_icon_close}
-									aria-hidden="true"
-								/>
-							</p>
-						</div>
-						<div className="container">
-							<Collapse isOpened={!this.state.iconSearch}>
-								<SearchFilter searchData={this.searchData} />
-							</Collapse>
-
+						<div className="container mt-5">
 							<div className="row justify-content-center align-items-center">
 								<div className="col-lg-10">
 									<Breadcrumb>
@@ -253,91 +226,135 @@ export class AudioList extends Component {
 									</Breadcrumb>
 								</div>
 							</div>
+
+							<div
+								className="row justify-content-center"
+								style={{ marginTop: '0', marginBottom: '0' }}>
+								<div className="col-lg-10">
+									<div style={{ textAlign: 'center' }}>
+										<Button
+											type="primary"
+											icon="search"
+											shape="circle"
+											onClick={() => this.onClickIcon(!this.state.iconSearch)}
+										/>
+
+										{/* <p className="">
+											<Translate>
+												{({ translate }) => translate('HOME.audio')}
+											</Translate>
+											<i
+												onClick={() => this.onClickIcon(false)}
+												className={class_icon_search}
+												aria-hidden="true"
+											/>
+											<i
+												onClick={() => this.onClickIcon(true)}
+												className={class_icon_close}
+												aria-hidden="true"
+											/>
+										</p> */}
+									</div>
+								</div>
+							</div>
+
+							{!this.state.iconSearch && (
+								<div
+									className="row justify-content-center"
+									style={{ marginTop: '0' }}>
+									<div className="col-lg-10">
+										<Collapse isOpened={!this.state.iconSearch}>
+											<SearchFilter searchData={this.searchData} />
+										</Collapse>
+									</div>
+								</div>
+							)}
+
 							<div className="row justify-content-center">
 								<div className="col-lg-10">
-									{/* <div className="table-responsive wow fadeIn"> */}
-									{this.state.lectures.length > 0 ? (
-										// <table className="table table-hover table-job-positions videoTable">
-										// 	<thead>
-										// 		<tr>
-										// 			<th className="align">Title</th>
-										// 			<th className="align">Audio</th>
-										// 			<th className="align">Downloads</th>
-										// 		</tr>
-										// 	</thead>
-										// 	<tbody>
-										// 		{this.state.lectures.map((item, key) => {
-										// 			return (
-										// 				<tr key={key}>
-										// 					<td className="titleColor">
-										// 						{' '}
-										// 						<Link
-										// 							to={{
-										// 								pathname: '/audioDetails',
-										// 								state: item
-										// 							}}>
-										// 							{renderHTML(
-										// 								reactCookie.load('languageCode') === 'en'
-										// 									? item.en.title
-										// 									: item.ru.title
-										// 							)}
-										// 						</Link>
-										// 					</td>
+									<div className="table-responsive wow fadeIn">
+										{this.state.lectures.length > 0 ? (
+											// <table className="table table-hover table-job-positions videoTable">
+											// 	<thead>
+											// 		<tr>
+											// 			<th className="align">Title</th>
+											// 			<th className="align">Audio</th>
+											// 			<th className="align">Downloads</th>
+											// 		</tr>
+											// 	</thead>
+											// 	<tbody>
+											// 		{this.state.lectures.map((item, key) => {
+											// 			return (
+											// 				<tr key={key}>
+											// 					<td className="titleColor">
+											// 						{' '}
+											// 						<Link
+											// 							to={{
+											// 								pathname: '/audioDetails',
+											// 								state: item
+											// 							}}>
+											// 							{renderHTML(
+											// 								reactCookie.load('languageCode') === 'en'
+											// 									? item.en.title
+											// 									: item.ru.title
+											// 							)}
+											// 						</Link>
+											// 					</td>
 
-										// 					<td>
-										// 						<audio
-										// 							controls
-										// 							controlsList="nodownload"
-										// 							onPlay={() => {
-										// 								this.updateAudioPlayCount(item.uuid);
-										// 							}}>
-										// 							<source
-										// 								src={renderHTML(item.audio_link)}
-										// 								type="audio/mpeg"
-										// 							/>
-										// 						</audio>
-										// 					</td>
+											// 					<td>
+											// 						<audio
+											// 							controls
+											// 							controlsList="nodownload"
+											// 							onPlay={() => {
+											// 								this.updateAudioPlayCount(item.uuid);
+											// 							}}>
+											// 							<source
+											// 								src={renderHTML(item.audio_link)}
+											// 								type="audio/mpeg"
+											// 							/>
+											// 						</audio>
+											// 					</td>
 
-										// 					<td>
-										// 						{item.counters.downloads}{' '}
-										// 						<a
-										// 							href={item.audio_link}
-										// 							onClick={() => {
-										// 								this.handleUpdate(item);
-										// 							}}
-										// 							download="download">
-										// 							<i
-										// 								style={{ cursor: 'pointer' }}
-										// 								className="fa fa-download"
-										// 								aria-hidden="true"
-										// 							/>
-										// 						</a>
-										// 					</td>
-										// 				</tr>
-										// 			);
-										// 		})}
-										// 	</tbody>
-										// </table>
-										<div>
-											<Table
-												columns={columns}
-												rowKey={(record) => record.uuid}
-												dataSource={this.props.lecturesDetails.lectures}
-												pagination={this.state.pagination}
-												loading={this.state.loading}
-												onChange={this.handleTableChange}
-											/>
-										</div>
-									) : (
-										<div style={{ textAlign: 'center' }}>
-											<p className="bookingForm">
-												{this.state.isSearch
-													? 'No Record Found'
-													: 'Hare Krishna...'}
-											</p>
-										</div>
-									)}
-									{/* </div> */}
+											// 					<td>
+											// 						{item.counters.downloads}{' '}
+											// 						<a
+											// 							href={item.audio_link}
+											// 							onClick={() => {
+											// 								this.handleUpdate(item);
+											// 							}}
+											// 							download="download">
+											// 							<i
+											// 								style={{ cursor: 'pointer' }}
+											// 								className="fa fa-download"
+											// 								aria-hidden="true"
+											// 							/>
+											// 						</a>
+											// 					</td>
+											// 				</tr>
+											// 			);
+											// 		})}
+											// 	</tbody>
+											// </table>
+											<div>
+												<Table
+													columns={columns}
+													rowKey={(record) => record.uuid}
+													dataSource={this.props.lecturesDetails.lectures}
+													pagination={this.state.pagination}
+													loading={this.state.loading}
+													onChange={this.handleTableChange}
+												/>
+											</div>
+										) : (
+											<div style={{ textAlign: 'center' }}>
+												<p className="bookingForm">
+													{this.state.isSearch
+														? 'No Record Found'
+														: 'Hare Krishna...'}
+												</p>
+											</div>
+										)}
+									</div>
 								</div>
 							</div>
 							{/* </div> */}

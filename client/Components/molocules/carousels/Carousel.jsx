@@ -22,7 +22,7 @@ export class Carousel2 extends Component {
 
 		return (
 			<div>
-				<Carousel autoplay={true} arrows={true} autoplaySpeed={2000}>
+				<Carousel autoplay={true} arrows={true} autoplaySpeed={3000}>
 					<div>
 						<img
 							src="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_portrait_no_logo_rJorBWrIN.jpg"
