@@ -17,8 +17,7 @@ Gallery.add({
 	photos: { type: Types.TextArray },
 	publish_date: { type: String },
 	translation_required: { type: Boolean, default: true },
-	audit: {type: Types.TextArray }
+	audit: { type: Types.TextArray },
 });
-
 
 Gallery.register();
