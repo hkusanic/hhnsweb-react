@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Table } from 'antd';
 import Auth from '../../../utils/Auth';
 import { connect } from 'react-redux';
 import {
@@ -15,6 +16,38 @@ import { Translate } from 'react-localize-redux';
 
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
+const columns = [
+	{
+		title: 'Title',
+		dataIndex: renderHTML(
+			reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+		),
+		render: (text, record, index) => (
+			<Link
+				to={{
+					pathname: '/transcriptionDetails',
+					state: record
+				}}>
+				{renderHTML(
+					reactCookie.load('languageCode') === 'en'
+						? record.en.title
+						: record.ru.title
+				)}
+			</Link>
+		)
+	},
+	{
+		title: 'View',
+		dataIndex: renderHTML(
+			reactCookie.load('languageCode') === 'en'
+				? 'counters.en_transcription_view'
+				: 'counters.ru_transcription_view'
+		)
+	}
+];
+
+const defaultPageSize = 20;
+
 export class Transcritpion extends Component {
 	constructor(props) {
 		super(props);
@@ -29,34 +62,75 @@ export class Transcritpion extends Component {
 				page: 1,
 				transcriptions: true
 			},
-			isSearch: false
+			isSearch: false,
+			data: [],
+			pagination: {},
+			loading: false
 		};
 	}
+
+	handleTableChange = (pagination, filters, sorter) => {
+		// console.log('pagination from htc: ', pagination);
+		const pager = { ...this.state.pagination };
+		pager.current = pagination.current;
+		pager.total = this.props.lecturesDetails.totalLectures;
+		this.setState({
+			pagination: pager
+		});
+
+		let body = { ...this.state.body };
+		body.page = pagination.current;
+		// console.log('body from htc: ', body);
+		this.props.searchLecture(body);
+	};
 
 	componentDidMount() {
 		let body = { ...this.state.body };
 		body.page = this.props.lecturesDetails.transcriptionsCurrentPage || 1;
 
+    this.setState({ loading: true });
+		const pagination = { ...this.state.pagination };
+		pagination.total = this.props.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current =
+			this.props.lecturesDetails.transcriptionsCurrentPage || 1;
+
 		const isUserLogin = Auth.isUserAuthenticated();
 		this.setState({
-			isUserLogin
+			isUserLogin,
+			loading: false,
+			pagination
 		});
 		this.props.searchLecture(body);
 	}
 
 	componentWillReceiveProps(nextProps) {
+		let body = { ...this.state.body };
+		body.page = nextProps.lecturesDetails.transcriptionsCurrentPage;
+		body.video = true;
+
+		const pagination = { ...this.state.pagination };
+		pagination.total = nextProps.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = nextProps.lecturesDetails.transcriptionsCurrentPage;
+
 		this.setState({
 			transcriptions: nextProps.lecturesDetails.lectures,
-			currentPage: nextProps.lecturesDetails.currentPage,
-			totalItem: nextProps.lecturesDetails.totalLectures
+			currentPage: nextProps.lecturesDetails.transcriptionsCurrentPage,
+			totalItem: nextProps.lecturesDetails.totalLectures,
+			pagination
 		});
+
+		if (nextProps.lecturesDetails.Count) {
+			this.props.searchLecture(body);
+		}
 	}
 
-	handlePageChange = (pageNumber) => {
-		let body = Object.assign({}, this.state.body);
-		body.page = pageNumber;
-		this.props.searchLecture(body);
-	};
+	// handlePageChange = (pageNumber) => {
+	// 	let body = Object.assign({}, this.state.body);
+	// 	body.page = pageNumber;
+	// 	this.props.searchLecture(body);
+	// };
 
 	onClickIcon = (value) => {
 		this.setState({ iconSearch: value });
@@ -76,6 +150,8 @@ export class Transcritpion extends Component {
 		let class_icon_close = this.state.iconSearch
 			? 'display-none-icon'
 			: 'icon-search fa fa-close';
+
+		// console.log('trans ====> ', this.props.lecturesDetails.lectures);
 
 		return (
 			<div>
@@ -112,50 +188,62 @@ export class Transcritpion extends Component {
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
 										</Link>
-										&nbsp;/&nbsp;<Breadcrumb.Item active>Transcriptions</Breadcrumb.Item>
+										&nbsp;/&nbsp;
+										<Breadcrumb.Item active>Transcriptions</Breadcrumb.Item>
 									</Breadcrumb>
 								</div>
 							</div>
 
-							<div className="row">
-								<div className="col-lg-12">
+							<div className="row justify-content-center">
+								<div className="col-lg-10">
 									<div className="table-responsive wow fadeIn">
 										{this.state.transcriptions.length > 0 ? (
-											<table className="table table-hover table-job-positions videoTable">
-												<thead>
-													<tr>
-														<th className="align">Title</th>
-														<th className="align">View</th>
-													</tr>
-												</thead>
-												<tbody>
-													{this.state.transcriptions.map((item, key) => {
-														return (
-															<tr key={key}>
-																<td className="titleColor dataRowAlign">
-																	{' '}
-																	<Link
-																		to={{
-																			pathname: '/transcriptionDetails',
-																			state: item
-																		}}>
-																		{renderHTML(
-																			reactCookie.load('languageCode') === 'en'
-																				? item.en.title
-																				: item.ru.title
-																		)}
-																	</Link>
-																</td>
-																<td>
-																	{reactCookie.load('languageCode') === 'en'
-																		? item.counters.en_transcription_view
-																		: item.counters.ru_transcription_view}
-																</td>
-															</tr>
-														);
-													})}
-												</tbody>
-											</table>
+											// <table className="table table-hover table-job-positions videoTable">
+											// 	<thead>
+											// 		<tr>
+											// 			<th className="align">Title</th>
+											// 			<th className="align">View</th>
+											// 		</tr>
+											// 	</thead>
+											// 	<tbody>
+											// 		{this.state.transcriptions.map((item, key) => {
+											// 			return (
+											// 				<tr key={key}>
+											// 					<td className="titleColor dataRowAlign">
+											// 						{' '}
+											// 						<Link
+											// 							to={{
+											// 								pathname: '/transcriptionDetails',
+											// 								state: item
+											// 							}}>
+											// 							{renderHTML(
+											// 								reactCookie.load('languageCode') === 'en'
+											// 									? item.en.title
+											// 									: item.ru.title
+											// 							)}
+											// 						</Link>
+											// 					</td>
+											// 					<td>
+											// 						{reactCookie.load('languageCode') === 'en'
+											// 							? item.counters.en_transcription_view
+											// 							: item.counters.ru_transcription_view}
+											// 					</td>
+											// 				</tr>
+											// 			);
+											// 		})}
+											// 	</tbody>
+                      // </table>
+                      
+                      <div>
+												<Table
+													columns={columns}
+													rowKey={(record) => record.uuid}
+													dataSource={this.props.lecturesDetails.lectures}
+													pagination={this.state.pagination}
+													loading={this.state.loading}
+													onChange={this.handleTableChange}
+												/>
+											</div>
 										) : (
 											<div style={{ textAlign: 'center' }}>
 												<p className="bookingForm">
@@ -169,7 +257,7 @@ export class Transcritpion extends Component {
 								</div>
 							</div>
 						</div>
-						<div className="padLeft">
+						{/* <div className="padLeft">
 							{this.state.transcriptions.length > 0 ? (
 								<Pagination
 									className="paginationStyle"
@@ -186,7 +274,7 @@ export class Transcritpion extends Component {
 									onChange={this.handlePageChange}
 								/>
 							) : null}
-						</div>
+						</div> */}
 					</div>
 				) : (
 					<div style={{ textAlign: 'center' }}>

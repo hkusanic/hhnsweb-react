@@ -22,6 +22,8 @@
     "pug": "^2.0.3",
     "query-string": "^6.2.0",
     "rand-token": "^0.4.0",
+    "rc-banner-anim": "^2.2.5",
+    "rc-tween-one": "^2.4.1",
     "react": "^16.8.4",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-bootstrap-table-next": "^3.0.0",

@@ -124,6 +124,7 @@ exports = module.exports = function (app) {
 						<link rel="stylesheet" href="../css/cus.css">
 						<link rel="stylesheet" href="../css/mobilevalidation.css">
 						<link rel="stylesheet" href="../css/codeFlag.css">
+						<link rel="stylesheet" href="../css/antd.css">
 						<link rel="stylesheet" href="../css/style.css" id="main-styles-link">
 						<script type="text/javascript" src="../js/bundle.js"></script>
 						<script src="../js/core.min.js"></script>

@@ -15,7 +15,7 @@ export class BiographyDetails extends Component {
 		// if (!this.props.location.state) {
 		// 	return <div>Error Occured..........</div>;
 		// }
-		console.log('from details: ', this.props.history);
+		// console.log('from details: ', this.props.history);
 		return (
 			<div>
 				<section className="section section-lg">

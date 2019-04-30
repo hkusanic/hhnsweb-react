@@ -12,27 +12,17 @@ export class Carousel2 extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
-
-		this.carousel = React.createRef();
 	}
 	componentDidMount() {
 		script();
 	}
 
 	render() {
-		const customProps = {
-			dots: true,
-			infinite: true,
-			speed: 500,
-			slidesToShow: 1,
-			slidesToScroll: 1
-		};
-
-		console.log('history from Carousel: ', this.props.history);
+		// console.log('history from Carousel: ', this.props.history);
 
 		return (
 			<div>
-				<Carousel ref={(node) => (this.carousel = node)} {...customProps}>
+				<Carousel autoplay={true} arrows={true} autoplaySpeed={2000}>
 					<div>
 						<img
 							src="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_portrait_no_logo_rJorBWrIN.jpg"

@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 import reactCookie from 'react-cookies';
 import renderHTML from 'react-render-html';
+import TweenOne from 'rc-tween-one';
+import BannerAnim, { Element } from 'rc-banner-anim';
 
 import { Card } from 'antd';
 const { Meta } = Card;
@@ -64,7 +66,7 @@ export class Biography extends Component {
 			<section className="section section-lg text-center">
 				<div className="container">
 					<div className="row row-50">
-						<Card
+						{/* <Card
 							hoverable
 							style={{ width: 440 }}
 							cover={
@@ -94,9 +96,9 @@ export class Biography extends Component {
 								onClick={() => this.redirect('1')}>
 								Read More...
 							</Link>
-						</Card>
+						</Card> */}
 
-						<Card
+						{/* <Card
 							hoverable
 							style={{ width: 440 }}
 							cover={
@@ -126,21 +128,25 @@ export class Biography extends Component {
 								onClick={() => this.redirect('2')}>
 								Read More...
 							</Link>
-						</Card>
-						{/* <SingleBiography
+            </Card> */}
+
+						
+
+						<SingleBiography
 							img="https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png"
 							title_en={DATA.BIOGRAPHY.one_title_en}
 							title_ru={DATA.BIOGRAPHY.one_title_ru}
 							content_en={DATA.BIOGRAPHY.one_content_en}
 							content_ru={DATA.BIOGRAPHY.one_content_ru}
-						/> */}
-						{/* <SingleBiography
+              />
+              
+						<SingleBiography
 							img="https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png"
 							title_en={DATA.BIOGRAPHY.two_title_en}
 							title_ru={DATA.BIOGRAPHY.two_title_ru}
 							content_en={DATA.BIOGRAPHY.two_content_en}
 							content_ru={DATA.BIOGRAPHY.two_content_ru}
-						/> */}
+						/>
 					</div>
 				</div>
 			</section>
