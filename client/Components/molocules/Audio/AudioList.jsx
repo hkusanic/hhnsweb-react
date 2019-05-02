@@ -217,7 +217,7 @@ export class AudioList extends Component {
 					<div>
 						<div className="container mt-5">
 							<div className="row justify-content-center align-items-center">
-								<div className="col-lg-10">
+								<div className="col-lg-12">
 									<Breadcrumb>
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -230,7 +230,7 @@ export class AudioList extends Component {
 							<div
 								className="row justify-content-center"
 								style={{ marginTop: '0', marginBottom: '0' }}>
-								<div className="col-lg-10">
+								<div className="col-lg-12">
 									<div style={{ textAlign: 'center' }}>
 										<Button
 											type="primary"
@@ -262,7 +262,7 @@ export class AudioList extends Component {
 								<div
 									className="row justify-content-center"
 									style={{ marginTop: '0' }}>
-									<div className="col-lg-10">
+									<div className="col-lg-12">
 										<Collapse isOpened={!this.state.iconSearch}>
 											<SearchFilter searchData={this.searchData} />
 										</Collapse>
@@ -271,7 +271,7 @@ export class AudioList extends Component {
 							)}
 
 							<div className="row justify-content-center">
-								<div className="col-lg-10">
+								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
 										{this.state.lectures.length > 0 ? (
 											// <table className="table table-hover table-job-positions videoTable">
