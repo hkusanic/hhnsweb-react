@@ -52,8 +52,9 @@ const columns = [
 		dataIndex: 'counters.downloads',
 		render: (text, record, index) => (
 			<React.Fragment>
-				{record.counters.downloads}{' '}
-				<a
+				<span className="downloadDetails">{record.counters.downloads}</span>
+        <a
+          className="downloadIcon"
 					href={record.audio_link}
 					onClick={() => {
 						this.handleUpdate(record);
@@ -149,13 +150,6 @@ export class AudioList extends Component {
 		}
 	}
 
-	// handlePageChange = (pageNumber) => {
-	// 	console.log(pageNumber);
-	// 	let body = Object.assign({}, this.state.body);
-	// 	body.page = pageNumber;
-	// 	this.props.searchLecture(body);
-	// };
-
 	showing100Characters = (sentence) => {
 		var result = sentence;
 		var resultArray = result.split(' ');
@@ -238,22 +232,6 @@ export class AudioList extends Component {
 											shape="circle"
 											onClick={() => this.onClickIcon(!this.state.iconSearch)}
 										/>
-
-										{/* <p className="">
-											<Translate>
-												{({ translate }) => translate('HOME.audio')}
-											</Translate>
-											<i
-												onClick={() => this.onClickIcon(false)}
-												className={class_icon_search}
-												aria-hidden="true"
-											/>
-											<i
-												onClick={() => this.onClickIcon(true)}
-												className={class_icon_close}
-												aria-hidden="true"
-											/>
-										</p> */}
 									</div>
 								</div>
 							</div>
@@ -274,67 +252,6 @@ export class AudioList extends Component {
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
 										{this.state.lectures.length > 0 ? (
-											// <table className="table table-hover table-job-positions videoTable">
-											// 	<thead>
-											// 		<tr>
-											// 			<th className="align">Title</th>
-											// 			<th className="align">Audio</th>
-											// 			<th className="align">Downloads</th>
-											// 		</tr>
-											// 	</thead>
-											// 	<tbody>
-											// 		{this.state.lectures.map((item, key) => {
-											// 			return (
-											// 				<tr key={key}>
-											// 					<td className="titleColor">
-											// 						{' '}
-											// 						<Link
-											// 							to={{
-											// 								pathname: '/audioDetails',
-											// 								state: item
-											// 							}}>
-											// 							{renderHTML(
-											// 								reactCookie.load('languageCode') === 'en'
-											// 									? item.en.title
-											// 									: item.ru.title
-											// 							)}
-											// 						</Link>
-											// 					</td>
-
-											// 					<td>
-											// 						<audio
-											// 							controls
-											// 							controlsList="nodownload"
-											// 							onPlay={() => {
-											// 								this.updateAudioPlayCount(item.uuid);
-											// 							}}>
-											// 							<source
-											// 								src={renderHTML(item.audio_link)}
-											// 								type="audio/mpeg"
-											// 							/>
-											// 						</audio>
-											// 					</td>
-
-											// 					<td>
-											// 						{item.counters.downloads}{' '}
-											// 						<a
-											// 							href={item.audio_link}
-											// 							onClick={() => {
-											// 								this.handleUpdate(item);
-											// 							}}
-											// 							download="download">
-											// 							<i
-											// 								style={{ cursor: 'pointer' }}
-											// 								className="fa fa-download"
-											// 								aria-hidden="true"
-											// 							/>
-											// 						</a>
-											// 					</td>
-											// 				</tr>
-											// 			);
-											// 		})}
-											// 	</tbody>
-											// </table>
 											<div>
 												<Table
 													columns={columns}
@@ -357,22 +274,7 @@ export class AudioList extends Component {
 									</div>
 								</div>
 							</div>
-							{/* </div> */}
 						</div>
-						{/* <div className="padLeft">
-							<Pagination
-								className="paginationStyle"
-								innerClass="pagination"
-								activeClass="page-item active"
-								itemClass="page-item"
-								linkClass="page-link button-winona"
-								activePage={this.props.lecturesDetails.currentPage}
-								itemsCountPerPage={20}
-								totalItemsCount={this.state.totalItem}
-								pageRangeDisplayed={5}
-								onChange={this.handlePageChange}
-							/>
-						</div> */}
 					</div>
 				) : (
 					<div style={{ textAlign: 'center' }}>
