@@ -6,13 +6,17 @@ import { updateCounters } from '../../../actions/lectureActions';
 // eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
+import { Link } from 'react-router-dom';
+
 export class SummariesDetails extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
-	componentDidMount () {
+	componentDidMount() {
 		let body = {
-			uuid: this.props.location.state.uuid,
+			uuid: this.props.location.state.uuid
 		};
 		if (reactCookie.load('languageCode') === 'en') {
 			body.en_summary_view = true;
@@ -22,8 +26,7 @@ export class SummariesDetails extends React.Component {
 		this.props.updateCounters(body);
 	}
 
-
-	render () {
+	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -34,6 +37,18 @@ export class SummariesDetails extends React.Component {
 						<div className="row row-50">
 							<div className="col-lg-12">
 								<article className="post-creative">
+									<Breadcrumb>
+										<Link to=" " onClick={() => this.props.history.push('/')}>
+											<Breadcrumb.Item>Home</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;
+										<Link to=" " onClick={() => this.props.history.goBack()}>
+											<Breadcrumb.Item>Summaries</Breadcrumb.Item>
+										</Link>
+										&nbsp;/&nbsp;
+										<Breadcrumb.Item active>Summary Details</Breadcrumb.Item>
+									</Breadcrumb>
+
 									<h3 className="post-creative-title dataTitle">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
@@ -187,7 +202,7 @@ export class SummariesDetails extends React.Component {
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>
-								<Comments lecture_uuid={this.props.location.state.uuid}/>
+								<Comments lecture_uuid={this.props.location.state.uuid} />
 							</div>
 							<div className="col-lg-4" />
 						</div>
@@ -198,16 +213,16 @@ export class SummariesDetails extends React.Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
-		Count: state.lectureReducer.Count,
+		Count: state.lectureReducer.Count
 	};
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
-		updateCounters: body => {
+		updateCounters: (body) => {
 			dispatch(updateCounters(body));
-		},
+		}
 	};
 };
 

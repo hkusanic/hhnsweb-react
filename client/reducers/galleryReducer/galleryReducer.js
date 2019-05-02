@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const galleryReducer = (state = initialState, action) => {
-	console.log('action =====>>>>>>', action);
+	// console.log('action =====>>>>>>', action);
 	switch (action.type) {
 		case types.GET_GALLERY:
 			state = {
