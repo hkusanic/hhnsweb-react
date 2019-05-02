@@ -7,8 +7,8 @@ import {
 	getStaticGalleryList,
 	getSubGalleryByGallery,
 } from '../../../actions/gallery';
+import { handleFilterGallery } from '../../../utils/custom';
 import reactCookie from 'react-cookies';
-
 
 export class Gallery extends React.Component {
 	constructor (props) {
@@ -26,14 +26,17 @@ export class Gallery extends React.Component {
 	}
 
 	render () {
+		const { galleryReducer } = this.props;
+		console.log('galleryReducer=====>>>.', galleryReducer);
+		let { mainGallery } = galleryReducer;
+		mainGallery = handleFilterGallery(mainGallery);
 		return (
 			<div>
 				<section class="section-lg text-center bg-gray-100">
 					<div class="container">
 						<div class="row row-50 row-lg-70 offset-top-2">
-							{this.props.galleryReducer.mainGallery
-							&& this.props.galleryReducer.mainGallery.length > 0
-								? this.props.galleryReducer.mainGallery.map(item => {
+							{mainGallery && mainGallery.length > 0
+								? mainGallery.map(item => {
 									return (
 										<div class="col-sm-6 col-lg-3 wow-outer">
 											<article
@@ -56,7 +59,9 @@ export class Gallery extends React.Component {
 														<Link
 															to={{ pathname: '/subGallery', state: item }}
 														>
-															{reactCookie.load('languageCode') === 'en' ? item.name_en : item.name_ru}
+															{reactCookie.load('languageCode') === 'en'
+																? item.name_en
+																: item.name_ru}
 														</Link>
 													</h5>
 												</div>
