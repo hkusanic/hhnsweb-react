@@ -1,5 +1,6 @@
 var keystone = require('keystone');
 let modelHelper = require('../helpers/modelHelper');
+var path = require('path');
 
 
 // Then to get access to our API route we will use importer
@@ -106,42 +107,49 @@ exports = module.exports = function (app) {
 	// app.post('/api/blog/generateUploadUrl', multipartMiddleware,routes.api.blog.generateUploadUrl );
 	// Set up the default app route to  http://localhost:3000/index.htmli
 	app.get('/*', function (req, res) {
-		keystone.set('updateDatabase', false);
-		// Render some simple boilerplate html
-		function renderFullPage (result) {
-			// Note the div class name here, we will use that as a hook for our React code
-			// static menu
-			return `
-				<!doctype html>
-				<html>
-					<head>
-						<title>H.H. Niranjana Swami - Official web-site</title>
-						<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Work+Sans:300,500,700,800%7COswald:300,400,500">
-						<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-						<link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
-						<link rel="stylesheet" href="../css/bootstrap.css">
-						<link rel="stylesheet" href="../css/fonts.css">
-						<link rel="stylesheet" href="../css/custom.css">
-						<link rel="stylesheet" href="../css/cus.css">
-						<link rel="stylesheet" href="../css/mobilevalidation.css">
-						<link rel="stylesheet" href="../css/codeFlag.css">
-						<link rel="stylesheet" href="../css/antd.css">
-						<link rel="stylesheet" href="../css/style.css" id="main-styles-link">
-						<script type="text/javascript" src="../js/bundle.js"></script>
-						<script src="../js/core.min.js"></script>
-					</head>
-					<body>
-						<div id="react-container" />
-					</body>
-				</html>
-				`;
-		}
+        keystone.set('updateDatabase', false);
+        // Render some simple boilerplate html
+        console.log("====>", req.originalUrl);
+    
+        function renderFullPage (result) {
+            // Note the div class name here, we will use that as a hook for our React code
+            // static menu
+            return `
+                <!doctype html>
+                <html>
+                    <head>
+                        <title>H.H. Niranjana Swami - Official web-site</title>
+                        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Work+Sans:300,500,700,800%7COswald:300,400,500">
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                        <link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
+                        <link rel="stylesheet" href="../css/bootstrap.css">
+                        <link rel="stylesheet" href="../css/fonts.css">
+                        <link rel="stylesheet" href="../css/custom.css">
+                        <link rel="stylesheet" href="../css/cus.css">
+                        <link rel="stylesheet" href="../css/mobilevalidation.css">
+                        <link rel="stylesheet" href="../css/codeFlag.css">
+                        <link rel="stylesheet" href="../css/style.css" id="main-styles-link">
+                        <script type="text/javascript" src="../js/bundle.js"></script>
+                        <script src="../js/core.min.js"></script>
+                    </head>
+                    <body>
+                        <div id="react-container" />
+                    </body>
+                </html>
+                `;
+        }
 
-		modelHelper.getStaticNavigation().then((result) => {
-			console.log('KEYSTONE STATIC MENU RESTORED');
-			console.dir(result);
-			// Send the html boilerplate
-			res.send(renderFullPage(result));
-		});
-	});
+        modelHelper.getStaticNavigation().then((result) => {
+            console.log('KEYSTONE STATIC MENU RESTORED');
+            console.dir(result);
+            // Send the html boilerplate
+            if(req.originalUrl.includes("/admin")){
+                res.sendFile(path.join(__dirname, '../../admin/', 'index1.html'));
+            }
+            else
+            res.send(renderFullPage(result));
+        });
+
+    
+    });
 };
