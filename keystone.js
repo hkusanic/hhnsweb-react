@@ -14,6 +14,7 @@ keystone.init({
 	'static': [
 		'./server/public',
 		'./uploads',
+		'./admin'
 	],
 	'file limit': '150MB',
 	'cors allow origin': true,

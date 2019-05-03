@@ -1,106 +1,163 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Pagination } from 'antd';
 import SingleBlog from '../../Components/molocules/SingleBlog/SIngleBlog';
-import Pagination from 'react-js-pagination';
+// import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
 import { getBlogs, getBlog } from '../../actions/blogActions';
-import Auth from "../../utils/Auth";
+import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
+const defaultPageSize = 20;
 
 export class Blogs extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            totalItem: null,
-            currentPage: null,
-            page: null,
-            blogs: [],
-            isUserLogin: false
-        }
+	constructor(props) {
+		super(props);
+		this.state = {
+			totalItem: null,
+			currentPage: null,
+			page: null,
+			blogs: [],
+			isUserLogin: false,
+			pagination: {}
+		};
 
-        this.props.getBlog({ "uuid": "02d47a4e-2dfc-11e9-b210-d663bd873d93" });
-    }
+		this.props.getBlog({ uuid: '02d47a4e-2dfc-11e9-b210-d663bd873d93' });
+	}
 
-    componentDidMount() {
-        const isUserLogin = Auth.isUserAuthenticated();
-        this.setState({
-            totalItem: this.props.blogsDetails.totalBlogs,
-            blogs: this.props.blogsDetails.blogs,
-            currentPage: this.props.blogsDetails.currentPage,
-            isUserLogin
-        })
-        this.props.getBlogs(1);
-    }
+	handleTableChange = (pagination, filters, sorter) => {
+		// console.log('pagination from blog: ', pagination);
+		const pager = { ...this.state.pagination };
+		pager.current = pagination;
+		pager.total = this.props.blogsDetails.totalBlogs;
+		this.setState({
+			pagination: pager
+		});
 
-    componentWillReceiveProps(nextprops) {
-        const isUserLogin = Auth.isUserAuthenticated();
-        this.setState({
-            totalItem: nextprops.blogsDetails.totalBlogs,
-            blogs: nextprops.blogsDetails.blogs,
-            currentPage: nextprops.blogsDetails.currentPage,
-            isUserLogin
-        })
-    }
+		this.props.getBlogs(pagination);
+	};
 
-    handlePageChange = (pageNumber) => {
-        this.props.getBlogs(pageNumber);
-    }
+	componentDidMount() {
+		const pagination = { ...this.state.pagination };
+		pagination.total = this.props.blogsDetails.totalBlogs;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = this.props.blogsDetails.currentPage || 1;
 
-    render() {
-        return (
-            <div>
-                <section className="bg-gray-100">
-                    <img  className="img-banner-width" src="https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png" />
-                </section>
-                {
-                    !this.state.isUserLogin ?
-                        <section>
-                            <div style={{ textAlign: 'center' }}>
-                                <p className="bookingForm">
-                                    <Translate>{({ translate }) => translate('HOME.blog')}</Translate>
-                                </p>
-                            </div>
-                            <div className="container centerAlign">
-                                <div className="row row-50 row-xxl-70">
-                                    {this.state.blogs.map((item, key) => {
-                                        return <SingleBlog blog={item} key={key} />
-                                    })}
-                                </div>
-                                <Pagination
-                                    className="paginationStyle"
-                                    innerClass='pagination'
-                                    activeClass='page-item active'
-                                    itemClass='page-item'
-                                    linkClass='page-link button-winona'
-                                    activePage={this.state.currentPage}
-                                    itemsCountPerPage={4}
-                                    totalItemsCount={this.state.totalItem}
-                                    pageRangeDisplayed={5}
-                                    onChange={this.handlePageChange}
-                                />
-                            </div>
-                        </section>
-                        : ''
-                }
-            </div>
-        )
-    }
+		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({
+			totalItem: this.props.blogsDetails.totalBlogs,
+			blogs: this.props.blogsDetails.blogs,
+			currentPage: this.props.blogsDetails.currentPage,
+			isUserLogin,
+			pagination
+		});
+		this.props.getBlogs(this.props.blogsDetails.currentPage || 1);
+	}
+
+	componentWillReceiveProps(nextprops) {
+		const isUserLogin = Auth.isUserAuthenticated();
+
+		const pagination = { ...this.state.pagination };
+		pagination.total = nextprops.blogsDetails.totalBlogs;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = nextprops.blogsDetails.currentPage;
+
+		this.setState({
+			totalItem: nextprops.blogsDetails.totalBlogs,
+			blogs: nextprops.blogsDetails.blogs,
+			currentPage: nextprops.blogsDetails.currentPage,
+			isUserLogin,
+			pagination
+		});
+	}
+
+	// handlePageChange = (pageNumber) => {
+	// 	this.props.getBlogs(pageNumber);
+	// };
+
+	render() {
+		console.log('blog ===>', this.props.blogsDetails);
+
+		return (
+			<div>
+				<section className="bg-gray-100">
+					<img
+						className="img-banner-width"
+						src="https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png"
+					/>
+				</section>
+				{!this.state.isUserLogin ? (
+					<section>
+						<div style={{ textAlign: 'center' }}>
+							<p className="bookingForm">
+								<Translate>
+									{({ translate }) => translate('HOME.blog')}
+								</Translate>
+							</p>
+						</div>
+						<div className="container centerAlign">
+							<Breadcrumb>
+								<Link to=" " onClick={() => this.props.history.push('/')}>
+									<Breadcrumb.Item>Home</Breadcrumb.Item>
+								</Link>
+								&nbsp;/&nbsp;<Breadcrumb.Item active>Blog</Breadcrumb.Item>
+							</Breadcrumb>
+
+							<div className="row row-50 row-xxl-70">
+								{this.state.blogs.map((item, key) => {
+									return <SingleBlog blog={item} key={key} />;
+								})}
+							</div>
+							<div className="padLeft pt-5 pb-5">
+								{/* <Pagination
+									className="paginationStyle"
+									innerClass="pagination"
+									activeClass="page-item active"
+									itemClass="page-item"
+									linkClass="page-link button-winona"
+									activePage={this.props.blogsDetails.currentPage}
+									itemsCountPerPage={4}
+									totalItemsCount={this.state.totalItem}
+									pageRangeDisplayed={5}
+									onChange={this.handlePageChange}
+                /> */}
+
+								<Pagination
+									defaultPageSize={this.state.pagination.defaultPageSize}
+									current={this.state.pagination.current}
+									total={this.state.pagination.total}
+									onChange={this.handleTableChange}
+								/>
+							</div>
+						</div>
+					</section>
+				) : (
+					''
+				)}
+			</div>
+		);
+	}
 }
 
 const mapStateToProps = (state) => {
-    return {
-        blogsDetails: state.blogReducer,
-    };
+	return {
+		blogsDetails: state.blogReducer
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        getBlogs: (page) => {
-            dispatch(getBlogs(page));
-        },
-        getBlog: (body) => {
-            dispatch(getBlog(body));
-        }
-    };
+	return {
+		getBlogs: (page) => {
+			dispatch(getBlogs(page));
+		},
+		getBlog: (body) => {
+			dispatch(getBlog(body));
+		}
+	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Blogs);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Blogs);

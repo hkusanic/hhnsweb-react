@@ -1,23 +1,29 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getMkv } from "../../../actions/mkv";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getMkv } from '../../../actions/mkv';
+import Auth from '../../../utils/Auth';
 export class MKV extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			showTabs: false,
 			array: [],
-			selectedMkv: {}
+			selectedMkv: {},
+			isUserLogin: false,
 		};
 	}
 
 	componentDidMount() {
+		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({
+			isUserLogin,
+		});
 		this.props.getMkv({});
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
-			array: nextProps.mkv.mkv
+			array: nextProps.mkv.mkv,
 		});
 	}
 	handleShowTabs = item => {
@@ -32,34 +38,40 @@ export class MKV extends Component {
 				<section className="bg-gray-100">
 					<img src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png" />
 				</section>
-				<div style={{ textAlign: "center" }}>
+				<div style={{ textAlign: 'center' }}>
 					<p className="bookingForm">MKV</p>
 				</div>
-				<section className="text-center">
-					<div className="container yearList">
-						<div className="row offset-top-2">
-							{this.state.array.map((item, key) => {
-								return (
-									<div
-										key={key}
-										className={
-											this.state.selectedMkv.year === item.year
-												? "col-sm-6 wow-outer OuterDiv outer"
-												: "col-sm-6 wow-outer OuterDiv"
-										}
-										onClick={() => this.handleShowTabs({ item })}
-									>
-										<article className="articleDiv wow slideInLeft">
-											<div className="tour-default-caption">
-												<p className="titleColor">{item.year}</p>
-											</div>
-										</article>
-									</div>
-								);
-							})}
+				{!this.state.isUserLogin ? (
+					<section className="text-center">
+						<div className="container yearList">
+							<div className="row offset-top-2">
+								{this.state.array.map((item, key) => {
+									return (
+										<div
+											key={key}
+											className={
+												this.state.selectedMkv.year === item.year
+													? 'col-sm-6 wow-outer OuterDiv outer'
+													: 'col-sm-6 wow-outer OuterDiv'
+											}
+											onClick={() => this.handleShowTabs({ item })}
+										>
+											<article className="articleDiv wow slideInLeft">
+												<div className="tour-default-caption">
+													<p className="titleColor">{item.year}</p>
+												</div>
+											</article>
+										</div>
+									);
+								})}
+							</div>
 						</div>
+					</section>
+				) : (
+					<div style={{ textAlign: 'center' }}>
+						<p className="bookingForm">Please Log in to continue</p>
 					</div>
-				</section>
+				)}
 				{this.state.showTabs ? (
 					<section className="section section-lg">
 						<div className="container tabPadLeft">
@@ -200,7 +212,7 @@ export class MKV extends Component {
 
 const mapStateToProps = state => {
 	return {
-		mkv: state.mkvReducer
+		mkv: state.mkvReducer,
 	};
 };
 
@@ -208,7 +220,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		getMkv: body => {
 			dispatch(getMkv(body));
-		}
+		},
 	};
 };
 

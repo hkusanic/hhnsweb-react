@@ -1,40 +1,41 @@
-import searchFilterApi from "../utils/api/searchFilter";
-import * as types from "../constants/index";
+import searchFilterApi from '../utils/api/searchFilter';
+import * as types from '../constants/index';
 
 export function getEvents() {
-	return dispatch => {
+	return (dispatch) => {
 		searchFilterApi
 			.getEvents()
-			.then(response => {
+			.then((response) => {
 				dispatch(getEventsAction(response.data));
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.error(err);
 			});
 	};
 }
 
 export function getLocations() {
-	return dispatch => {
+	return (dispatch) => {
 		searchFilterApi
 			.getLocations()
-			.then(response => {
+			.then((response) => {
+				// console.log('getlocation action', response.data);
 				dispatch(getLocationsAction(response.data));
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.error(err);
 			});
 	};
 }
 
 export function getTopics() {
-	return dispatch => {
+	return (dispatch) => {
 		searchFilterApi
 			.getTopics()
-			.then(response => {
+			.then((response) => {
 				dispatch(getTopicsAction(response.data));
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.error(err);
 			});
 	};

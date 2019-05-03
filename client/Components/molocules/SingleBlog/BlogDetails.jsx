@@ -1,16 +1,23 @@
 import React from 'react';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
+import { Link } from 'react-router-dom';
+
 // eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
-
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 export class BlogDetails extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
 
-	render () {
+	goBack = () => {
+		// console.log(this.props.history);
+		this.props.history.goBack();
+	};
+
+	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -18,6 +25,21 @@ export class BlogDetails extends React.Component {
 			<div>
 				<section className="section section-lg">
 					<div className="container padLeftBlog">
+						<div className="row">
+							<div className="col-lg-12">
+								<Breadcrumb>
+									<Link to=" " onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+									&nbsp;/&nbsp;
+									<Link to=" " onClick={() => this.props.history.goBack()}>
+										<Breadcrumb.Item>Blog</Breadcrumb.Item>
+									</Link>
+									&nbsp;/&nbsp;
+									<Breadcrumb.Item active>Blog Details</Breadcrumb.Item>
+								</Breadcrumb>
+							</div>
+						</div>
 						<div className="row row-50">
 							<div className="col-lg-12">
 								<article className="post-creative">

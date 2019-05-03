@@ -1,5 +1,6 @@
 var keystone = require('keystone');
 let modelHelper = require('../helpers/modelHelper');
+var path = require('path');
 
 
 // Then to get access to our API route we will use importer
@@ -15,6 +16,7 @@ var multipartMiddleware = multipart();
 exports = module.exports = function (app) {
 	// Get access to the API route in our app
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
+	app.get('/api/content/', keystone.middleware.api, routes.api.content.list);
 	app.all('/api/appointment/:id/update', keystone.middleware.api, routes.api.appointment.update);
 	app.post('/api/appointment/:id/remove', keystone.middleware.api, routes.api.appointment.remove);
 	app.all('/api/appointment/create', keystone.middleware.api, routes.api.appointment.create);
@@ -34,6 +36,7 @@ exports = module.exports = function (app) {
 	app.post('/api/lecture/create/', keystone.middleware.api, routes.api.lecture.create);
 	app.post('/api/comment/create/', keystone.middleware.api, routes.api.comment.create);
 	app.get('/api/comment/', keystone.middleware.api, routes.api.comment.list);
+	app.get('/api/comment/getlimitedlist/', keystone.middleware.api, routes.api.comment.getlimitedlist);
 	app.post('/api/comment/:id/remove', keystone.middleware.api, routes.api.comment.remove);
 	app.post('/api/gallery/create/', keystone.middleware.api, routes.api.gallery.create);
 	app.get('/api/gallerylist/', keystone.middleware.api, routes.api.gallerylist.list);
@@ -46,6 +49,7 @@ exports = module.exports = function (app) {
 	app.post('/api/quote/:id/remove', keystone.middleware.api, routes.api.quote.remove);
 	app.post('/api/quote/create/', keystone.middleware.api, routes.api.quote.create);
 	app.get('/api/quote/', keystone.middleware.api, routes.api.quote.list);
+	app.post('/api/quote/:id/update', keystone.middleware.api, routes.api.quote.update);
 	app.post('/api/quote/getquotebyid/', keystone.middleware.api, routes.api.quote.getquotebyid);
 	app.all('/api/video/:id/update', keystone.middleware.api, routes.api.video.update);
 	app.post('/api/video/:id/remove', keystone.middleware.api, routes.api.video.remove);
@@ -103,41 +107,49 @@ exports = module.exports = function (app) {
 	// app.post('/api/blog/generateUploadUrl', multipartMiddleware,routes.api.blog.generateUploadUrl );
 	// Set up the default app route to  http://localhost:3000/index.htmli
 	app.get('/*', function (req, res) {
-		keystone.set('updateDatabase', false);
-		// Render some simple boilerplate html
-		function renderFullPage (result) {
-			// Note the div class name here, we will use that as a hook for our React code
-			// static menu
-			return `
-				<!doctype html>
-				<html>
-					<head>
-						<title>H.H. Niranjana Swami - Official web-site</title>
-						<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Work+Sans:300,500,700,800%7COswald:300,400,500">
-						<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-						<link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
-						<link rel="stylesheet" href="../css/bootstrap.css">
-						<link rel="stylesheet" href="../css/fonts.css">
-						<link rel="stylesheet" href="../css/custom.css">
-						<link rel="stylesheet" href="../css/cus.css">
-						<link rel="stylesheet" href="../css/mobilevalidation.css">
-						<link rel="stylesheet" href="../css/codeFlag.css">
-						<link rel="stylesheet" href="../css/style.css" id="main-styles-link">
-						<script type="text/javascript" src="../js/bundle.js"></script>
-						<script src="../js/core.min.js"></script>
-					</head>
-					<body>
-						<div id="react-container" />
-					</body>
-				</html>
-				`;
-		}
+        keystone.set('updateDatabase', false);
+        // Render some simple boilerplate html
+        console.log("====>", req.originalUrl);
+    
+        function renderFullPage (result) {
+            // Note the div class name here, we will use that as a hook for our React code
+            // static menu
+            return `
+                <!doctype html>
+                <html>
+                    <head>
+                        <title>H.H. Niranjana Swami - Official web-site</title>
+                        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Work+Sans:300,500,700,800%7COswald:300,400,500">
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                        <link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
+                        <link rel="stylesheet" href="../css/bootstrap.css">
+                        <link rel="stylesheet" href="../css/fonts.css">
+                        <link rel="stylesheet" href="../css/custom.css">
+                        <link rel="stylesheet" href="../css/cus.css">
+                        <link rel="stylesheet" href="../css/mobilevalidation.css">
+                        <link rel="stylesheet" href="../css/codeFlag.css">
+                        <link rel="stylesheet" href="../css/style.css" id="main-styles-link">
+                        <script type="text/javascript" src="../js/bundle.js"></script>
+                        <script src="../js/core.min.js"></script>
+                    </head>
+                    <body>
+                        <div id="react-container" />
+                    </body>
+                </html>
+                `;
+        }
 
-		modelHelper.getStaticNavigation().then((result) => {
-			console.log('KEYSTONE STATIC MENU RESTORED');
-			console.dir(result);
-			// Send the html boilerplate
-			res.send(renderFullPage(result));
-		});
-	});
+        modelHelper.getStaticNavigation().then((result) => {
+            console.log('KEYSTONE STATIC MENU RESTORED');
+            console.dir(result);
+            // Send the html boilerplate
+            if(req.originalUrl.includes("/admin")){
+                res.sendFile(path.join(__dirname, '../../admin/', 'index1.html'));
+            }
+            else
+            res.send(renderFullPage(result));
+        });
+
+    
+    });
 };

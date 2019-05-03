@@ -3,29 +3,28 @@ import SingleGridMenu from '../../atoms/SingleGirdMenu/SingleGridMenu';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 export class GridLayoutMenus extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isUserLogin: true,
-        }
-    }
-    componentDidMount(){
-        const isUserLogin = Auth.isUserAuthenticated();
-        this.setState({isUserLogin})
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			isUserLogin: true
+		};
+	}
+	componentDidMount() {
+		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({ isUserLogin });
+	}
 
-    handleNavigationClick = () => {
-        setTimeout(()=>{
-            $('.login-modal-2').removeClass('active');
-            $('.register-modal-2').removeClass('active');
-            if (this.state.isUserLogin) {
-                $('.login-modal-2').addClass('active');
-                $('.rd-navbar-toggle').removeClass('active');
-                $('.rd-navbar-nav-wrap').removeClass('active');
-            }
-        },500)
-      
-    }
+	handleNavigationClick = () => {
+		setTimeout(() => {
+			$('.login-modal-2').removeClass('active');
+			$('.register-modal-2').removeClass('active');
+			if (this.state.isUserLogin) {
+				$('.login-modal-2').addClass('active');
+				$('.rd-navbar-toggle').removeClass('active');
+				$('.rd-navbar-nav-wrap').removeClass('active');
+			}
+		}, 500);
+	};
 
     render() {
         return (
@@ -53,7 +52,8 @@ export class GridLayoutMenus extends React.Component {
                                 image='images/tour-8-270x200.jpg' 
                                 menu={<p><Translate>{({ translate }) => translate('HOME.Summaries')}</Translate></p>} 
                                 link="/summaries" />
-                            <SingleGridMenu 
+                            <SingleGridMenu
+                                handleNavigationClick={this.handleNavigationClick}  
                                 image='images/tour-1-270x200.jpg' 
                                 menu="Gallery" 
                                 link="/gallery" />
@@ -62,7 +62,8 @@ export class GridLayoutMenus extends React.Component {
                                 image='images/tour-2-270x200.jpg' 
                                 menu={<p><Translate>{({ translate }) => translate('HOME.calendar')}</Translate></p>} 
                                 link="/calender" /> */}
-                            <SingleGridMenu 
+                            <SingleGridMenu
+                                handleNavigationClick={this.handleNavigationClick} 
                                 image='images/tour-3-270x200.jpg' 
                                 menu="MKV" 
                                 link="/mkv" />

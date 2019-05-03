@@ -92,7 +92,7 @@ exports.signin = function (req, res) {
 			}, 'API signin user');
 
 			return res.json({
-				success: true,
+				success: false,
 				session: false,
 				message: (err && err.message ? err.message : false) || 'Sorry, there was an issue signing you in, please try again.',
 			});
