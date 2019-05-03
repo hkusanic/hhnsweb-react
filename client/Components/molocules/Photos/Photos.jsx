@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { Icon } from 'antd';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { Link } from 'react-router-dom';
+import script from '../../../assets/script.js';
 
 export class Photos extends Component {
 	constructor (props) {
@@ -6,6 +10,10 @@ export class Photos extends Component {
 		this.state = {
 			photoObject: this.props.location.state,
 		};
+	}
+
+	componentDidMount () {
+		script();
 	}
 
 	render () {
@@ -16,7 +24,27 @@ export class Photos extends Component {
 						<p className="bookingForm">Photos</p>
 					</div>
 					<div className="container">
-						<div className="isotope isotope-responsive row">
+						<Breadcrumb>
+							<Link to=" " onClick={() => this.props.history.push('/')}>
+								<Breadcrumb.Item>Home</Breadcrumb.Item>
+							</Link>
+							<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
+							<Link to=" " onClick={() => this.props.history.push('/gallery')}>
+								<Breadcrumb.Item>Gallery</Breadcrumb.Item>
+							</Link>
+							<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
+							<Link to=" " onClick={() => this.props.history.goBack()}>
+								<Breadcrumb.Item>{this.props.location.state.gallery}</Breadcrumb.Item>
+							</Link>
+							<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
+							<Breadcrumb.Item active>{this.props.location.state.title_en}</Breadcrumb.Item>
+						</Breadcrumb>
+						<div
+							className="isotope isotope-responsive row"
+							data-isotope-layout="masonry"
+							data-isotope-group="gallery"
+							data-lightgallery="group"
+						>
 							{this.state
 							&& this.state.photoObject
 							&& this.state.photoObject.photos
@@ -37,7 +65,7 @@ export class Photos extends Component {
 													height="256"
 												/>
 												<div className="thumbnail-corporate-caption">
-													<p className="thumbnail-corporate-title">2019</p>
+													<p className="thumbnail-corporate-title">{this.props.location.state.gallery}</p>
 												</div>
 												<div className="thumbnail-corporate-dummy"> </div>
 											</a>
@@ -45,25 +73,6 @@ export class Photos extends Component {
 									);
 								  })
 								: null}
-							<div className="col-sm-6 col-lg-4 isotope-item">
-								<a
-									className="thumbnail-corporate thumbnail-corporate-light"
-									href="images/gallery-original-9.jpg"
-									data-lightgallery="item"
-								>
-									<img
-										className="thumbnail-corporate-image"
-										src="images/grid-layout-9-370x256.jpg"
-										alt=""
-										width="370"
-										height="256"
-									/>
-									<div className="thumbnail-corporate-caption">
-										<p className="thumbnail-corporate-title">2017</p>
-									</div>
-									<div className="thumbnail-corporate-dummy"> </div>
-								</a>
-							</div>
 						</div>
 					</div>
 				</section>
