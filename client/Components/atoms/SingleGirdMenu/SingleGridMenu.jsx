@@ -15,23 +15,23 @@ const SingleGridMenu = props => {
 					class="tour-default-figure"
 					onClick={props.handleNavigationClick}
 				>
-					<Skeleton loading={true}>
-						<Card
-							hoverable
-							style={{ width: 270 }}
-							cover={
-								<img
-									src={props.image}
-									alt=""
-								/>
-							}
-						>
-							<Meta
-								title={props.menu}
-								class="tour-default-title"
+					{/* <Skeleton loading={true}> */}
+					<Card
+						hoverable
+						style={{ width: 270 }}
+						cover={
+							<img
+								src={props.image}
+								alt=""
 							/>
-						</Card>
-					</Skeleton>
+						}
+					>
+						<Meta
+							title={props.menu}
+							class="tour-default-title"
+						/>
+					</Card>
+					{/* </Skeleton> */}
 				</Link>
 			</article>
 		</div>

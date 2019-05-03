@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import { Link } from 'react-router-dom';
+import { Icon } from 'antd';
 import { updateCounters } from '../../../actions/lectureActions';
 import Comments from '../Comments/Comments';
 
@@ -88,6 +89,7 @@ export class AudioDetails extends Component {
 								</article>
 								<div className="audioStyle">
 									<audio
+										className="audioPlayer"
 										controls
 										controlsList="nodownload"
 										onPlay={() => {
@@ -100,15 +102,15 @@ export class AudioDetails extends Component {
 									</audio>
 
 									<a
+										className="downloadIcon"
 										href={this.props.location.state.audio_link}
 										onClick={() => {
 											this.handleUpdate(this.props.location.state.uuid);
 										}}
 										download="download">
-										<i
-											style={{ cursor: 'pointer', fontSize: '28px' }}
-											class="fa fa-download"
-											aria-hidden="true"
+										<Icon
+											type="cloud-download"
+											style={{ fontSize: '1.5rem' }}
 										/>
 									</a>
 								</div>

@@ -3,29 +3,28 @@ import SingleGridMenu from '../../atoms/SingleGirdMenu/SingleGridMenu';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 export class GridLayoutMenus extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isUserLogin: true,
-        }
-    }
-    componentDidMount(){
-        const isUserLogin = Auth.isUserAuthenticated();
-        this.setState({isUserLogin})
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			isUserLogin: true
+		};
+	}
+	componentDidMount() {
+		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({ isUserLogin });
+	}
 
-    handleNavigationClick = () => {
-        setTimeout(()=>{
-            $('.login-modal-2').removeClass('active');
-            $('.register-modal-2').removeClass('active');
-            if (this.state.isUserLogin) {
-                $('.login-modal-2').addClass('active');
-                $('.rd-navbar-toggle').removeClass('active');
-                $('.rd-navbar-nav-wrap').removeClass('active');
-            }
-        },500)
-      
-    }
+	handleNavigationClick = () => {
+		setTimeout(() => {
+			$('.login-modal-2').removeClass('active');
+			$('.register-modal-2').removeClass('active');
+			if (this.state.isUserLogin) {
+				$('.login-modal-2').addClass('active');
+				$('.rd-navbar-toggle').removeClass('active');
+				$('.rd-navbar-nav-wrap').removeClass('active');
+			}
+		}, 500);
+	};
 
     render() {
         return (
