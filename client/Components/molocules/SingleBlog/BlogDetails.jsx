@@ -1,10 +1,9 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { Icon } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { Link } from 'react-router-dom';
-
-// eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
@@ -14,7 +13,6 @@ export class BlogDetails extends React.Component {
 	}
 
 	goBack = () => {
-		// console.log(this.props.history);
 		this.props.history.goBack();
 	};
 
@@ -32,12 +30,32 @@ export class BlogDetails extends React.Component {
 									<Link to=" " onClick={() => this.props.history.push('/')}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
 									</Link>
-									<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
+									<Icon
+										type="double-right"
+										style={{
+											alignSelf: 'center',
+											paddingLeft: 5,
+											paddingRight: 5,
+										}}
+									/>
 									<Link to=" " onClick={() => this.props.history.goBack()}>
 										<Breadcrumb.Item>Blog</Breadcrumb.Item>
 									</Link>
-									<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
-									<Breadcrumb.Item active>Blog Details</Breadcrumb.Item>
+									<Icon
+										type="double-right"
+										style={{
+											alignSelf: 'center',
+											paddingLeft: 5,
+											paddingRight: 5,
+										}}
+									/>
+									<Breadcrumb.Item active>
+										{renderHTML(
+											reactCookie.load('languageCode') === 'en'
+												? this.props.location.state.title_en
+												: this.props.location.state.title_ru
+										)}
+									</Breadcrumb.Item>
 								</Breadcrumb>
 							</div>
 						</div>

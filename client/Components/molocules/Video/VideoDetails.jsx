@@ -18,13 +18,12 @@ export class VideoDetails extends React.Component {
 	componentDidMount() {
 		const body = {
 			uuid: this.props.location.state.uuid,
-			video_page_view: true
+			video_page_view: true,
 		};
 		this.props.updateCounters(body);
 	}
 
 	goBack = () => {
-		// console.log(this.props.history);
 		this.props.history.goBack();
 	};
 
@@ -43,12 +42,32 @@ export class VideoDetails extends React.Component {
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
 										</Link>
-										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
+										<Icon
+											type="double-right"
+											style={{
+												alignSelf: 'center',
+												paddingLeft: 5,
+												paddingRight: 5,
+											}}
+										/>
 										<Link to=" " onClick={() => this.props.history.goBack()}>
 											<Breadcrumb.Item>Video</Breadcrumb.Item>
 										</Link>
-										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
-										<Breadcrumb.Item active>Video Details</Breadcrumb.Item>
+										<Icon
+											type="double-right"
+											style={{
+												alignSelf: 'center',
+												paddingLeft: 5,
+												paddingRight: 5,
+											}}
+										/>
+										<Breadcrumb.Item active>
+											{renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? this.props.location.state.en.title
+													: this.props.location.state.ru.title
+											)}
+										</Breadcrumb.Item>
 									</Breadcrumb>
 
 									<h3 class="post-creative-title">
@@ -106,16 +125,16 @@ export class VideoDetails extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
-		Count: state.lectureReducer.Count
+		Count: state.lectureReducer.Count,
 	};
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
-		updateCounters: (body) => {
+		updateCounters: body => {
 			dispatch(updateCounters(body));
-		}
+		},
 	};
 };
 

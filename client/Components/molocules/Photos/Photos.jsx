@@ -65,7 +65,7 @@ export class Photos extends Component {
 													height="256"
 												/>
 												<div className="thumbnail-corporate-caption">
-													<p className="thumbnail-corporate-title">{this.props.location.state.gallery}</p>
+													<p className="thumbnail-corporate-title" />
 												</div>
 												<div className="thumbnail-corporate-dummy"> </div>
 											</a>

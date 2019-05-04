@@ -44,8 +44,6 @@ export class AudioDetails extends Component {
 			return <div>Error Occured..........</div>;
 		}
 
-		// console.log(this.props.history);
-
 		return (
 			<div>
 				<section className="section section-lg">
@@ -76,7 +74,11 @@ export class AudioDetails extends Component {
 												paddingRight: 5,
 											}}
 										/>
-										<Breadcrumb.Item active>Audio Details</Breadcrumb.Item>
+										<Breadcrumb.Item active>{renderHTML(
+											reactCookie.load('languageCode') === 'en'
+												? this.props.location.state.en.title
+												: this.props.location.state.ru.title
+										)}</Breadcrumb.Item>
 									</Breadcrumb>
 
 									<h3 className="post-creative-title">
@@ -103,6 +105,7 @@ export class AudioDetails extends Component {
 								</article>
 								<div className="audioStyle">
 									<audio
+										style={{height: '30px'}}
 										className="audioPlayer"
 										controls
 										controlsList="nodownload"

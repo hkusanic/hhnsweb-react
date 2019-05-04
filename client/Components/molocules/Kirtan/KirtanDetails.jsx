@@ -1,23 +1,59 @@
-import React, { Component } from "react";
-import renderHTML from "react-render-html";
-import reactCookie from "react-cookies";
+import React, { Component } from 'react';
+import { Icon } from 'antd';
+import { Link } from 'react-router-dom';
+import renderHTML from 'react-render-html';
+import reactCookie from 'react-cookies';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 export class KirtanDetails extends Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 	}
 
-	render() {
+	render () {
 		return (
 			<div>
 				<section className="section section-lg">
 					<div className="container">
-						<div style={{ paddingLeft: "15%" }} className="row row-100">
+						<div className="BreadCrumDiv">
+							<Breadcrumb>
+								<Link to=" " onClick={() => this.props.history.push('/')}>
+									<Breadcrumb.Item>Home</Breadcrumb.Item>
+								</Link>
+								<Icon
+									type="double-right"
+									style={{
+										alignSelf: 'center',
+										paddingLeft: 5,
+										paddingRight: 5,
+									}}
+								/>
+								<Link to=" " onClick={() => this.props.history.goBack()}>
+									<Breadcrumb.Item>Kirtan</Breadcrumb.Item>
+								</Link>
+								<Icon
+									type="double-right"
+									style={{
+										alignSelf: 'center',
+										paddingLeft: 5,
+										paddingRight: 5,
+									}}
+								/>
+								<Breadcrumb.Item active>
+									{renderHTML(
+										reactCookie.load('languageCode') === 'en'
+											? this.props.location.state.en.title
+											: this.props.location.state.ru.title
+									)}
+								</Breadcrumb.Item>
+							</Breadcrumb>
+						</div>
+						<div className="row row-100">
 							<div className="col-lg-12">
 								<article className="post-creative">
 									<h3 className="post-creative-title">
 										{renderHTML(
-											reactCookie.load("languageCode") === "en"
+											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.en.title
 												: this.props.location.state.ru.title
 										)}
@@ -38,7 +74,7 @@ export class KirtanDetails extends Component {
 									</ul>
 								</article>
 								<div className="audioStyle">
-									<audio controls>
+									<audio style={{ height: '30px' }} controls>
 										<source
 											src={renderHTML(this.props.location.state.audio_link)}
 											type="audio/mpeg"
@@ -55,7 +91,7 @@ export class KirtanDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.event
 														: this.props.location.state.ru.event}
 												</td>
@@ -89,7 +125,7 @@ export class KirtanDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.location
 														: this.props.location.state.ru.location}
 												</td>
@@ -111,7 +147,7 @@ export class KirtanDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.topic
 														: this.props.location.state.ru.topic}
 												</td>

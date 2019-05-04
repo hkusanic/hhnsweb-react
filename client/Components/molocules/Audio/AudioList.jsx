@@ -13,63 +13,6 @@ import { Collapse } from 'react-collapse';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-const columns = [
-	{
-		title: 'Title',
-		dataIndex: renderHTML(
-			reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
-		),
-		render: (text, record, index) => (
-			<Link
-				to={{
-					pathname: '/audioDetails',
-					state: record,
-				}}
-			>
-				{renderHTML(
-					reactCookie.load('languageCode') === 'en'
-						? record.en.title
-						: record.ru.title
-				)}
-			</Link>
-		),
-	},
-	{
-		title: 'Audio',
-		dataIndex: 'audio_link',
-		render: (text, record, index) => (
-			<audio
-				controls
-				controlsList="nodownload"
-				onPlay={() => {
-					this.updateAudioPlayCount(record.uuid);
-				}}
-			>
-				<source src={renderHTML(record.audio_link)} type="audio/mpeg" />
-			</audio>
-		),
-	},
-	{
-		title: 'Downloads',
-		dataIndex: 'counters.downloads',
-		render: (text, record, index) => (
-			<React.Fragment>
-				<span className="downloadDetails">{record.counters.downloads}</span>
-				<a
-					className="downloadIcon"
-					href={record.audio_link}
-					onClick={() => {
-						this.handleUpdate(record);
-					}}
-					download="download"
-				>
-					<Icon type="download" style={{ fontSize: '1.5rem' }} />
-				</a>
-			</React.Fragment>
-		),
-	},
-];
-
 const defaultPageSize = 20;
 
 export class AudioList extends Component {
@@ -91,7 +34,6 @@ export class AudioList extends Component {
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
-		// console.log('pagination from audio: ', pagination);
 		const pager = { ...this.state.pagination };
 		pager.current = pagination.current;
 		pager.total = this.props.lecturesDetails.totalLectures;
@@ -101,7 +43,6 @@ export class AudioList extends Component {
 
 		let body = Object.assign({}, this.state.body);
 		body.page = pagination.current;
-		// console.log('body from htc: ', body);
 		this.props.searchLecture(body);
 	};
 
@@ -111,13 +52,10 @@ export class AudioList extends Component {
 
 		let body = { ...this.state.body };
 		body.page = this.props.lecturesDetails.currentPage || 1;
-		// console.log('body from cdm: ', body);
-
 		const pagination = { ...this.state.pagination };
 		pagination.total = this.props.lecturesDetails.totalLectures;
 		pagination.defaultPageSize = defaultPageSize;
 		pagination.current = this.props.lecturesDetails.currentPage || 1;
-		// console.log('pagination from cdm: ', pagination);
 
 		this.setState({
 			lectures: this.props.lecturesDetails.lectures,
@@ -134,12 +72,10 @@ export class AudioList extends Component {
 	componentWillReceiveProps(nextProps) {
 		let body = { ...this.state.body };
 		body.page = nextProps.lecturesDetails.currentPage;
-
 		const pagination = { ...this.state.pagination };
 		pagination.total = nextProps.lecturesDetails.totalLectures;
 		pagination.defaultPageSize = 20;
 		pagination.current = nextProps.lecturesDetails.currentPage;
-		// console.log('pagination from cwrp: ', pagination);
 
 		this.setState({
 			lectures: nextProps.lecturesDetails.lectures,
@@ -156,8 +92,8 @@ export class AudioList extends Component {
 	showing100Characters = sentence => {
 		var result = sentence;
 		var resultArray = result.split(' ');
-		if (resultArray.length > 10) {
-			resultArray = resultArray.slice(0, 10);
+		if (resultArray.length > 15) {
+			resultArray = resultArray.slice(0, 15);
 			result = resultArray.join(' ') + '...';
 		}
 		return result;
@@ -190,7 +126,65 @@ export class AudioList extends Component {
 	};
 
 	render() {
-		// this.props.lecturesDetails.lectures
+
+		const columns = [
+			{
+				title: 'Title',
+				dataIndex: renderHTML(
+					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+				),
+				render: (text, record, index) => (
+					<Link
+						to={{
+							pathname: '/audioDetails',
+							state: record,
+						}}
+					>
+						{this.showing100Characters(renderHTML(
+							reactCookie.load('languageCode') === 'en'
+								? record.en.title
+								: record.ru.title
+						))}
+					</Link>
+				),
+			},
+			{
+				title: 'Audio',
+				dataIndex: 'audio_link',
+				render: (text, record, index) => (
+					<audio
+					    style={{height: '30px'}}
+						controls
+						controlsList="nodownload"
+						onPlay={() => {
+							this.updateAudioPlayCount(record.uuid);
+						}}
+					>
+						<source src={renderHTML(record.audio_link)} type="audio/mpeg" />
+					</audio>
+				),
+			},
+			{
+				title: 'Downloads',
+				dataIndex: 'counters.downloads',
+				className: 'downloadSign',
+				render: (text, record, index) => (
+					<React.Fragment>
+						<span className="downloadDetails">{record.counters.downloads}</span>
+						<a
+							className="downloadIcon"
+							href={record.audio_link}
+							onClick={() => {
+								this.handleUpdate(record);
+							}}
+							download="download"
+						>
+							<Icon type="download" style={{ fontSize: '1.5rem' }} />
+						</a>
+					</React.Fragment>
+				),
+			},
+		];
 
 		this.props.history.location.currentPage = this.state.currentPage;
 		let class_icon_search = this.state.iconSearch
@@ -273,6 +267,7 @@ export class AudioList extends Component {
 													pagination={this.state.pagination}
 													loading={this.state.loading}
 													onChange={this.handleTableChange}
+													rowClassName="tableRow"
 												/>
 											</div>
 										) : (

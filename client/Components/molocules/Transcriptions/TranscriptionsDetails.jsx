@@ -45,13 +45,31 @@ export class TranscriptionDetails extends React.Component {
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
 										</Link>
-										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
+										<Icon
+											type="double-right"
+											style={{
+												alignSelf: 'center',
+												paddingLeft: 5,
+												paddingRight: 5,
+											}}
+										/>
 										<Link to=" " onClick={() => this.props.history.goBack()}>
 											<Breadcrumb.Item>Transcriptions</Breadcrumb.Item>
 										</Link>
-										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
+										<Icon
+											type="double-right"
+											style={{
+												alignSelf: 'center',
+												paddingLeft: 5,
+												paddingRight: 5,
+											}}
+										/>
 										<Breadcrumb.Item active>
-											Transcriptions Details
+											{renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? this.props.location.state.en.title
+													: this.props.location.state.ru.title
+											)}
 										</Breadcrumb.Item>
 									</Breadcrumb>
 
@@ -94,7 +112,7 @@ export class TranscriptionDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													<audio controls>
+													<audio style={{ height: '30px' }} controls>
 														<source
 															src={renderHTML(
 																this.props.location.state.audio_link
@@ -116,7 +134,8 @@ export class TranscriptionDetails extends React.Component {
 															this.props.location.state.en.transcription
 																.attachment_link
 														}
-														target="_blank">
+														target="_blank"
+													>
 														<span>
 															{
 																this.props.location.state.en.transcription
@@ -247,14 +266,14 @@ export class TranscriptionDetails extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
 		Count: state.lectureReducer.Count,
 	};
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
-		updateCounters: (body) => {
+		updateCounters: body => {
 			dispatch(updateCounters(body));
 		},
 	};
