@@ -107,14 +107,14 @@ exports = module.exports = function (app) {
 	// app.post('/api/blog/generateUploadUrl', multipartMiddleware,routes.api.blog.generateUploadUrl );
 	// Set up the default app route to  http://localhost:3000/index.htmli
 	app.get('/*', function (req, res) {
-        keystone.set('updateDatabase', false);
-        // Render some simple boilerplate html
-        console.log("====>", req.originalUrl);
-    
-        function renderFullPage (result) {
-            // Note the div class name here, we will use that as a hook for our React code
-            // static menu
-            return `
+		keystone.set('updateDatabase', false);
+		// Render some simple boilerplate html
+		console.log('====>', req.originalUrl);
+
+		function renderFullPage (result) {
+			// Note the div class name here, we will use that as a hook for our React code
+			// static menu
+			return `
                 <!doctype html>
                 <html>
                     <head>
@@ -127,7 +127,8 @@ exports = module.exports = function (app) {
                         <link rel="stylesheet" href="../css/custom.css">
                         <link rel="stylesheet" href="../css/cus.css">
                         <link rel="stylesheet" href="../css/mobilevalidation.css">
-                        <link rel="stylesheet" href="../css/codeFlag.css">
+						<link rel="stylesheet" href="../css/codeFlag.css">
+						<link rel="stylesheet" href="../css/antd.css">
                         <link rel="stylesheet" href="../css/style.css" id="main-styles-link">
                         <script type="text/javascript" src="../js/bundle.js"></script>
                         <script src="../js/core.min.js"></script>
@@ -137,19 +138,19 @@ exports = module.exports = function (app) {
                     </body>
                 </html>
                 `;
-        }
+		}
 
-        modelHelper.getStaticNavigation().then((result) => {
-            console.log('KEYSTONE STATIC MENU RESTORED');
-            console.dir(result);
-            // Send the html boilerplate
-            if(req.originalUrl.includes("/admin")){
-                res.sendFile(path.join(__dirname, '../../admin/', 'index1.html'));
-            }
-            else
-            res.send(renderFullPage(result));
-        });
+		modelHelper.getStaticNavigation().then((result) => {
+			console.log('KEYSTONE STATIC MENU RESTORED');
+			console.dir(result);
+			// Send the html boilerplate
+			if (req.originalUrl.includes('/admin')) {
+				res.sendFile(path.join(__dirname, '../../admin/', 'index1.html'));
+			}
+			else
+			{ res.send(renderFullPage(result)); }
+		});
 
-    
-    });
+
+	});
 };
