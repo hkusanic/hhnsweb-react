@@ -23,15 +23,16 @@ const columns = [
 			<Link
 				to={{
 					pathname: '/audioDetails',
-					state: record
-				}}>
+					state: record,
+				}}
+			>
 				{renderHTML(
 					reactCookie.load('languageCode') === 'en'
 						? record.en.title
 						: record.ru.title
 				)}
 			</Link>
-		)
+		),
 	},
 	{
 		title: 'Audio',
@@ -42,10 +43,11 @@ const columns = [
 				controlsList="nodownload"
 				onPlay={() => {
 					this.updateAudioPlayCount(record.uuid);
-				}}>
+				}}
+			>
 				<source src={renderHTML(record.audio_link)} type="audio/mpeg" />
 			</audio>
-		)
+		),
 	},
 	{
 		title: 'Downloads',
@@ -53,18 +55,19 @@ const columns = [
 		render: (text, record, index) => (
 			<React.Fragment>
 				<span className="downloadDetails">{record.counters.downloads}</span>
-        <a
-          className="downloadIcon"
+				<a
+					className="downloadIcon"
 					href={record.audio_link}
 					onClick={() => {
 						this.handleUpdate(record);
 					}}
-					download="download">
+					download="download"
+				>
 					<Icon type="download" style={{ fontSize: '1.5rem' }} />
 				</a>
 			</React.Fragment>
-		)
-	}
+		),
+	},
 ];
 
 const defaultPageSize = 20;
@@ -83,7 +86,7 @@ export class AudioList extends Component {
 			isSearch: false,
 			data: [],
 			pagination: {},
-			loading: false
+			loading: false,
 		};
 	}
 
@@ -93,7 +96,7 @@ export class AudioList extends Component {
 		pager.current = pagination.current;
 		pager.total = this.props.lecturesDetails.totalLectures;
 		this.setState({
-			pagination: pager
+			pagination: pager,
 		});
 
 		let body = Object.assign({}, this.state.body);
@@ -122,7 +125,7 @@ export class AudioList extends Component {
 			totalItem: this.props.lecturesDetails.totalLectures,
 			isUserLogin,
 			loading: false,
-			pagination
+			pagination,
 		});
 
 		this.props.searchLecture(body);
@@ -142,7 +145,7 @@ export class AudioList extends Component {
 			lectures: nextProps.lecturesDetails.lectures,
 			currentPage: nextProps.lecturesDetails.currentPage,
 			totalItem: nextProps.lecturesDetails.totalLectures,
-			pagination
+			pagination,
 		});
 
 		if (nextProps.lecturesDetails.Count) {
@@ -150,7 +153,7 @@ export class AudioList extends Component {
 		}
 	}
 
-	showing100Characters = (sentence) => {
+	showing100Characters = sentence => {
 		var result = sentence;
 		var resultArray = result.split(' ');
 		if (resultArray.length > 10) {
@@ -160,28 +163,28 @@ export class AudioList extends Component {
 		return result;
 	};
 
-	searchData = (body) => {
+	searchData = body => {
 		this.setState({ body, isSearch: true }, () => {
 			this.props.searchLecture(body);
 		});
 	};
 
-	onClickIcon = (value) => {
+	onClickIcon = value => {
 		this.setState({ iconSearch: value });
 	};
 
-	handleUpdate = (item) => {
+	handleUpdate = item => {
 		const body = {
 			uuid: item.uuid,
-			downloads: true
+			downloads: true,
 		};
 		this.props.updateCounters(body);
 	};
 
-	updateAudioPlayCount = (uuid) => {
+	updateAudioPlayCount = uuid => {
 		const body = {
 			uuid: uuid,
-			audio_play_count: true
+			audio_play_count: true,
 		};
 		this.props.updateCounters(body);
 	};
@@ -216,14 +219,23 @@ export class AudioList extends Component {
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
 										</Link>
-										&nbsp;/&nbsp;<Breadcrumb.Item active>Audio</Breadcrumb.Item>
+										<Icon
+											type="double-right"
+											style={{
+												alignSelf: 'center',
+												paddingLeft: 5,
+												paddingRight: 5,
+											}}
+										/>
+										<Breadcrumb.Item active>Audio</Breadcrumb.Item>
 									</Breadcrumb>
 								</div>
 							</div>
 
 							<div
 								className="row justify-content-center"
-								style={{ marginTop: '0', marginBottom: '0' }}>
+								style={{ marginTop: '0', marginBottom: '0' }}
+							>
 								<div className="col-lg-12">
 									<div style={{ textAlign: 'center' }}>
 										<Button
@@ -239,7 +251,8 @@ export class AudioList extends Component {
 							{!this.state.iconSearch && (
 								<div
 									className="row justify-content-center"
-									style={{ marginTop: '0' }}>
+									style={{ marginTop: '0' }}
+								>
 									<div className="col-lg-12">
 										<Collapse isOpened={!this.state.iconSearch}>
 											<SearchFilter searchData={this.searchData} />
@@ -255,7 +268,7 @@ export class AudioList extends Component {
 											<div>
 												<Table
 													columns={columns}
-													rowKey={(record) => record.uuid}
+													rowKey={record => record.uuid}
 													dataSource={this.props.lecturesDetails.lectures}
 													pagination={this.state.pagination}
 													loading={this.state.loading}
@@ -286,20 +299,20 @@ export class AudioList extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
-		lecturesDetails: state.lectureReducer
+		lecturesDetails: state.lectureReducer,
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
-		searchLecture: (body) => {
+		searchLecture: body => {
 			dispatch(searchLecture(body));
 		},
-		updateCounters: (body) => {
+		updateCounters: body => {
 			dispatch(updateCounters(body));
-		}
+		},
 	};
 };
 

@@ -18,7 +18,7 @@ export class AudioDetails extends Component {
 	componentDidMount() {
 		const body = {
 			uuid: this.props.location.state.uuid,
-			audio_page_view: true
+			audio_page_view: true,
 		};
 		this.props.updateCounters(body);
 	}
@@ -26,15 +26,15 @@ export class AudioDetails extends Component {
 	updateAudioCount = () => {
 		const body = {
 			uuid: this.props.location.state.uuid,
-			audio_play_count: true
+			audio_play_count: true,
 		};
 		this.props.updateCounters(body);
 	};
 
-	handleUpdate = (uuid) => {
+	handleUpdate = uuid => {
 		const body = {
 			uuid: uuid,
-			downloads: true
+			downloads: true,
 		};
 		this.props.updateCounters(body);
 	};
@@ -57,11 +57,25 @@ export class AudioDetails extends Component {
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
 										</Link>
-										&nbsp;/&nbsp;
+										<Icon
+											type="double-right"
+											style={{
+												alignSelf: 'center',
+												paddingLeft: 5,
+												paddingRight: 5,
+											}}
+										/>
 										<Link to=" " onClick={() => this.props.history.goBack()}>
 											<Breadcrumb.Item>Audio</Breadcrumb.Item>
 										</Link>
-										&nbsp;/&nbsp;
+										<Icon
+											type="double-right"
+											style={{
+												alignSelf: 'center',
+												paddingLeft: 5,
+												paddingRight: 5,
+											}}
+										/>
 										<Breadcrumb.Item active>Audio Details</Breadcrumb.Item>
 									</Breadcrumb>
 
@@ -83,7 +97,7 @@ export class AudioDetails extends Component {
 										</li>
 										<li>
 											<span className="icon mdi mdi-tag-multiple" />
-											<a>Lecture</a>
+											<a>Audio Details</a>
 										</li>
 									</ul>
 								</article>
@@ -94,7 +108,8 @@ export class AudioDetails extends Component {
 										controlsList="nodownload"
 										onPlay={() => {
 											this.updateAudioCount();
-										}}>
+										}}
+									>
 										<source
 											src={renderHTML(this.props.location.state.audio_link)}
 											type="audio/mpeg"
@@ -107,9 +122,10 @@ export class AudioDetails extends Component {
 										onClick={() => {
 											this.handleUpdate(this.props.location.state.uuid);
 										}}
-										download="download">
+										download="download"
+									>
 										<Icon
-											type="cloud-download"
+											type="download"
 											style={{ fontSize: '1.5rem' }}
 										/>
 									</a>
@@ -238,16 +254,16 @@ export class AudioDetails extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
-		Count: state.lectureReducer.Count
+		Count: state.lectureReducer.Count,
 	};
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
-		updateCounters: (body) => {
+		updateCounters: body => {
 			dispatch(updateCounters(body));
-		}
+		},
 	};
 };
 
