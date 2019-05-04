@@ -40,8 +40,8 @@
 //     "url": "/static/js/20.6e7496ca.chunk.js"
 //   },
 //   {
-//     "revision": "2e98779db7654ecb427b",
-//     "url": "/static/js/main.2e98779d.chunk.js"
+//     "revision": "c82a8e75dd875b7d0388",
+//     "url": "/static/js/main.c82a8e75.chunk.js"
 //   },
 //   {
 //     "revision": "32d4d0729048c9e4799a",
@@ -144,7 +144,7 @@
 //     "url": "/static/css/20.333691dd.chunk.css"
 //   },
 //   {
-//     "revision": "2e98779db7654ecb427b",
+//     "revision": "c82a8e75dd875b7d0388",
 //     "url": "/static/css/main.1b5d37da.chunk.css"
 //   },
 //   {
@@ -168,7 +168,7 @@
 //     "url": "/static/css/1.d4a2935a.chunk.css"
 //   },
 //   {
-//     "revision": "a66a266c0430f57de283500321cab3fc",
+//     "revision": "1b22b28f56875c5f0ab706a4e906ba67",
 //     "url": "/index.html"
 //   }
 // ];
