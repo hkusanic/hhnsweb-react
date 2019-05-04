@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
@@ -10,16 +11,16 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
 
 export class TranscriptionDetails extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
-			text: ''
+			text: '',
 		};
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		let body = {
-			uuid: this.props.location.state.uuid
+			uuid: this.props.location.state.uuid,
 		};
 		if (reactCookie.load('languageCode') === 'en') {
 			body.en_transcription_view = true;
@@ -29,7 +30,7 @@ export class TranscriptionDetails extends React.Component {
 		this.props.updateCounters(body);
 	}
 
-	render() {
+	render () {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -44,11 +45,11 @@ export class TranscriptionDetails extends React.Component {
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
 										</Link>
-										&nbsp;/&nbsp;
+										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
 										<Link to=" " onClick={() => this.props.history.goBack()}>
 											<Breadcrumb.Item>Transcriptions</Breadcrumb.Item>
 										</Link>
-										&nbsp;/&nbsp;
+										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
 										<Breadcrumb.Item active>
 											Transcriptions Details
 										</Breadcrumb.Item>
@@ -248,14 +249,14 @@ export class TranscriptionDetails extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		Count: state.lectureReducer.Count
+		Count: state.lectureReducer.Count,
 	};
 };
 const mapDispatchToProps = (dispatch) => {
 	return {
 		updateCounters: (body) => {
 			dispatch(updateCounters(body));
-		}
+		},
 	};
 };
 

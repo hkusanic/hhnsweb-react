@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { Translate } from 'react-localize-redux';
@@ -42,11 +43,12 @@ export class VideoDetails extends React.Component {
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
 										</Link>
-										&nbsp;/&nbsp;
+										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
 										<Link to=" " onClick={() => this.props.history.goBack()}>
 											<Breadcrumb.Item>Video</Breadcrumb.Item>
 										</Link>
-										&nbsp;/&nbsp;<Breadcrumb.Item active>Video Details</Breadcrumb.Item>
+										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
+										<Breadcrumb.Item active>Video Details</Breadcrumb.Item>
 									</Breadcrumb>
 
 									<h3 class="post-creative-title">

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Icon } from 'antd';
 import renderHTML from 'react-render-html';
 import { Link } from 'react-router-dom';
 import reactCookie from 'react-cookies';
