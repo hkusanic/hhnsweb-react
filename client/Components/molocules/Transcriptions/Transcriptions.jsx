@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from 'antd';
+import { Table, Icon } from 'antd';
 import Auth from '../../../utils/Auth';
 import { connect } from 'react-redux';
 import {
@@ -188,7 +188,7 @@ export class Transcritpion extends Component {
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
 										</Link>
-										&nbsp;/&nbsp;
+										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
 										<Breadcrumb.Item active>Transcriptions</Breadcrumb.Item>
 									</Breadcrumb>
 								</div>

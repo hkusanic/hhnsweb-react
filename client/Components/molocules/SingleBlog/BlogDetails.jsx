@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { Link } from 'react-router-dom';
@@ -31,11 +32,11 @@ export class BlogDetails extends React.Component {
 									<Link to=" " onClick={() => this.props.history.push('/')}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
 									</Link>
-									&nbsp;/&nbsp;
+									<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
 									<Link to=" " onClick={() => this.props.history.goBack()}>
 										<Breadcrumb.Item>Blog</Breadcrumb.Item>
 									</Link>
-									&nbsp;/&nbsp;
+									<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
 									<Breadcrumb.Item active>Blog Details</Breadcrumb.Item>
 								</Breadcrumb>
 							</div>

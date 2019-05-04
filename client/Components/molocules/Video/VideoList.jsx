@@ -3,7 +3,7 @@ import renderHTML from 'react-render-html';
 import Pagination from 'react-js-pagination';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Table } from 'antd';
+import { Table, Icon } from 'antd';
 import {
 	searchLecture,
 	searchLectureVideo
@@ -36,8 +36,8 @@ const columns = [
 		)
 	},
 	{
-		title: 'Downloads',
-		dataIndex: 'counters.downloads',
+		title: 'view',
+		dataIndex: 'counters.video_page_view',
 		render: (text, record, index) => record.counters.video_page_view
 	}
 ];
@@ -199,7 +199,8 @@ export class VideoList extends Component {
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
 										</Link>
-										&nbsp;/&nbsp;<Breadcrumb.Item active>Video</Breadcrumb.Item>
+										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
+										<Breadcrumb.Item active>Video</Breadcrumb.Item>
 									</Breadcrumb>
 								</div>
 							</div>
