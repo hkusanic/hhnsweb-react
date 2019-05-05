@@ -1,14 +1,16 @@
-import React, { Component } from "react";
-import renderHTML from "react-render-html";
-import Pagination from "react-js-pagination";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { searchKirtan } from "../../../actions/kirtanAction";
-import Auth from "../../../utils/Auth";
-import { Translate } from "react-localize-redux";
-import SearchFilter from "../SeachFilter/SearchFilter";
-import { Collapse } from "react-collapse";
-import reactCookie from "react-cookies";
+import React, { Component } from 'react';
+import { Icon } from 'antd';
+import { Link } from 'react-router-dom';
+import renderHTML from 'react-render-html';
+import Pagination from 'react-js-pagination';
+import { connect } from 'react-redux';
+import { searchKirtan } from '../../../actions/kirtanAction';
+import Auth from '../../../utils/Auth';
+import { Translate } from 'react-localize-redux';
+import SearchFilter from '../SeachFilter/SearchFilter';
+import { Collapse } from 'react-collapse';
+import reactCookie from 'react-cookies';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 export class Kirtan extends Component {
 	constructor(props) {
@@ -20,10 +22,10 @@ export class Kirtan extends Component {
 			page: null,
 			kirtans: [],
 			body: {
-				page: 1
+				page: 1,
 			},
 			iconSearch: true,
-			isSearch: false
+			isSearch: false,
 		};
 	}
 
@@ -33,7 +35,7 @@ export class Kirtan extends Component {
 			kirtans: this.props.kirtanDetails.kirtans,
 			currentPage: this.props.kirtanDetails.currentPage,
 			totalItem: this.props.kirtanDetails.totalKirtans,
-			isUserLogin
+			isUserLogin,
 		});
 		this.props.searchKirtan({ page: 1 });
 	}
@@ -42,7 +44,7 @@ export class Kirtan extends Component {
 		this.setState({
 			kirtans: nextProps.kirtanDetails.kirtans,
 			currentPage: nextProps.kirtanDetails.currentPage,
-			totalItem: nextProps.kirtanDetails.totalKirtans
+			totalItem: nextProps.kirtanDetails.totalKirtans,
 		});
 	}
 
@@ -64,13 +66,13 @@ export class Kirtan extends Component {
 	};
 
 	render() {
-		console.log("this.props ====>>>", this.props);
+		console.log('this.props ====>>>', this.props);
 		let class_icon_search = this.state.iconSearch
-			? "icon-search fa fa-search"
-			: "display-none-icon";
+			? 'icon-search fa fa-search'
+			: 'display-none-icon';
 		let class_icon_close = this.state.iconSearch
-			? "display-none-icon"
-			: "icon-search fa fa-close";
+			? 'display-none-icon'
+			: 'icon-search fa fa-close';
 		return (
 			<div>
 				<section className="bg-gray-100">
@@ -78,24 +80,40 @@ export class Kirtan extends Component {
 				</section>
 				{!this.state.isUserLogin ? (
 					<div>
-						<div style={{ textAlign: "center" }}>
-							<p className="bookingForm">
-								<Translate>
-									{({ translate }) => translate("HOME.kirtan")}
-								</Translate>
-								<i
-									onClick={() => this.onClickIcon(false)}
-									className={class_icon_search}
-									aria-hidden="true"
-								/>
-								<i
-									onClick={() => this.onClickIcon(true)}
-									className={class_icon_close}
-									aria-hidden="true"
-								/>
-							</p>
-						</div>
 						<div className="container">
+							<div className="BreadCrumDiv BreadCrumDivPad">
+								<Breadcrumb>
+									<Link to=" " onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+									<Icon
+										type="double-right"
+										style={{
+											alignSelf: 'center',
+											paddingLeft: 5,
+											paddingRight: 5,
+										}}
+									/>
+									<Breadcrumb.Item active>Kirtan</Breadcrumb.Item>
+								</Breadcrumb>
+							</div>
+							<div style={{ textAlign: 'center' }}>
+								<p className="bookingForm">
+									<Translate>
+										{({ translate }) => translate('HOME.kirtan')}
+									</Translate>
+									<i
+										onClick={() => this.onClickIcon(false)}
+										className={class_icon_search}
+										aria-hidden="true"
+									/>
+									<i
+										onClick={() => this.onClickIcon(true)}
+										className={class_icon_close}
+										aria-hidden="true"
+									/>
+								</p>
+							</div>
 							<Collapse isOpened={!this.state.iconSearch}>
 								<SearchFilter searchData={this.searchData} />
 							</Collapse>
@@ -105,6 +123,7 @@ export class Kirtan extends Component {
 										<thead>
 											<tr>
 												<th className="align">Title</th>
+												<th className="align">Views</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -112,31 +131,31 @@ export class Kirtan extends Component {
 												return (
 													<tr key={key}>
 														<td className="titleColor dataRowAlign">
-															{" "}
 															<Link
 																to={{
-																	pathname: "/kirtanDetails",
-																	state: item
+																	pathname: '/kirtanDetails',
+																	state: item,
 																}}
 															>
 																{renderHTML(
-																	reactCookie.load("languageCode") === "en"
+																	reactCookie.load('languageCode') === 'en'
 																		? item.en.title
 																		: item.ru.title
 																)}
 															</Link>
 														</td>
+														<td className="dataRowAlign">{item.downloads}</td>
 													</tr>
 												);
 											})}
 										</tbody>
 									</table>
 								) : (
-									<div style={{ textAlign: "center" }}>
+									<div style={{ textAlign: 'center' }}>
 										<p className="bookingForm">
 											{this.state.isSearch
-												? "No Record Found"
-												: "Hare Krishna..."}
+												? 'No Record Found'
+												: 'Hare Krishna...'}
 										</p>
 									</div>
 								)}
@@ -160,7 +179,7 @@ export class Kirtan extends Component {
 						</div>
 					</div>
 				) : (
-					<div style={{ textAlign: "center" }}>
+					<div style={{ textAlign: 'center' }}>
 						<p className="bookingForm">Please Log in to continue</p>
 					</div>
 				)}
@@ -171,7 +190,7 @@ export class Kirtan extends Component {
 
 const mapStateToProps = state => {
 	return {
-		kirtanDetails: state.kirtanReducer
+		kirtanDetails: state.kirtanReducer,
 	};
 };
 
@@ -179,7 +198,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		searchKirtan: body => {
 			dispatch(searchKirtan(body));
-		}
+		},
 	};
 };
 

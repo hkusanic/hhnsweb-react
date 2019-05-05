@@ -542,12 +542,11 @@
 	margin-left: 10% !important;
 }
 .kirtanTable {
-	width: 60% !important;
-	margin-left: 20% !important;
+	width: 75% !important;
+	margin-left: 10% !important;
 }
 .padkirtanLeft {
 	padding-left: 17% !important;
-	margin-left: 10% !important;
 }
 .OuterDiv {
 	height: 50px;
@@ -603,8 +602,8 @@
 }
 
 .commentContainer {
-	padding-top: 5em;
-	padding-left: 8%;
+	/* padding-top: 5em;
+	padding-left: 8%; */
 	display: inline-block;
 }
 
@@ -786,4 +785,27 @@
 .audioPlayer {
 	display: inline-block;
 	vertical-align: middle;
+}
+
+.downloadSign {
+	text-align: right !important;
+    padding-right: 1.5em !important;
+}
+
+.tableRow {
+	line-height: 1 !important;
+}
+
+.title {
+	font-size: 25px;
+    color: #eb7217;
+}
+
+.BreadCrumDiv {
+	margin-top: 20px !important
+}
+
+.BreadCrumDivPad {
+	width: 75% !important;
+	margin-left: 10% !important;
 }

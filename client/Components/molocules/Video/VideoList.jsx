@@ -36,7 +36,7 @@ const columns = [
 		)
 	},
 	{
-		title: 'view',
+		title: 'Views',
 		dataIndex: 'counters.video_page_view',
 		render: (text, record, index) => record.counters.video_page_view
 	}

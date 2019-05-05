@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Pagination } from 'antd';
+import { Pagination, Icon } from 'antd';
 import SingleBlog from '../../Components/molocules/SingleBlog/SIngleBlog';
-// import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
 import { getBlogs, getBlog } from '../../actions/blogActions';
 import Auth from '../../utils/Auth';
@@ -20,19 +19,18 @@ export class Blogs extends Component {
 			page: null,
 			blogs: [],
 			isUserLogin: false,
-			pagination: {}
+			pagination: {},
 		};
 
 		this.props.getBlog({ uuid: '02d47a4e-2dfc-11e9-b210-d663bd873d93' });
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
-		// console.log('pagination from blog: ', pagination);
 		const pager = { ...this.state.pagination };
 		pager.current = pagination;
 		pager.total = this.props.blogsDetails.totalBlogs;
 		this.setState({
-			pagination: pager
+			pagination: pager,
 		});
 
 		this.props.getBlogs(pagination);
@@ -50,7 +48,7 @@ export class Blogs extends Component {
 			blogs: this.props.blogsDetails.blogs,
 			currentPage: this.props.blogsDetails.currentPage,
 			isUserLogin,
-			pagination
+			pagination,
 		});
 		this.props.getBlogs(this.props.blogsDetails.currentPage || 1);
 	}
@@ -68,17 +66,11 @@ export class Blogs extends Component {
 			blogs: nextprops.blogsDetails.blogs,
 			currentPage: nextprops.blogsDetails.currentPage,
 			isUserLogin,
-			pagination
+			pagination,
 		});
 	}
 
-	// handlePageChange = (pageNumber) => {
-	// 	this.props.getBlogs(pageNumber);
-	// };
-
 	render() {
-		console.log('blog ===>', this.props.blogsDetails);
-
 		return (
 			<div>
 				<section className="bg-gray-100">
@@ -101,7 +93,15 @@ export class Blogs extends Component {
 								<Link to=" " onClick={() => this.props.history.push('/')}>
 									<Breadcrumb.Item>Home</Breadcrumb.Item>
 								</Link>
-								&nbsp;/&nbsp;<Breadcrumb.Item active>Blog</Breadcrumb.Item>
+								<Icon
+									type="double-right"
+									style={{
+										alignSelf: 'center',
+										paddingLeft: 5,
+										paddingRight: 5,
+									}}
+								/>
+								<Breadcrumb.Item active>Blog</Breadcrumb.Item>
 							</Breadcrumb>
 
 							<div className="row row-50 row-xxl-70">
@@ -110,19 +110,6 @@ export class Blogs extends Component {
 								})}
 							</div>
 							<div className="padLeft pt-5 pb-5">
-								{/* <Pagination
-									className="paginationStyle"
-									innerClass="pagination"
-									activeClass="page-item active"
-									itemClass="page-item"
-									linkClass="page-link button-winona"
-									activePage={this.props.blogsDetails.currentPage}
-									itemsCountPerPage={4}
-									totalItemsCount={this.state.totalItem}
-									pageRangeDisplayed={5}
-									onChange={this.handlePageChange}
-                /> */}
-
 								<Pagination
 									defaultPageSize={this.state.pagination.defaultPageSize}
 									current={this.state.pagination.current}
@@ -140,20 +127,20 @@ export class Blogs extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
-		blogsDetails: state.blogReducer
+		blogsDetails: state.blogReducer,
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
-		getBlogs: (page) => {
+		getBlogs: page => {
 			dispatch(getBlogs(page));
 		},
-		getBlog: (body) => {
+		getBlog: body => {
 			dispatch(getBlog(body));
-		}
+		},
 	};
 };
 

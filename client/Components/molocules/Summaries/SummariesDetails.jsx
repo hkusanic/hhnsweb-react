@@ -42,12 +42,32 @@ export class SummariesDetails extends React.Component {
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
 										</Link>
-										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
+										<Icon
+											type="double-right"
+											style={{
+												alignSelf: 'center',
+												paddingLeft: 5,
+												paddingRight: 5,
+											}}
+										/>
 										<Link to=" " onClick={() => this.props.history.goBack()}>
 											<Breadcrumb.Item>Summaries</Breadcrumb.Item>
-				    					</Link>
-										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
-										<Breadcrumb.Item active>Summary Details</Breadcrumb.Item>
+										</Link>
+										<Icon
+											type="double-right"
+											style={{
+												alignSelf: 'center',
+												paddingLeft: 5,
+												paddingRight: 5,
+											}}
+										/>
+										<Breadcrumb.Item active>
+											{renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? this.props.location.state.en.title
+													: this.props.location.state.ru.title
+											)}
+										</Breadcrumb.Item>
 									</Breadcrumb>
 
 									<h3 className="post-creative-title dataTitle">
@@ -89,7 +109,7 @@ export class SummariesDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													<audio controls>
+													<audio style={{ height: '30px' }} controls>
 														<source
 															src={renderHTML(
 																this.props.location.state.audio_link
@@ -214,14 +234,14 @@ export class SummariesDetails extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
 		Count: state.lectureReducer.Count,
 	};
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
-		updateCounters: (body) => {
+		updateCounters: body => {
 			dispatch(updateCounters(body));
 		},
 	};

@@ -1,8 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
+import { Icon } from 'antd';
+import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import Comments from '../Comments/Comments';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 export class LectureDetails extends React.Component {
 	constructor (props) {
@@ -17,6 +20,37 @@ export class LectureDetails extends React.Component {
 			<div>
 				<section className="section section-lg">
 					<div className="container">
+						<Breadcrumb>
+							<Link to=" " onClick={() => this.props.history.push('/')}>
+								<Breadcrumb.Item>Home</Breadcrumb.Item>
+							</Link>
+							<Icon
+								type="double-right"
+								style={{
+									alignSelf: 'center',
+									paddingLeft: 5,
+									paddingRight: 5,
+								}}
+							/>
+							<Link to=" " onClick={() => this.props.history.goBack()}>
+								<Breadcrumb.Item>Lecture</Breadcrumb.Item>
+							</Link>
+							<Icon
+								type="double-right"
+								style={{
+									alignSelf: 'center',
+									paddingLeft: 5,
+									paddingRight: 5,
+								}}
+							/>
+							<Breadcrumb.Item active>
+								{renderHTML(
+									reactCookie.load('languageCode') === 'en'
+										? this.props.location.state.en.title
+										: this.props.location.state.ru.title
+								)}
+							</Breadcrumb.Item>
+						</Breadcrumb>
 						<div className="row row-50">
 							<div className="col-lg-8">
 								<article className="post-creative">
