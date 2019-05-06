@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File Upload Example in AngularJS</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="angular-uuid.js"></script>
+</head>
+
+<body ng-app="fupApp">
+
+    <div ng-controller="fupController">
+        <!-- <input type="button" ng-click="ReadData()" value="Lecture Data" />
+        <br>
+        <br>
+        <input type="button" ng-click="KirtanData()" value="Kirtan Data" />
+        <br>
+        <br>
+        <input type="button" ng-click="GalleryData()" value="Gallery Data" /> -->
+        <!-- <br>
+        <br>
+        <input type="button" ng-click="AudioData()" value="Audio Data" /> -->
+       <!-- {{lectureData[55]}} -->
+
+       <form novalidate>
+            Data :  
+            <select ng-model="dataType" ng-options="item.DataKey as item.DataTitle for item in DataType" name="dataType" >
+                <option value="">--Select--</option>
+            </select>
+            
+            <br><br>
+            <button ng-click="GetData(dataType)">Upload Data</button>
+            <div ng-show="message">
+                <label>Files are getting download and zippig... Please wait</label>
+            </div>
+            <div ng-show="completed">
+                <label>Process is completed..</label>
+            </div>
+        
+        </form>
+    </div>
+    
+</body>
+
+<script>
+        var myApp = angular.module('fupApp', ["angular-uuid"]);
+    
+        myApp.controller('fupController', function ($scope, $q, $http, uuid) {
+
+            $scope.GetData = function(DataType) {
+                
+                if(DataType == "Lecture Data"){
+                    $scope.ReadData();
+                }
+                if(DataType == "Kirtan Data"){
+                    $scope.KirtanData();
+                }
+                if(DataType == "Gallery Data"){
+                    $scope.GalleryData();
+                }
+                if(DataType == "Quote Data"){
+                    $scope.QuoteData();
+                }
+
+            }
+
+            $scope.DataType = [
+            {
+                "DataKey" : "Lecture Data",
+                "DataTitle" : "Lecture Data"
+            },
+            {
+                "DataKey" : "Kirtan Data",
+                "DataTitle" : "Kirtan Data"
+            },
+            {
+                "DataKey" : "Gallery Data",
+                "DataTitle" : "Gallery Data"
+            },
+            {
+                "DataKey" : "Quote Data",
+                "DataTitle" : "Quote Data"
+            },
+            ];
+            
+            $scope.ReadData = function(){
+
+                // http://localhost:3000/utils/lecturenew.json
+
+                $http.get('http://localhost:3000/utils/audioData.json').then(function(response) {
+                    $scope.lectureData = response.data;
+
+                    console.log($scope.lectureData);
+
+                    var resultArray = [];
+                    // $scope.lectureData.length
+                    for(var i=3000 ; i < $scope.lectureData.length ; i++){
+
+                        // if($scope.lectureData[i] != null || $scope.lectureData[i] != undefined){
+                        //     $scope.lectureData[i].uuid = uuid.v4();
+                        //     $scope.lectureData[i].en = {};
+                        //     $scope.lectureData[i].counters = {};
+                            
+                        //     $scope.lectureData[i].en.title = ($scope.lectureData[i].title !=null || $scope.lectureData[i].title != undefined) ? $scope.lectureData[i].title : "";
+
+                        //     $scope.lectureData[i].en.location = ($scope.lectureData[i].location !=null || $scope.lectureData[i].location != undefined) ? $scope.lectureData[i].location : "";
+
+                        //     $scope.lectureData[i].en.topic = ($scope.lectureData[i].topic != null || $scope.lectureData[i].topic != undefined) ? $scope.lectureData[i].topic : "";
+
+                        //     $scope.lectureData[i].en.event = ($scope.lectureData[i].event !=null || $scope.lectureData[i].event != undefined) ? $scope.lectureData[i].event : "";
+
+                        //     $scope.lectureData[i].counters.downloads = ($scope.lectureData[i].downloads !=null || $scope.lectureData[i].downloads != undefined) ? $scope.lectureData[i].downloads : "" ;
+
+                        //     $scope.lectureData[i].comments = ($scope.lectureData[i].comments !=null || $scope.lectureData[i].comments != undefined) ? $scope.lectureData[i].comments : [] ;
+
+                        //     if($scope.lectureData[i].file !=null || $scope.lectureData[i].file != undefined ){
+                        //         $scope.lectureData[i].audio_link = $scope.lectureData[i].file;
+                        //         //resultArray.push(insertLectureData($scope.lectureData[i]));
+                        //     }
+                        // }
+
+                        resultArray.push(insertLectureData($scope.lectureData[i]));
+
+                        if(i == $scope.lectureData.length - 1) {
+                            $q.all(resultArray).then(function(response){
+                                console.log(response);
+                            }, function(error){
+                                console.log(error);
+                            });
+                        }
+                    }
+
+                });
+            };
+
+            function insertLectureData(data){
+                var deffer = $q.defer();
+                try {
+                    $http.post("http://localhost:3000/api/lecture/create", data).then(function(response){
+                        deffer.resolve(response);
+                    }, function(error){
+                        deffer.reject(error);
+                    });
+                }
+                catch(err) {
+                    deffer.reject(error);
+                }
+                return deffer.promise;
+            }
+
+            $scope.KirtanData = function() {
+
+                $http.get('http://localhost:3000/utils/Kirtan.json').then(function(response) {
+                    $scope.Kirtan = response.data;
+                    console.log($scope.Kirtan);
+
+                    var kirtanResult = [];
+                    for(var i = 0; i< $scope.Kirtan.length; i++){
+
+                        kirtanResult.push(insertKirtanData($scope.Kirtan[i]));
+
+                        if(i == $scope.Kirtan.length - 1){
+                            $q.all(kirtanResult).then(function (response){
+                                console.log(response);
+                            }, function(error) {
+                                console.log(error);
+                            });
+                        }
+                    }
+                });
+            };
+
+            function insertKirtanData (data) {
+                var deffer = $q.defer();
+                try {
+                    $http.post("http://localhost:3000/api/kirtan/create", data).then(function(response){
+                        deffer.resolve(response);
+                    }, function(error){
+                        deffer.reject(error);
+                    });
+                }
+                catch(err){
+                    deffer.reject(err);
+                }
+                return deffer.promise;
+            }
+
+            $scope.GalleryData = function() {
+                $http.get('http://localhost:3000/utils/gallerydata.json').then(function(response) {
+                    $scope.Gallery = response.data;
+                    console.log($scope.Gallery);
+                    
+                    // $scope.Gallery.length
+                    var resultGallery = [];
+                    for(var i =0; i< $scope.Gallery.length; i++ ){
+                        if($scope.Gallery[i] != null || $scope.Gallery[i] != undefined){
+                            $scope.Gallery[i].uuid = uuid.v4();
+                            $scope.Gallery[i].title_en = ( $scope.Gallery[i].title != null || $scope.Gallery[i].title != undefined ) ? $scope.Gallery[i].title : "";
+                            $scope.Gallery[i].date = ($scope.Gallery[i].date != false) ? $scope.Gallery[i].date : todayDate() ;
+                            
+                            resultGallery.push(insertGalleryData($scope.Gallery[i]));
+
+                        }
+                        if (i == $scope.Gallery.length - 1){
+                            $q.all(resultGallery).then(function(response){
+                                console.log(response);
+                            }, function(err){
+                                console.log(err);
+                            });
+                        }
+                    }
+                    
+                });
+
+            }
+
+            function insertGalleryData(data){
+                
+                var deffer = $q.defer();
+                try {
+                    $http.post("http://localhost:3000/api/gallery/create", data).then(function(response){
+                        deffer.resolve(response);
+                    }, function(error){
+                        deffer.reject(error);
+                    });
+                }
+                catch(err){
+                    deffer.reject(err);
+                }
+
+                return deffer.promise;
+            }
+
+            function todayDate () {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; // January is 0!
+
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                var today = yyyy + '-' + mm + '-' + dd;
+                return today;
+            }
+
+            $scope.QuoteData = function() {
+
+                $http.get('http://localhost:3000/utils/audioData.json').then(function(response) { 
+                    $scope.Audio = response.data;
+                    console.log($scope.Audio);
+                    $http.post("http://localhost:3000/api/gallery/create", $scope.Audio[0]).then(function(response){
+                        deffer.resolve(response);
+                    }, function(error){
+                        deffer.reject(error);
+                    });
+                });
+            }
+
+        });
+    </script>
+    </html>

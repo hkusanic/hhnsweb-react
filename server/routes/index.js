@@ -57,6 +57,18 @@ exports = module.exports = function (app) {
 
 	// Folder Compress
 
+	// PDF Reading..
+	app.get('/api/pdfRead/', keystone.middleware.api, routes.api.lecture.pdfRead);
+	// PDF Reading..
+
+	//PDF Download and reading
+	app.post('/api/pdfDownloadAndRead/', keystone.middleware.api, routes.api.lecture.pdfDownloadAndRead);
+	//PDF Download and reading
+
+	// PDF Data pushing
+	app.post('/api/pdfDataPushing/', keystone.middleware.api, routes.api.lecture.pdfDataPushing);
+	// PDF Data pushing
+
 	app.post('/api/lecture/createBulk/', keystone.middleware.api, routes.api.lecture.createBulk);
 	app.post('/api/lecture/create/', keystone.middleware.api, routes.api.lecture.create);
 	app.post('/api/comment/create/', keystone.middleware.api, routes.api.comment.create);

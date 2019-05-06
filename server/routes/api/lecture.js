@@ -8,7 +8,9 @@ const Axios = require('axios');
 const zlib = require('zlib');
 // const zipFolder = require('zip-folder');
 const zipFolder = require('zip-a-folder');
-//const zip = require('bestzip');
+const pdfreader = require('pdfreader');
+
+const pdf = require('pdf-parse');
 
 /**
  * List Page
@@ -326,8 +328,6 @@ exports.lectureDownload = function(req, res){
 		Fs.mkdirSync(dir);
 	}
 
-	
-
 	async function download() {
 		const url = req.body.url;
 
@@ -359,23 +359,6 @@ exports.lectureDownload = function(req, res){
 			Fs.mkdirSync(dir);
 		}
 
-		// filename = dir + "/" + req.body.title +".mp3",
-		// //filename = zipPath + "/" + req.body.year,
-		// compress = zlib.createGzip(), //Compressing
-		// decompress = zlib.createGunzip(), //decompressing
-		// readstream = Fs.createReadStream(filename);
-		// compressfile(filename);
-
-		// zipFolder(zipPath, zipPath + req.body.year + '.zip', function(err) {
-		// 	console.log("getting....................");
-		// 	if(err) {
-		// 		console.log('oh no!', err);
-		// 	} else {
-		// 		console.log('EXCELLENT');
-		// 	}
-		// }, function(response){
-		// 	console.log(response);
-		// });
 		res.apiResponse({
 			data: "Downloaded Successfully",
 		});
@@ -392,32 +375,12 @@ exports.lectureDownload = function(req, res){
         readstream.pipe(compress).pipe(writestream);
     }
 
-    // if(/.gz$/i.test(filename)==true){
-    //     decompressfile(filename);
-    // }
-    // else{
-	// 	compressfile(filename);
-	// }
-
 }
 
 // Lecture Download
 
 exports.lectureZip = function (req, res) {
 	console.log(req.body);
-
-	// zipFolder(req.body.FolderPath, req.body.zipPath, function(err) {
-	// 	console.log("getting....................");
-	// 	if(err) {
-	// 		console.log('oh no!', err);
-	// 	} else {
-	// 		console.log('EXCELLENT');
-	// 	}
-	// }, function(response){
-	// 	console.log(".......");
-	// 	console.log(response);
-	// });
-
 	zipFolder.zipFolder(req.body.Source, req.body.Destination, function(err){
 		if(err){
 			console.log('Something went wrong!', err);
@@ -427,22 +390,173 @@ exports.lectureZip = function (req, res) {
 		});
 	}, function(response){
 		console.log(response);
-
 	});
 
-	// zip({
-	// 	source: req.body.Source,
-	// 	destination: req.body.Destination
-	//   }).then(function(response) {
-	// 	console.log('all done!', response);
-	// 	res.apiResponse({
-	// 		data: 'all done!',
-	// 	});
-	//   }).catch(function(err) {
-	// 	console.error(err.stack);
-	// 	//process.exit(1);
-	//   });
+};
 
+exports.pdfRead = function (req, res) {
+
+	// default render callback
+	function render_page(pageData) {
+    
+		let render_options = {
+			normalizeWhitespace: true,
+			disableCombineTextItems: true
+		}
+	
+		return pageData.getTextContent(render_options).then(function(textContent) {
+			let lastY, text = '';
+			for (let item of textContent.items) {
+				if (lastY == item.transform[5] || !lastY){
+					text += item.str;
+				}  
+				else{
+					text += '\n' + item.str;
+				}    
+				lastY = item.transform[5];
+			}
+			return text;
+		});
+	}
+	
+	let options = {
+		pagerender: render_page
+	}
+ 
+
+	let dataBuffer = Fs.readFileSync('/home/system6/Documents/30-04-2019/hhnsweb-react/server/routes/api/files/hello.pdf');
+
+	pdf(dataBuffer, options).then(function(data) {
+	
+			// number of pages
+			console.log(data.numpages);
+			// number of rendered pages
+			console.log(data.numrender);
+			// PDF info
+			console.log(data.info);
+			// PDF metadata
+			console.log(data.metadata); 
+			// PDF.js version
+			// check https://mozilla.github.io/pdf.js/getting_started/
+			console.log(data.version);
+			// // PDF text
+			// console.log(data.text); 
+			res.apiResponse({
+				data: data.text,
+			});
+					
+	});
+		
+};
+
+exports.pdfDownloadAndRead = function (req, res) {
+
+	var dir = "/home/system6/Documents/30-04-2019/hhnsweb-react/server/public/utils/files/nrs-pdf";
+	if (!Fs.existsSync(dir)){
+		Fs.mkdirSync(dir);
+	}
+
+	async function download() {
+		const url = req.body.attachment_link;
+		console.log(__dirname);
+		//const path = Path.resolve(__dirname, 'files/nrs-pdf',  req.body.attachment_name);
+		const path = Path.resolve('/home/system6/Documents/30-04-2019/hhnsweb-react/server/public/utils', 'files/nrs-pdf',  req.body.attachment_name);
+		const response = await Axios({
+			method: 'GET',
+			url : url,
+			responseType: 'stream',
+		});
+	
+		response.data.pipe(Fs.createWriteStream(path));
+	
+		return new Promise((resolve, reject) => {
+			response.data.on('end', () => {
+				resolve();
+			});
+	
+			response.data.on('error', err => {
+				reject(err);
+			});
+		});
+	}
+	
+	download().then(() => {
+		console.log("Download finished..");
+
+		if (!Fs.existsSync(dir)){
+			Fs.mkdirSync(dir);
+		}
+
+		function render_page(pageData) {
+    
+			let render_options = {
+				normalizeWhitespace: true,
+				disableCombineTextItems: true
+			}
+		
+			return pageData.getTextContent(render_options).then(function(textContent) {
+				let lastY, text = '';
+				for (let item of textContent.items) {
+					if (lastY == item.transform[5] || !lastY){
+						text += item.str;
+					}  
+					else{
+						text += '\n' + item.str;
+					}    
+					lastY = item.transform[5];
+				}
+				return text;
+			});
+		}
+		
+		let options = {
+			pagerender: render_page
+		}
+
+		let dataBuffer = Fs.readFileSync('/home/system6/Documents/30-04-2019/hhnsweb-react/server/routes/api/files/nrs-pdf/' + req.body.attachment_name);
+		pdf(dataBuffer).then(function(data) {
+			res.apiResponse({
+				data: data.text,
+			});
+		});
+	}, (err) => {
+		console.log("error");
+		res.apiResponse({
+			data: err,
+		});
+	});
+		
+};
+
+exports.pdfDataPushing = function (req, res) {
+	var obj = [];
+	Fs.exists('output.json', function(exists){
+		if(exists){
+			console.log("yes file exists");
+			Fs.readFile('output.json', function readFileCallback(err, data){
+				if (err){
+					console.log(err);
+				} 
+				else {
+					obj = JSON.parse(data);
+					//obj.table = [];
+					obj.push(req.body);
+					
+					var json = JSON.stringify(obj); 
+					Fs.writeFile('output.json', json); 
+				}
+			});
+		} 
+		else {
+			obj = [];
+			console.log("file not exists")
+			for (i=0; i<5 ; i++){
+			obj.push(req.body);
+			}
+			var json = JSON.stringify(obj);
+			Fs.writeFile('output.json', json);
+		}
+	});
 };
 
 exports.create = function (req, res) {

@@ -64,8 +64,6 @@
 
         <input type="button" ng-click="BulkUpload()" value="Upload" />
 
-        <!--ADD A PROGRESS BAR ELEMENT.-->
-         <!-- <p><progress id="pro" value="0"></progress></p> -->
     </div>
     
 </body>
@@ -75,13 +73,11 @@
     
         myApp.controller('fupController', function ($scope, $q, $http) {
     
-            // GET THE FILE INFORMATION.
             $scope.getFileDetails = function (e) {          
     
                 $scope.files = [];
                 $scope.$apply(function () {
     
-                    // STORE THE FILE OBJECT IN AN ARRAY.
                     for (var i = 0; i < e.files.length; i++) {
                         $scope.files.push(e.files[i])
                     }
@@ -105,37 +101,23 @@
                             console.log(error);
                         });
                     }
-                    
                 }
-
-                
-                
             };
 
             function UploadFiles(fileName, fileType, fileObj){
 				var successStatus = [];
-				// $http.get("http://localhost:3000/api/blog/generateUploadUrl?name=mp3files/$"+ fileName + "&type=$" + fileType +"/").then(function(response){
-				// 	console.log(response);
-					
-				// 		uploadFileToS3UsingPresignedUrl(data.presignedUrl, fileObj)
-					
-					
-				// }, function(error){
-				// 	console.log(error);
-				// });
-
+				
 				$.ajax({
 					type: "GET",
 					url: `http://localhost:3000/api/blog/generateUploadUrl?name=mp3files/${fileName}&type=${fileType}`,
 					success: (data) => {
 						console.log('-------->',data);
 						uploadFileToS3UsingPresignedUrl(data.presignedUrl, fileObj)
-						var successStatus = [{status : 200}]
-						
+						successStatus = [{status : 200}];
 					},
 					error: function(){ 
 						alert("failed"); 
-						var successStatus = [{status : 200}]
+						successStatus = [{status : 200}];
 					}
 				});
 
@@ -171,10 +153,7 @@
                     deffer.reject(err);
                 }
                 return deffer.promise;
-                
             };
-    
-            
         });
     </script>
     </html>
