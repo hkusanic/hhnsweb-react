@@ -132,7 +132,7 @@ export class Kirtan extends Component {
 														<td className="titleColor dataRowAlign">
 															<Link
 																to={{
-																	pathname: '/kirtanDetails',
+																	pathname: `/kirtanDetails/${item.uuid}`,
 																	state: item,
 																}}
 															>

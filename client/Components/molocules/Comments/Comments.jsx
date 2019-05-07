@@ -110,9 +110,10 @@ export class Comments extends React.Component {
 		return (
 			<div>
 				<div>
-					{this.props.commentReducer.comments.map(comment => {
+					{this.props.commentReducer.comments.map((comment, index) => {
 						return (
 							<Comment
+							 	key={index}
 								comment={comment}
 								replies={this.props.commentReducer.replies}
 								user={this.state.user}

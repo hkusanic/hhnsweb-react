@@ -4,13 +4,41 @@ import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { connect } from 'react-redux';
+import { getKirtanByUuid } from '../../../actions/kirtanAction';
 
 export class KirtanDetails extends Component {
 	constructor (props) {
 		super(props);
+		this.state = {
+			kirtanDetails: null,
+		};
+	}
+
+	componentDidMount () {
+		const body = {
+			uuid: this.props.match.params.uuid,
+		};
+
+		this.props.getKirtanByUuid(body);
+
+		if (this.props.kirtanDetails) {
+			this.setState({ kirtanDetails: this.props.kirtanDetails });
+		}
+	}
+
+	static getDerivedStateFromProps (nextProps, prevState) {
+		if (nextProps.kirtanDetails !== prevState.kirtanDetails) {
+			return { kirtanDetails: nextProps.kirtanDetails };
+		} else return null;
 	}
 
 	render () {
+		const { kirtanDetails } = this.state;
+
+		if (!kirtanDetails) {
+			return <div>Error Occured..........</div>;
+		}
 		return (
 			<div>
 				<section className="section section-lg">
@@ -42,8 +70,8 @@ export class KirtanDetails extends Component {
 								<Breadcrumb.Item active>
 									{renderHTML(
 										reactCookie.load('languageCode') === 'en'
-											? this.props.location.state.en.title
-											: this.props.location.state.ru.title
+											? kirtanDetails.en.title
+											: kirtanDetails.ru.title
 									)}
 								</Breadcrumb.Item>
 							</Breadcrumb>
@@ -54,17 +82,15 @@ export class KirtanDetails extends Component {
 									<h3 className="post-creative-title">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.en.title
-												: this.props.location.state.ru.title
+												? kirtanDetails.en.title
+												: kirtanDetails.ru.title
 										)}
 									</h3>
 									<ul className="post-creative-meta">
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(
-													this.props.location.state.created_date
-												).toDateString()}
+												{new Date(kirtanDetails.created_date).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -76,7 +102,7 @@ export class KirtanDetails extends Component {
 								<div className="audioStyle">
 									<audio style={{ height: '30px' }} controls>
 										<source
-											src={renderHTML(this.props.location.state.audio_link)}
+											src={renderHTML(kirtanDetails.audio_link)}
 											type="audio/mpeg"
 										/>
 									</audio>
@@ -92,20 +118,18 @@ export class KirtanDetails extends Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.event
-														: this.props.location.state.ru.event}
+														? kirtanDetails.en.event
+														: kirtanDetails.ru.event}
 												</td>
 											</tr>
-											{this.props.location.state.author ? (
+											{kirtanDetails.author ? (
 												<tr>
 													<td>
 														<b>
 															<span>Author</span> :
 														</b>
 													</td>
-													<td className="padLeftRow">
-														{this.props.location.state.author}
-													</td>
+													<td className="padLeftRow">{kirtanDetails.author}</td>
 												</tr>
 											) : null}
 											<tr>
@@ -114,9 +138,7 @@ export class KirtanDetails extends Component {
 														<span>Durations</span> :
 													</b>
 												</td>
-												<td className="padLeftRow">
-													{this.props.location.state.duration}
-												</td>
+												<td className="padLeftRow">{kirtanDetails.duration}</td>
 											</tr>
 											<tr>
 												<td>
@@ -126,8 +148,8 @@ export class KirtanDetails extends Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.location
-														: this.props.location.state.ru.location}
+														? kirtanDetails.en.location
+														: kirtanDetails.ru.location}
 												</td>
 											</tr>
 											<tr>
@@ -137,7 +159,7 @@ export class KirtanDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.downloads}
+													{kirtanDetails.downloads}
 												</td>
 											</tr>
 											<tr>
@@ -148,8 +170,8 @@ export class KirtanDetails extends Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.topic
-														: this.props.location.state.ru.topic}
+														? kirtanDetails.en.topic
+														: kirtanDetails.ru.topic}
 												</td>
 											</tr>
 										</tbody>
@@ -164,4 +186,20 @@ export class KirtanDetails extends Component {
 	}
 }
 
-export default KirtanDetails;
+const mapStateToProps = state => {
+	return {
+		kirtanDetails: state.kirtanReducer.kirtan,
+	};
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		getKirtanByUuid: body => {
+			dispatch(getKirtanByUuid(body));
+		},
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(KirtanDetails);

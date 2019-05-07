@@ -6,14 +6,38 @@ import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
+import { connect } from 'react-redux';
+import { getLectureByUuid } from '../../../actions/lectureActions';
 export class LectureDetails extends React.Component {
 	constructor (props) {
 		super(props);
+		this.state = {
+			lectureDetails: null,
+		};
+	}
+
+	componentDidMount () {
+		const body = {
+			uuid: this.props.match.params.uuid,
+			video_page_view: true,
+		};
+
+		this.props.getLectureByUuid(body);
+		if (this.props.lectureDetails) {
+			this.setState({ lectureDetails: this.props.lectureDetails });
+		}
+	}
+
+	static getDerivedStateFromProps (nextProps, prevState) {
+		if (nextProps.lectureDetails !== prevState.lectureDetails) {
+			return { lectureDetails: nextProps.lectureDetails };
+		} else return null;
 	}
 
 	render () {
-		if (!this.props.location.state) {
+		const { lectureDetails } = this.state;
+
+		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
 		}
 		return (
@@ -46,8 +70,8 @@ export class LectureDetails extends React.Component {
 							<Breadcrumb.Item active>
 								{renderHTML(
 									reactCookie.load('languageCode') === 'en'
-										? this.props.location.state.en.title
-										: this.props.location.state.ru.title
+										? lectureDetails.en.title
+										: lectureDetails.ru.title
 								)}
 							</Breadcrumb.Item>
 						</Breadcrumb>
@@ -57,17 +81,15 @@ export class LectureDetails extends React.Component {
 									<h3 className="post-creative-title">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.en.event
-												: this.props.location.state.ru.event
+												? lectureDetails.en.event
+												: lectureDetails.ru.event
 										)}
 									</h3>
 									<ul className="post-creative-meta">
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(
-													this.props.location.state.created_date
-												).toDateString()}
+												{new Date(lectureDetails.created_date).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -87,23 +109,21 @@ export class LectureDetails extends React.Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.event
-														: this.props.location.state.ru.event}
+														? lectureDetails.en.event
+														: lectureDetails.ru.event}
 												</td>
 											</tr>
-											{this.props.location.state.part ? (
+											{lectureDetails.part ? (
 												<tr>
 													<td>
 														<b>
 															<span>Part</span> :
 														</b>
 													</td>
-													<td className="padLeftRow">
-														{this.props.location.state.part}
-													</td>
+													<td className="padLeftRow">{lectureDetails.part}</td>
 												</tr>
 											) : null}
-											{this.props.location.state.chapter ? (
+											{lectureDetails.chapter ? (
 												<tr>
 													<td>
 														<b>
@@ -111,23 +131,21 @@ export class LectureDetails extends React.Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.chapter}
+														{lectureDetails.chapter}
 													</td>
 												</tr>
 											) : null}
-											{this.props.location.state.verse ? (
+											{lectureDetails.verse ? (
 												<tr>
 													<td>
 														<b>
 															<span>Verse</span> :
 														</b>
 													</td>
-													<td className="padLeftRow">
-														{this.props.location.state.verse}
-													</td>
+													<td className="padLeftRow">{lectureDetails.verse}</td>
 												</tr>
 											) : null}
-											{this.props.location.state.author ? (
+											{lectureDetails.author ? (
 												<tr>
 													<td>
 														<b>
@@ -135,7 +153,7 @@ export class LectureDetails extends React.Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.author}
+														{lectureDetails.author}
 													</td>
 												</tr>
 											) : null}
@@ -146,7 +164,7 @@ export class LectureDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.duration}
+													{lectureDetails.duration}
 												</td>
 											</tr>
 											<tr>
@@ -157,8 +175,8 @@ export class LectureDetails extends React.Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.location
-														: this.props.location.state.ru.location}
+														? lectureDetails.en.location
+														: lectureDetails.ru.location}
 												</td>
 											</tr>
 											<tr>
@@ -168,7 +186,7 @@ export class LectureDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.downloads}
+													{lectureDetails.downloads}
 												</td>
 											</tr>
 											<tr>
@@ -179,8 +197,8 @@ export class LectureDetails extends React.Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.topic
-														: this.props.location.state.ru.topic}
+														? lectureDetails.en.topic
+														: lectureDetails.ru.topic}
 												</td>
 											</tr>
 										</tbody>
@@ -188,7 +206,7 @@ export class LectureDetails extends React.Component {
 									<div className="padTop">
 										<table>
 											<tbody>
-												{this.props.location.state.youtube.map((item, key) => {
+												{lectureDetails.youtube.map((item, key) => {
 													return (
 														<tr key={key}>
 															<td>
@@ -203,7 +221,7 @@ export class LectureDetails extends React.Component {
 									<div>
 										<p className="bookingForm">Comments</p>
 									</div>
-									<Comments lecture_uuid={this.props.location.state.uuid} />
+									<Comments lecture_uuid={lectureDetails.uuid} />
 								</div>
 							</div>
 							<div className="col-lg-4" />
@@ -215,4 +233,20 @@ export class LectureDetails extends React.Component {
 	}
 }
 
-export default LectureDetails;
+const mapStateToProps = state => {
+	return {
+		lectureDetails: state.lectureReducer.lecture,
+	};
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		getLectureByUuid: body => {
+			dispatch(getLectureByUuid(body));
+		},
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(LectureDetails);

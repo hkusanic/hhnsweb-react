@@ -27,7 +27,7 @@ export class Biography extends Component {
 		this.state = {};
 	}
 
-	redirect = (params) => {
+	redirect = params => {
 		const title_en =
 			params === '1'
 				? DATA.BIOGRAPHY.one_title_en
@@ -55,8 +55,8 @@ export class Biography extends Component {
 				title_ru,
 				content_en,
 				content_ru,
-				img
-			}
+				img,
+			},
 		});
 	};
 
@@ -129,22 +129,19 @@ export class Biography extends Component {
 							</Link>
             </Card> */}
 
-						
-
-						<SingleBiography
-							img="https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png"
-							title_en={DATA.BIOGRAPHY.one_title_en}
-							title_ru={DATA.BIOGRAPHY.one_title_ru}
-							content_en={DATA.BIOGRAPHY.one_content_en}
-							content_ru={DATA.BIOGRAPHY.one_content_ru}
-              />
-              
 						<SingleBiography
 							img="https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png"
 							title_en={DATA.BIOGRAPHY.two_title_en}
 							title_ru={DATA.BIOGRAPHY.two_title_ru}
 							content_en={DATA.BIOGRAPHY.two_content_en}
 							content_ru={DATA.BIOGRAPHY.two_content_ru}
+						/>
+						<SingleBiography
+							img="https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png"
+							title_en={DATA.BIOGRAPHY.one_title_en}
+							title_ru={DATA.BIOGRAPHY.one_title_ru}
+							content_en={DATA.BIOGRAPHY.one_content_en}
+							content_ru={DATA.BIOGRAPHY.one_content_ru}
 						/>
 					</div>
 				</div>

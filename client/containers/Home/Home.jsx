@@ -76,7 +76,7 @@ export class Home extends Component {
 								<Route path="/quotes" component={Quotes} />
 								<Route path="/blogDetails/:uuid" component={BlogDetails} />
 								<Route path="/quoteDetails" component={QuoteDetails} />
-								<Route path="/lectureDetails" component={LectureDetails} />
+								<Route path="/lectureDetails/:uuid" component={LectureDetails} />
 								<Route
 									path="/audio"
 									component={AudioList}
@@ -95,7 +95,7 @@ export class Home extends Component {
 									component={TranscriptionDetails}
 								/>
 								<Route path="/kirtan" component={Kirtan} />
-								<Route path="/kirtanDetails" component={KirtanDetails} />
+								<Route path="/kirtanDetails/:uuid" component={KirtanDetails} />
 								<Route path="/mkv" component={MKV} />
 							</ShellCompoenent>
 						</ScrollToTop>
