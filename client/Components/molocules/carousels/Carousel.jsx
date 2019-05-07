@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import Antd from 'antd';
 import { Carousel, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import script from '../../../assets/script';
@@ -9,16 +8,15 @@ import Announcement from '../../organisms/Announcement/Announcement';
 import GridLayoutMenus from '../../organisms/GridLayoutMenu/GridLayoutMenus';
 import './index.css';
 export class Carousel2 extends Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {};
 	}
-	componentDidMount() {
+	componentDidMount () {
 		script();
 	}
 
-	render() {
-		// console.log('history from Carousel: ', this.props.history);
+	render () {
 
 		return (
 			<div>

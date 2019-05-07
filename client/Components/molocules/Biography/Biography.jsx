@@ -61,7 +61,6 @@ export class Biography extends Component {
 	};
 
 	render() {
-		// console.log('history*****', this.props.history);
 		return (
 			<section className="section section-lg text-center">
 				<div className="container">

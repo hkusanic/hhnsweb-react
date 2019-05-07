@@ -66,7 +66,6 @@ export class VideoList extends Component {
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
-		// console.log('pagination from htc: ', pagination);
 		const pager = { ...this.state.pagination };
 		pager.current = pagination.current;
 		pager.total = this.props.lecturesDetails.totalLectures;
@@ -76,7 +75,6 @@ export class VideoList extends Component {
 
 		let body = { ...this.state.body };
 		body.page = pagination.current;
-		// console.log('body from htc: ', body);
 		this.props.searchLecture(body);
 	};
 

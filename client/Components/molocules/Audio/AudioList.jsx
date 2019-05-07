@@ -194,8 +194,6 @@ export class AudioList extends Component {
 			? 'display-none-icon'
 			: 'icon-search fa fa-close';
 
-		// console.log('lectures from state: ', this.state.lectures);
-
 		return (
 			<div>
 				<section className="bg-gray-100">

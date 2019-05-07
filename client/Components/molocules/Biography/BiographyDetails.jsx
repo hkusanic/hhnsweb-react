@@ -3,19 +3,18 @@ import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 
 export class BiographyDetails extends Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		window.scrollTo(0, 0);
 	}
 
-	render() {
-		// if (!this.props.location.state) {
-		// 	return <div>Error Occured..........</div>;
-		// }
-		// console.log('from details: ', this.props.history);
+	render () {
+		if (!this.props.location.state) {
+			return <div>Error Occured..........</div>;
+		}
 		return (
 			<div>
 				<section className="section section-lg">

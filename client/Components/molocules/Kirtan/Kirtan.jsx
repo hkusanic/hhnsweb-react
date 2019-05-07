@@ -66,7 +66,6 @@ export class Kirtan extends Component {
 	};
 
 	render() {
-		console.log('this.props ====>>>', this.props);
 		let class_icon_search = this.state.iconSearch
 			? 'icon-search fa fa-search'
 			: 'display-none-icon';

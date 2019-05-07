@@ -31,7 +31,6 @@ export class Gallery extends React.Component {
 
 	render () {
 		const { galleryReducer } = this.props;
-		console.log('galleryReducer=====>>>.', galleryReducer);
 		let { mainGallery } = galleryReducer;
 		mainGallery = handleFilterGallery(mainGallery);
 		return (
