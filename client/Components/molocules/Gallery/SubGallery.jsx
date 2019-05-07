@@ -24,6 +24,14 @@ export class SubGallery extends React.Component {
 	}
 
 	render () {
+		if (!localStorage.getItem('user')) {
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">Please Log in to continue</p>
+				</div>
+			);
+		}
+
 		return (
 			<div>
 				<section class="section-lg text-center bg-gray-100">

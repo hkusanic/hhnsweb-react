@@ -5,7 +5,10 @@ import reactCookie from 'react-cookies';
 import { Translate } from 'react-localize-redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { updateCounters, getLectureByUuid } from '../../../actions/lectureActions';
+import {
+	updateCounters,
+	getLectureByUuid,
+} from '../../../actions/lectureActions';
 // eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -15,7 +18,7 @@ export class VideoDetails extends React.Component {
 		super(props);
 		this.state = {
 			lectureDetails: null,
-		}
+		};
 	}
 
 	componentDidMount() {
@@ -40,12 +43,21 @@ export class VideoDetails extends React.Component {
 		this.props.history.goBack();
 	};
 
- render() {
-		const { lectureDetails } = this.state
-	
+	render() {
+		const { lectureDetails } = this.state;
+
 		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
 		}
+
+		if (!localStorage.getItem('user')) {
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">Please Log in to continue</p>
+				</div>
+			);
+		}
+
 		return (
 			<div>
 				<section class="section section-lg">
@@ -96,9 +108,7 @@ export class VideoDetails extends React.Component {
 										<li>
 											<span class="icon mdi mdi-calendar-clock" />
 											<time datetime="2018">
-												{new Date(
-													lectureDetails.created_date
-												).toDateString()}
+												{new Date(lectureDetails.created_date).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -153,7 +163,7 @@ const mapDispatchToProps = dispatch => {
 		},
 		getLectureByUuid: body => {
 			dispatch(getLectureByUuid(body));
-		}
+		},
 	};
 };
 

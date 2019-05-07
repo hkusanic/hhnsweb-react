@@ -140,7 +140,7 @@ export class AudioList extends Component {
 							state: record,
 						}}
 					>
-						{this.showing100Characters(renderHTML(
+						{renderHTML(this.showing100Characters(
 							reactCookie.load('languageCode') === 'en'
 								? record.en.title
 								: record.ru.title

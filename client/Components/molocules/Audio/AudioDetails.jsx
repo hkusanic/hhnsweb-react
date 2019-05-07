@@ -7,14 +7,17 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import { Link, withRouter } from 'react-router-dom';
 import { Icon } from 'antd';
-import { updateCounters, getLectureByUuid } from '../../../actions/lectureActions';
+import {
+	updateCounters,
+	getLectureByUuid,
+} from '../../../actions/lectureActions';
 import Comments from '../Comments/Comments';
 
 export class AudioDetails extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			lectureDetails: null
+			lectureDetails: null,
 		};
 	}
 
@@ -59,6 +62,14 @@ export class AudioDetails extends Component {
 			return <div>Error Occured..........</div>;
 		}
 
+		if (!localStorage.getItem('user')) {
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">Please Log in to continue</p>
+				</div>
+			);
+		}
+
 		return (
 			<div>
 				<section className="section section-lg">
@@ -89,11 +100,13 @@ export class AudioDetails extends Component {
 												paddingRight: 5,
 											}}
 										/>
-										<Breadcrumb.Item active>{renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? lectureDetails.en.title
-												: lectureDetails.ru.title
-										)}</Breadcrumb.Item>
+										<Breadcrumb.Item active>
+											{renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? lectureDetails.en.title
+													: lectureDetails.ru.title
+											)}
+										</Breadcrumb.Item>
 									</Breadcrumb>
 
 									<h3 className="post-creative-title">
@@ -107,9 +120,7 @@ export class AudioDetails extends Component {
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(
-													lectureDetails.created_date
-												).toDateString()}
+												{new Date(lectureDetails.created_date).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -120,7 +131,7 @@ export class AudioDetails extends Component {
 								</article>
 								<div className="audioStyle">
 									<audio
-										style={{height: '30px'}}
+										style={{ height: '30px' }}
 										className="audioPlayer"
 										controls
 										controlsList="nodownload"
@@ -142,10 +153,7 @@ export class AudioDetails extends Component {
 										}}
 										download="download"
 									>
-										<Icon
-											type="download"
-											style={{ fontSize: '1.5rem' }}
-										/>
+										<Icon type="download" style={{ fontSize: '1.5rem' }} />
 									</a>
 								</div>
 
@@ -171,9 +179,7 @@ export class AudioDetails extends Component {
 															<span>Part</span> :
 														</b>
 													</td>
-													<td className="padLeftRow">
-														{lectureDetails.part}
-													</td>
+													<td className="padLeftRow">{lectureDetails.part}</td>
 												</tr>
 											) : null}
 											{lectureDetails.chapter ? (
@@ -195,9 +201,7 @@ export class AudioDetails extends Component {
 															<span>Verse</span> :
 														</b>
 													</td>
-													<td className="padLeftRow">
-														{lectureDetails.verse}
-													</td>
+													<td className="padLeftRow">{lectureDetails.verse}</td>
 												</tr>
 											) : null}
 											{lectureDetails.author ? (
@@ -275,7 +279,7 @@ export class AudioDetails extends Component {
 const mapStateToProps = state => {
 	return {
 		Count: state.lectureReducer.Count,
-		lectureDetails: state.lectureReducer.lecture
+		lectureDetails: state.lectureReducer.lecture,
 	};
 };
 const mapDispatchToProps = dispatch => {
@@ -285,7 +289,7 @@ const mapDispatchToProps = dispatch => {
 		},
 		getLectureByUuid: body => {
 			dispatch(getLectureByUuid(body));
-		}
+		},
 	};
 };
 

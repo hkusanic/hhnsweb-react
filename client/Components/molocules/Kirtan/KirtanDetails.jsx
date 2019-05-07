@@ -39,6 +39,15 @@ export class KirtanDetails extends Component {
 		if (!kirtanDetails) {
 			return <div>Error Occured..........</div>;
 		}
+
+		if (!localStorage.getItem('user')) {
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">Please Log in to continue</p>
+				</div>
+			);
+		}
+
 		return (
 			<div>
 				<section className="section section-lg">
