@@ -268,7 +268,6 @@ const mapStateToProps = state => {
 		lectureDetails: state.lectureReducer.lecture,
 	};
 };
-
 const mapDispatchToProps = dispatch => {
 	return {
 		updateCounters: body => {
