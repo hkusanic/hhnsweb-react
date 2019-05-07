@@ -136,11 +136,11 @@ export class AudioList extends Component {
 				render: (text, record, index) => (
 					<Link
 						to={{
-							pathname: '/audioDetails',
+							pathname: `/audioDetails/${record.uuid}`,
 							state: record,
 						}}
 					>
-						{this.showing100Characters(renderHTML(
+						{renderHTML(this.showing100Characters(
 							reactCookie.load('languageCode') === 'en'
 								? record.en.title
 								: record.ru.title
@@ -193,8 +193,6 @@ export class AudioList extends Component {
 		let class_icon_close = this.state.iconSearch
 			? 'display-none-icon'
 			: 'icon-search fa fa-close';
-
-		// console.log('lectures from state: ', this.state.lectures);
 
 		return (
 			<div>

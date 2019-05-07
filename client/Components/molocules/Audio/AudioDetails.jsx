@@ -5,27 +5,43 @@ import { connect } from 'react-redux';
 
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Icon } from 'antd';
-import { updateCounters } from '../../../actions/lectureActions';
+import {
+	updateCounters,
+	getLectureByUuid,
+} from '../../../actions/lectureActions';
 import Comments from '../Comments/Comments';
 
 export class AudioDetails extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			lectureDetails: null,
+		};
 	}
 
 	componentDidMount() {
 		const body = {
-			uuid: this.props.location.state.uuid,
+			uuid: this.props.match.params.uuid,
 			audio_page_view: true,
 		};
 		this.props.updateCounters(body);
+		this.props.getLectureByUuid(body);
+		if (this.props.lectureDetails) {
+			this.setState({ lectureDetails: this.props.lectureDetails });
+		}
+	}
+
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.lectureDetails !== prevState.lectureDetails) {
+			return { lectureDetails: nextProps.lectureDetails };
+		} else return null;
 	}
 
 	updateAudioCount = () => {
 		const body = {
-			uuid: this.props.location.state.uuid,
+			uuid: this.props.match.params.uuid,
 			audio_play_count: true,
 		};
 		this.props.updateCounters(body);
@@ -40,8 +56,18 @@ export class AudioDetails extends Component {
 	};
 
 	render() {
-		if (!this.props.location.state) {
+		const { lectureDetails } = this.state;
+
+		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
+		}
+
+		if (!localStorage.getItem('user')) {
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">Please Log in to continue</p>
+				</div>
+			);
 		}
 
 		return (
@@ -74,27 +100,27 @@ export class AudioDetails extends Component {
 												paddingRight: 5,
 											}}
 										/>
-										<Breadcrumb.Item active>{renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.en.title
-												: this.props.location.state.ru.title
-										)}</Breadcrumb.Item>
+										<Breadcrumb.Item active>
+											{renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? lectureDetails.en.title
+													: lectureDetails.ru.title
+											)}
+										</Breadcrumb.Item>
 									</Breadcrumb>
 
 									<h3 className="post-creative-title">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.en.title
-												: this.props.location.state.ru.title
+												? lectureDetails.en.title
+												: lectureDetails.ru.title
 										)}
 									</h3>
 									<ul className="post-creative-meta">
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(
-													this.props.location.state.created_date
-												).toDateString()}
+												{new Date(lectureDetails.created_date).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -105,7 +131,7 @@ export class AudioDetails extends Component {
 								</article>
 								<div className="audioStyle">
 									<audio
-										style={{height: '30px'}}
+										style={{ height: '30px' }}
 										className="audioPlayer"
 										controls
 										controlsList="nodownload"
@@ -114,23 +140,20 @@ export class AudioDetails extends Component {
 										}}
 									>
 										<source
-											src={renderHTML(this.props.location.state.audio_link)}
+											src={renderHTML(lectureDetails.audio_link)}
 											type="audio/mpeg"
 										/>
 									</audio>
 
 									<a
 										className="downloadIcon"
-										href={this.props.location.state.audio_link}
+										href={lectureDetails.audio_link}
 										onClick={() => {
-											this.handleUpdate(this.props.location.state.uuid);
+											this.handleUpdate(lectureDetails.uuid);
 										}}
 										download="download"
 									>
-										<Icon
-											type="download"
-											style={{ fontSize: '1.5rem' }}
-										/>
+										<Icon type="download" style={{ fontSize: '1.5rem' }} />
 									</a>
 								</div>
 
@@ -145,23 +168,21 @@ export class AudioDetails extends Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.event
-														: this.props.location.state.ru.event}
+														? lectureDetails.en.event
+														: lectureDetails.ru.event}
 												</td>
 											</tr>
-											{this.props.location.state.part ? (
+											{lectureDetails.part ? (
 												<tr>
 													<td>
 														<b>
 															<span>Part</span> :
 														</b>
 													</td>
-													<td className="padLeftRow">
-														{this.props.location.state.part}
-													</td>
+													<td className="padLeftRow">{lectureDetails.part}</td>
 												</tr>
 											) : null}
-											{this.props.location.state.chapter ? (
+											{lectureDetails.chapter ? (
 												<tr>
 													<td>
 														<b>
@@ -169,23 +190,21 @@ export class AudioDetails extends Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.chapter}
+														{lectureDetails.chapter}
 													</td>
 												</tr>
 											) : null}
-											{this.props.location.state.verse ? (
+											{lectureDetails.verse ? (
 												<tr>
 													<td>
 														<b>
 															<span>Verse</span> :
 														</b>
 													</td>
-													<td className="padLeftRow">
-														{this.props.location.state.verse}
-													</td>
+													<td className="padLeftRow">{lectureDetails.verse}</td>
 												</tr>
 											) : null}
-											{this.props.location.state.author ? (
+											{lectureDetails.author ? (
 												<tr>
 													<td>
 														<b>
@@ -193,7 +212,7 @@ export class AudioDetails extends Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.author}
+														{lectureDetails.author}
 													</td>
 												</tr>
 											) : null}
@@ -204,7 +223,7 @@ export class AudioDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.duration}
+													{lectureDetails.duration}
 												</td>
 											</tr>
 											<tr>
@@ -215,8 +234,8 @@ export class AudioDetails extends Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.location
-														: this.props.location.state.ru.location}
+														? lectureDetails.en.location
+														: lectureDetails.ru.location}
 												</td>
 											</tr>
 											<tr>
@@ -226,7 +245,7 @@ export class AudioDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.counters.downloads}
+													{lectureDetails.counters.downloads}
 												</td>
 											</tr>
 											<tr>
@@ -237,8 +256,8 @@ export class AudioDetails extends Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.topic
-														: this.props.location.state.ru.topic}
+														? lectureDetails.en.topic
+														: lectureDetails.ru.topic}
 												</td>
 											</tr>
 										</tbody>
@@ -247,7 +266,7 @@ export class AudioDetails extends Component {
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>
-								<Comments lecture_uuid={this.props.location.state.uuid} />
+								<Comments lecture_uuid={lectureDetails.uuid} />
 							</div>
 						</div>
 					</div>
@@ -260,6 +279,7 @@ export class AudioDetails extends Component {
 const mapStateToProps = state => {
 	return {
 		Count: state.lectureReducer.Count,
+		lectureDetails: state.lectureReducer.lecture,
 	};
 };
 const mapDispatchToProps = dispatch => {
@@ -267,10 +287,13 @@ const mapDispatchToProps = dispatch => {
 		updateCounters: body => {
 			dispatch(updateCounters(body));
 		},
+		getLectureByUuid: body => {
+			dispatch(getLectureByUuid(body));
+		},
 	};
 };
 
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(AudioDetails);
+)(withRouter(AudioDetails));

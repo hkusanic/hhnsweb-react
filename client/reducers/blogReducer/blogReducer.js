@@ -5,7 +5,8 @@ const initialState = {
 	currentPage: 1,
 	totalBlogs: '',
 	isCompleted: false,
-	error: ''
+	error: '',
+	blog: null,
 };
 
 const blogReducer = (state = initialState, action) => {
@@ -17,7 +18,7 @@ const blogReducer = (state = initialState, action) => {
 				currentPage: blogs.currentPage,
 				blogs: blogs.results,
 				totalBlogs: blogs.total,
-				isCompleted: true
+				isCompleted: true,
 			};
 			break;
 		case types.GET_BLOG:
@@ -25,7 +26,13 @@ const blogReducer = (state = initialState, action) => {
 			state = {
 				...state,
 				appointmentData: data,
-				error: ''
+				error: '',
+			};
+			break;
+		case types.GET_BLOG_BY_UUID:
+			state = {
+				...state,
+				blog: action.payload.blog,
 			};
 			break;
 	}

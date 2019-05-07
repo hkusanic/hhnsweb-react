@@ -25,7 +25,7 @@ const columns = [
 		render: (text, record, index) => (
 			<Link
 				to={{
-					pathname: '/transcriptionDetails',
+					pathname: `/transcriptionDetails/${record.uuid}`,
 					state: record
 				}}>
 				{renderHTML(
@@ -70,7 +70,6 @@ export class Transcritpion extends Component {
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
-		// console.log('pagination from htc: ', pagination);
 		const pager = { ...this.state.pagination };
 		pager.current = pagination.current;
 		pager.total = this.props.lecturesDetails.totalLectures;
@@ -80,7 +79,6 @@ export class Transcritpion extends Component {
 
 		let body = { ...this.state.body };
 		body.page = pagination.current;
-		// console.log('body from htc: ', body);
 		this.props.searchLecture(body);
 	};
 
@@ -150,8 +148,6 @@ export class Transcritpion extends Component {
 		let class_icon_close = this.state.iconSearch
 			? 'display-none-icon'
 			: 'icon-search fa fa-close';
-
-		// console.log('trans ====> ', this.props.lecturesDetails.lectures);
 
 		return (
 			<div>

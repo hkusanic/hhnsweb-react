@@ -32,9 +32,30 @@ export function getBlog (body) {
 	};
 }
 
+export function getBlogByUuid (body) {
+	return (dispatch) => {
+		blogApi.fetchBlog(body)
+			.then((response) => {
+				dispatch(fetchBlogByUuid(response));
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+}
+
 export function getAction (data) {
 	return {
 		type: types.GET_BLOG,
 		payload: data,
 	};
 }
+
+export function fetchBlogByUuid (data) {
+	return {
+		type: types.GET_BLOG_BY_UUID,
+		payload: {
+			blog: data.data.blog,
+		},
+	};
+};

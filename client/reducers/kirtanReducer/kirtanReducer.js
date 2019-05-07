@@ -1,11 +1,12 @@
-import * as types from "../../constants/index";
+import * as types from '../../constants/index';
 
 const initialState = {
 	kirtans: [],
 	currentPage: 1,
-	totalKirtans: "",
+	totalKirtans: '',
 	isCompleted: false,
-	error: ""
+	error: '',
+	kirtan: null,
 };
 
 const kirtanReducer = (state = initialState, action) => {
@@ -17,7 +18,13 @@ const kirtanReducer = (state = initialState, action) => {
 				kirtans: data.results,
 				totalKirtans: data.total,
 				currentPage: data.currentPage,
-				isCompleted: true
+				isCompleted: true,
+			};
+			break;
+		case types.GET_KIRTAN_BY_UUID:
+			state = {
+				...state,
+				kirtan: action.payload.kirtan,
 			};
 			break;
 	}

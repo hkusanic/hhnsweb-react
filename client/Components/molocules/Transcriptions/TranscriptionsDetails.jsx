@@ -3,7 +3,7 @@ import { Icon } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
-import { updateCounters } from '../../../actions/lectureActions';
+import { updateCounters, getLectureByUuid } from '../../../actions/lectureActions';
 // eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 
@@ -15,12 +15,13 @@ export class TranscriptionDetails extends React.Component {
 		super(props);
 		this.state = {
 			text: '',
+			lectureDetails: null,
 		};
 	}
 
 	componentDidMount () {
 		let body = {
-			uuid: this.props.location.state.uuid,
+			uuid: this.props.match.params.uuid,
 		};
 		if (reactCookie.load('languageCode') === 'en') {
 			body.en_transcription_view = true;
@@ -28,12 +29,33 @@ export class TranscriptionDetails extends React.Component {
 			body.ru_transcription_view = true;
 		}
 		this.props.updateCounters(body);
+		this.props.getLectureByUuid(body);
+		if (this.props.lectureDetails) {
+			this.setState({ lectureDetails: this.props.lectureDetails });
+		}
+	}
+
+	static getDerivedStateFromProps (nextProps, prevState) {
+		if (nextProps.lectureDetails !== prevState.lectureDetails) {
+			return { lectureDetails: nextProps.lectureDetails };
+		} else return null;
 	}
 
 	render () {
-		if (!this.props.location.state) {
+		const { lectureDetails } = this.state;
+
+		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
 		}
+
+		if (!localStorage.getItem('user')) {
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">Please Log in to continue</p>
+				</div>
+			);
+		}
+
 		return (
 			<div>
 				<section className="section section-lg">
@@ -67,8 +89,8 @@ export class TranscriptionDetails extends React.Component {
 										<Breadcrumb.Item active>
 											{renderHTML(
 												reactCookie.load('languageCode') === 'en'
-													? this.props.location.state.en.title
-													: this.props.location.state.ru.title
+													? lectureDetails.en.title
+													: lectureDetails.ru.title
 											)}
 										</Breadcrumb.Item>
 									</Breadcrumb>
@@ -76,8 +98,8 @@ export class TranscriptionDetails extends React.Component {
 									<h3 className="post-creative-title dataTitle">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.en.title
-												: this.props.location.state.ru.title
+												? lectureDetails.en.title
+												: lectureDetails.ru.title
 										)}
 									</h3>
 									<ul className="post-creative-meta dataUL">
@@ -85,7 +107,7 @@ export class TranscriptionDetails extends React.Component {
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
 												{new Date(
-													this.props.location.state.created_date
+													lectureDetails.created_date
 												).toDateString()}
 											</time>
 										</li>
@@ -97,8 +119,8 @@ export class TranscriptionDetails extends React.Component {
 									<div>
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.en.transcription.text
-												: this.props.location.state.en.transcription.text
+												? lectureDetails.en.transcription.text
+												: lectureDetails.en.transcription.text
 										)}
 									</div>
 								</article>
@@ -115,7 +137,7 @@ export class TranscriptionDetails extends React.Component {
 													<audio style={{ height: '30px' }} controls>
 														<source
 															src={renderHTML(
-																this.props.location.state.audio_link
+																lectureDetails.audio_link
 															)}
 															type="audio/mpeg"
 														/>
@@ -131,14 +153,14 @@ export class TranscriptionDetails extends React.Component {
 												<td className="padLeftRow">
 													<a
 														href={
-															this.props.location.state.en.transcription
+															lectureDetails.en.transcription
 																.attachment_link
 														}
 														target="_blank"
 													>
 														<span>
 															{
-																this.props.location.state.en.transcription
+																lectureDetails.en.transcription
 																	.attachment_name
 															}
 														</span>
@@ -153,11 +175,11 @@ export class TranscriptionDetails extends React.Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.event
-														: this.props.location.state.ru.event}
+														? lectureDetails.en.event
+														: lectureDetails.ru.event}
 												</td>
 											</tr>
-											{this.props.location.state.part ? (
+											{lectureDetails.part ? (
 												<tr>
 													<td>
 														<b>
@@ -165,11 +187,11 @@ export class TranscriptionDetails extends React.Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.part}
+														{lectureDetails.part}
 													</td>
 												</tr>
 											) : null}
-											{this.props.location.state.chapter ? (
+											{lectureDetails.chapter ? (
 												<tr>
 													<td>
 														<b>
@@ -177,11 +199,11 @@ export class TranscriptionDetails extends React.Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.chapter}
+														{lectureDetails.chapter}
 													</td>
 												</tr>
 											) : null}
-											{this.props.location.state.verse ? (
+											{lectureDetails.verse ? (
 												<tr>
 													<td>
 														<b>
@@ -189,11 +211,11 @@ export class TranscriptionDetails extends React.Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.verse}
+														{lectureDetails.verse}
 													</td>
 												</tr>
 											) : null}
-											{this.props.location.state.author ? (
+											{lectureDetails.author ? (
 												<tr>
 													<td>
 														<b>
@@ -201,7 +223,7 @@ export class TranscriptionDetails extends React.Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.author}
+														{lectureDetails.author}
 													</td>
 												</tr>
 											) : null}
@@ -212,7 +234,7 @@ export class TranscriptionDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.duration}
+													{lectureDetails.duration}
 												</td>
 											</tr>
 											<tr>
@@ -223,8 +245,8 @@ export class TranscriptionDetails extends React.Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.location
-														: this.props.location.state.en.location}
+														? lectureDetails.en.location
+														: lectureDetails.en.location}
 												</td>
 											</tr>
 											<tr>
@@ -234,7 +256,7 @@ export class TranscriptionDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.counters.downloads}
+													{lectureDetails.counters.downloads}
 												</td>
 											</tr>
 											<tr>
@@ -245,8 +267,8 @@ export class TranscriptionDetails extends React.Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.en.topic
-														: this.props.location.state.ru.topic}
+														? lectureDetails.en.topic
+														: lectureDetails.ru.topic}
 												</td>
 											</tr>
 										</tbody>
@@ -255,7 +277,7 @@ export class TranscriptionDetails extends React.Component {
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>
-								<Comments lecture_uuid={this.props.location.state.uuid} />
+								<Comments lecture_uuid={lectureDetails.uuid} />
 							</div>
 							<div className="col-lg-4" />
 						</div>
@@ -269,12 +291,16 @@ export class TranscriptionDetails extends React.Component {
 const mapStateToProps = state => {
 	return {
 		Count: state.lectureReducer.Count,
+		lectureDetails: state.lectureReducer.lecture,
 	};
 };
 const mapDispatchToProps = dispatch => {
 	return {
 		updateCounters: body => {
 			dispatch(updateCounters(body));
+		},
+		getLectureByUuid: body => {
+			dispatch(getLectureByUuid(body));
 		},
 	};
 };

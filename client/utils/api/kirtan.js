@@ -27,6 +27,10 @@ const utils = {
 
 		return axios.get(url);
 	},
+	fetchKirtan: body => {
+		let url = serverAddress + '/api/kirtan/getkirtanbyid/';
+		return axios.post(url, body);
+	},
 };
 
 export default utils;

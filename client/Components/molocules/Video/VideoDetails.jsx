@@ -5,7 +5,10 @@ import reactCookie from 'react-cookies';
 import { Translate } from 'react-localize-redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { updateCounters } from '../../../actions/lectureActions';
+import {
+	updateCounters,
+	getLectureByUuid,
+} from '../../../actions/lectureActions';
 // eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -13,14 +16,27 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 export class VideoDetails extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			lectureDetails: null,
+		};
 	}
 
 	componentDidMount() {
 		const body = {
-			uuid: this.props.location.state.uuid,
+			uuid: this.props.match.params.uuid,
 			video_page_view: true,
 		};
 		this.props.updateCounters(body);
+		this.props.getLectureByUuid(body);
+		if (this.props.lectureDetails) {
+			this.setState({ lectureDetails: this.props.lectureDetails });
+		}
+	}
+
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.lectureDetails !== prevState.lectureDetails) {
+			return { lectureDetails: nextProps.lectureDetails };
+		} else return null;
 	}
 
 	goBack = () => {
@@ -28,9 +44,20 @@ export class VideoDetails extends React.Component {
 	};
 
 	render() {
-		if (!this.props.location.state) {
+		const { lectureDetails } = this.state;
+
+		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
 		}
+
+		if (!localStorage.getItem('user')) {
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">Please Log in to continue</p>
+				</div>
+			);
+		}
+
 		return (
 			<div>
 				<section class="section section-lg">
@@ -64,8 +91,8 @@ export class VideoDetails extends React.Component {
 										<Breadcrumb.Item active>
 											{renderHTML(
 												reactCookie.load('languageCode') === 'en'
-													? this.props.location.state.en.title
-													: this.props.location.state.ru.title
+													? lectureDetails.en.title
+													: lectureDetails.ru.title
 											)}
 										</Breadcrumb.Item>
 									</Breadcrumb>
@@ -73,17 +100,15 @@ export class VideoDetails extends React.Component {
 									<h3 class="post-creative-title">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.en.title
-												: this.props.location.state.ru.title
+												? lectureDetails.en.title
+												: lectureDetails.ru.title
 										)}
 									</h3>
 									<ul class="post-creative-meta">
 										<li>
 											<span class="icon mdi mdi-calendar-clock" />
 											<time datetime="2018">
-												{new Date(
-													this.props.location.state.created_date
-												).toDateString()}
+												{new Date(lectureDetails.created_date).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -98,8 +123,8 @@ export class VideoDetails extends React.Component {
 								</article>
 								<div>
 									<div className="row row-50 row-xxl-70 padTop flexDiv padLeftRow">
-										{this.props.location.state.youtube
-											? this.props.location.state.youtube.map((item, key) => {
+										{lectureDetails.youtube
+											? lectureDetails.youtube.map((item, key) => {
 													return (
 														<div key={key} className="flexRow">
 															<iframe className="iframeStyle" src={item} />
@@ -114,7 +139,7 @@ export class VideoDetails extends React.Component {
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>
-								<Comments lecture_uuid={this.props.location.state.uuid} />
+								<Comments lecture_uuid={lectureDetails.uuid} />
 							</div>
 							<div class="col-lg-4" />
 						</div>
@@ -128,12 +153,16 @@ export class VideoDetails extends React.Component {
 const mapStateToProps = state => {
 	return {
 		Count: state.lectureReducer.Count,
+		lectureDetails: state.lectureReducer.lecture,
 	};
 };
 const mapDispatchToProps = dispatch => {
 	return {
 		updateCounters: body => {
 			dispatch(updateCounters(body));
+		},
+		getLectureByUuid: body => {
+			dispatch(getLectureByUuid(body));
 		},
 	};
 };

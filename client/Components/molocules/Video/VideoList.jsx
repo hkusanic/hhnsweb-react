@@ -15,33 +15,6 @@ import Auth from '../../../utils/Auth';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-const columns = [
-	{
-		title: 'Title',
-		dataIndex: renderHTML(
-			reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
-		),
-		render: (text, record, index) => (
-			<Link
-				to={{
-					pathname: '/videoDetails',
-					state: record
-				}}>
-				{renderHTML(
-					reactCookie.load('languageCode') === 'en'
-						? record.en.title
-						: record.ru.title
-				)}
-			</Link>
-		)
-	},
-	{
-		title: 'Views',
-		dataIndex: 'counters.video_page_view',
-		render: (text, record, index) => record.counters.video_page_view
-	}
-];
-
 const defaultPageSize = 20;
 
 export class VideoList extends Component {
@@ -66,7 +39,6 @@ export class VideoList extends Component {
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
-		// console.log('pagination from htc: ', pagination);
 		const pager = { ...this.state.pagination };
 		pager.current = pagination.current;
 		pager.total = this.props.lecturesDetails.totalLectures;
@@ -76,7 +48,6 @@ export class VideoList extends Component {
 
 		let body = { ...this.state.body };
 		body.page = pagination.current;
-		// console.log('body from htc: ', body);
 		this.props.searchLecture(body);
 	};
 
@@ -154,6 +125,34 @@ export class VideoList extends Component {
 	};
 
 	render() {
+
+		const columns = [
+			{
+				title: 'Title',
+				dataIndex: renderHTML(
+					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+				),
+				render: (text, record, index) => (
+					<Link
+						to={{
+							pathname: `/videoDetails/${record.uuid}`,
+							state: record
+						}}>
+						{renderHTML(this.showing100Characters(
+							reactCookie.load('languageCode') === 'en'
+								? record.en.title
+								: record.ru.title
+						))}
+					</Link>
+				)
+			},
+			{
+				title: 'Views',
+				dataIndex: 'counters.video_page_view',
+				render: (text, record, index) => record.counters.video_page_view
+			}
+		];
+
 		let class_icon_search = this.state.iconSearch
 			? 'icon-search fa fa-search'
 			: 'display-none-icon';

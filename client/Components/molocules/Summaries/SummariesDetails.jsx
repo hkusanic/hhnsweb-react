@@ -3,7 +3,7 @@ import { Icon } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
-import { updateCounters } from '../../../actions/lectureActions';
+import { updateCounters, getLectureByUuid } from '../../../actions/lectureActions';
 // eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 
@@ -14,10 +14,13 @@ import { Link } from 'react-router-dom';
 export class SummariesDetails extends React.Component {
 	constructor (props) {
 		super(props);
+		this.state = {
+			lectureDetails: null,
+		};
 	}
 	componentDidMount () {
 		let body = {
-			uuid: this.props.location.state.uuid,
+			uuid: this.props.match.params.uuid,
 		};
 		if (reactCookie.load('languageCode') === 'en') {
 			body.en_summary_view = true;
@@ -25,12 +28,34 @@ export class SummariesDetails extends React.Component {
 			body.ru_summary_view = true;
 		}
 		this.props.updateCounters(body);
+		this.props.getLectureByUuid(body);
+
+		if (this.props.lectureDetails) {
+			this.setState({ lectureDetails: this.props.lectureDetails });
+		}
+	}
+
+	static getDerivedStateFromProps (nextProps, prevState) {
+		if (nextProps.lectureDetails !== prevState.lectureDetails) {
+			return { lectureDetails: nextProps.lectureDetails };
+		} else return null;
 	}
 
 	render () {
-		if (!this.props.location.state) {
+		const { lectureDetails } = this.state;
+
+		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
 		}
+
+		if (!localStorage.getItem('user')) {
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">Please Log in to continue</p>
+				</div>
+			);
+		}
+
 		return (
 			<div>
 				<section className="section section-lg">
@@ -62,20 +87,22 @@ export class SummariesDetails extends React.Component {
 											}}
 										/>
 										<Breadcrumb.Item active>
-											{renderHTML(
+											{lectureDetails
+											&& renderHTML(
 												reactCookie.load('languageCode') === 'en'
-													? this.props.location.state.en.title
-													: this.props.location.state.ru.title
+													? lectureDetails.en.title
+													: lectureDetails.ru.title
 											)}
 										</Breadcrumb.Item>
 									</Breadcrumb>
 
 									<h3 className="post-creative-title dataTitle">
-										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.en.title
-												: this.props.location.state.ru.title
-										)}
+										{lectureDetails
+											&& renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? lectureDetails.en.title
+													: lectureDetails.ru.title
+											)}
 									</h3>
 									<ul className="post-creative-meta dataUL">
 										<li>
@@ -92,11 +119,12 @@ export class SummariesDetails extends React.Component {
 										</li>
 									</ul>
 									<div>
-										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.ru.summary.text
-												: this.props.location.state.ru.summary.text
-										)}
+										{lectureDetails
+											&& renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? lectureDetails.ru.summary.text
+													: lectureDetails.ru.summary.text
+											)}
 									</div>
 								</article>
 								<div>
@@ -112,7 +140,7 @@ export class SummariesDetails extends React.Component {
 													<audio style={{ height: '30px' }} controls>
 														<source
 															src={renderHTML(
-																this.props.location.state.audio_link
+																lectureDetails.audio_link
 															)}
 															type="audio/mpeg"
 														/>
@@ -126,10 +154,10 @@ export class SummariesDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.ru.event}
+													{lectureDetails.ru.event}
 												</td>
 											</tr>
-											{this.props.location.state.part ? (
+											{lectureDetails.part ? (
 												<tr>
 													<td>
 														<b>
@@ -137,11 +165,11 @@ export class SummariesDetails extends React.Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.part}
+														{lectureDetails.part}
 													</td>
 												</tr>
 											) : null}
-											{this.props.location.state.chapter ? (
+											{lectureDetails.chapter ? (
 												<tr>
 													<td>
 														<b>
@@ -149,11 +177,11 @@ export class SummariesDetails extends React.Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.chapter}
+														{lectureDetails.chapter}
 													</td>
 												</tr>
 											) : null}
-											{this.props.location.state.verse ? (
+											{lectureDetails.verse ? (
 												<tr>
 													<td>
 														<b>
@@ -161,11 +189,11 @@ export class SummariesDetails extends React.Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.verse}
+														{lectureDetails.verse}
 													</td>
 												</tr>
 											) : null}
-											{this.props.location.state.author ? (
+											{lectureDetails.author ? (
 												<tr>
 													<td>
 														<b>
@@ -173,7 +201,7 @@ export class SummariesDetails extends React.Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{this.props.location.state.author}
+														{lectureDetails.author}
 													</td>
 												</tr>
 											) : null}
@@ -184,7 +212,7 @@ export class SummariesDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.duration}
+													{lectureDetails.duration}
 												</td>
 											</tr>
 											<tr>
@@ -194,7 +222,7 @@ export class SummariesDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.ru.location}
+													{lectureDetails.ru.location}
 												</td>
 											</tr>
 											<tr>
@@ -204,7 +232,7 @@ export class SummariesDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.counters.downloads}
+													{lectureDetails.counters.downloads}
 												</td>
 											</tr>
 											<tr>
@@ -214,7 +242,7 @@ export class SummariesDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{this.props.location.state.ru.topic}
+													{lectureDetails.ru.topic}
 												</td>
 											</tr>
 										</tbody>
@@ -223,7 +251,7 @@ export class SummariesDetails extends React.Component {
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>
-								<Comments lecture_uuid={this.props.location.state.uuid} />
+								<Comments lecture_uuid={lectureDetails.uuid} />
 							</div>
 							<div className="col-lg-4" />
 						</div>
@@ -237,12 +265,16 @@ export class SummariesDetails extends React.Component {
 const mapStateToProps = state => {
 	return {
 		Count: state.lectureReducer.Count,
+		lectureDetails: state.lectureReducer.lecture,
 	};
 };
 const mapDispatchToProps = dispatch => {
 	return {
 		updateCounters: body => {
 			dispatch(updateCounters(body));
+		},
+		getLectureByUuid: (body) => {
+			dispatch(getLectureByUuid(body));
 		},
 	};
 };

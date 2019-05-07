@@ -31,9 +31,17 @@ export class Gallery extends React.Component {
 
 	render () {
 		const { galleryReducer } = this.props;
-		console.log('galleryReducer=====>>>.', galleryReducer);
 		let { mainGallery } = galleryReducer;
 		mainGallery = handleFilterGallery(mainGallery);
+
+		if (!localStorage.getItem('user')) {
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">Please Log in to continue</p>
+				</div>
+			);
+		}
+
 		return (
 			<div>
 				{!this.state.isUserLogin ? (

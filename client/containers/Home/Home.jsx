@@ -38,20 +38,20 @@ import MKV from '../../Components/molocules/MKV/mkv';
 import { Route, Switch } from 'react-router-dom';
 
 export class Home extends Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
 			isLogin: false,
 			isAdmin: false,
-			userId: ''
+			userId: '',
 		};
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		script();
 	}
 
-	render() {
+	render () {
 		return (
 			<div>
 				<div className="page">
@@ -74,28 +74,28 @@ export class Home extends Component {
 								<Route path="/calender" component={Calender} />
 								<Route path="/lectures" component={Lectures} />
 								<Route path="/quotes" component={Quotes} />
-								<Route path="/blogDetails" component={BlogDetails} />
+								<Route path="/blogDetails/:uuid" component={BlogDetails} />
 								<Route path="/quoteDetails" component={QuoteDetails} />
-								<Route path="/lectureDetails" component={LectureDetails} />
+								<Route path="/lectureDetails/:uuid" component={LectureDetails} />
 								<Route
 									path="/audio"
 									component={AudioList}
 									location={this.props.location}
 									{...this.props}
 								/>
-								<Route path="/audioDetails" component={AudioDetails} />
+								<Route path="/audioDetails/:uuid" component={AudioDetails} />
 								<Route path="/video" component={VideoList} />
-								<Route path="/videoDetails" component={VideoDetails} />
+								<Route path="/videoDetails/:uuid" component={VideoDetails} />
 								<Route path="/profile" component={UserProfile} />
 								<Route path="/transcriptions" component={Transcritpion} />
 								<Route path="/summaries" component={Summaries} />
-								<Route path="/summariesDetails" component={SummariesDetails} />
+								<Route path="/summariesDetails/:uuid" component={SummariesDetails} />
 								<Route
-									path="/transcriptionDetails"
+									path="/transcriptionDetails/:uuid"
 									component={TranscriptionDetails}
 								/>
 								<Route path="/kirtan" component={Kirtan} />
-								<Route path="/kirtanDetails" component={KirtanDetails} />
+								<Route path="/kirtanDetails/:uuid" component={KirtanDetails} />
 								<Route path="/mkv" component={MKV} />
 							</ShellCompoenent>
 						</ScrollToTop>

@@ -42,6 +42,11 @@ const utils = {
 		let url = serverAddress + '/api/lecture/updateCounters';
 		return axios.post(url, body);
 	},
+
+	fetchLecture: (body) => {
+		let url = serverAddress + '/api/lecture/getlecturebyid/';
+		return axios.post(url, body);
+	},
 };
 
 export default utils;

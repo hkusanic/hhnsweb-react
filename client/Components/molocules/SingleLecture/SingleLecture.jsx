@@ -16,7 +16,7 @@ export class SingleLecture extends Component {
 					<article className="post-modern">
 						<h4 className="post-modern-title">
 							<Link
-								to={{ pathname: '/lectureDetails', state: this.props.lecture }}
+								to={{ pathname: `/lectureDetails/${this.props.lecture.uuid}`, state: this.props.lecture }}
 							>
 								{renderHTML(this.props.lecture.en.title)}
 							</Link>
