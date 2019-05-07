@@ -136,7 +136,7 @@ export class AudioList extends Component {
 				render: (text, record, index) => (
 					<Link
 						to={{
-							pathname: '/audioDetails',
+							pathname: `/audioDetails/${record.uuid}`,
 							state: record,
 						}}
 					>

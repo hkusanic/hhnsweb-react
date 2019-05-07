@@ -124,7 +124,7 @@ export class SearchFilter extends Component {
 		const authorMenu = (
 			<Menu>
 				<Menu.Item
-					onClick={() => this.handleChange('author', 'niranjana_swami')}>
+					onClick={() => this.handleChange('author', 'Niranjana Swami')}>
 					Niranjana Swami
 				</Menu.Item>
 			</Menu>
@@ -132,7 +132,7 @@ export class SearchFilter extends Component {
 
 		const translationMenu = (
 			<Menu>
-				<Menu.Item onClick={() => this.handleChange('translation', 'all')}>
+				<Menu.Item onClick={() => this.handleChange('translation', 'All')}>
 					All
 				</Menu.Item>
 			</Menu>
@@ -145,7 +145,7 @@ export class SearchFilter extends Component {
 						return (
 							<Menu.Item
 								key={index}
-								onClick={() => this.handleChange(type, item.title)}>
+								onClick={() => this.handleChange('location', item.title)}>
 								{item.title}
 							</Menu.Item>
 						);

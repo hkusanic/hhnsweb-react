@@ -56,7 +56,7 @@ export class SingleBlog extends Component {
 							<Meta
 								title={
 									<Link
-										to={{ pathname: '/blogDetails', state: this.props.blog }}>
+										to={{ pathname: `/blogDetails/${this.props.blog.uuid}`, state: this.props.blog }}>
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
 												? this.props.blog.title_en

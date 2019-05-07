@@ -12,6 +12,10 @@ const utils = {
 		let url = serverAddress + `/api/blog/find/`;
 		return axios.post(url, body);
 	},
+	fetchBlog: (body) => {
+		let url = serverAddress + `/api/blog/getblogbyid/`;
+		return axios.post(url, body);
+	},
 };
 
 export default utils;

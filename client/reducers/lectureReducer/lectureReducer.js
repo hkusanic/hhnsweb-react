@@ -3,13 +3,14 @@ import * as types from '../../constants/index';
 const initialState = {
 	lectures: [],
 	currentPage: 1,
-  videoCurrentPage: 1,
-  transcriptionsCurrentPage: 1,
-  summariesCurrentPage: 1,
+	videoCurrentPage: 1,
+	transcriptionsCurrentPage: 1,
+	summariesCurrentPage: 1,
 	totalLectures: '',
 	isCompleted: false,
 	error: '',
-	Count: false
+	Count: false,
+	lecture: null,
 };
 
 const lectureReducer = (state = initialState, action) => {
@@ -22,7 +23,7 @@ const lectureReducer = (state = initialState, action) => {
 				totalLectures: data.total,
 				currentPage: data.currentPage,
 				isCompleted: true,
-				Count: false
+				Count: false,
 			};
 			break;
 		case types.SEARCH_LECTURE_VIDEO:
@@ -33,7 +34,7 @@ const lectureReducer = (state = initialState, action) => {
 				totalLectures: dataVideo.total,
 				videoCurrentPage: dataVideo.currentPage,
 				isCompleted: true,
-				Count: false
+				Count: false,
 			};
 			break;
 		case types.SEARCH_LECTURE_TRANSCRIPTIONS:
@@ -44,7 +45,7 @@ const lectureReducer = (state = initialState, action) => {
 				totalLectures: dataTrans.total,
 				transcriptionsCurrentPage: dataTrans.currentPage,
 				isCompleted: true,
-				Count: false
+				Count: false,
 			};
 			break;
 		case types.SEARCH_LECTURE_SUMMARIES:
@@ -55,13 +56,19 @@ const lectureReducer = (state = initialState, action) => {
 				totalLectures: dataSummary.total,
 				summariesCurrentPage: dataSummary.currentPage,
 				isCompleted: true,
-				Count: false
+				Count: false,
+			};
+			break;
+		case types.GET_LECTURE_BY_UUID:
+			state = {
+				...state,
+				lecture: action.payload.lecture,
 			};
 			break;
 		case types.UPDATE_COUNTERS:
 			state = {
 				...state,
-				Count: true
+				Count: true,
 			};
 			break;
 	}

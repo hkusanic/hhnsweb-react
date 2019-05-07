@@ -25,7 +25,7 @@ const columns = [
 		render: (text, record, index) => (
 			<Link
 				to={{
-					pathname: '/summariesDetails',
+					pathname: `/summariesDetails/${record.uuid}`,
 					state: record
 				}}>
 				{renderHTML(

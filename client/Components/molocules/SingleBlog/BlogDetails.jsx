@@ -1,23 +1,46 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, { Component } from 'react';
 import { Icon } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { getBlogByUuid } from '../../../actions/blogActions';
 
-export class BlogDetails extends React.Component {
+export class BlogDetails extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {};
+	}
+
+	componentDidMount() {
+		const body = {
+			uuid: this.props.match.params.uuid,
+		};
+
+		this.props.getBlogByUuid(body);
+
+		if (this.props.blogDetails) {
+			this.setState({ blogDetails: this.props.blogDetails });
+		}
 	}
 
 	goBack = () => {
 		this.props.history.goBack();
 	};
 
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.blogDetails !== prevState.blogDetails) {
+			return { blogDetails: nextProps.blogDetails };
+		} else return null;
+	}
+
 	render() {
-		if (!this.props.location.state) {
+		const { blogDetails } = this.state;
+
+		if (!blogDetails) {
 			return <div>Error Occured..........</div>;
 		}
 		return (
@@ -63,19 +86,19 @@ export class BlogDetails extends React.Component {
 							<div className="col-lg-12">
 								<article className="post-creative">
 									<h3 className="post-creative-title alignment padLeft">
-										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.title_en
-												: this.props.location.state.title_ru
-										)}
+										{blogDetails &&
+											renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? blogDetails.title_en
+													: blogDetails.title_ru
+											)}
 									</h3>
 									<ul className="post-creative-meta">
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(
-													this.props.location.state.date
-												).toDateString()}
+												{blogDetails &&
+													new Date(blogDetails.date).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -83,11 +106,12 @@ export class BlogDetails extends React.Component {
 											<a>Blog</a>
 										</li>
 									</ul>
-									{renderHTML(
-										reactCookie.load('languageCode') === 'en'
-											? this.props.location.state.body_en
-											: this.props.location.state.body_ru
-									)}
+									{blogDetails &&
+										renderHTML(
+											reactCookie.load('languageCode') === 'en'
+												? blogDetails.body_en
+												: blogDetails.body_ru
+										)}
 								</article>
 							</div>
 							<div>
@@ -103,4 +127,23 @@ export class BlogDetails extends React.Component {
 	}
 }
 
-export default BlogDetails;
+const mapStateToProps = state => {
+	return {
+		blogDetails: state.blogReducer.blog,
+	};
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		updateCounters: body => {
+			dispatch(updateCounters(body));
+		},
+		getBlogByUuid: body => dispatch(getBlogByUuid(body)),
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(BlogDetails);
+
+// export default BlogDetails;
