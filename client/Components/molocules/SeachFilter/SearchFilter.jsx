@@ -225,7 +225,7 @@ export class SearchFilter extends Component {
 					</div>
 					<div className="titleSearch">
 						<Input
-							placeholder="Songs"
+							placeholder="Canto"
 							allowClear={this.state.songs !== ''}
 							suffix={
 								this.state.songs === '' && (
