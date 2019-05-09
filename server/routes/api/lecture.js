@@ -171,6 +171,33 @@ exports.list = function (req, res) {
 		query.push(chapter_query);
 	}
 
+	if (req.query.translation) {
+		let translation_query = {
+			'en.translation': {
+				$regex: '.*' + req.query.translation + '.*',
+				$options: 'i',
+			},
+		};
+		if (req.cookies.languageCode === 'en') {
+			translation_query = {
+				'en.translation': {
+					$regex: '.*' + req.query.translation + '.*',
+					$options: 'i',
+				},
+			};
+		}
+		if (req.cookies.languageCode === 'ru') {
+			translation_query = {
+				'ru.translation': {
+					$regex: '.*' + req.query.translation + '.*',
+					$options: 'i',
+				},
+			};
+		}
+
+		query.push(translation_query);
+	}
+
 	if (req.query.song) {
 		let song_query = {
 			song: {
@@ -309,7 +336,7 @@ exports.list = function (req, res) {
 exports.create = function (req, res) {
 	var item = new Lecture.model();
 	var data = req.method === 'POST' ? req.body : req.query;
-	data.created_date = data.created_date ? data.created_date:todayDate();
+	data.created_date = data.created_date ? data.created_date : todayDate();
 	logger.info(
 		{
 			req: req,
