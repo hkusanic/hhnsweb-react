@@ -184,7 +184,6 @@ export class Kirtan extends Component {
 					</div>
 				)}
 			</div>
-		);
 	}
 }
 
