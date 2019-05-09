@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
-// import Pagination from 'react-js-pagination';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Table, Icon, Button } from 'antd';
-
 import { searchLecture, updateCounters } from '../../../actions/lectureActions';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';

@@ -18,7 +18,7 @@ const SingleGridMenu = props => {
 						style={{ width: 270 }}
 						cover={<img src={props.image} alt="" />}
 					>
-						<Meta title={props.menu} class="tour-default-title" />
+						<Meta title={props.menu} className="tour-default-title CommonFontFamily" />
 					</Card>
 				</Link>
 			</article>

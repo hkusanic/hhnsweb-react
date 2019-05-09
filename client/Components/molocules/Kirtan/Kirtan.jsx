@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Icon } from 'antd';
+import { Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
 import { searchKirtan } from '../../../actions/kirtanAction';
 import Auth from '../../../utils/Auth';
-import { Translate } from 'react-localize-redux';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import reactCookie from 'react-cookies';
@@ -66,12 +65,6 @@ export class Kirtan extends Component {
 	};
 
 	render() {
-		let class_icon_search = this.state.iconSearch
-			? 'icon-search fa fa-search'
-			: 'display-none-icon';
-		let class_icon_close = this.state.iconSearch
-			? 'display-none-icon'
-			: 'icon-search fa fa-close';
 		return (
 			<div>
 				<section className="bg-gray-100">
@@ -79,43 +72,52 @@ export class Kirtan extends Component {
 				</section>
 				{!this.state.isUserLogin ? (
 					<div>
-						<div className="container">
-							<div className="BreadCrumDiv BreadCrumDivPad">
-								<Breadcrumb>
-									<Link to=" " onClick={() => this.props.history.push('/')}>
-										<Breadcrumb.Item>Home</Breadcrumb.Item>
-									</Link>
-									<Icon
-										type="double-right"
-										style={{
-											alignSelf: 'center',
-											paddingLeft: 5,
-											paddingRight: 5,
-										}}
-									/>
-									<Breadcrumb.Item active>Kirtan</Breadcrumb.Item>
-								</Breadcrumb>
+						<div className="container mt-5">
+							<div className="row justify-content-center align-items-center">
+								<div className="col-lg-10">
+									<Breadcrumb>
+										<Link to=" " onClick={() => this.props.history.push('/')}>
+											<Breadcrumb.Item>Home</Breadcrumb.Item>
+										</Link>
+										<Icon
+											type="double-right"
+											style={{
+												alignSelf: 'center',
+												paddingLeft: 5,
+												paddingRight: 5,
+											}}
+										/>
+										<Breadcrumb.Item active>Kirtan</Breadcrumb.Item>
+									</Breadcrumb>
+								</div>
 							</div>
-							<div style={{ textAlign: 'center' }}>
-								<p className="bookingForm">
-									<Translate>
-										{({ translate }) => translate('HOME.kirtan')}
-									</Translate>
-									<i
-										onClick={() => this.onClickIcon(false)}
-										className={class_icon_search}
-										aria-hidden="true"
-									/>
-									<i
-										onClick={() => this.onClickIcon(true)}
-										className={class_icon_close}
-										aria-hidden="true"
-									/>
-								</p>
+							<div
+								className="row justify-content-center"
+								style={{ marginTop: '0', marginBottom: '0' }}
+							>
+								<div className="col-lg-10">
+									<div style={{ textAlign: 'center' }}>
+										<Button
+											type="primary"
+											icon="search"
+											shape="circle"
+											onClick={() => this.onClickIcon(!this.state.iconSearch)}
+										/>
+									</div>
+								</div>
 							</div>
-							<Collapse isOpened={!this.state.iconSearch}>
-								<SearchFilter searchData={this.searchData} />
-							</Collapse>
+							{!this.state.iconSearch && (
+								<div
+									className="row justify-content-center"
+									style={{ marginTop: '0' }}
+								>
+									<div className="col-lg-10">
+										<Collapse isOpened={!this.state.iconSearch}>
+											<SearchFilter searchData={this.searchData} />
+										</Collapse>
+									</div>
+								</div>
+							)}
 							<div className="table-responsive wow fadeIn">
 								{this.state.kirtans.length > 0 ? (
 									<table className="table table-hover table-job-positions kirtanTable">

@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import { Table, Icon } from 'antd';
+import { Button, Table, Icon } from 'antd';
 import Auth from '../../../utils/Auth';
 import { connect } from 'react-redux';
 import {
 	searchLecture,
-	searchLectureSummaries
+	searchLectureSummaries,
 } from '../../../actions/lectureActions';
 import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
-import Pagination from 'react-js-pagination';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import reactCookie from 'react-cookies';
-import { Translate } from 'react-localize-redux';
-
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 const columns = [
@@ -26,15 +23,16 @@ const columns = [
 			<Link
 				to={{
 					pathname: `/summariesDetails/${record.uuid}`,
-					state: record
-				}}>
+					state: record,
+				}}
+			>
 				{renderHTML(
 					reactCookie.load('languageCode') === 'en'
 						? record.en.title
 						: record.ru.title
 				)}
 			</Link>
-		)
+		),
 	},
 	{
 		title: 'View',
@@ -42,8 +40,8 @@ const columns = [
 			reactCookie.load('languageCode') === 'en'
 				? 'counters.en_summary_view'
 				: 'counters.ru_summary_view'
-		)
-	}
+		),
+	},
 ];
 
 const defaultPageSize = 20;
@@ -60,12 +58,12 @@ export class Summaries extends Component {
 			iconSearch: true,
 			body: {
 				page: 1,
-				summaries: true
+				summaries: true,
 			},
 			isSearch: false,
 			data: [],
 			pagination: {},
-			loading: false
+			loading: false,
 		};
 	}
 
@@ -74,7 +72,7 @@ export class Summaries extends Component {
 		pager.current = pagination.current;
 		pager.total = this.props.lecturesDetails.totalLectures;
 		this.setState({
-			pagination: pager
+			pagination: pager,
 		});
 
 		let body = { ...this.state.body };
@@ -96,7 +94,7 @@ export class Summaries extends Component {
 		this.setState({
 			isUserLogin,
 			loading: false,
-			pagination
+			pagination,
 		});
 		this.props.searchLecture(body);
 	}
@@ -113,38 +111,25 @@ export class Summaries extends Component {
 		this.setState({
 			summaries: nextProps.lecturesDetails.lectures,
 			currentPage: nextProps.lecturesDetails.summariesCurrentPage,
-			totalItem: nextProps.lecturesDetails.totalLectures
+			totalItem: nextProps.lecturesDetails.totalLectures,
 		});
 
 		if (nextProps.lecturesDetails.Count) {
 			this.props.searchLecture(body);
 		}
 	}
-	searchData = (body) => {
+	searchData = body => {
 		body.summaries = true;
 		this.setState({ body, isSearch: true }, () => {
 			this.props.searchLecture(body);
 		});
 	};
 
-	// handlePageChange = (pageNumber) => {
-	// 	let body = Object.assign({}, this.state.body);
-	// 	body.page = pageNumber;
-	// 	this.props.searchLecture(body);
-	// };
-
-	onClickIcon = (value) => {
+	onClickIcon = value => {
 		this.setState({ iconSearch: value });
 	};
 
 	render() {
-		let class_icon_search = this.state.iconSearch
-			? 'icon-search fa fa-search'
-			: 'display-none-icon';
-		let class_icon_close = this.state.iconSearch
-			? 'display-none-icon'
-			: 'icon-search fa fa-close';
-
 		return (
 			<div>
 				<section className="bg-gray-100">
@@ -152,84 +137,60 @@ export class Summaries extends Component {
 				</section>
 				{!this.state.isUserLogin ? (
 					<div>
-						<div style={{ textAlign: 'center' }}>
-							<p className="">
-								<Translate>
-									{({ translate }) => translate('HOME.Summaries')}
-								</Translate>
-								<i
-									onClick={() => this.onClickIcon(false)}
-									className={class_icon_search}
-									aria-hidden="true"
-								/>
-								<i
-									onClick={() => this.onClickIcon(true)}
-									className={class_icon_close}
-									aria-hidden="true"
-								/>
-							</p>
-						</div>
-						<div className="container">
-							<Collapse isOpened={!this.state.iconSearch}>
-								<SearchFilter searchData={this.searchData} />
-							</Collapse>
-
+						<div className="container mt-5">
 							<div className="row justify-content-center align-items-center">
 								<div className="col-lg-10">
 									<Breadcrumb>
 										<Link to=" " onClick={() => this.props.history.push('/')}>
 											<Breadcrumb.Item>Home</Breadcrumb.Item>
 										</Link>
-										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
+										<Icon
+											type="double-right"
+											style={{
+												alignSelf: 'center',
+												paddingLeft: 5,
+												paddingRight: 5,
+											}}
+										/>
 										<Breadcrumb.Item active>Summaries</Breadcrumb.Item>
 									</Breadcrumb>
 								</div>
 							</div>
-
+							<div
+								className="row justify-content-center"
+								style={{ marginTop: '0', marginBottom: '0' }}
+							>
+								<div className="col-lg-10">
+									<div style={{ textAlign: 'center' }}>
+										<Button
+											type="primary"
+											icon="search"
+											shape="circle"
+											onClick={() => this.onClickIcon(!this.state.iconSearch)}
+										/>
+									</div>
+								</div>
+							</div>
+							{!this.state.iconSearch && (
+								<div
+									className="row justify-content-center"
+									style={{ marginTop: '0' }}
+								>
+									<div className="col-lg-10">
+										<Collapse isOpened={!this.state.iconSearch}>
+											<SearchFilter searchData={this.searchData} />
+										</Collapse>
+									</div>
+								</div>
+							)}
 							<div className="row justify-content-center">
 								<div className="col-lg-10">
 									<div className="table-responsive wow fadeIn">
 										{this.state.summaries.length > 0 ? (
-											// <table className="table table-hover table-job-positions videoTable">
-											// 	<thead>
-											// 		<tr>
-											// 			<th className="align">Title</th>
-											// 			<th className="align">View</th>
-											// 		</tr>
-											// 	</thead>
-											// 	<tbody>
-											// 		{this.state.summaries.map((item, key) => {
-											// 			return (
-											// 				<tr key={key}>
-											// 					<td className="titleColor dataRowAlign">
-											// 						{' '}
-											// 						<Link
-											// 							to={{
-											// 								pathname: '/summariesDetails',
-											// 								state: item
-											// 							}}>
-											// 							{renderHTML(
-											// 								reactCookie.load('languageCode') === 'en'
-											// 									? item.en.title
-											// 									: item.ru.title
-											// 							)}
-											// 						</Link>
-											// 					</td>
-											// 					<td>
-											// 						{reactCookie.load('languageCode') === 'en'
-											// 							? item.counters.en_summary_view
-											// 							: item.counters.ru_summary_view}
-											// 					</td>
-											// 				</tr>
-											// 			);
-											// 		})}
-											// 	</tbody>
-											// </table>
-
 											<div>
 												<Table
 													columns={columns}
-													rowKey={(record) => record.uuid}
+													rowKey={record => record.uuid}
 													dataSource={this.props.lecturesDetails.lectures}
 													pagination={this.state.pagination}
 													loading={this.state.loading}
@@ -249,22 +210,6 @@ export class Summaries extends Component {
 								</div>
 							</div>
 						</div>
-						{/* <div className="padLeft">
-							{this.state.summaries.length > 0 ? (
-								<Pagination
-									className="paginationStyle"
-									innerClass="pagination"
-									activeClass="page-item active"
-									itemClass="page-item"
-									linkClass="page-link button-winona"
-									activePage={this.props.lecturesDetails.summariesCurrentPage}
-									itemsCountPerPage={20}
-									totalItemsCount={this.state.totalItem}
-									pageRangeDisplayed={5}
-									onChange={this.handlePageChange}
-								/>
-							) : null}
-						</div> */}
 					</div>
 				) : (
 					<div style={{ textAlign: 'center' }}>
@@ -276,17 +221,17 @@ export class Summaries extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
-		lecturesDetails: state.lectureReducer
+		lecturesDetails: state.lectureReducer,
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
-		searchLecture: (body) => {
+		searchLecture: body => {
 			dispatch(searchLectureSummaries(body));
-		}
+		},
 	};
 };
 
