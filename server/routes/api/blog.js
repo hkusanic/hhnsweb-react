@@ -22,6 +22,21 @@ const AWS = require('aws-sdk');
  * @param {number} config.signedUrlExpireSeconds Expiration time of presignedUrl
  * @param {string} config.bucket Bucket name where file will be uploaded/downloaded
  */
+function todayDate () {
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; // January is 0!
+
+	var yyyy = today.getFullYear();
+	if (dd < 10) {
+		dd = '0' + dd;
+	}
+	if (mm < 10) {
+		mm = '0' + mm;
+	}
+	var today = yyyy + '-' + mm + '-' + dd;
+	return today;
+}
 function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
 
 	if (type === 'upload' && !fileDetails.type) {
@@ -187,6 +202,7 @@ exports.get = function (req, res) {
 exports.create = function (req, res) {
 	var item = new Blog.model();
 	var data = req.method === 'POST' ? req.body : req.query;
+	data.date = todayDate();
 	logger.info(
 		{
 			req: req,
