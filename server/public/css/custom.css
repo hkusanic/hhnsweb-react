@@ -809,3 +809,15 @@
 	width: 75% !important;
 	margin-left: 10% !important;
 }
+
+.CommonFontFamily {
+	font: 400 14px/20px "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.searchDropDownDiv {
+	max-height: 250px;
+	overflow: scroll;
+	border: 1px solid #d9d9d9;
+}

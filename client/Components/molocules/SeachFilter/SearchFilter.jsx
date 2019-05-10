@@ -136,8 +136,8 @@ export class SearchFilter extends Component {
 
 		const translationMenu = (
 			<Menu>
-				<Menu.Item onClick={() => this.handleChange('translation', 'All')}>
-					All
+				<Menu.Item onClick={() => this.handleChange('translation', 'Hungarian')}>
+					Hungarian
 				</Menu.Item>
 			</Menu>
 		);
@@ -277,7 +277,7 @@ export class SearchFilter extends Component {
 				</div>
 				<div className="container filterDiv titleDiv">
 					<div className="filter">
-						<Dropdown overlay={authorMenu}>
+						<Dropdown overlay={authorMenu} overlayClassName="searchDropDownDiv">
 							<Button className="w-100">
 								{this.state.author ? this.state.author : 'Author'}{' '}
 								<Icon type="down" />
@@ -285,7 +285,7 @@ export class SearchFilter extends Component {
 						</Dropdown>
 					</div>
 					<div className="filter">
-						<Dropdown overlay={translationMenu}>
+						<Dropdown overlay={translationMenu} overlayClassName="searchDropDownDiv">
 							<Button className="w-100">
 								{this.state.translation
 									? this.state.translation
@@ -295,7 +295,7 @@ export class SearchFilter extends Component {
 						</Dropdown>
 					</div>
 					<div className="filter">
-						<Dropdown overlay={locationMenu}>
+						<Dropdown overlay={locationMenu} overlayClassName="searchDropDownDiv">
 							<Button className="w-100">
 								{this.state.location ? this.state.location : 'Location'}{' '}
 								<Icon type="down" />
@@ -303,7 +303,7 @@ export class SearchFilter extends Component {
 						</Dropdown>
 					</div>
 					<div className="filter">
-						<Dropdown overlay={topicMenu}>
+						<Dropdown overlay={topicMenu} overlayClassName="searchDropDownDiv">
 							<Button className="w-100">
 								{this.state.topic ? this.state.topic : 'Topic'}{' '}
 								<Icon type="down" />
@@ -314,7 +314,7 @@ export class SearchFilter extends Component {
 
 				<div className="container filterDiv titleDiv">
 					<div className="filter">
-						<Dropdown overlay={eventMenu}>
+						<Dropdown overlay={eventMenu} overlayClassName="searchDropDownDiv">
 							<Button className="w-100">
 								{this.state.event ? this.state.event : 'Event'}{' '}
 								<Icon type="down" />
@@ -322,7 +322,7 @@ export class SearchFilter extends Component {
 						</Dropdown>
 					</div>
 					<div className="filter">
-						<Dropdown overlay={yearMenu}>
+						<Dropdown overlay={yearMenu} overlayClassName="searchDropDownDiv">
 							<Button className="w-100">
 								{this.state.year ? this.state.year : 'Year'}{' '}
 								<Icon type="down" />
