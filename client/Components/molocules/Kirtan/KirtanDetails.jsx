@@ -50,41 +50,41 @@ export class KirtanDetails extends Component {
 
 		return (
 			<div>
+				<section
+					className="bg-gray-100"
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
+					}}
+				>
+					<div class="breadcrumbs-custom-inner headingImage">
+						<div class="container breadcrumbs-custom-container">
+							<ul class="breadcrumbs-custom-path">
+								<li>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<Link to=" " onClick={() => this.props.history.goBack()}>
+										<Breadcrumb.Item>Kirtan</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<a className="textColor">
+										{renderHTML(
+											reactCookie.load('languageCode') === 'en'
+												? kirtanDetails.en.title
+												: kirtanDetails.ru.title
+										)}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
 				<section className="section section-lg">
 					<div className="container">
-						<div className="BreadCrumDiv">
-							<Breadcrumb>
-								<Link to=" " onClick={() => this.props.history.push('/')}>
-									<Breadcrumb.Item>Home</Breadcrumb.Item>
-								</Link>
-								<Icon
-									type="double-right"
-									style={{
-										alignSelf: 'center',
-										paddingLeft: 5,
-										paddingRight: 5,
-									}}
-								/>
-								<Link to=" " onClick={() => this.props.history.goBack()}>
-									<Breadcrumb.Item>Kirtan</Breadcrumb.Item>
-								</Link>
-								<Icon
-									type="double-right"
-									style={{
-										alignSelf: 'center',
-										paddingLeft: 5,
-										paddingRight: 5,
-									}}
-								/>
-								<Breadcrumb.Item active>
-									{renderHTML(
-										reactCookie.load('languageCode') === 'en'
-											? kirtanDetails.en.title
-											: kirtanDetails.ru.title
-									)}
-								</Breadcrumb.Item>
-							</Breadcrumb>
-						</div>
 						<div className="row row-100">
 							<div className="col-lg-12">
 								<article className="post-creative">

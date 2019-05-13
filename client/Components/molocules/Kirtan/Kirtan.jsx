@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Icon } from 'antd';
+import { Button, Table } from 'antd';
 import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
-import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
 import { searchKirtan } from '../../../actions/kirtanAction';
 import Auth from '../../../utils/Auth';
@@ -10,6 +9,8 @@ import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
+const defaultPageSize = 20;
 
 export class Kirtan extends Component {
 	constructor(props) {
@@ -20,30 +21,63 @@ export class Kirtan extends Component {
 			currentPage: null,
 			page: null,
 			kirtans: [],
-			body: {
-				page: 1,
-			},
+			body: {},
 			iconSearch: true,
 			isSearch: false,
+			pagination: {},
+			loading: false,
 		};
 	}
 
+	handleTableChange = (pagination, filters, sorter) => {
+		const pager = { ...this.state.pagination };
+		pager.current = pagination.current;
+		pager.total = this.props.kirtanDetails.totalKirtans;
+		this.setState({
+			pagination: pager,
+		});
+
+		let body = Object.assign({}, this.state.body);
+		body.page = pagination.current;
+		this.props.searchKirtan(body);
+	};
+
 	componentDidMount() {
 		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({ loading: true });
+
+		let body = { ...this.state.body };
+		body.page = this.props.kirtanDetails.currentPage || 1;
+		const pagination = { ...this.state.pagination };
+		pagination.total = this.props.kirtanDetails.totalKirtans;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = this.props.kirtanDetails.currentPage || 1;
+
 		this.setState({
 			kirtans: this.props.kirtanDetails.kirtans,
 			currentPage: this.props.kirtanDetails.currentPage,
 			totalItem: this.props.kirtanDetails.totalKirtans,
 			isUserLogin,
+			loading: false,
+			pagination
 		});
-		this.props.searchKirtan({ page: 1 });
+		this.props.searchKirtan(body);
 	}
 
 	componentWillReceiveProps(nextProps) {
+
+		let body = { ...this.state.body };
+		body.page = nextProps.kirtanDetails.currentPage;
+		const pagination = { ...this.state.pagination };
+		pagination.total = nextProps.kirtanDetails.totalKirtans;
+		pagination.defaultPageSize = 20;
+		pagination.current = nextProps.kirtanDetails.currentPage;
+
 		this.setState({
 			kirtans: nextProps.kirtanDetails.kirtans,
 			currentPage: nextProps.kirtanDetails.currentPage,
 			totalItem: nextProps.kirtanDetails.totalKirtans,
+			pagination,
 		});
 	}
 
@@ -65,15 +99,42 @@ export class Kirtan extends Component {
 	};
 
 	render() {
+		const columns = [
+			{
+				title: 'Title',
+				dataIndex: renderHTML(
+					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+				),
+				render: (text, record, index) => (
+					<Link
+						to={{
+							pathname: `/kirtanDetails/${record.uuid}`,
+							state: record,
+						}}
+					>
+						{renderHTML(
+							reactCookie.load('languageCode') === 'en'
+								? record.en.title
+								: record.ru.title
+						)}
+					</Link>
+				),
+			},
+			{
+				title: 'Views',
+				dataIndex: 'downloads',
+				key: 'downloads',
+			},
+		];
+		return (
 			<div>
 				<section
-				className="bg-gray-100"
-				style={{
-					backgroundImage:
-						'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
-				}}
+					className="bg-gray-100"
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
+					}}
 				>
-					{/* <img src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png" /> */}
 					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
 							<ul class="breadcrumbs-custom-path">
@@ -83,7 +144,7 @@ export class Kirtan extends Component {
 									</Link>
 								</li>
 								<li>
-									<a>Kirtan</a>
+									<a className="textColor">Kirtan</a>
 								</li>
 							</ul>
 						</div>
@@ -92,24 +153,6 @@ export class Kirtan extends Component {
 				{!this.state.isUserLogin ? (
 					<div className="PadTop">
 						<div className="container mt-5">
-							{/* <div className="row justify-content-center align-items-center">
-								<div className="col-lg-10">
-									<Breadcrumb>
-										<Link to=" " onClick={() => this.props.history.push('/')}>
-											<Breadcrumb.Item>Home</Breadcrumb.Item>
-										</Link>
-										<Icon
-											type="double-right"
-											style={{
-												alignSelf: 'center',
-												paddingLeft: 5,
-												paddingRight: 5,
-											}}
-										/>
-										<Breadcrumb.Item active>Kirtan</Breadcrumb.Item>
-									</Breadcrumb>
-								</div>
-							</div> */}
 							<div
 								className="row justify-content-center"
 								style={{ marginTop: '0', marginBottom: '0' }}
@@ -140,37 +183,17 @@ export class Kirtan extends Component {
 							)}
 							<div className="table-responsive wow fadeIn">
 								{this.state.kirtans.length > 0 ? (
-									<table className="table table-hover table-job-positions kirtanTable">
-										<thead>
-											<tr>
-												<th className="align">Title</th>
-												<th className="align">Views</th>
-											</tr>
-										</thead>
-										<tbody>
-											{this.state.kirtans.map((item, key) => {
-												return (
-													<tr key={key}>
-														<td className="titleColor dataRowAlign">
-															<Link
-																to={{
-																	pathname: `/kirtanDetails/${item.uuid}`,
-																	state: item,
-																}}
-															>
-																{renderHTML(
-																	reactCookie.load('languageCode') === 'en'
-																		? item.en.title
-																		: item.ru.title
-																)}
-															</Link>
-														</td>
-														<td className="dataRowAlign">{item.downloads}</td>
-													</tr>
-												);
-											})}
-										</tbody>
-									</table>
+									<div>
+									<Table
+										columns={columns}
+										rowKey={record => record.uuid}
+										dataSource={this.state.kirtans}
+										pagination={this.state.pagination}
+										loading={this.state.loading}
+										onChange={this.handleTableChange}
+										rowClassName="tableRow"
+									/>
+								</div>
 								) : (
 									<div style={{ textAlign: 'center' }}>
 										<p className="bookingForm">
@@ -182,22 +205,6 @@ export class Kirtan extends Component {
 								)}
 							</div>
 						</div>
-						<div className="padkirtanLeft">
-							{this.state.kirtans.length > 0 ? (
-								<Pagination
-									className="paginationStyle"
-									innerClass="pagination"
-									activeClass="page-item active"
-									itemClass="page-item"
-									linkClass="page-link button-winona"
-									activePage={this.state.currentPage}
-									itemsCountPerPage={20}
-									totalItemsCount={this.state.totalItem}
-									pageRangeDisplayed={5}
-									onChange={this.handlePageChange}
-								/>
-							) : null}
-						</div>
 					</div>
 				) : (
 					<div style={{ textAlign: 'center' }}>
@@ -205,6 +212,7 @@ export class Kirtan extends Component {
 					</div>
 				)}
 			</div>
+		);
 	}
 }
 
