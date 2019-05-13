@@ -21,8 +21,8 @@
 }
 
 .maintable tr td {
-	padding-top: 1em;
-	padding-bottom: 1em;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .maintable tr td b span {

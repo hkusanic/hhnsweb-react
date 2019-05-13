@@ -128,7 +128,7 @@ export class SummariesDetails extends React.Component {
 									</div>
 								</article>
 								<div>
-									<table className="datatable">
+									<table className="maintable">
 										<tbody>
 											<tr>
 												<td>
