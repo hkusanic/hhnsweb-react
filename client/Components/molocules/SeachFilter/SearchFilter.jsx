@@ -206,7 +206,7 @@ export class SearchFilter extends Component {
 		return (
 			<div>
 				<div className="container filterDiv titleDiv">
-					<div className="titleSearch">
+					{/* <div className="titleSearch">
 						<Input
 							placeholder="Title"
 							allowClear={this.state.title !== ''}
@@ -222,7 +222,7 @@ export class SearchFilter extends Component {
 							}
 							onChange={event => this.handleTextChange('title', event)}
 						/>
-					</div>
+					</div> */}
 					<div className="titleSearch">
 						<Input
 							placeholder="Canto"
@@ -274,16 +274,24 @@ export class SearchFilter extends Component {
 							onChange={event => this.handleTextChange('verse', event)}
 						/>
 					</div>
+					<div className="filter">
+						<Dropdown overlay={yearMenu} overlayClassName="searchDropDownDiv">
+							<Button className="w-100">
+								{this.state.year ? this.state.year : 'Year'}{' '}
+								<Icon type="down" />
+							</Button>
+						</Dropdown>
+					</div>
 				</div>
 				<div className="container filterDiv titleDiv">
-					<div className="filter">
+					{/* <div className="filter">
 						<Dropdown overlay={authorMenu} overlayClassName="searchDropDownDiv">
 							<Button className="w-100">
 								{this.state.author ? this.state.author : 'Author'}{' '}
 								<Icon type="down" />
 							</Button>
 						</Dropdown>
-					</div>
+					</div> */}
 					<div className="filter">
 						<Dropdown overlay={translationMenu} overlayClassName="searchDropDownDiv">
 							<Button className="w-100">
@@ -310,9 +318,6 @@ export class SearchFilter extends Component {
 							</Button>
 						</Dropdown>
 					</div>
-				</div>
-
-				<div className="container filterDiv titleDiv">
 					<div className="filter">
 						<Dropdown overlay={eventMenu} overlayClassName="searchDropDownDiv">
 							<Button className="w-100">
@@ -321,17 +326,14 @@ export class SearchFilter extends Component {
 							</Button>
 						</Dropdown>
 					</div>
-					<div className="filter">
-						<Dropdown overlay={yearMenu} overlayClassName="searchDropDownDiv">
-							<Button className="w-100">
-								{this.state.year ? this.state.year : 'Year'}{' '}
-								<Icon type="down" />
-							</Button>
-						</Dropdown>
-					</div>
+				</div>
+
+				<div className="container filterDiv titleDiv">
+					
+					
 					<div className="filter">
 						<Button
-							className="w-100"
+							className="w-100 searchButtonColor searchIconBorder"
 							type="primary"
 							icon="search"
 							onClick={this.handleSearchData}

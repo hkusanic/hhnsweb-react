@@ -27,7 +27,7 @@ export class SingleBlog extends Component {
 			<div className="col-md-6 scaleFadeInWrap">
 				<div className="wow scaleFadeIn" data-wow-delay=".1s">
 					<article className="post-modern">
-						{/* <h4 className="post-modern-title">
+						<h4 className="post-modern-title">
 							<Link to={{ pathname: '/blogDetails', state: this.props.blog }}>
 								{renderHTML(
 									reactCookie.load('languageCode') === 'en'
@@ -50,9 +50,9 @@ export class SingleBlog extends Component {
 									? this.props.blog.body_en
 									: this.props.blog.body_ru
 							)
-            )} */}
+            )}
 
-						<Card style={{ width: 350 }}>
+						{/* <Card style={{ width: 350 }}>
 							<Meta
 								title={
 									<Link
@@ -84,7 +84,7 @@ export class SingleBlog extends Component {
 									</div>
 								}
 							/>
-						</Card>
+						</Card> */}
 					</article>
 				</div>
 			</div>

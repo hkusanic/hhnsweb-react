@@ -182,12 +182,12 @@ export class Navigation extends Component {
 								/>
 							</div>
 							<div className="rd-navbar-main-outer menubanner">
-								<div className="menulogoDiv">
+								{/* <div className="menulogoDiv">
 									<img
 										className={'menulogoImg' + ' ' + this.state.floatImage}
 										src="https://ik.imagekit.io/gcwjdmqwwznjl/logo_S1yq6Zr8N.png"
 									/>
-								</div>
+								</div> */}
 								<div className="rd-navbar-main MenuPad">
 									<div
 										className="rd-navbar-nav-wrap padTopMenu"

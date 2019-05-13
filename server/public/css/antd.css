@@ -16242,29 +16242,29 @@ textarea.ant-input-number {
 }
 .ant-pagination-item:focus,
 .ant-pagination-item:hover {
-  border-color: #1890ff;
+  border-color: #eb722f;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
 .ant-pagination-item:focus a,
 .ant-pagination-item:hover a {
-  color: #1890ff;
+  color: #eb722f;
 }
 .ant-pagination-item-active {
   font-weight: 500;
   background: #fff;
-  border-color: #1890ff;
+  border-color: #eb722f;
 }
 .ant-pagination-item-active a {
-  color: #1890ff;
+  color: #eb722f;
 }
 .ant-pagination-item-active:focus,
 .ant-pagination-item-active:hover {
-  border-color: #40a9ff;
+  border-color: #eb722f;
 }
 .ant-pagination-item-active:focus a,
 .ant-pagination-item-active:hover a {
-  color: #40a9ff;
+  color: #eb722f;
 }
 .ant-pagination-jump-prev,
 .ant-pagination-jump-next {
@@ -16282,7 +16282,7 @@ textarea.ant-input-number {
   -webkit-transform: scale(1) rotate(0deg);
       -ms-transform: scale(1) rotate(0deg);
           transform: scale(1) rotate(0deg);
-  color: #1890ff;
+  color: #eb722f;
   letter-spacing: -1px;
   opacity: 0;
   -webkit-transition: all 0.2s;
