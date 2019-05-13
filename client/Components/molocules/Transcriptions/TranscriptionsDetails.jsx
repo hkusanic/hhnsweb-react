@@ -58,43 +58,44 @@ export class TranscriptionDetails extends React.Component {
 
 		return (
 			<div>
+				<section
+					className="bg-gray-100"
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
+					}}
+				>
+					<div class="breadcrumbs-custom-inner headingImage">
+						<div class="container breadcrumbs-custom-container">
+							<ul class="breadcrumbs-custom-path">
+								<li>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<Link to=" " onClick={() => this.props.history.goBack()}>
+										<Breadcrumb.Item>Transcriptions</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<a className="textColor">
+										{renderHTML(
+											reactCookie.load('languageCode') === 'en'
+												? lectureDetails.en.title
+												: lectureDetails.ru.title
+										)}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
 				<section className="section section-lg">
 					<div className="container padLeftBlog">
 						<div className="row row-50">
 							<div className="col-lg-12">
 								<article className="post-creative">
-									<Breadcrumb>
-										<Link to=" " onClick={() => this.props.history.push('/')}>
-											<Breadcrumb.Item>Home</Breadcrumb.Item>
-										</Link>
-										<Icon
-											type="double-right"
-											style={{
-												alignSelf: 'center',
-												paddingLeft: 5,
-												paddingRight: 5,
-											}}
-										/>
-										<Link to=" " onClick={() => this.props.history.goBack()}>
-											<Breadcrumb.Item>Transcriptions</Breadcrumb.Item>
-										</Link>
-										<Icon
-											type="double-right"
-											style={{
-												alignSelf: 'center',
-												paddingLeft: 5,
-												paddingRight: 5,
-											}}
-										/>
-										<Breadcrumb.Item active>
-											{renderHTML(
-												reactCookie.load('languageCode') === 'en'
-													? lectureDetails.en.title
-													: lectureDetails.ru.title
-											)}
-										</Breadcrumb.Item>
-									</Breadcrumb>
-
 									<h3 className="post-creative-title dataTitle">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
@@ -125,7 +126,7 @@ export class TranscriptionDetails extends React.Component {
 									</div>
 								</article>
 								<div>
-									<table className="datatable">
+									<table className="maintable">
 										<tbody>
 											<tr>
 												<td>

@@ -21,8 +21,8 @@
 }
 
 .maintable tr td {
-	padding-top: 1em;
-	padding-bottom: 1em;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .maintable tr td b span {
@@ -816,8 +816,37 @@
     font-weight: 400;
 }
 
+.websiteFontFamily {
+	font: 14px/20px "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+	font-weight: unset !important
+}
+
 .searchDropDownDiv {
 	max-height: 250px;
 	overflow: scroll;
 	border: 1px solid #d9d9d9;
+}
+
+.headingImage {
+	height: 300px !important;
+}
+
+.PadTop {
+	padding-top: 25px !important;
+}
+
+.searchIconBorder {
+    border-color: #eb722f !important;
+}
+
+.searchButtonColor {
+	background-color: #eb722f !important;
+}
+
+.PosRight {
+	text-align: right;
+}
+
+.textColor {
+	color: #fff !important;
 }

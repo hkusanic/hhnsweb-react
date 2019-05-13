@@ -148,40 +148,39 @@ export class VideoList extends Component {
 
 		return (
 			<div>
-				<section className="bg-gray-100">
-					<img
-						className="img-banner-width"
-						src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png"
-					/>
+				<section
+					className="bg-gray-100"
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
+					}}
+				>
+					<div class="breadcrumbs-custom-inner headingImage">
+						<div class="container breadcrumbs-custom-container">
+							<ul class="breadcrumbs-custom-path">
+								<li>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<a className="textColor">Video</a>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</section>
 				{!this.state.isUserLogin ? (
-					<div>
+					<div className="PadTop">
 						<div className="container mt-5">
-							<div className="row justify-content-center align-items-center">
-								<div className="col-lg-10">
-									<Breadcrumb>
-										<Link to=" " onClick={() => this.props.history.push('/')}>
-											<Breadcrumb.Item>Home</Breadcrumb.Item>
-										</Link>
-										<Icon
-											type="double-right"
-											style={{
-												alignSelf: 'center',
-												paddingLeft: 5,
-												paddingRight: 5,
-											}}
-										/>
-										<Breadcrumb.Item active>Video</Breadcrumb.Item>
-									</Breadcrumb>
-								</div>
-							</div>
 							<div
 								className="row justify-content-center"
 								style={{ marginTop: '0', marginBottom: '0' }}
 							>
-								<div className="col-lg-10">
+								<div className="col-lg-12">
 									<div style={{ textAlign: 'center' }}>
 										<Button
+											className="searchButtonColor searchIconBorder"
 											type="primary"
 											icon="search"
 											shape="circle"
@@ -195,7 +194,7 @@ export class VideoList extends Component {
 									className="row justify-content-center"
 									style={{ marginTop: '0' }}
 								>
-									<div className="col-lg-10">
+									<div className="col-lg-12">
 										<Collapse isOpened={!this.state.iconSearch}>
 											<SearchFilter searchData={this.searchData} />
 										</Collapse>
@@ -203,9 +202,9 @@ export class VideoList extends Component {
 								</div>
 							)}
 
-							<div className="row">
+							<div className="row  justify-content-center">
 								<div className="col-lg-12">
-									<div className="table-responsive wow fadeIn videoTable">
+									<div className="table-responsive wow fadeIn">
 										{this.state.videos.length > 0 ? (
 											<div>
 												<Table

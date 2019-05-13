@@ -124,7 +124,6 @@ export class AudioList extends Component {
 	};
 
 	render() {
-
 		const columns = [
 			{
 				title: 'Title',
@@ -138,11 +137,13 @@ export class AudioList extends Component {
 							state: record,
 						}}
 					>
-						{renderHTML(this.showing100Characters(
-							reactCookie.load('languageCode') === 'en'
-								? record.en.title
-								: record.ru.title
-						))}
+						{renderHTML(
+							this.showing100Characters(
+								reactCookie.load('languageCode') === 'en'
+									? record.en.title
+									: record.ru.title
+							)
+						)}
 					</Link>
 				),
 			},
@@ -151,7 +152,7 @@ export class AudioList extends Component {
 				dataIndex: 'audio_link',
 				render: (text, record, index) => (
 					<audio
-					    style={{height: '30px'}}
+						style={{ height: '30px' }}
 						controls
 						controlsList="nodownload"
 						onPlay={() => {
@@ -194,34 +195,28 @@ export class AudioList extends Component {
 
 		return (
 			<div>
-				<section className="bg-gray-100">
-					<img
-						className="img-banner-width"
-						src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png"
-					/>
+				<section
+					className="bg-gray-100"
+					style={{backgroundImage: "url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)"}}
+				>
+					<div class="breadcrumbs-custom-inner headingImage">
+						<div class="container breadcrumbs-custom-container">
+							<ul class="breadcrumbs-custom-path">
+								<li>
+								<Link to="" onClick={() => this.props.history.push('/')}>
+									<Breadcrumb.Item>Home</Breadcrumb.Item>
+								</Link>
+								</li>
+								<li>
+									<a className="textColor">Audio</a>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</section>
 				{!this.state.isUserLogin ? (
-					<div>
+					<div className="PadTop">
 						<div className="container mt-5">
-							<div className="row justify-content-center align-items-center">
-								<div className="col-lg-12">
-									<Breadcrumb>
-										<Link to=" " onClick={() => this.props.history.push('/')}>
-											<Breadcrumb.Item>Home</Breadcrumb.Item>
-										</Link>
-										<Icon
-											type="double-right"
-											style={{
-												alignSelf: 'center',
-												paddingLeft: 5,
-												paddingRight: 5,
-											}}
-										/>
-										<Breadcrumb.Item active>Audio</Breadcrumb.Item>
-									</Breadcrumb>
-								</div>
-							</div>
-
 							<div
 								className="row justify-content-center"
 								style={{ marginTop: '0', marginBottom: '0' }}
@@ -229,6 +224,7 @@ export class AudioList extends Component {
 								<div className="col-lg-12">
 									<div style={{ textAlign: 'center' }}>
 										<Button
+											className="searchButtonColor searchIconBorder"
 											type="primary"
 											icon="search"
 											shape="circle"
