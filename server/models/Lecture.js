@@ -25,6 +25,7 @@ Lecture.add({
 	part: { type: String },
 	chapter: { type: String },
 	verse: { type: String },
+	transcribe_required: { type: Boolean, default: false },
 	en: {
 		title: { type: String },
 		event: { type: String },
@@ -80,11 +81,11 @@ Lecture.schema.pre('save', function (next) {
 	next();
 });
 
-function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
+function uuidv4 () {
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+		var r = Math.random() * 16 | 0; var v = c == 'x' ? r : (r & 0x3 | 0x8);
+		return v.toString(16);
+	});
 }
 
 function todayDate () {
@@ -105,26 +106,26 @@ function todayDate () {
 
 Lecture.schema.post('save', function (data, next) {
 
-   
-    var item = new Content.model();
-    let body = {};
-    body.content_uuid = data.uuid;
-    body.uuid = uuidv4();
-    body.content_type = 'Lecture';
-    body.date_created = todayDate();
-    
+
+	var item = new Content.model();
+	let body = {};
+	body.content_uuid = data.uuid;
+	body.uuid = uuidv4();
+	body.content_type = 'Lecture';
+	body.date_created = todayDate();
+
 	item.getUpdateHandler().process(body, function (err) {
 
 		if (err) {
 			logger.error({
 				error: err,
 			}, 'API create content');
-		
+
 		}
 
-    });
-    
-    next();
+	});
+
+	next();
 });
 
 Lecture.schema.post('validate', function (err, next) {
