@@ -127,7 +127,7 @@ export class SummariesDetails extends React.Component {
 											)}
 									</div>
 								</article>
-								<div>
+								<div style={{ paddingTop: '20px' }}>
 									<table className="maintable">
 										<tbody>
 											<tr>

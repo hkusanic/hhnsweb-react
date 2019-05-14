@@ -85,7 +85,7 @@ export class KirtanDetails extends Component {
 				</section>
 				<section className="section section-lg">
 					<div className="container">
-						<div className="row row-100">
+						<div style={{ paddingLeft: '15%' }} className="row row-100">
 							<div className="col-lg-12">
 								<article className="post-creative">
 									<h3 className="post-creative-title">
@@ -171,18 +171,23 @@ export class KirtanDetails extends Component {
 													{kirtanDetails.downloads}
 												</td>
 											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Topic</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{reactCookie.load('languageCode') === 'en'
-														? kirtanDetails.en.topic
-														: kirtanDetails.ru.topic}
-												</td>
-											</tr>
+											{reactCookie.load('languageCode') === 'en'
+												? kirtanDetails.en.topic
+												: kirtanDetails.ru.topic
+													? (
+														<tr>
+															<td>
+																<b>
+																	<span>Topic</span> :
+																</b>
+															</td>
+															<td className="padLeftRow">
+																{reactCookie.load('languageCode') === 'en'
+																	? kirtanDetails.en.topic
+																	: kirtanDetails.ru.topic}
+															</td>
+														</tr>
+													) : null }
 										</tbody>
 									</table>
 								</div>

@@ -28,7 +28,7 @@ export class SingleBlog extends Component {
 				<div className="wow scaleFadeIn" data-wow-delay=".1s">
 					<article className="post-modern">
 						<h4 className="post-modern-title">
-							<Link to={{ pathname: '/blogDetails', state: this.props.blog }}>
+							<Link to={{ pathname: `/blogDetails/${this.props.blog.uuid}`, state: this.props.blog }}>
 								{renderHTML(
 									reactCookie.load('languageCode') === 'en'
 										? this.props.blog.title_en

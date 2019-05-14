@@ -25,6 +25,7 @@ export class SingleQuote extends Component {
 							<path d="M27.461,10.206h7.5v15h-15v-15L25,0.127h7.5L27.461,10.206z M7.539,10.206h7.5v15h-15v-15L4.961,0.127h7.5                L7.539,10.206z" />
 						</svg>
 						<div class="quote-modern-text">
+				        <p class="quote-modern-caption">{new Date(this.props.quote.published_date).toDateString()}</p>
 							<p>
 								{renderHTML(reactCookie.load('languageCode') === 'en'
 									? this.props.quote.en.body
@@ -32,17 +33,17 @@ export class SingleQuote extends Component {
 							</p>
 						</div>
 						<div class="quote-modern-meta">
-							<div class="quote-modern-avatar">
+							{/* <div class="quote-modern-avatar">
 								<img
 									src="https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png"
 									alt=""
 									width="96"
 									height="96"
 								/>
-							</div>
+							</div> */}
 							<div class="quote-modern-info">
-								<cite class="quote-modern-cite">{this.props.quote.en.author}</cite>
-								<p class="quote-modern-caption">Regular Client</p>
+								{/* <cite class="quote-modern-cite">{this.props.quote.en.author}</cite> */}
+								{/* <p class="quote-modern-caption">Regular Client</p> */}
 							</div>
 						</div>
 					</blockquote>

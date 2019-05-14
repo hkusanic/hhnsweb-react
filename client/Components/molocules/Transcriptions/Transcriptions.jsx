@@ -152,7 +152,7 @@ export class Transcritpion extends Component {
 									</Link>
 								</li>
 								<li>
-									<a className="textColor">Trnascriptions</a>
+									<a className="textColor">Transcriptions</a>
 								</li>
 							</ul>
 						</div>
