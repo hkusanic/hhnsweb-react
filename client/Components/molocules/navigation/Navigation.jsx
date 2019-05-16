@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import { setActiveLanguage, withLocalize } from 'react-localize-redux';
+import { Select } from 'antd';
 import Login from './../../../containers/Login/Login';
 import { Link, Redirect } from 'react-router-dom';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import { LanguageSwitch } from '../../atoms/LanguageSwitch/LanguageSwitch';
 import * as DATA from '../../../constants/biographies';
+import reactCookie from 'react-cookies';
+
+
+const Option = Select.Option;
 
 export class Navigation extends Component {
 	constructor(props) {
@@ -16,7 +22,7 @@ export class Navigation extends Component {
 			floatImage: '',
 			index: 1,
 			redirect: false,
-			login: false
+			login: false,
 		};
 	}
 
@@ -26,14 +32,14 @@ export class Navigation extends Component {
 			title_en: DATA.BIOGRAPHY.one_title_en,
 			title_ru: DATA.BIOGRAPHY.one_title_ru,
 			content_en: DATA.BIOGRAPHY.one_content_en,
-			content_ru: DATA.BIOGRAPHY.one_content_ru
+			content_ru: DATA.BIOGRAPHY.one_content_ru,
 		};
 		const Niranjana_swami_bio = {
 			img: 'https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png',
 			title_en: DATA.BIOGRAPHY.two_title_en,
 			title_ru: DATA.BIOGRAPHY.two_title_ru,
 			content_en: DATA.BIOGRAPHY.two_content_en,
-			content_ru: DATA.BIOGRAPHY.two_content_ru
+			content_ru: DATA.BIOGRAPHY.two_content_ru,
 		};
 		const isUserLogin = Auth.isUserAuthenticated();
 		let tabIndex = sessionStorage.getItem('tabIndex');
@@ -44,7 +50,7 @@ export class Navigation extends Component {
 			isUserLogin,
 			Prabhupada_swami_bio,
 			Niranjana_swami_bio,
-			index: tabIndex ? tabIndex : 1
+			index: tabIndex ? tabIndex : 1,
 		});
 
 		window.addEventListener('scroll', this.handleScroll);
@@ -67,7 +73,7 @@ export class Navigation extends Component {
 		window.removeEventListener('scroll', this.handleScroll);
 	}
 
-	handleScroll = (event) => {
+	handleScroll = event => {
 		if ($('.rd-navbar--is-stuck')) {
 			if ($('.rd-navbar--is-stuck').length === 1) {
 				if (this.state.floatImage === '')
@@ -79,7 +85,7 @@ export class Navigation extends Component {
 		}
 	};
 
-	handleNavigationClick = (index) => {
+	handleNavigationClick = index => {
 		this.handleTabIndex(index);
 		$('.login-modal-2').removeClass('active');
 		$('.register-modal-2').removeClass('active');
@@ -90,7 +96,7 @@ export class Navigation extends Component {
 		}
 	};
 
-	handleRemoveModal = (index) => {
+	handleRemoveModal = index => {
 		this.handleTabIndex(index);
 		$('.login-modal-2').removeClass('active');
 		$('.rd-navbar-nav-wrap').removeClass('active');
@@ -98,7 +104,7 @@ export class Navigation extends Component {
 		$('.rd-navbar-toggle').removeClass('active');
 	};
 
-	handleTabIndex = (index) => {
+	handleTabIndex = index => {
 		// alert('inside handletabindex: ' + index);
 		if (index) {
 			this.setState({ index });
@@ -111,8 +117,19 @@ export class Navigation extends Component {
 		$('.biography-submenu').removeClass('opened');
 	};
 
+	languageToggle (language) {
+		setActiveLanguage(language);
+		reactCookie.save('languageCode', language, { path: '/' });
+		window.location.reload();
+
+	}
+
 	render() {
 		const maxWidth = window.screen.width;
+		let currentLanguage = 'en';
+		if (reactCookie.load('languageCode')) {
+			currentLanguage = reactCookie.load('languageCode');
+		}
 		return (
 			<div>
 				<header className="section page-header">
@@ -134,14 +151,16 @@ export class Navigation extends Component {
 							data-xxl-stick-up-offset="46px"
 							data-lg-stick-up="true"
 							data-xl-stick-up="true"
-							data-xxl-stick-up="true">
+							data-xxl-stick-up="true"
+						>
 							<div className="rd-navbar-aside-outer banner outSideBanner banner1">
 								{maxWidth <= 1210 ? (
 									<div className="rd-navbar-aside head ">
 										<div className="rd-navbar-panel">
 											<button
 												className="rd-navbar-toggle"
-												data-rd-navbar-toggle="#rd-navbar-nav-wrap-1">
+												data-rd-navbar-toggle="#rd-navbar-nav-wrap-1"
+											>
 												<span />
 											</button>
 											<div style={{ width: '100%' }}>
@@ -163,7 +182,8 @@ export class Navigation extends Component {
 												</div>
 												<div
 													className="topMenu languageToggle"
-													style={{ float: 'right' }}>
+													style={{ float: 'right' }}
+												>
 													<ul className="rd-navbar-nav">
 														<li className="rd-nav-item">
 															<LanguageSwitch />
@@ -191,21 +211,21 @@ export class Navigation extends Component {
 								<div className="rd-navbar-main MenuPad">
 									<div
 										className="rd-navbar-nav-wrap padTopMenu"
-										id="rd-navbar-nav-wrap-1">
+										id="rd-navbar-nav-wrap-1"
+									>
 										<ul className="rd-navbar-nav">
-											<li className="rd-nav-item hideMenu">
-												<LanguageSwitch />
-											</li>
 											<li
 												onClick={() => {
 													this.handleRemoveModal(1);
 												}}
-												className="rd-nav-item">
+												className="rd-nav-item"
+											>
 												<Link
 													className={`rd-nav-link ${
 														this.state.index === 1 ? 'active1' : ''
 													} `}
-													to="/">
+													to="/"
+												>
 													<Translate>
 														{({ translate }) => translate('HOME.home')}
 													</Translate>
@@ -215,7 +235,8 @@ export class Navigation extends Component {
 												<a
 													className={`rd-nav-link ${
 														this.state.index === 2 ? 'active1' : ''
-													} `}>
+													} `}
+												>
 													<Translate>
 														{({ translate }) => translate('HOME.biography')}
 													</Translate>
@@ -225,14 +246,16 @@ export class Navigation extends Component {
 														onClick={() => {
 															this.handleRemoveModal(2);
 														}}
-														className="rd-dropdown-item">
+														className="rd-dropdown-item"
+													>
 														<Link
 															to={{
 																pathname: '/biograhyDetails',
-																state: this.state.Prabhupada_swami_bio
+																state: this.state.Prabhupada_swami_bio,
 															}}
 															onClick={this.handleBiographyClick}
-															className="rd-dropdown-link">
+															className="rd-dropdown-link"
+														>
 															<Translate>
 																{({ translate }) =>
 																	translate('HOME.swami_prabhupada')
@@ -244,14 +267,16 @@ export class Navigation extends Component {
 														onClick={() => {
 															this.handleRemoveModal(2);
 														}}
-														className="rd-dropdown-item">
+														className="rd-dropdown-item"
+													>
 														<Link
 															to={{
 																pathname: '/biograhyDetails',
-																state: this.state.Niranjana_swami_bio
+																state: this.state.Niranjana_swami_bio,
 															}}
 															onClick={this.handleBiographyClick}
-															className="rd-dropdown-link">
+															className="rd-dropdown-link"
+														>
 															<Translate>
 																{({ translate }) =>
 																	translate('HOME.niranjanaswami')
@@ -274,7 +299,8 @@ export class Navigation extends Component {
 													}}
 													onClick={() => {
 														this.handleNavigationClick(10);
-													}}>
+													}}
+												>
 													<Translate>
 														{({ translate }) => translate('HOME.audio')}
 													</Translate>
@@ -288,7 +314,8 @@ export class Navigation extends Component {
 													to="/video"
 													onClick={() => {
 														this.handleNavigationClick(11);
-													}}>
+													}}
+												>
 													<Translate>
 														{({ translate }) => translate('HOME.video')}
 													</Translate>
@@ -302,7 +329,8 @@ export class Navigation extends Component {
 													to="/blog"
 													onClick={() => {
 														this.handleNavigationClick(3);
-													}}>
+													}}
+												>
 													<Translate>
 														{({ translate }) => translate('HOME.blog')}
 													</Translate>
@@ -316,7 +344,8 @@ export class Navigation extends Component {
 													to="/transcriptions"
 													onClick={() => {
 														this.handleNavigationClick(4);
-													}}>
+													}}
+												>
 													<Translate>
 														{({ translate }) =>
 															translate('HOME.Transcriptions')
@@ -332,7 +361,8 @@ export class Navigation extends Component {
 													to="/summaries"
 													onClick={() => {
 														this.handleNavigationClick(5);
-													}}>
+													}}
+												>
 													<Translate>
 														{({ translate }) => translate('HOME.Summaries')}
 													</Translate>
@@ -344,7 +374,8 @@ export class Navigation extends Component {
 														className={`rd-nav-link ${
 															this.state.index === 6 ? 'active1' : ''
 														} `}
-														to="/">
+														to="/"
+													>
 														Admin
 													</Link>
 												</li>
@@ -361,6 +392,26 @@ export class Navigation extends Component {
 													/>
 												</a>
 											</li>
+											<li className="rd-nav-item hideMenu">
+												{/* <LanguageSwitch /> */}
+												<Select
+													showSearch
+													className="langaugeDropDown"
+													style={{ width: 70, color: '#000', backgroundColor: '#f6f6f6', border: '1px solid #d9d9d9' }}
+													defaultValue={currentLanguage}
+													placeholder="Select language"
+													optionFilterProp="children"
+													onChange={this.languageToggle}
+													filterOption={(input, option) =>
+														option.props.children
+															.toLowerCase()
+															.indexOf(input.toLowerCase()) >= 0
+													}
+												>
+													<Option value="en">En</Option>
+													<Option value="ru">Ru</Option>
+												</Select>
+											</li>
 										</ul>
 									</div>
 								</div>
@@ -375,4 +426,4 @@ export class Navigation extends Component {
 	}
 }
 
-export default Navigation;
+export default withLocalize(Navigation);

@@ -334,7 +334,7 @@
 	font-family: 'Roboto_New' !important;
 }
 .MenuPad {
-	padding-left: 3% !important;
+	padding-left: 8.5% !important;
 }
 .announcementDiv {
 	text-align: left;
@@ -869,4 +869,17 @@
 .readMoreFont {
 	float: left;
     font-size: 16px;
+}
+
+.langaugeDropDown {
+	color: #fff;
+}
+
+.langaugeDropDown div {
+	background-color: #f6f6f6 !important;
+}
+
+.gridMenuText {
+	font-weight: 400 !important;
+    color: #103055 !important;
 }
