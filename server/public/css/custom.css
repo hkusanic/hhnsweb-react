@@ -821,6 +821,10 @@
 	font-weight: unset !important
 }
 
+.quotePad {
+	padding-bottom: 40px;
+}
+
 .searchDropDownDiv {
 	max-height: 250px;
 	overflow: scroll;
@@ -855,4 +859,14 @@
 	text-align: right !important;
     padding-top: 20px !important;
     padding-bottom: 20px !important;
+}
+
+.quotesFont {
+	font-size: 18px !important;
+	color: #74757f !important;
+}
+
+.readMoreFont {
+	float: left;
+    font-size: 16px;
 }

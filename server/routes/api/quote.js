@@ -3,24 +3,43 @@ let logger = require('./../../logger/logger');
 var quote_LIST = require('../../constants/constant');
 
 var Quote = keystone.list('Quote');
-function todayDate(){
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-      dd = '0' + dd;
-    } 
-    if (mm < 10) {
-      mm = '0' + mm;
-    } 
-    var today = yyyy  + '-' + mm + '-' + dd;
-    return today
-    }
+function todayDate () {
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; // January is 0!
+
+	var yyyy = today.getFullYear();
+	if (dd < 10) {
+		dd = '0' + dd;
+	}
+	if (mm < 10) {
+		mm = '0' + mm;
+	}
+	var today = yyyy + '-' + mm + '-' + dd;
+	return today;
+}
 
 exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
+	let query = [];
+
+	if (req.query.author) {
+		query.push({
+			author: {
+				$regex: '.*' + req.query.author + '.*',
+				$options: 'i',
+			},
+		});
+	}
+
+	let filters = {};
+
+	if (query.length > 0) {
+		filters = {
+			$and: query,
+		};
+	}
+
 	logger.info(
 		{
 			req: req,
@@ -30,6 +49,7 @@ exports.list = function (req, res) {
 	Quote.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
+		filters: filters,
 	}).sort('-date').exec(function (err, items) {
 		if (err) {
 			logger.error(
@@ -40,7 +60,7 @@ exports.list = function (req, res) {
 			);
 			return res.apiError('database error', err);
 		}
-		res.apiResponse({
+		return res.apiResponse({
 			// Filter page by
 			quote: items,
 		});
@@ -54,8 +74,8 @@ exports.list = function (req, res) {
 exports.create = function (req, res) {
 
 	var item = new Quote.model();
-    var data = (req.method === 'POST') ? req.body : req.query;
-    data.date = data.date?data.date:todayDate();
+	var data = (req.method === 'POST') ? req.body : req.query;
+	data.date = data.date ? data.date : todayDate();
 	logger.info({
 		req: req,
 	}, 'API create quote');
@@ -136,7 +156,6 @@ exports.update = function (req, res) {
 
 	});
 };
-
 
 
 exports.remove = function (req, res) {

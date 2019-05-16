@@ -43,7 +43,7 @@ const utils = {
 		return axios.post(url, body);
 	},
 
-	fetchLecture: (body) => {
+	fetchLecture: body => {
 		let url = serverAddress + '/api/lecture/getlecturebyid/';
 		return axios.post(url, body);
 	},
