@@ -6848,7 +6848,7 @@ html:not(.tablet):not(.mobile) .profile-minimal-caption {
 	color: #74757f;
 }
 
-.comment-classic-reply {
+.comment-classic-reply .comment-classic-cancelReply .comment-classic-delete {
 	font-size: 24px;
 	line-height: 1;
 	color: #aeb1be;
@@ -6857,10 +6857,51 @@ html:not(.tablet):not(.mobile) .profile-minimal-caption {
 .comment-classic-reply::before {
 	content: '\f549';
 	font-family: 'Material Design Icons';
+	color: #aeb1be;
+}
+
+.comment-classic-cancelReply::before{
+	content: '\f250';
+	font-family: 'Material Design Icons';
+	color: #aeb1be;
+}
+
+.comment-classic-delete::before {
+	content: '\f2b5';
+	font-family: 'Material Design Icons';
+	color: #aeb1be;
+}
+
+.comment-classic-hideAll::before {
+	content: '\f235';
+	font-family: 'Material Design Icons';
+	color: #aeb1be;
+}
+
+.comment-classic-showAll::before{
+	content: '\f232';
+	font-family: 'Material Design Icons';
+	color: #9e9e9e;
 }
 
 .comment-classic-reply:hover {
-	color: #ff830a;
+	color: #ff830a !important;
+}
+
+.comment-classic-cancelReply:hover {
+	color: #ff830a !important;
+}
+
+.comment-classic-delete:hover {
+	color: #ff830a !important;
+}
+
+.comment-classic-hideAll:hover {
+	color: #ff830a !important;
+}
+
+.comment-classic-showAll:hover {
+	color: #ff830a !important;
 }
 
 * + .comment-classic-text {
@@ -6876,6 +6917,18 @@ html:not(.tablet):not(.mobile) .profile-minimal-caption {
 		margin-left: 25px;
 	}
 	.comment-classic-reply {
+		font-size: 28px;
+	}
+	.comment-classic-cancelReply {
+		font-size: 28px;
+	}
+	.comment-classic-delete {
+		font-size: 28px;
+	}
+	.comment-classic-showAll {
+		font-size: 28px;
+	}
+	.comment-classic-hideAll {
 		font-size: 28px;
 	}
 }

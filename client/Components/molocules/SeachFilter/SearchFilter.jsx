@@ -90,6 +90,8 @@ export class SearchFilter extends Component {
 			verse: '',
 			chapter: '',
 			songs: '',
+		}, () => {
+			this.handleSearchData();
 		});
 	};
 

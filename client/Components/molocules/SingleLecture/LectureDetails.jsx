@@ -51,9 +51,42 @@ export class LectureDetails extends React.Component {
 
 		return (
 			<div>
+				<section
+					className="bg-gray-100"
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
+					}}
+				>
+					<div class="breadcrumbs-custom-inner headingImage">
+						<div class="container breadcrumbs-custom-container">
+							<ul class="breadcrumbs-custom-path">
+								<li>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<Link to=" " onClick={() => this.props.history.goBack()}>
+										<Breadcrumb.Item>Lecture</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<a className="textColor">
+										{renderHTML(
+											reactCookie.load('languageCode') === 'en'
+												? lectureDetails.en.title
+												: lectureDetails.ru.title
+										)}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
 				<section className="section section-lg">
-					<div className="container">
-						<Breadcrumb>
+					<div className="container padTop">
+						{/* <Breadcrumb>
 							<Link to=" " onClick={() => this.props.history.push('/')}>
 								<Breadcrumb.Item>Home</Breadcrumb.Item>
 							</Link>
@@ -83,15 +116,15 @@ export class LectureDetails extends React.Component {
 										: lectureDetails.ru.title
 								)}
 							</Breadcrumb.Item>
-						</Breadcrumb>
-						<div className="row row-50">
-							<div className="col-lg-8">
+						</Breadcrumb> */}
+						<div className="row row-100">
+							<div style={{ paddingLeft: '15%' }} className="col-lg-12">
 								<article className="post-creative">
 									<h3 className="post-creative-title">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? lectureDetails.en.event
-												: lectureDetails.ru.event
+												? lectureDetails.en.title
+												: lectureDetails.ru.title
 										)}
 									</h3>
 									<ul className="post-creative-meta">

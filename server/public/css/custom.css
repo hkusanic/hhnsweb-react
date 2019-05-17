@@ -26,7 +26,7 @@
 }
 
 .maintable tr td b span {
-	width: 85px;
+	width: 100px;
 	display: inline-block;
 }
 
@@ -334,7 +334,7 @@
 	font-family: 'Roboto_New' !important;
 }
 .MenuPad {
-	padding-left: 3% !important;
+	padding-left: 8.5% !important;
 }
 .announcementDiv {
 	text-align: left;
@@ -636,9 +636,9 @@
 	color: #000;
 }
 .comment-holder {
-	padding: 20px 10px;
+	padding: 10px 10px;
 	color: #000;
-	margin-top: 10px;
+	/* margin-top: 10px; */
 	background-color: #fff;
 	margin-bottom: 15px;
 }
@@ -821,6 +821,10 @@
 	font-weight: unset !important
 }
 
+.quotePad {
+	padding-bottom: 40px;
+}
+
 .searchDropDownDiv {
 	max-height: 250px;
 	overflow: scroll;
@@ -849,4 +853,33 @@
 
 .textColor {
 	color: #fff !important;
+}
+
+.antPage {
+	text-align: right !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
+
+.quotesFont {
+	font-size: 18px !important;
+	color: #74757f !important;
+}
+
+.readMoreFont {
+	float: left;
+    font-size: 16px;
+}
+
+.langaugeDropDown {
+	color: #fff;
+}
+
+.langaugeDropDown div {
+	background-color: #f6f6f6 !important;
+}
+
+.gridMenuText {
+	font-weight: 400 !important;
+    color: #103055 !important;
 }

@@ -54,11 +54,44 @@ export class BlogDetails extends Component {
 
 		return (
 			<div>
+				<section
+					className="bg-gray-100"
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
+					}}
+				>
+					<div class="breadcrumbs-custom-inner headingImage">
+						<div class="container breadcrumbs-custom-container">
+							<ul class="breadcrumbs-custom-path">
+								<li>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<Link to=" " onClick={() => this.props.history.goBack()}>
+										<Breadcrumb.Item>Blog</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<a className="textColor">
+									{renderHTML(
+											reactCookie.load('languageCode') === 'en'
+												? this.props.location.state.title_en
+												: this.props.location.state.title_ru
+										)}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
 				<section className="section section-lg">
-					<div className="container padLeftBlog">
-						<div className="row">
-							<div className="col-lg-12">
-								<Breadcrumb>
+					<div className="container padTop">
+						{/* <div style={{ paddingLeft: '15%' }} className="row row-100">
+							<div className="col-lg-12"> */}
+								{/* <Breadcrumb>
 									<Link to=" " onClick={() => this.props.history.push('/')}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
 									</Link>
@@ -88,13 +121,13 @@ export class BlogDetails extends Component {
 												: this.props.location.state.title_ru
 										)}
 									</Breadcrumb.Item>
-								</Breadcrumb>
-							</div>
-						</div>
-						<div className="row row-50">
+								</Breadcrumb> */}
+							{/* </div>
+						</div> */}
+						<div style={{ paddingLeft: '15%' }} className="row row-100">
 							<div className="col-lg-12">
 								<article className="post-creative">
-									<h3 className="post-creative-title alignment padLeft">
+									<h3 className="post-creative-title">
 										{blogDetails &&
 											renderHTML(
 												reactCookie.load('languageCode') === 'en'
@@ -121,13 +154,13 @@ export class BlogDetails extends Component {
 												? blogDetails.body_en
 												: blogDetails.body_ru
 										)}
-								</article>
-							</div>
 							<div>
 								<p className="bookingForm">Comments</p>
 							</div>
 							<Comments lecture_uuid={this.props.location.state.uuid} />
-							<div className="col-lg-4" />
+								</article>
+							</div>
+							{/* <div className="col-lg-4" /> */}
 						</div>
 					</div>
 				</section>

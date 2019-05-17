@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Icon } from 'antd';
+import { Icon, Pagination } from 'antd';
 import { Link } from 'react-router-dom';
 import SingleLecture from '../../Components/molocules/SingleLecture/SingleLecture';
-import Pagination from 'react-js-pagination';
+// import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
 import { searchLecture, updateCounters } from '../../actions/lectureActions';
 import Auth from '../../utils/Auth';
@@ -55,30 +55,32 @@ export class Lectures extends Component {
 	render() {
 		return (
 			<div>
-				<section className="bg-gray-100">
-					<img
-						className="img-banner-width"
-						src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png"
-					/>
+				<section
+				className="bg-gray-100"
+				style={{
+					backgroundImage:
+						'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
+				}}
+				>
+					{!this.state.isUserLogin ? (
+					<div class="breadcrumbs-custom-inner headingImage">
+						<div class="container breadcrumbs-custom-container">
+							<ul class="breadcrumbs-custom-path">
+								<li>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<a className="textColor">Lecture</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					) : null }
 				</section>
 				{!this.state.isUserLogin ? (
 					<div className="container">
-						<div className="BreadCrumDiv">
-							<Breadcrumb>
-								<Link to=" " onClick={() => this.props.history.push('/')}>
-									<Breadcrumb.Item>Home</Breadcrumb.Item>
-								</Link>
-								<Icon
-									type="double-right"
-									style={{
-										alignSelf: 'center',
-										paddingLeft: 5,
-										paddingRight: 5,
-									}}
-								/>
-								<Breadcrumb.Item active>Lecture</Breadcrumb.Item>
-							</Breadcrumb>
-						</div>
 						<div style={{ textAlign: 'center' }}>
 							<p className="bookingForm">
 								<Translate>
@@ -114,14 +116,14 @@ export class Lectures extends Component {
                             </table>
                         </div> */}
 						<Pagination
-							className="paginationStyle"
+							className="paginationStyle antPage"
 							innerClass="pagination"
 							activeClass="page-item active"
 							itemClass="page-item"
 							linkClass="page-link button-winona"
 							activePage={this.state.currentPage}
-							itemsCountPerPage={20}
-							totalItemsCount={this.state.totalItem}
+							pageSize={20}
+							total={this.state.totalItem}
 							pageRangeDisplayed={5}
 							onChange={this.handlePageChange}
 						/>

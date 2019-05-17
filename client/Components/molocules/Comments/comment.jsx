@@ -110,14 +110,83 @@ class Comment extends React.Component {
 			<div>
 				<div className="comment-holder">
 					<div className="clearafter">
-						<div className="comment-iconholder">
+						{/* <div className="comment-iconholder">
 							<img
 								src="https://ik.imagekit.io/gcwjdmqwwznjl/user_Hkl1ywJtN.png"
 								alt="hello"
 							/>
-						</div>
-						<div className="comment-details-holder">
-							<div className="comments-header-type clearafter headerDiv">
+						</div> */}
+						<div>
+							<div class="comment-classic-group">
+								<article class="comment-classic">
+									<figure class="comment-classic-figure">
+										<img
+											class="comment-classic-image"
+											src="https://ik.imagekit.io/gcwjdmqwwznjl/user_Hkl1ywJtN.png"
+											alt=""
+											width="48"
+											height="48"
+										/>
+									</figure>
+									<div class="comment-classic-main">
+										<p class="comment-classic-name">
+											{this.props.comment.author_name}{' '}
+										</p>
+										<div class="comment-classic-text">
+											<p>
+												<MathJax math={this.props.comment.message} />
+											</p>
+										</div>
+										<ul class="comment-classic-meta">
+											<li>
+												<time datetime="2018">
+													{moment(
+														this.props.comment.dateCreated,
+														'YYYYMMDDTHHmmssZ'
+													).format('h:mm a, MMMM Do YYYY')}
+												</time>
+											</li>
+											<li>
+												{!this.state.reply ? (
+													<a
+														class="comment-classic-reply"
+														onClick={this.handleReply}
+														aria-label="reply"
+													/>
+												) : (
+													<a
+														class="comment-classic-cancelReply"
+														onClick={this.handleReply}
+														aria-label="cancel"
+													/>
+												)}
+												{this.checkUserEmail() ? (
+													<a
+													class="comment-classic-delete"
+													onClick={this.handleDeleteComment}
+													aria-label="delete"
+												/>
+												) : null}
+												{!this.state.showAllReplies ? (
+												<a
+													class="comment-classic-showAll"
+													onClick={this.handleShowAllReplies}
+													aria-label="showAll"
+												/>
+												) : (
+													<a
+													class="comment-classic-hideAll"
+													onClick={this.handleShowAllReplies}
+													aria-label="showAll"
+												/>
+												)}
+												{/* <span>({this.state.replies.length})</span> */}
+											</li>
+										</ul>
+									</div>
+								</article>
+							</div>
+							{/* <div className="comments-header-type clearafter headerDiv">
 								<div className="flexLeft">
 									<span className="commented-person">
 										{this.props.comment.author_name}
@@ -139,7 +208,7 @@ class Comment extends React.Component {
 							</div>
 							<div className="comments-block blockHeight">
 								<MathJax math={this.props.comment.message} />
-							</div>
+							</div> */}
 							{this.state.reply ? (
 								<textarea
 									className="reply_textbox"
@@ -152,8 +221,8 @@ class Comment extends React.Component {
 								/>
 							) : null}
 
-							<div style={{ margin: '0 0 20px 0' }}>
-								<button
+							<div style={{ margin: '5px 0 20px 0' }}>
+								{/* <button
 									className="button button-primary button-winona commentBtn"
 									onClick={this.handleShowAllReplies}
 								>
@@ -162,8 +231,8 @@ class Comment extends React.Component {
 									) : (
 										<span>Show All {this.state.replies.length} Replies</span>
 									)}
-								</button>
-								<button
+								</button> */}
+								{/* <button
 									className="button button-primary button-winona commentBtn"
 									style={{ margin: '0 0 0 10px' }}
 									onClick={this.handleReply}
@@ -173,8 +242,8 @@ class Comment extends React.Component {
 									) : (
 										<span>Reply</span>
 									)}
-								</button>
-								{this.checkUserEmail() ? (
+								</button> */}
+								{/* {this.checkUserEmail() ? (
 									<button
 										className="button button-primary button-winona commentBtn"
 										style={{ margin: '0 0 0 10px' }}
@@ -182,7 +251,7 @@ class Comment extends React.Component {
 									>
 										<span>Delete</span>
 									</button>
-								) : null}
+								) : null} */}
 								{this.state.reply && this.state.commentReply.length > 0 ? (
 									<button
 										className="button button-primary button-winona commentBtn"
