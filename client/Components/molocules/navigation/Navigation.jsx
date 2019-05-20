@@ -392,7 +392,7 @@ export class Navigation extends Component {
 													/>
 												</a>
 											</li>
-											<li className="rd-nav-item hideMenu">
+											<li className={`rd-nav-item hideMenu ${reactCookie.load('languageCode') === 'en' ? 'enToggle' : 'ruToggle' } `} >
 												{/* <LanguageSwitch /> */}
 												<Select
 													showSearch

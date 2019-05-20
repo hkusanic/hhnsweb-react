@@ -131,8 +131,12 @@ exports = module.exports = function (app) {
 			// static menu
 			return `
                 <!doctype html>
-                <html>
-                    <head>
+                <html class="wide wow-animation">
+					<head>
+						<meta name="format-detection" content="telephone=no">
+						<meta name="viewport" content="width=device-width height=device-height initial-scale=1.0 maximum-scale=1.0 user-scalable=0">
+						<meta http-equiv="X-UA-Compatible" content="IE=edge">
+						<meta charset="utf-8">
                         <title>H.H. Niranjana Swami - Official web-site</title>
                         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Work+Sans:300,500,700,800%7COswald:300,400,500">
                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

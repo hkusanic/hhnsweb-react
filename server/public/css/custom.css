@@ -83,6 +83,7 @@
 .outSideBanner {
 	padding-left: 0px !important;
 	padding-right: 0px !important;
+	border-radius: 0px !important;
 }
 
 .progressBarDiv {
@@ -882,4 +883,12 @@
 .gridMenuText {
 	font-weight: 400 !important;
     color: #103055 !important;
+}
+
+.enToggle {
+	padding-left: 125px;
+}
+
+.ruToggle {
+	padding-left: 10px;
 }
