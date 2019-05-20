@@ -6,7 +6,7 @@ const { Meta } = Card;
 
 const SingleGridMenu = props => {
 	return (
-		<div class="col-sm-6 col-lg-3 page1">
+		<div class="col-sm-6 col-lg-3 wow-outer page1">
 			<article class="tour-default wow slideInLeft page1" data-wow-delay=".1s">
 				<Link
 					to={props.link}
@@ -15,7 +15,7 @@ const SingleGridMenu = props => {
 				>
 					<Card
 						hoverable
-						style={{ width: 270 }}
+						style={{ width: 290 }}
 						cover={<img src={props.image} alt="" />}
 					>
 						<Meta title={props.menu} className="tour-default-title CommonFontFamily gridMenuText" />

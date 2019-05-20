@@ -105,6 +105,12 @@ exports = module.exports = function (app) {
 	app.get('/api/appointment/', keystone.middleware.api, routes.api.appointment.list);
 	app.get('/api/blog/generateUploadUrl/', keystone.middleware.api, routes.api.blog.generateUploadUrl);
 	app.get('/api/blog/deleteFile/', keystone.middleware.api, routes.api.blog.deleteFile);
+	app.post('/api/sadhana/find/', keystone.middleware.api, routes.api.sadhana.get);
+	app.get('/api/sadhana/', keystone.middleware.api, routes.api.sadhana.list);
+	app.post('/api/sadhana/getSadhanaById/', keystone.middleware.api, routes.api.sadhana.getSadhanaById);
+	app.post('/api/sadhana/create/', keystone.middleware.api, routes.api.sadhana.create);
+	app.all('/api/sadhana/:id/update', keystone.middleware.api, routes.api.sadhana.update);
+	app.post('/api/sadhana/:id/remove', keystone.middleware.api, routes.api.sadhana.remove);
 	// File Upload Routes
 	app.get('/api/fileupload/list', keystone.middleware.api, routes.api.fileupload.list);
 	app.get('/api/fileupload/:id', keystone.middleware.api, routes.api.fileupload.get);
@@ -125,8 +131,12 @@ exports = module.exports = function (app) {
 			// static menu
 			return `
                 <!doctype html>
-                <html>
-                    <head>
+                <html class="wide wow-animation">
+					<head>
+						<meta name="format-detection" content="telephone=no">
+						<meta name="viewport" content="width=device-width height=device-height initial-scale=1.0 maximum-scale=1.0 user-scalable=0">
+						<meta http-equiv="X-UA-Compatible" content="IE=edge">
+						<meta charset="utf-8">
                         <title>H.H. Niranjana Swami - Official web-site</title>
                         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Work+Sans:300,500,700,800%7COswald:300,400,500">
                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
