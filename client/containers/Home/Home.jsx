@@ -34,6 +34,10 @@ import SummariesDetails from '../../Components/molocules/Summaries/SummariesDeta
 import Kirtan from '../../Components/molocules/Kirtan/Kirtan';
 import KirtanDetails from '../../Components/molocules/Kirtan/KirtanDetails';
 import MKV from '../../Components/molocules/MKV/mkv';
+import SadhanaList from '../../Components/molocules/Sadhana/SadhanaList';
+import SadhanaDetails from '../../Components/molocules/Sadhana/SadhanaDetails';
+import AddSadhana from '../../Components/molocules/Sadhana/addSadhana';
+
 
 import { Route, Switch } from 'react-router-dom';
 
@@ -97,6 +101,9 @@ export class Home extends Component {
 								<Route path="/kirtan" component={Kirtan} />
 								<Route path="/kirtanDetails/:uuid" component={KirtanDetails} />
 								<Route path="/mkv" component={MKV} />
+								<Route path="/sadhanaList" component={SadhanaList} />
+								<Route path="/sadhanaDetails/:uuid" component={SadhanaDetails} />
+								<Route path="addSadhana" component={AddSadhana} />
 							</ShellCompoenent>
 						</ScrollToTop>
 					</Switch>

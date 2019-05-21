@@ -23,10 +23,12 @@ Sadhana.add({
 	reading: { type: String },
 	time_rising: { type: String },
 	association: { type: String },
-	comments: { type: Types.TextArray },
-	additional_comments: { type: Types.TextArray },
-	lectures: { type: Types.TextArray },
+	comments: { type: String },
+	additional_comments: { type: String },
+	lectures: { type: String },
 	email: { type: String },
+	approved: { type: Boolean, default: false },
+	userId: { type: String },
 });
 
 Sadhana.register();
