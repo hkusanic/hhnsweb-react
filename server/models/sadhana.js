@@ -26,15 +26,7 @@ Sadhana.add({
 	comments: { type: Types.TextArray },
 	additional_comments: { type: Types.TextArray },
 	lectures: { type: Types.TextArray },
-	email: {
-		type: String,
-		initial: true,
-		required: true,
-		unique: true,
-		index: true,
-		default: '',
-	},
-
+	email: { type: String },
 });
 
 Sadhana.register();
