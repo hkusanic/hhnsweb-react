@@ -892,3 +892,22 @@
 .ruToggle {
 	padding-left: 10px;
 }
+
+.sadhanaAdd {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.sadhanaButton {
+	margin-left: 50px;
+    background-color: #f18130 !important;
+    border: none !important;
+}
+
+.datePickerFilter {
+	width: 250px;
+}
+
+.dropdownClass {
+	width: 100%;
+}

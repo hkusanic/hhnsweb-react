@@ -103,7 +103,7 @@ export class Home extends Component {
 								<Route path="/mkv" component={MKV} />
 								<Route path="/sadhanaList" component={SadhanaList} />
 								<Route path="/sadhanaDetails/:uuid" component={SadhanaDetails} />
-								<Route path="addSadhana" component={AddSadhana} />
+								<Route path="/addSadhana" component={AddSadhana} />
 							</ShellCompoenent>
 						</ScrollToTop>
 					</Switch>
