@@ -30,10 +30,29 @@ export class SadhanaList extends React.Component {
 						pageNumber: 1,
 						email: this.state.userEmail,
 					};
-					this.props.getSadhanaList(body);
+					this.props.getSadhanaList(body, 'list');
 				}
 			);
 		}
+	}
+
+	formatDate = date => {
+		const dateString = new Date(
+			date.getTime() - date.getTimezoneOffset() * 60000
+		)
+			.toISOString()
+			.split('T')[0];
+
+		return dateString;
+	};
+
+	handleDateChange = (date, dateString) => {
+		const body = {
+			pageNumber: 1,
+			email: this.state.userEmail,
+			date: dateString
+		};
+		this.props.getSadhanaList(body, 'list');
 	}
 
 	render () {
@@ -98,7 +117,7 @@ export class SadhanaList extends React.Component {
 							>
 								<div className="col-lg-12">
 									<div>
-										<DatePicker className="datePickerFilter" />
+										<DatePicker onChange={this.handleDateChange} className="datePickerFilter" />
 										<Button
 											type="primary"
 											className="sadhanaButton"
@@ -161,8 +180,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		getSadhanaList: body => {
-			dispatch(getSadhanaList(body));
+		getSadhanaList: (body, type) => {
+			dispatch(getSadhanaList(body, type));
 		},
 	};
 };

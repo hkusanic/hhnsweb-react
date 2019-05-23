@@ -1,15 +1,16 @@
 import React from 'react';
-import { Form, Input, Button, DatePicker } from 'antd';
+import { Form, Input, Button, DatePicker, TimePicker } from 'antd';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Auth from '../../../utils/Auth';
-import moment from 'moment'
+import moment from 'moment';
+import { createSadhana } from '../../../actions/sadhanaAction';
 import { connect } from 'react-redux';
 
 const { TextArea } = Input;
 
 class AddSadhana extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {
@@ -17,52 +18,110 @@ class AddSadhana extends React.Component {
 			firstName: '',
 			lastName: '',
 			email: '',
+			userId: '',
+			time_rising: '',
 		};
 	}
 
 	componentDidMount() {
 		const isUserLogin = Auth.isUserAuthenticated();
-		if(!isUserLogin){
+		if (!isUserLogin) {
 			const userDetails = JSON.parse(Auth.getUserDetails());
 			this.setState({
 				firstName: userDetails.firstName,
 				lastName: userDetails.last,
 				email: userDetails.email,
-			})
+				userId: userDetails.id,
+			});
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.sadhana.isCreated) {
+			this.props.history.push('/sadhanaList');
 		}
 	}
 
 	handleReset = () => {
 		const { form } = this.props;
 		form.resetFields();
-	}
+	};
 
-	handleSubmit = () => {
+	uuidv4 = () => {
+		// eslint-disable-next-line func-names
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			// eslint-disable-next-line no-bitwise
+			const r = (Math.random() * 16) | 0;
+
+			// eslint-disable-next-line no-bitwise
+			const v = c === 'x' ? r : (r & 0x3) | 0x8;
+			return v.toString(16);
+		});
+	};
+
+	handleSubmit = event => {
+		event.preventDefault();
 		const { form } = this.props;
+		const { time_rising, userId } = this.state;
 
-		form.validateFields([
-			'firstname',
-			'lastname',
-			'emai',
-			'date',
-			'time_rising',
-			'rounds',
-			'reading',
-			'association'
-		], (err, values) => {
-			if (!err) {
-			 console.info("form values ====>>>>", values)
+		form.validateFields(
+			[
+				'firstname',
+				'lastname',
+				'email',
+				'date',
+				'time_rising',
+				'rounds',
+				'reading',
+				'association',
+			],
+			(err, values) => {
+				if (!err) {
+					const body = {
+						uuid: this.uuidv4(),
+						firstName: values.firstname,
+						lastName: values.lastname,
+						email: values.email,
+						date: this.formatDate(new Date()),
+						time_rising: time_rising,
+						rounds: values.rounds,
+						reading: values.reading,
+						association: values.association,
+						comments: form.getFieldValue('comments'),
+						lectures: form.getFieldValue('lectures'),
+						additional_comments: form.getFieldValue('additional_comments'),
+						userId,
+					};
+					this.props.createSadhana(body);
+				}
 			}
-		  });
-	}
+		);
+	};
 
-	render () {
+	onChange = (time, timeString) => {
+		console.log(time, timeString);
+		this.setState({
+			time_rising: timeString,
+		});
+	};
+
+	formatDate = date => {
+		const dateString = new Date(
+			date.getTime() - date.getTimezoneOffset() * 60000
+		)
+			.toISOString()
+			.split('T')[0];
+
+		return dateString;
+	};
+
+	render() {
 		const { language, firstName, lastName, email } = this.state;
 		const { form } = this.props;
-		const dateFormat = 'YYYY/MM/DD'
+		const dateFormat = 'YYYY-MM-DD';
 
-		if(!this.state && !this.props) {
-			return <div>Loading...</div>
+		if (!this.state && !this.props) {
+			return <div>Loading...</div>;
 		}
 		return (
 			<React.Fragment>
@@ -82,7 +141,10 @@ class AddSadhana extends React.Component {
 									</Link>
 								</li>
 								<li>
-									<Link to="" onClick={() => this.props.history.push('/sadhanaList')}>
+									<Link
+										to=""
+										onClick={() => this.props.history.push('/sadhanaList')}
+									>
 										<Breadcrumb.Item>Sadhana List</Breadcrumb.Item>
 									</Link>
 								</li>
@@ -104,10 +166,10 @@ class AddSadhana extends React.Component {
 												initialValue: firstName,
 												rules: [
 													{
-													  required: true,
-													  message: 'This field is required'
-													}
-												  ],
+														required: true,
+														message: 'This field is required',
+													},
+												],
 											})(<Input disabled placeholder="Name" name="name" />)}
 										</Form.Item>
 									</div>
@@ -116,23 +178,23 @@ class AddSadhana extends React.Component {
 											{form.getFieldDecorator('lastname', {
 												rules: [
 													{
-													  required: true,
-													  message: 'This field is required'
-													}
-												  ],
+														required: true,
+														message: 'This field is required',
+													},
+												],
 												initialValue: lastName,
 											})(<Input disabled placeholder="Name" name="name" />)}
 										</Form.Item>
 									</div>
 									<div className="form-group">
 										<Form.Item label={language ? 'Email' : 'Email'}>
-											{form.getFieldDecorator('emai;', {
+											{form.getFieldDecorator('email', {
 												rules: [
 													{
-													  required: true,
-													  message: 'This field is required'
-													}
-												  ],
+														required: true,
+														message: 'This field is required',
+													},
+												],
 												initialValue: email,
 											})(<Input disabled placeholder="Email" name="email" />)}
 										</Form.Item>
@@ -142,10 +204,10 @@ class AddSadhana extends React.Component {
 											{form.getFieldDecorator('date', {
 												rules: [
 													{
-													  required: true,
-													  message: 'This field is required'
-													}
-												  ],
+														required: true,
+														message: 'This field is required',
+													},
+												],
 												initialValue: moment(new Date(), dateFormat),
 											})(<DatePicker disabled />)}
 										</Form.Item>
@@ -155,12 +217,18 @@ class AddSadhana extends React.Component {
 											{form.getFieldDecorator('time_rising', {
 												rules: [
 													{
-													  required: true,
-													  message: 'This field is required'
-													}
-												  ],
+														required: true,
+														message: 'This field is required',
+													},
+												],
 												initialValue: '',
-											})(<Input placeholder="Time Rising" name="time_rising" />)}
+											})(
+												<TimePicker
+													use12Hours
+													format="h:mm a"
+													onChange={this.onChange}
+												/>
+											)}
 										</Form.Item>
 									</div>
 									<div className="form-group">
@@ -168,12 +236,18 @@ class AddSadhana extends React.Component {
 											{form.getFieldDecorator('rounds', {
 												rules: [
 													{
-													  required: true,
-													  message: 'This field is required'
-													}
-												  ],
+														required: true,
+														message: 'This field is required',
+													},
+												],
 												initialValue: '',
-											})(<Input placeholder="Rounds" type="number" name="rounds" />)}
+											})(
+												<Input
+													placeholder="Rounds"
+													type="number"
+													name="rounds"
+												/>
+											)}
 										</Form.Item>
 									</div>
 									<div className="form-group">
@@ -181,12 +255,18 @@ class AddSadhana extends React.Component {
 											{form.getFieldDecorator('reading', {
 												rules: [
 													{
-													  required: true,
-													  message: 'This field is required'
-													}
-												  ],
+														required: true,
+														message: 'This field is required',
+													},
+												],
 												initialValue: '',
-											})(<Input placeholder="Reading" name="reading" />)}
+											})(
+												<TextArea
+													rows={4}
+													placeholder="Reading"
+													name="reading"
+												/>
+											)}
 										</Form.Item>
 									</div>
 									<div className="form-group">
@@ -194,12 +274,18 @@ class AddSadhana extends React.Component {
 											{form.getFieldDecorator('association', {
 												rules: [
 													{
-													  required: true,
-													  message: 'This field is required'
-													}
-												  ],
+														required: true,
+														message: 'This field is required',
+													},
+												],
 												initialValue: '',
-											})(<Input placeholder="Association" name="association" />)}
+											})(
+												<TextArea
+													rows={4}
+													placeholder="Association"
+													name="association"
+												/>
+											)}
 										</Form.Item>
 									</div>
 									<div className="form-group">
@@ -249,7 +335,13 @@ class AddSadhana extends React.Component {
 										<Form.Item>
 											<div>
 												<span className="mr-3">
-													<Button type="primary" className="sadhanaButton" onClick={this.handleSubmit}>
+													<Button
+														type="primary"
+														className="sadhanaButton"
+														onClick={event => {
+															this.handleSubmit(event);
+														}}
+													>
 														Submit
 													</Button>
 												</span>
@@ -270,11 +362,20 @@ class AddSadhana extends React.Component {
 }
 
 const mapStateToProps = state => {
-	return {};
+	return {
+		sadhana: state.sadhanaReducer,
+	};
 };
 
 const mapDispatchToProps = dispatch => {
-	return {};
+	return {
+		createSadhana: body => {
+			dispatch(createSadhana(body));
+		},
+	};
 };
 
-export default  connect(mapStateToProps, mapDispatchToProps)(Form.create()(AddSadhana));
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Form.create()(AddSadhana));

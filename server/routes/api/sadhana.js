@@ -137,6 +137,7 @@ exports.create = function (req, res) {
 		}
 		res.apiResponse({
 			sadhana: item,
+			isCreated: true,
 		});
 	});
 };
@@ -261,7 +262,7 @@ exports.update = function (req, res) {
 				}
 				res.apiResponse({
 					sadhana: item,
-					updated: true,
+					isUpdated: true,
 				});
 			});
 		});
