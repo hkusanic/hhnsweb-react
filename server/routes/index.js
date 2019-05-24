@@ -111,12 +111,14 @@ exports = module.exports = function (app) {
 	app.post('/api/sadhana/create/', keystone.middleware.api, routes.api.sadhana.create);
 	app.all('/api/sadhana/:id/update', keystone.middleware.api, routes.api.sadhana.update);
 	app.post('/api/sadhana/:id/remove', keystone.middleware.api, routes.api.sadhana.remove);
-	// File Upload Routes
 	app.get('/api/fileupload/list', keystone.middleware.api, routes.api.fileupload.list);
 	app.get('/api/fileupload/:id', keystone.middleware.api, routes.api.fileupload.get);
 	app.all('/api/fileupload/:id/update', keystone.middleware.api, routes.api.fileupload.update);
 	app.all('/api/fileupload/create', keystone.middleware.api, routes.api.fileupload.create);
 	app.get('/api/fileupload/:id/remove', keystone.middleware.api, routes.api.fileupload.remove);
+	app.post('/api/user/approveSadhanaSheet', keystone.middleware.api, routes.api.user.approvedUserForSadhana);
+	app.post('/api/user/getUserByUserId', keystone.middleware.api, routes.api.user.getUserByUserId);
+
 	app.options('/api*', function (req, res) { res.send(200); });
 
 	// app.post('/api/blog/generateUploadUrl', multipartMiddleware,routes.api.blog.generateUploadUrl );

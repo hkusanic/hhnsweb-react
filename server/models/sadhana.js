@@ -17,24 +17,16 @@ let Sadhana = new keystone.List('Sadhana', {
 Sadhana.add({
 	uuid: { type: String, unique: true, index: true },
 	date: { type: String },
-	firstName: { type: String },
-	lastName: { type: String },
+	creation_date_time: { type: String },
 	rounds: { type: String },
 	reading: { type: String },
 	time_rising: { type: String },
 	association: { type: String },
-	comments: { type: Types.TextArray },
-	additional_comments: { type: Types.TextArray },
-	lectures: { type: Types.TextArray },
-	email: {
-		type: String,
-		initial: true,
-		required: true,
-		unique: true,
-		index: true,
-		default: '',
-	},
-
+	comments: { type: String },
+	additional_comments: { type: String },
+	lectures: { type: String },
+	approved: { type: Boolean, default: false },
+	userId: { type: String },
 });
 
 Sadhana.register();

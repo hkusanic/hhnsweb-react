@@ -22,7 +22,37 @@ function todayDate () {
 
 exports.list = function (req, res) {
 
-	let DateSort = 'date';
+	let DateSort = '-date';
+
+	let query = [];
+
+	if (req.query.userId) {
+		query.push({
+			userId: {
+				$regex: '.*' + req.query.userId + '.*',
+				$options: 'i',
+			},
+		});
+	}
+
+	if (req.query.date) {
+		let date_query = {
+			date: {
+				$regex: '.*' + req.query.date + '.*',
+				$options: 'i',
+			},
+		};
+
+		query.push(date_query);
+	}
+
+	let filters = {};
+
+	if (query.length > 0) {
+		filters = {
+			$and: query,
+		};
+	}
 
 	logger.info({
 		req: req,
@@ -33,6 +63,7 @@ exports.list = function (req, res) {
 	Sadhana.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
+		filters: filters,
 	}).sort(DateSort).exec(function (err, items) {
 		if (err) {
 			logger.error({
@@ -87,7 +118,7 @@ exports.get = function (req, res) {
 exports.create = function (req, res) {
 	var item = new Sadhana.model();
 	var data = req.method === 'POST' ? req.body : req.query;
-	data.date = todayDate();
+	// data.date = todayDate();
 	logger.info(
 		{
 			req: req,
@@ -106,6 +137,7 @@ exports.create = function (req, res) {
 		}
 		res.apiResponse({
 			sadhana: item,
+			isCreated: true,
 		});
 	});
 };
@@ -230,7 +262,7 @@ exports.update = function (req, res) {
 				}
 				res.apiResponse({
 					sadhana: item,
-					updated: true,
+					isUpdated: true,
 				});
 			});
 		});

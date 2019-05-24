@@ -9,10 +9,10 @@
 
 exports.create = {
 	User: [
-		{ 'name.first': 'Dina Gauranga', 'name.last': 'dasa', 'email': 'dgd.nrs@gmail.com', 'mobileNumber': '+12039183034', 'password': 'Gauranga108!', 'canAccessKeystone': true },
-		{ 'name.first': 'Hari-katha', 'name.last': 'dasa', 'email': 'hrvoje.kusanic@hotmail.com', 'mobileNumber': '+41786904834', 'password': 'Test01!', 'canAccessKeystone': true },
-		{ 'name.first': 'Shailendra', 'name.last': 'sahu', 'email': 'shailendra@cronj.com', 'password': 'cronj123@', 'canAccessKeystone': false },
-		{ 'name.first': 'Kiran', 'name.last': 'Kulkarni', 'email': 'kiran.kulkarni@cronj.com', 'password': '12345', 'canAccessKeystone': false },
+		{ 'user_id': '395a4634-7de8-11e9-8f9e-2a86e4085a59', 'name.first': 'Dina Gauranga', 'name.last': 'dasa', 'userName': 'dina123', 'email': 'dgd.nrs@gmail.com', 'mobileNumber': '+12039183034', 'password': 'Gauranga108!', 'canAccessKeystone': true, 'sadhanaSheetEnable': false },
+		{ 'user_id': '395a48be-7de8-11e9-8f9e-2a86e4085a59', 'name.first': 'Hari-katha', 'name.last': 'dasa', 'userName': 'hrvoje123', 'email': 'hrvoje.kusanic@hotmail.com', 'mobileNumber': '+41786904834', 'password': 'Test01!', 'canAccessKeystone': true, 'sadhanaSheetEnable': false },
+		{ 'user_id': '395a4b84-7de8-11e9-8f9e-2a86e4085a59', 'name.first': 'Shailendra', 'name.last': 'sahu', 'userName': 'shailendra123', 'email': 'shailendra@cronj.com', 'password': 'cronj123@', 'canAccessKeystone': false, 'sadhanaSheetEnable': false },
+		{ 'user_id': '395a4d64-7de8-11e9-8f9e-2a86e4085a59', 'name.first': 'Kiran', 'name.last': 'Kulkarni', 'userName': 'kiran123', 'email': 'kiran.kulkarni@cronj.com', 'password': '12345', 'canAccessKeystone': false, 'sadhanaSheetEnable': false },
 	],
 };
 
@@ -50,3 +50,4 @@ exports = module.exports = function (done) {
 };
 
 */
+

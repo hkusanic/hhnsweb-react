@@ -5,10 +5,11 @@ var nodemailer = require('nodemailer');
 var EMAIL_CONFIG = require('../../constants/constant');
 let logger = require('./../../logger/logger');
 
-var transporter = nodemailer.createTransport(EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig);
+var transporter = nodemailer.createTransport(
+	EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig
+);
 
 function sendMail (from, to, subject, html) {
-
 	var mailOptions = createMailBody(from, to, subject, html);
 
 	return transporter.sendMail(mailOptions);
@@ -26,82 +27,108 @@ function createMailBody (from, to, subject, html) {
 
 exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
-	logger.info({
-		req: req,
-	}, 'API list users');
-	keystone.list('User').model.find(function (err, items) {
-		// Make sure we are handling errors
-		if (err) {
-			logger.error({
-				error: err,
-			}, 'API list users');
-			return res.apiError('database error', err);
-		}
-		res.apiResponse({
-			// Filter page by
-			users: items,
-		});
+	logger.info(
+		{
+			req: req,
+		},
+		'API list users'
+	);
+	keystone
+		.list('User')
+		.model.find(function (err, items) {
+			// Make sure we are handling errors
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API list users'
+				);
+				return res.apiError('database error', err);
+			}
+			res.apiResponse({
+				// Filter page by
+				users: items,
+			});
 
-	// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
-	// This is handy if we want to speed up loading times once our recipe collection grows
-	}).limit(Number(req.query.limit));
+			// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
+			// This is handy if we want to speed up loading times once our recipe collection grows
+		})
+		.limit(Number(req.query.limit));
 };
-
 
 exports.signin = function (req, res) {
-	logger.info({
-		req: req,
-	}, 'API signin user');
+	logger.info(
+		{
+			req: req,
+		},
+		'API signin user'
+	);
 
-	if (!req.body.username || !req.body.password) return res.json({ success: false });
+	if (!req.body.username || !req.body.password)
+	{ return res.json({ success: false }); }
 
-	keystone.list('User').model.findOne({ email: req.body.username }).exec(function (err, user) {
+	keystone
+		.list('User')
+		.model.findOne({ email: req.body.username })
+		.exec(function (err, user) {
+			if (err || !user) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API signin user'
+				);
+				return res.json({
+					success: false,
+					session: false,
+					message:
+						(err && err.message ? err.message : false)
+						|| 'Sorry, there was an issue signing you in, please try again.',
+				});
+			}
 
-		if (err || !user) {
-			logger.error({
-				error: err,
-			}, 'API signin user');
-			return res.json({
-				success: false,
-				session: false,
-				message: (err && err.message ? err.message : false) || 'Sorry, there was an issue signing you in, please try again.',
-			});
-		}
-
-		keystone.session.signin({ email: user.email, password: req.body.password }, req, res, function (user) {
-
-			return res.json({
-				success: true,
-				session: true,
-				date: new Date().getTime(),
-				admin: user.canAccessKeystone,
-				loginUser: {
-					id: user.id,
-					email: user.email,
-					firstName: user.name.first,
-					last: user.name.last,
-					mobileNumber: user.mobileNumber,
-					countryCode: user.countryCode,
-					youbookme_url: process.env.YOUBOOKME_URL,
+			keystone.session.signin(
+				{ email: user.email, password: req.body.password },
+				req,
+				res,
+				function (user) {
+					return res.json({
+						success: true,
+						session: true,
+						date: new Date().getTime(),
+						admin: user.canAccessKeystone,
+						loginUser: {
+							id: user.id,
+							email: user.email,
+							firstName: user.name.first,
+							last: user.name.last,
+							mobileNumber: user.mobileNumber,
+							countryCode: user.countryCode,
+							user_id: user.user_id,
+							youbookme_url: process.env.YOUBOOKME_URL,
+						},
+					});
 				},
-			});
+				function (err) {
+					logger.error(
+						{
+							error: err,
+						},
+						'API signin user'
+					);
 
-		}, function (err) {
-			logger.error({
-				error: err,
-			}, 'API signin user');
-
-			return res.json({
-				success: false,
-				session: false,
-				message: (err && err.message ? err.message : false) || 'Sorry, there was an issue signing you in, please try again.',
-			});
-
+					return res.json({
+						success: false,
+						session: false,
+						message:
+							(err && err.message ? err.message : false)
+							|| 'Sorry, there was an issue signing you in, please try again.',
+					});
+				}
+			);
 		});
-
-	});
 };
-
 
 exports.signout = function (req, res) {
 	keystone.session.signout(req, res, () => {
@@ -111,107 +138,150 @@ exports.signout = function (req, res) {
 	});
 };
 
-
 exports.signup = function (req, res) {
-
-	logger.info({
-		req: req,
-	}, 'API signup user');
-
-	async.series([
-		(cb) => {
-			console.log('1');
-			if (!req.body.firstname || !req.body.lastname || !req.body.email || !req.body.password || !req.body.mobileNumber) {
-				let list = [];
-				req.body.firstname === '' ? list.push('First name is missing.') : '';
-				req.body.lastname === '' ? list.push('Last name is missing.') : '';
-				req.body.email === '' ? list.push('Email is missing.') : '';
-				req.body.password === '' ? list.push('Password is missing.') : '';
-				req.body.mobileNumber === '' ? list.push('Mobile number is missing.') : '';
-				req.body.countryCode === '' ? list.push('Country Code is missing.') : '';
-
-				res.json({ error: { title: 'Error while creating new account', detail: 'Mandatory values are missing. Please check below for more details.' }, list: list });
-				return cb('true');
-			}
-			return cb();
+	logger.info(
+		{
+			req: req,
 		},
-		(cb) => {
+		'API signup user'
+	);
 
-			keystone.list('User').model.findOne({
-				email: req.body.email,
-			}, (err, user) => {
-				if (err || user) {
-					return res.json({ error: { title: 'User already exists with that email', detail: 'Please try with another email' } });
+	async.series(
+		[
+			cb => {
+				console.log('1');
+				if (
+					!req.body.firstname
+					|| !req.body.lastname
+					|| !req.body.email
+					|| !req.body.password
+					|| !req.body.mobileNumber
+				) {
+					let list = [];
+					req.body.firstname === '' ? list.push('First name is missing.') : '';
+					req.body.lastname === '' ? list.push('Last name is missing.') : '';
+					req.body.email === '' ? list.push('Email is missing.') : '';
+					req.body.password === '' ? list.push('Password is missing.') : '';
+					req.body.mobileNumber === ''
+						? list.push('Mobile number is missing.')
+						: '';
+					req.body.countryCode === ''
+						? list.push('Country Code is missing.')
+						: '';
+
+					res.json({
+						error: {
+							title: 'Error while creating new account',
+							detail:
+								'Mandatory values are missing. Please check below for more details.',
+						},
+						list: list,
+					});
+					return cb('true');
 				}
 				return cb();
-			});
-		},
-		(cb) => {
+			},
+			cb => {
+				keystone.list('User').model.findOne(
+					{
+						email: req.body.email,
+					},
+					(err, user) => {
+						if (err || user) {
+							return res.json({
+								error: {
+									title: 'User already exists with that email',
+									detail: 'Please try with another email',
+								},
+							});
+						}
+						return cb();
+					}
+				);
+			},
+			cb => {
+				let userData = {
+					name: {
+						first: req.body.firstname,
+						last: req.body.lastname,
+					},
+					email: req.body.email,
+					mobileNumber: req.body.mobileNumber,
+					countryCode: req.body.countryCode,
+					password: req.body.password,
+				};
 
-			let userData = {
-				name: {
-					first: req.body.firstname,
-					last: req.body.lastname,
-				},
-				email: req.body.email,
-				mobileNumber: req.body.mobileNumber,
-				countryCode: req.body.countryCode,
-				password: req.body.password,
+				let User = keystone.list('User').model;
+				let newUser = new User(userData);
+
+				newUser.save(err => {
+					return cb(err);
+				});
+			},
+		],
+		err => {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API signup user'
+				);
+				console.log('ERROR');
+			}
+			let onSuccess = function (user) {
+				res.json({
+					success: true,
+					session: true,
+					date: new Date().getTime(),
+					admin: user.canAccessKeystone,
+					loginUser: {
+						id: user.id,
+						email: user.email,
+						firstName: user.name.first,
+						last: user.name.last,
+						mobileNumber: user.mobileNumber,
+						countryCode: user.countryCode,
+						user_id: user.user_id,
+						youbookme_url: process.env.YOUBOOKME_URL,
+					},
+				});
 			};
 
-			let User = keystone.list('User').model;
-			let newUser = new User(userData);
+			let onFail = function (e) {
+				logger.error(
+					{
+						error: e,
+					},
+					'API signup user'
+				);
+				res.json({
+					error: {
+						title: 'Sign up error',
+						detail: 'There was a problem signing you up, please try again',
+					},
+				});
+				console.log('ERROR');
+			};
 
-			newUser.save((err) => {
-				return cb(err);
-			});
-		}],
-	(err) => {
-
-		if (err) {
-			logger.error({
-				error: err,
-			}, 'API signup user');
-			console.log('ERROR');
+			keystone.session.signin(
+				{ email: req.body.email, password: req.body.password },
+				req,
+				res,
+				onSuccess,
+				onFail
+			);
 		}
-		let onSuccess = function (user) {
-			res.json({
-				success: true,
-				session: true,
-				date: new Date().getTime(),
-				admin: user.canAccessKeystone,
-				loginUser: {
-					id: user.id,
-					email: user.email,
-					firstName: user.name.first,
-					last: user.name.last,
-					mobileNumber: user.mobileNumber,
-					countryCode: user.countryCode,
-				       	youbookme_url: process.env.YOUBOOKME_URL,
-
-				},
-			});
-		};
-
-		let onFail = function (e) {
-			logger.error({
-				error: e,
-			}, 'API signup user');
-			res.json({ error: { title: 'Sign up error', detail: 'There was a problem signing you up, please try again' } });
-			console.log('ERROR');
-		};
-
-		keystone.session.signin({ email: req.body.email, password: req.body.password }, req, res, onSuccess, onFail);
-	});
-
-
+	);
 };
 
-
 exports.forgotpassword = function (req, res) {
-	logger.info({
-		req: req,
-	}, 'API forgotpassword');
+	logger.info(
+		{
+			req: req,
+		},
+		'API forgotpassword'
+	);
 	const msg = {
 		to: req.body.email,
 		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
@@ -219,79 +289,105 @@ exports.forgotpassword = function (req, res) {
 		html: '',
 	};
 	if (!req.body.email) {
-		res.json({ error: { title: 'Email is Reqired', detail: 'Mandatory values are missing. Please check.' } });
+		res.json({
+			error: {
+				title: 'Email is Reqired',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
 	}
 
-	keystone.list('User').model.findOne().where('email', req.body.email).exec((err, userFound) => {
-		if (err) {
-			logger.error({
-				error: err,
-			}, 'API forgotpassword');
-			return res.json({ error: { title: 'Not able to reset password' } });
-		}
+	keystone
+		.list('User')
+		.model.findOne()
+		.where('email', req.body.email)
+		.exec((err, userFound) => {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API forgotpassword'
+				);
+				return res.json({ error: { title: 'Not able to reset password' } });
+			}
 
-	 userFound.accessKeyId = keystone.utils.randomString();
-	 userFound.save((err) => {
-	  if (err) {
-				logger.error({
-					error: err,
-				}, 'API forgotpassword');
-		  return res.json({ error: { title: 'Not able to reset password' } });
-	  	}		;
-	  msg.subject = 'Password Reset';
-	  msg.html = `
+			userFound.accessKeyId = keystone.utils.randomString();
+			userFound.save(err => {
+				if (err) {
+					logger.error(
+						{
+							error: err,
+						},
+						'API forgotpassword'
+					);
+					return res.json({ error: { title: 'Not able to reset password' } });
+				}
+				msg.subject = 'Password Reset';
+				msg.html = `
 	  <p>Hare Krishna,</p>
 	  <p>Please accept our humble obeisances.</p>
 	  <p>All glories to Srila Prabhupada!</p>
 	  <br/>
-	  <p>Please click on the following link <a href="${EMAIL_CONFIG.CONSTANTS.SITE_URL + '/reset-password?accessid=' + userFound.accessKeyId}">here </a>to reset your password</p>
+	  <p>Please click on the following link <a href="${EMAIL_CONFIG.CONSTANTS
+		.SITE_URL
+			+ '/reset-password?accessid='
+			+ userFound.accessKeyId}">here </a>to reset your password</p>
 	  <br/>
 	  <p>Your servants always,</p>
 	  <p>Site administrators</p>
 	  `;
 
-
-	  sendMail(msg.from, userFound.email, msg.subject, msg.html)
-				.then((res) => {
-					console.log('email was sent', res);
-				})
-				.catch((err) => {
-					logger.error({
-						error: err,
-					}, 'API forgotpassword');
-					console.error(err);
+				sendMail(msg.from, userFound.email, msg.subject, msg.html)
+					.then(res => {
+						console.log('email was sent', res);
+					})
+					.catch(err => {
+						logger.error(
+							{
+								error: err,
+							},
+							'API forgotpassword'
+						);
+						console.error(err);
+					});
+				res.json({
+					success: true,
 				});
-		  res.json({
-				success: true,
 			});
 		});
-	});
-
-
 };
-
 
 exports.getuserbyaccessid = function (req, res) {
 	if (!req.body.accessid) {
-		res.json({ error: { title: 'Access Id is Required', detail: 'Mandatory values are missing. Please check.' } });
+		res.json({
+			error: {
+				title: 'Access Id is Required',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
 	}
 
-	keystone.list('User').model.findOne().where('accessKeyId', req.body.accessid).exec((err, userFound) => {
-
-		if (err || !userFound) {
-			logger.error({
-				error: err,
-			}, 'API getuserbyaccessid');
-			return res.json({ error: { title: 'Not able to find user' } });
-		}
-		res.json({
-			email: userFound.email,
-			success: true,
+	keystone
+		.list('User')
+		.model.findOne()
+		.where('accessKeyId', req.body.accessid)
+		.exec((err, userFound) => {
+			if (err || !userFound) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API getuserbyaccessid'
+				);
+				return res.json({ error: { title: 'Not able to find user' } });
+			}
+			res.json({
+				email: userFound.email,
+				success: true,
+			});
 		});
-	});
-
 };
-
 
 exports.resetpassword = function (req, res) {
 	const msg = {
@@ -302,35 +398,59 @@ exports.resetpassword = function (req, res) {
 	};
 
 	if (!req.body.email || !req.body.accessid || !req.body.password) {
-		res.json({ error: { title: 'Email, Password and Accessid is Reqired', detail: 'Mandatory values are missing. Please check.' } });
+		res.json({
+			error: {
+				title: 'Email, Password and Accessid is Reqired',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
 	}
 
-	keystone.list('User').model.findOne().where('accessKeyId', req.body.accessid).exec((err, userFound) => {
-		if (err || !userFound) {
-			logger.error({
-				error: err,
-			}, 'API resetpassword');
-			return res.json({ error: { title: 'Not able to find user' } });
-		}
-		keystone.list('User').model.findOne().where('email', req.body.email).exec((err, userFound) => {
+	keystone
+		.list('User')
+		.model.findOne()
+		.where('accessKeyId', req.body.accessid)
+		.exec((err, userFound) => {
 			if (err || !userFound) {
-				logger.error({
-					error: err,
-				}, 'API resetpassword');
-				return res.json({ error: { title: 'Not able to reset password' } });
-			}
-			userFound.password = req.body.password;
-			let userPassword = userFound.password;
-			userFound.accessKeyId = '';
-			userFound.save((err) => {
-				if (err) {
-					logger.error({
+				logger.error(
+					{
 						error: err,
-					}, 'API resetpassword');
-					return res.json({ error: { title: 'Not able to reset password' } });
-				}			;
-				msg.subject = 'Your Password is Successfully Changed';
-				msg.html = `
+					},
+					'API resetpassword'
+				);
+				return res.json({ error: { title: 'Not able to find user' } });
+			}
+			keystone
+				.list('User')
+				.model.findOne()
+				.where('email', req.body.email)
+				.exec((err, userFound) => {
+					if (err || !userFound) {
+						logger.error(
+							{
+								error: err,
+							},
+							'API resetpassword'
+						);
+						return res.json({ error: { title: 'Not able to reset password' } });
+					}
+					userFound.password = req.body.password;
+					let userPassword = userFound.password;
+					userFound.accessKeyId = '';
+					userFound.save(err => {
+						if (err) {
+							logger.error(
+								{
+									error: err,
+								},
+								'API resetpassword'
+							);
+							return res.json({
+								error: { title: 'Not able to reset password' },
+							});
+						}
+						msg.subject = 'Your Password is Successfully Changed';
+						msg.html = `
 				<p>Hare Krishna,</p>
 				<p>Please accept our humble obeisances.</p>
 				<p>All glories to Srila Prabhupada!</p>
@@ -341,71 +461,169 @@ exports.resetpassword = function (req, res) {
 				<p>Site administrators</p>
 				`;
 
-
-				sendMail(msg.from, userFound.email, msg.subject, msg.html)
-				  .then((res) => {
-					  console.log('email was sent', res);
-				  })
-				  .catch((err) => {
-						logger.error({
-							error: err,
-						}, 'API resetpassword');
-					  console.error(err);
-				  });
-				  res.json({
-					success: true,
+						sendMail(msg.from, userFound.email, msg.subject, msg.html)
+							.then(res => {
+								console.log('email was sent', res);
+							})
+							.catch(err => {
+								logger.error(
+									{
+										error: err,
+									},
+									'API resetpassword'
+								);
+								console.error(err);
+							});
+						res.json({
+							success: true,
+						});
+					});
 				});
-
-			});
 		});
-
-	});
-
-
 };
 
-
 exports.editprofile = function (req, res) {
-
 	if (!req.body.firstName || !req.body.lastName || !req.body.mobileNumber) {
-		res.json({ error: { title: 'Required', detail: 'Mandatory values are missing. Please check.' } });
+		res.json({
+			error: {
+				title: 'Required',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
 	}
 
-	keystone.list('User').model.findOne().where('email', req.user.email).exec((err, userFound) => {
-		if (err || !userFound) {
-			logger.error({
-				error: err,
-			}, 'API editprofile');
-			return res.json({ error: { title: 'Not able to reset password' } });
-		}
+	keystone
+		.list('User')
+		.model.findOne()
+		.where('email', req.user.email)
+		.exec((err, userFound) => {
+			if (err || !userFound) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API editprofile'
+				);
+				return res.json({ error: { title: 'Not able to reset password' } });
+			}
 
-		userFound.name.first = req.body.firstName;
-		userFound.name.last = req.body.lastName;
-		userFound.mobileNumber = req.body.mobileNumber;
-		userFound.countryCode = req.body.countryCode;
+			userFound.name.first = req.body.firstName;
+			userFound.name.last = req.body.lastName;
+			userFound.mobileNumber = req.body.mobileNumber;
+			userFound.countryCode = req.body.countryCode;
 
-	 userFound.save((err) => {
-	  if (err) {
-				logger.error({
-					error: err,
-				}, 'API editprofile');
-		  return res.json({ error: { title: 'Not able to reset password' } });
-			}			;
+			userFound.save(err => {
+				if (err) {
+					logger.error(
+						{
+							error: err,
+						},
+						'API editprofile'
+					);
+					return res.json({ error: { title: 'Not able to reset password' } });
+				}
 
-		  res.json({
-				success: true,
-				loginUser: {
-					id: userFound.id,
-					email: userFound.email,
-					firstName: userFound.name.first,
-					last: userFound.name.last,
-					mobileNumber: userFound.mobileNumber,
-					countryCode: userFound.countryCode,
-					youbookme_url: process.env.YOUBOOKME_URL,
-				},
-		  });
+				res.json({
+					success: true,
+					loginUser: {
+						id: userFound.id,
+						email: userFound.email,
+						firstName: userFound.name.first,
+						last: userFound.name.last,
+						mobileNumber: userFound.mobileNumber,
+						countryCode: userFound.countryCode,
+						user_id: userFound.user_id,
+						youbookme_url: process.env.YOUBOOKME_URL,
+					},
+				});
+			});
 		});
-	});
+};
 
+exports.getUserByUserId = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API get Sadhana'
+	);
+	keystone
+		.list('User')
+		.model.findOne()
+		.where({ user_id: req.body.user_id })
+		.exec(function (err, item) {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API get sadhana'
+				);
+				return res.apiError('database error', err);
+			}
+			if (!item) {
+				logger.error(
+					{
+						error: 'item not found',
+					},
+					'API get sadhana'
+				);
+				return res.apiError('not found');
+			}
+			res.apiResponse({
+				userDetails: item,
+				success: true,
+			});
+		});
+};
 
+exports.approvedUserForSadhana = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API Approve Sadhana Sheet For user'
+	);
+	keystone
+		.list('User')
+		.model.findOne()
+		.where({ user_id: req.body.user_id })
+		.exec(function (err, user) {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API Approve Sadhana Sheet For user'
+				);
+				return res.apiError('database error', err);
+			}
+			if (!user) {
+				logger.error(
+					{
+						error: 'item not found',
+					},
+					'API Approve Sadhana Sheet For user'
+				);
+				return res.apiError('not found');
+			}
+
+			user.sadhanaSheetEnable = req.body.sadhanaSheetEnable;
+			user.save(err => {
+				if (err) {
+					logger.error(
+						{
+							error: err,
+						},
+						'API Approve Sadhana Sheet For user'
+					);
+					return res.apiError('Enable Sadhana Sheet Error', err);
+				}
+
+				res.json({
+					isSadhanaSheetEnable: true,
+					userDetails: user,
+				});
+			});
+		});
 };

@@ -34,7 +34,7 @@ export class Gallery extends React.Component {
 		let { mainGallery } = galleryReducer;
 		mainGallery = handleFilterGallery(mainGallery);
 
-		if (!localStorage.getItem('user')) {
+		if (!sessionStorage.getItem('user')) {
 			return (
 				<div style={{ textAlign: 'center' }}>
 					<p className="bookingForm">Please Log in to continue</p>

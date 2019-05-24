@@ -62,7 +62,7 @@ export class AudioDetails extends Component {
 			return <div>Error Occured..........</div>;
 		}
 
-		if (!localStorage.getItem('user')) {
+		if (!sessionStorage.getItem('user')) {
 			return (
 				<div style={{ textAlign: 'center' }}>
 					<p className="bookingForm">Please Log in to continue</p>
