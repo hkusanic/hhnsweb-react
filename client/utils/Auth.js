@@ -8,8 +8,8 @@ class Auth {
 	static authenticateUser (session, user) {
 
 		try {
-			localStorage.setItem('session', session);
-			localStorage.setItem('user', JSON.stringify(user));
+			sessionStorage.setItem('session', session);
+			sessionStorage.setItem('user', JSON.stringify(user));
 		} catch (e) {
 			document.cookie = 'session=' + session + ';';
 		}
@@ -21,8 +21,8 @@ class Auth {
    * @returns {boolean}
    */
 	static isUserAuthenticated () {
-		var local_storage = localStorage.getItem('session');
-		var user = localStorage.getItem('user');
+		var local_storage = sessionStorage.getItem('session');
+		var user = sessionStorage.getItem('user');
 		if (!local_storage && !user) {
 			return true;
 		}
@@ -34,8 +34,8 @@ class Auth {
    *
    */
 	static deauthenticateUser () {
-		localStorage.removeItem('session');
-		localStorage.removeItem('user');
+		sessionStorage.removeItem('session');
+		sessionStorage.removeItem('user');
 
 	}
 	/**
@@ -44,13 +44,13 @@ class Auth {
    * @returns {string}
    */
 	static getUserSeesion () {
-		var local_storage = localStorage.getItem('session');
+		var local_storage = sessionStorage.getItem('session');
 
 		return local_storage ? local_storage : '';
 	}
 
 	static getUserDetails () {
-		var user = localStorage.getItem('user');
+		var user = sessionStorage.getItem('user');
 		return user ? user : '';
 	}
 

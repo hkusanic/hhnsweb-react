@@ -24,7 +24,7 @@ export class Comments extends React.Component {
 		this.props.resetState();
 	}
 	componentDidMount() {
-		const user = JSON.parse(localStorage.getItem('user'));
+		const user = JSON.parse(sessionStorage.getItem('user'));
 		this.setState(
 			{
 				user,

@@ -72,7 +72,7 @@ export class Login extends Component {
   logoutSubmit = () => {
     this.props.handleTabIndex(1);
     this.props.logoutUser();
-    window.localStorage.clear();
+    window.sessionStorage.clear();
     window.location.href = '/';
   }
 

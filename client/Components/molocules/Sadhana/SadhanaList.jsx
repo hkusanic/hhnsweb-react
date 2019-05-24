@@ -30,14 +30,14 @@ export class SadhanaList extends React.Component {
 
 			this.setState(
 				{
-					userEmail: userDetails.email,
+					user_id: userDetails.user_id,
 					isUserLogin,
 					pagination
 				},
 				() => {
 					const body = {
 						pageNumber: 1,
-						email: this.state.userEmail,
+						userId: this.state.user_id,
 					};
 					this.props.getSadhanaList(body, 'list');
 				}
@@ -66,7 +66,7 @@ export class SadhanaList extends React.Component {
 
 		let body = Object.assign({}, this.state.body);
 		body.pageNumber = pagination.current;
-		body.email = this.state.userEmail,
+		body.userId = this.state.user_id,
 		this.props.getSadhanaList(body, 'list');
 	};
 
@@ -83,7 +83,7 @@ export class SadhanaList extends React.Component {
 	handleDateChange = (date, dateString) => {
 		const body = {
 			pageNumber: 1,
-			email: this.state.userEmail,
+			userId: this.state.user_id,
 			date: dateString
 		};
 		this.props.getSadhanaList(body, 'list');
@@ -117,6 +117,7 @@ export class SadhanaList extends React.Component {
 	}
 
 	render () {
+		console.log("whole reducer -====>>>>", this.props.redu)
 		const columns = [
 			{
 				title: 'Date',
@@ -236,6 +237,7 @@ export class SadhanaList extends React.Component {
 const mapStateToProps = state => {
 	return {
 		sadhana: state.sadhanaReducer,
+		redu: state,
 	};
 };
 

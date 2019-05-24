@@ -5,8 +5,8 @@ let logger = require('./../../logger/logger');
 
 exports.bookingcreated = function (req, res) {
 	logger.info({
-		req: req
-	}, "API get blog");
+		req: req,
+	}, 'API get blog');
 	let item = new Booking.model();
 	let	data = (req.method === 'POST') ? req.body : req.query;
 
@@ -14,8 +14,8 @@ exports.bookingcreated = function (req, res) {
 
 		if (err) {
 			logger.error({
-				error: err
-			}, "API create booking ---> Webhook");
+				error: err,
+			}, 'API create booking ---> Webhook');
 			return res.apiError('error', err);
 		}
 
@@ -36,14 +36,14 @@ exports.get = function (req, res) {
 
 		if (err) {
 			logger.error({
-				error: err
-			}, "API get booking");
+				error: err,
+			}, 'API get booking');
 			return res.apiError('database error', err);
 		}
 		if (!item) {
 			logger.error({
-				error: 'item not found'
-			}, "API get booking");
+				error: 'item not found',
+			}, 'API get booking');
 
 			return res.apiError('not found');
 		}

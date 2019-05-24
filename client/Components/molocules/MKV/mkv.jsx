@@ -37,7 +37,7 @@ export class MKV extends Component {
 			return <p>Loading...</p>;
 		}
 
-		if (!localStorage.getItem('user')) {
+		if (!sessionStorage.getItem('user')) {
 			return (
 				<div style={{ textAlign: 'center' }}>
 					<p className="bookingForm">Please Log in to continue</p>

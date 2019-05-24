@@ -6,8 +6,10 @@ let User = new keystone.List('User');
 
 // Then we gonna add the fields
 User.add({
+	user_id: { type: String },
 	name: { type: Types.Name, initial: true },
 	userName: { type: String, initial: true, required: true },
+	discipleName: { type: String },
 	email: { type: String, initial: true, required: true, index: true },
 	mobileNumber: { type: String, initial: true },
 	countryCode: { type: String, initial: true },

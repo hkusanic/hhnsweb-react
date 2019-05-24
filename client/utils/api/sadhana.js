@@ -3,14 +3,14 @@ import serverAddress from './config';
 
 const utils = {
 	getSadhanaList: body => {
-		const email = body.email;
+		const userId = body.userId;
 		const page = body.pageNumber || 1;
 		const date = body.date;
 		let url
             = serverAddress
             + '/api/sadhana?page='
             + page
-		+ (email ? '&email=' + email : '')
+		+ (userId ? '&userId=' + userId : '')
 		+ (date ? '&date=' + date : '');
 		return axios.get(url);
 	},

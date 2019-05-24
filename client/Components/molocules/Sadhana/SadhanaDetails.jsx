@@ -22,7 +22,9 @@ export class SadhanaDetails extends React.Component {
 			time_rising: '',
 			userId: '',
 			email: '',
-			customStyleLeft:{}
+			customStyleLeft:{},
+			firstName: '',
+			lastName: '',
 		};
 	}
 
@@ -31,8 +33,10 @@ export class SadhanaDetails extends React.Component {
 		if (!isUserLogin) {
 			const userDetails = JSON.parse(Auth.getUserDetails());
 			this.setState({
-				userId: userDetails.id,
+				userId: userDetails.user_id,
 				email: userDetails.email,
+				firstName: userDetails.firstName,
+				lastName: userDetails.last,
 			});
 		}
 
@@ -118,9 +122,6 @@ export class SadhanaDetails extends React.Component {
 				if (!err) {
 					const body = {
 						uuid: sadhanaDetails.uuid,
-						firstname: values.firstname,
-						lastName: values.lastname,
-						email: values.email,
 						date: sadhanaDetails.date,
 						time_rising: time_rising ? time_rising : sadhanaDetails.time_rising,
 						rounds: values.rounds,
@@ -162,7 +163,7 @@ export class SadhanaDetails extends React.Component {
 	};
 
 	render() {
-		const { sadhanaDetails, language, customStyleLeft } = this.state;
+		const { sadhanaDetails, language, customStyleLeft, email, firstName, lastName } = this.state;
 		const { form } = this.props;
 		const dateFormat = 'YYYY/MM/DD';
 
@@ -232,7 +233,7 @@ export class SadhanaDetails extends React.Component {
 									<div className="form-group">
 										<Form.Item label={language ? 'First Name' : 'First Name'}>
 											{form.getFieldDecorator('firstname', {
-												initialValue: sadhanaDetails.firstName,
+												initialValue: firstName,
 												rules: [
 													{
 														required: true,
@@ -251,7 +252,7 @@ export class SadhanaDetails extends React.Component {
 														message: 'This field is required',
 													},
 												],
-												initialValue: sadhanaDetails.lastName,
+												initialValue: lastName,
 											})(<Input disabled placeholder="Name" name="name" />)}
 										</Form.Item>
 									</div>
@@ -264,7 +265,7 @@ export class SadhanaDetails extends React.Component {
 														message: 'This field is required',
 													},
 												],
-												initialValue: sadhanaDetails.email,
+												initialValue: email,
 											})(<Input disabled placeholder="Email" name="email" />)}
 										</Form.Item>
 									</div>

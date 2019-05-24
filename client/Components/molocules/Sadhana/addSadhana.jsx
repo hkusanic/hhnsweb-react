@@ -31,7 +31,7 @@ class AddSadhana extends React.Component {
 				firstName: userDetails.firstName,
 				lastName: userDetails.last,
 				email: userDetails.email,
-				userId: userDetails.id,
+				userId: userDetails.user_id,
 			});
 		}
 	}
@@ -82,6 +82,7 @@ class AddSadhana extends React.Component {
 						firstName: values.firstname,
 						lastName: values.lastname,
 						email: values.email,
+						creation_date_time: new Date(),
 						date: this.formatDate(new Date()),
 						time_rising: time_rising,
 						rounds: values.rounds,

@@ -26,10 +26,10 @@ exports.list = function (req, res) {
 
 	let query = [];
 
-	if (req.query.email) {
+	if (req.query.userId) {
 		query.push({
-			email: {
-				$regex: '.*' + req.query.email + '.*',
+			userId: {
+				$regex: '.*' + req.query.userId + '.*',
 				$options: 'i',
 			},
 		});
