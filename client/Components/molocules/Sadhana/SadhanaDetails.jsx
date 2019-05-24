@@ -3,7 +3,11 @@ import { Form, Input, DatePicker, Button, TimePicker, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import moment from 'moment';
-import { updateSadhana, getSadhanaById, getSadhanaList } from '../../../actions/sadhanaAction';
+import {
+	updateSadhana,
+	getSadhanaById,
+	getSadhanaList,
+} from '../../../actions/sadhanaAction';
 import { connect } from 'react-redux';
 import Auth from '../../../utils/Auth';
 
@@ -18,6 +22,7 @@ export class SadhanaDetails extends React.Component {
 			time_rising: '',
 			userId: '',
 			email: '',
+			customStyleLeft:{}
 		};
 	}
 
@@ -38,15 +43,22 @@ export class SadhanaDetails extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		const { userId } = this.state;
-		if (nextProps.sadhana.singleSadhanaSheet) {
-			if(nextProps.sadhana.singleSadhanaSheet.userId === userId) {
+		const { sadhana } = nextProps;
+		const { singleSadhanaSheet, noMoreSadhanaSheet } = sadhana;
+		if (singleSadhanaSheet) {
+			if (singleSadhanaSheet.userId === this.state.userId) {
 				this.setState({
-					sadhanaDetails: nextProps.sadhana.singleSadhanaSheet,
+					sadhanaDetails: singleSadhanaSheet,
+					customStyleLeft: {}
 				});
 			} else {
-				this.props.history.push('/sadhanaList')
+				this.props.history.push('/sadhanaList');
 			}
+		}
+		if(noMoreSadhanaSheet &&  singleSadhanaSheet === undefined){
+			this.setState({
+				customStyleLeft: { pointerEvents: 'none', opacity: '0.4' }
+			})
 		}
 	}
 
@@ -150,9 +162,15 @@ export class SadhanaDetails extends React.Component {
 	};
 
 	render() {
-		const { sadhanaDetails, language } = this.state;
+		const { sadhanaDetails, language, customStyleLeft } = this.state;
 		const { form } = this.props;
 		const dateFormat = 'YYYY/MM/DD';
+
+		let customStyleRight = {}
+
+		if (sadhanaDetails.date === this.formatDate(new Date()) || sadhanaDetails.noMoreSadhanaSheet) {
+			customStyleRight = { pointerEvents: 'none', opacity: '0.4' }
+		}
 
 		if (!sadhanaDetails) {
 			return <div>Loading...</div>;
@@ -192,27 +210,22 @@ export class SadhanaDetails extends React.Component {
 				<div className="row justify-content-center">
 					<section className="card col-lg-8 sadhanaAdd">
 						<div className="card-body">
-							<div
-								className="leftArrowDiv col-lg-1 justify-content-center align-self-center"
-								// style={customStyleLeft}
-							>
-								<Icon
-									className="leftArrow"
-									type="left"
-									onClick={this.getPrevDaySadhanaSheet}
-								/>
-							</div>
-
-							<div
-								className="rightArrowDiv col-lg-1 justify-content-center align-self-center"
-								// style={customStyleRight}
-							>
-								<Icon
-									className="rightArrow"
-									type="right"
-									onClick={this.getNextDaySadhanaSheet}
-
-								/>
+							<div className="ArrowDiv">
+								<div style={customStyleLeft}>
+									<Icon
+										className="arrowfont"
+										type="left"
+										onClick={this.getPrevDaySadhanaSheet}
+									/>
+								</div>
+								<span className="displayDate">{sadhanaDetails.date}</span>
+								<div style={customStyleRight}>
+									<Icon
+										className="arrowfont"
+										type="right"
+										onClick={this.getNextDaySadhanaSheet}
+									/>
+								</div>
 							</div>
 							<div>
 								<Form className="mt-3">
@@ -319,7 +332,13 @@ export class SadhanaDetails extends React.Component {
 													},
 												],
 												initialValue: sadhanaDetails.reading,
-											})(<Input placeholder="Reading" name="reading" />)}
+											})(
+												<TextArea
+													rows={4}
+													placeholder="Reading"
+													name="reading"
+												/>
+											)}
 										</Form.Item>
 									</div>
 									<div className="form-group">
@@ -333,7 +352,11 @@ export class SadhanaDetails extends React.Component {
 												],
 												initialValue: sadhanaDetails.association,
 											})(
-												<Input placeholder="Association" name="association" />
+												<TextArea
+													rows={4}
+													placeholder="Association"
+													name="association"
+												/>
 											)}
 										</Form.Item>
 									</div>
@@ -425,8 +448,8 @@ const mapDispatchToProps = dispatch => {
 			dispatch(getSadhanaById(body));
 		},
 		getSadhanaList: (body, type) => {
-			dispatch(getSadhanaList(body, type))
-		}
+			dispatch(getSadhanaList(body, type));
+		},
 	};
 };
 

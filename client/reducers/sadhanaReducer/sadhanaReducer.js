@@ -9,6 +9,7 @@ const initialState = {
 	totalSadhanaSheet: '',
 	currentPage: 1,
 	singleSadhanaSheet: '',
+	noMoreSadhanaSheet: false,
 };
 
 const sadhanaReducer = (state = initialState, action) => {
@@ -23,6 +24,7 @@ const sadhanaReducer = (state = initialState, action) => {
 				isCompleted: true,
 				isCreated: false,
 				isUpdated: false,
+				noMoreSadhanaSheet: false,
 				currentPage: data.currentPage,
 				singleSadhanaSheet: '',
 			};
@@ -35,6 +37,7 @@ const sadhanaReducer = (state = initialState, action) => {
 				isCreated: result ? true : false,
 				isCompleted: true,
 				isUpdated: false,
+				noMoreSadhanaSheet: false,
 			};
 			break;
 
@@ -44,6 +47,7 @@ const sadhanaReducer = (state = initialState, action) => {
 				...state,
 				isUpdated: updateResult ? true : false,
 				isCompleted: false,
+				noMoreSadhanaSheet: false,
 			};
 			break;
 
@@ -52,13 +56,16 @@ const sadhanaReducer = (state = initialState, action) => {
 			state = {
 				...state,
 				singleSadhanaSheet: getResult,
+				noMoreSadhanaSheet: false,
 			};
 			break;
 
 		case types.GET_SINGLE_SHEET_BY_DATE_USER:
+
 			state = {
 				...state,
 				singleSadhanaSheet: action.payload,
+				noMoreSadhanaSheet: true,
 			};
 			break;
 		default:

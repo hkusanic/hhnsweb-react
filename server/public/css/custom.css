@@ -911,3 +911,19 @@
 .dropdownClass {
 	width: 100%;
 }
+
+.ArrowDiv {
+	display: flex;
+	flex-direction: row; 
+}
+
+.arrowfont {
+	font-size: 20px !important;
+	color: #f18130 !important;
+}
+
+.displayDate {
+	padding-left: 20px;
+	padding-right: 20px;
+	font-weight: 500;
+}

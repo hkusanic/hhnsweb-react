@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Icon, Button, DatePicker } from 'antd';
+import { Table, Icon, Button, DatePicker, notification } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Auth from '../../../utils/Auth';
@@ -7,12 +7,15 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { getSadhanaList } from '../../../actions/sadhanaAction';
 import { sortByDate } from '../../../utils/funct';
 
+const defaultPageSize = 20;
+
 export class SadhanaList extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {
 			isUserLogin: true,
 			userEmail: '',
+			pagination: {},
 		};
 	}
 
@@ -20,10 +23,16 @@ export class SadhanaList extends React.Component {
 		const isUserLogin = Auth.isUserAuthenticated();
 		if (!isUserLogin) {
 			const userDetails = JSON.parse(Auth.getUserDetails());
+			const pagination = { ...this.state.pagination };
+			pagination.total = this.props.sadhana.totalSadhanaSheet;
+			pagination.defaultPageSize = defaultPageSize;
+			pagination.current = this.props.sadhana.currentPage || 1;
+
 			this.setState(
 				{
 					userEmail: userDetails.email,
 					isUserLogin,
+					pagination
 				},
 				() => {
 					const body = {
@@ -35,6 +44,31 @@ export class SadhanaList extends React.Component {
 			);
 		}
 	}
+
+	componentWillReceiveProps(nextProps){
+		const pagination = { ...this.state.pagination };
+		pagination.total = nextProps.sadhana.totalSadhanaSheet;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = nextProps.sadhana.currentPage;
+
+		this.setState({
+			pagination,
+		});
+	}
+
+	handlePagination = (pagination, filters, sorter) => {
+		const pager = { ...this.state.pagination };
+		pager.current = pagination.current;
+		pager.total = this.props.sadhana.totalSadhanaSheet;
+		this.setState({
+			pagination: pager,
+		});
+
+		let body = Object.assign({}, this.state.body);
+		body.pageNumber = pagination.current;
+		body.email = this.state.userEmail,
+		this.props.getSadhanaList(body, 'list');
+	};
 
 	formatDate = date => {
 		const dateString = new Date(
@@ -53,6 +87,33 @@ export class SadhanaList extends React.Component {
 			date: dateString
 		};
 		this.props.getSadhanaList(body, 'list');
+	}
+
+	checkTodaySadhanaSubmitted = () => {
+		const { sadhana } = this.props;
+		const { sadhanaList } = sadhana;
+
+		for(let i=0; i<sadhanaList.length; i++){
+			if(sadhanaList[i].date === this.formatDate(new Date())){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	addSadhanaSheet = () => {
+		const { history } = this.props;
+		if(!this.checkTodaySadhanaSubmitted()){
+			history.push('/addSadhana')
+		} else {
+			notification.error({
+				message: 'Error',
+				description: `You have already Submitted the sadhana sheet for the day.`,
+				style: {
+					marginTop: 50,
+				  },
+			})
+		}
 	}
 
 	render () {
@@ -121,7 +182,7 @@ export class SadhanaList extends React.Component {
 										<Button
 											type="primary"
 											className="sadhanaButton"
-											onClick={() => this.props.history.push('/addSadhana')}
+											onClick={this.addSadhanaSheet}
 										>
 											Add Sadhana Sheet
 										</Button>
@@ -152,7 +213,7 @@ export class SadhanaList extends React.Component {
 													}
 													pagination={this.state.pagination}
 													loading={this.state.loading}
-													onChange={this.handleTableChange}
+													onChange={this.handlePagination}
 													rowClassName="tableRow"
 												/>
 											</div>

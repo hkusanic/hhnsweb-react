@@ -1,5 +1,7 @@
 import sadhanaApi from '../utils/api/sadhana';
 import * as types from '../constants/index';
+import { notification } from 'antd';
+
 
 export function getSadhanaList (body, type) {
 	return dispatch => {
@@ -15,6 +17,13 @@ export function getSadhanaList (body, type) {
 				}
 			})
 			.catch(err => {
+				notification.error({
+					message: 'Error',
+					description: `Some error occured, please try again.`,
+					style: {
+						marginTop: 50,
+					},
+				});
 				console.error(err);
 			});
 	};
@@ -25,9 +34,23 @@ export function createSadhana (body) {
 		sadhanaApi
 			.createSdahanaSheet(body)
 			.then(response => {
+				notification.success({
+					message: 'Success',
+					description: `Sadhana Sheet is submitted successfuly.`,
+					style: {
+						marginTop: 50,
+					},
+				});
 				dispatch(createSadhanaSheetAction(response));
 			})
 			.catch(err => {
+				notification.error({
+					message: 'Error',
+					description: `Some error occured, please try again.`,
+					style: {
+						marginTop: 50,
+					},
+				});
 				console.error(err);
 			});
 	};
@@ -38,9 +61,23 @@ export function updateSadhana (uuid, body) {
 		sadhanaApi
 			.updateSadhanaSheet(uuid, body)
 			.then(response => {
+				notification.success({
+					message: 'Success',
+					description: `Sadhana Sheet is updated successfully.`,
+					style: {
+						marginTop: 50,
+					},
+				});
 				dispatch(updateSadhanaSheerAction(response));
 			})
 			.catch(err => {
+				notification.error({
+					message: 'Error',
+					description: `Some error occured, please try again.`,
+					style: {
+						marginTop: 50,
+					},
+				});
 				console.error(err);
 			});
 	};
@@ -54,6 +91,13 @@ export function getSadhanaById (body) {
 				dispatch(getSadhanaByIdAction(response));
 			})
 			.catch(err => {
+				notification.error({
+					message: 'Error',
+					description: `Some error occured, please try again.`,
+					style: {
+						marginTop: 50,
+					},
+				});
 				console.error(err);
 			});
 	};
