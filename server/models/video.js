@@ -62,8 +62,7 @@ Video.schema.post('save', function (data, next) {
 	body.content_uuid = data.uuid;
 	body.uuid = uuidv4();
 	body.content_type = 'Video';
-	body.date_created = todayDate();
-
+	body.created_date_time = new Date().toISOString();
 	item.getUpdateHandler().process(body, function (err) {
 
 		if (err) {
