@@ -126,6 +126,7 @@ export class Navigation extends Component {
 
 	render() {
 		const maxWidth = window.screen.width;
+		const maxElemWidth = 0.9 * maxWidth;
 		let currentLanguage = 'en';
 		if (reactCookie.load('languageCode')) {
 			currentLanguage = reactCookie.load('languageCode');
@@ -201,7 +202,7 @@ export class Navigation extends Component {
 									src="https://ik.imagekit.io/gcwjdmqwwznjl/banner1_HyhqTWrIE.png"
 								/>
 							</div>
-							<div className="rd-navbar-main-outer menubanner">
+							<div className="rd-navbar-main-outer menubanner container">
 								{/* <div className="menulogoDiv">
 									<img
 										className={'menulogoImg' + ' ' + this.state.floatImage}
@@ -213,7 +214,7 @@ export class Navigation extends Component {
 										className="rd-navbar-nav-wrap padTopMenu"
 										id="rd-navbar-nav-wrap-1"
 									>
-										<ul className="rd-navbar-nav">
+										<ul className= {maxWidth >= 1210 ?"rd-navbar-nav navbarItemAlign" : "rd-navbar-nav"}>
 											<li
 												onClick={() => {
 													this.handleRemoveModal(1);
@@ -392,7 +393,8 @@ export class Navigation extends Component {
 													/>
 												</a>
 											</li>
-											<li className={`rd-nav-item hideMenu ${reactCookie.load('languageCode') === 'en' ? 'enToggle' : 'ruToggle' } `} >
+											<li className={`rd-nav-item hideMenu ${reactCookie.load('languageCode') === 'en' ? 'enToggle' : 'ruToggle' } `}
+												style={{padding:0, float:"right"}} >
 												{/* <LanguageSwitch /> */}
 												<Select
 													showSearch

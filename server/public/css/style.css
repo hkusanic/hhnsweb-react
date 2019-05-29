@@ -9860,7 +9860,7 @@ html.tablet .ui-to-top {
 	top: 0;
 	right: 0;
 	z-index: 1080;
-	background: #fff;
+	background: #f6f6f6;
 	will-change: transform;
 }
 
@@ -10955,8 +10955,8 @@ html.rd-navbar-fixed-linked .page {
 
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-aside-outer,
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-main-outer {
-	padding-left: 15px;
-	padding-right: 15px;
+	/* padding-left: 15px;
+	padding-right: 15px; */
 }
 
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-aside,

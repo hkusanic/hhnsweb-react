@@ -15,7 +15,7 @@ const SingleGridMenu = props => {
 				>
 					<Card
 						hoverable
-						style={{ width: 290 }}
+						
 						cover={<img src={props.image} alt="" />}
 					>
 						<Meta title={props.menu} className="tour-default-title CommonFontFamily gridMenuText" />

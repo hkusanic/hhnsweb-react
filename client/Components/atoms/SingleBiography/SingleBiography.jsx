@@ -35,6 +35,7 @@ const SingleBiography = props => {
 					<Card
 						hoverable
 						style={{ width: 440 }}
+						className="biographyCard"
 						cover={<img alt="example" src={props.img} />}
 					>
 						<Meta

@@ -335,7 +335,9 @@
 	font-family: 'Roboto_New' !important;
 }
 .MenuPad {
-	padding-left: 8.5% !important;
+	/* padding-left: 7.8% !important;
+	padding-right: 8.0% !important; */
+	
 }
 .announcementDiv {
 	text-align: left;
@@ -926,4 +928,12 @@
 	padding-left: 20px;
 	padding-right: 20px;
 	font-weight: 500;
+}
+.biographyCard{
+	max-width: 440px;
+	margin: auto !important;
+}
+.navbarItemAlign{
+	justify-content: space-between;
+	width: 1170px;
 }
