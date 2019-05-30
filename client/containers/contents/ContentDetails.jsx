@@ -28,8 +28,8 @@ class ContentDetails extends Component {
 					{this.props.contentDetails &&
 						this.props.contentDetails.content &&
 						this.props.contentDetails.content.map(eachContent => {
-							return <div key={eachContent.id}>
-								<Link to={`/${eachContent.content_type.toLowerCase()}Details/${eachContent.content_uuid}`} >{`New**     ${eachContent.content_type}`}</Link>
+							return <div >
+								<Link key={eachContent.id} to={`/${eachContent.content_type.toLowerCase()}Details/${eachContent.content_uuid}`} >{`New**     ${eachContent.content_type}`}</Link>
 								<p key={eachContent.content_id}>{`Posted On     ${(new Date(eachContent.created_date_time)).toLocaleString("en-GB")}`}</p>
 
 							</div>
