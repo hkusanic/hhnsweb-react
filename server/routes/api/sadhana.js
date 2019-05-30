@@ -62,9 +62,9 @@ exports.list = function (req, res) {
 
 	Sadhana.paginate({
 		page: req.query.page || 1,
-		perPage: 20,
+		// perPage: 20,
 		filters: filters,
-	}).sort(DateSort).exec(function (err, items) {
+	}).sort(DateSort).populate('user').exec(function (err, items) {
 		if (err) {
 			logger.error({
 				error: err,
