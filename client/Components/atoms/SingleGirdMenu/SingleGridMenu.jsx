@@ -7,7 +7,7 @@ const { Meta } = Card;
 const SingleGridMenu = props => {
 	return (
 		<div class="col-sm-6 col-lg-3 wow-outer page1">
-			<article class="tour-default wow slideInLeft page1" data-wow-delay=".1s">
+			<article class="tour-default wow fadeInUpSmall page1" data-wow-delay=".1s">
 				<Link
 					to={props.link}
 					class="tour-default-figure"

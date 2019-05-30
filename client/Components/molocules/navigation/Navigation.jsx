@@ -126,7 +126,6 @@ export class Navigation extends Component {
 
 	render() {
 		const maxWidth = window.screen.width;
-		const maxElemWidth = 0.9 * maxWidth;
 		let currentLanguage = 'en';
 		if (reactCookie.load('languageCode')) {
 			currentLanguage = reactCookie.load('languageCode');
@@ -202,6 +201,7 @@ export class Navigation extends Component {
 									src="https://ik.imagekit.io/gcwjdmqwwznjl/banner1_HyhqTWrIE.png"
 								/>
 							</div>
+							<div className="bg-gray-100" style={{width: '100vw'}}>
 							<div className="rd-navbar-main-outer menubanner container">
 								{/* <div className="menulogoDiv">
 									<img
@@ -214,7 +214,7 @@ export class Navigation extends Component {
 										className="rd-navbar-nav-wrap padTopMenu"
 										id="rd-navbar-nav-wrap-1"
 									>
-										<ul className= {maxWidth >= 1210 ?"rd-navbar-nav navbarItemAlign" : "rd-navbar-nav"}>
+										<ul className= {maxWidth >= 1200 ?"rd-navbar-nav navbarItemAlign" : "rd-navbar-nav"}>
 											<li
 												onClick={() => {
 													this.handleRemoveModal(1);
@@ -399,7 +399,7 @@ export class Navigation extends Component {
 												<Select
 													showSearch
 													className="langaugeDropDown"
-													style={{ width: 70, color: '#000', backgroundColor: '#f6f6f6', border: '1px solid #d9d9d9' }}
+													style={{ width: 70, color: '#000', backgroundColor: '#f6f6f6'}}
 													defaultValue={currentLanguage}
 													placeholder="Select language"
 													optionFilterProp="children"
@@ -419,6 +419,7 @@ export class Navigation extends Component {
 								</div>
 								{this.state.redirect ? <Redirect to="/registration" /> : ''}
 								{this.state.login ? <Redirect to="/" /> : ''}
+							</div>
 							</div>
 						</nav>
 					</div>

@@ -8471,7 +8471,6 @@ html [class*='section-'].section-bottom-0 {
 	background-position: center center;
 	background-size: cover;
 }
-
 .phone-frame {
 	max-width: 296px;
 	padding: 0 5px;
@@ -8823,11 +8822,11 @@ html:not(.lt-ie10) .not-animated {
 @keyframes fadeInUpSmall {
 	0% {
 		opacity: 0;
-		transform: translate3d(0, 20px, 0);
+		transform: translate3d(0, 100%, 0);
 	}
 	100% {
 		opacity: 1;
-		transform: none;
+		transform: translate3d(0, 0, 0);
 	}
 }
 
@@ -9458,6 +9457,8 @@ html.tablet .ui-to-top {
 
 .rd-navbar-static .rd-nav-item {
 	display: inline-block;
+	height:34px;
+	padding: 5px 0;
 }
 
 .rd-navbar-static .rd-nav-item.focus .rd-nav-link, .rd-navbar-static .rd-nav-item.opened .rd-nav-link {
