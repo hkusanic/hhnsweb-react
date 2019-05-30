@@ -167,7 +167,6 @@ exports.signup = function (req, res) {
 				);
 			},
 			cb => {
-				console.log('req.body ====>>>', req.body);
 				let userData = {
 					name: {
 						first: req.body.name ? req.body.name.first : '',
@@ -286,7 +285,7 @@ exports.create = function (req, res) {
 		},
 		'API create User'
 	);
-	data.oldData.picture = JSON.stringify(data.oldData.picture);
+	// data.oldData.picture = JSON.stringify(data.oldData.picture);
 	item.getUpdateHandler(req).process(data, function (err) {
 		if (err) {
 			logger.error(
@@ -302,6 +301,34 @@ exports.create = function (req, res) {
 			user: item,
 		});
 	});
+};
+
+exports.createBulk = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API createBulk User'
+	);
+	keystone.createItems(
+		{
+			User: req.body,
+		},
+		function (err, stats) {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API createBulk User'
+				);
+				return res.apiError('error', err);
+			}
+			return res.apiResponse({
+				User: true,
+			});
+		}
+	);
 };
 
 exports.forgotpassword = function (req, res) {
