@@ -9,12 +9,12 @@
     <script> 
     
 
-    $.getJSON('AAAAAAAAAAAA.json', function(data) {
+    $.getJSON('UserProfileData.json', function(data) {
         for(let i = 0; i< data.length; i++){
             (function ($) { 
             $.ajax({
             type: "POST",             
-            url: 'http://localhost:3000/api/signup/',
+            url: 'http://localhost:3000/api/user/create/',
             data: data[i],
             success:  (data) => {
               console.log("data ===>>>>", data);

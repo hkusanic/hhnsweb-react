@@ -98,8 +98,6 @@ function getDiscipleUserDetails () {
 							data.oldData.vid = discipleUserDetailsList[v].vid;
 							data.oldData.nid = discipleUserDetailsList[v].nid;
 							data.disciple = 'Disciple';
-						} else {
-							data.disciple = 'No';
 						}
 					}
 				}
