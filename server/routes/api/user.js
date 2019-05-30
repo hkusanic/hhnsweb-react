@@ -149,39 +149,6 @@ exports.signup = function (req, res) {
 	async.series(
 		[
 			cb => {
-				console.log('1');
-				if (
-					!req.body.firstname
-					|| !req.body.lastname
-					|| !req.body.email
-					|| !req.body.password
-					|| !req.body.mobileNumber
-				) {
-					let list = [];
-					req.body.firstname === '' ? list.push('First name is missing.') : '';
-					req.body.lastname === '' ? list.push('Last name is missing.') : '';
-					req.body.email === '' ? list.push('Email is missing.') : '';
-					req.body.password === '' ? list.push('Password is missing.') : '';
-					req.body.mobileNumber === ''
-						? list.push('Mobile number is missing.')
-						: '';
-					req.body.countryCode === ''
-						? list.push('Country Code is missing.')
-						: '';
-
-					res.json({
-						error: {
-							title: 'Error while creating new account',
-							detail:
-								'Mandatory values are missing. Please check below for more details.',
-						},
-						list: list,
-					});
-					return cb('true');
-				}
-				return cb();
-			},
-			cb => {
 				keystone.list('User').model.findOne(
 					{
 						email: req.body.email,
@@ -200,16 +167,49 @@ exports.signup = function (req, res) {
 				);
 			},
 			cb => {
+				console.log('req.body ====>>>', req.body);
 				let userData = {
 					name: {
-						first: req.body.firstname,
-						last: req.body.lastname,
+						first: req.body.name ? req.body.name.first : '',
+						last: req.body.name ? req.body.name.last : '',
 					},
+					user_id: req.body.user_id,
+					userName: req.body.userName,
 					email: req.body.email,
+					password: req.body.password,
 					mobileNumber: req.body.mobileNumber,
 					countryCode: req.body.countryCode,
-					password: req.body.password,
+					disciple: req.body.disciple,
+					timezone: req.body.timezone,
+					language: req.body.language,
+					created: req.body.created,
+					access: req.body.access,
+					login: req.body.login,
+					signature: req.body.signature,
+					signature_format: req.body.signature_format,
+					canAccessKeystone: req.body.canAccessKeystone,
+					oldData: {
+						uid: req.body.oldData.uid,
+						vid: req.body.oldData.vid,
+						nid: req.body.oldData.nid,
+						init: req.body.oldData.init,
+						picture: req.body.oldData.picture,
+						path: req.body.oldData.path,
+					},
+
 				};
+				if (Object.keys(req.body.disciple_profile).length > 0) {
+					console.log('inside it');
+					userData.disciple_profile = {
+						first_initiation_date: req.body.disciple_profile.first_initiation_date,
+						second_initiation_date: req.body.disciple_profile.second_initiation_date,
+						spiritual_name: req.body.disciple_profile.spiritual_name,
+						temple: req.body.disciple_profile.temple,
+						verifier: req.body.disciple_profile.verifier,
+						marital_status: req.body.disciple_profile.marital_status,
+						education: req.body.disciple_profile.education,
+					};
+				}
 
 				let User = keystone.list('User').model;
 				let newUser = new User(userData);
@@ -227,7 +227,7 @@ exports.signup = function (req, res) {
 					},
 					'API signup user'
 				);
-				console.log('ERROR');
+				console.log('ERROR222', err);
 			}
 			let onSuccess = function (user) {
 				res.json({
@@ -261,7 +261,7 @@ exports.signup = function (req, res) {
 						detail: 'There was a problem signing you up, please try again',
 					},
 				});
-				console.log('ERROR');
+				console.log('ERROR111', e);
 			};
 
 			keystone.session.signin(
@@ -273,6 +273,35 @@ exports.signup = function (req, res) {
 			);
 		}
 	);
+};
+
+var User = keystone.list('User');
+
+exports.create = function (req, res) {
+	var item = new User.model();
+	var data = req.method === 'POST' ? req.body : req.query;
+	logger.info(
+		{
+			req: req,
+		},
+		'API create User'
+	);
+	data.oldData.picture = JSON.stringify(data.oldData.picture);
+	item.getUpdateHandler(req).process(data, function (err) {
+		if (err) {
+			logger.error(
+				{
+					error: err,
+				},
+				'API create lecture'
+			);
+			return res.apiError('error', err);
+		}
+
+		res.apiResponse({
+			user: item,
+		});
+	});
 };
 
 exports.forgotpassword = function (req, res) {

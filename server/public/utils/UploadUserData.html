@@ -1,0 +1,31 @@
+<html>
+
+    <head>Script Parser</head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script> 
+    
+
+    $.getJSON('UserProfileData.json', function(data) {
+        for(let i = 0; i< data.length; i++){
+            (function ($) { 
+            $.ajax({
+            type: "POST",             
+            url: 'http://localhost:3000/api/user/create/',
+            data: data[i],
+            success:  (data) => {
+              console.log("data ===>>>>", data);
+            },
+            error: function(){ console.log("failed"); 
+            }
+            })
+            })(jQuery);
+        }
+    });
+    </script>
+    <body>
+    
+    </body>
