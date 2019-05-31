@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Card } from "antd";
-import { getContents } from "../../actions/contentAction"
-import { Link } from 'react-router-dom'
-import axios from 'axios'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Card } from 'antd';
+import { getContents } from '../../actions/contentAction'
+import { Link } from 'react-router-dom';
+import RussiaDubbedLectures from '../Lectures/LecturesInRussian'
 
 class ContentDetails extends Component {
 	constructor(props) {
@@ -23,19 +23,27 @@ class ContentDetails extends Component {
 
 	render() {
 		return (
-			<div>
-				<Card title="Recent Activities">
-					{this.props.contentDetails &&
-						this.props.contentDetails.content &&
-						this.props.contentDetails.content.map(eachContent => {
-							return <div >
-								<Link key={eachContent.id} to={`/${eachContent.content_type.toLowerCase()}Details/${eachContent.content_uuid}`} >{`New**     ${eachContent.content_type}`}</Link>
-								<p key={eachContent.content_id}>{`Posted On     ${(new Date(eachContent.created_date_time)).toLocaleString("en-GB")}`}</p>
 
-							</div>
-						})}
-				</Card>
-			</div>
+			<section className='section section-lg text-center'>
+				<div className='container'>
+					<div className='row row-50' >
+						<Card title='Recent Activities' style={{ width: '400px' }}>
+							{this.props.contentDetails &&
+								this.props.contentDetails.content &&
+								this.props.contentDetails.content.map(eachContent => {
+									return <div >
+										<Link key={eachContent.	d} to={`/${eachContent.content_type.toLowerCase()}Details/${eachContent.content_uuid}`} >{`New**     ${eachContent.content_type}`}</Link>
+										<p key={eachContent.content_id}>{`Posted On     ${(new Date(eachContent.created_date_time)).toLocaleString('en-GB')}`}</p>
+									</div>
+								})}
+						</Card>
+						<Card title='Lecture Dubbed in Russian' style={{ marginLeft: '15%', width: '400px' }}>
+							<RussiaDubbedLectures />
+						</Card>
+					</div>
+				</div>
+			</section>
+
 		);
 	}
 }

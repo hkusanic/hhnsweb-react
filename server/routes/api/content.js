@@ -117,7 +117,7 @@ exports.getlimitedlist = function(req, res) {
 	);
 	Content.paginate({
 		page: req.query.page || 1,
-		perPage: 10
+		perPage: 5
 	})
 		.sort("-created_date_time")
 		.exec(function(err, items) {
