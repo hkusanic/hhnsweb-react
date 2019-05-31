@@ -109,7 +109,7 @@ export class Blogs extends Component {
 								</Translate>
 							</p>
 						</div>
-						<div className="container centerAlign">
+						<div className="container">
 							{/* <Breadcrumb>
 								<Link to=" " onClick={() => this.props.history.push('/')}>
 									<Breadcrumb.Item>Home</Breadcrumb.Item>
