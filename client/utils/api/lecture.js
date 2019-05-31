@@ -34,7 +34,7 @@ const utils = {
 			+ (author ? '&author=' + author : '')
 			+ (translation ? '&translation=' + translation : '')
 			+ (video ? '&video=' + video : '');
-
+		console.log(`API URL: ${url}`);
 		return axios.get(url);
 	},
 

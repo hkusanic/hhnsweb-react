@@ -17,7 +17,7 @@ export class LatestLecture extends Component {
                         <div className="row row-50">
                             <div className="col-md-6 wow-outer">
 
-                                <article className="post-modern wow slideInLeft"><a className="post-modern-media"><img src="images/grid-blog-1-571x353.jpg" alt="" width="571" height="353" /></a>
+                                <article className="post-modern wow fadeInUpSmall"><a className="post-modern-media"><img src="images/grid-blog-1-571x353.jpg" alt="" width="571" height="353" /></a>
                                     <h4 className="post-modern-title"><a>How to Plan Your Vacation in Advance</a></h4>
                                     <ul className="post-modern-meta">
                                         <li>by Theresa Barnes</li>
@@ -31,7 +31,7 @@ export class LatestLecture extends Component {
                             </div>
                             <div className="col-md-6 wow-outer">
 
-                                <article className="post-modern wow slideInLeft"><a className="post-modern-media" href="single-blog-post.html"><img src="images/grid-blog-2-571x353.jpg" alt="" width="571" height="353" /></a>
+                                <article className="post-modern wow fadeInUpSmall"><a className="post-modern-media" href="single-blog-post.html"><img src="images/grid-blog-2-571x353.jpg" alt="" width="571" height="353" /></a>
                                     <h4 className="post-modern-title"><a href="single-blog-post.html">Your Personal Guide to 5 Best Places</a></h4>
                                     <ul className="post-modern-meta">
                                         <li>by Theresa Barnes</li>

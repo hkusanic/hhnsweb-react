@@ -127,6 +127,7 @@ export class AudioList extends Component {
 		const columns = [
 			{
 				title: 'Title',
+				className: 'audioTable_title',
 				dataIndex: renderHTML(
 					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
 				),
@@ -150,6 +151,7 @@ export class AudioList extends Component {
 			{
 				title: 'Audio',
 				dataIndex: 'audio_link',
+				className: 'audioTable_audio',
 				render: (text, record, index) => (
 					<audio
 						style={{ height: '30px' }}
