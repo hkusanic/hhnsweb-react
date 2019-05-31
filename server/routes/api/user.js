@@ -774,54 +774,22 @@ function generateS3Object(awsConfig) {
 	return new AWS.S3();
 }
 
-async function uploadFileToS3UsingPresignedUrl(presignedUrl, info, finalUrl) {
-	let image_path = `./uploads/profile ${date.now()}.jpg`;
-	let url = info.oldData.picture.url;
-	https.get(url, function(res) {
-		fs.readFile(image_path, "utf-8", function(err, content) {
-			if (err) {
-				console.log(err);
-			} else {
-				// console.log(content);
-				let file = {
-					name: info.oldData.picture.filename,
-					type: info.oldData.picture.filemime,
-					data: content
-				};
-				axios
-					.put(presignedUrl, file, {
-						headers: {
-							"Content-Type": info.oldData.picture.filemime
-						}
-					})
-					.then(response => {
-						// console.log(response);
-						console.log("uploaded successfully");
-						console.log(finalUrl);
-						return finalUrl;
-					})
-					.catch(err => {
-						console.log(err);
-					});
-			}
-		});
-	});
-}
-
-exports.uploadPic = function(req, res) {
+exports.uploadPic = (req, response) => {
 	if (req && req.body && req.body.oldData && req.body.oldData.picture) {
-		let date = req.body.oldData.picture.timestamp;
-		let filePath = `./uploads/profile/${date}.jpg`;
+		let filePath = "./uploads/profile/" + Date.now() + ".jpg";
 		let url = req.body.oldData.picture.url;
+		var file = fs.createWriteStream(filePath);
 		https.get(url, function(res) {
+			res.pipe(file);
 			fs.readFile(filePath, function(err, content) {
 				if (err) {
 					console.log(err);
 					throw err;
 				} else {
+					console.log(content);
 					let base64data = new Buffer(content, "binary");
-					let myKey = `profilePictures/pictures/${req.user_id}/${
-						req.oldData.picture.filename
+					let myKey = `profilePictures/pictures/${req.body.user_id}/${
+						req.body.oldData.picture.filename
 					}`;
 					let params = {
 						Bucket: process.env.bucket,
@@ -830,52 +798,17 @@ exports.uploadPic = function(req, res) {
 						ACL: "public-read"
 					};
 					const s3 = generateS3Object();
-
 					s3.upload(params, (err, data) => {
 						if (err) console.error(`Upload Error ${err}`);
 						console.log("Upload Completed");
-						res.send(data.Location);
+						return response.json({
+							url: data.Location
+						});
 					});
 				}
 			});
 		});
 	} else {
-		res.send("Profile pic not available");
+		return response.json({ message: "Profile pic not available" });
 	}
 };
-
-// uploadFile(filePath, bucketName, key)
-
-// exports.uploadPic = function(req, res) {
-// 	let isError = false;
-// 	const errors = [];
-// 	if (!req && reeq.body && req.body.oldData && req.body.oldData.path) {
-// 		isError = true;
-// 		errors.push({ message: "please attach profile picture" });
-// 	}
-// 	if (isError) {
-// 		logger.error({ err: errors });
-// 		return res.status(400).json({ errors });
-// 	}
-// 	const s3 = generateS3Object();
-// 	const options = {
-// 		signedUrlExpireSeconds: 100000,
-// 		bucket: process.env.bucket,
-// 		ACL: "public-read",
-// 		Body: ""
-// 	};
-// 	const url = generatePresignedUrl(
-// 		"upload",
-// 		req.body.oldData.picture,
-// 		s3,
-// 		options
-// 	);
-// 	const finalUrl = url.substr(0, url.lastIndexOf("?"));
-// 	let imageUrl = uploadFileToS3UsingPresignedUrl(url, req.body, finalUrl);
-// 	console.log(imageUrl);
-// 	return res.json({
-// 		message: "Image uploaded successfully !!",
-// 		imageLocation:
-// 			"https://kirannrs.s3.amazonaws.com/profilePicture/picture-7445-1556262183.jpg"
-// 	});
-// };
