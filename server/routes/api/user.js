@@ -38,6 +38,23 @@ exports.list = function (req, res) {
 		});
 	}
 
+	if (req.query.disciple) {
+		query.push({
+			disciple: {
+				$regex: '.*' + req.query.disciple + '.*',
+				$options: 'i',
+			},
+		});
+	}
+
+	if (req.query.discipleName) {
+		query.push({
+			discipleName: {
+				$regex: '.*' + req.query.discipleName + '.*',
+				$options: 'i',
+			},
+		});
+	}
 
 	let filters = {};
 
