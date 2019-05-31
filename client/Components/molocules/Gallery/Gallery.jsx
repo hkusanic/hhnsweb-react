@@ -64,7 +64,7 @@ export class Gallery extends React.Component {
 										return (
 											<div class="col-sm-6 col-lg-3 wow-outer">
 												{/* <article
-												class="tour-default wow slideInLeft"
+												class="tour-default wow fadeInUpSmall"
 												data-wow-delay=".1s"
 											> */}
 												<Link to={{ pathname: '/subGallery', state: item }}>
