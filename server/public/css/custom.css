@@ -1,5 +1,6 @@
 .titleColor {
 	color: #ff830a !important;
+	margin: auto;
 }
 
 .padLeft {
@@ -193,7 +194,7 @@
 }
 
 .centerAlign {
-	padding-left: 12%;
+	margin:auto;
 }
 
 .padLeftBlog {
@@ -530,9 +531,10 @@
 	text-align: center;
 	align-items: center;
 	border-radius: 10px;
-	margin-left: 5% !important;
+	/* margin-left: 5% !important;
 	margin-top: 2% !important;
-	margin-bottom: 2% !important;
+	margin-bottom: 2% !important; */
+	margin: 2% 2.5%;
 	cursor: pointer;
 }
 .outer {
@@ -583,8 +585,7 @@
 }
 .tour-default-caption {
 	height: 100% !important;
-	margin-top: 4px !important;
-	margin-left: 0px !important;
+	
 }
 
 
@@ -887,11 +888,18 @@
 }
 .biographyCard{
 	max-width: 440px;
+	height:420px;
 	margin: auto !important;
 }
 .navbarItemAlign{
 	justify-content: space-between;
 	width: 1170px;
+}
+.subGalleryImg{
+	height:240px;
+	width:240px;
+	background-position: center;
+	background-size: cover;
 }
 @media (min-width: 200px) {
 	.rd-navbar-fixed .banner {
@@ -910,11 +918,6 @@
 		padding-left: 10% !important;
 	}
 }
-@media (min-width: 1024px) {
-	.tour-default-caption {
-		margin-left: 20% !important;
-	}
-}
 @media (min-width: 1210px) {
 	.topMenu {
 		visibility: collapse;
@@ -925,6 +928,16 @@
 	.languageToggle {
 		padding-top: 12px;
 		font-size: 18px;
+	}
+}
+@media (max-width: 990px){
+	.quote-modern-info{
+		font-size: 75%;
+	}
+}
+@media (max-width:333px){
+	.quote-modern-info{
+		font-size: 55%;
 	}
 }
 @media (max-width: 767px){
@@ -983,12 +996,15 @@
 	.audioTable_title{
 		max-width:100%;
 	}
+	.OuterDiv {
+		height:50px;
+		max-width: 25% !important;
+		margin: 1.5% 4%;
+	}
 }
 @media (min-width: 1440px) and (max-width: 2560px) {
 	.img-banner-width {
 		width: 2560px !important;
 	}
-	.tour-default-caption {
-		margin-left: 25% !important;
-	}
+	
 }

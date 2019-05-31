@@ -53,7 +53,7 @@ export class MKV extends Component {
 
 				{!this.state.isUserLogin ? (
 					<section className="text-center">
-						<div className="container yearList">
+						<div className="container">
 							<div className="BreadCrumDiv">
 								<Breadcrumb>
 									<Link to=" " onClick={() => this.props.history.push('/')}>
@@ -73,9 +73,10 @@ export class MKV extends Component {
 							<div style={{ textAlign: 'center' }}>
 								<p className="title">MKV</p>
 							</div>
-							<div className="row offset-top-2">
+							<div className="row" style={{margin: 0, textAlign:"center"}}>
 								{this.state.array.map((item, key) => {
 									return (
+										
 										<div
 											key={key}
 											className={
@@ -91,6 +92,7 @@ export class MKV extends Component {
 												</div>
 											</article>
 										</div>
+										
 									);
 								})}
 							</div>
@@ -103,7 +105,7 @@ export class MKV extends Component {
 				)}
 				{this.state.showTabs ? (
 					<section className="section section-lg">
-						<div className="container tabPadLeft">
+						<div className="container centerAlign">
 							<div className="row">
 								<div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 									<div
