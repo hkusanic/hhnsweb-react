@@ -101,6 +101,7 @@ function getDiscipleUserDetails () {
 						}
 					}
 				}
+				data.oldData.picture = JSON.stringify(data.oldData.picture);
 				finalUserData.push(data);
 			}
 		}

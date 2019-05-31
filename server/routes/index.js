@@ -120,7 +120,7 @@ exports = module.exports = function(app) {
 	app.post('/api/user/getUserByUserId', keystone.middleware.api, routes.api.user.getUserByUserId);
 	app.post('/api/user/create/', keystone.middleware.api, routes.api.user.create);
 	app.post('/api/user/uploadPic',keystone.middleware.api,routes.api.user.uploadPic)
-
+	app.post('/api/user/createBulk/', keystone.middleware.api, routes.api.user.createBulk);
 
 	app.options('/api*', function (req, res) { res.send(200); });
 

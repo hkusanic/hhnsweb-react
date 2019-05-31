@@ -30,7 +30,7 @@ export class QuoteOfDay extends React.Component {
 										state: 'Niranjana Swami',
 									}}
 								>
-									<blockquote class="quote-modern quote-modern-big wow slideInLeft">
+									<blockquote class="quote-modern quote-modern-big wow fadeInUpSmall">
 										<svg
 											class="quote-modern-mark"
 											x="0px"
@@ -87,7 +87,7 @@ export class QuoteOfDay extends React.Component {
 										state: 'Srila Prabhupada',
 									}}
 								>
-									<blockquote class="quote-modern quote-modern-big wow slideInLeft">
+									<blockquote class="quote-modern quote-modern-big wow fadeInUpSmall">
 										<svg
 											class="quote-modern-mark"
 											x="0px"

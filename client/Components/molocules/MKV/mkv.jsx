@@ -85,7 +85,7 @@ export class MKV extends Component {
 											}
 											onClick={() => this.handleShowTabs({ item })}
 										>
-											<article className="articleDiv wow slideInLeft">
+											<article className="articleDiv wow fadeInUpSmall">
 												<div className="tour-default-caption">
 													<p className="titleColor">{item.year}</p>
 												</div>

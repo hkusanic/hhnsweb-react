@@ -19,7 +19,7 @@ function showing100Characters (sentence) {
 const SingleBiography = props => {
 	return (
 		<div className="col-md-6 wow-outer">
-			<article className="post-modern wow slideInLeft">
+			<article className="post-modern wow fadeInUpSmall">
 				<Link
 					to={{
 						pathname: '/biograhyDetails',
@@ -34,8 +34,8 @@ const SingleBiography = props => {
 				>
 					<Card
 						hoverable
-						style={{ width: 440 }}
-						cover={<img alt="example" src={props.img} />}
+						className="biographyCard"
+						cover={<img alt="example" className="img-fluid" src={props.img} />}
 					>
 						<Meta
 							title={
