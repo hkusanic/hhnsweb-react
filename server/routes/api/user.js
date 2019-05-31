@@ -38,14 +38,6 @@ exports.list = function (req, res) {
 		});
 	}
 
-	if (req.query.disciple) {
-		query.push({
-			email: {
-				$regex: '.*' + req.query.disciple + '.*',
-				$options: 'i',
-			},
-		});
-	}
 
 	let filters = {};
 
