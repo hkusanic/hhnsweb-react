@@ -208,23 +208,6 @@ export class SearchFilter extends Component {
 		return (
 			<div>
 				<div className="container filterDiv titleDiv">
-					{/* <div className="titleSearch">
-						<Input
-							placeholder="Title"
-							allowClear={this.state.title !== ''}
-							suffix={
-								this.state.title === '' && (
-									<Tooltip title="Please enter the title you want to search">
-										<Icon
-											type="info-circle"
-											style={{ color: 'rgba(0,0,0,.45)' }}
-										/>
-									</Tooltip>
-								)
-							}
-							onChange={event => this.handleTextChange('title', event)}
-						/>
-					</div> */}
 					<div className="titleSearch">
 						<Input
 							placeholder="Canto"

@@ -14,7 +14,7 @@ export class SingleQuote extends Component {
 		return (
 			<div className="col-md-6 scaleFadeInWrap websiteFontFamily quotePad">
 				<div class="wow-outer">
-					<blockquote class="quote-modern quote-modern-big wow slideInLeft">
+					<blockquote class="quote-modern quote-modern-big wow fadeInUpSmall">
 						<svg
 							class="quote-modern-mark"
 							x="0px"
