@@ -4,43 +4,47 @@ var Email = require('keystone-email');
 var nodemailer = require('nodemailer');
 var EMAIL_CONFIG = require('../../constants/constant');
 let logger = require('./../../logger/logger');
+const AWS = require('aws-sdk');
+const axios = require('axios');
+const fs = require('fs');
+var https = require('https');
 
 var transporter = nodemailer.createTransport(
 	EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig
 );
 
-function sendMail (from, to, subject, html) {
+function sendMail(from, to, subject, html) {
 	var mailOptions = createMailBody(from, to, subject, html);
 
 	return transporter.sendMail(mailOptions);
 }
 
-function createMailBody (from, to, subject, html) {
+function createMailBody(from, to, subject, html) {
 	var mailOptions = {
 		from: from,
 		to: to,
 		subject: subject,
-		html: html,
+		html: html
 	};
 	return mailOptions;
 }
 
-exports.list = function (req, res) {
+exports.list = function(req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API list users'
 	);
 	keystone
 		.list('User')
-		.model.find(function (err, items) {
+		.model.find(function(err, items) {
 			// Make sure we are handling errors
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API list users'
 				);
@@ -48,7 +52,7 @@ exports.list = function (req, res) {
 			}
 			res.apiResponse({
 				// Filter page by
-				users: items,
+				users: items
 			});
 
 			// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
@@ -57,25 +61,26 @@ exports.list = function (req, res) {
 		.limit(Number(req.query.limit));
 };
 
-exports.signin = function (req, res) {
+exports.signin = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API signin user'
 	);
 
-	if (!req.body.username || !req.body.password)
-	{ return res.json({ success: false }); }
+	if (!req.body.username || !req.body.password) {
+		return res.json({ success: false });
+	}
 
 	keystone
 		.list('User')
 		.model.findOne({ email: req.body.username })
-		.exec(function (err, user) {
+		.exec(function(err, user) {
 			if (err || !user) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API signin user'
 				);
@@ -83,8 +88,8 @@ exports.signin = function (req, res) {
 					success: false,
 					session: false,
 					message:
-						(err && err.message ? err.message : false)
-						|| 'Sorry, there was an issue signing you in, please try again.',
+						(err && err.message ? err.message : false) ||
+						'Sorry, there was an issue signing you in, please try again.'
 				});
 			}
 
@@ -92,7 +97,7 @@ exports.signin = function (req, res) {
 				{ email: user.email, password: req.body.password },
 				req,
 				res,
-				function (user) {
+				function(user) {
 					return res.json({
 						success: true,
 						session: true,
@@ -106,14 +111,14 @@ exports.signin = function (req, res) {
 							mobileNumber: user.mobileNumber,
 							countryCode: user.countryCode,
 							user_id: user.user_id,
-							youbookme_url: process.env.YOUBOOKME_URL,
-						},
+							youbookme_url: process.env.YOUBOOKME_URL
+						}
 					});
 				},
-				function (err) {
+				function(err) {
 					logger.error(
 						{
-							error: err,
+							error: err
 						},
 						'API signin user'
 					);
@@ -122,26 +127,26 @@ exports.signin = function (req, res) {
 						success: false,
 						session: false,
 						message:
-							(err && err.message ? err.message : false)
-							|| 'Sorry, there was an issue signing you in, please try again.',
+							(err && err.message ? err.message : false) ||
+							'Sorry, there was an issue signing you in, please try again.'
 					});
 				}
 			);
 		});
 };
 
-exports.signout = function (req, res) {
+exports.signout = function(req, res) {
 	keystone.session.signout(req, res, () => {
 		res.json({
-			signedout: true,
+			signedout: true
 		});
 	});
 };
 
-exports.signup = function (req, res) {
+exports.signup = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API signup user'
 	);
@@ -151,15 +156,15 @@ exports.signup = function (req, res) {
 			cb => {
 				keystone.list('User').model.findOne(
 					{
-						email: req.body.email,
+						email: req.body.email
 					},
 					(err, user) => {
 						if (err || user) {
 							return res.json({
 								error: {
 									title: 'User already exists with that email',
-									detail: 'Please try with another email',
-								},
+									detail: 'Please try with another email'
+								}
 							});
 						}
 						return cb();
@@ -171,7 +176,7 @@ exports.signup = function (req, res) {
 				let userData = {
 					name: {
 						first: req.body.name ? req.body.name.first : '',
-						last: req.body.name ? req.body.name.last : '',
+						last: req.body.name ? req.body.name.last : ''
 					},
 					user_id: req.body.user_id,
 					userName: req.body.userName,
@@ -194,20 +199,21 @@ exports.signup = function (req, res) {
 						nid: req.body.oldData.nid,
 						init: req.body.oldData.init,
 						picture: req.body.oldData.picture,
-						path: req.body.oldData.path,
-					},
-
+						path: req.body.oldData.path
+					}
 				};
 				if (Object.keys(req.body.disciple_profile).length > 0) {
 					console.log('inside it');
 					userData.disciple_profile = {
-						first_initiation_date: req.body.disciple_profile.first_initiation_date,
-						second_initiation_date: req.body.disciple_profile.second_initiation_date,
+						first_initiation_date:
+							req.body.disciple_profile.first_initiation_date,
+						second_initiation_date:
+							req.body.disciple_profile.second_initiation_date,
 						spiritual_name: req.body.disciple_profile.spiritual_name,
 						temple: req.body.disciple_profile.temple,
 						verifier: req.body.disciple_profile.verifier,
 						marital_status: req.body.disciple_profile.marital_status,
-						education: req.body.disciple_profile.education,
+						education: req.body.disciple_profile.education
 					};
 				}
 
@@ -217,19 +223,19 @@ exports.signup = function (req, res) {
 				newUser.save(err => {
 					return cb(err);
 				});
-			},
+			}
 		],
 		err => {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API signup user'
 				);
 				console.log('ERROR222', err);
 			}
-			let onSuccess = function (user) {
+			let onSuccess = function(user) {
 				res.json({
 					success: true,
 					session: true,
@@ -243,23 +249,23 @@ exports.signup = function (req, res) {
 						mobileNumber: user.mobileNumber,
 						countryCode: user.countryCode,
 						user_id: user.user_id,
-						youbookme_url: process.env.YOUBOOKME_URL,
-					},
+						youbookme_url: process.env.YOUBOOKME_URL
+					}
 				});
 			};
 
-			let onFail = function (e) {
+			let onFail = function(e) {
 				logger.error(
 					{
-						error: e,
+						error: e
 					},
 					'API signup user'
 				);
 				res.json({
 					error: {
 						title: 'Sign up error',
-						detail: 'There was a problem signing you up, please try again',
-					},
+						detail: 'There was a problem signing you up, please try again'
+					}
 				});
 				console.log('ERROR111', e);
 			};
@@ -277,21 +283,21 @@ exports.signup = function (req, res) {
 
 var User = keystone.list('User');
 
-exports.create = function (req, res) {
+exports.create = function(req, res) {
 	var item = new User.model();
 	var data = req.method === 'POST' ? req.body : req.query;
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API create User'
 	);
 	data.oldData.picture = JSON.stringify(data.oldData.picture);
-	item.getUpdateHandler(req).process(data, function (err) {
+	item.getUpdateHandler(req).process(data, function(err) {
 		if (err) {
 			logger.error(
 				{
-					error: err,
+					error: err
 				},
 				'API create lecture'
 			);
@@ -299,15 +305,15 @@ exports.create = function (req, res) {
 		}
 
 		res.apiResponse({
-			user: item,
+			user: item
 		});
 	});
 };
 
-exports.forgotpassword = function (req, res) {
+exports.forgotpassword = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API forgotpassword'
 	);
@@ -315,14 +321,14 @@ exports.forgotpassword = function (req, res) {
 		to: req.body.email,
 		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
 		subject: '',
-		html: '',
+		html: ''
 	};
 	if (!req.body.email) {
 		res.json({
 			error: {
 				title: 'Email is Reqired',
-				detail: 'Mandatory values are missing. Please check.',
-			},
+				detail: 'Mandatory values are missing. Please check.'
+			}
 		});
 	}
 
@@ -334,7 +340,7 @@ exports.forgotpassword = function (req, res) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API forgotpassword'
 				);
@@ -346,7 +352,7 @@ exports.forgotpassword = function (req, res) {
 				if (err) {
 					logger.error(
 						{
-							error: err,
+							error: err
 						},
 						'API forgotpassword'
 					);
@@ -358,10 +364,10 @@ exports.forgotpassword = function (req, res) {
 	  <p>Please accept our humble obeisances.</p>
 	  <p>All glories to Srila Prabhupada!</p>
 	  <br/>
-	  <p>Please click on the following link <a href="${EMAIL_CONFIG.CONSTANTS
-		.SITE_URL
-			+ '/reset-password?accessid='
-			+ userFound.accessKeyId}">here </a>to reset your password</p>
+	  <p>Please click on the following link <a href='${EMAIL_CONFIG.CONSTANTS
+			.SITE_URL +
+			'/reset-password?accessid=' +
+			userFound.accessKeyId}'>here </a>to reset your password</p>
 	  <br/>
 	  <p>Your servants always,</p>
 	  <p>Site administrators</p>
@@ -374,26 +380,26 @@ exports.forgotpassword = function (req, res) {
 					.catch(err => {
 						logger.error(
 							{
-								error: err,
+								error: err
 							},
 							'API forgotpassword'
 						);
 						console.error(err);
 					});
 				res.json({
-					success: true,
+					success: true
 				});
 			});
 		});
 };
 
-exports.getuserbyaccessid = function (req, res) {
+exports.getuserbyaccessid = function(req, res) {
 	if (!req.body.accessid) {
 		res.json({
 			error: {
 				title: 'Access Id is Required',
-				detail: 'Mandatory values are missing. Please check.',
-			},
+				detail: 'Mandatory values are missing. Please check.'
+			}
 		});
 	}
 
@@ -405,7 +411,7 @@ exports.getuserbyaccessid = function (req, res) {
 			if (err || !userFound) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API getuserbyaccessid'
 				);
@@ -413,25 +419,25 @@ exports.getuserbyaccessid = function (req, res) {
 			}
 			res.json({
 				email: userFound.email,
-				success: true,
+				success: true
 			});
 		});
 };
 
-exports.resetpassword = function (req, res) {
+exports.resetpassword = function(req, res) {
 	const msg = {
 		to: req.body.email,
 		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
 		subject: '',
-		html: '',
+		html: ''
 	};
 
 	if (!req.body.email || !req.body.accessid || !req.body.password) {
 		res.json({
 			error: {
 				title: 'Email, Password and Accessid is Reqired',
-				detail: 'Mandatory values are missing. Please check.',
-			},
+				detail: 'Mandatory values are missing. Please check.'
+			}
 		});
 	}
 
@@ -443,7 +449,7 @@ exports.resetpassword = function (req, res) {
 			if (err || !userFound) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API resetpassword'
 				);
@@ -457,7 +463,7 @@ exports.resetpassword = function (req, res) {
 					if (err || !userFound) {
 						logger.error(
 							{
-								error: err,
+								error: err
 							},
 							'API resetpassword'
 						);
@@ -470,12 +476,12 @@ exports.resetpassword = function (req, res) {
 						if (err) {
 							logger.error(
 								{
-									error: err,
+									error: err
 								},
 								'API resetpassword'
 							);
 							return res.json({
-								error: { title: 'Not able to reset password' },
+								error: { title: 'Not able to reset password' }
 							});
 						}
 						msg.subject = 'Your Password is Successfully Changed';
@@ -497,27 +503,27 @@ exports.resetpassword = function (req, res) {
 							.catch(err => {
 								logger.error(
 									{
-										error: err,
+										error: err
 									},
 									'API resetpassword'
 								);
 								console.error(err);
 							});
 						res.json({
-							success: true,
+							success: true
 						});
 					});
 				});
 		});
 };
 
-exports.editprofile = function (req, res) {
+exports.editprofile = function(req, res) {
 	if (!req.body.firstName || !req.body.lastName || !req.body.mobileNumber) {
 		res.json({
 			error: {
 				title: 'Required',
-				detail: 'Mandatory values are missing. Please check.',
-			},
+				detail: 'Mandatory values are missing. Please check.'
+			}
 		});
 	}
 
@@ -529,7 +535,7 @@ exports.editprofile = function (req, res) {
 			if (err || !userFound) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API editprofile'
 				);
@@ -545,7 +551,7 @@ exports.editprofile = function (req, res) {
 				if (err) {
 					logger.error(
 						{
-							error: err,
+							error: err
 						},
 						'API editprofile'
 					);
@@ -562,17 +568,17 @@ exports.editprofile = function (req, res) {
 						mobileNumber: userFound.mobileNumber,
 						countryCode: userFound.countryCode,
 						user_id: userFound.user_id,
-						youbookme_url: process.env.YOUBOOKME_URL,
-					},
+						youbookme_url: process.env.YOUBOOKME_URL
+					}
 				});
 			});
 		});
 };
 
-exports.getUserByUserId = function (req, res) {
+exports.getUserByUserId = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API get Sadhana'
 	);
@@ -580,11 +586,11 @@ exports.getUserByUserId = function (req, res) {
 		.list('User')
 		.model.findOne()
 		.where({ user_id: req.body.user_id })
-		.exec(function (err, item) {
+		.exec(function(err, item) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API get sadhana'
 				);
@@ -593,7 +599,7 @@ exports.getUserByUserId = function (req, res) {
 			if (!item) {
 				logger.error(
 					{
-						error: 'item not found',
+						error: 'item not found'
 					},
 					'API get sadhana'
 				);
@@ -601,15 +607,15 @@ exports.getUserByUserId = function (req, res) {
 			}
 			res.apiResponse({
 				userDetails: item,
-				success: true,
+				success: true
 			});
 		});
 };
 
-exports.approvedUserForSadhana = function (req, res) {
+exports.approvedUserForSadhana = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API Approve Sadhana Sheet For user'
 	);
@@ -617,11 +623,11 @@ exports.approvedUserForSadhana = function (req, res) {
 		.list('User')
 		.model.findOne()
 		.where({ user_id: req.body.user_id })
-		.exec(function (err, user) {
+		.exec(function(err, user) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API Approve Sadhana Sheet For user'
 				);
@@ -630,7 +636,7 @@ exports.approvedUserForSadhana = function (req, res) {
 			if (!user) {
 				logger.error(
 					{
-						error: 'item not found',
+						error: 'item not found'
 					},
 					'API Approve Sadhana Sheet For user'
 				);
@@ -642,7 +648,7 @@ exports.approvedUserForSadhana = function (req, res) {
 				if (err) {
 					logger.error(
 						{
-							error: err,
+							error: err
 						},
 						'API Approve Sadhana Sheet For user'
 					);
@@ -651,8 +657,137 @@ exports.approvedUserForSadhana = function (req, res) {
 
 				res.json({
 					isSadhanaSheetEnable: true,
-					userDetails: user,
+					userDetails: user
 				});
 			});
 		});
 };
+
+function generatePresignedUrl(type = 'upload', fileDetails, s3, config) {
+	let fileType = fileDetails.filemime;
+	let myKey = `profilePicture/${fileDetails.filename}`;
+	let urlType = {
+		upload: 'putObject',
+		download: 'getObject'
+	};
+	const commonOptions = {
+		Bucket: process.env.bucket,
+		Key: myKey,
+		Expires: 100000,
+		ACL: 'public-read'
+	};
+	const options = {
+		upload: Object.assign({}, commonOptions, { ContentType: fileType }),
+		download: Object.assign({}, commonOptions)
+	};
+	return s3.getSignedUrl(urlType[type], options[type]);
+}
+
+/**
+ * To generate s3 object using configuration object
+ * @param {object} awsConfig
+ * @param {string} awsConfig.accessKeyId Access Key of AWS configuration
+ * @param {string} awsConfig.secretAccessKey Access Secret Key(Token) of AWS configuration
+ */
+function generateS3Object(awsConfig) {
+	const awsConfigObj = {
+		accessKeyId: process.env.accessKeyId,
+		secretAccessKey: process.env.secretAccessKey,
+		s3BucketEndpoint: false,
+		endpoint: 'https://s3.amazonaws.com'
+	};
+	AWS.config.update(awsConfigObj);
+	return new AWS.S3();
+}
+
+async function uploadFileToS3UsingPresignedUrl(presignedUrl, info, finalUrl) {
+	let image_path = './uploads/profile/1559286105286.jpg';
+	let url = info.oldData.picture.url;
+	https.get(url, function(res) {
+		fs.readFile(image_path, 'utf-8', function(err, content) {
+			if (err) {
+				console.log(err);
+			} else {
+				// console.log(content);
+				let file = {
+					name: info.oldData.picture.filename,
+					type: info.oldData.picture.filemime,
+					data: content
+				};
+				axios
+					.put(presignedUrl, file, {
+						headers: {
+							'Content-Type': info.oldData.picture.filemime
+						}
+					})
+					.then(response => {
+						// console.log(response);
+						console.log('uploaded successfully');
+						console.log(finalUrl);
+						return finalUrl;
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			}
+		});
+	});
+}
+
+exports.uploadPic = function(req, res) {
+	filePath = './uploads/profile/1559286105286.jpg';
+	fs.readFile(filePath, (err, data) => {
+		if (err) console.error(err);
+
+		let base64data = new Buffer(data, 'binary');
+
+		let params = {
+			Bucket: process.env.bucket,
+			Key: 'profilePictures/pictures/10d399cb-6347-4aee-8ba3-8c8a9eb7ce0f/1559286105286.jpg',
+			Body: base64data,
+			ACL: 'public-read'
+		};
+		const s3 = generateS3Object();
+
+		s3.upload(params, (err, data) => {
+			if (err) console.error(`Upload Error ${err}`);
+			console.log('Upload Completed');
+			res.send(data.Location);
+		});
+	});
+};
+
+// uploadFile(filePath, bucketName, key)
+
+// exports.uploadPic = function(req, res) {
+// 	let isError = false;
+// 	const errors = [];
+// 	if (!req && reeq.body && req.body.oldData && req.body.oldData.path) {
+// 		isError = true;
+// 		errors.push({ message: 'please attach profile picture' });
+// 	}
+// 	if (isError) {
+// 		logger.error({ err: errors });
+// 		return res.status(400).json({ errors });
+// 	}
+// 	const s3 = generateS3Object();
+// 	const options = {
+// 		signedUrlExpireSeconds: 100000,
+// 		bucket: process.env.bucket,
+// 		ACL: 'public-read',
+// 		Body: ''
+// 	};
+// 	const url = generatePresignedUrl(
+// 		'upload',
+// 		req.body.oldData.picture,
+// 		s3,
+// 		options
+// 	);
+// 	const finalUrl = url.substr(0, url.lastIndexOf('?'));
+// 	let imageUrl = uploadFileToS3UsingPresignedUrl(url, req.body, finalUrl);
+// 	console.log(imageUrl);
+// 	return res.json({
+// 		message: 'Image uploaded successfully !!',
+// 		imageLocation:'https://kirannrs.s3.amazonaws.com/profilePicture/picture-7445-1556262183.jpg'
+// 	});
+// };
