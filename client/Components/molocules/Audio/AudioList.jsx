@@ -124,9 +124,11 @@ export class AudioList extends Component {
 	};
 
 	render() {
+		const maxWidth = window.screen.width;
+		const mobileBrkPnt = 767;
 		const columns = [
 			{
-				title: 'Title',
+				title: maxWidth > mobileBrkPnt?'Title':'',
 				className: 'audioTable_title',
 				dataIndex: renderHTML(
 					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
@@ -149,7 +151,7 @@ export class AudioList extends Component {
 				),
 			},
 			{
-				title: 'Audio',
+				title: maxWidth > mobileBrkPnt?'Audio':'',
 				dataIndex: 'audio_link',
 				className: 'audioTable_audio',
 				render: (text, record, index) => (
@@ -166,7 +168,7 @@ export class AudioList extends Component {
 				),
 			},
 			{
-				title: 'Downloads',
+				title: maxWidth > mobileBrkPnt?'Downloads':'',
 				dataIndex: 'counters.downloads',
 				className: 'downloadSign',
 				render: (text, record, index) => (
@@ -181,6 +183,7 @@ export class AudioList extends Component {
 							download="download"
 						>
 							<Icon type="download" style={{ fontSize: '1.5rem' }} />
+							{maxWidth <= mobileBrkPnt?' Download':null}
 						</a>
 					</React.Fragment>
 				),
