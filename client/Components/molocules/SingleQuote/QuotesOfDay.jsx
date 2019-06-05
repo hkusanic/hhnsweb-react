@@ -135,7 +135,7 @@ export class QuoteOfDay extends React.Component {
 												/>
 											</div>
 											<div class="quote-modern-info">
-												<cite class="quote-modern-cite">Shrila Prabhupada</cite>
+												<cite class="quote-modern-cite">Srila Prabhupada</cite>
 												<p class="quote-modern-caption">
 													Lectures from a disciple, Vol 1, p. 159, Kiev,
 													11.15.2001

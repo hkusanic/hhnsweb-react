@@ -1,94 +1,95 @@
-var keystone = require("keystone");
-const async = require("async");
-var Email = require("keystone-email");
-var nodemailer = require("nodemailer");
-var EMAIL_CONFIG = require("../../constants/constant");
-let logger = require("./../../logger/logger");
-const AWS = require("aws-sdk");
-const axios = require("axios");
-const fs = require("fs");
-var https = require("https");
+var keystone = require('keystone');
+const async = require('async');
+var Email = require('keystone-email');
+var nodemailer = require('nodemailer');
+var EMAIL_CONFIG = require('../../constants/constant');
+let logger = require('./../../logger/logger');
+const AWS = require('aws-sdk');
+const axios = require('axios');
+const fs = require('fs');
+var https = require('https');
 
 var transporter = nodemailer.createTransport(
 	EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig
 );
 
-function sendMail(from, to, subject, html) {
+function sendMail (from, to, subject, html) {
 	var mailOptions = createMailBody(from, to, subject, html);
 
 	return transporter.sendMail(mailOptions);
 }
 
-function createMailBody(from, to, subject, html) {
+function createMailBody (from, to, subject, html) {
 	var mailOptions = {
 		from: from,
 		to: to,
 		subject: subject,
-		html: html
+		html: html,
 	};
 	return mailOptions;
 }
 
-exports.list = function(req, res) {
+exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	let query = [];
-	let DateSort = "-date";
+	let DateSort = '-date';
 	if (req.query.email) {
 		query.push({
 			email: {
-				$regex: ".*" + req.query.email + ".*",
-				$options: "i"
-			}
+				$regex: '.*' + req.query.email + '.*',
+				$options: 'i',
+			},
 		});
 	}
+
 
 	let filters = {};
 
 	if (query.length > 0) {
 		filters = {
-			$and: query
+			$and: query,
 		};
 	}
 
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
-		"API list users"
+		'API list users'
 	);
 
 	keystone
-		.list("User")
+		.list('User')
 		.paginate({
 			page: req.query.page || 1,
 			perPage: 10000,
-			filters: filters
+			filters: filters,
 		})
 		.sort(DateSort)
-		.exec(function(err, items) {
+		.exec(function (err, items) {
 			if (err) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
-					"API list lecture"
+					'API list lecture'
 				);
-				return res.apiError("database error", err);
+				return res.apiError('database error', err);
 			}
 			return res.apiResponse({
 				success: true,
 				users: items.results,
-				total: items.results.length
+				total: items.results.length,
 			});
 		});
 };
 
-exports.signin = function(req, res) {
+exports.signin = function (req, res) {
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
-		"API signin user"
+		'API signin user'
 	);
 
 	if (!req.body.username || !req.body.password) {
@@ -96,22 +97,22 @@ exports.signin = function(req, res) {
 	}
 
 	keystone
-		.list("User")
+		.list('User')
 		.model.findOne({ email: req.body.username })
-		.exec(function(err, user) {
+		.exec(function (err, user) {
 			if (err || !user) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
-					"API signin user"
+					'API signin user'
 				);
 				return res.json({
 					success: false,
 					session: false,
 					message:
-						(err && err.message ? err.message : false) ||
-						"Sorry, there was an issue signing you in, please try again."
+						(err && err.message ? err.message : false)
+						|| 'Sorry, there was an issue signing you in, please try again.',
 				});
 			}
 
@@ -119,7 +120,7 @@ exports.signin = function(req, res) {
 				{ email: user.email, password: req.body.password },
 				req,
 				res,
-				function(user) {
+				function (user) {
 					return res.json({
 						success: true,
 						session: true,
@@ -133,71 +134,71 @@ exports.signin = function(req, res) {
 							mobileNumber: user.mobileNumber,
 							countryCode: user.countryCode,
 							user_id: user.user_id,
-							youbookme_url: process.env.YOUBOOKME_URL
-						}
+							youbookme_url: process.env.YOUBOOKME_URL,
+						},
 					});
 				},
-				function(err) {
+				function (err) {
 					logger.error(
 						{
-							error: err
+							error: err,
 						},
-						"API signin user"
+						'API signin user'
 					);
 
 					return res.json({
 						success: false,
 						session: false,
 						message:
-							(err && err.message ? err.message : false) ||
-							"Sorry, there was an issue signing you in, please try again."
+							(err && err.message ? err.message : false)
+							|| 'Sorry, there was an issue signing you in, please try again.',
 					});
 				}
 			);
 		});
 };
 
-exports.signout = function(req, res) {
+exports.signout = function (req, res) {
 	keystone.session.signout(req, res, () => {
 		res.json({
-			signedout: true
+			signedout: true,
 		});
 	});
 };
 
-exports.signup = function(req, res) {
+exports.signup = function (req, res) {
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
-		"API signup user"
+		'API signup user'
 	);
 
 	async.series(
 		[
-			cb => {
-				keystone.list("User").model.findOne(
+			(cb) => {
+				keystone.list('User').model.findOne(
 					{
-						email: req.body.email
+						email: req.body.email,
 					},
 					(err, user) => {
 						if (err || user) {
 							return res.json({
 								error: {
-									title: "User already exists with that email",
-									detail: "Please try with another email"
-								}
+									title: 'User already exists with that email',
+									detail: 'Please try with another email',
+								},
 							});
 						}
 						return cb();
 					}
 				);
 			},
-			cb => {
+			(cb) => {
 				let userData = {
 					name: {
-						first: req.body.name ? req.body.name.first : "",
-						last: req.body.name ? req.body.name.last : ""
+						first: req.body.name ? req.body.name.first : '',
+						last: req.body.name ? req.body.name.last : '',
 					},
 					user_id: req.body.user_id,
 					userName: req.body.userName,
@@ -220,11 +221,11 @@ exports.signup = function(req, res) {
 						nid: req.body.oldData.nid,
 						init: req.body.oldData.init,
 						picture: req.body.oldData.picture,
-						path: req.body.oldData.path
-					}
+						path: req.body.oldData.path,
+					},
 				};
 				if (Object.keys(req.body.disciple_profile).length > 0) {
-					console.log("inside it");
+					console.log('inside it');
 					userData.disciple_profile = {
 						first_initiation_date:
 							req.body.disciple_profile.first_initiation_date,
@@ -234,29 +235,29 @@ exports.signup = function(req, res) {
 						temple: req.body.disciple_profile.temple,
 						verifier: req.body.disciple_profile.verifier,
 						marital_status: req.body.disciple_profile.marital_status,
-						education: req.body.disciple_profile.education
+						education: req.body.disciple_profile.education,
 					};
 				}
 
-				let User = keystone.list("User").model;
+				let User = keystone.list('User').model;
 				let newUser = new User(userData);
 
-				newUser.save(err => {
+				newUser.save((err) => {
 					return cb(err);
 				});
-			}
+			},
 		],
-		err => {
+		(err) => {
 			if (err) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
-					"API signup user"
+					'API signup user'
 				);
-				console.log("ERROR222", err);
+				console.log('ERROR222', err);
 			}
-			let onSuccess = function(user) {
+			let onSuccess = function (user) {
 				res.json({
 					success: true,
 					session: true,
@@ -270,25 +271,25 @@ exports.signup = function(req, res) {
 						mobileNumber: user.mobileNumber,
 						countryCode: user.countryCode,
 						user_id: user.user_id,
-						youbookme_url: process.env.YOUBOOKME_URL
-					}
+						youbookme_url: process.env.YOUBOOKME_URL,
+					},
 				});
 			};
 
-			let onFail = function(e) {
+			let onFail = function (e) {
 				logger.error(
 					{
-						error: e
+						error: e,
 					},
-					"API signup user"
+					'API signup user'
 				);
 				res.json({
 					error: {
-						title: "Sign up error",
-						detail: "There was a problem signing you up, please try again"
-					}
+						title: 'Sign up error',
+						detail: 'There was a problem signing you up, please try again',
+					},
 				});
-				console.log("ERROR111", e);
+				console.log('ERROR111', e);
 			};
 
 			keystone.session.signin(
@@ -302,263 +303,291 @@ exports.signup = function(req, res) {
 	);
 };
 
-var User = keystone.list("User");
+var User = keystone.list('User');
 
-exports.create = function(req, res) {
+exports.create = function (req, res) {
 	var item = new User.model();
-	var data = req.method === "POST" ? req.body : req.query;
+	var data = req.method === 'POST' ? req.body : req.query;
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
-		"API create User"
+		'API create User'
 	);
 	// data.oldData.picture = JSON.stringify(data.oldData.picture);
-	item.getUpdateHandler(req).process(data, function(err) {
+	item.getUpdateHandler(req).process(data, function (err) {
 		if (err) {
 			logger.error(
 				{
-					error: err
+					error: err,
 				},
-				"API create lecture"
+				'API create lecture'
 			);
-			return res.apiError("error", err);
+			return res.apiError('error', err);
 		}
 
 		res.apiResponse({
-			user: item
+			user: item,
 		});
 	});
 };
 
-exports.createBulk = function(req, res) {
+exports.createBulk = function (req, res) {
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
-		"API createBulk User"
+		'API createBulk User'
 	);
 	keystone.createItems(
 		{
-			User: req.body
+			User: req.body,
 		},
-		function(err, stats) {
+		function (err, stats) {
 			if (err) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
-					"API createBulk User"
+					'API createBulk User'
 				);
-				return res.apiError("error", err);
+				return res.apiError('error', err);
 			}
 			return res.apiResponse({
-				User: true
+				User: true,
 			});
 		}
 	);
 };
 
-exports.forgotpassword = function(req, res) {
+exports.forgotpassword = function (req, res) {
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
-		"API create User"
+		'API create User'
 	);
-	data.oldData.picture = JSON.stringify(data.oldData.picture);
-	item.getUpdateHandler(req).process(data, function(err) {
+	// data.oldData.picture = JSON.stringify(data.oldData.picture);
+	item.getUpdateHandler(req).process(data, function (err) {
 		if (err) {
 			logger.error(
 				{
-					error: err
+					error: err,
 				},
-				"API create lecture"
+				'API create lecture'
 			);
-			return res.apiError("error", err);
+			return res.apiError('error', err);
 		}
 
 		res.apiResponse({
-			user: item
+			user: item,
 		});
 	});
 };
 
-exports.forgotpassword = function(req, res) {
+exports.createBulk = function (req, res) {
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
-		"API forgotpassword"
+		'API createBulk User'
+	);
+	keystone.createItems(
+		{
+			User: req.body,
+		},
+		function (err, stats) {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API createBulk User'
+				);
+				return res.apiError('error', err);
+			}
+			return res.apiResponse({
+				User: true,
+			});
+		}
+	);
+};
+
+exports.forgotpassword = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API forgotpassword'
 	);
 	const msg = {
 		to: req.body.email,
 		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
-		subject: "",
-		html: ""
+		subject: '',
+		html: '',
 	};
 	if (!req.body.email) {
 		res.json({
 			error: {
-				title: "Email is Reqired",
-				detail: "Mandatory values are missing. Please check."
-			}
+				title: 'Email is Reqired',
+				detail: 'Mandatory values are missing. Please check.',
+			},
 		});
 	}
 
 	keystone
-		.list("User")
+		.list('User')
 		.model.findOne()
-		.where("email", req.body.email)
+		.where('email', req.body.email)
 		.exec((err, userFound) => {
 			if (err) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
-					"API forgotpassword"
+					'API forgotpassword'
 				);
-				return res.json({ error: { title: "Not able to reset password" } });
+				return res.json({ error: { title: 'Not able to reset password' } });
 			}
 
 			userFound.accessKeyId = keystone.utils.randomString();
-			userFound.save(err => {
+			userFound.save((err) => {
 				if (err) {
 					logger.error(
 						{
-							error: err
+							error: err,
 						},
-						"API forgotpassword"
+						'API forgotpassword'
 					);
-					return res.json({ error: { title: "Not able to reset password" } });
+					return res.json({ error: { title: 'Not able to reset password' } });
 				}
-				msg.subject = "Password Reset";
+				msg.subject = 'Password Reset';
 				msg.html = `
 	  <p>Hare Krishna,</p>
 	  <p>Please accept our humble obeisances.</p>
 	  <p>All glories to Srila Prabhupada!</p>
 	  <br/>
 	  <p>Please click on the following link <a href='${EMAIL_CONFIG.CONSTANTS
-			.SITE_URL +
-			"/reset-password?accessid=" +
-			userFound.accessKeyId}'>here </a>to reset your password</p>
+		.SITE_URL
+			+ '/reset-password?accessid='
+			+ userFound.accessKeyId}'>here </a>to reset your password</p>
 	  <br/>
 	  <p>Your servants always,</p>
 	  <p>Site administrators</p>
 	  `;
 
 				sendMail(msg.from, userFound.email, msg.subject, msg.html)
-					.then(res => {
-						console.log("email was sent", res);
+					.then((res) => {
+						console.log('email was sent', res);
 					})
-					.catch(err => {
+					.catch((err) => {
 						logger.error(
 							{
-								error: err
+								error: err,
 							},
-							"API forgotpassword"
+							'API forgotpassword'
 						);
 						console.error(err);
 					});
 				res.json({
-					success: true
+					success: true,
 				});
 			});
 		});
 };
 
-exports.getuserbyaccessid = function(req, res) {
+exports.getuserbyaccessid = function (req, res) {
 	if (!req.body.accessid) {
 		res.json({
 			error: {
-				title: "Access Id is Required",
-				detail: "Mandatory values are missing. Please check."
-			}
+				title: 'Access Id is Required',
+				detail: 'Mandatory values are missing. Please check.',
+			},
 		});
 	}
 
 	keystone
-		.list("User")
+		.list('User')
 		.model.findOne()
-		.where("accessKeyId", req.body.accessid)
+		.where('accessKeyId', req.body.accessid)
 		.exec((err, userFound) => {
 			if (err || !userFound) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
-					"API getuserbyaccessid"
+					'API getuserbyaccessid'
 				);
-				return res.json({ error: { title: "Not able to find user" } });
+				return res.json({ error: { title: 'Not able to find user' } });
 			}
 			res.json({
 				email: userFound.email,
-				success: true
+				success: true,
 			});
 		});
 };
 
-exports.resetpassword = function(req, res) {
+exports.resetpassword = function (req, res) {
 	const msg = {
 		to: req.body.email,
 		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
-		subject: "",
-		html: ""
+		subject: '',
+		html: '',
 	};
 
 	if (!req.body.email || !req.body.accessid || !req.body.password) {
 		res.json({
 			error: {
-				title: "Email, Password and Accessid is Reqired",
-				detail: "Mandatory values are missing. Please check."
-			}
+				title: 'Email, Password and Accessid is Reqired',
+				detail: 'Mandatory values are missing. Please check.',
+			},
 		});
 	}
 
 	keystone
-		.list("User")
+		.list('User')
 		.model.findOne()
-		.where("accessKeyId", req.body.accessid)
+		.where('accessKeyId', req.body.accessid)
 		.exec((err, userFound) => {
 			if (err || !userFound) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
-					"API resetpassword"
+					'API resetpassword'
 				);
-				return res.json({ error: { title: "Not able to find user" } });
+				return res.json({ error: { title: 'Not able to find user' } });
 			}
 			keystone
-				.list("User")
+				.list('User')
 				.model.findOne()
-				.where("email", req.body.email)
+				.where('email', req.body.email)
 				.exec((err, userFound) => {
 					if (err || !userFound) {
 						logger.error(
 							{
-								error: err
+								error: err,
 							},
-							"API resetpassword"
+							'API resetpassword'
 						);
-						return res.json({ error: { title: "Not able to reset password" } });
+						return res.json({ error: { title: 'Not able to reset password' } });
 					}
 					userFound.password = req.body.password;
 					let userPassword = userFound.password;
-					userFound.accessKeyId = "";
-					userFound.save(err => {
+					userFound.accessKeyId = '';
+					userFound.save((err) => {
 						if (err) {
 							logger.error(
 								{
-									error: err
+									error: err,
 								},
-								"API resetpassword"
+								'API resetpassword'
 							);
 							return res.json({
-								error: { title: "Not able to reset password" }
+								error: { title: 'Not able to reset password' },
 							});
 						}
-						msg.subject = "Your Password is Successfully Changed";
+						msg.subject = 'Your Password is Successfully Changed';
 						msg.html = `
 				<p>Hare Krishna,</p>
 				<p>Please accept our humble obeisances.</p>
@@ -571,49 +600,49 @@ exports.resetpassword = function(req, res) {
 				`;
 
 						sendMail(msg.from, userFound.email, msg.subject, msg.html)
-							.then(res => {
-								console.log("email was sent", res);
+							.then((res) => {
+								console.log('email was sent', res);
 							})
-							.catch(err => {
+							.catch((err) => {
 								logger.error(
 									{
-										error: err
+										error: err,
 									},
-									"API resetpassword"
+									'API resetpassword'
 								);
 								console.error(err);
 							});
 						res.json({
-							success: true
+							success: true,
 						});
 					});
 				});
 		});
 };
 
-exports.editprofile = function(req, res) {
+exports.editprofile = function (req, res) {
 	if (!req.body.firstName || !req.body.lastName || !req.body.mobileNumber) {
 		res.json({
 			error: {
-				title: "Required",
-				detail: "Mandatory values are missing. Please check."
-			}
+				title: 'Required',
+				detail: 'Mandatory values are missing. Please check.',
+			},
 		});
 	}
 
 	keystone
-		.list("User")
+		.list('User')
 		.model.findOne()
-		.where("email", req.user.email)
+		.where('email', req.user.email)
 		.exec((err, userFound) => {
 			if (err || !userFound) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
-					"API editprofile"
+					'API editprofile'
 				);
-				return res.json({ error: { title: "Not able to reset password" } });
+				return res.json({ error: { title: 'Not able to reset password' } });
 			}
 
 			userFound.name.first = req.body.firstName;
@@ -621,15 +650,15 @@ exports.editprofile = function(req, res) {
 			userFound.mobileNumber = req.body.mobileNumber;
 			userFound.countryCode = req.body.countryCode;
 
-			userFound.save(err => {
+			userFound.save((err) => {
 				if (err) {
 					logger.error(
 						{
-							error: err
+							error: err,
 						},
-						"API editprofile"
+						'API editprofile'
 					);
-					return res.json({ error: { title: "Not able to reset password" } });
+					return res.json({ error: { title: 'Not able to reset password' } });
 				}
 
 				res.json({
@@ -642,117 +671,117 @@ exports.editprofile = function(req, res) {
 						mobileNumber: userFound.mobileNumber,
 						countryCode: userFound.countryCode,
 						user_id: userFound.user_id,
-						youbookme_url: process.env.YOUBOOKME_URL
-					}
+						youbookme_url: process.env.YOUBOOKME_URL,
+					},
 				});
 			});
 		});
 };
 
-exports.getUserByUserId = function(req, res) {
+exports.getUserByUserId = function (req, res) {
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
-		"API get Sadhana"
+		'API get Sadhana'
 	);
 	keystone
-		.list("User")
+		.list('User')
 		.model.findOne()
 		.where({ user_id: req.body.user_id })
-		.exec(function(err, item) {
+		.exec(function (err, item) {
 			if (err) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
-					"API get sadhana"
+					'API get sadhana'
 				);
-				return res.apiError("database error", err);
+				return res.apiError('database error', err);
 			}
 			if (!item) {
 				logger.error(
 					{
-						error: "item not found"
+						error: 'item not found',
 					},
-					"API get sadhana"
+					'API get sadhana'
 				);
-				return res.apiError("not found");
+				return res.apiError('not found');
 			}
 			res.apiResponse({
 				userDetails: item,
-				success: true
+				success: true,
 			});
 		});
 };
 
-exports.approvedUserForSadhana = function(req, res) {
+exports.approvedUserForSadhana = function (req, res) {
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
-		"API Approve Sadhana Sheet For user"
+		'API Approve Sadhana Sheet For user'
 	);
 	keystone
-		.list("User")
+		.list('User')
 		.model.findOne()
 		.where({ user_id: req.body.user_id })
-		.exec(function(err, user) {
+		.exec(function (err, user) {
 			if (err) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
-					"API Approve Sadhana Sheet For user"
+					'API Approve Sadhana Sheet For user'
 				);
-				return res.apiError("database error", err);
+				return res.apiError('database error', err);
 			}
 			if (!user) {
 				logger.error(
 					{
-						error: "item not found"
+						error: 'item not found',
 					},
-					"API Approve Sadhana Sheet For user"
+					'API Approve Sadhana Sheet For user'
 				);
-				return res.apiError("not found");
+				return res.apiError('not found');
 			}
 
 			user.sadhanaSheetEnable = req.body.sadhanaSheetEnable;
-			user.save(err => {
+			user.save((err) => {
 				if (err) {
 					logger.error(
 						{
-							error: err
+							error: err,
 						},
-						"API Approve Sadhana Sheet For user"
+						'API Approve Sadhana Sheet For user'
 					);
-					return res.apiError("Enable Sadhana Sheet Error", err);
+					return res.apiError('Enable Sadhana Sheet Error', err);
 				}
 
 				res.json({
 					isSadhanaSheetEnable: true,
-					userDetails: user
+					userDetails: user,
 				});
 			});
 		});
 };
 
-function generatePresignedUrl(type = "upload", fileDetails, s3, config) {
+function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
 	let fileType = fileDetails.filemime;
 	let myKey = `profilePicture/${fileDetails.filename}`;
 	let urlType = {
-		upload: "putObject",
-		download: "getObject"
+		upload: 'putObject',
+		download: 'getObject',
 	};
 	const commonOptions = {
 		Bucket: process.env.bucket,
 		Key: myKey,
 		Expires: 100000,
-		ACL: "public-read"
+		ACL: 'public-read',
 	};
 	const options = {
 		upload: Object.assign({}, commonOptions, { ContentType: fileType }),
-		download: Object.assign({}, commonOptions)
+		download: Object.assign({}, commonOptions),
 	};
 	return s3.getSignedUrl(urlType[type], options[type]);
 }
@@ -763,12 +792,12 @@ function generatePresignedUrl(type = "upload", fileDetails, s3, config) {
  * @param {string} awsConfig.accessKeyId Access Key of AWS configuration
  * @param {string} awsConfig.secretAccessKey Access Secret Key(Token) of AWS configuration
  */
-function generateS3Object(awsConfig) {
+function generateS3Object (awsConfig) {
 	const awsConfigObj = {
 		accessKeyId: process.env.accessKeyId,
 		secretAccessKey: process.env.secretAccessKey,
 		s3BucketEndpoint: false,
-		endpoint: "https://s3.amazonaws.com"
+		endpoint: 'https://s3.amazonaws.com',
 	};
 	AWS.config.update(awsConfigObj);
 	return new AWS.S3();
@@ -776,18 +805,18 @@ function generateS3Object(awsConfig) {
 
 exports.uploadPic = (req, response) => {
 	if (req && req.body && req.body.oldData && req.body.oldData.picture) {
-		let filePath = "./uploads/profile/" + Date.now() + ".jpg";
+		let filePath = './uploads/profile/' + Date.now() + '.jpg';
 		let url = req.body.oldData.picture.url;
 		var file = fs.createWriteStream(filePath);
-		https.get(url, function(res) {
+		https.get(url, function (res) {
 			res.pipe(file);
-			fs.readFile(filePath, function(err, content) {
+			fs.readFile(filePath, function (err, content) {
 				if (err) {
 					console.log(err);
 					throw err;
 				} else {
 					console.log(content);
-					let base64data = new Buffer(content, "binary");
+					let base64data = new Buffer(content, 'binary');
 					let myKey = `profilePictures/pictures/${req.body.user_id}/${
 						req.body.oldData.picture.filename
 					}`;
@@ -795,7 +824,7 @@ exports.uploadPic = (req, response) => {
 						Bucket: process.env.bucket,
 						Key: myKey,
 						Body: base64data,
-						ACL: "public-read"
+						ACL: 'public-read',
 					};
 					const s3 = generateS3Object();
 					//delete the file
@@ -808,15 +837,15 @@ exports.uploadPic = (req, response) => {
 					});
 					s3.upload(params, (err, data) => {
 						if (err) console.error(`Upload Error ${err}`);
-						console.log("Upload Completed");
+						console.log('Upload Completed');
 						return response.json({
-							url: data.Location
+							url: data.Location,
 						});
 					});
 				}
 			});
 		});
 	} else {
-		return response.json({ message: "Profile pic not available" });
+		return response.json({ message: 'Profile pic not available' });
 	}
 };
