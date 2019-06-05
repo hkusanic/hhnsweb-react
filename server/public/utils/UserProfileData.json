@@ -3,10 +3,24 @@
     "oldData": {
       "uid": "7479",
       "init": "vaishnavdev673@gmail.com",
+      "picture": "null",
+      "path": "https://nrs.niranjanaswami.net/en/rest/user/7479"
+    },
+    "user_id": "98e6a14d-b111-4872-9718-314cb872dbf1",
+    "userName": "Vaishnav Dev",
+    "email": "vaishnavdev673@gmail.com",
+    "password": "Gauranga",
+    "timezone": "America/New_York",
+    "language": "en",
+    "created": "1559149477",
+    "access": "1559149579",
+    "login": "1559149579",
+    "signature": "",
     "signature_format": "1",
     "canAccessKeystone": false
   },
   {
+    "oldData": {
       "uid": "7478",
       "init": "volna.6@mail.ru",
       "picture": "null",
@@ -22,7 +36,11 @@
     "language": "en",
     "created": "1559025516",
     "access": "1559025616",
+    "login": "1559025616",
+    "signature": "",
+    "signature_format": "1",
     "canAccessKeystone": false,
+    "disciple_profile": {
       "first_initiation_date": "",
       "second_initiation_date": "",
       "spiritual_name": "",
@@ -39,8 +57,7 @@
     "mobileNumber": "",
     "dob": "",
     "disciple": "Disciple"
-  }
-},
+  },
   {
     "oldData": {
       "uid": "7477",
@@ -641,7 +658,11 @@
       "vid": "27917",
       "nid": "27914"
     },
+    "user_id": "aeb2ae71-0413-4adb-97d7-c654aaee142d",
+    "userName": "damira",
+    "email": "ln-nat@mail.ru",
     "password": "Gauranga",
+    "timezone": "America/New_York",
     "language": "ru",
     "created": "1556089424",
     "access": "1558192227",
@@ -769,10 +790,17 @@
     "oldData": {
       "uid": "7401",
       "init": "Shuvaevaaa@gmail.com",
+      "picture": "null",
+      "path": "https://nrs.niranjanaswami.net/en/rest/user/7401"
+    },
+    "user_id": "b3e4885e-1cbb-4893-b159-0e09c5d55493",
+    "userName": "Алесандрина",
+    "email": "Shuvaevaaa@gmail.com",
     "password": "Gauranga",
     "timezone": "America/New_York",
     "language": "ru",
     "created": "1554781214",
+    "access": "1554981341",
     "login": "1554781256",
     "signature": "",
     "signature_format": "1",
@@ -821,10 +849,17 @@
     "oldData": {
       "uid": "7399",
       "init": "eluviro36@gmail.com",
+      "picture": "null",
+      "path": "https://nrs.niranjanaswami.net/en/rest/user/7399"
+    },
+    "user_id": "8173b4b3-0caf-461f-95a4-40d778b183a3",
+    "userName": "VlSh",
+    "email": "eluviro36@gmail.com",
     "password": "Gauranga",
     "timezone": "Asia/Vladivostok",
     "language": "ru",
     "created": "1554686233",
+    "access": "1554687690",
     "login": "1554686261",
     "signature": "",
     "signature_format": "1",
@@ -840,7 +875,11 @@
       "nid": "27787"
     },
     "user_id": "a46e4899-5cae-4664-9cbb-2a0752ef6e97",
+    "userName": "Zali",
+    "email": "Infernaljax@gmail.com",
+    "password": "Gauranga",
     "timezone": "America/New_York",
+    "language": "ru",
     "created": "1554658543",
     "access": "1554658673",
     "login": "1554658751",
