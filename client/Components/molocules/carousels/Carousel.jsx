@@ -74,9 +74,9 @@ export class Carousel2 extends Component {
 					</div>
 				</section>
 				<QuoteOfDay />
-				<ContentDetails />
 				<GridLayoutMenus />
 				<Biography {...this.props} />
+				<ContentDetails />
 				<Announcement />
 			</div>
 		);
