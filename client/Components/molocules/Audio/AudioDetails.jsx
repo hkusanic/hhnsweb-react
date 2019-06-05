@@ -135,7 +135,7 @@ export class AudioDetails extends Component {
 										style={{ height: '30px' }}
 										className="audioPlayer"
 										controls
-										controlsList="nodownload"
+										// controlsList="nodownload"
 										onPlay={() => {
 											this.updateAudioCount();
 										}}

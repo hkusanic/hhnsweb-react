@@ -1,12 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { quoteOfDay } from '../../../actions/quoteActions'
+import renderHTML from 'react-render-html';
+import reactCookie from 'react-cookies';
+
 
 export class QuoteOfDay extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
+		this.state = {
+			quotes: []
+		}
+	}
+	componentDidMount() {
+		let authorList = ["Niranjana Swami", "Srila Prabhupada"]
+		this.props.quoteOfDay(authorList)
+		this.setState({
+			quotes: this.props.quoteOfDay.quotes
+		})
 	}
 
-	render () {
+	render() {
 		return (
 			<div>
 				<section class="section section-lg text-center">
@@ -39,16 +54,17 @@ export class QuoteOfDay extends React.Component {
 											height="25px"
 											viewbox="0 0 35 25"
 										>
-											<path d="M27.461,10.206h7.5v15h-15v-15L25,0.127h7.5L27.461,10.206z M7.539,10.206h7.5v15h-15v-15L4.961,0.127h7.5                L7.539,10.206z" />
+											<path d="M27.461,10.206h7.5v15h-15v-15L25,0.127h7.5L27.461,10.206z M7.539,10.206h7.5v15h-15v-15L4.961,0.127h7.5L7.539,10.206z" />
 										</svg>
 										<div class="quote-modern-text">
 											<p className="quotesFont">
-												We should want to establish and maintain our eternal
-												relationship with the Lord. Unfortunately, we have
-												forgotten that relationship. At the time of initiation,
-												the spiritual master helps us awaken our remembrance by
-												giving us the holy name—the means to remember Him—and
-												instructing us to chant the holy name with great faith.
+												{renderHTML(
+													reactCookie.load('languageCode') === 'en' ?
+														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[0] && this.props.quote.quotes[0].en && this.props.quote.quotes[0].en.body ? this.props.quote.quotes[0].en.body : "<p>...</p>"
+														:
+														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[0] && this.props.quote.quotes[0].ru && this.props.quote.quotes[0].ru.body ? this.props.quote.quotes[0].ru.body : "<p>...</p>"
+
+												)}
 											</p>
 										</div>
 										<div class="quote-modern-meta">
@@ -100,12 +116,13 @@ export class QuoteOfDay extends React.Component {
 										</svg>
 										<div class="quote-modern-text">
 											<p className="quotesFont">
-												God must be equal to everyone. He is neither envious to
-												anyone nor friendly to anyone. This is general. But
-												there is special significance. Ye tu bhajanti mam
-												bhaktya: "Persons who are engaged in devotional service
-												with love and faith," tesu te mayi [BG 9.29], "I have
-												got a special intimate relation with him."
+												{renderHTML(
+													reactCookie.load('languageCode') === 'en' ?
+														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[1] && this.props.quote.quotes[1].en && this.props.quote.quotes[1].en.body ? this.props.quote.quotes[1].en.body : "<p>...</p>"
+														:
+														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[1] && this.props.quote.quotes[1].ru && this.props.quote.quotes[1].ru.body ? this.props.quote.quotes[1].ru.body : "<p>...</p>"
+
+												)}
 											</p>
 										</div>
 										<div class="quote-modern-meta">
@@ -146,4 +163,24 @@ export class QuoteOfDay extends React.Component {
 	}
 }
 
-export default QuoteOfDay;
+
+const mapStateToProps = state => {
+	return {
+		quote: state.quoteReducer
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		quoteOfDay: (authorList) => {
+			dispatch(quoteOfDay(authorList));
+		}
+	};
+};
+
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(QuoteOfDay);
+
