@@ -804,40 +804,46 @@ function generateS3Object (awsConfig) {
 }
 
 exports.uploadPic = (req, response) => {
-	if (req && req.body && req.body.oldData && req.body.oldData.picture) {
-		let filePath = './uploads/profile/' + Date.now() + '.jpg';
-		let url = req.body.oldData.picture.url;
-		var file = fs.createWriteStream(filePath);
-		https.get(url, function (res) {
-			res.pipe(file);
-			fs.readFile(filePath, function (err, content) {
-				if (err) {
-					console.log(err);
-					throw err;
-				} else {
-					console.log(content);
-					let base64data = new Buffer(content, 'binary');
-					let myKey = `profilePictures/pictures/${req.body.user_id}/${
-						req.body.oldData.picture.filename
-					}`;
-					let params = {
-						Bucket: process.env.bucket,
-						Key: myKey,
-						Body: base64data,
-						ACL: 'public-read',
-					};
-					const s3 = generateS3Object();
-					s3.upload(params, (err, data) => {
-						if (err) console.error(`Upload Error ${err}`);
-						console.log('Upload Completed');
-						return response.json({
-							url: data.Location,
+	if (req && req.body && req.body.oldData) {
+		if (req.body.oldData.picture && JSON.parse(req.body.oldData.picture) !== null) {
+			req.body.oldData.picture = JSON.parse(req.body.oldData.picture);
+			let filePath = './uploads/profile/' + Date.now() + '.jpg';
+			let url = req.body.oldData.picture.url;
+			var file = fs.createWriteStream(filePath);
+			https.get(url, function (res) {
+				res.pipe(file);
+				fs.readFile(filePath, function (err, content) {
+					if (err) {
+						console.log(err);
+						throw err;
+					} else {
+						console.log(content);
+						let base64data = new Buffer(content, 'binary');
+						let myKey = `profilePictures/pictures/${req.body.user_id}/${
+							req.body.oldData.picture.filename
+						}`;
+						let params = {
+							Bucket: process.env.bucket,
+							Key: myKey,
+							Body: base64data,
+							ACL: 'public-read',
+						};
+						const s3 = generateS3Object();
+						s3.upload(params, (err, data) => {
+							if (err) console.error(`Upload Error ${err}`);
+							console.log('Upload Completed');
+							return response.json({
+								url: data.Location,
+							});
 						});
-					});
-				}
+					}
+				});
 			});
-		});
+		}
+		else {
+			return response.json({ url: 'Profile pic not available' });
+		}
 	} else {
-		return response.json({ message: 'Profile pic not available' });
+		return response.json({ url: 'Profile pic not available' });
 	}
 };

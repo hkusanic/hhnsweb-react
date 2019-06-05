@@ -212,6 +212,7 @@ export class SearchFilter extends Component {
 						<Input
 							placeholder="Canto"
 							allowClear={this.state.songs !== ''}
+							type="number"
 							suffix={
 								this.state.songs === '' && (
 									<Tooltip title="Please enter the song you want to search">
@@ -229,6 +230,7 @@ export class SearchFilter extends Component {
 						<Input
 							placeholder="Chapter"
 							allowClear={this.state.chapter !== ''}
+							type="number"
 							suffix={
 								this.state.chapter === '' && (
 									<Tooltip title="Please enter the chapter you want to search">
@@ -246,6 +248,7 @@ export class SearchFilter extends Component {
 						<Input
 							placeholder="Verse"
 							allowClear={this.state.verse !== ''}
+							type="number"
 							suffix={
 								this.state.verse === '' && (
 									<Tooltip title="Please enter the verse you want to search">
