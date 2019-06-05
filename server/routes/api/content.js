@@ -119,7 +119,7 @@ exports.getlimitedlist = function(req, res) {
 		page: req.query.page || 1,
 		perPage: 10
 	})
-		.sort("-dateCreated")
+		.sort("-created_date_time")
 		.exec(function(err, items) {
 			if (err) {
 				logger.error(

@@ -11,7 +11,7 @@ Content.add({
 	uuid: { type: String, unique: true, index: true },
 	content_uuid: { type: String },
 	content_type: { type: String },
-	created_date_time: { type: String }
+	created_date_time: { type: Types.Date, default: Date.now }
 });
 
 Content.register();
