@@ -27,34 +27,57 @@ function createMailBody (from, to, subject, html) {
 
 exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
+	let query = [];
+	let DateSort = '-date';
+	if (req.query.email) {
+		query.push({
+			email: {
+				$regex: '.*' + req.query.email + '.*',
+				$options: 'i',
+			},
+		});
+	}
+
+
+	let filters = {};
+
+	if (query.length > 0) {
+		filters = {
+			$and: query,
+		};
+	}
+
 	logger.info(
 		{
 			req: req,
 		},
 		'API list users'
 	);
+
 	keystone
 		.list('User')
-		.model.find(function (err, items) {
-			// Make sure we are handling errors
+		.paginate({
+			page: req.query.page || 1,
+			perPage: 10000,
+			filters: filters,
+		})
+		.sort(DateSort)
+		.exec(function (err, items) {
 			if (err) {
 				logger.error(
 					{
 						error: err,
 					},
-					'API list users'
+					'API list lecture'
 				);
 				return res.apiError('database error', err);
 			}
-			res.apiResponse({
-				// Filter page by
-				users: items,
+			return res.apiResponse({
+				success: true,
+				users: items.results,
+				total: items.results.length,
 			});
-
-			// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
-			// This is handy if we want to speed up loading times once our recipe collection grows
-		})
-		.limit(Number(req.query.limit));
+		});
 };
 
 exports.signin = function (req, res) {
@@ -65,8 +88,9 @@ exports.signin = function (req, res) {
 		'API signin user'
 	);
 
-	if (!req.body.username || !req.body.password)
-	{ return res.json({ success: false }); }
+	if (!req.body.username || !req.body.password) {
+		return res.json({ success: false });
+	}
 
 	keystone
 		.list('User')
@@ -148,40 +172,7 @@ exports.signup = function (req, res) {
 
 	async.series(
 		[
-			cb => {
-				console.log('1');
-				if (
-					!req.body.firstname
-					|| !req.body.lastname
-					|| !req.body.email
-					|| !req.body.password
-					|| !req.body.mobileNumber
-				) {
-					let list = [];
-					req.body.firstname === '' ? list.push('First name is missing.') : '';
-					req.body.lastname === '' ? list.push('Last name is missing.') : '';
-					req.body.email === '' ? list.push('Email is missing.') : '';
-					req.body.password === '' ? list.push('Password is missing.') : '';
-					req.body.mobileNumber === ''
-						? list.push('Mobile number is missing.')
-						: '';
-					req.body.countryCode === ''
-						? list.push('Country Code is missing.')
-						: '';
-
-					res.json({
-						error: {
-							title: 'Error while creating new account',
-							detail:
-								'Mandatory values are missing. Please check below for more details.',
-						},
-						list: list,
-					});
-					return cb('true');
-				}
-				return cb();
-			},
-			cb => {
+			(cb) => {
 				keystone.list('User').model.findOne(
 					{
 						email: req.body.email,
@@ -199,27 +190,60 @@ exports.signup = function (req, res) {
 					}
 				);
 			},
-			cb => {
+			(cb) => {
 				let userData = {
 					name: {
-						first: req.body.firstname,
-						last: req.body.lastname,
+						first: req.body.name ? req.body.name.first : '',
+						last: req.body.name ? req.body.name.last : '',
 					},
+					user_id: req.body.user_id,
+					userName: req.body.userName,
 					email: req.body.email,
+					password: req.body.password,
 					mobileNumber: req.body.mobileNumber,
 					countryCode: req.body.countryCode,
-					password: req.body.password,
+					disciple: req.body.disciple,
+					timezone: req.body.timezone,
+					language: req.body.language,
+					created: req.body.created,
+					access: req.body.access,
+					login: req.body.login,
+					signature: req.body.signature,
+					signature_format: req.body.signature_format,
+					canAccessKeystone: req.body.canAccessKeystone,
+					oldData: {
+						uid: req.body.oldData.uid,
+						vid: req.body.oldData.vid,
+						nid: req.body.oldData.nid,
+						init: req.body.oldData.init,
+						picture: req.body.oldData.picture,
+						path: req.body.oldData.path,
+					},
 				};
+				if (Object.keys(req.body.disciple_profile).length > 0) {
+					console.log('inside it');
+					userData.disciple_profile = {
+						first_initiation_date:
+							req.body.disciple_profile.first_initiation_date,
+						second_initiation_date:
+							req.body.disciple_profile.second_initiation_date,
+						spiritual_name: req.body.disciple_profile.spiritual_name,
+						temple: req.body.disciple_profile.temple,
+						verifier: req.body.disciple_profile.verifier,
+						marital_status: req.body.disciple_profile.marital_status,
+						education: req.body.disciple_profile.education,
+					};
+				}
 
 				let User = keystone.list('User').model;
 				let newUser = new User(userData);
 
-				newUser.save(err => {
+				newUser.save((err) => {
 					return cb(err);
 				});
 			},
 		],
-		err => {
+		(err) => {
 			if (err) {
 				logger.error(
 					{
@@ -227,7 +251,7 @@ exports.signup = function (req, res) {
 					},
 					'API signup user'
 				);
-				console.log('ERROR');
+				console.log('ERROR222', err);
 			}
 			let onSuccess = function (user) {
 				res.json({
@@ -261,7 +285,7 @@ exports.signup = function (req, res) {
 						detail: 'There was a problem signing you up, please try again',
 					},
 				});
-				console.log('ERROR');
+				console.log('ERROR111', e);
 			};
 
 			keystone.session.signin(
@@ -271,6 +295,63 @@ exports.signup = function (req, res) {
 				onSuccess,
 				onFail
 			);
+		}
+	);
+};
+
+var User = keystone.list('User');
+
+exports.create = function (req, res) {
+	var item = new User.model();
+	var data = req.method === 'POST' ? req.body : req.query;
+	logger.info(
+		{
+			req: req,
+		},
+		'API create User'
+	);
+	// data.oldData.picture = JSON.stringify(data.oldData.picture);
+	item.getUpdateHandler(req).process(data, function (err) {
+		if (err) {
+			logger.error(
+				{
+					error: err,
+				},
+				'API create lecture'
+			);
+			return res.apiError('error', err);
+		}
+
+		res.apiResponse({
+			user: item,
+		});
+	});
+};
+
+exports.createBulk = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API createBulk User'
+	);
+	keystone.createItems(
+		{
+			User: req.body,
+		},
+		function (err, stats) {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API createBulk User'
+				);
+				return res.apiError('error', err);
+			}
+			return res.apiResponse({
+				User: true,
+			});
 		}
 	);
 };
@@ -313,7 +394,7 @@ exports.forgotpassword = function (req, res) {
 			}
 
 			userFound.accessKeyId = keystone.utils.randomString();
-			userFound.save(err => {
+			userFound.save((err) => {
 				if (err) {
 					logger.error(
 						{
@@ -339,10 +420,10 @@ exports.forgotpassword = function (req, res) {
 	  `;
 
 				sendMail(msg.from, userFound.email, msg.subject, msg.html)
-					.then(res => {
+					.then((res) => {
 						console.log('email was sent', res);
 					})
-					.catch(err => {
+					.catch((err) => {
 						logger.error(
 							{
 								error: err,
@@ -437,7 +518,7 @@ exports.resetpassword = function (req, res) {
 					userFound.password = req.body.password;
 					let userPassword = userFound.password;
 					userFound.accessKeyId = '';
-					userFound.save(err => {
+					userFound.save((err) => {
 						if (err) {
 							logger.error(
 								{
@@ -462,10 +543,10 @@ exports.resetpassword = function (req, res) {
 				`;
 
 						sendMail(msg.from, userFound.email, msg.subject, msg.html)
-							.then(res => {
+							.then((res) => {
 								console.log('email was sent', res);
 							})
-							.catch(err => {
+							.catch((err) => {
 								logger.error(
 									{
 										error: err,
@@ -512,7 +593,7 @@ exports.editprofile = function (req, res) {
 			userFound.mobileNumber = req.body.mobileNumber;
 			userFound.countryCode = req.body.countryCode;
 
-			userFound.save(err => {
+			userFound.save((err) => {
 				if (err) {
 					logger.error(
 						{
@@ -609,7 +690,7 @@ exports.approvedUserForSadhana = function (req, res) {
 			}
 
 			user.sadhanaSheetEnable = req.body.sadhanaSheetEnable;
-			user.save(err => {
+			user.save((err) => {
 				if (err) {
 					logger.error(
 						{
