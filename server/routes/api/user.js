@@ -4,6 +4,10 @@ var Email = require('keystone-email');
 var nodemailer = require('nodemailer');
 var EMAIL_CONFIG = require('../../constants/constant');
 let logger = require('./../../logger/logger');
+const AWS = require('aws-sdk');
+const axios = require('axios');
+const fs = require('fs');
+var https = require('https');
 
 var transporter = nodemailer.createTransport(
 	EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig
@@ -361,6 +365,59 @@ exports.forgotpassword = function (req, res) {
 		{
 			req: req,
 		},
+		'API create User'
+	);
+	// data.oldData.picture = JSON.stringify(data.oldData.picture);
+	item.getUpdateHandler(req).process(data, function (err) {
+		if (err) {
+			logger.error(
+				{
+					error: err,
+				},
+				'API create lecture'
+			);
+			return res.apiError('error', err);
+		}
+
+		res.apiResponse({
+			user: item,
+		});
+	});
+};
+
+exports.createBulk = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API createBulk User'
+	);
+	keystone.createItems(
+		{
+			User: req.body,
+		},
+		function (err, stats) {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API createBulk User'
+				);
+				return res.apiError('error', err);
+			}
+			return res.apiResponse({
+				User: true,
+			});
+		}
+	);
+};
+
+exports.forgotpassword = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
 		'API forgotpassword'
 	);
 	const msg = {
@@ -410,10 +467,10 @@ exports.forgotpassword = function (req, res) {
 	  <p>Please accept our humble obeisances.</p>
 	  <p>All glories to Srila Prabhupada!</p>
 	  <br/>
-	  <p>Please click on the following link <a href="${EMAIL_CONFIG.CONSTANTS
+	  <p>Please click on the following link <a href='${EMAIL_CONFIG.CONSTANTS
 		.SITE_URL
 			+ '/reset-password?accessid='
-			+ userFound.accessKeyId}">here </a>to reset your password</p>
+			+ userFound.accessKeyId}'>here </a>to reset your password</p>
 	  <br/>
 	  <p>Your servants always,</p>
 	  <p>Site administrators</p>
@@ -707,4 +764,80 @@ exports.approvedUserForSadhana = function (req, res) {
 				});
 			});
 		});
+};
+
+function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
+	let fileType = fileDetails.filemime;
+	let myKey = `profilePicture/${fileDetails.filename}`;
+	let urlType = {
+		upload: 'putObject',
+		download: 'getObject',
+	};
+	const commonOptions = {
+		Bucket: process.env.bucket,
+		Key: myKey,
+		Expires: 100000,
+		ACL: 'public-read',
+	};
+	const options = {
+		upload: Object.assign({}, commonOptions, { ContentType: fileType }),
+		download: Object.assign({}, commonOptions),
+	};
+	return s3.getSignedUrl(urlType[type], options[type]);
+}
+
+/**
+ * To generate s3 object using configuration object
+ * @param {object} awsConfig
+ * @param {string} awsConfig.accessKeyId Access Key of AWS configuration
+ * @param {string} awsConfig.secretAccessKey Access Secret Key(Token) of AWS configuration
+ */
+function generateS3Object (awsConfig) {
+	const awsConfigObj = {
+		accessKeyId: process.env.accessKeyId,
+		secretAccessKey: process.env.secretAccessKey,
+		s3BucketEndpoint: false,
+		endpoint: 'https://s3.amazonaws.com',
+	};
+	AWS.config.update(awsConfigObj);
+	return new AWS.S3();
+}
+
+exports.uploadPic = (req, response) => {
+	if (req && req.body && req.body.oldData && req.body.oldData.picture) {
+		let filePath = './uploads/profile/' + Date.now() + '.jpg';
+		let url = req.body.oldData.picture.url;
+		var file = fs.createWriteStream(filePath);
+		https.get(url, function (res) {
+			res.pipe(file);
+			fs.readFile(filePath, function (err, content) {
+				if (err) {
+					console.log(err);
+					throw err;
+				} else {
+					console.log(content);
+					let base64data = new Buffer(content, 'binary');
+					let myKey = `profilePictures/pictures/${req.body.user_id}/${
+						req.body.oldData.picture.filename
+					}`;
+					let params = {
+						Bucket: process.env.bucket,
+						Key: myKey,
+						Body: base64data,
+						ACL: 'public-read',
+					};
+					const s3 = generateS3Object();
+					s3.upload(params, (err, data) => {
+						if (err) console.error(`Upload Error ${err}`);
+						console.log('Upload Completed');
+						return response.json({
+							url: data.Location,
+						});
+					});
+				}
+			});
+		});
+	} else {
+		return response.json({ message: 'Profile pic not available' });
+	}
 };

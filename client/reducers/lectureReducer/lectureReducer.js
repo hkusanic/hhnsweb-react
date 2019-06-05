@@ -26,7 +26,7 @@ const lectureReducer = (state = initialState, action) => {
 				Count: false
 			};
 			break;
-		
+
 		case types.SEARCH_LECTURE_VIDEO:
 			const dataVideo = action.payload.data.lecture;
 			state = {
@@ -69,7 +69,8 @@ const lectureReducer = (state = initialState, action) => {
 		case types.UPDATE_COUNTERS:
 			state = {
 				...state,
-				Count: true
+				Count: true,
+				lecture: action.payload.data.Lecture
 			};
 			break;
 	}

@@ -10,15 +10,15 @@ import ContentDetails from '../../../containers/contents/ContentDetails';
 import './index.css';
 
 export class Carousel2 extends Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {};
 	}
-	componentDidMount() {
+	componentDidMount () {
 		script();
 	}
 
-	render() {
+	render () {
 		return (
 			<div>
 				{/* <Carousel autoplay={true} arrows={true} autoplaySpeed={3000}>
@@ -42,34 +42,34 @@ export class Carousel2 extends Component {
 					</div>
 				</Carousel> */}
 				<section
-					className='swiper-container swiper-slider swiper-slider-light bg-gray-700'
-					data-loop='true'
-					data-autoplay='5000'
-					data-simulate-touch='false'
-					data-custom-slide-effect='inter-leave-effect'
-					data-inter-leave-offset='-.5'
+					className="swiper-container swiper-slider swiper-slider-light bg-gray-700"
+					data-loop="true"
+					data-autoplay="5000"
+					data-simulate-touch="false"
+					data-custom-slide-effect="inter-leave-effect"
+					data-inter-leave-offset="-.5"
 				>
-					<div className='swiper-wrapper'>
+					<div className="swiper-wrapper">
 						<SingleCarousel
-							image='https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_portrait_no_logo_rJorBWrIN.jpg'
-							heading=''
-							text=''
+							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_portrait_no_logo_rJorBWrIN.jpg"
+							heading=""
+							text=""
 						/>
 						<SingleCarousel
-							image='https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture-abhishek_no_logo_rk3rB-HLV.jpg'
-							heading=''
-							text=''
+							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture-abhishek_no_logo_rk3rB-HLV.jpg"
+							heading=""
+							text=""
 						/>
 						<SingleCarousel
-							image='https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_kirtan_no_logo_HJiHHWrLN.jpg'
-							heading=''
-							text=''
+							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_kirtan_no_logo_HJiHHWrLN.jpg"
+							heading=""
+							text=""
 						/>
 					</div>
-					<div className='swiper-pagination-outer container alignment'>
+					<div className="swiper-pagination-outer container alignment">
 						<div
-							className='swiper-pagination swiper-pagination-modern swiper-pagination-marked'
-							data-index-bullet='true'
+							className="swiper-pagination swiper-pagination-modern swiper-pagination-marked"
+							data-index-bullet="true"
 						/>
 					</div>
 				</section>
