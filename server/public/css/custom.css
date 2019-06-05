@@ -41,8 +41,9 @@
 }
 
 .iframeStyle {
-	width: 420px;
-	height: 315px;
+	width: 70vw;
+	height: 40vw;
+
 }
 
 .calenderStyle {
@@ -98,7 +99,6 @@
 .bookingformDiv {
 	text-align: center;
 	width: 65%;
-	padding-left: 35%;
 	padding-bottom: 2%;
 }
 
@@ -172,7 +172,8 @@
 	flex-wrap: wrap;
 }
 .flexRow {
-	width: 39%;
+	width: 70vw;
+	margin: 20px auto;
 	box-sizing: border-box;
 }
 
@@ -326,9 +327,7 @@
 }
 .regist-Text {
 	text-align: left;
-	margin-left: 15%;
 	padding-bottom: 2em;
-	margin-right: 5%;
 }
 .contactHeading {
 	text-align: center;
@@ -755,7 +754,9 @@
 .tableRow {
 	line-height: 1 !important;
 }
-
+.tableRow_sadhana{
+	line-height: 1 !important;
+}
 .title {
 	font-size: 25px;
     color: #eb7217;
@@ -901,6 +902,14 @@
 	background-position: center;
 	background-size: cover;
 }
+.floated{
+	float:right;
+	width: 500px;
+	margin: 40px 20px;
+}
+.sadhnaTable_headers{
+	display: none;
+}
 @media (min-width: 200px) {
 	.rd-navbar-fixed .banner {
 		padding: 0px !important;
@@ -929,10 +938,18 @@
 		padding-top: 12px;
 		font-size: 18px;
 	}
+	.floated{
+		width: 500px;
+		margin: 30px 10px;
+	}
 }
 @media (max-width: 990px){
 	.quote-modern-info{
 		font-size: 75%;
+	}
+	.floated{
+		width: 400px;
+		margin: 20px 0px;
 	}
 }
 @media (max-width:333px){
@@ -964,6 +981,10 @@
 	.ant-table-thead{
 		display: none;
 	}
+	.sadhnaTable_headers{
+		font-weight: bolder;
+		margin-bottom: 5px;
+	} 
 	.ant-table table{
 		border-top: 1px solid #e8e8e8 !important;
 	}
@@ -1000,6 +1021,42 @@
 		height:50px;
 		max-width: 25% !important;
 		margin: 1.5% 4%;
+	}
+	.floated{
+		float: none;
+		margin: 30px auto;
+		max-width: 80vw;
+	}
+	.audioStyle audio{
+		width: 100%;
+		margin-bottom: 20px;
+	}
+	.maintable{
+		width:100%;
+	}
+	.maintable tr{
+		border-bottom: 1px solid #e8e8e8;
+	}
+	.maintable tr td{
+		display: inline-block;
+	}
+	.maintable tr td audio{
+		width: 80vw;
+		margin: auto;
+	}
+	.datePickerFilter{
+		width: 80vw;
+		display: block !important;
+		margin: 10px auto !important;
+		margin-top: 0 !important;
+	}
+	.sadhanaButton{
+		display: block !important;
+		width: 80vw;
+		margin: auto;
+	}
+	.bookingformDiv{
+		width: 100%;
 	}
 }
 @media (min-width: 1440px) and (max-width: 2560px) {
