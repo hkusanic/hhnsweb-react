@@ -1,18 +1,18 @@
-var keystone = require("keystone");
-let modelHelper = require("../helpers/modelHelper");
-var path = require("path");
+var keystone = require('keystone');
+let modelHelper = require('../helpers/modelHelper');
+var path = require('path');
 
 // Then to get access to our API route we will use importer
 var importRoutes = keystone.importer(__dirname);
 // And finally set up the api on a route
 var routes = {
-	api: importRoutes("./api")
+	api: importRoutes('./api'),
 };
-var multipart = require("connect-multiparty");
+var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
 // Export our app routes
-exports = module.exports = function(app) {
+exports = module.exports = function (app) {
 	// Get access to the API route in our app
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
 	app.get('/api/content/', keystone.middleware.api, routes.api.content.list);
@@ -124,12 +124,12 @@ exports = module.exports = function(app) {
 
 	// app.post('/api/blog/generateUploadUrl', multipartMiddleware,routes.api.blog.generateUploadUrl );
 	// Set up the default app route to  http://localhost:3000/index.htmli
-	app.get("/*", function(req, res) {
-		keystone.set("updateDatabase", false);
+	app.get('/*', function (req, res) {
+		keystone.set('updateDatabase', false);
 		// Render some simple boilerplate html
-		console.log("====>", req.originalUrl);
+		console.log('====>', req.originalUrl);
 
-		function renderFullPage(result) {
+		function renderFullPage (result) {
 			// Note the div class name here, we will use that as a hook for our React code
 			// static menu
 			return `
@@ -164,11 +164,11 @@ exports = module.exports = function(app) {
 		}
 
 		modelHelper.getStaticNavigation().then(result => {
-			console.log("KEYSTONE STATIC MENU RESTORED");
+			console.log('KEYSTONE STATIC MENU RESTORED');
 			console.dir(result);
 			// Send the html boilerplate
-			if (req.originalUrl.includes("/admin")) {
-				res.sendFile(path.join(__dirname, "../../admin/", "index1.html"));
+			if (req.originalUrl.includes('/admin')) {
+				res.sendFile(path.join(__dirname, '../../admin/', 'index1.html'));
 			} else {
 				res.send(renderFullPage(result));
 			}

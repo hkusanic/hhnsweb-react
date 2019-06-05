@@ -50,13 +50,14 @@
 			temp.date = new Date().toLocaleDateString()
 			$.ajax({
 				type: 'POST',
-				url: `http://dev.niranjanaswami.net/api/gallerylist/create/`,
+				url: `http://localhost:3000/api/gallerylist/create/`,
+				// url: `http://dev.niranjanaswami.net/api/gallerylist/create/`,
 				data: temp,
 				success: data => {
 					console.log('-------->', data);
 				},
 				error: function() {
-					alert('failed');
+					console.log('-------->', 'failed');
 				}
 			});
 		}
@@ -64,3 +65,4 @@
 
 	<body></body>
 </html>
+r
