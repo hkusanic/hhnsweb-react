@@ -65,7 +65,7 @@ export class ForgotPassword extends Component {
                                         <h3 class="wow-outer text-center"><span class="wow slideInUp"><Translate>
                                             {({ translate }) => translate('FORGOT_PASSWORD.forgot_password')}
                                         </Translate></span></h3>
-                                        {!this.state.submitting ? <p class="wow-outer"><span class="wow slideInLeft"><Translate>
+                                        {!this.state.submitting ? <p class="wow-outer"><span class="wow fadeInUpSmall"><Translate>
                                             {({ translate }) => translate('FORGOT_PASSWORD.enter_the_email')}
                                         </Translate></span></p> : ''}
                                         {!this.state.submitting ?
@@ -80,7 +80,7 @@ export class ForgotPassword extends Component {
                                                 </div>
                                             </form>
                                             : ""}
-                                        {this.state.submitting ? <p class="wow-outer ForgotPasText"><span class="wow slideInLeft"><Translate>
+                                        {this.state.submitting ? <p class="wow-outer ForgotPasText"><span class="wow fadeInUpSmall"><Translate>
                                             {({ translate }) => translate('FORGOT_PASSWORD.please_check_email')}
                                         </Translate></span></p> : ''}
                                         <p className="loginError">

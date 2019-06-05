@@ -30,7 +30,7 @@ export class QuoteOfDay extends React.Component {
 										state: 'Niranjana Swami',
 									}}
 								>
-									<blockquote class="quote-modern quote-modern-big wow slideInLeft">
+									<blockquote class="quote-modern quote-modern-big wow fadeInUpSmall">
 										<svg
 											class="quote-modern-mark"
 											x="0px"
@@ -87,7 +87,7 @@ export class QuoteOfDay extends React.Component {
 										state: 'Srila Prabhupada',
 									}}
 								>
-									<blockquote class="quote-modern quote-modern-big wow slideInLeft">
+									<blockquote class="quote-modern quote-modern-big wow fadeInUpSmall">
 										<svg
 											class="quote-modern-mark"
 											x="0px"
@@ -118,7 +118,7 @@ export class QuoteOfDay extends React.Component {
 												/>
 											</div>
 											<div class="quote-modern-info">
-												<cite class="quote-modern-cite">Swami Prabhupada</cite>
+												<cite class="quote-modern-cite">Srila Prabhupada</cite>
 												<p class="quote-modern-caption">
 													Lectures from a disciple, Vol 1, p. 159, Kiev,
 													11.15.2001
