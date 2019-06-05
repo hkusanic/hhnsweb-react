@@ -798,6 +798,14 @@ exports.uploadPic = (req, response) => {
 						ACL: "public-read"
 					};
 					const s3 = generateS3Object();
+					//delete the file
+					fs.unlink(filePath, err => {
+						if (err) {
+							console.log(err);
+						} else {
+							console.log("file deleted");
+						}
+					});
 					s3.upload(params, (err, data) => {
 						if (err) console.error(`Upload Error ${err}`);
 						console.log("Upload Completed");
