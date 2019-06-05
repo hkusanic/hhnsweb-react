@@ -24324,7 +24324,8 @@ for(let i = 0; i< a.length; i++){
    a[i].translation_required = true
     $.ajax({
     type: "POST",             
-    url: `http://dev.niranjanaswami.net/api/gallery/create/`,
+    // url: `http://dev.niranjanaswami.net/api/gallery/create/`,
+    url: `http://localhost:3000/api/gallery/create/`,
     data: a[i],
     success:  (data) => {
         console.log('-------->',data);
