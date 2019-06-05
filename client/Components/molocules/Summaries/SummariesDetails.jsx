@@ -43,7 +43,8 @@ export class SummariesDetails extends React.Component {
 
 	render () {
 		const { lectureDetails } = this.state;
-
+		const mobileBrkPnt = 767;
+		const maxWidth = window.screen.width;
 		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
 		}
@@ -133,7 +134,7 @@ export class SummariesDetails extends React.Component {
 											<tr>
 												<td>
 													<b>
-														<span>Audio</span> :
+														<span>Audio</span> {maxWidth > mobileBrkPnt?':':null}
 													</b>
 												</td>
 												<td className="padLeftRow">

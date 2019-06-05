@@ -85,7 +85,7 @@ export class KirtanDetails extends Component {
 				</section>
 				<section className="section section-lg">
 					<div className="container">
-						<div style={{ paddingLeft: '15%' }} className="row row-100">
+						<div className="row row-100">
 							<div className="col-lg-12">
 								<article className="post-creative">
 									<h3 className="post-creative-title">

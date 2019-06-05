@@ -17915,8 +17915,6 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: -10px;
-	margin-left: -10px;
 }
 
 .tour-default-caption:empty {
@@ -17926,7 +17924,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 
 .tour-default-caption > * {
 	display: inline-block;
-	margin: 0 0 10px 10px;
+	margin: auto;
 }
 
 .tour-default-price {
