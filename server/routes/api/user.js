@@ -4,6 +4,10 @@ var Email = require('keystone-email');
 var nodemailer = require('nodemailer');
 var EMAIL_CONFIG = require('../../constants/constant');
 let logger = require('./../../logger/logger');
+const AWS = require('aws-sdk');
+const axios = require('axios');
+const fs = require('fs');
+var https = require('https');
 
 var transporter = nodemailer.createTransport(
 	EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig
@@ -722,4 +726,87 @@ exports.approvedUserForSadhana = function (req, res) {
 				});
 			});
 		});
+};
+
+// eslint-disable-next-line no-unused-vars
+function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
+	let fileType = fileDetails.filemime;
+	let myKey = `profilePicture/${fileDetails.filename}`;
+	let urlType = {
+		upload: 'putObject',
+		download: 'getObject',
+	};
+	const commonOptions = {
+		Bucket: process.env.bucket,
+		Key: myKey,
+		Expires: 100000,
+		ACL: 'public-read',
+	};
+	const options = {
+		upload: Object.assign({}, commonOptions, { ContentType: fileType }),
+		download: Object.assign({}, commonOptions),
+	};
+	return s3.getSignedUrl(urlType[type], options[type]);
+}
+
+/**
+ * To generate s3 object using configuration object
+ * @param {object} awsConfig
+ * @param {string} awsConfig.accessKeyId Access Key of AWS configuration
+ * @param {string} awsConfig.secretAccessKey Access Secret Key(Token) of AWS configuration
+ */
+function generateS3Object (awsConfig) {
+	const awsConfigObj = {
+		accessKeyId: process.env.accessKeyId,
+		secretAccessKey: process.env.secretAccessKey,
+		s3BucketEndpoint: false,
+		endpoint: 'https://s3.amazonaws.com',
+	};
+	AWS.config.update(awsConfigObj);
+	return new AWS.S3();
+}
+
+exports.uploadPic = (req, response) => {
+	if (req && req.body && req.body.oldData) {
+		if (req.body.oldData.picture && JSON.parse(req.body.oldData.picture) !== null) {
+			req.body.oldData.picture = JSON.parse(req.body.oldData.picture);
+			let filePath = './uploads/profile/' + Date.now() + '.jpg';
+			let url = req.body.oldData.picture.url;
+			var file = fs.createWriteStream(filePath);
+			https.get(url, function (res) {
+				res.pipe(file);
+				fs.readFile(filePath, function (err, content) {
+					if (err) {
+						console.log(err);
+						throw err;
+					} else {
+						console.log(content);
+						let base64data = new Buffer(content, 'binary');
+						let myKey = `profilePictures/pictures/${req.body.user_id}/${
+							req.body.oldData.picture.filename
+						}`;
+						let params = {
+							Bucket: process.env.bucket,
+							Key: myKey,
+							Body: base64data,
+							ACL: 'public-read',
+						};
+						const s3 = generateS3Object();
+						s3.upload(params, (err, data) => {
+							if (err) console.error(`Upload Error ${err}`);
+							console.log('Upload Completed');
+							return response.json({
+								url: data.Location,
+							});
+						});
+					}
+				});
+			});
+		}
+		else {
+			return response.json({ url: 'Profile pic not available' });
+		}
+	} else {
+		return response.json({ url: 'Profile pic not available' });
+	}
 };

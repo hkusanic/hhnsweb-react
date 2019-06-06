@@ -4,16 +4,17 @@ var fs = require('fs');
 
 var https = require('https');
 var httpAgent = new https.Agent();
-httpAgent.maxSockets = 20;
+httpAgent.maxSockets = 30;
 
 let cookie = new tough.Cookie({
 	key: 'SSESS8c0f16dd6e4ff53e267519930069d1e3',
-	value: 'BydqPSQrvpLQddIyI8HNARfAiNR4kXGMmRubkowE-U4',
+	value: 'G_mIrsNllS7rkTjnc6bVLZTUe9NSeG5-6rjH-kKSc0o',
 	domain: 'nrs.niranjanaswami.net',
 	httpOnly: false,
 	maxAge: 3153600000000000,
 });
 var cookiejar = rp.jar();
+cookiejar._jar.rejectPublicSuffixes = false;
 cookiejar.setCookie(cookie.toString(), 'https://nrs.niranjanaswami.net');
 
 var normalUserList = [];
@@ -65,6 +66,7 @@ function getDiscipleUserDetails () {
 				data.user_id = uuidv4();
 				data.userName = normalUserDetailsList[u].name;
 				data.email = normalUserDetailsList[u].mail;
+				data.isPasswordUpdated = false;
 				data.password = 'Gauranga';
 				data.timezone = normalUserDetailsList[u].timezone;
 				data.language = normalUserDetailsList[u].language;
@@ -109,8 +111,31 @@ function getDiscipleUserDetails () {
 		return finalUserData;
 	}).then((data) => {
 		console.log('final User data is integrated  total user is :', finalUserData.length);
-		var json = JSON.stringify(finalUserData, null, 2);
-		fs.writeFile('UserProfileData.json', json, 'utf8', () => { console.log('success'); });
+		const ProfilePromise = finalUserData.map((item, i) => {
+
+			let options = {
+				method: 'POST',
+				uri: 'http://localhost:3000/api/user/uploadPic',
+				body: item,
+				json: true,
+				pool: httpAgent,
+				timeout: 600000,
+				headers: {
+					'User-Agent': 'Request-Promise',
+				},
+			};
+			return rp(options);
+		});
+		Promise.all(ProfilePromise)
+			.then((data) => {
+				for (let p = 0; p < finalUserData.length; p++) {
+					finalUserData[p].profile_pic = data[p].url;
+				}
+				var json = JSON.stringify(finalUserData, null, 2);
+				fs.writeFile('UserData.json', json, 'utf8', () => { console.log('success'); });
+			}).catch(err => {
+				console.log('error inside the profile api ===>>>', err);
+			});
 	}).catch((err) => {
 		console.log('Error inside getDiscipleUserDetails() function ====>>>>', err); ;
 	});

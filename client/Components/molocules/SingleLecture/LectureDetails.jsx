@@ -118,7 +118,7 @@ export class LectureDetails extends React.Component {
 							</Breadcrumb.Item>
 						</Breadcrumb> */}
 						<div className="row row-100">
-							<div style={{ paddingLeft: '15%' }} className="col-lg-12">
+							<div className="col-lg-12">
 								<article className="post-creative">
 									<h3 className="post-creative-title">
 										{renderHTML(
