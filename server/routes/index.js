@@ -2,6 +2,7 @@ var keystone = require('keystone');
 let modelHelper = require('../helpers/modelHelper');
 var path = require('path');
 
+
 // Then to get access to our API route we will use importer
 var importRoutes = keystone.importer(__dirname);
 // And finally set up the api on a route
@@ -16,7 +17,6 @@ exports = module.exports = function (app) {
 	// Get access to the API route in our app
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
 	app.get('/api/content/', keystone.middleware.api, routes.api.content.list);
-	app.get('/api/content/getLimitedList', keystone.middleware.api, routes.api.content.getlimitedlist);
 	app.all('/api/appointment/:id/update', keystone.middleware.api, routes.api.appointment.update);
 	app.post('/api/appointment/:id/remove', keystone.middleware.api, routes.api.appointment.remove);
 	app.all('/api/appointment/create', keystone.middleware.api, routes.api.appointment.create);
@@ -121,7 +121,6 @@ exports = module.exports = function (app) {
 	app.post('/api/user/approveSadhanaSheet', keystone.middleware.api, routes.api.user.approvedUserForSadhana);
 	app.post('/api/user/getUserByUserId', keystone.middleware.api, routes.api.user.getUserByUserId);
 	app.post('/api/user/create/', keystone.middleware.api, routes.api.user.create);
-	app.post('/api/user/uploadPic', keystone.middleware.api, routes.api.user.uploadPic);
 	app.post('/api/user/createBulk/', keystone.middleware.api, routes.api.user.createBulk);
 
 	app.options('/api*', function (req, res) { res.send(200); });

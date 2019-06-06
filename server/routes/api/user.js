@@ -51,6 +51,15 @@ exports.list = function(req, res) {
 		});
 	}
 
+	if (req.query.disciple) {
+		query.push({
+			disciple: {
+				$regex: '.*' + req.query.disciple + '.*',
+				$options: 'i',
+			},
+		});
+	}
+
 	if (req.query.discipleName) {
 		query.push({
 			discipleName: {
@@ -380,59 +389,6 @@ exports.forgotpassword = function(req, res) {
 		{
 			req: req
 		},
-		'API create User'
-	);
-	// data.oldData.picture = JSON.stringify(data.oldData.picture);
-	item.getUpdateHandler(req).process(data, function(err) {
-		if (err) {
-			logger.error(
-				{
-					error: err
-				},
-				'API create lecture'
-			);
-			return res.apiError('error', err);
-		}
-
-		res.apiResponse({
-			user: item
-		});
-	});
-};
-
-exports.createBulk = function(req, res) {
-	logger.info(
-		{
-			req: req
-		},
-		'API createBulk User'
-	);
-	keystone.createItems(
-		{
-			User: req.body
-		},
-		function(err, stats) {
-			if (err) {
-				logger.error(
-					{
-						error: err
-					},
-					'API createBulk User'
-				);
-				return res.apiError('error', err);
-			}
-			return res.apiResponse({
-				User: true
-			});
-		}
-	);
-};
-
-exports.forgotpassword = function(req, res) {
-	logger.info(
-		{
-			req: req
-		},
 		'API forgotpassword'
 	);
 	const msg = {
@@ -482,10 +438,10 @@ exports.forgotpassword = function(req, res) {
 	  <p>Please accept our humble obeisances.</p>
 	  <p>All glories to Srila Prabhupada!</p>
 	  <br/>
-	  <p>Please click on the following link <a href='${EMAIL_CONFIG.CONSTANTS
-			.SITE_URL +
-			'/reset-password?accessid=' +
-			userFound.accessKeyId}'>here </a>to reset your password</p>
+	  <p>Please click on the following link <a href="${EMAIL_CONFIG.CONSTANTS
+		.SITE_URL
+			+ '/reset-password?accessid='
+			+ userFound.accessKeyId}">here </a>to reset your password</p>
 	  <br/>
 	  <p>Your servants always,</p>
 	  <p>Site administrators</p>
