@@ -46,8 +46,8 @@ exports.list = function(req, res) {
 		query.push({
 			disciple: {
 				$regex: '.*' + req.query.disciple + '.*',
-				$options: 'i',
-			},
+				$options: 'i'
+			}
 		});
 	}
 
@@ -55,8 +55,8 @@ exports.list = function(req, res) {
 		query.push({
 			disciple: {
 				$regex: '.*' + req.query.disciple + '.*',
-				$options: 'i',
-			},
+				$options: 'i'
+			}
 		});
 	}
 
@@ -64,8 +64,8 @@ exports.list = function(req, res) {
 		query.push({
 			discipleName: {
 				$regex: '.*' + req.query.discipleName + '.*',
-				$options: 'i',
-			},
+				$options: 'i'
+			}
 		});
 	}
 
@@ -118,8 +118,9 @@ exports.signin = function(req, res) {
 		'API signin user'
 	);
 
-	if (!req.body.username || !req.body.password)
-	{ return res.json({ success: false }); }
+	if (!req.body.username || !req.body.password) {
+		return res.json({ success: false });
+	}
 
 	keystone
 		.list('User')
@@ -246,15 +247,16 @@ exports.signup = function(req, res) {
 						nid: req.body.oldData.nid,
 						init: req.body.oldData.init,
 						picture: req.body.oldData.picture,
-						path: req.body.oldData.path,
-					},
-
+						path: req.body.oldData.path
+					}
 				};
 				if (Object.keys(req.body.disciple_profile).length > 0) {
 					console.log('inside it');
 					userData.disciple_profile = {
-						first_initiation_date: req.body.disciple_profile.first_initiation_date,
-						second_initiation_date: req.body.disciple_profile.second_initiation_date,
+						first_initiation_date:
+							req.body.disciple_profile.first_initiation_date,
+						second_initiation_date:
+							req.body.disciple_profile.second_initiation_date,
 						spiritual_name: req.body.disciple_profile.spiritual_name,
 						temple: req.body.disciple_profile.temple,
 						verifier: req.body.disciple_profile.verifier,
@@ -438,10 +440,10 @@ exports.forgotpassword = function(req, res) {
 	  <p>Please accept our humble obeisances.</p>
 	  <p>All glories to Srila Prabhupada!</p>
 	  <br/>
-	  <p>Please click on the following link <a href="${EMAIL_CONFIG.CONSTANTS
-		.SITE_URL
-			+ '/reset-password?accessid='
-			+ userFound.accessKeyId}">here </a>to reset your password</p>
+	  <p>Please click on the following link <a href='${EMAIL_CONFIG.CONSTANTS
+			.SITE_URL +
+			'/reset-password?accessid=' +
+			userFound.accessKeyId}'>here </a>to reset your password</p>
 	  <br/>
 	  <p>Your servants always,</p>
 	  <p>Site administrators</p>
@@ -737,48 +739,28 @@ exports.approvedUserForSadhana = function(req, res) {
 		});
 };
 
-// eslint-disable-next-line no-unused-vars
-function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
-	let fileType = fileDetails.filemime;
-	let myKey = `profilePicture/${fileDetails.filename}`;
-	let urlType = {
-		upload: 'putObject',
-		download: 'getObject',
-	};
-	const commonOptions = {
-		Bucket: process.env.bucket,
-		Key: myKey,
-		Expires: 100000,
-		ACL: 'public-read',
-	};
-	const options = {
-		upload: Object.assign({}, commonOptions, { ContentType: fileType }),
-		download: Object.assign({}, commonOptions),
-	};
-	return s3.getSignedUrl(urlType[type], options[type]);
-}
-
 /**
  * To generate s3 object using configuration object
  * @param {object} awsConfig
  * @param {string} awsConfig.accessKeyId Access Key of AWS configuration
  * @param {string} awsConfig.secretAccessKey Access Secret Key(Token) of AWS configuration
  */
-function generateS3Object (awsConfig) {
+function generateS3Object(awsConfig) {
 	const awsConfigObj = {
 		accessKeyId: process.env.accessKeyId,
 		secretAccessKey: process.env.secretAccessKey,
 		s3BucketEndpoint: false,
-		endpoint: 'https://s3.amazonaws.com',
+		endpoint: 'https://s3.amazonaws.com'
 	};
 	AWS.config.update(awsConfigObj);
 	return new AWS.S3();
 }
 
 async function uploadToAWS(filePath, req, response) {
+	console.log('...came to upload aws');
 	let content = await readFilePromise(filePath);
 	let base64data = new Buffer(content, 'binary');
-	let myKey = `profilePictures/pictures/${req.body.user_id}/${
+	let myKey = `profilePictures/pictures/${req.body.uid}/${
 		req.body.oldData.picture.filename
 	}`;
 	let params = {
@@ -787,13 +769,13 @@ async function uploadToAWS(filePath, req, response) {
 		Body: base64data,
 		ACL: 'public-read'
 	};
-	fs.unlink(filePath, err => {
-		if (err) {
-			console.log(err);
-		} else {
-			console.log('deleted file');
-		}
-	});
+	// fs.unlink(filePath, err => {
+	// 	if (err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		console.log('deleted file');
+	// 	}
+	// });
 	const s3 = generateS3Object();
 	s3.upload(params, (err, data) => {
 		if (err) console.error(`Upload Error ${err}`);
@@ -806,7 +788,7 @@ async function uploadToAWS(filePath, req, response) {
 
 exports.uploadPic = async (req, response) => {
 	var delayInMilliseconds = 1000;
-	if (req && req.body && req.body.oldData) {
+	if (req && req.body && req.body.oldData && req.body.oldData.picture) {
 		if (
 			req.body.oldData.picture &&
 			JSON.parse(req.body.oldData.picture) !== null
@@ -822,9 +804,11 @@ exports.uploadPic = async (req, response) => {
 				}, delayInMilliseconds);
 			}
 		} else {
+			console.log('profile pic not available');
 			return response.json({ url: 'Profile pic not available' });
 		}
 	} else {
+		console.log('profile pic not available');
 		return response.json({ url: 'Profile pic not available' });
 	}
 };
