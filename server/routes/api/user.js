@@ -42,6 +42,23 @@ exports.list = function (req, res) {
 		});
 	}
 
+	if (req.query.disciple) {
+		query.push({
+			disciple: {
+				$regex: '.*' + req.query.disciple + '.*',
+				$options: 'i',
+			},
+		});
+	}
+
+	if (req.query.discipleName) {
+		query.push({
+			discipleName: {
+				$regex: '.*' + req.query.discipleName + '.*',
+				$options: 'i',
+			},
+		});
+	}
 
 	let filters = {};
 
@@ -92,9 +109,8 @@ exports.signin = function (req, res) {
 		'API signin user'
 	);
 
-	if (!req.body.username || !req.body.password) {
-		return res.json({ success: false });
-	}
+	if (!req.body.username || !req.body.password)
+	{ return res.json({ success: false }); }
 
 	keystone
 		.list('User')
@@ -176,7 +192,7 @@ exports.signup = function (req, res) {
 
 	async.series(
 		[
-			(cb) => {
+			cb => {
 				keystone.list('User').model.findOne(
 					{
 						email: req.body.email,
@@ -194,7 +210,7 @@ exports.signup = function (req, res) {
 					}
 				);
 			},
-			(cb) => {
+			cb => {
 				let userData = {
 					name: {
 						first: req.body.name ? req.body.name.first : '',
@@ -223,14 +239,13 @@ exports.signup = function (req, res) {
 						picture: req.body.oldData.picture,
 						path: req.body.oldData.path,
 					},
+
 				};
 				if (Object.keys(req.body.disciple_profile).length > 0) {
 					console.log('inside it');
 					userData.disciple_profile = {
-						first_initiation_date:
-							req.body.disciple_profile.first_initiation_date,
-						second_initiation_date:
-							req.body.disciple_profile.second_initiation_date,
+						first_initiation_date: req.body.disciple_profile.first_initiation_date,
+						second_initiation_date: req.body.disciple_profile.second_initiation_date,
 						spiritual_name: req.body.disciple_profile.spiritual_name,
 						temple: req.body.disciple_profile.temple,
 						verifier: req.body.disciple_profile.verifier,
@@ -242,12 +257,12 @@ exports.signup = function (req, res) {
 				let User = keystone.list('User').model;
 				let newUser = new User(userData);
 
-				newUser.save((err) => {
+				newUser.save(err => {
 					return cb(err);
 				});
 			},
 		],
-		(err) => {
+		err => {
 			if (err) {
 				logger.error(
 					{
@@ -365,59 +380,6 @@ exports.forgotpassword = function (req, res) {
 		{
 			req: req,
 		},
-		'API create User'
-	);
-	// data.oldData.picture = JSON.stringify(data.oldData.picture);
-	item.getUpdateHandler(req).process(data, function (err) {
-		if (err) {
-			logger.error(
-				{
-					error: err,
-				},
-				'API create lecture'
-			);
-			return res.apiError('error', err);
-		}
-
-		res.apiResponse({
-			user: item,
-		});
-	});
-};
-
-exports.createBulk = function (req, res) {
-	logger.info(
-		{
-			req: req,
-		},
-		'API createBulk User'
-	);
-	keystone.createItems(
-		{
-			User: req.body,
-		},
-		function (err, stats) {
-			if (err) {
-				logger.error(
-					{
-						error: err,
-					},
-					'API createBulk User'
-				);
-				return res.apiError('error', err);
-			}
-			return res.apiResponse({
-				User: true,
-			});
-		}
-	);
-};
-
-exports.forgotpassword = function (req, res) {
-	logger.info(
-		{
-			req: req,
-		},
 		'API forgotpassword'
 	);
 	const msg = {
@@ -451,7 +413,7 @@ exports.forgotpassword = function (req, res) {
 			}
 
 			userFound.accessKeyId = keystone.utils.randomString();
-			userFound.save((err) => {
+			userFound.save(err => {
 				if (err) {
 					logger.error(
 						{
@@ -467,20 +429,20 @@ exports.forgotpassword = function (req, res) {
 	  <p>Please accept our humble obeisances.</p>
 	  <p>All glories to Srila Prabhupada!</p>
 	  <br/>
-	  <p>Please click on the following link <a href='${EMAIL_CONFIG.CONSTANTS
+	  <p>Please click on the following link <a href="${EMAIL_CONFIG.CONSTANTS
 		.SITE_URL
 			+ '/reset-password?accessid='
-			+ userFound.accessKeyId}'>here </a>to reset your password</p>
+			+ userFound.accessKeyId}">here </a>to reset your password</p>
 	  <br/>
 	  <p>Your servants always,</p>
 	  <p>Site administrators</p>
 	  `;
 
 				sendMail(msg.from, userFound.email, msg.subject, msg.html)
-					.then((res) => {
+					.then(res => {
 						console.log('email was sent', res);
 					})
-					.catch((err) => {
+					.catch(err => {
 						logger.error(
 							{
 								error: err,
@@ -575,7 +537,7 @@ exports.resetpassword = function (req, res) {
 					userFound.password = req.body.password;
 					let userPassword = userFound.password;
 					userFound.accessKeyId = '';
-					userFound.save((err) => {
+					userFound.save(err => {
 						if (err) {
 							logger.error(
 								{
@@ -600,10 +562,10 @@ exports.resetpassword = function (req, res) {
 				`;
 
 						sendMail(msg.from, userFound.email, msg.subject, msg.html)
-							.then((res) => {
+							.then(res => {
 								console.log('email was sent', res);
 							})
-							.catch((err) => {
+							.catch(err => {
 								logger.error(
 									{
 										error: err,
@@ -650,7 +612,7 @@ exports.editprofile = function (req, res) {
 			userFound.mobileNumber = req.body.mobileNumber;
 			userFound.countryCode = req.body.countryCode;
 
-			userFound.save((err) => {
+			userFound.save(err => {
 				if (err) {
 					logger.error(
 						{
@@ -747,7 +709,7 @@ exports.approvedUserForSadhana = function (req, res) {
 			}
 
 			user.sadhanaSheetEnable = req.body.sadhanaSheetEnable;
-			user.save((err) => {
+			user.save(err => {
 				if (err) {
 					logger.error(
 						{
@@ -766,6 +728,7 @@ exports.approvedUserForSadhana = function (req, res) {
 		});
 };
 
+// eslint-disable-next-line no-unused-vars
 function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
 	let fileType = fileDetails.filemime;
 	let myKey = `profilePicture/${fileDetails.filename}`;
