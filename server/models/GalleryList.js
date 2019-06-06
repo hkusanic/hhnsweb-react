@@ -18,6 +18,8 @@ GalleryList.add({
 	date: { type: String },
 	name_en: { type: String },
 	name_ru: { type: String },
+	created_date_time: { type: Types.Date, default: Date.now }
+
 });
 
 GalleryList.register();
