@@ -26,7 +26,7 @@ Comment.add({
 		default: '2',
 	},
 	dateCreated: { type: Types.Date, default: Date.now },
-	created_date_time: { type: Types.Date, default: Date.now },
+	created_date_time: { type: Types.Date, default: Date.now }
 });
 
 Comment.register();

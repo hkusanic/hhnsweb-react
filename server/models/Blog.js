@@ -82,7 +82,9 @@ Blog.add({
 		type: String,
 		label: "Language"
 	},
-	audit: { type: Types.TextArray }
+	audit: { type: Types.TextArray },
+	created_date_time: { type: Types.Date, default: Date.now }
+
 });
 
 function uuidv4() {

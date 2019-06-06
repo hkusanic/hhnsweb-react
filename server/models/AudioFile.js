@@ -104,6 +104,8 @@ AudioFile.add({
 	},
 	version: { type: Types.Number, default: 1, hidden: true },
 	state: { type: Types.Select, options: 'draft, published, archived', default: 'published', index: true },
+	created_date_time: { type: Types.Date, default: Date.now }
+
 });
 
 AudioFile.relationship({ path: 'blogs', ref: 'Blog', refPath: 'audio_files' });

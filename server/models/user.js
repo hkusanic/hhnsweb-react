@@ -51,6 +51,8 @@ User.add({
 		education: { type: String },
 	},
 	profile_pic: { type: String },
+	created_date_time: { type: Types.Date, default: Date.now }
+
 });
 
 User.register();

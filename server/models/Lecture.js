@@ -71,7 +71,8 @@ Lecture.add({
 		ru_transcription_view: { type: Types.Number, default: 0 },
 		ru_summary_view: { type: Types.Number, default: 0 }
 	},
-	audit: { type: Types.TextArray }
+	audit: { type: Types.TextArray },
+	created_date_time: { type: Types.Date, default: Date.now }
 });
 
 // Lecture.schema.add({ data: mongoose.Schema.Types.Mixed }); // you can add mongoose types like this.. but they should be defined outside .add()

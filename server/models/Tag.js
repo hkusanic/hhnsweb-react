@@ -8,7 +8,7 @@ let Tag = new keystone.List('Tag', {
 });
 
 Tag.add({
-	title: { type: String, initial: true, required: true, unique: true, index: true, default: '' },
+	title: { type: String, initial: true, required: true, unique: true, index: true, default: '' },	created_date_time: { type: Types.Date, default: Date.now }
 });
 
 Tag.schema.pre('save', function (next) {
