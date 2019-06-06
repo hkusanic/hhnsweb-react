@@ -17,23 +17,25 @@ const utils = {
 		const transcriptions = body.transcriptions || false;
 		const summaries = body.summaries || false;
 		const video = body.video || false;
-		let url
-			= serverAddress
-			+ '/api/lecture?page='
-			+ page
-			+ (year ? '&year=' + year : '')
-			+ (location ? '&location=' + location : '')
-			+ (event ? '&event=' + event : '')
-			+ (title ? '&title=' + title : '')
-			+ (verse ? '&verse=' + verse : '')
-			+ (topic ? '&topic=' + topic : '')
-			+ (transcriptions ? '&transcriptions=' + transcriptions : '')
-			+ (summaries ? '&summaries=' + summaries : '')
-			+ (songs ? '&songs=' + songs : '')
-			+ (chapter ? '&chapter=' + chapter : '')
-			+ (author ? '&author=' + author : '')
-			+ (translation ? '&translation=' + translation : '')
-			+ (video ? '&video=' + video : '');
+		const limit = body.limit || 10;
+		let url =
+			serverAddress +
+			'/api/lecture?page=' +
+			page +
+			(year ? '&year=' + year : '') +
+			(location ? '&location=' + location : '') +
+			(event ? '&event=' + event : '') +
+			(title ? '&title=' + title : '') +
+			(verse ? '&verse=' + verse : '') +
+			(topic ? '&topic=' + topic : '') +
+			(transcriptions ? '&transcriptions=' + transcriptions : '') +
+			(summaries ? '&summaries=' + summaries : '') +
+			(songs ? '&songs=' + songs : '') +
+			(chapter ? '&chapter=' + chapter : '') +
+			(author ? '&author=' + author : '') +
+			(translation ? '&translation=' + translation : '') +
+			(video ? '&video=' + video : '') +
+			(limit ? '&limit=' + limit : '');
 		console.log(`API URL: ${url}`);
 		return axios.get(url);
 	},
@@ -46,7 +48,7 @@ const utils = {
 	fetchLecture: body => {
 		let url = serverAddress + '/api/lecture/getlecturebyid/';
 		return axios.post(url, body);
-	},
+	}
 };
 
 export default utils;
