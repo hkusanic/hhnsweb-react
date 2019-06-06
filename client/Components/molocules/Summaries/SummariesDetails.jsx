@@ -12,13 +12,13 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
 
 export class SummariesDetails extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			lectureDetails: null,
 		};
 	}
-	componentDidMount () {
+	componentDidMount() {
 		let body = {
 			uuid: this.props.match.params.uuid,
 		};
@@ -34,16 +34,24 @@ export class SummariesDetails extends React.Component {
 			this.setState({ lectureDetails: this.props.lectureDetails });
 		}
 	}
-
-	static getDerivedStateFromProps (nextProps, prevState) {
+	handleUpdate = uuid => {
+		const body = {
+			uuid: uuid,
+			downloads: true,
+		};
+		this.props.updateCounters(body);
+	};
+	
+	static getDerivedStateFromProps(nextProps, prevState) {
 		if (nextProps.lectureDetails !== prevState.lectureDetails) {
 			return { lectureDetails: nextProps.lectureDetails };
 		} else return null;
 	}
 
-	render () {
+	render() {
 		const { lectureDetails } = this.state;
-
+		const mobileBrkPnt = 767;
+		const maxWidth = window.screen.width;
 		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
 		}
@@ -133,11 +141,12 @@ export class SummariesDetails extends React.Component {
 											<tr>
 												<td>
 													<b>
-														<span>Audio</span> :
+														<span>Audio</span> {maxWidth > mobileBrkPnt?':':null}
 													</b>
 												</td>
 												<td className="padLeftRow">
-													<audio style={{ height: '30px' }} controls>
+													<audio style={{ height: '30px' }}
+														controlsList="nodownload" controls>
 														<source
 															src={renderHTML(
 																lectureDetails.audio_link
@@ -145,6 +154,16 @@ export class SummariesDetails extends React.Component {
 															type="audio/mpeg"
 														/>
 													</audio>
+													<a
+														className="downloadIcon"
+														href={lectureDetails.audio_link}
+														onClick={() => {
+															this.handleUpdate(lectureDetails.uuid);
+														}}
+														download="download"
+													>
+														<Icon type="download" style={{ fontSize: '1.5rem' }} />
+													</a>
 												</td>
 											</tr>
 											<tr>

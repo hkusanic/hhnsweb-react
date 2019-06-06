@@ -27,6 +27,7 @@ User.add({
 	gender: { type: String },
 	creation_date_time: { type: String },
 	sadhanaSheetEnable: { type: Boolean, default: false },
+	isPasswordUpdated: { type: Boolean },
 	disciple: {
 		type: Types.Select,
 		options: ['No', 'Disciple', 'Aspiring disciple'],
@@ -49,7 +50,7 @@ User.add({
 		marital_status: { type: String },
 		education: { type: String },
 	},
-	profile_pic: { type: String }, // s3 url which we get after uploading
+	profile_pic: { type: String },
 });
 
 User.register();

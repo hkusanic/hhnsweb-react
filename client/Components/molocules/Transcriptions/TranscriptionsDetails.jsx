@@ -11,7 +11,7 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
 
 export class TranscriptionDetails extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			text: '',
@@ -19,7 +19,7 @@ export class TranscriptionDetails extends React.Component {
 		};
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		let body = {
 			uuid: this.props.match.params.uuid,
 		};
@@ -35,15 +35,24 @@ export class TranscriptionDetails extends React.Component {
 		}
 	}
 
-	static getDerivedStateFromProps (nextProps, prevState) {
+	handleUpdate = uuid => {
+		const body = {
+			uuid: uuid,
+			downloads: true,
+		};
+		this.props.updateCounters(body);
+	};
+
+	static getDerivedStateFromProps(nextProps, prevState) {
 		if (nextProps.lectureDetails !== prevState.lectureDetails) {
 			return { lectureDetails: nextProps.lectureDetails };
 		} else return null;
 	}
 
-	render () {
+	render() {
 		const { lectureDetails } = this.state;
-
+		const mobileBrkPnt = 767;
+		const maxWidth = window.screen.width;
 		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
 		}
@@ -92,7 +101,7 @@ export class TranscriptionDetails extends React.Component {
 					</div>
 				</section>
 				<section className="section section-lg">
-					<div className="container padLeftBlog">
+					<div className="container">
 						<div className="row row-50">
 							<div className="col-lg-12">
 								<article className="post-creative">
@@ -131,11 +140,13 @@ export class TranscriptionDetails extends React.Component {
 											<tr>
 												<td>
 													<b>
-														<span>Audio</span> :
+														<span>Audio</span> {maxWidth > mobileBrkPnt?':':null}
 													</b>
 												</td>
 												<td className="padLeftRow">
-													<audio style={{ height: '30px' }} controls>
+													<audio style={{ height: '30px' }} controls
+														controlsList="nodownload"
+													>
 														<source
 															src={renderHTML(
 																lectureDetails.audio_link
@@ -143,6 +154,16 @@ export class TranscriptionDetails extends React.Component {
 															type="audio/mpeg"
 														/>
 													</audio>
+													<a
+														className="downloadIcon"
+														href={lectureDetails.audio_link}
+														onClick={() => {
+															this.handleUpdate(lectureDetails.uuid);
+														}}
+														download="download"
+													>
+														<Icon type="download" style={{ fontSize: '1.5rem' }} />
+													</a>
 												</td>
 											</tr>
 											<tr>

@@ -17,8 +17,8 @@ export class Navigation extends Component {
 		super(props);
 		this.state = {
 			isUserLogin: true,
-			Prabhupada_swami_bio: '',
 			Niranjana_swami_bio: '',
+			Prabhupada_swami_bio: '',
 			floatImage: '',
 			index: 1,
 			redirect: false,
@@ -48,8 +48,8 @@ export class Navigation extends Component {
 		}
 		this.setState({
 			isUserLogin,
-			Prabhupada_swami_bio,
 			Niranjana_swami_bio,
+			Prabhupada_swami_bio,
 			index: tabIndex ? tabIndex : 1,
 		});
 
@@ -252,14 +252,14 @@ export class Navigation extends Component {
 														<Link
 															to={{
 																pathname: '/biograhyDetails',
-																state: this.state.Prabhupada_swami_bio,
+																state: this.state.Niranjana_swami_bio,
 															}}
 															onClick={this.handleBiographyClick}
 															className="rd-dropdown-link"
 														>
 															<Translate>
 																{({ translate }) =>
-																	translate('HOME.swami_prabhupada')
+																	translate('HOME.niranjanaswami')
 																}
 															</Translate>
 														</Link>
@@ -273,18 +273,19 @@ export class Navigation extends Component {
 														<Link
 															to={{
 																pathname: '/biograhyDetails',
-																state: this.state.Niranjana_swami_bio,
+																state: this.state.Prabhupada_swami_bio,
 															}}
 															onClick={this.handleBiographyClick}
 															className="rd-dropdown-link"
 														>
 															<Translate>
 																{({ translate }) =>
-																	translate('HOME.niranjanaswami')
+																	translate('HOME.swami_prabhupada')
 																}
 															</Translate>
 														</Link>
 													</li>
+													
 												</ul>
 											</li>
 											<li className="rd-nav-item">

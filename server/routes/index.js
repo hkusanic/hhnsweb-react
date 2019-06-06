@@ -1,18 +1,19 @@
-var keystone = require("keystone");
-let modelHelper = require("../helpers/modelHelper");
-var path = require("path");
+var keystone = require('keystone');
+let modelHelper = require('../helpers/modelHelper');
+var path = require('path');
+
 
 // Then to get access to our API route we will use importer
 var importRoutes = keystone.importer(__dirname);
 // And finally set up the api on a route
 var routes = {
-	api: importRoutes("./api")
+	api: importRoutes('./api'),
 };
-var multipart = require("connect-multiparty");
+var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
 // Export our app routes
-exports = module.exports = function(app) {
+exports = module.exports = function (app) {
 	// Get access to the API route in our app
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
 	app.get('/api/content/', keystone.middleware.api, routes.api.content.list);
@@ -43,6 +44,7 @@ exports = module.exports = function(app) {
 	app.post('/api/lecture/createBulk/', keystone.middleware.api, routes.api.lecture.createBulk);
 	app.post('/api/lecture/create/', keystone.middleware.api, routes.api.lecture.create);
 	app.post('/api/comment/create/', keystone.middleware.api, routes.api.comment.create);
+	app.all('/api/comment/update/:id', keystone.middleware.api, routes.api.comment.update);
 	app.get('/api/comment/', keystone.middleware.api, routes.api.comment.list);
 	app.get('/api/comment/getlimitedlist/', keystone.middleware.api, routes.api.comment.getlimitedlist);
 	app.post('/api/comment/:id/remove', keystone.middleware.api, routes.api.comment.remove);
@@ -57,6 +59,7 @@ exports = module.exports = function(app) {
 	app.post('/api/quote/:id/remove', keystone.middleware.api, routes.api.quote.remove);
 	app.post('/api/quote/create/', keystone.middleware.api, routes.api.quote.create);
 	app.get('/api/quote/', keystone.middleware.api, routes.api.quote.list);
+	app.post('/api/quote/quoteOfDay/', keystone.middleware.api, routes.api.quote.quoteOfDay);
 	app.post('/api/quote/:id/update', keystone.middleware.api, routes.api.quote.update);
 	app.post('/api/quote/getquotebyid/', keystone.middleware.api, routes.api.quote.getquotebyid);
 	app.all('/api/video/:id/update', keystone.middleware.api, routes.api.video.update);
@@ -124,12 +127,12 @@ exports = module.exports = function(app) {
 
 	// app.post('/api/blog/generateUploadUrl', multipartMiddleware,routes.api.blog.generateUploadUrl );
 	// Set up the default app route to  http://localhost:3000/index.htmli
-	app.get("/*", function(req, res) {
-		keystone.set("updateDatabase", false);
+	app.get('/*', function (req, res) {
+		keystone.set('updateDatabase', false);
 		// Render some simple boilerplate html
-		console.log("====>", req.originalUrl);
+		console.log('====>', req.originalUrl);
 
-		function renderFullPage(result) {
+		function renderFullPage (result) {
 			// Note the div class name here, we will use that as a hook for our React code
 			// static menu
 			return `
@@ -163,15 +166,17 @@ exports = module.exports = function(app) {
                 `;
 		}
 
-		modelHelper.getStaticNavigation().then(result => {
-			console.log("KEYSTONE STATIC MENU RESTORED");
+		modelHelper.getStaticNavigation().then((result) => {
+			console.log('KEYSTONE STATIC MENU RESTORED');
 			console.dir(result);
 			// Send the html boilerplate
-			if (req.originalUrl.includes("/admin")) {
-				res.sendFile(path.join(__dirname, "../../admin/", "index1.html"));
-			} else {
-				res.send(renderFullPage(result));
+			if (req.originalUrl.includes('/admin')) {
+				res.sendFile(path.join(__dirname, '../../admin/', 'index1.html'));
 			}
+			else
+			{ res.send(renderFullPage(result)); }
 		});
+
+
 	});
 };

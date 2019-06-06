@@ -57,7 +57,8 @@ export class AudioDetails extends Component {
 
 	render() {
 		const { lectureDetails } = this.state;
-
+		const mobileBrkPnt = 767;
+		const maxWidth = window.screen.width;
 		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
 		}
@@ -107,7 +108,7 @@ export class AudioDetails extends Component {
 				</section>
 				<section className="section section-lg">
 					<div className="container padTop">
-						<div style={{ paddingLeft: '15%' }} className="row row-100">
+						<div className="row row-100">
 							<div className="col-lg-12">
 								<article className="post-creative">
 									<h3 className="post-creative-title">
@@ -135,7 +136,7 @@ export class AudioDetails extends Component {
 										style={{ height: '30px' }}
 										className="audioPlayer"
 										controls
-										controlsList="nodownload"
+										// controlsList="nodownload"
 										onPlay={() => {
 											this.updateAudioCount();
 										}}
@@ -155,6 +156,7 @@ export class AudioDetails extends Component {
 										download="download"
 									>
 										<Icon type="download" style={{ fontSize: '1.5rem' }} />
+										{maxWidth <= mobileBrkPnt?' Download':null}
 									</a>
 								</div>
 

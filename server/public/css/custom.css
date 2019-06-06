@@ -1,5 +1,6 @@
 .titleColor {
 	color: #ff830a !important;
+	margin: auto;
 }
 
 .padLeft {
@@ -40,8 +41,9 @@
 }
 
 .iframeStyle {
-	width: 420px;
-	height: 315px;
+	width: 70vw;
+	height: 40vw;
+
 }
 
 .calenderStyle {
@@ -97,7 +99,6 @@
 .bookingformDiv {
 	text-align: center;
 	width: 65%;
-	padding-left: 35%;
 	padding-bottom: 2%;
 }
 
@@ -171,7 +172,8 @@
 	flex-wrap: wrap;
 }
 .flexRow {
-	width: 39%;
+	width: 70vw;
+	margin: 20px auto;
 	box-sizing: border-box;
 }
 
@@ -193,7 +195,7 @@
 }
 
 .centerAlign {
-	padding-left: 12%;
+	margin:auto;
 }
 
 .padLeftBlog {
@@ -325,9 +327,7 @@
 }
 .regist-Text {
 	text-align: left;
-	margin-left: 15%;
 	padding-bottom: 2em;
-	margin-right: 5%;
 }
 .contactHeading {
 	text-align: center;
@@ -530,9 +530,10 @@
 	text-align: center;
 	align-items: center;
 	border-radius: 10px;
-	margin-left: 5% !important;
+	/* margin-left: 5% !important;
 	margin-top: 2% !important;
-	margin-bottom: 2% !important;
+	margin-bottom: 2% !important; */
+	margin: 2% 2.5%;
 	cursor: pointer;
 }
 .outer {
@@ -583,8 +584,7 @@
 }
 .tour-default-caption {
 	height: 100% !important;
-	margin-top: 4px !important;
-	margin-left: 0px !important;
+	
 }
 
 
@@ -754,7 +754,9 @@
 .tableRow {
 	line-height: 1 !important;
 }
-
+.tableRow_sadhana{
+	line-height: 1 !important;
+}
 .title {
 	font-size: 25px;
     color: #eb7217;
@@ -887,11 +889,26 @@
 }
 .biographyCard{
 	max-width: 440px;
+	height:420px;
 	margin: auto !important;
 }
 .navbarItemAlign{
 	justify-content: space-between;
 	width: 1170px;
+}
+.subGalleryImg{
+	height:240px;
+	width:240px;
+	background-position: center;
+	background-size: cover;
+}
+.floated{
+	float:right;
+	width: 500px;
+	margin: 40px 20px;
+}
+.sadhnaTable_headers{
+	display: none;
 }
 @media (min-width: 200px) {
 	.rd-navbar-fixed .banner {
@@ -910,11 +927,6 @@
 		padding-left: 10% !important;
 	}
 }
-@media (min-width: 1024px) {
-	.tour-default-caption {
-		margin-left: 20% !important;
-	}
-}
 @media (min-width: 1210px) {
 	.topMenu {
 		visibility: collapse;
@@ -926,8 +938,26 @@
 		padding-top: 12px;
 		font-size: 18px;
 	}
+	.floated{
+		width: 500px;
+		margin: 30px 10px;
+	}
 }
-@media (max-width: 768px){
+@media (max-width: 990px){
+	.quote-modern-info{
+		font-size: 75%;
+	}
+	.floated{
+		width: 400px;
+		margin: 20px 0px;
+	}
+}
+@media (max-width:333px){
+	.quote-modern-info{
+		font-size: 55%;
+	}
+}
+@media (max-width: 767px){
 	.filterDiv {
 		flex-direction: column;
 	}
@@ -937,7 +967,7 @@
 	}
 	.titleSearch {
 		padding: 0 2em;
-		width: 80vw;
+		width: 100%;
 		margin-top: 1rem;
 	}
 	.titleSearch input {
@@ -945,12 +975,28 @@
 	}
 	.filter {
 		padding: 0 2em;
-		width: 80vw;
+		width: 100%;
 		margin-top: 1rem;
+	}
+	.ant-table-thead{
+		display: none;
+	}
+	.sadhnaTable_headers{
+		font-weight: bolder;
+		margin-bottom: 5px;
+	} 
+	.ant-table table{
+		border-top: 1px solid #e8e8e8 !important;
 	}
 	.tableRow *{
 		display: block;
-		max-width: 60vw;
+		max-width: 100%;
+	}
+	.ant-table-tbody > tr > td{
+		border:none !important;
+	}
+	.ant-table-tbody > tr {
+		border-bottom: 1px solid #e8e8e8 !important;
 	}
 	.downloadSign {
 		text-align: left !important;
@@ -962,19 +1008,60 @@
 	.downloadIcon{
 		display: inline-block;
 	}
-	/* .audioTable_audio{
-		max-width:70vw;
-		display: block;
+	.audioTable_audio{
+		max-width:100%;
+	}
+	.audioTable_audio audio{
+		width:100% !important;
 	}
 	.audioTable_title{
-		display: block;
-	} */
+		max-width:100%;
+	}
+	.OuterDiv {
+		height:50px;
+		max-width: 25% !important;
+		margin: 1.5% 4%;
+	}
+	.floated{
+		float: none;
+		margin: 30px auto;
+		max-width: 80vw;
+	}
+	.audioStyle audio{
+		width: 100%;
+		margin-bottom: 20px;
+	}
+	.maintable{
+		width:100%;
+	}
+	.maintable tr{
+		border-bottom: 1px solid #e8e8e8;
+	}
+	.maintable tr td{
+		display: inline-block;
+	}
+	.maintable tr td audio{
+		width: 80vw;
+		margin: auto;
+	}
+	.datePickerFilter{
+		width: 80vw;
+		display: block !important;
+		margin: 10px auto !important;
+		margin-top: 0 !important;
+	}
+	.sadhanaButton{
+		display: block !important;
+		width: 80vw;
+		margin: auto;
+	}
+	.bookingformDiv{
+		width: 100%;
+	}
 }
 @media (min-width: 1440px) and (max-width: 2560px) {
 	.img-banner-width {
 		width: 2560px !important;
 	}
-	.tour-default-caption {
-		margin-left: 25% !important;
-	}
+	
 }
