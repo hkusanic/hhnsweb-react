@@ -59,7 +59,7 @@ export class Registration extends Component {
                                 <p><Translate>{({ translate }) => translate('REGISTER_FORM.hare_krishna')}</Translate> <b>{this.state.user.firstName} {this.state.user.last}</b>,
                         &nbsp;<Translate>{({ translate }) => translate('REGISTER_FORM.registation_msg')}</Translate></p>
                             </div> :
-                            <div className="regist-Text">
+                            <div className="container regist-Text">
                                 {this.registrationInstruction()}
                             </div>}
                     </div>

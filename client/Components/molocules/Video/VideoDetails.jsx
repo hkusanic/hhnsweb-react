@@ -95,7 +95,7 @@ export class VideoDetails extends React.Component {
 				</section>
 				<section class="section section-lg">
 					<div class="container padTop">
-						<div style={{ paddingLeft: '15%' }} className="row row-100">
+						<div className="row">
 							<div class="col-lg-12">
 								<article class="post-creative">
 									<h3 class="post-creative-title">

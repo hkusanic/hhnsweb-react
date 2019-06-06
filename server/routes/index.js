@@ -44,6 +44,7 @@ exports = module.exports = function (app) {
 	app.post('/api/lecture/createBulk/', keystone.middleware.api, routes.api.lecture.createBulk);
 	app.post('/api/lecture/create/', keystone.middleware.api, routes.api.lecture.create);
 	app.post('/api/comment/create/', keystone.middleware.api, routes.api.comment.create);
+	app.all('/api/comment/update/:id', keystone.middleware.api, routes.api.comment.update);
 	app.get('/api/comment/', keystone.middleware.api, routes.api.comment.list);
 	app.get('/api/comment/getlimitedlist/', keystone.middleware.api, routes.api.comment.getlimitedlist);
 	app.post('/api/comment/:id/remove', keystone.middleware.api, routes.api.comment.remove);
@@ -166,15 +167,17 @@ exports = module.exports = function (app) {
                 `;
 		}
 
-		modelHelper.getStaticNavigation().then(result => {
+		modelHelper.getStaticNavigation().then((result) => {
 			console.log('KEYSTONE STATIC MENU RESTORED');
 			console.dir(result);
 			// Send the html boilerplate
 			if (req.originalUrl.includes('/admin')) {
 				res.sendFile(path.join(__dirname, '../../admin/', 'index1.html'));
-			} else {
-				res.send(renderFullPage(result));
 			}
+			else
+			{ res.send(renderFullPage(result)); }
 		});
+
+
 	});
 };

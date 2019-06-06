@@ -7,7 +7,6 @@ let logger = require('./../../logger/logger');
 const AWS = require('aws-sdk');
 const axios = require('axios');
 const fs = require('fs');
-var https = require('https');
 const readFilePromise = require('fs-readfile-promise');
 
 var transporter = nodemailer.createTransport(
@@ -40,6 +39,24 @@ exports.list = function(req, res) {
 				$regex: '.*' + req.query.email + '.*',
 				$options: 'i'
 			}
+		});
+	}
+
+	if (req.query.disciple) {
+		query.push({
+			disciple: {
+				$regex: '.*' + req.query.disciple + '.*',
+				$options: 'i',
+			},
+		});
+	}
+
+	if (req.query.discipleName) {
+		query.push({
+			discipleName: {
+				$regex: '.*' + req.query.discipleName + '.*',
+				$options: 'i',
+			},
 		});
 	}
 
@@ -92,9 +109,8 @@ exports.signin = function(req, res) {
 		'API signin user'
 	);
 
-	if (!req.body.username || !req.body.password) {
-		return res.json({ success: false });
-	}
+	if (!req.body.username || !req.body.password)
+	{ return res.json({ success: false }); }
 
 	keystone
 		.list('User')
@@ -221,16 +237,15 @@ exports.signup = function(req, res) {
 						nid: req.body.oldData.nid,
 						init: req.body.oldData.init,
 						picture: req.body.oldData.picture,
-						path: req.body.oldData.path
-					}
+						path: req.body.oldData.path,
+					},
+
 				};
 				if (Object.keys(req.body.disciple_profile).length > 0) {
 					console.log('inside it');
 					userData.disciple_profile = {
-						first_initiation_date:
-							req.body.disciple_profile.first_initiation_date,
-						second_initiation_date:
-							req.body.disciple_profile.second_initiation_date,
+						first_initiation_date: req.body.disciple_profile.first_initiation_date,
+						second_initiation_date: req.body.disciple_profile.second_initiation_date,
 						spiritual_name: req.body.disciple_profile.spiritual_name,
 						temple: req.body.disciple_profile.temple,
 						verifier: req.body.disciple_profile.verifier,
@@ -766,22 +781,23 @@ exports.approvedUserForSadhana = function(req, res) {
 		});
 };
 
-function generatePresignedUrl(type = 'upload', fileDetails, s3, config) {
+// eslint-disable-next-line no-unused-vars
+function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
 	let fileType = fileDetails.filemime;
 	let myKey = `profilePicture/${fileDetails.filename}`;
 	let urlType = {
 		upload: 'putObject',
-		download: 'getObject'
+		download: 'getObject',
 	};
 	const commonOptions = {
 		Bucket: process.env.bucket,
 		Key: myKey,
 		Expires: 100000,
-		ACL: 'public-read'
+		ACL: 'public-read',
 	};
 	const options = {
 		upload: Object.assign({}, commonOptions, { ContentType: fileType }),
-		download: Object.assign({}, commonOptions)
+		download: Object.assign({}, commonOptions),
 	};
 	return s3.getSignedUrl(urlType[type], options[type]);
 }
@@ -792,12 +808,12 @@ function generatePresignedUrl(type = 'upload', fileDetails, s3, config) {
  * @param {string} awsConfig.accessKeyId Access Key of AWS configuration
  * @param {string} awsConfig.secretAccessKey Access Secret Key(Token) of AWS configuration
  */
-function generateS3Object(awsConfig) {
+function generateS3Object (awsConfig) {
 	const awsConfigObj = {
 		accessKeyId: process.env.accessKeyId,
 		secretAccessKey: process.env.secretAccessKey,
 		s3BucketEndpoint: false,
-		endpoint: 'https://s3.amazonaws.com'
+		endpoint: 'https://s3.amazonaws.com',
 	};
 	AWS.config.update(awsConfigObj);
 	return new AWS.S3();
@@ -815,13 +831,13 @@ async function uploadToAWS(filePath, req, response) {
 		Body: base64data,
 		ACL: 'public-read'
 	};
-	// fs.unlink(filePath, err => {
-	// 	if (err) {
-	// 		console.log(err);
-	// 	} else {
-	// 		console.log('deleted file');
-	// 	}
-	// });
+	fs.unlink(filePath, err => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('deleted file');
+		}
+	});
 	const s3 = generateS3Object();
 	s3.upload(params, (err, data) => {
 		if (err) console.error(`Upload Error ${err}`);
