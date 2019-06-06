@@ -92,6 +92,24 @@ exports.getlimitedlist = function (req, res) {
 
 	let DateSort = 'date';
 
+	let query = [];
+	if (req.query.approved) {
+		query.push({
+			approved: {
+				$regex: '.*' + req.query.approved + '.*',
+				$options: 'i',
+			},
+		});
+	}
+
+	let filters = {};
+
+	if (query.length > 0) {
+		filters = {
+			$and: query,
+		};
+	}
+
 	logger.info(
 		{
 			req: req,
@@ -101,6 +119,7 @@ exports.getlimitedlist = function (req, res) {
 	Comment.paginate({
 		page: req.query.page || 1,
 		perPage: 10,
+		filters: filters,
 	}).sort('-dateCreated').exec(function (err, items) {
 		if (err) {
 			logger.error(
