@@ -239,7 +239,8 @@ export class SadhanaList extends React.Component {
 													pagination={this.state.pagination}
 													loading={this.state.loading}
 													onChange={this.handlePagination}
-													rowClassName="tableRow"
+													rowClassName={(record, index) => {
+													return index%2===0?"tableRow grey":"tableRow white" }}
 												/>
 											</div>
 										) : (

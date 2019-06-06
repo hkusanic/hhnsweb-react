@@ -118,12 +118,14 @@ export class TranscriptionDetails extends React.Component {
 											<a>Transcription</a>
 										</li>
 									</ul>
-									<div>
-										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? lectureDetails.en.transcription.text
-												: lectureDetails.en.transcription.text
-										)}
+									<div className="row">
+										<div className="col mx-3">
+											{renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? lectureDetails.en.transcription.text
+													: lectureDetails.en.transcription.text
+											)}
+										</div>
 									</div>
 								</article>
 								<div style={{ paddingTop: '20px' }}>
