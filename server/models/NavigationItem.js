@@ -1,4 +1,5 @@
 const keystone = require('keystone');
+const Types = keystone.Field.Types;
 
 let NavigationItem = new keystone.List('NavigationItem', {
 	autokey: { path: 'slug', from: 'name', unique: true },

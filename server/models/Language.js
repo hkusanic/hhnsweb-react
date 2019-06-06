@@ -1,4 +1,5 @@
 const keystone = require('keystone');
+const Types = keystone.Field.Types;
 
 let Language = new keystone.List('Language', {
 	autokey: { path: 'slug', from: 'title _id', unique: true },

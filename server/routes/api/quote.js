@@ -76,6 +76,7 @@ exports.create = function(req, res) {
 	var item = new Quote.model();
 	var data = req.method === 'POST' ? req.body : req.query;
 	data.date = data.date ? data.date : todayDate();
+	data.published_date = todayDate();
 	logger.info(
 		{
 			req: req
