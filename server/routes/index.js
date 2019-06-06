@@ -2,6 +2,7 @@ var keystone = require('keystone');
 let modelHelper = require('../helpers/modelHelper');
 var path = require('path');
 
+
 // Then to get access to our API route we will use importer
 var importRoutes = keystone.importer(__dirname);
 // And finally set up the api on a route
@@ -16,7 +17,6 @@ exports = module.exports = function (app) {
 	// Get access to the API route in our app
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
 	app.get('/api/content/', keystone.middleware.api, routes.api.content.list);
-	app.get('/api/content/getLimitedList', keystone.middleware.api, routes.api.content.getlimitedlist);
 	app.all('/api/appointment/:id/update', keystone.middleware.api, routes.api.appointment.update);
 	app.post('/api/appointment/:id/remove', keystone.middleware.api, routes.api.appointment.remove);
 	app.all('/api/appointment/create', keystone.middleware.api, routes.api.appointment.create);
@@ -44,6 +44,7 @@ exports = module.exports = function (app) {
 	app.post('/api/lecture/createBulk/', keystone.middleware.api, routes.api.lecture.createBulk);
 	app.post('/api/lecture/create/', keystone.middleware.api, routes.api.lecture.create);
 	app.post('/api/comment/create/', keystone.middleware.api, routes.api.comment.create);
+	app.all('/api/comment/update/:id', keystone.middleware.api, routes.api.comment.update);
 	app.get('/api/comment/', keystone.middleware.api, routes.api.comment.list);
 	app.get('/api/comment/getlimitedlist/', keystone.middleware.api, routes.api.comment.getlimitedlist);
 	app.post('/api/comment/:id/remove', keystone.middleware.api, routes.api.comment.remove);
@@ -120,7 +121,6 @@ exports = module.exports = function (app) {
 	app.post('/api/user/approveSadhanaSheet', keystone.middleware.api, routes.api.user.approvedUserForSadhana);
 	app.post('/api/user/getUserByUserId', keystone.middleware.api, routes.api.user.getUserByUserId);
 	app.post('/api/user/create/', keystone.middleware.api, routes.api.user.create);
-	app.post('/api/user/uploadPic', keystone.middleware.api, routes.api.user.uploadPic);
 	app.post('/api/user/createBulk/', keystone.middleware.api, routes.api.user.createBulk);
 
 	app.options('/api*', function (req, res) { res.send(200); });
@@ -166,15 +166,17 @@ exports = module.exports = function (app) {
                 `;
 		}
 
-		modelHelper.getStaticNavigation().then(result => {
+		modelHelper.getStaticNavigation().then((result) => {
 			console.log('KEYSTONE STATIC MENU RESTORED');
 			console.dir(result);
 			// Send the html boilerplate
 			if (req.originalUrl.includes('/admin')) {
 				res.sendFile(path.join(__dirname, '../../admin/', 'index1.html'));
-			} else {
-				res.send(renderFullPage(result));
 			}
+			else
+			{ res.send(renderFullPage(result)); }
 		});
+
+
 	});
 };
