@@ -16,6 +16,7 @@ export class SadhanaList extends React.Component {
 			isUserLogin: true,
 			userEmail: '',
 			pagination: {},
+			sadhanaList: [],
 		};
 	}
 
@@ -50,9 +51,28 @@ export class SadhanaList extends React.Component {
 		pagination.total = nextProps.sadhana.totalSadhanaSheet;
 		pagination.defaultPageSize = defaultPageSize;
 		pagination.current = nextProps.sadhana.currentPage;
-
+		let sadhanaList = nextProps.sadhana.sadhanaList.map((obj, index) => {
+			let obj1 = {
+				additional_comments:obj.additional_comments.substring(0, 200),
+				approved: obj.approved,
+				association: obj.association.substring(0, 200),
+				comments: obj.comments.substring(0, 200),
+				creation_date_time: obj.creation_date_time,
+				date: obj.date,
+				lectures: obj.lectures,
+				reading: obj.reading.substring(0, 200),
+				rounds: obj.rounds,
+				slug: obj.slug,
+				time_rising: obj.time_rising,
+				uuid: obj.uuid,
+				__v: obj.__v,
+				_id: obj._id,
+			}
+			return obj1;
+		});
 		this.setState({
 			pagination,
+			sadhanaList : sadhanaList,
 		});
 	}
 
@@ -123,27 +143,31 @@ export class SadhanaList extends React.Component {
 				title: 'Date',
 				dataIndex: 'date',
 				key: 'date',
-				render: date => <span>{`${new Date(date).toDateString()}`}</span>,
+				render: date => <div><div className="sadhnaTable_headers">Date</div><div>{`${new Date(date).toDateString()}`}</div></div>,
 			},
 			{
 				title: 'Time Rising',
 				dataIndex: 'time_rising',
 				key: 'time_rising',
+				render: time_rising => <div><div className="sadhnaTable_headers">Time Rising</div><div>{time_rising}</div></div>
 			},
 			{
 				title: 'Rounds',
 				dataIndex: 'rounds',
 				key: 'rounds',
+				render: rounds => <div><div className="sadhnaTable_headers">Rounds</div><div>{rounds}</div></div>
 			},
 			{
 				title: 'Reading',
 				dataIndex: 'reading',
 				key: 'reading',
+				render: reading => <div><div className="sadhnaTable_headers">Reading</div><div>{reading}</div></div>
 			},
 			{
 				title: 'Association',
 				dataIndex: 'association',
 				key: 'association',
+				render: association => <div><div className="sadhnaTable_headers">Association</div><div>{association}</div></div>
 			},
 		];
 		return (
@@ -155,9 +179,9 @@ export class SadhanaList extends React.Component {
 							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
 					}}
 				>
-					<div class="breadcrumbs-custom-inner headingImage">
-						<div class="container breadcrumbs-custom-container">
-							<ul class="breadcrumbs-custom-path">
+					<div className="breadcrumbs-custom-inner headingImage">
+						<div className="container breadcrumbs-custom-container">
+							<ul className="breadcrumbs-custom-path">
 								<li>
 									<Link to="" onClick={() => this.props.history.push('/')}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -178,7 +202,7 @@ export class SadhanaList extends React.Component {
 								style={{ marginTop: '0', marginBottom: '0' }}
 							>
 								<div className="col-lg-12">
-									<div>
+									<div className="centerAlign">
 										<DatePicker onChange={this.handleDateChange} className="datePickerFilter" />
 										<Button
 											type="primary"
@@ -199,7 +223,7 @@ export class SadhanaList extends React.Component {
 													columns={columns}
 													rowKey={record => record.uuid}
 													dataSource={sortByDate(
-														this.props.sadhana.sadhanaList,
+														this.state.sadhanaList,
 														'date'
 													)}
 													onRow={(record, index) => {

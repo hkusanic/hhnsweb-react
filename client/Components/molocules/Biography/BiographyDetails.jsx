@@ -22,19 +22,44 @@ export class BiographyDetails extends Component {
 						<div className="row row-50">
 							<div className="col-lg-12">
 								<article className="post-creative">
-									<h3 className="post-creative-title alignment padLeft">
+								<div className="container">
+									<div className="row">
+										<div className="col-12">
+											<h3 className="post-creative-title centerAlign alignment">
+												{renderHTML(
+													reactCookie.load('languageCode') === 'en'
+														? this.props.location.state.title_en
+														: this.props.location.state.title_ru
+												)}
+											</h3>
+										</div>
+									</div>
+									<div className="row">
+										<div className="col">
+										<div className="floated">
+										<img style={{objectFit: 'cover'}} src={this.props.location.state.img} />
+										</div>
+										{renderHTML(
+										reactCookie.load('languageCode') === 'en'
+											? this.props.location.state.content_en
+											: this.props.location.state.content_ru
+									)}
+										</div>
+									</div>
+								</div>
+									{/* <h3 className="post-creative-title centerAlign alignment">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.title_en
 												: this.props.location.state.title_ru
 										)}
-									</h3>
-									<img src={this.props.location.state.img} />
-									{renderHTML(
+									</h3> */}
+									{/* <img src={this.props.location.state.img} /> */}
+									{/* {renderHTML(
 										reactCookie.load('languageCode') === 'en'
 											? this.props.location.state.content_en
 											: this.props.location.state.content_ru
-									)}
+									)} */}
 								</article>
 							</div>
 							<div className="col-lg-4" />

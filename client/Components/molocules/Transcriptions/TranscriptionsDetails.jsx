@@ -51,7 +51,8 @@ export class TranscriptionDetails extends React.Component {
 
 	render() {
 		const { lectureDetails } = this.state;
-
+		const mobileBrkPnt = 767;
+		const maxWidth = window.screen.width;
 		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
 		}
@@ -100,7 +101,7 @@ export class TranscriptionDetails extends React.Component {
 					</div>
 				</section>
 				<section className="section section-lg">
-					<div className="container padLeftBlog">
+					<div className="container">
 						<div className="row row-50">
 							<div className="col-lg-12">
 								<article className="post-creative">
@@ -139,7 +140,7 @@ export class TranscriptionDetails extends React.Component {
 											<tr>
 												<td>
 													<b>
-														<span>Audio</span> :
+														<span>Audio</span> {maxWidth > mobileBrkPnt?':':null}
 													</b>
 												</td>
 												<td className="padLeftRow">

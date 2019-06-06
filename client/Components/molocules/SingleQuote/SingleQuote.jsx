@@ -42,7 +42,7 @@ export class SingleQuote extends Component {
 						</div>
 						<div class="quote-modern-meta">
 							<div class="quote-modern-info">
-								<cite class="quote-modern-cite">{this.props.quote.en.source_of_quote}</cite>
+								<cite style={{fontSize: 16}} class="quote-modern-text">{this.props.quote.en.source_of_quote}</cite>
 							</div>
 						</div>
 					</blockquote>
