@@ -16,7 +16,6 @@ QuoteTopicList.add({
         unique: true,},
     name_ru: {type: String,initial: true,required: true,
 						unique: true,},
-		created_date_time: { type: Types.Date, default: Date.now }
 
 });
 

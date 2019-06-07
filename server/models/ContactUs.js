@@ -23,7 +23,6 @@ ContactUs.add({
 	message: {
 		type: String,
 	},
-	created_date_time: { type: Types.Date, default: Date.now }
 
 
 });

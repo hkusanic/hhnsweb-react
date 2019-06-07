@@ -11,7 +11,6 @@ let Topic = new keystone.List('Topic', {
 Topic.add({
 	title_en: { type: String },
 	title_ru: { type: String },
-	created_date_time: { type: Types.Date, default: Date.now }
 
 });
 
