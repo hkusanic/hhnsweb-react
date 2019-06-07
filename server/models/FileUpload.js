@@ -32,6 +32,7 @@ FileUpload.add({
 	children: { type: String },
 	url: { type: String },
 	fileType: { type: String },
+	created_date_time: { type: Types.Date, default: Date.now }
 });
 
 
