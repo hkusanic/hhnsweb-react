@@ -44,6 +44,8 @@ Booking.add({
 		type: Types.Date,
 		default: Date.now,
 	},
+	created_date_time: { type: Types.Date, default: Date.now }
+
 
 });
 

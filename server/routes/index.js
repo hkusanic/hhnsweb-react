@@ -59,6 +59,7 @@ exports = module.exports = function (app) {
 	app.post('/api/quote/:id/remove', keystone.middleware.api, routes.api.quote.remove);
 	app.post('/api/quote/create/', keystone.middleware.api, routes.api.quote.create);
 	app.get('/api/quote/', keystone.middleware.api, routes.api.quote.list);
+	app.post('/api/quote/quoteOfDay/', keystone.middleware.api, routes.api.quote.quoteOfDay);
 	app.post('/api/quote/:id/update', keystone.middleware.api, routes.api.quote.update);
 	app.post('/api/quote/getquotebyid/', keystone.middleware.api, routes.api.quote.getquotebyid);
 	app.all('/api/video/:id/update', keystone.middleware.api, routes.api.video.update);
@@ -121,6 +122,7 @@ exports = module.exports = function (app) {
 	app.post('/api/user/getUserByUserId', keystone.middleware.api, routes.api.user.getUserByUserId);
 	app.post('/api/user/create/', keystone.middleware.api, routes.api.user.create);
 	app.post('/api/user/createBulk/', keystone.middleware.api, routes.api.user.createBulk);
+	app.post('/api/user/uploadPic/', keystone.middleware.api, routes.api.user.uploadPic);
 
 	app.options('/api*', function (req, res) { res.send(200); });
 

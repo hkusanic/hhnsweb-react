@@ -15,7 +15,7 @@ class RussiaDubbedLectures extends Component {
         this.setState({
             lecture: this.props.lectureDetails.lecture
         });
-        this.props.getRussianDubbedLecture({ page: 1, translation: "Russian dubbed" })
+        this.props.getRussianDubbedLecture({ page: 1, translation: "Russian dubbed", limit: 5 })
     }
 
 

@@ -15,7 +15,9 @@ QuoteTopicList.add({
     name_en: {type: String,initial: true,required: true,
         unique: true,},
     name_ru: {type: String,initial: true,required: true,
-            unique: true,},
+						unique: true,},
+		created_date_time: { type: Types.Date, default: Date.now }
+
 });
 
 

@@ -3,7 +3,7 @@ let logger = require('./../../logger/logger');
 var quote_LIST = require('../../constants/constant');
 
 var Quote = keystone.list('Quote');
-function todayDate () {
+function todayDate() {
 	var today = new Date();
 	var dd = today.getDate();
 	var mm = today.getMonth() + 1; // January is 0!
@@ -19,7 +19,7 @@ function todayDate () {
 	return today;
 }
 
-exports.list = function (req, res) {
+exports.list = function(req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	let query = [];
 
@@ -27,8 +27,8 @@ exports.list = function (req, res) {
 		query.push({
 			author: {
 				$regex: '.*' + req.query.author + '.*',
-				$options: 'i',
-			},
+				$options: 'i'
+			}
 		});
 	}
 
@@ -36,159 +36,242 @@ exports.list = function (req, res) {
 
 	if (query.length > 0) {
 		filters = {
-			$and: query,
+			$and: query
 		};
 	}
 
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API list Quote'
 	);
 	Quote.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
-		filters: filters,
-	}).sort('-date').exec(function (err, items) {
+		filters: filters
+	})
+		.sort('-date')
+		.exec(function(err, items) {
+			if (err) {
+				logger.error(
+					{
+						error: err
+					},
+					'API list Quote'
+				);
+				return res.apiError('database error', err);
+			}
+			return res.apiResponse({
+				// Filter page by
+				quote: items
+			});
+
+			// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
+			// This is handy if we want to speed up loading times once our Quote collection grows
+		});
+};
+
+exports.create = function(req, res) {
+	var item = new Quote.model();
+	var data = req.method === 'POST' ? req.body : req.query;
+	data.date = data.date ? data.date : todayDate();
+	data.published_date = todayDate();
+	logger.info(
+		{
+			req: req
+		},
+		'API create quote'
+	);
+	item.getUpdateHandler(req).process(data, function(err) {
 		if (err) {
 			logger.error(
 				{
-					error: err,
+					error: err
 				},
-				'API list Quote'
+				'API create quote'
 			);
-			return res.apiError('database error', err);
-		}
-		return res.apiResponse({
-			// Filter page by
-			quote: items,
-		});
-
-		// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
-		// This is handy if we want to speed up loading times once our Quote collection grows
-	});
-};
-
-
-exports.create = function (req, res) {
-
-	var item = new Quote.model();
-	var data = (req.method === 'POST') ? req.body : req.query;
-	data.date = data.date ? data.date : todayDate();
-	logger.info({
-		req: req,
-	}, 'API create quote');
-	item.getUpdateHandler(req).process(data, function (err) {
-
-		if (err) {
-			logger.error({
-				error: err,
-			}, 'API create quote');
 			return res.apiError('error', err);
 		}
 
 		res.apiResponse({
-			quote: item,
+			quote: item
 		});
-
 	});
 };
 
-exports.getquotebyid = function (req, res) {
+exports.getquotebyid = function(req, res) {
 	if (!req.body.uuid) {
-		res.json({ error: { title: 'Id is Required', detail: 'Mandatory values are missing. Please check.' } });
+		res.json({
+			error: {
+				title: 'Id is Required',
+				detail: 'Mandatory values are missing. Please check.'
+			}
+		});
 	}
 
-	Quote.model.findOne().where('uuid', req.body.uuid).exec((err, quote) => {
-
-		if (err || !quote) {
-			logger.error({
-				error: err,
-			}, 'API getblogbyid');
-			return res.json({ error: { title: 'Not able to find quote' } });
-		}
-		res.json({
-			quote: quote,
-			success: true,
+	Quote.model
+		.findOne()
+		.where('uuid', req.body.uuid)
+		.exec((err, quote) => {
+			if (err || !quote) {
+				logger.error(
+					{
+						error: err
+					},
+					'API getblogbyid'
+				);
+				return res.json({ error: { title: 'Not able to find quote' } });
+			}
+			res.json({
+				quote: quote,
+				success: true
+			});
 		});
-	});
-
 };
 
+exports.update = function(req, res) {
+	logger.info(
+		{
+			req: req
+		},
+		'API update blog'
+	);
 
-exports.update = function (req, res) {
-	logger.info({
-		req: req,
-	}, 'API update blog');
-
-	Quote.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
-
+	Quote.model.findOne({ uuid: req.params.id }).exec(function(err, item) {
 		if (err) {
-			logger.error({
-				error: err,
-			}, 'API update quote');
+			logger.error(
+				{
+					error: err
+				},
+				'API update quote'
+			);
 			return res.apiError('database error', err);
 		}
 		if (!item) {
-			logger.error({
-				error: 'Item not found',
-			}, 'API update quote');
+			logger.error(
+				{
+					error: 'Item not found'
+				},
+				'API update quote'
+			);
 			return res.apiError('not found');
 		}
 
-		var data = (req.method === 'POST') ? req.body : req.query;
+		var data = req.method === 'POST' ? req.body : req.query;
 
-		item.getUpdateHandler(req).process(data, function (err) {
-
+		item.getUpdateHandler(req).process(data, function(err) {
 			if (err) {
-				logger.error({
-					error: err,
-				}, 'API update quote');
+				logger.error(
+					{
+						error: err
+					},
+					'API update quote'
+				);
 				return res.apiError('create error', err);
 			}
 
 			res.apiResponse({
-				Quote: item,
+				Quote: item
 			});
-
 		});
-
 	});
 };
 
-
-exports.remove = function (req, res) {
-	logger.info({
-		req: req,
-	}, 'API remove quote');
-	Quote.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
-
+exports.remove = function(req, res) {
+	logger.info(
+		{
+			req: req
+		},
+		'API remove quote'
+	);
+	Quote.model.findOne({ uuid: req.params.id }).exec(function(err, item) {
 		if (err) {
-			logger.error({
-				error: err,
-			}, 'API remove quote');
+			logger.error(
+				{
+					error: err
+				},
+				'API remove quote'
+			);
 			return res.apiError('database error', err);
 		}
 		if (!item) {
-			logger.error({
-				error: 'No Item',
-			}, 'API remove quote');
+			logger.error(
+				{
+					error: 'No Item'
+				},
+				'API remove quote'
+			);
 			return res.apiError('not found');
 		}
 
-		item.remove(function (err) {
+		item.remove(function(err) {
 			if (err) {
-				logger.error({
-					error: err,
-				}, 'API remove quote');
+				logger.error(
+					{
+						error: err
+					},
+					'API remove quote'
+				);
 				return res.apiError('database error', err);
 			}
 
 			return res.apiResponse({
-				quote: true,
+				quote: true
 			});
 		});
+	});
+};
 
+exports.quoteOfDay = async function(req, res) {
+	if (!req.body && req.body.length < 1) {
+		return res.json({
+			error: {
+				title: 'Author for quotes is not mentioned',
+				detail: 'Mandatory values are missing. Please check.'
+			}
+		});
+	}
+	logger.info(
+		{
+			req: req
+		},
+		'API GET QUOTE OF THE DAY'
+	);
+	let quotesOfDay = [];
+	for (let i = 0; i < req.body.length; i++) {
+		let date = todayDate();
+		let author = req.body[i].toLowerCase();
+		await Quote.model
+			.findOne()
+			.where({ $and: [{ published_date: date }, { author: author }] })
+			.exec(function(err, item) {
+				if (err) {
+					logger.error(
+						{
+							error: err
+						},
+						'API GET QUOTE OF THE DAY'
+					);
+					return res.apiError({ err: err });
+				}
+
+				if (item) {
+					quotesOfDay.push(item);
+				}
+			});
+	}
+	if (quotesOfDay.length < 1) {
+		logger.error(
+			{
+				error: 'No Item'
+			},
+			'API GET  QUOTE OF THE DAY'
+		);
+		return res.json({ err: 'NO QUOTE FOUND' });
+	}
+
+	return res.apiResponse({
+		quote: quotesOfDay
 	});
 };

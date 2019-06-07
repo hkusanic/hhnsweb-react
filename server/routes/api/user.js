@@ -7,29 +7,29 @@ let logger = require('./../../logger/logger');
 const AWS = require('aws-sdk');
 const axios = require('axios');
 const fs = require('fs');
-var https = require('https');
+const readFilePromise = require('fs-readfile-promise');
 
 var transporter = nodemailer.createTransport(
 	EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig
 );
 
-function sendMail (from, to, subject, html) {
+function sendMail(from, to, subject, html) {
 	var mailOptions = createMailBody(from, to, subject, html);
 
 	return transporter.sendMail(mailOptions);
 }
 
-function createMailBody (from, to, subject, html) {
+function createMailBody(from, to, subject, html) {
 	var mailOptions = {
 		from: from,
 		to: to,
 		subject: subject,
-		html: html,
+		html: html
 	};
 	return mailOptions;
 }
 
-exports.list = function (req, res) {
+exports.list = function(req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	let query = [];
 	let DateSort = '-date';
@@ -37,8 +37,8 @@ exports.list = function (req, res) {
 		query.push({
 			email: {
 				$regex: '.*' + req.query.email + '.*',
-				$options: 'i',
-			},
+				$options: 'i'
+			}
 		});
 	}
 
@@ -46,8 +46,17 @@ exports.list = function (req, res) {
 		query.push({
 			disciple: {
 				$regex: '.*' + req.query.disciple + '.*',
-				$options: 'i',
-			},
+				$options: 'i'
+			}
+		});
+	}
+
+	if (req.query.disciple) {
+		query.push({
+			disciple: {
+				$regex: '.*' + req.query.disciple + '.*',
+				$options: 'i'
+			}
 		});
 	}
 
@@ -55,8 +64,8 @@ exports.list = function (req, res) {
 		query.push({
 			discipleName: {
 				$regex: '.*' + req.query.discipleName + '.*',
-				$options: 'i',
-			},
+				$options: 'i'
+			}
 		});
 	}
 
@@ -64,13 +73,13 @@ exports.list = function (req, res) {
 
 	if (query.length > 0) {
 		filters = {
-			$and: query,
+			$and: query
 		};
 	}
 
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API list users'
 	);
@@ -80,14 +89,14 @@ exports.list = function (req, res) {
 		.paginate({
 			page: req.query.page || 1,
 			perPage: 10000,
-			filters: filters,
+			filters: filters
 		})
 		.sort(DateSort)
-		.exec(function (err, items) {
+		.exec(function(err, items) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API list lecture'
 				);
@@ -96,15 +105,15 @@ exports.list = function (req, res) {
 			return res.apiResponse({
 				success: true,
 				users: items.results,
-				total: items.results.length,
+				total: items.results.length
 			});
 		});
 };
 
-exports.signin = function (req, res) {
+exports.signin = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API signin user'
 	);
@@ -115,11 +124,11 @@ exports.signin = function (req, res) {
 	keystone
 		.list('User')
 		.model.findOne({ email: req.body.username })
-		.exec(function (err, user) {
+		.exec(function(err, user) {
 			if (err || !user) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API signin user'
 				);
@@ -127,8 +136,8 @@ exports.signin = function (req, res) {
 					success: false,
 					session: false,
 					message:
-						(err && err.message ? err.message : false)
-						|| 'Sorry, there was an issue signing you in, please try again.',
+						(err && err.message ? err.message : false) ||
+						'Sorry, there was an issue signing you in, please try again.'
 				});
 			}
 
@@ -136,7 +145,7 @@ exports.signin = function (req, res) {
 				{ email: user.email, password: req.body.password },
 				req,
 				res,
-				function (user) {
+				function(user) {
 					return res.json({
 						success: true,
 						session: true,
@@ -150,14 +159,14 @@ exports.signin = function (req, res) {
 							mobileNumber: user.mobileNumber,
 							countryCode: user.countryCode,
 							user_id: user.user_id,
-							youbookme_url: process.env.YOUBOOKME_URL,
-						},
+							youbookme_url: process.env.YOUBOOKME_URL
+						}
 					});
 				},
-				function (err) {
+				function(err) {
 					logger.error(
 						{
-							error: err,
+							error: err
 						},
 						'API signin user'
 					);
@@ -166,26 +175,26 @@ exports.signin = function (req, res) {
 						success: false,
 						session: false,
 						message:
-							(err && err.message ? err.message : false)
-							|| 'Sorry, there was an issue signing you in, please try again.',
+							(err && err.message ? err.message : false) ||
+							'Sorry, there was an issue signing you in, please try again.'
 					});
 				}
 			);
 		});
 };
 
-exports.signout = function (req, res) {
+exports.signout = function(req, res) {
 	keystone.session.signout(req, res, () => {
 		res.json({
-			signedout: true,
+			signedout: true
 		});
 	});
 };
 
-exports.signup = function (req, res) {
+exports.signup = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API signup user'
 	);
@@ -195,15 +204,15 @@ exports.signup = function (req, res) {
 			cb => {
 				keystone.list('User').model.findOne(
 					{
-						email: req.body.email,
+						email: req.body.email
 					},
 					(err, user) => {
 						if (err || user) {
 							return res.json({
 								error: {
 									title: 'User already exists with that email',
-									detail: 'Please try with another email',
-								},
+									detail: 'Please try with another email'
+								}
 							});
 						}
 						return cb();
@@ -214,7 +223,7 @@ exports.signup = function (req, res) {
 				let userData = {
 					name: {
 						first: req.body.name ? req.body.name.first : '',
-						last: req.body.name ? req.body.name.last : '',
+						last: req.body.name ? req.body.name.last : ''
 					},
 					user_id: req.body.user_id,
 					userName: req.body.userName,
@@ -237,9 +246,8 @@ exports.signup = function (req, res) {
 						nid: req.body.oldData.nid,
 						init: req.body.oldData.init,
 						picture: req.body.oldData.picture,
-						path: req.body.oldData.path,
-					},
-
+						path: req.body.oldData.path
+					}
 				};
 				if (Object.keys(req.body.disciple_profile).length > 0) {
 					console.log('inside it');
@@ -250,7 +258,7 @@ exports.signup = function (req, res) {
 						temple: req.body.disciple_profile.temple,
 						verifier: req.body.disciple_profile.verifier,
 						marital_status: req.body.disciple_profile.marital_status,
-						education: req.body.disciple_profile.education,
+						education: req.body.disciple_profile.education
 					};
 				}
 
@@ -260,19 +268,19 @@ exports.signup = function (req, res) {
 				newUser.save(err => {
 					return cb(err);
 				});
-			},
+			}
 		],
 		err => {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API signup user'
 				);
 				console.log('ERROR222', err);
 			}
-			let onSuccess = function (user) {
+			let onSuccess = function(user) {
 				res.json({
 					success: true,
 					session: true,
@@ -286,23 +294,23 @@ exports.signup = function (req, res) {
 						mobileNumber: user.mobileNumber,
 						countryCode: user.countryCode,
 						user_id: user.user_id,
-						youbookme_url: process.env.YOUBOOKME_URL,
-					},
+						youbookme_url: process.env.YOUBOOKME_URL
+					}
 				});
 			};
 
-			let onFail = function (e) {
+			let onFail = function(e) {
 				logger.error(
 					{
-						error: e,
+						error: e
 					},
 					'API signup user'
 				);
 				res.json({
 					error: {
 						title: 'Sign up error',
-						detail: 'There was a problem signing you up, please try again',
-					},
+						detail: 'There was a problem signing you up, please try again'
+					}
 				});
 				console.log('ERROR111', e);
 			};
@@ -320,21 +328,21 @@ exports.signup = function (req, res) {
 
 var User = keystone.list('User');
 
-exports.create = function (req, res) {
+exports.create = function(req, res) {
 	var item = new User.model();
 	var data = req.method === 'POST' ? req.body : req.query;
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API create User'
 	);
 	// data.oldData.picture = JSON.stringify(data.oldData.picture);
-	item.getUpdateHandler(req).process(data, function (err) {
+	item.getUpdateHandler(req).process(data, function(err) {
 		if (err) {
 			logger.error(
 				{
-					error: err,
+					error: err
 				},
 				'API create lecture'
 			);
@@ -342,43 +350,43 @@ exports.create = function (req, res) {
 		}
 
 		res.apiResponse({
-			user: item,
+			user: item
 		});
 	});
 };
 
-exports.createBulk = function (req, res) {
+exports.createBulk = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API createBulk User'
 	);
 	keystone.createItems(
 		{
-			User: req.body,
+			User: req.body
 		},
-		function (err, stats) {
+		function(err, stats) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API createBulk User'
 				);
 				return res.apiError('error', err);
 			}
 			return res.apiResponse({
-				User: true,
+				User: true
 			});
 		}
 	);
 };
 
-exports.forgotpassword = function (req, res) {
+exports.forgotpassword = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API forgotpassword'
 	);
@@ -386,14 +394,14 @@ exports.forgotpassword = function (req, res) {
 		to: req.body.email,
 		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
 		subject: '',
-		html: '',
+		html: ''
 	};
 	if (!req.body.email) {
 		res.json({
 			error: {
 				title: 'Email is Reqired',
-				detail: 'Mandatory values are missing. Please check.',
-			},
+				detail: 'Mandatory values are missing. Please check.'
+			}
 		});
 	}
 
@@ -405,7 +413,7 @@ exports.forgotpassword = function (req, res) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API forgotpassword'
 				);
@@ -417,7 +425,7 @@ exports.forgotpassword = function (req, res) {
 				if (err) {
 					logger.error(
 						{
-							error: err,
+							error: err
 						},
 						'API forgotpassword'
 					);
@@ -429,10 +437,10 @@ exports.forgotpassword = function (req, res) {
 	  <p>Please accept our humble obeisances.</p>
 	  <p>All glories to Srila Prabhupada!</p>
 	  <br/>
-	  <p>Please click on the following link <a href="${EMAIL_CONFIG.CONSTANTS
-		.SITE_URL
-			+ '/reset-password?accessid='
-			+ userFound.accessKeyId}">here </a>to reset your password</p>
+	  <p>Please click on the following link <a href='${EMAIL_CONFIG.CONSTANTS
+			.SITE_URL +
+			'/reset-password?accessid=' +
+			userFound.accessKeyId}'>here </a>to reset your password</p>
 	  <br/>
 	  <p>Your servants always,</p>
 	  <p>Site administrators</p>
@@ -445,26 +453,26 @@ exports.forgotpassword = function (req, res) {
 					.catch(err => {
 						logger.error(
 							{
-								error: err,
+								error: err
 							},
 							'API forgotpassword'
 						);
 						console.error(err);
 					});
 				res.json({
-					success: true,
+					success: true
 				});
 			});
 		});
 };
 
-exports.getuserbyaccessid = function (req, res) {
+exports.getuserbyaccessid = function(req, res) {
 	if (!req.body.accessid) {
 		res.json({
 			error: {
 				title: 'Access Id is Required',
-				detail: 'Mandatory values are missing. Please check.',
-			},
+				detail: 'Mandatory values are missing. Please check.'
+			}
 		});
 	}
 
@@ -476,7 +484,7 @@ exports.getuserbyaccessid = function (req, res) {
 			if (err || !userFound) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API getuserbyaccessid'
 				);
@@ -484,25 +492,25 @@ exports.getuserbyaccessid = function (req, res) {
 			}
 			res.json({
 				email: userFound.email,
-				success: true,
+				success: true
 			});
 		});
 };
 
-exports.resetpassword = function (req, res) {
+exports.resetpassword = function(req, res) {
 	const msg = {
 		to: req.body.email,
 		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
 		subject: '',
-		html: '',
+		html: ''
 	};
 
 	if (!req.body.email || !req.body.accessid || !req.body.password) {
 		res.json({
 			error: {
 				title: 'Email, Password and Accessid is Reqired',
-				detail: 'Mandatory values are missing. Please check.',
-			},
+				detail: 'Mandatory values are missing. Please check.'
+			}
 		});
 	}
 
@@ -514,7 +522,7 @@ exports.resetpassword = function (req, res) {
 			if (err || !userFound) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API resetpassword'
 				);
@@ -528,7 +536,7 @@ exports.resetpassword = function (req, res) {
 					if (err || !userFound) {
 						logger.error(
 							{
-								error: err,
+								error: err
 							},
 							'API resetpassword'
 						);
@@ -541,12 +549,12 @@ exports.resetpassword = function (req, res) {
 						if (err) {
 							logger.error(
 								{
-									error: err,
+									error: err
 								},
 								'API resetpassword'
 							);
 							return res.json({
-								error: { title: 'Not able to reset password' },
+								error: { title: 'Not able to reset password' }
 							});
 						}
 						msg.subject = 'Your Password is Successfully Changed';
@@ -568,27 +576,27 @@ exports.resetpassword = function (req, res) {
 							.catch(err => {
 								logger.error(
 									{
-										error: err,
+										error: err
 									},
 									'API resetpassword'
 								);
 								console.error(err);
 							});
 						res.json({
-							success: true,
+							success: true
 						});
 					});
 				});
 		});
 };
 
-exports.editprofile = function (req, res) {
+exports.editprofile = function(req, res) {
 	if (!req.body.firstName || !req.body.lastName || !req.body.mobileNumber) {
 		res.json({
 			error: {
 				title: 'Required',
-				detail: 'Mandatory values are missing. Please check.',
-			},
+				detail: 'Mandatory values are missing. Please check.'
+			}
 		});
 	}
 
@@ -600,7 +608,7 @@ exports.editprofile = function (req, res) {
 			if (err || !userFound) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API editprofile'
 				);
@@ -616,7 +624,7 @@ exports.editprofile = function (req, res) {
 				if (err) {
 					logger.error(
 						{
-							error: err,
+							error: err
 						},
 						'API editprofile'
 					);
@@ -633,17 +641,17 @@ exports.editprofile = function (req, res) {
 						mobileNumber: userFound.mobileNumber,
 						countryCode: userFound.countryCode,
 						user_id: userFound.user_id,
-						youbookme_url: process.env.YOUBOOKME_URL,
-					},
+						youbookme_url: process.env.YOUBOOKME_URL
+					}
 				});
 			});
 		});
 };
 
-exports.getUserByUserId = function (req, res) {
+exports.getUserByUserId = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API get Sadhana'
 	);
@@ -651,11 +659,11 @@ exports.getUserByUserId = function (req, res) {
 		.list('User')
 		.model.findOne()
 		.where({ user_id: req.body.user_id })
-		.exec(function (err, item) {
+		.exec(function(err, item) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API get sadhana'
 				);
@@ -664,7 +672,7 @@ exports.getUserByUserId = function (req, res) {
 			if (!item) {
 				logger.error(
 					{
-						error: 'item not found',
+						error: 'item not found'
 					},
 					'API get sadhana'
 				);
@@ -672,15 +680,15 @@ exports.getUserByUserId = function (req, res) {
 			}
 			res.apiResponse({
 				userDetails: item,
-				success: true,
+				success: true
 			});
 		});
 };
 
-exports.approvedUserForSadhana = function (req, res) {
+exports.approvedUserForSadhana = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
 		'API Approve Sadhana Sheet For user'
 	);
@@ -688,11 +696,11 @@ exports.approvedUserForSadhana = function (req, res) {
 		.list('User')
 		.model.findOne()
 		.where({ user_id: req.body.user_id })
-		.exec(function (err, user) {
+		.exec(function(err, user) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
 					'API Approve Sadhana Sheet For user'
 				);
@@ -701,7 +709,7 @@ exports.approvedUserForSadhana = function (req, res) {
 			if (!user) {
 				logger.error(
 					{
-						error: 'item not found',
+						error: 'item not found'
 					},
 					'API Approve Sadhana Sheet For user'
 				);
@@ -713,7 +721,7 @@ exports.approvedUserForSadhana = function (req, res) {
 				if (err) {
 					logger.error(
 						{
-							error: err,
+							error: err
 						},
 						'API Approve Sadhana Sheet For user'
 					);
@@ -722,32 +730,11 @@ exports.approvedUserForSadhana = function (req, res) {
 
 				res.json({
 					isSadhanaSheetEnable: true,
-					userDetails: user,
+					userDetails: user
 				});
 			});
 		});
 };
-
-// eslint-disable-next-line no-unused-vars
-function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
-	let fileType = fileDetails.filemime;
-	let myKey = `profilePicture/${fileDetails.filename}`;
-	let urlType = {
-		upload: 'putObject',
-		download: 'getObject',
-	};
-	const commonOptions = {
-		Bucket: process.env.bucket,
-		Key: myKey,
-		Expires: 100000,
-		ACL: 'public-read',
-	};
-	const options = {
-		upload: Object.assign({}, commonOptions, { ContentType: fileType }),
-		download: Object.assign({}, commonOptions),
-	};
-	return s3.getSignedUrl(urlType[type], options[type]);
-}
 
 /**
  * To generate s3 object using configuration object
@@ -755,58 +742,88 @@ function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
  * @param {string} awsConfig.accessKeyId Access Key of AWS configuration
  * @param {string} awsConfig.secretAccessKey Access Secret Key(Token) of AWS configuration
  */
-function generateS3Object (awsConfig) {
+function generateS3Object(awsConfig) {
 	const awsConfigObj = {
 		accessKeyId: process.env.accessKeyId,
 		secretAccessKey: process.env.secretAccessKey,
 		s3BucketEndpoint: false,
-		endpoint: 'https://s3.amazonaws.com',
+		endpoint: 'https://s3.amazonaws.com'
 	};
 	AWS.config.update(awsConfigObj);
 	return new AWS.S3();
 }
 
-exports.uploadPic = (req, response) => {
-	if (req && req.body && req.body.oldData) {
-		if (req.body.oldData.picture && JSON.parse(req.body.oldData.picture) !== null) {
+async function uploadToAWS(filePath, req, response) {
+	console.log('...came to upload aws');
+	let content = await readFilePromise(filePath);
+	let base64data = new Buffer(content, 'binary');
+	let myKey = `profilePictures/pictures/${req.body.uid}/${
+		req.body.oldData.picture.filename
+	}`;
+	let params = {
+		Bucket: process.env.bucket,
+		Key: myKey,
+		Body: base64data,
+		ACL: 'public-read'
+	};
+	// fs.unlink(filePath, err => {
+	// 	if (err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		console.log('deleted file');
+	// 	}
+	// });
+	const s3 = generateS3Object();
+	s3.upload(params, (err, data) => {
+		if (err) console.error(`Upload Error ${err}`);
+		console.log('Upload Completed');
+		return response.json({
+			url: data.Location
+		});
+	});
+}
+
+exports.uploadPic = async (req, response) => {
+	var delayInMilliseconds = 1000;
+	if (req && req.body && req.body.oldData && req.body.oldData.picture) {
+		if (
+			req.body.oldData.picture &&
+			JSON.parse(req.body.oldData.picture) !== null
+		) {
 			req.body.oldData.picture = JSON.parse(req.body.oldData.picture);
 			let filePath = './uploads/profile/' + Date.now() + '.jpg';
 			let url = req.body.oldData.picture.url;
-			var file = fs.createWriteStream(filePath);
-			https.get(url, function (res) {
-				res.pipe(file);
-				fs.readFile(filePath, function (err, content) {
-					if (err) {
-						console.log(err);
-						throw err;
-					} else {
-						console.log(content);
-						let base64data = new Buffer(content, 'binary');
-						let myKey = `profilePictures/pictures/${req.body.user_id}/${
-							req.body.oldData.picture.filename
-						}`;
-						let params = {
-							Bucket: process.env.bucket,
-							Key: myKey,
-							Body: base64data,
-							ACL: 'public-read',
-						};
-						const s3 = generateS3Object();
-						s3.upload(params, (err, data) => {
-							if (err) console.error(`Upload Error ${err}`);
-							console.log('Upload Completed');
-							return response.json({
-								url: data.Location,
-							});
-						});
-					}
-				});
-			});
-		}
-		else {
+			let downloadImage = await download_image(url, filePath);
+			if (downloadImage.status) {
+				setTimeout(function() {
+					uploadToAWS(filePath, req, response);
+					console.log('done');
+				}, delayInMilliseconds);
+			}
+		} else {
+			console.log('profile pic not available');
 			return response.json({ url: 'Profile pic not available' });
 		}
 	} else {
+		console.log('profile pic not available');
 		return response.json({ url: 'Profile pic not available' });
 	}
 };
+
+const download_image = (url, image_path) =>
+	axios({
+		url: url,
+		responseType: 'stream'
+	})
+		.then(response => {
+			response.data.pipe(fs.createWriteStream(image_path));
+
+			return {
+				status: true,
+				error: ''
+			};
+		})
+		.catch(error => ({
+			status: false,
+			error: 'Error: ' + error.message
+		}));

@@ -55,6 +55,8 @@ Recipe.add({
 		wysiwyg: true,
 		height: 500,
 	},
+	created_date_time: { type: Types.Date, default: Date.now }
+
 });
 
 // Setting the default order of the columns on the admin tab
