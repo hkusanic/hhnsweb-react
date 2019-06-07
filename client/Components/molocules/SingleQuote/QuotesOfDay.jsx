@@ -14,7 +14,7 @@ export class QuoteOfDay extends React.Component {
 		}
 	}
 	componentDidMount() {
-		let authorList = ["Niranjana Swami", "Srila Prabhupada"]
+		let authorList = ["Nirajanana Swami", "Srila Prabhupada"]
 		this.props.quoteOfDay(authorList)
 		this.setState({
 			quotes: this.props.quoteOfDay.quotes

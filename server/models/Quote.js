@@ -28,7 +28,9 @@ Quote.add({
 		body: { type: String },
 		topic: { type: String },
 		source_of_quote: { type: String }
-	}
+	},
+	created_date_time: { type: Types.Date, default: Date.now }
+
 });
 function uuidv4() {
 	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {

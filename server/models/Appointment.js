@@ -74,6 +74,8 @@ Appointment.add({
 		type: Types.Boolean,
 		default: false,
 	},
+	created_date_time: { type: Types.Date, default: Date.now }
+
 });
 
 Appointment.defaultColumns = 'title_en, date|15%, needs_translation|10%';

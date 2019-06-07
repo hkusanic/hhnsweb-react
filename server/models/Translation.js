@@ -11,6 +11,8 @@ let Translation = new keystone.List('Translation', {
 Translation.add({
 	title_en: { type: String },
 	title_ru: { type: String },
+	created_date_time: { type: Types.Date, default: Date.now }
+
 });
 
 

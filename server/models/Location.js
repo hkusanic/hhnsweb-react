@@ -10,7 +10,9 @@ let Location = new keystone.List('Location', {
 
 Location.add({
 	title_en: { type: String },
-	title_ru: { type: String }
+	title_ru: { type: String },
+	created_date_time: { type: Types.Date, default: Date.now }
+
 });
 
 Location.register();

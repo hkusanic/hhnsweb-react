@@ -10,7 +10,9 @@ let Event = new keystone.List('Event', {
 
 Event.add({
 	title_en: { type: String },
-	title_ru: { type: String }
+	title_ru: { type: String },
+	created_date_time: { type: Types.Date, default: Date.now }
+
 });
 
 Event.register();
