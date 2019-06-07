@@ -77,7 +77,7 @@ export class QuoteOfDay extends React.Component {
 												/>
 											</div>
 											<div class="quote-modern-info">
-												<cite class="quote-modern-cite">Nirajanana Swami</cite>
+												<cite class="quote-modern-cite">{this.props && this.props.quote && this.props.quote.quotes[0] && titleCase(this.props.quote.quotes[0].author)}</cite>
 												<p class="quote-modern-caption">
 													Lecture on Bhagavad-gita 12.13-14, Bombay, May 12,
 													1974
@@ -135,7 +135,7 @@ export class QuoteOfDay extends React.Component {
 												/>
 											</div>
 											<div class="quote-modern-info">
-												<cite class="quote-modern-cite">Srila Prabhupada</cite>
+												<cite class="quote-modern-cite">{this.props && this.props.quote && this.props.quote.quotes[1] && titleCase(this.props.quote.quotes[1].author)}</cite>
 												<p class="quote-modern-caption">
 													Lectures from a disciple, Vol 1, p. 159, Kiev,
 													11.15.2001
@@ -184,3 +184,11 @@ export default connect(
 	mapDispatchToProps
 )(QuoteOfDay);
 
+
+const titleCase = (str) => {
+	str = str.toLowerCase().split(' ');
+	for (var i = 0; i < str.length; i++) {
+		str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+	}
+	return str.join(' ');
+}
