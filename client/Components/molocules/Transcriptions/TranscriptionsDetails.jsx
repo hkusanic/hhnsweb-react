@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { Icon, Collapse } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
@@ -9,9 +9,9 @@ import Comments from '../Comments/Comments';
 
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
-
+const Panel = Collapse.Panel;
 export class TranscriptionDetails extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
 			text: '',
@@ -19,7 +19,7 @@ export class TranscriptionDetails extends React.Component {
 		};
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		let body = {
 			uuid: this.props.match.params.uuid,
 		};
@@ -35,21 +35,13 @@ export class TranscriptionDetails extends React.Component {
 		}
 	}
 
-	handleUpdate = uuid => {
-		const body = {
-			uuid: uuid,
-			downloads: true,
-		};
-		this.props.updateCounters(body);
-	};
-
-	static getDerivedStateFromProps(nextProps, prevState) {
+	static getDerivedStateFromProps (nextProps, prevState) {
 		if (nextProps.lectureDetails !== prevState.lectureDetails) {
 			return { lectureDetails: nextProps.lectureDetails };
 		} else return null;
 	}
 
-	render() {
+	render () {
 		const { lectureDetails } = this.state;
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
@@ -64,7 +56,6 @@ export class TranscriptionDetails extends React.Component {
 				</div>
 			);
 		}
-
 		return (
 			<div>
 				<section
@@ -126,176 +117,171 @@ export class TranscriptionDetails extends React.Component {
 											<a>Transcription</a>
 										</li>
 									</ul>
-									<div>
-										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? lectureDetails.en.transcription.text
-												: lectureDetails.en.transcription.text
-										)}
+									<div className="row">
+										<div className="col mx-3">
+											{renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? lectureDetails.en.transcription.text
+													: lectureDetails.en.transcription.text
+											)}
+										</div>
 									</div>
 								</article>
-								<div style={{ paddingTop: '20px' }}>
-									<table className="maintable">
-										<tbody>
-											<tr>
-												<td>
-													<b>
-														<span>Audio</span> {maxWidth > mobileBrkPnt?':':null}
-													</b>
-												</td>
-												<td className="padLeftRow">
-													<audio style={{ height: '30px' }} controls
-														controlsList="nodownload"
-													>
-														<source
-															src={renderHTML(
-																lectureDetails.audio_link
-															)}
-															type="audio/mpeg"
-														/>
-													</audio>
-													<a
-														className="downloadIcon"
-														href={lectureDetails.audio_link}
-														onClick={() => {
-															this.handleUpdate(lectureDetails.uuid);
-														}}
-														download="download"
-													>
-														<Icon type="download" style={{ fontSize: '1.5rem' }} />
-													</a>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Attachment</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													<a
-														href={
-															lectureDetails.en.transcription
-																.attachment_link
-														}
-														target="_blank"
-													>
-														<span>
-															{
-																lectureDetails.en.transcription
-																	.attachment_name
-															}
-														</span>
-													</a>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Event</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{reactCookie.load('languageCode') === 'en'
-														? lectureDetails.en.event
-														: lectureDetails.ru.event}
-												</td>
-											</tr>
-											{lectureDetails.part ? (
-												<tr>
-													<td>
-														<b>
-															<span>Part</span> :
-														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.part}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.chapter ? (
-												<tr>
-													<td>
-														<b>
-															<span>Chapter</span> :
-														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.chapter}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.verse ? (
-												<tr>
-													<td>
-														<b>
-															<span>Verse</span> :
-														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.verse}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.author ? (
-												<tr>
-													<td>
-														<b>
-															<span>Author</span> :
-														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.author}
-													</td>
-												</tr>
-											) : null}
-											<tr>
-												<td>
-													<b>
-														<span>Durations</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.duration}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Location</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{reactCookie.load('languageCode') === 'en'
-														? lectureDetails.en.location
-														: lectureDetails.en.location}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Downloads</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.counters.downloads}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Topic</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{reactCookie.load('languageCode') === 'en'
-														? lectureDetails.en.topic
-														: lectureDetails.ru.topic}
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
+								<Collapse bordered={false} style={{ marginTop: '10px' }}>
+									<Panel header="Audio Details" key="1" style={{ borderTop: '1px solid #e8e8e8', borderBottom: 'none' }}>
+										<div style={{ paddingTop: '20px' }}>
+											<table className="maintable">
+												<tbody>
+													<tr>
+														<td>
+															<b>
+																<span>Audio</span> {maxWidth > mobileBrkPnt ? ':' : null}
+															</b>
+														</td>
+														<td className="padLeftRow">
+															<audio style={{ height: '30px' }} controls>
+																<source
+																	src={renderHTML(
+																		lectureDetails.audio_link
+																	)}
+																	type="audio/mpeg"
+																/>
+															</audio>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<b>
+																<span>Attachment</span> :
+															</b>
+														</td>
+														<td className="padLeftRow text-truncate">
+															<a
+																href={
+																	lectureDetails.en.transcription
+																		.attachment_link
+																}
+																target="_blank"
+															>
+																<span>
+																	{
+																		lectureDetails.en.transcription
+																			.attachment_name
+																	}
+																</span>
+															</a>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<b>
+																<span>Event</span> :
+															</b>
+														</td>
+														<td className="padLeftRow">
+															{reactCookie.load('languageCode') === 'en'
+																? lectureDetails.en.event
+																: lectureDetails.ru.event}
+														</td>
+													</tr>
+													{lectureDetails.part ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Part</span> :
+																</b>
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.part}
+															</td>
+														</tr>
+													) : null}
+													{lectureDetails.chapter ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Chapter</span> :
+																</b>
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.chapter}
+															</td>
+														</tr>
+													) : null}
+													{lectureDetails.verse ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Verse</span> :
+																</b>
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.verse}
+															</td>
+														</tr>
+													) : null}
+													{lectureDetails.author ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Author</span> :
+																</b>
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.author}
+															</td>
+														</tr>
+													) : null}
+													<tr>
+														<td>
+															<b>
+																<span>Durations</span> :
+															</b>
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.duration}
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<b>
+																<span>Location</span> :
+															</b>
+														</td>
+														<td className="padLeftRow">
+															{reactCookie.load('languageCode') === 'en'
+																? lectureDetails.en.location
+																: lectureDetails.en.location}
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<b>
+																<span>Downloads</span> :
+															</b>
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.counters.downloads}
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<b>
+																<span>Topic</span> :
+															</b>
+														</td>
+														<td className="padLeftRow">
+															{reactCookie.load('languageCode') === 'en'
+																? lectureDetails.en.topic
+																: lectureDetails.ru.topic}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</Panel>
+								</Collapse>
+
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>
