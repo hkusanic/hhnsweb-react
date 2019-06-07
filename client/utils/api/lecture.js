@@ -17,7 +17,7 @@ const utils = {
 		const transcriptions = body.transcriptions || false;
 		const summaries = body.summaries || false;
 		const video = body.video || false;
-		const limit = body.limit || 10;
+		const limit = body.limit || 20;
 		let url
 			= serverAddress
 			+ '/api/lecture?page='
