@@ -15,7 +15,6 @@ Transcript.add({
 	tags: {	type: Types.Relationship, ref: 'Tag', many: true },
 	body: { type: Types.Textarea },
 	slug: { type: String, index: true },
-	created_date_time: { type: Types.Date, default: Date.now }
 
 });
 

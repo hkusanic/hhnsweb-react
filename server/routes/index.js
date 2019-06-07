@@ -17,6 +17,7 @@ exports = module.exports = function (app) {
 	// Get access to the API route in our app
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
 	app.get('/api/content/', keystone.middleware.api, routes.api.content.list);
+	app.get('/api/content/getLimitedList', keystone.middleware.api, routes.api.content.getlimitedlist);
 	app.all('/api/appointment/:id/update', keystone.middleware.api, routes.api.appointment.update);
 	app.post('/api/appointment/:id/remove', keystone.middleware.api, routes.api.appointment.remove);
 	app.all('/api/appointment/create', keystone.middleware.api, routes.api.appointment.create);
@@ -85,6 +86,8 @@ exports = module.exports = function (app) {
 	app.post('/api/kirtan/:id/remove', keystone.middleware.api, routes.api.kirtan.remove);
 	app.all('/api/kirtan/:id/update', keystone.middleware.api, routes.api.kirtan.update);
 	app.post('/api/kirtan/getkirtanbyid/', keystone.middleware.api, routes.api.kirtan.getKirtanbyid);
+	app.all('/api/kirtan/updateCounters', keystone.middleware.api, routes.api.kirtan.updateCounters);
+	app.all('/api/lecture/updateCounters', keystone.middleware.api, routes.api.lecture.updateCounters);
 	app.get('/api/mkv/', keystone.middleware.api, routes.api.mkv.list);
 	app.post('/api/mkv/create/', keystone.middleware.api, routes.api.mkv.create);
 	app.post('/api/lecture/updateBulk/', keystone.middleware.api, routes.api.lecture.updateBulk);

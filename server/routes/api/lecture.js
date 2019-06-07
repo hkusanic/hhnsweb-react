@@ -283,13 +283,13 @@ exports.list = function(req, res) {
 		query.push(date_query);
 	}
 
-	let createdDateSort = '-created_date';
+	let createdDateSort = '-created_date_time';
 
 	if (req.query.createdDateSort) {
 		if (req.query.createdDateSort === 'asc') {
-			createdDateSort = 'created_date';
+			createdDateSort = 'created_date_time'; 
 		} else {
-			createdDateSort = '-created_date';
+			createdDateSort = '-created_date_time';
 		}
 	}
 
