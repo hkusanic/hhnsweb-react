@@ -135,44 +135,44 @@ export class SummariesDetails extends React.Component {
 											)}
 									</div>
 								</article>
-								<Collapse bordered={false} style={{ marginTop: '10px' }}>
-									<Panel header="Audio Details" key="1" style={{ borderTop: '1px solid #e8e8e8', borderBottom: 'none' }}>
-
-										<div style={{ paddingTop: '20px' }}>
-											<table className="maintable">
-												<tbody>
-													<tr>
-														<td>
-															<b>
-																<span>Audio</span> {maxWidth > mobileBrkPnt ? ':' : null}
-															</b>
-														</td>
-														<td className="padLeftRow">
-															<audio style={{ height: '30px' }}
-																controlsList="nodownload" controls>
-																<source
-																	src={renderHTML(
-																		lectureDetails.audio_link
-																	)}
-																	type="audio/mpeg"
-																/>
-															</audio>
-															<a
-																className="downloadIcon"
-																href={lectureDetails.audio_link}
-																onClick={() => {
-																	this.handleUpdate(lectureDetails.uuid);
-																}}
-																download="download"
-															>
-																<Icon type="download" style={{ fontSize: '1.5rem' }} />
-															</a>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<b>
-																<span>Event</span> :
+								<Collapse bordered={false} style={{marginTop: '10px'}}>
+									<Panel header="Audio Details" key="1" style={{borderTop: '1px solid #e8e8e8', borderBottom: 'none'}}>
+										
+								<div style={{ paddingTop: '20px' }}>
+									<table className="maintable">
+										<tbody>
+											<tr>
+												<td>
+													<b>
+														<span>Audio</span> {maxWidth > mobileBrkPnt?':':null}
+													</b>
+												</td>
+												<td className="padLeftRow">
+													<audio style={{ height: '30px' }}
+														controlsList="nodownload" controls>
+														<source
+															src={renderHTML(
+																lectureDetails.audio_link
+															)}
+															type="audio/mpeg"
+														/>
+													</audio>
+													<a
+														className="downloadIcon"
+														href={lectureDetails.audio_link}
+														onClick={() => {
+															this.handleUpdate(lectureDetails.uuid);
+														}}
+														download="download"
+													>
+														<Icon type="download" style={{ fontSize: '1.5rem' }} />
+													</a>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<b>
+														<span>Event</span> :
 													</b>
 														</td>
 														<td className="padLeftRow">
@@ -262,15 +262,15 @@ export class SummariesDetails extends React.Component {
 															<b>
 																<span>Topic</span> :
 													</b>
-														</td>
-														<td className="padLeftRow">
-															{lectureDetails.ru.topic}
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</Panel>
+												</td>
+												<td className="padLeftRow">
+													{lectureDetails.ru.topic}
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								</Panel>
 								</Collapse>
 								<div>
 									<p className="bookingForm">Comments</p>

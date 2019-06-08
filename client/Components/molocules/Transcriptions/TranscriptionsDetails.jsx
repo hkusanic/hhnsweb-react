@@ -11,7 +11,7 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
 const Panel = Collapse.Panel;
 export class TranscriptionDetails extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
 			text: '',
@@ -19,7 +19,7 @@ export class TranscriptionDetails extends React.Component {
 		};
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		let body = {
 			uuid: this.props.match.params.uuid,
 		};
@@ -48,7 +48,7 @@ export class TranscriptionDetails extends React.Component {
 		} else return null;
 	}
 
-	render() {
+	render () {
 		const { lectureDetails } = this.state;
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
