@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { Icon, Collapse } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import { Link } from 'react-router-dom';
-
+const Panel = Collapse.Panel;
 export class SummariesDetails extends React.Component {
 	constructor(props) {
 		super(props);
@@ -135,6 +135,9 @@ export class SummariesDetails extends React.Component {
 											)}
 									</div>
 								</article>
+								<Collapse bordered={false} style={{marginTop: '10px'}}>
+									<Panel header="Audio Details" key="1" style={{borderTop: '1px solid #e8e8e8', borderBottom: 'none'}}>
+										
 								<div style={{ paddingTop: '20px' }}>
 									<table className="maintable">
 										<tbody>
@@ -267,6 +270,8 @@ export class SummariesDetails extends React.Component {
 										</tbody>
 									</table>
 								</div>
+								</Panel>
+								</Collapse>
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>

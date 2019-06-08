@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import scrollToElement from 'scroll-to-element';
 import { connect } from 'react-redux';
 import { Input, Tooltip, Icon, Menu, Dropdown, Button } from 'antd';
 import {
@@ -6,6 +7,7 @@ import {
 	getLocations,
 	getTopics,
 } from '../../../actions/searchFilter';
+import { react } from 'babel-types';
 
 export class SearchFilter extends Component {
 	constructor(props) {
@@ -31,6 +33,8 @@ export class SearchFilter extends Component {
 		this.props.getTopics();
 		const years = this.getYearsList(1980);
 		this.setState({ years });
+		scrollToElement();
+		
 	}
 
 	renderOptions = (item, key, type) => {
@@ -79,6 +83,7 @@ export class SearchFilter extends Component {
 	};
 
 	reset = () => {
+		this.canto
 		this.setState({
 			event: '',
 			location: '',
@@ -120,7 +125,14 @@ export class SearchFilter extends Component {
 		};
 		this.props.searchData(body);
 	};
-
+	scrollToElement = () => {
+		console.log('came here');
+		scrollToElement('#id', {
+			offset: -150,
+			ease: 'linear',
+			duration: 1000
+		});
+	}
 	render() {
 		if (!this.props.searchFilterReducer.events.length > 0) {
 			return <div>Loading...</div>;
@@ -206,83 +218,80 @@ export class SearchFilter extends Component {
 		);
 
 		return (
-			<div>
-				<div className="container filterDiv titleDiv">
-					<div className="titleSearch">
-						<Input
-							placeholder="Canto"
-							allowClear={this.state.songs !== ''}
-							type="number"
-							suffix={
-								this.state.songs === '' && (
-									<Tooltip title="Please enter the song you want to search">
-										<Icon
-											type="info-circle"
-											style={{ color: 'rgba(0,0,0,.45)' }}
-										/>
-									</Tooltip>
-								)
-							}
-							onChange={event => this.handleTextChange('songs', event)}
-						/>
-					</div>
-					<div className="titleSearch">
-						<Input
-							placeholder="Chapter"
-							allowClear={this.state.chapter !== ''}
-							type="number"
-							suffix={
-								this.state.chapter === '' && (
-									<Tooltip title="Please enter the chapter you want to search">
-										<Icon
-											type="info-circle"
-											style={{ color: 'rgba(0,0,0,.45)' }}
-										/>
-									</Tooltip>
-								)
-							}
-							onChange={event => this.handleTextChange('chapter', event)}
-						/>
-					</div>
-					<div className="titleSearch">
-						<Input
-							placeholder="Verse"
-							allowClear={this.state.verse !== ''}
-							type="number"
-							suffix={
-								this.state.verse === '' && (
-									<Tooltip title="Please enter the verse you want to search">
-										<Icon
-											type="info-circle"
-											style={{ color: 'rgba(0,0,0,.45)' }}
-										/>
-									</Tooltip>
-								)
-							}
-							onChange={event => this.handleTextChange('verse', event)}
-						/>
-					</div>
-					<div className="filter">
-						<Dropdown overlay={yearMenu} overlayClassName="searchDropDownDiv">
-							<Button className="w-100">
-								{this.state.year ? this.state.year : 'Year'}{' '}
-								<Icon type="down" />
-							</Button>
-						</Dropdown>
+			<div id="id">
+				<div className="container titleDiv">
+					<div className="row">
+						<div className="col-6 my-1 col-md-3">
+							<Input
+								placeholder="Canto"
+								allowClear={this.state.songs !== ''}
+								value={this.state.songs}
+								suffix={
+									this.state.songs === '' && (
+										<Tooltip title="Please enter the song you want to search">
+											<Icon
+												type="info-circle"
+												style={{ color: 'rgba(0,0,0,.45)' }}
+											/>
+										</Tooltip>
+									)
+								}
+								onChange={event => this.handleTextChange('songs', event)}
+							/>
+						</div>
+						<div className="col-6 my-1 col-md-3 ">
+							<Input
+								placeholder="Chapter"
+								allowClear={this.state.chapter !== ''}
+								value={this.state.chapter}
+								suffix={
+									this.state.chapter === '' && (
+										<Tooltip title="Please enter the chapter you want to search">
+											<Icon
+												type="info-circle"
+												style={{ color: 'rgba(0,0,0,.45)' }}
+											/>
+										</Tooltip>
+									)
+								}
+								onChange={event => this.handleTextChange('chapter', event)}
+							/>
+						</div>
+						<div className="col-6 my-1 col-md-3 ">
+							<Input
+								placeholder="Verse"
+								allowClear={this.state.verse !== ''}
+								value={this.state.verse}
+								suffix={
+									this.state.verse === '' && (
+										<Tooltip title="Please enter the verse you want to search">
+											<Icon
+												type="info-circle"
+												style={{ color: 'rgba(0,0,0,.45)' }}
+											/>
+										</Tooltip>
+									)
+								}
+								onChange={event => this.handleTextChange('verse', event)}
+							/>
+						</div>
+						<div className="col-6 my-1 col-md-3 ">
+							<Dropdown overlay={yearMenu} overlayClassName="searchDropDownDiv">
+								<Button className="w-100"
+								onClick={()=>this.scrollToElement()}>
+									{this.state.year ? this.state.year : 'Year'}{' '}
+									<Icon type="down" />
+								</Button>
+							</Dropdown>
+						</div>
 					</div>
 				</div>
-				<div className="container filterDiv titleDiv">
-					{/* <div className="filter">
-						<Dropdown overlay={authorMenu} overlayClassName="searchDropDownDiv">
-							<Button className="w-100">
-								{this.state.author ? this.state.author : 'Author'}{' '}
-								<Icon type="down" />
-							</Button>
-						</Dropdown>
-					</div> */}
-					<div className="filter">
+				<div className="container titleDiv">
+				<div className="row">
+					<div className="col-6 my-1 col-md-3">
 						<Dropdown overlay={translationMenu} overlayClassName="searchDropDownDiv">
-							<Button className="w-100">
+							<Button className="w-100"
+							onClick={()=>this.scrollToElement()}>
 								{this.state.translation
 									? this.state.translation
 									: 'Translation'}{' '}
@@ -290,36 +299,40 @@ export class SearchFilter extends Component {
 							</Button>
 						</Dropdown>
 					</div>
-					<div className="filter">
+					<div className="col-6 my-1 col-md-3">
 						<Dropdown overlay={locationMenu} overlayClassName="searchDropDownDiv">
-							<Button className="w-100">
+							<Button className="w-100"
+							onClick={()=>this.scrollToElement()}>
 								{this.state.location ? this.state.location : 'Location'}{' '}
 								<Icon type="down" />
 							</Button>
 						</Dropdown>
 					</div>
-					<div className="filter">
+					<div className="col-6 my-1 col-md-3">
 						<Dropdown overlay={topicMenu} overlayClassName="searchDropDownDiv">
-							<Button className="w-100">
+							<Button className="w-100"
+							onClick={()=>this.scrollToElement()}>
 								{this.state.topic ? this.state.topic : 'Topic'}{' '}
 								<Icon type="down" />
 							</Button>
 						</Dropdown>
 					</div>
-					<div className="filter">
+					<div className="col-6 my-1 col-md-3">
 						<Dropdown overlay={eventMenu} overlayClassName="searchDropDownDiv">
-							<Button className="w-100">
+							<Button className="w-100"
+							onClick={()=>this.scrollToElement()}>
 								{this.state.event ? this.state.event : 'Event'}{' '}
 								<Icon type="down" />
 							</Button>
 						</Dropdown>
 					</div>
 				</div>
+				</div>
 
-				<div className="container filterDiv titleDiv">
+				<div className="container titleDiv">
 					
-					
-					<div className="filter">
+					<div className="row">
+					<div className="col-12 my-1 col-md-3">
 						<Button
 							className="w-100 searchButtonColor searchIconBorder"
 							type="primary"
@@ -329,7 +342,7 @@ export class SearchFilter extends Component {
 							Search
 						</Button>
 					</div>
-					<div className="filter">
+					<div className="col-12 my-1 col-md-3">
 						<Button
 							className="w-100"
 							type="danger"
@@ -339,6 +352,7 @@ export class SearchFilter extends Component {
 							Reset
 						</Button>
 					</div>
+				</div>
 				</div>
 			</div>
 		);
