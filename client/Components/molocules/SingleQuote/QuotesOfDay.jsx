@@ -79,10 +79,12 @@ export class QuoteOfDay extends React.Component {
 											<div class="quote-modern-info">
 												<cite class="quote-modern-cite">{this.props && this.props.quote && this.props.quote.quotes[0] && titleCase(this.props.quote.quotes[0].author)}</cite>
 												<p class="quote-modern-caption">
-													{reactCookie.load('languageCode') === 'en' ?
-														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[0] && this.props.quote.quotes[0].en && this.props.quote.quotes[0].en.title ? `${this.props.quote.quotes[0].en.title} Published On ${new Date(this.props && this.props.quote && this.props.quote.quotes[0] && this.props.quote.quotes[0].date).toLocaleString("en-IN")}` : "<p>...</p>"
+													{
+														reactCookie.load('languageCode') === 'en' ?
+														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[0] && this.props.quote.quotes[0].en && this.props.quote.quotes[0].en.source_of_quote ? this.props.quote.quotes[0].en.source_of_quote : "<p>...</p>"
 														:
-														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[0] && this.props.quote.quotes[0].ru && this.props.quote.quotes[0].ru.title ? `${this.props.quote.quotes[0].ru.title} Published On ${new Date(this.props && this.props.quote && this.props.quote.quotes[0] && this.props.quote.quotes[0].date).toLocaleString("en-IN")}` : "<p>...</p>"
+														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[0] && this.props.quote.quotes[0].ru && this.props.quote.quotes[0].ru.source_of_quote ? this.props.quote.quotes[0].ru.source_of_quote : "<p>...</p>"
+
 													}
 												</p>
 											</div>
@@ -140,10 +142,12 @@ export class QuoteOfDay extends React.Component {
 											<div class="quote-modern-info">
 												<cite class="quote-modern-cite">{this.props && this.props.quote && this.props.quote.quotes[1] && titleCase(this.props.quote.quotes[1].author)}</cite>
 												<p class="quote-modern-caption">
-													{reactCookie.load('languageCode') === 'en' ?
-														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[1] && this.props.quote.quotes[1].en && this.props.quote.quotes[1].en.title ? `${this.props.quote.quotes[1].en.title} Published On ${new Date(this.props && this.props.quote && this.props.quote.quotes[1] && this.props.quote.quotes[1].date).toLocaleString("en-IN")}` : "<p>...</p>"
+													{
+														reactCookie.load('languageCode') === 'en' ?
+														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[1] && this.props.quote.quotes[1].en && this.props.quote.quotes[1].en.source_of_quote ? this.props.quote.quotes[1].en.source_of_quote : "<p>...</p>"
 														:
-														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[1] && this.props.quote.quotes[1].ru && this.props.quote.quotes[1].ru.title ? `${this.props.quote.quotes[1].ru.title} Published On ${new Date(this.props && this.props.quote && this.props.quote.quotes[1] && this.props.quote.quotes[1].date).toLocaleString("en-IN")}` : "<p>...</p>"
+														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[1] && this.props.quote.quotes[1].ru && this.props.quote.quotes[1].ru.source_of_quote ? this.props.quote.quotes[1].ru.source_of_quote : "<p>...</p>"
+
 													}
 												</p>
 											</div>
