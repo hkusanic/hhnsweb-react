@@ -31,6 +31,11 @@ const utils = {
 		let url = serverAddress + '/api/kirtan/getkirtanbyid/';
 		return axios.post(url, body);
 	},
+	
+	updateCounters: body => {
+		let url = serverAddress + '/api/kirtan/updateCounters';
+		return axios.post(url, body);
+	},
 };
 
 export default utils;

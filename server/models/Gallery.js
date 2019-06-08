@@ -19,7 +19,6 @@ Gallery.add({
 	publish_date: { type: String },
 	translation_required: { type: Boolean, default: true },
 	audit: { type: Types.TextArray },
-	created_date_time: { type: Types.Date, default: Date.now }
 
 });
 

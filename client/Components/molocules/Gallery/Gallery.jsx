@@ -36,8 +36,8 @@ export class Gallery extends React.Component {
 
 		if (!sessionStorage.getItem('user')) {
 			return (
-				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">Please Log in to continue</p>
+				<div className="loginText">
+					<p className="bookingForm">Please log in to continue</p>
 				</div>
 			);
 		}
@@ -49,14 +49,21 @@ export class Gallery extends React.Component {
 						<div class="container">
 							{/* <div className="row justify-content-center align-items-center">
 								<div className="col-lg-10"> */}
-									<Breadcrumb>
-										<Link to="" onClick={() => this.props.history.push('/')}>
-											<Breadcrumb.Item>Home</Breadcrumb.Item>
-										</Link>
-										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
-										<Breadcrumb.Item active>Gallery</Breadcrumb.Item>
-									</Breadcrumb>
-								{/* </div>
+							<Breadcrumb>
+								<Link to="" onClick={() => this.props.history.push('/')}>
+									<Breadcrumb.Item>Home</Breadcrumb.Item>
+								</Link>
+								<Icon
+									type="double-right"
+									style={{
+										alignSelf: 'center',
+										paddingLeft: 5,
+										paddingRight: 5,
+									}}
+								/>
+								<Breadcrumb.Item active>Gallery</Breadcrumb.Item>
+							</Breadcrumb>
+							{/* </div>
 							</div> */}
 							<div class="row row-50 row-lg-70 offset-top-2">
 								{mainGallery && mainGallery.length > 0
@@ -70,7 +77,7 @@ export class Gallery extends React.Component {
 												<Link to={{ pathname: '/subGallery', state: item }}>
 													<Card
 														hoverable
-														style={{ width: 240, margin:'auto' }}
+														style={{ width: 240, margin: 'auto' }}
 														cover={
 															<img
 																src="https://nrs-site.s3.amazonaws.com/styles/gallery_images/s3/default_images/004.jpg?itok=xizRm1w6"
@@ -96,8 +103,8 @@ export class Gallery extends React.Component {
 						</div>
 					</section>
 				) : (
-					<div style={{ textAlign: 'center' }}>
-						<p className="bookingForm">Please Log in to continue</p>
+					<div className="loginText">
+						<p className="bookingForm">Please log in to continue</p>
 					</div>
 				)}
 			</div>

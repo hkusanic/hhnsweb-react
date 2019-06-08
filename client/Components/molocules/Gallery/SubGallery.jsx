@@ -9,11 +9,11 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 const { Meta } = Card;
 
 export class SubGallery extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {};
 	}
-	componentDidMount() {
+	componentDidMount () {
 		const body = {
 			gallery:
 				reactCookie.load('languageCode') === 'en'
@@ -23,11 +23,11 @@ export class SubGallery extends React.Component {
 		this.props.getSubGalleryByGallery(body);
 	}
 
-	render() {
+	render () {
 		if (!sessionStorage.getItem('user')) {
 			return (
-				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">Please Log in to continue</p>
+				<div className="loginText">
+					<p className="bookingForm">Please log in to continue</p>
 				</div>
 			);
 		}
@@ -54,7 +54,7 @@ export class SubGallery extends React.Component {
 						<div class="row row-50 row-lg-70 offset-top-2">
 							{this.props.subGalleries && this.props.subGalleries.length > 0
 								? this.props.subGalleries.map(item => {
-									let background = item.photos && item.photos? item.photos[0]: 'images/tour-5-270x200.jpg'
+									let background = item.photos && item.photos ? item.photos[0] : 'images/tour-5-270x200.jpg';
 									return (
 										<div class="col-sm-6 col-lg-3 wow-outer">
 											<article
@@ -69,7 +69,7 @@ export class SubGallery extends React.Component {
 														cover={
 															<div className="subGalleryImg"
 																style={{
-																	backgroundImage: `url('${background}')`
+																	backgroundImage: `url('${background}')`,
 																}}></div>
 															// <img
 															// 	src={

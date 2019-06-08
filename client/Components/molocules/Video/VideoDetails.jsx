@@ -52,8 +52,8 @@ export class VideoDetails extends React.Component {
 
 		if (!sessionStorage.getItem('user')) {
 			return (
-				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">Please Log in to continue</p>
+				<div className="loginText">
+					<p className="bookingForm">Please log in to continue</p>
 				</div>
 			);
 		}

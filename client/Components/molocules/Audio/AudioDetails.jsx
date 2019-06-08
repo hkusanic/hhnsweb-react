@@ -65,8 +65,8 @@ export class AudioDetails extends Component {
 
 		if (!sessionStorage.getItem('user')) {
 			return (
-				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">Please Log in to continue</p>
+				<div className="loginText">
+					<p className="bookingForm">Please log in to continue</p>
 				</div>
 			);
 		}
@@ -136,7 +136,7 @@ export class AudioDetails extends Component {
 										style={{ height: '30px' }}
 										className="audioPlayer"
 										controls
-										// controlsList="nodownload"
+										controlsList="nodownload"
 										onPlay={() => {
 											this.updateAudioCount();
 										}}

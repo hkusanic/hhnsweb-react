@@ -345,7 +345,6 @@
 }
 
 .filter {
-	padding-left: 2em;
 	padding-right: 2em;
 	width: 25%;
 	/* width: 12rem; */
@@ -754,9 +753,6 @@
 .tableRow {
 	line-height: 1 !important;
 }
-.tableRow_sadhana{
-	line-height: 1 !important;
-}
 .title {
 	font-size: 25px;
     color: #eb7217;
@@ -910,6 +906,12 @@
 .sadhnaTable_headers{
 	display: none;
 }
+.white{
+	background: none;
+}
+.grey{
+	background: none;
+}
 @media (min-width: 200px) {
 	.rd-navbar-fixed .banner {
 		padding: 0px !important;
@@ -974,7 +976,7 @@
 		width: 100%;
 	}
 	.filter {
-		padding: 0 2em;
+		padding: 0 2rem;
 		width: 100%;
 		margin-top: 1rem;
 	}
@@ -991,6 +993,14 @@
 	.tableRow *{
 		display: block;
 		max-width: 100%;
+	}
+	.grey{
+		background-color: #ebe8e8;
+	}
+	.white{
+		background-color: #dbdbdb;
+		/* border-left:1px solid #e8e8e8 !important;
+		border-right:1px solid #e8e8e8 !important; */
 	}
 	.ant-table-tbody > tr > td{
 		border:none !important;
@@ -1064,4 +1074,14 @@
 		width: 2560px !important;
 	}
 	
+}
+
+.loginText {
+	margin-left: 9%;
+}
+
+@media (max-width: 1024px) {
+	.loginText {
+		margin-left: 5%;
+	}
 }

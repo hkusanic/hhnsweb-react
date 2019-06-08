@@ -44,8 +44,10 @@ Kirtan.add({
 		body: { type: String }
 	},
 	audit: { type: Types.TextArray },
-	created_date_time: { type: Types.Date, default: Date.now }
-
+	created_date_time: { type: Types.Date, default: Date.now },
+	counters: {
+		downloads: { type: Types.Number, default: 0 },
+	}
 });
 
 // Kirtan.schema.add({ data: mongoose.Schema.Types.Mixed }); // you can add mongoose types like this.. but they should be defined outside .add()

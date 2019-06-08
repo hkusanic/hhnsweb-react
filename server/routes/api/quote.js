@@ -241,8 +241,8 @@ exports.quoteOfDay = async function(req, res) {
 	let quotesOfDay = [];
 	for (let i = 0; i < req.body.length; i++) {
 		let date = todayDate();
-		let author = req.body[i].toLowerCase();
-		await Quote.model
+		let author = req.body[i];
+		let quoote = await Quote.model
 			.findOne()
 			.where({ $and: [{ published_date: date }, { author: author }] })
 			.exec(function(err, item) {
@@ -260,8 +260,25 @@ exports.quoteOfDay = async function(req, res) {
 					quotesOfDay.push(item);
 				}
 			});
+			if(!quoote){
+				await Quote.model.findOne().where({author:author}).exec(function(err, item) {
+					if (err) {
+						logger.error(
+							{
+								error: err
+							},
+							'API GET QUOTE OF THE DAY'
+						);
+						return res.apiError({ err: err });
+					}
+					if (item) {
+						quotesOfDay.push(item);
+					}
+				});
+			}
 	}
 	if (quotesOfDay.length < 1) {
+
 		logger.error(
 			{
 				error: 'No Item'
@@ -269,8 +286,9 @@ exports.quoteOfDay = async function(req, res) {
 			'API GET  QUOTE OF THE DAY'
 		);
 		return res.json({ err: 'NO QUOTE FOUND' });
-	}
 
+		
+	}
 	return res.apiResponse({
 		quote: quotesOfDay
 	});
