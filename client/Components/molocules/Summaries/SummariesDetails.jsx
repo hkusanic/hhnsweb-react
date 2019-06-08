@@ -41,7 +41,7 @@ export class SummariesDetails extends React.Component {
 		};
 		this.props.updateCounters(body);
 	};
-	
+
 	static getDerivedStateFromProps(nextProps, prevState) {
 		if (nextProps.lectureDetails !== prevState.lectureDetails) {
 			return { lectureDetails: nextProps.lectureDetails };
@@ -135,142 +135,142 @@ export class SummariesDetails extends React.Component {
 											)}
 									</div>
 								</article>
-								<Collapse bordered={false} style={{marginTop: '10px'}}>
-									<Panel header="Audio Details" key="1" style={{borderTop: '1px solid #e8e8e8', borderBottom: 'none'}}>
-										
-								<div style={{ paddingTop: '20px' }}>
-									<table className="maintable">
-										<tbody>
-											<tr>
-												<td>
-													<b>
-														<span>Audio</span> {maxWidth > mobileBrkPnt?':':null}
+								<Collapse bordered={false} style={{ marginTop: '10px' }}>
+									<Panel header="Audio Details" key="1" style={{ borderTop: '1px solid #e8e8e8', borderBottom: 'none' }}>
+
+										<div style={{ paddingTop: '20px' }}>
+											<table className="maintable">
+												<tbody>
+													<tr>
+														<td>
+															<b>
+																<span>Audio</span> {maxWidth > mobileBrkPnt ? ':' : null}
+															</b>
+														</td>
+														<td className="padLeftRow">
+															<audio style={{ height: '30px' }}
+																controlsList="nodownload" controls>
+																<source
+																	src={renderHTML(
+																		lectureDetails.audio_link
+																	)}
+																	type="audio/mpeg"
+																/>
+															</audio>
+															<a
+																className="downloadIcon"
+																href={lectureDetails.audio_link}
+																onClick={() => {
+																	this.handleUpdate(lectureDetails.uuid);
+																}}
+																download="download"
+															>
+																<Icon type="download" style={{ fontSize: '1.5rem' }} />
+															</a>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<b>
+																<span>Event</span> :
 													</b>
-												</td>
-												<td className="padLeftRow">
-													<audio style={{ height: '30px' }}
-														controlsList="nodownload" controls>
-														<source
-															src={renderHTML(
-																lectureDetails.audio_link
-															)}
-															type="audio/mpeg"
-														/>
-													</audio>
-													<a
-														className="downloadIcon"
-														href={lectureDetails.audio_link}
-														onClick={() => {
-															this.handleUpdate(lectureDetails.uuid);
-														}}
-														download="download"
-													>
-														<Icon type="download" style={{ fontSize: '1.5rem' }} />
-													</a>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Event</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.ru.event}
-												</td>
-											</tr>
-											{lectureDetails.part ? (
-												<tr>
-													<td>
-														<b>
-															<span>Part</span> :
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.ru.event}
+														</td>
+													</tr>
+													{lectureDetails.part ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Part</span> :
 														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.part}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.chapter ? (
-												<tr>
-													<td>
-														<b>
-															<span>Chapter</span> :
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.part}
+															</td>
+														</tr>
+													) : null}
+													{lectureDetails.chapter ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Chapter</span> :
 														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.chapter}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.verse ? (
-												<tr>
-													<td>
-														<b>
-															<span>Verse</span> :
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.chapter}
+															</td>
+														</tr>
+													) : null}
+													{lectureDetails.verse ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Verse</span> :
 														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.verse}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.author ? (
-												<tr>
-													<td>
-														<b>
-															<span>Author</span> :
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.verse}
+															</td>
+														</tr>
+													) : null}
+													{lectureDetails.author ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Author</span> :
 														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.author}
-													</td>
-												</tr>
-											) : null}
-											<tr>
-												<td>
-													<b>
-														<span>Durations</span> :
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.author}
+															</td>
+														</tr>
+													) : null}
+													{lectureDetails.duration ? <tr>
+														<td>
+															<b>
+																<span>Durations</span> :
 													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.duration}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Location</span> :
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.duration}
+														</td>
+													</tr> : null}
+													<tr>
+														<td>
+															<b>
+																<span>Location</span> :
 													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.ru.location}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Downloads</span> :
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.ru.location}
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<b>
+																<span>Downloads</span> :
 													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.counters.downloads}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Topic</span> :
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.counters.downloads}
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<b>
+																<span>Topic</span> :
 													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.ru.topic}
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								</Panel>
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.ru.topic}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</Panel>
 								</Collapse>
 								<div>
 									<p className="bookingForm">Comments</p>

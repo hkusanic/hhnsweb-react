@@ -219,7 +219,7 @@ export class AudioDetails extends Component {
 													</td>
 												</tr>
 											) : null}
-											<tr>
+											{lectureDetails.duration ? <tr>
 												<td>
 													<b>
 														<span>Durations</span> :
@@ -228,7 +228,7 @@ export class AudioDetails extends Component {
 												<td className="padLeftRow">
 													{lectureDetails.duration}
 												</td>
-											</tr>
+											</tr> :null}
 											<tr>
 												<td>
 													<b>
