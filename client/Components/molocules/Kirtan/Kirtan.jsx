@@ -59,13 +59,12 @@ export class Kirtan extends Component {
 			totalItem: this.props.kirtanDetails.totalKirtans,
 			isUserLogin,
 			loading: false,
-			pagination
+			pagination,
 		});
 		this.props.searchKirtan(body);
 	}
 
 	componentWillReceiveProps(nextProps) {
-
 		let body = { ...this.state.body };
 		body.page = nextProps.kirtanDetails.currentPage;
 		const pagination = { ...this.state.pagination };
@@ -184,16 +183,16 @@ export class Kirtan extends Component {
 							<div className="table-responsive wow fadeIn">
 								{this.state.kirtans.length > 0 ? (
 									<div>
-									<Table
-										columns={columns}
-										rowKey={record => record.uuid}
-										dataSource={this.state.kirtans}
-										pagination={this.state.pagination}
-										loading={this.state.loading}
-										onChange={this.handleTableChange}
-										rowClassName="tableRow"
-									/>
-								</div>
+										<Table
+											columns={columns}
+											rowKey={record => record.uuid}
+											dataSource={this.state.kirtans}
+											pagination={this.state.pagination}
+											loading={this.state.loading}
+											onChange={this.handleTableChange}
+											rowClassName="tableRow"
+										/>
+									</div>
 								) : (
 									<div style={{ textAlign: 'center' }}>
 										<p className="bookingForm">
@@ -207,12 +206,12 @@ export class Kirtan extends Component {
 						</div>
 					</div>
 				) : (
-					<div style={{ textAlign: 'center' }}>
-						<p className="bookingForm">Please Log in to continue</p>
+					<div className="loginText">
+						<p className="bookingForm">Please log in to continue</p>
 					</div>
 				)}
 			</div>
-		)
+		);
 	}
 }
 

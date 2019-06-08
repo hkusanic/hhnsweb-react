@@ -128,7 +128,7 @@ export class AudioList extends Component {
 		const mobileBrkPnt = 767;
 		const columns = [
 			{
-				title: maxWidth > mobileBrkPnt?'Title':'',
+				title: maxWidth > mobileBrkPnt ? 'Title' : '',
 				className: 'audioTable_title',
 				dataIndex: renderHTML(
 					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
@@ -151,7 +151,7 @@ export class AudioList extends Component {
 				),
 			},
 			{
-				title: maxWidth > mobileBrkPnt?'Audio':'',
+				title: maxWidth > mobileBrkPnt ? 'Audio' : '',
 				dataIndex: 'audio_link',
 				className: 'audioTable_audio',
 				render: (text, record, index) => (
@@ -168,7 +168,7 @@ export class AudioList extends Component {
 				),
 			},
 			{
-				title: maxWidth > mobileBrkPnt?'Downloads':'',
+				title: maxWidth > mobileBrkPnt ? 'Downloads' : '',
 				dataIndex: 'counters.downloads',
 				className: 'downloadSign',
 				render: (text, record, index) => (
@@ -183,7 +183,7 @@ export class AudioList extends Component {
 							download="download"
 						>
 							<Icon type="download" style={{ fontSize: '1.5rem' }} />
-							{maxWidth <= mobileBrkPnt?' Download':null}
+							{maxWidth <= mobileBrkPnt ? ' Download' : null}
 						</a>
 					</React.Fragment>
 				),
@@ -202,15 +202,18 @@ export class AudioList extends Component {
 			<div>
 				<section
 					className="bg-gray-100"
-					style={{backgroundImage: "url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)"}}
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
+					}}
 				>
 					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
 							<ul class="breadcrumbs-custom-path">
 								<li>
-								<Link to="" onClick={() => this.props.history.push('/')}>
-									<Breadcrumb.Item>Home</Breadcrumb.Item>
-								</Link>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
 								</li>
 								<li>
 									<a className="textColor">Audio</a>
@@ -218,8 +221,8 @@ export class AudioList extends Component {
 							</ul>
 						</div>
 					</div>
-					</section>
-				
+				</section>
+
 				{!this.state.isUserLogin ? (
 					<div className="PadTop">
 						<div className="container mt-5">
@@ -283,8 +286,8 @@ export class AudioList extends Component {
 						</div>
 					</div>
 				) : (
-					<div style={{ textAlign: 'center' }}>
-						<p className="bookingForm">Please Log in to continue</p>
+					<div className="loginText">
+						<p className="bookingForm">Please log in to continue</p>
 					</div>
 				)}
 			</div>

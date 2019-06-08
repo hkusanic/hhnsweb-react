@@ -39,8 +39,8 @@ export class MKV extends Component {
 
 		if (!sessionStorage.getItem('user')) {
 			return (
-				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">Please Log in to continue</p>
+				<div className="loginText">
+					<p className="bookingForm">Please log in to continue</p>
 				</div>
 			);
 		}
@@ -73,10 +73,9 @@ export class MKV extends Component {
 							<div style={{ textAlign: 'center' }}>
 								<p className="title">MKV</p>
 							</div>
-							<div className="row" style={{margin: 0, textAlign:"center"}}>
+							<div className="row" style={{ margin: 0, textAlign: 'center' }}>
 								{this.state.array.map((item, key) => {
 									return (
-										
 										<div
 											key={key}
 											className={
@@ -92,15 +91,14 @@ export class MKV extends Component {
 												</div>
 											</article>
 										</div>
-										
 									);
 								})}
 							</div>
 						</div>
 					</section>
 				) : (
-					<div style={{ textAlign: 'center' }}>
-						<p className="bookingForm">Please Log in to continue</p>
+					<div className="loginText">
+						<p className="bookingForm">Please log in to continue</p>
 					</div>
 				)}
 				{this.state.showTabs ? (
