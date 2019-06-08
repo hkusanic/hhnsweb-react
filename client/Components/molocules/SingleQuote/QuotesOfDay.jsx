@@ -14,7 +14,7 @@ export class QuoteOfDay extends React.Component {
 		}
 	}
 	componentDidMount() {
-		let authorList = ["Nirajanana Swami", "Srila Prabhupada"]
+		let authorList = ["Niranjana Swami", "Srila Prabhupada"]
 		this.props.quoteOfDay(authorList)
 		this.setState({
 			quotes: this.props.quoteOfDay.quotes
@@ -77,7 +77,7 @@ export class QuoteOfDay extends React.Component {
 												/>
 											</div>
 											<div class="quote-modern-info">
-												<cite class="quote-modern-cite">{this.props && this.props.quote && this.props.quote.quotes[0] && titleCase(this.props.quote.quotes[0].author)}</cite>
+												<cite class="quote-modern-cite">{this.props && this.props.quote &&this.props.quote.quotes&& this.props.quote.quotes[0] && titleCase(this.props.quote.quotes[0].author)}</cite>
 												<p class="quote-modern-caption">
 													{
 														reactCookie.load('languageCode') === 'en' ?
@@ -140,7 +140,7 @@ export class QuoteOfDay extends React.Component {
 												/>
 											</div>
 											<div class="quote-modern-info">
-												<cite class="quote-modern-cite">{this.props && this.props.quote && this.props.quote.quotes[1] && titleCase(this.props.quote.quotes[1].author)}</cite>
+												<cite class="quote-modern-cite">{this.props && this.props.quote&&this.props.quote.quotes && this.props.quote.quotes[1] && titleCase(this.props.quote.quotes[1].author)}</cite>
 												<p class="quote-modern-caption">
 													{
 														reactCookie.load('languageCode') === 'en' ?

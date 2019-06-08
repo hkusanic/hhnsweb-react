@@ -241,7 +241,7 @@ exports.quoteOfDay = async function(req, res) {
 	let quotesOfDay = [];
 	for (let i = 0; i < req.body.length; i++) {
 		let date = todayDate();
-		let author = req.body[i].toLowerCase();
+		let author = req.body[i];
 		let quoote = await Quote.model
 			.findOne()
 			.where({ $and: [{ published_date: date }, { author: author }] })
@@ -289,7 +289,6 @@ exports.quoteOfDay = async function(req, res) {
 
 		
 	}
-
 	return res.apiResponse({
 		quote: quotesOfDay
 	});
