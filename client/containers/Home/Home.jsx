@@ -38,7 +38,6 @@ import SadhanaList from '../../Components/molocules/Sadhana/SadhanaList';
 import SadhanaDetails from '../../Components/molocules/Sadhana/SadhanaDetails';
 import AddSadhana from '../../Components/molocules/Sadhana/addSadhana';
 
-
 import { Route, Switch } from 'react-router-dom';
 
 export class Home extends Component {
@@ -72,15 +71,18 @@ export class Home extends Component {
 							<Route path="/photos" component={Photos} />
 							<Route path="/gallery" component={Gallery} />
 							<Route path="/subGallery" component={SubGallery} />
+							<Route path="/quotes" component={Quotes} />
+							<Route path="/quoteDetails" component={QuoteDetails} />
 							<ShellCompoenent>
 								<Route path="/blog" component={Blog} />
 								<Route path="/booking" component={Booking} />
 								<Route path="/calender" component={Calender} />
 								<Route path="/lectures" component={Lectures} />
-								<Route path="/quotes" component={Quotes} />
 								<Route path="/blogDetails/:uuid" component={BlogDetails} />
-								<Route path="/quoteDetails" component={QuoteDetails} />
-								<Route path="/lectureDetails/:uuid" component={LectureDetails} />
+								<Route
+									path="/lectureDetails/:uuid"
+									component={LectureDetails}
+								/>
 								<Route
 									path="/audio"
 									component={AudioList}
@@ -93,7 +95,10 @@ export class Home extends Component {
 								<Route path="/profile" component={UserProfile} />
 								<Route path="/transcriptions" component={Transcritpion} />
 								<Route path="/summaries" component={Summaries} />
-								<Route path="/summariesDetails/:uuid" component={SummariesDetails} />
+								<Route
+									path="/summariesDetails/:uuid"
+									component={SummariesDetails}
+								/>
 								<Route
 									path="/transcriptionDetails/:uuid"
 									component={TranscriptionDetails}
@@ -102,7 +107,10 @@ export class Home extends Component {
 								<Route path="/kirtanDetails/:uuid" component={KirtanDetails} />
 								<Route path="/mkv" component={MKV} />
 								<Route path="/sadhanaList" component={SadhanaList} />
-								<Route path="/sadhanaDetails/:uuid" component={SadhanaDetails} />
+								<Route
+									path="/sadhanaDetails/:uuid"
+									component={SadhanaDetails}
+								/>
 								<Route path="/addSadhana" component={AddSadhana} />
 							</ShellCompoenent>
 						</ScrollToTop>

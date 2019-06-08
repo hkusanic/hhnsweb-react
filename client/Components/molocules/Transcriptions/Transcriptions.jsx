@@ -137,11 +137,11 @@ export class Transcritpion extends Component {
 		return (
 			<div>
 				<section
-				className="bg-gray-100"
-				style={{
-					backgroundImage:
-						'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
-				}}
+					className="bg-gray-100"
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
+					}}
 				>
 					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
@@ -219,8 +219,8 @@ export class Transcritpion extends Component {
 						</div>
 					</div>
 				) : (
-					<div style={{ textAlign: 'center' }}>
-						<p className="bookingForm">Please Log in to continue</p>
+					<div className="loginText">
+						<p className="bookingForm">Please log in to continue</p>
 					</div>
 				)}
 			</div>

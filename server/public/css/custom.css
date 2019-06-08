@@ -1075,3 +1075,13 @@
 	}
 	
 }
+
+.loginText {
+	margin-left: 9%;
+}
+
+@media (max-width: 1024px) {
+	.loginText {
+		margin-left: 5%;
+	}
+}
