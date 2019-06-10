@@ -1,3 +1,8 @@
+.textContent p, .textContent {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 .titleColor {
 	color: #ff830a !important;
 	margin: auto;

@@ -37,11 +37,13 @@ export class BiographyDetails extends Component {
 										<div className="floated">
 										<img style={{objectFit: 'cover'}} src={this.props.location.state.img} />
 										</div>
-										{renderHTML(
-										reactCookie.load('languageCode') === 'en'
-											? this.props.location.state.content_en
-											: this.props.location.state.content_ru
-									)}
+										<div className="textContent">
+										  {renderHTML(
+  										reactCookie.load('languageCode') === 'en'
+  											? this.props.location.state.content_en
+  											: this.props.location.state.content_ru
+  									)}
+										</div>
 										</div>
 									</div>
 								</div>

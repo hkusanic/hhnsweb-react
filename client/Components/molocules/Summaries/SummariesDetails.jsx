@@ -126,7 +126,7 @@ export class SummariesDetails extends React.Component {
 											<a>Summary</a>
 										</li>
 									</ul>
-									<div>
+									<div className="textContent">
 										{lectureDetails
 											&& renderHTML(
 												reactCookie.load('languageCode') === 'en'
