@@ -11,10 +11,10 @@
 //  * See https://goo.gl/2aRDsh
 //  */
 
-// importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
+// importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 // importScripts(
-// 	'/precache-manifest.b3b4822aa72b330d66eb0fabfaa7102e.js'
+//   "/precache-manifest.8a0f22ea0d78817c241eb7f9a8d8fe16.js"
 // );
 
 // workbox.clientsClaim();
@@ -28,7 +28,7 @@
 // workbox.precaching.suppressWarnings();
 // workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-// workbox.routing.registerNavigationRoute('/index.html', {
+// workbox.routing.registerNavigationRoute("/index.html", {
 
-// 	blacklist: [/^\/_/, /\/[^\/]+\.[^\/]+$/],
+//   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 // });
