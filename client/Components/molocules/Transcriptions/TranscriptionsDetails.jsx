@@ -139,13 +139,13 @@ export class TranscriptionDetails extends React.Component {
 										<div style={{ paddingTop: '20px' }}>
 											<table className="maintable">
 												<tbody>
-													<tr>
+													<tr className="">
 														<td>
 															<b>
 																<span>Audio</span> {maxWidth > mobileBrkPnt ? ':' : null}
 															</b>
 														</td>
-														<td className="padLeftRow">
+														<td className="padLeftRow downloadDiv">
 															<audio style={{ height: '30px' }} controls controlsList="nodownload">
 																<source
 																	src={renderHTML(
