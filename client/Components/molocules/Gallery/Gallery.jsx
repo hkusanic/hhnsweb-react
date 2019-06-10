@@ -44,12 +44,34 @@ export class Gallery extends React.Component {
 
 		return (
 			<div>
+				<section
+					className="bg-gray-100"
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
+					}}
+				>
+					<div class="breadcrumbs-custom-inner headingImage">
+						<div class="container breadcrumbs-custom-container">
+							<ul class="breadcrumbs-custom-path">
+								<li>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<a className="textColor">Gallery</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
 				{!this.state.isUserLogin ? (
 					<section class="section-lg text-center bg-gray-100">
 						<div class="container">
 							{/* <div className="row justify-content-center align-items-center">
 								<div className="col-lg-10"> */}
-							<Breadcrumb>
+							{/* <Breadcrumb>
 								<Link to="" onClick={() => this.props.history.push('/')}>
 									<Breadcrumb.Item>Home</Breadcrumb.Item>
 								</Link>
@@ -62,7 +84,7 @@ export class Gallery extends React.Component {
 									}}
 								/>
 								<Breadcrumb.Item active>Gallery</Breadcrumb.Item>
-							</Breadcrumb>
+							</Breadcrumb> */}
 							{/* </div>
 							</div> */}
 							<div class="row row-50 row-lg-70 offset-top-2">
@@ -77,13 +99,13 @@ export class Gallery extends React.Component {
 												<Link to={{ pathname: '/subGallery', state: item }}>
 													<Card
 														hoverable
-														style={{ width: 240, margin: 'auto' }}
-														cover={
-															<img
-																src="https://nrs-site.s3.amazonaws.com/styles/gallery_images/s3/default_images/004.jpg?itok=xizRm1w6"
-																alt=""
-															/>
-														}
+														// style={{ width: 240, margin: 'auto' }}
+														// cover={
+														// 	<img
+														// 		src="https://nrs-site.s3.amazonaws.com/styles/gallery_images/s3/default_images/004.jpg?itok=xizRm1w6"
+														// 		alt=""
+														// 	/>
+														// }
 													>
 														<Meta
 															title={
