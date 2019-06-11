@@ -148,12 +148,14 @@ export class BlogDetails extends Component {
 											<a>Blog</a>
 										</li>
 									</ul>
-									{blogDetails &&
-										renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? blogDetails.body_en
-												: blogDetails.body_ru
-										)}
+									<div className="textContent">
+									  {blogDetails &&
+  										renderHTML(
+  											reactCookie.load('languageCode') === 'en'
+  												? blogDetails.body_en
+  												: blogDetails.body_ru
+  										)}
+									</div>
 							<div>
 								<p className="bookingForm">Comments</p>
 							</div>
