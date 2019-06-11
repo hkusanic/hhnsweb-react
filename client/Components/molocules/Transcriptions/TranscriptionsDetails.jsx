@@ -34,8 +34,15 @@ export class TranscriptionDetails extends React.Component {
 			this.setState({ lectureDetails: this.props.lectureDetails });
 		}
 	}
+	handleUpdate = uuid => {
+		const body = {
+			uuid: uuid,
+			downloads: true,
+		};
+		this.props.updateCounters(body);
+	};
 
-	static getDerivedStateFromProps (nextProps, prevState) {
+	static getDerivedStateFromProps(nextProps, prevState) {
 		if (nextProps.lectureDetails !== prevState.lectureDetails) {
 			return { lectureDetails: nextProps.lectureDetails };
 		} else return null;
@@ -118,7 +125,7 @@ export class TranscriptionDetails extends React.Component {
 										</li>
 									</ul>
 									<div className="row">
-										<div className="col mx-3">
+										<div className="col mx-3 textContent">
 											{renderHTML(
 												reactCookie.load('languageCode') === 'en'
 													? lectureDetails.en.transcription.text
@@ -132,14 +139,14 @@ export class TranscriptionDetails extends React.Component {
 										<div style={{ paddingTop: '20px' }}>
 											<table className="maintable">
 												<tbody>
-													<tr>
+													<tr className="">
 														<td>
 															<b>
 																<span>Audio</span> {maxWidth > mobileBrkPnt ? ':' : null}
 															</b>
 														</td>
-														<td className="padLeftRow">
-															<audio style={{ height: '30px' }} controls>
+														<td className="padLeftRow downloadDiv">
+															<audio style={{ height: '30px' }} controls controlsList="nodownload">
 																<source
 																	src={renderHTML(
 																		lectureDetails.audio_link
@@ -147,6 +154,16 @@ export class TranscriptionDetails extends React.Component {
 																	type="audio/mpeg"
 																/>
 															</audio>
+															<a
+																className="downloadIcon"
+																href={lectureDetails.audio_link}
+																onClick={() => {
+																	this.handleUpdate(lectureDetails.uuid);
+																}}
+																download="download"
+															>
+																<Icon type="download" style={{ fontSize: '1.5rem' }} />
+															</a>
 														</td>
 													</tr>
 													<tr>
@@ -232,16 +249,16 @@ export class TranscriptionDetails extends React.Component {
 															</td>
 														</tr>
 													) : null}
-													<tr>
+													{lectureDetails.duration ? <tr>
 														<td>
 															<b>
 																<span>Durations</span> :
-															</b>
+													</b>
 														</td>
 														<td className="padLeftRow">
 															{lectureDetails.duration}
 														</td>
-													</tr>
+													</tr> : null}
 													<tr>
 														<td>
 															<b>

@@ -18,9 +18,7 @@ export class BiographyDetails extends Component {
 		return (
 			<div>
 				<section className="section section-lg">
-					<div className="container padLeftBlog">
-						<div className="row row-50">
-							<div className="col-lg-12">
+					
 								<article className="post-creative">
 								<div className="container">
 									<div className="row">
@@ -39,11 +37,13 @@ export class BiographyDetails extends Component {
 										<div className="floated">
 										<img style={{objectFit: 'cover'}} src={this.props.location.state.img} />
 										</div>
-										{renderHTML(
-										reactCookie.load('languageCode') === 'en'
-											? this.props.location.state.content_en
-											: this.props.location.state.content_ru
-									)}
+										<div className="textContent">
+										  {renderHTML(
+  										reactCookie.load('languageCode') === 'en'
+  											? this.props.location.state.content_en
+  											: this.props.location.state.content_ru
+  									)}
+										</div>
 										</div>
 									</div>
 								</div>
@@ -61,10 +61,9 @@ export class BiographyDetails extends Component {
 											: this.props.location.state.content_ru
 									)} */}
 								</article>
-							</div>
-							<div className="col-lg-4" />
-						</div>
-					</div>
+							
+							
+					
 				</section>
 			</div>
 		);

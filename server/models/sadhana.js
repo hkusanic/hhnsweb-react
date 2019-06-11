@@ -28,7 +28,7 @@ Sadhana.add({
 	approved: { type: Boolean, default: false },
 	userId: { type: String },
 	user: { type: Types.Relationship, ref: 'User' },
-	created_date_time: { type: Types.Date, default: Date.now }
+	created_date_time: { type: Types.Date, default: Date.now },
 
 });
 

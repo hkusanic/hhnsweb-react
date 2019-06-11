@@ -41,7 +41,7 @@ export class SummariesDetails extends React.Component {
 		};
 		this.props.updateCounters(body);
 	};
-	
+
 	static getDerivedStateFromProps(nextProps, prevState) {
 		if (nextProps.lectureDetails !== prevState.lectureDetails) {
 			return { lectureDetails: nextProps.lectureDetails };
@@ -126,7 +126,7 @@ export class SummariesDetails extends React.Component {
 											<a>Summary</a>
 										</li>
 									</ul>
-									<div>
+									<div className="textContent">
 										{lectureDetails
 											&& renderHTML(
 												reactCookie.load('languageCode') === 'en'
@@ -147,7 +147,7 @@ export class SummariesDetails extends React.Component {
 														<span>Audio</span> {maxWidth > mobileBrkPnt?':':null}
 													</b>
 												</td>
-												<td className="padLeftRow">
+												<td className="padLeftRow downloadDiv">
 													<audio style={{ height: '30px' }}
 														controlsList="nodownload" controls>
 														<source
@@ -174,93 +174,93 @@ export class SummariesDetails extends React.Component {
 													<b>
 														<span>Event</span> :
 													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.ru.event}
-												</td>
-											</tr>
-											{lectureDetails.part ? (
-												<tr>
-													<td>
-														<b>
-															<span>Part</span> :
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.ru.event}
+														</td>
+													</tr>
+													{lectureDetails.part ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Part</span> :
 														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.part}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.chapter ? (
-												<tr>
-													<td>
-														<b>
-															<span>Chapter</span> :
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.part}
+															</td>
+														</tr>
+													) : null}
+													{lectureDetails.chapter ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Chapter</span> :
 														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.chapter}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.verse ? (
-												<tr>
-													<td>
-														<b>
-															<span>Verse</span> :
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.chapter}
+															</td>
+														</tr>
+													) : null}
+													{lectureDetails.verse ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Verse</span> :
 														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.verse}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.author ? (
-												<tr>
-													<td>
-														<b>
-															<span>Author</span> :
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.verse}
+															</td>
+														</tr>
+													) : null}
+													{lectureDetails.author ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Author</span> :
 														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.author}
-													</td>
-												</tr>
-											) : null}
-											<tr>
-												<td>
-													<b>
-														<span>Durations</span> :
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.author}
+															</td>
+														</tr>
+													) : null}
+													{lectureDetails.duration ? <tr>
+														<td>
+															<b>
+																<span>Durations</span> :
 													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.duration}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Location</span> :
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.duration}
+														</td>
+													</tr> : null}
+													<tr>
+														<td>
+															<b>
+																<span>Location</span> :
 													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.ru.location}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Downloads</span> :
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.ru.location}
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<b>
+																<span>Downloads</span> :
 													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.counters.downloads}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Topic</span> :
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.counters.downloads}
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<b>
+																<span>Topic</span> :
 													</b>
 												</td>
 												<td className="padLeftRow">

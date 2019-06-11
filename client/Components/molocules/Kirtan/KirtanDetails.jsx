@@ -127,7 +127,7 @@ export class KirtanDetails extends Component {
 														<span>Audio</span> {maxWidth > mobileBrkPnt ? ':' : null}
 													</b>
 												</td>
-												<td className="padLeftRow">
+												<td className="padLeftRow downloadDiv">
 													<audio style={{ height: '30px' }}
 														controlsList="nodownload" controls>
 														<source

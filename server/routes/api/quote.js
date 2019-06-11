@@ -51,7 +51,7 @@ exports.list = function(req, res) {
 		perPage: 20,
 		filters: filters
 	})
-		.sort('-date')
+		.sort('-created_date_time')
 		.exec(function(err, items) {
 			if (err) {
 				logger.error(
@@ -260,8 +260,11 @@ exports.quoteOfDay = async function(req, res) {
 					quotesOfDay.push(item);
 				}
 			});
-			if(!quoote){
-				await Quote.model.findOne().where({author:author}).exec(function(err, item) {
+		if (!quoote) {
+			await Quote.model
+				.findOne()
+				.where({ author: author })
+				.exec(function(err, item) {
 					if (err) {
 						logger.error(
 							{
@@ -275,10 +278,10 @@ exports.quoteOfDay = async function(req, res) {
 						quotesOfDay.push(item);
 					}
 				});
-			}
+		}
 	}
-	if (quotesOfDay.length < 1) {
 
+	if (quotesOfDay.length < 2) {
 		logger.error(
 			{
 				error: 'No Item'
@@ -286,8 +289,29 @@ exports.quoteOfDay = async function(req, res) {
 			'API GET  QUOTE OF THE DAY'
 		);
 		return res.json({ err: 'NO QUOTE FOUND' });
+	}
+	for (let i = 0; i < quotesOfDay.length; i++) {
+		if (quotesOfDay[i].en.body === '<p></p>\n') {
+			quotesOfDay[i].en.body = quotesOfDay[i].ru.body;
+		}
+		if (quotesOfDay[i].en.body === '<p></p>\n') {
+			quotesOfDay[i].ru.body = quotesOfDay[i].en.body;
+		}
+		if (quotesOfDay[i].en.title === '') {
+			quotesOfDay[i].en.title = quotesOfDay[i].ru.title;
+		}
 
-		
+		if (quotesOfDay[i].ru.title === '') {
+			quotesOfDay[i].ru.title = quotesOfDay[i].en.title;
+		}
+
+		if (quotesOfDay[i].en.source_of_quote === '') {
+			quotesOfDay[i].en.source_of_quote = quotesOfDay[i].ru.source_of_quote;
+		}
+
+		if (quotesOfDay[i].ru.source_of_quote === '') {
+			quotesOfDay[i].ru.source_of_quote = quotesOfDay[i].en.source_of_quote;
+		}
 	}
 	return res.apiResponse({
 		quote: quotesOfDay
