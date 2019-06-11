@@ -129,9 +129,9 @@ export class SummariesDetails extends React.Component {
 									</div>
 								</article>
 								<Collapse bordered={false} style={{marginTop: '10px'}}>
-									<Panel header="Audio Details" key="1" style={{borderTop: '1px solid #e8e8e8', borderBottom: 'none'}}>
+									<Panel header="Audio Details" key="1" style={{borderTop: '2px solid #e8e8e8', borderBottom: 'none', fontSize:'1.5rem'}}>
 										
-								<div style={{ paddingTop: '20px' }}>
+								<div style={{ paddingTop: '20px', fontSize:'14px' }}>
 									<table className="maintable">
 										<tbody>
 											<tr>

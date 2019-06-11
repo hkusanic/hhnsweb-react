@@ -161,7 +161,7 @@ class AddSadhana extends React.Component {
 						<div className="card-body">
 							<div>
 								<Form className="mt-3">
-									<div className="form-group">
+									<div className="form-group inline-block-element inline-block-children">
 										<Form.Item label={language ? 'First Name' : 'First Name'}>
 											{form.getFieldDecorator('firstname', {
 												initialValue: firstName,
@@ -174,7 +174,7 @@ class AddSadhana extends React.Component {
 											})(<Input disabled placeholder="Name" name="name" />)}
 										</Form.Item>
 									</div>
-									<div className="form-group">
+									<div className="form-group inline-block-element inline-block-element-right inline-block-children">
 										<Form.Item label={language ? 'Last Name' : 'Last Name'}>
 											{form.getFieldDecorator('lastname', {
 												rules: [
@@ -187,7 +187,7 @@ class AddSadhana extends React.Component {
 											})(<Input disabled placeholder="Name" name="name" />)}
 										</Form.Item>
 									</div>
-									<div className="form-group">
+									<div className="form-group inline-block-element inline-block-children">
 										<Form.Item label={language ? 'Email' : 'Email'}>
 											{form.getFieldDecorator('email', {
 												rules: [
@@ -200,7 +200,13 @@ class AddSadhana extends React.Component {
 											})(<Input disabled placeholder="Email" name="email" />)}
 										</Form.Item>
 									</div>
-									<div className="form-group">
+									{/* <div>
+										<div><span className="sadhnaform-label">First Name:</span><span className="sadhnaform-value">{firstName}</span></div>
+										<div><span className="sadhnaform-label">Last Name:</span><span className="sadhnaform-value">{lastName}</span></div>
+										<div><span className="sadhnaform-label">Email:</span><span className="sadhnaform-value">{email}</span></div>
+										<div><span className="sadhnaform-label">Date:</span><span className="sadhnaform-value">{moment(new Date(), dateFormat).toString().substring(3,15)}</span></div>
+									</div> */}
+									<div className="form-group inline-block-element inline-block-element-right inline-block-children">
 										<Form.Item label={language ? 'Date' : 'Date'}>
 											{form.getFieldDecorator('date', {
 												rules: [
@@ -212,8 +218,9 @@ class AddSadhana extends React.Component {
 												initialValue: moment(new Date(), dateFormat),
 											})(<DatePicker disabled />)}
 										</Form.Item>
-									</div>
-									<div className="form-group">
+									</div> 
+									
+									<div className="form-group inline-block-element">
 										<Form.Item label={language ? 'Time Rising' : 'Time Rising'}>
 											{form.getFieldDecorator('time_rising', {
 												rules: [
@@ -232,7 +239,7 @@ class AddSadhana extends React.Component {
 											)}
 										</Form.Item>
 									</div>
-									<div className="form-group">
+									<div className="form-group inline-block-element inline-block-element-right">
 										<Form.Item label={language ? 'Rounds' : 'Rounds'}>
 											{form.getFieldDecorator('rounds', {
 												rules: [
@@ -338,7 +345,7 @@ class AddSadhana extends React.Component {
 												<span className="mr-3">
 													<Button
 														type="primary"
-														className="sadhanaButton"
+														className="sadhanaSubmitButton"
 														onClick={event => {
 															this.handleSubmit(event);
 														}}

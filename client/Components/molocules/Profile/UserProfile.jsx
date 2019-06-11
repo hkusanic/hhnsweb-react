@@ -4,6 +4,8 @@ import { editProfile } from '../../../actions/loginActions';
 import Auth from '../../../utils/Auth';
 import IntlTelInput from 'react-intl-tel-input';
 import { Translate } from 'react-localize-redux';
+import ReactPhoneInput from 'react-phone-input-2';
+
 export class UserProfile extends Component {
     constructor(props) {
         super(props);
@@ -18,7 +20,9 @@ export class UserProfile extends Component {
             isUpdated: false
         }
     }
-
+    handleOnChange(value) {
+        console.log(`Phone number: ${value}`);
+     }
     componentDidMount() {
         this.setState({
             editing: true,
@@ -207,6 +211,8 @@ export class UserProfile extends Component {
                                             </div>
                                         }
                                     </div>
+                                    <br /><br />
+                                    <ReactPhoneInput defaultCountry={['us']} onChange={this.handleOnChange}/>
                                     <div className="group group-middle">
                                         {<Translate>
                                             {({ translate }) => {
