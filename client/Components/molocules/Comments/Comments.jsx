@@ -98,7 +98,7 @@ export class Comments extends React.Component {
 			message: this.state.comment,
 			author_email: this.state.user.email,
 			author_name: `${this.state.user.firstName} ${this.state.user.last}`,
-			approved: 2,
+			approved: '2',
 		};
 		this.props.createCommet(body);
 	};

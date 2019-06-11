@@ -70,7 +70,7 @@ class Comment extends React.Component {
 			author_name: `${this.props.user.firstName} ${this.props.user.last}`,
 			author_email: this.props.user.email,
 			message: this.state.commentReply,
-			approved: 2,
+			approved: '2',
 		};
 		this.setState(
 			{
