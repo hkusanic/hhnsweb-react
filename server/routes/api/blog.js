@@ -199,7 +199,7 @@ exports.get = function (req, res) {
 exports.create = function (req, res) {
 	var item = new Blog.model();
 	var data = req.method === 'POST' ? req.body : req.query;
-	data.date = todayDate();
+	// data.date = todayDate();
 	logger.info(
 		{
 			req: req,
