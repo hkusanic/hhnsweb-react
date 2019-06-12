@@ -3,23 +3,24 @@ import { Icon, Collapse } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
-import { updateCounters, getLectureByUuid } from '../../../actions/lectureActions';
-// eslint-disable-next-line no-unused-vars
+import {
+	updateCounters,
+	getLectureByUuid,
+	resetState,
+} from '../../../actions/lectureActions';
 import Comments from '../Comments/Comments';
-
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
+
 const Panel = Collapse.Panel;
 export class TranscriptionDetails extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
-		this.state = {
-			text: '',
-			lectureDetails: null,
-		};
+		const { resetState } = this.props;
+		resetState();
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		let body = {
 			uuid: this.props.match.params.uuid,
 		};
@@ -30,10 +31,8 @@ export class TranscriptionDetails extends React.Component {
 		}
 		this.props.updateCounters(body);
 		this.props.getLectureByUuid(body);
-		if (this.props.lectureDetails) {
-			this.setState({ lectureDetails: this.props.lectureDetails });
-		}
 	}
+
 	handleUpdate = uuid => {
 		const body = {
 			uuid: uuid,
@@ -42,18 +41,13 @@ export class TranscriptionDetails extends React.Component {
 		this.props.updateCounters(body);
 	};
 
-	static getDerivedStateFromProps(nextProps, prevState) {
-		if (nextProps.lectureDetails !== prevState.lectureDetails) {
-			return { lectureDetails: nextProps.lectureDetails };
-		} else return null;
-	}
-
-	render () {
-		const { lectureDetails } = this.state;
+	render() {
+		const { lectureDetails } = this.props;
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
+
 		if (!lectureDetails) {
-			return <div>Error Occured..........</div>;
+			return <div>Data Loading..........</div>;
 		}
 
 		if (!localStorage.getItem('user')) {
@@ -114,9 +108,7 @@ export class TranscriptionDetails extends React.Component {
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(
-													lectureDetails.created_date
-												).toDateString()}
+												{new Date(lectureDetails.created_date).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -135,22 +127,32 @@ export class TranscriptionDetails extends React.Component {
 									</div>
 								</article>
 								<Collapse bordered={false} style={{ marginTop: '10px' }}>
-									<Panel header="Audio Details" key="1" style={{ borderTop: '1px solid #e8e8e8', borderBottom: 'none' }}>
+									<Panel
+										header="Audio Details"
+										key="1"
+										style={{
+											borderTop: '1px solid #e8e8e8',
+											borderBottom: 'none',
+										}}
+									>
 										<div style={{ paddingTop: '20px' }}>
 											<table className="maintable">
 												<tbody>
 													<tr className="">
 														<td>
 															<b>
-																<span>Audio</span> {maxWidth > mobileBrkPnt ? ':' : null}
+																<span>Audio</span>{' '}
+																{maxWidth > mobileBrkPnt ? ':' : null}
 															</b>
 														</td>
 														<td className="padLeftRow downloadDiv">
-															<audio style={{ height: '30px' }} controls controlsList="nodownload">
+															<audio
+																style={{ height: '30px' }}
+																controls
+																controlsList="nodownload"
+															>
 																<source
-																	src={renderHTML(
-																		lectureDetails.audio_link
-																	)}
+																	src={renderHTML(lectureDetails.audio_link)}
 																	type="audio/mpeg"
 																/>
 															</audio>
@@ -162,7 +164,10 @@ export class TranscriptionDetails extends React.Component {
 																}}
 																download="download"
 															>
-																<Icon type="download" style={{ fontSize: '1.5rem' }} />
+																<Icon
+																	type="download"
+																	style={{ fontSize: '1.5rem' }}
+																/>
 															</a>
 														</td>
 													</tr>
@@ -249,16 +254,18 @@ export class TranscriptionDetails extends React.Component {
 															</td>
 														</tr>
 													) : null}
-													{lectureDetails.duration ? <tr>
-														<td>
-															<b>
-																<span>Durations</span> :
-													</b>
-														</td>
-														<td className="padLeftRow">
-															{lectureDetails.duration}
-														</td>
-													</tr> : null}
+													{lectureDetails.duration ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Durations</span> :
+																</b>
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.duration}
+															</td>
+														</tr>
+													) : null}
 													<tr>
 														<td>
 															<b>
@@ -326,6 +333,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		getLectureByUuid: body => {
 			dispatch(getLectureByUuid(body));
+		},
+		resetState: () => {
+			dispatch(resetState());
 		},
 	};
 };

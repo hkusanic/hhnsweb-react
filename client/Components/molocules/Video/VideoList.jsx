@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Button, Table, Icon } from 'antd';
 import {
 	searchLecture,
-	searchLectureVideo,
+	resetState,
 } from '../../../actions/lectureActions';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
@@ -20,10 +20,7 @@ export class VideoList extends Component {
 		super(props);
 		this.state = {
 			isUserLogin: true,
-			totalItem: null,
-			currentPage: null,
 			page: null,
-			videos: [],
 			iconSearch: true,
 			isSearch: false,
 			body: {
@@ -34,6 +31,8 @@ export class VideoList extends Component {
 			pagination: {},
 			loading: false,
 		};
+		const { resetState } = this.props;
+		resetState();
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
@@ -54,17 +53,16 @@ export class VideoList extends Component {
 		this.setState({ loading: true });
 
 		let body = { ...this.state.body };
-		body.page = this.props.lecturesDetails.videoCurrentPage || 1;
+		body.page = this.props.lecturesDetails.currentPage || 1;
 		body.video = true;
 
 		const pagination = { ...this.state.pagination };
 		pagination.total = this.props.lecturesDetails.totalLectures;
 		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = this.props.lecturesDetails.videoCurrentPage || 1;
+		pagination.current = this.props.lecturesDetails.currentPage || 1;
 
 		this.setState({
 			videos: this.props.lecturesDetails.lectures,
-			totalItem: this.props.lecturesDetails.totalLectures,
 			isUserLogin,
 			loading: false,
 			pagination,
@@ -75,17 +73,15 @@ export class VideoList extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		let body = { ...this.state.body };
-		body.page = nextProps.lecturesDetails.videoCurrentPage;
+		body.page = nextProps.lecturesDetails.currentPage;
 		body.video = true;
 
 		const pagination = { ...this.state.pagination };
 		pagination.total = nextProps.lecturesDetails.totalLectures;
 		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = nextProps.lecturesDetails.videoCurrentPage;
+		pagination.current = nextProps.lecturesDetails.currentPage;
 
 		this.setState({
-			videos: nextProps.lecturesDetails.lectures,
-			totalItem: nextProps.lecturesDetails.totalLectures,
 			pagination,
 		});
 
@@ -205,7 +201,7 @@ export class VideoList extends Component {
 							<div className="row  justify-content-center">
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
-										{this.state.videos.length > 0 ? (
+										{this.props.lecturesDetails.lectures.length > 0 ? (
 											<div>
 												<Table
 													columns={columns}
@@ -218,7 +214,6 @@ export class VideoList extends Component {
 											</div>
 										) : (
 											<div style={{ textAlign: 'center' }}>
-												<p className="bookingForm">No Records Found</p>
 												<p className="bookingForm">
 													{this.state.isSearch
 														? 'No Record Found'
@@ -250,7 +245,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		searchLecture: body => {
-			dispatch(searchLectureVideo(body));
+			dispatch(searchLecture(body));
+		},
+		resetState: () => {
+			dispatch(resetState());
 		},
 	};
 };

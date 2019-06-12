@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { Button, Table, Icon } from 'antd';
 import Auth from '../../../utils/Auth';
 import { connect } from 'react-redux';
-import {
-	searchLecture,
-	searchLectureSummaries,
-} from '../../../actions/lectureActions';
+import { searchLecture, resetState } from '../../../actions/lectureActions';
 import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import SearchFilter from '../SeachFilter/SearchFilter';
@@ -51,10 +48,7 @@ export class Summaries extends Component {
 		super(props);
 		this.state = {
 			isUserLogin: true,
-			totalItem: null,
-			currentPage: null,
 			page: null,
-			summaries: [],
 			iconSearch: true,
 			body: {
 				page: 1,
@@ -82,13 +76,13 @@ export class Summaries extends Component {
 
 	componentDidMount() {
 		let body = { ...this.state.body };
-		body.page = this.props.lecturesDetails.summariesCurrentPage || 1;
+		body.page = this.props.lecturesDetails.currentPage || 1;
 
 		this.setState({ loading: true });
 		const pagination = { ...this.state.pagination };
 		pagination.total = this.props.lecturesDetails.totalLectures;
 		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = this.props.lecturesDetails.summariesCurrentPage || 1;
+		pagination.current = this.props.lecturesDetails.currentPage || 1;
 
 		const isUserLogin = Auth.isUserAuthenticated();
 		this.setState({
@@ -100,18 +94,16 @@ export class Summaries extends Component {
 	}
 	componentWillReceiveProps(nextProps) {
 		let body = { ...this.state.body };
-		body.page = nextProps.lecturesDetails.summariesCurrentPage;
-		body.video = true;
+		body.page = nextProps.lecturesDetails.currentPage;
+		body.summaries = true;
 
 		const pagination = { ...this.state.pagination };
 		pagination.total = nextProps.lecturesDetails.totalLectures;
 		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = nextProps.lecturesDetails.summariesCurrentPage;
+		pagination.current = nextProps.lecturesDetails.currentPage;
 
 		this.setState({
-			summaries: nextProps.lecturesDetails.lectures,
-			currentPage: nextProps.lecturesDetails.summariesCurrentPage,
-			totalItem: nextProps.lecturesDetails.totalLectures,
+			pagination
 		});
 
 		if (nextProps.lecturesDetails.Count) {
@@ -130,6 +122,7 @@ export class Summaries extends Component {
 	};
 
 	render() {
+		console.log("this.props.lecturesDetails.lectures ====>>>", this.props.lecturesDetails.lectures);
 		return (
 			<div>
 				<section
@@ -188,7 +181,7 @@ export class Summaries extends Component {
 							<div className="row justify-content-center">
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
-										{this.state.summaries.length > 0 ? (
+										{this.props.lecturesDetails.lectures.length > 0 ? (
 											<div>
 												<Table
 													columns={columns}
@@ -232,8 +225,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		searchLecture: body => {
-			dispatch(searchLectureSummaries(body));
+			dispatch(searchLecture(body));
 		},
+		resetState: () => {
+			dispatch(resetState());
+		}
 	};
 };
 

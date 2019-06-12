@@ -1,5 +1,4 @@
 import React from 'react';
-import { Icon } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { Translate } from 'react-localize-redux';
@@ -8,17 +7,16 @@ import { Link } from 'react-router-dom';
 import {
 	updateCounters,
 	getLectureByUuid,
+	resetState,
 } from '../../../actions/lectureActions';
-// eslint-disable-next-line no-unused-vars
 import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 export class VideoDetails extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			lectureDetails: null,
-		};
+		const { resetState } = this.props;
+		resetState();
 	}
 
 	componentDidMount() {
@@ -28,15 +26,6 @@ export class VideoDetails extends React.Component {
 		};
 		this.props.updateCounters(body);
 		this.props.getLectureByUuid(body);
-		if (this.props.lectureDetails) {
-			this.setState({ lectureDetails: this.props.lectureDetails });
-		}
-	}
-
-	static getDerivedStateFromProps(nextProps, prevState) {
-		if (nextProps.lectureDetails !== prevState.lectureDetails) {
-			return { lectureDetails: nextProps.lectureDetails };
-		} else return null;
 	}
 
 	goBack = () => {
@@ -44,10 +33,16 @@ export class VideoDetails extends React.Component {
 	};
 
 	render() {
-		const { lectureDetails } = this.state;
+		const { lectureDetails } = this.props;
 
 		if (!lectureDetails) {
-			return <div>Error Occured..........</div>;
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">
+						 Hare Krishna...
+					</p>
+				</div>
+			);
 		}
 
 		if (!localStorage.getItem('user')) {
@@ -164,6 +159,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		getLectureByUuid: body => {
 			dispatch(getLectureByUuid(body));
+		},
+		resetState: () => {
+			dispatch(resetState());
 		},
 	};
 };

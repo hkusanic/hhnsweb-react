@@ -1,7 +1,7 @@
-import lectureApi from "../utils/api/lecture";
-import * as types from "../constants/index";
+import lectureApi from '../utils/api/lecture';
+import * as types from '../constants/index';
 
-export function searchLecture(body) {
+export function searchLecture (body) {
 	return dispatch => {
 		lectureApi
 			.searchLecture(body)
@@ -14,7 +14,7 @@ export function searchLecture(body) {
 			});
 	};
 }
-export function searchLectureVideo(body) {
+export function searchLectureVideo (body) {
 	return dispatch => {
 		lectureApi
 			.searchLecture(body)
@@ -28,7 +28,7 @@ export function searchLectureVideo(body) {
 	};
 }
 
-export function searchLectureTranscriptions(body) {
+export function searchLectureTranscriptions (body) {
 	return dispatch => {
 		lectureApi
 			.searchLecture(body)
@@ -42,7 +42,7 @@ export function searchLectureTranscriptions(body) {
 	};
 }
 
-export function searchLectureSummaries(body) {
+export function searchLectureSummaries (body) {
 	return dispatch => {
 		lectureApi
 			.searchLecture(body)
@@ -56,7 +56,7 @@ export function searchLectureSummaries(body) {
 	};
 }
 
-export function updateCounters(body) {
+export function updateCounters (body) {
 	return dispatch => {
 		lectureApi
 			.updateCounters(body)
@@ -69,7 +69,7 @@ export function updateCounters(body) {
 	};
 }
 
-export function getLectureByUuid(body) {
+export function getLectureByUuid (body) {
 	return dispatch => {
 		lectureApi
 			.fetchLecture(body)
@@ -82,7 +82,7 @@ export function getLectureByUuid(body) {
 	};
 }
 
-export function getRussianDubbedLecture(body) {
+export function getRussianDubbedLecture (body) {
 	return dispatch => {
 		lectureApi
 			.searchLecture(body)
@@ -95,45 +95,51 @@ export function getRussianDubbedLecture(body) {
 	};
 }
 
-export function searchLectureAction(data) {
+export function searchLectureAction (data) {
 	return {
 		type: types.SEARCH_LECTURE,
-		payload: data
+		payload: data,
 	};
 }
-export function searchLectureActionVideo(data) {
+export function searchLectureActionVideo (data) {
 	return {
 		type: types.SEARCH_LECTURE_VIDEO,
-		payload: data
+		payload: data,
 	};
 }
 
-export function searchLectureActionTranscriptions(data) {
+export function searchLectureActionTranscriptions (data) {
 	return {
 		type: types.SEARCH_LECTURE_TRANSCRIPTIONS,
-		payload: data
+		payload: data,
 	};
 }
 
-export function searchLectureActionSummaries(data) {
+export function searchLectureActionSummaries (data) {
 	return {
 		type: types.SEARCH_LECTURE_SUMMARIES,
-		payload: data
+		payload: data,
 	};
 }
 
-export function updateCountersAction(data) {
+export function updateCountersAction (data) {
 	return {
 		type: types.UPDATE_COUNTERS,
-		payload: data
+		payload: data,
 	};
 }
 
-export function fetchLectureByUuid(data) {
+export function fetchLectureByUuid (data) {
 	return {
 		type: types.GET_LECTURE_BY_UUID,
 		payload: {
-			lecture: data.data.lecture
-		}
+			lecture: data.data.lecture,
+		},
+	};
+}
+
+export function resetState () {
+	return {
+		type: 'RESET_STATE_LECTURE',
 	};
 }

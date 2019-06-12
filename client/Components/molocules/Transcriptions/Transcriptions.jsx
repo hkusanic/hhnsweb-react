@@ -4,7 +4,7 @@ import Auth from '../../../utils/Auth';
 import { connect } from 'react-redux';
 import {
 	searchLecture,
-	searchLectureTranscriptions,
+	resetState,
 } from '../../../actions/lectureActions';
 import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
@@ -51,10 +51,7 @@ export class Transcritpion extends Component {
 		super(props);
 		this.state = {
 			isUserLogin: true,
-			totalItem: null,
-			currentPage: null,
 			page: null,
-			transcriptions: [],
 			iconSearch: true,
 			body: {
 				page: 1,
@@ -65,6 +62,49 @@ export class Transcritpion extends Component {
 			pagination: {},
 			loading: false,
 		};
+		const { resetState } = this.props;
+		resetState();
+	}
+
+	componentDidMount() {
+		let body = { ...this.state.body };
+		body.page = this.props.lecturesDetails.currentPage || 1;
+
+		console.log("this.props.lecturesDetails ===>>>>", this.props.lecturesDetails);
+		this.setState({ loading: true });
+		const pagination = { ...this.state.pagination };
+		pagination.total = this.props.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = this.props.lecturesDetails.currentPage || 1;
+
+		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({
+			isUserLogin,
+			loading: false,
+			pagination,
+		});
+		this.props.searchLecture(body);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		let body = { ...this.state.body };
+		console.log("nextProps.lecturesDetails ===>>>>", nextProps.lecturesDetails);
+
+		body.page = nextProps.lecturesDetails.currentPage;
+		body.transcriptions = true;
+
+		const pagination = { ...this.state.pagination };
+		pagination.total = nextProps.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = nextProps.lecturesDetails.currentPage;
+
+		this.setState({
+			pagination,
+		});
+
+		if (nextProps.lecturesDetails.Count) {
+			this.props.searchLecture(body);
+		}
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
@@ -80,48 +120,6 @@ export class Transcritpion extends Component {
 		this.props.searchLecture(body);
 	};
 
-	componentDidMount() {
-		let body = { ...this.state.body };
-		body.page = this.props.lecturesDetails.transcriptionsCurrentPage || 1;
-
-		this.setState({ loading: true });
-		const pagination = { ...this.state.pagination };
-		pagination.total = this.props.lecturesDetails.totalLectures;
-		pagination.defaultPageSize = defaultPageSize;
-		pagination.current =
-			this.props.lecturesDetails.transcriptionsCurrentPage || 1;
-
-		const isUserLogin = Auth.isUserAuthenticated();
-		this.setState({
-			isUserLogin,
-			loading: false,
-			pagination,
-		});
-		this.props.searchLecture(body);
-	}
-
-	componentWillReceiveProps(nextProps) {
-		let body = { ...this.state.body };
-		body.page = nextProps.lecturesDetails.transcriptionsCurrentPage;
-		body.video = true;
-
-		const pagination = { ...this.state.pagination };
-		pagination.total = nextProps.lecturesDetails.totalLectures;
-		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = nextProps.lecturesDetails.transcriptionsCurrentPage;
-
-		this.setState({
-			transcriptions: nextProps.lecturesDetails.lectures,
-			currentPage: nextProps.lecturesDetails.transcriptionsCurrentPage,
-			totalItem: nextProps.lecturesDetails.totalLectures,
-			pagination,
-		});
-
-		if (nextProps.lecturesDetails.Count) {
-			this.props.searchLecture(body);
-		}
-	}
-
 	onClickIcon = value => {
 		this.setState({ iconSearch: value });
 	};
@@ -134,6 +132,9 @@ export class Transcritpion extends Component {
 	};
 
 	render() {
+		if(!this.props.lecturesDetails.lectures){
+			return <div>Data is loading...</div>
+		}
 		return (
 			<div>
 				<section
@@ -193,7 +194,7 @@ export class Transcritpion extends Component {
 							<div className="row justify-content-center">
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
-										{this.state.transcriptions.length > 0 ? (
+										{this.props.lecturesDetails.lectures.length > 0 ? (
 											<div>
 												<Table
 													columns={columns}
@@ -237,8 +238,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		searchLecture: body => {
-			dispatch(searchLectureTranscriptions(body));
+			dispatch(searchLecture(body));
 		},
+		resetState: () => {
+			dispatch(resetState())
+		}
 	};
 };
 
