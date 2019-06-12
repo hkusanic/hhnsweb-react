@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { quoteOfDay } from '../../../actions/quoteActions';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
+import script from "../../../assets/script.js";
 
 export class QuoteOfDay extends React.Component {
 	constructor (props) {
@@ -14,6 +15,7 @@ export class QuoteOfDay extends React.Component {
 		};
 	}
 	componentDidMount () {
+		script();
 		let authorList = ['Niranjana Swami', 'Srila Prabhupada'];
 		this.props.quoteOfDay(authorList);
 		this.setState({

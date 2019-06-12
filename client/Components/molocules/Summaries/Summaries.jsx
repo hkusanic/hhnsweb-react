@@ -2,59 +2,22 @@ import React, { Component } from 'react';
 import { Button, Table, Icon } from 'antd';
 import Auth from '../../../utils/Auth';
 import { connect } from 'react-redux';
-import {
-	searchLecture,
-	searchLectureSummaries,
-} from '../../../actions/lectureActions';
+import { searchLecture, resetState } from '../../../actions/lectureActions';
 import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
-const columns = [
-	{
-		title: 'Title',
-		dataIndex: renderHTML(
-			reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
-		),
-		render: (text, record, index) => (
-			<Link
-				to={{
-					pathname: `/summariesDetails/${record.uuid}`,
-					state: record,
-				}}
-			>
-				{renderHTML(
-					reactCookie.load('languageCode') === 'en'
-						? record.en.title
-						: record.ru.title
-				)}
-			</Link>
-		),
-	},
-	{
-		title: 'View',
-		dataIndex: renderHTML(
-			reactCookie.load('languageCode') === 'en'
-				? 'counters.en_summary_view'
-				: 'counters.ru_summary_view'
-		),
-	},
-];
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 
 const defaultPageSize = 20;
-
 export class Summaries extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			isUserLogin: true,
-			totalItem: null,
-			currentPage: null,
 			page: null,
-			summaries: [],
 			iconSearch: true,
 			body: {
 				page: 1,
@@ -65,6 +28,43 @@ export class Summaries extends Component {
 			pagination: {},
 			loading: false,
 		};
+	}
+
+	componentDidMount() {
+		let body = { ...this.state.body };
+		body.page = this.props.lecturesDetails.currentPage || 1;
+
+		this.setState({ loading: true });
+		const pagination = { ...this.state.pagination };
+		pagination.total = this.props.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = this.props.lecturesDetails.currentPage || 1;
+
+		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({
+			isUserLogin,
+			loading: false,
+			pagination,
+		});
+		this.props.searchLecture(body);
+	}
+	componentWillReceiveProps(nextProps) {
+		let body = { ...this.state.body };
+		body.page = nextProps.lecturesDetails.currentPage;
+		body.summaries = true;
+
+		const pagination = { ...this.state.pagination };
+		pagination.total = nextProps.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = nextProps.lecturesDetails.currentPage;
+
+		this.setState({
+			pagination
+		});
+
+		if (nextProps.lecturesDetails.Count) {
+			this.props.searchLecture(body);
+		}
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
@@ -80,44 +80,6 @@ export class Summaries extends Component {
 		this.props.searchLecture(body);
 	};
 
-	componentDidMount() {
-		let body = { ...this.state.body };
-		body.page = this.props.lecturesDetails.summariesCurrentPage || 1;
-
-		this.setState({ loading: true });
-		const pagination = { ...this.state.pagination };
-		pagination.total = this.props.lecturesDetails.totalLectures;
-		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = this.props.lecturesDetails.summariesCurrentPage || 1;
-
-		const isUserLogin = Auth.isUserAuthenticated();
-		this.setState({
-			isUserLogin,
-			loading: false,
-			pagination,
-		});
-		this.props.searchLecture(body);
-	}
-	componentWillReceiveProps(nextProps) {
-		let body = { ...this.state.body };
-		body.page = nextProps.lecturesDetails.summariesCurrentPage;
-		body.video = true;
-
-		const pagination = { ...this.state.pagination };
-		pagination.total = nextProps.lecturesDetails.totalLectures;
-		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = nextProps.lecturesDetails.summariesCurrentPage;
-
-		this.setState({
-			summaries: nextProps.lecturesDetails.lectures,
-			currentPage: nextProps.lecturesDetails.summariesCurrentPage,
-			totalItem: nextProps.lecturesDetails.totalLectures,
-		});
-
-		if (nextProps.lecturesDetails.Count) {
-			this.props.searchLecture(body);
-		}
-	}
 	searchData = body => {
 		body.summaries = true;
 		this.setState({ body, isSearch: true }, () => {
@@ -130,6 +92,36 @@ export class Summaries extends Component {
 	};
 
 	render() {
+		const columns = [
+			{
+				title: 'Title',
+				dataIndex: renderHTML(
+					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+				),
+				render: (text, record, index) => (
+					<Link
+						to={{
+							pathname: `/summariesDetails/${record.uuid}`,
+							state: record,
+						}}
+					>
+						{renderHTML(
+							reactCookie.load('languageCode') === 'en'
+								? record.en.title
+								: record.ru.title
+						)}
+					</Link>
+				),
+			},
+			{
+				title: 'View',
+				dataIndex: renderHTML(
+					reactCookie.load('languageCode') === 'en'
+						? 'counters.en_summary_view'
+						: 'counters.ru_summary_view'
+				),
+			},
+		];
 		return (
 			<div>
 				<section
@@ -188,7 +180,7 @@ export class Summaries extends Component {
 							<div className="row justify-content-center">
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
-										{this.state.summaries.length > 0 ? (
+										{this.props.lecturesDetails.lectures.length > 0 ? (
 											<div>
 												<Table
 													columns={columns}
@@ -213,11 +205,7 @@ export class Summaries extends Component {
 							</div>
 						</div>
 					</div>
-				) : (
-					<div className="loginText">
-						<p className="bookingForm">Please log in to continue</p>
-					</div>
-				)}
+				) : <QuoteOfDay />}
 			</div>
 		);
 	}
@@ -232,8 +220,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		searchLecture: body => {
-			dispatch(searchLectureSummaries(body));
+			dispatch(searchLecture(body));
 		},
+		resetState: () => {
+			dispatch(resetState());
+		}
 	};
 };
 

@@ -3,20 +3,21 @@ import { Icon, Collapse } from 'antd';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
-import { updateCounters, getLectureByUuid } from '../../../actions/lectureActions';
-// eslint-disable-next-line no-unused-vars
+import {
+	updateCounters,
+	getLectureByUuid,
+	resetState,
+} from '../../../actions/lectureActions';
 import Comments from '../Comments/Comments';
-
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
 import { Link } from 'react-router-dom';
+
 const Panel = Collapse.Panel;
 export class SummariesDetails extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			lectureDetails: null,
-		};
+		const { resetState } = this.props;
+		resetState();
 	}
 	componentDidMount() {
 		let body = {
@@ -29,11 +30,8 @@ export class SummariesDetails extends React.Component {
 		}
 		this.props.updateCounters(body);
 		this.props.getLectureByUuid(body);
-
-		if (this.props.lectureDetails) {
-			this.setState({ lectureDetails: this.props.lectureDetails });
-		}
 	}
+
 	handleUpdate = uuid => {
 		const body = {
 			uuid: uuid,
@@ -42,21 +40,21 @@ export class SummariesDetails extends React.Component {
 		this.props.updateCounters(body);
 	};
 
-	static getDerivedStateFromProps(nextProps, prevState) {
-		if (nextProps.lectureDetails !== prevState.lectureDetails) {
-			return { lectureDetails: nextProps.lectureDetails };
-		} else return null;
-	}
-
 	render() {
-		const { lectureDetails } = this.state;
+		const { lectureDetails } = this.props;
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
 		if (!lectureDetails) {
-			return <div>Error Occured..........</div>;
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">
+						 Hare Krishna...
+					</p>
+				</div>
+			);
 		}
 
-		if (!sessionStorage.getItem('user')) {
+		if (!localStorage.getItem('user')) {
 			return (
 				<div className="loginText">
 					<p className="bookingForm">Please log in to continue</p>
@@ -105,8 +103,8 @@ export class SummariesDetails extends React.Component {
 							<div className="col-lg-12">
 								<article className="post-creative">
 									<h3 className="post-creative-title dataTitle">
-										{lectureDetails
-											&& renderHTML(
+										{lectureDetails &&
+											renderHTML(
 												reactCookie.load('languageCode') === 'en'
 													? lectureDetails.en.title
 													: lectureDetails.ru.title
@@ -127,53 +125,64 @@ export class SummariesDetails extends React.Component {
 										</li>
 									</ul>
 									<div className="textContent">
-										{lectureDetails
-											&& renderHTML(
+										{lectureDetails &&
+											renderHTML(
 												reactCookie.load('languageCode') === 'en'
 													? lectureDetails.ru.summary.text
 													: lectureDetails.ru.summary.text
 											)}
 									</div>
 								</article>
-								<Collapse bordered={false} style={{marginTop: '10px'}}>
-									<Panel header="Audio Details" key="1" style={{borderTop: '1px solid #e8e8e8', borderBottom: 'none'}}>
-										
-								<div style={{ paddingTop: '20px' }}>
-									<table className="maintable">
-										<tbody>
-											<tr>
-												<td>
-													<b>
-														<span>Audio</span> {maxWidth > mobileBrkPnt?':':null}
-													</b>
-												</td>
-												<td className="padLeftRow downloadDiv">
-													<audio style={{ height: '30px' }}
-														controlsList="nodownload" controls>
-														<source
-															src={renderHTML(
-																lectureDetails.audio_link
-															)}
-															type="audio/mpeg"
-														/>
-													</audio>
-													<a
-														className="downloadIcon"
-														href={lectureDetails.audio_link}
-														onClick={() => {
-															this.handleUpdate(lectureDetails.uuid);
-														}}
-														download="download"
-													>
-														<Icon type="download" style={{ fontSize: '1.5rem' }} />
-													</a>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Event</span> :
-													</b>
+								<Collapse bordered={false} style={{ marginTop: '10px' }}>
+									<Panel
+										header="Audio Details"
+										key="1"
+										style={{
+											borderTop: '1px solid #e8e8e8',
+											borderBottom: 'none',
+										}}
+									>
+										<div style={{ paddingTop: '20px' }}>
+											<table className="maintable">
+												<tbody>
+													<tr>
+														<td>
+															<b>
+																<span>Audio</span>{' '}
+																{maxWidth > mobileBrkPnt ? ':' : null}
+															</b>
+														</td>
+														<td className="padLeftRow downloadDiv">
+															<audio
+																style={{ height: '30px' }}
+																controlsList="nodownload"
+																controls
+															>
+																<source
+																	src={renderHTML(lectureDetails.audio_link)}
+																	type="audio/mpeg"
+																/>
+															</audio>
+															<a
+																className="downloadIcon"
+																href={lectureDetails.audio_link}
+																onClick={() => {
+																	this.handleUpdate(lectureDetails.uuid);
+																}}
+																download="download"
+															>
+																<Icon
+																	type="download"
+																	style={{ fontSize: '1.5rem' }}
+																/>
+															</a>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<b>
+																<span>Event</span> :
+															</b>
 														</td>
 														<td className="padLeftRow">
 															{lectureDetails.ru.event}
@@ -184,7 +193,7 @@ export class SummariesDetails extends React.Component {
 															<td>
 																<b>
 																	<span>Part</span> :
-														</b>
+																</b>
 															</td>
 															<td className="padLeftRow">
 																{lectureDetails.part}
@@ -196,7 +205,7 @@ export class SummariesDetails extends React.Component {
 															<td>
 																<b>
 																	<span>Chapter</span> :
-														</b>
+																</b>
 															</td>
 															<td className="padLeftRow">
 																{lectureDetails.chapter}
@@ -208,7 +217,7 @@ export class SummariesDetails extends React.Component {
 															<td>
 																<b>
 																	<span>Verse</span> :
-														</b>
+																</b>
 															</td>
 															<td className="padLeftRow">
 																{lectureDetails.verse}
@@ -220,28 +229,30 @@ export class SummariesDetails extends React.Component {
 															<td>
 																<b>
 																	<span>Author</span> :
-														</b>
+																</b>
 															</td>
 															<td className="padLeftRow">
 																{lectureDetails.author}
 															</td>
 														</tr>
 													) : null}
-													{lectureDetails.duration ? <tr>
-														<td>
-															<b>
-																<span>Durations</span> :
-													</b>
-														</td>
-														<td className="padLeftRow">
-															{lectureDetails.duration}
-														</td>
-													</tr> : null}
+													{lectureDetails.duration ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Durations</span> :
+																</b>
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.duration}
+															</td>
+														</tr>
+													) : null}
 													<tr>
 														<td>
 															<b>
 																<span>Location</span> :
-													</b>
+															</b>
 														</td>
 														<td className="padLeftRow">
 															{lectureDetails.ru.location}
@@ -251,7 +262,7 @@ export class SummariesDetails extends React.Component {
 														<td>
 															<b>
 																<span>Downloads</span> :
-													</b>
+															</b>
 														</td>
 														<td className="padLeftRow">
 															{lectureDetails.counters.downloads}
@@ -261,16 +272,16 @@ export class SummariesDetails extends React.Component {
 														<td>
 															<b>
 																<span>Topic</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.ru.topic}
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								</Panel>
+															</b>
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.ru.topic}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</Panel>
 								</Collapse>
 								<div>
 									<p className="bookingForm">Comments</p>
@@ -297,8 +308,11 @@ const mapDispatchToProps = dispatch => {
 		updateCounters: body => {
 			dispatch(updateCounters(body));
 		},
-		getLectureByUuid: (body) => {
+		getLectureByUuid: body => {
 			dispatch(getLectureByUuid(body));
+		},
+		resetState: () => {
+			dispatch(resetState());
 		},
 	};
 };

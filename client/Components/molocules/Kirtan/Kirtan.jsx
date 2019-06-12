@@ -3,12 +3,13 @@ import { Button, Table } from 'antd';
 import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import { connect } from 'react-redux';
-import { searchKirtan } from '../../../actions/kirtanAction';
+import { searchKirtan, resetState } from '../../../actions/kirtanAction';
 import Auth from '../../../utils/Auth';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 
 const defaultPageSize = 20;
 
@@ -27,20 +28,9 @@ export class Kirtan extends Component {
 			pagination: {},
 			loading: false,
 		};
+		const { resetState } = this.props;
+		resetState();
 	}
-
-	handleTableChange = (pagination, filters, sorter) => {
-		const pager = { ...this.state.pagination };
-		pager.current = pagination.current;
-		pager.total = this.props.kirtanDetails.totalKirtans;
-		this.setState({
-			pagination: pager,
-		});
-
-		let body = Object.assign({}, this.state.body);
-		body.page = pagination.current;
-		this.props.searchKirtan(body);
-	};
 
 	componentDidMount() {
 		const isUserLogin = Auth.isUserAuthenticated();
@@ -79,6 +69,19 @@ export class Kirtan extends Component {
 			pagination,
 		});
 	}
+
+	handleTableChange = (pagination, filters, sorter) => {
+		const pager = { ...this.state.pagination };
+		pager.current = pagination.current;
+		pager.total = this.props.kirtanDetails.totalKirtans;
+		this.setState({
+			pagination: pager,
+		});
+
+		let body = Object.assign({}, this.state.body);
+		body.page = pagination.current;
+		this.props.searchKirtan(body);
+	};
 
 	handlePageChange = pageNumber => {
 		let body = Object.assign({}, this.state.body);
@@ -125,6 +128,16 @@ export class Kirtan extends Component {
 				key: 'downloads',
 			},
 		];
+
+		if(!this.props.kirtanDetails.kirtans.length > 0){
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">
+						 Hare Krishna...
+					</p>
+				</div>
+			);
+		}
 		return (
 			<div>
 				<section
@@ -181,12 +194,12 @@ export class Kirtan extends Component {
 								</div>
 							)}
 							<div className="table-responsive wow fadeIn">
-								{this.state.kirtans.length > 0 ? (
+								{this.props.kirtanDetails.kirtans.length > 0 ? (
 									<div>
 										<Table
 											columns={columns}
 											rowKey={record => record.uuid}
-											dataSource={this.state.kirtans}
+											dataSource={this.props.kirtanDetails.kirtans}
 											pagination={this.state.pagination}
 											loading={this.state.loading}
 											onChange={this.handleTableChange}
@@ -205,11 +218,7 @@ export class Kirtan extends Component {
 							</div>
 						</div>
 					</div>
-				) : (
-					<div className="loginText">
-						<p className="bookingForm">Please log in to continue</p>
-					</div>
-				)}
+				) : <QuoteOfDay />}
 			</div>
 		);
 	}
@@ -226,6 +235,9 @@ const mapDispatchToProps = dispatch => {
 		searchKirtan: body => {
 			dispatch(searchKirtan(body));
 		},
+		resetState: () => {
+			dispatch(resetState())
+		}
 	};
 };
 

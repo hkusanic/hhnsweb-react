@@ -1,7 +1,7 @@
 import kirtanApi from '../utils/api/kirtan';
 import * as types from '../constants/index';
 
-export function searchKirtan(body) {
+export function searchKirtan (body) {
 	return dispatch => {
 		kirtanApi
 			.searchKirtan(body)
@@ -14,7 +14,7 @@ export function searchKirtan(body) {
 	};
 }
 
-export function getKirtanByUuid(body) {
+export function getKirtanByUuid (body) {
 	return dispatch => {
 		kirtanApi
 			.fetchKirtan(body)
@@ -27,23 +27,23 @@ export function getKirtanByUuid(body) {
 	};
 }
 
-export function searchKirtanAction(data) {
+export function searchKirtanAction (data) {
 	return {
 		type: types.SEARCH_KIRTAN,
-		payload: data
+		payload: data,
 	};
 }
 
-export function fetchKirtanByUuid(data) {
+export function fetchKirtanByUuid (data) {
 	return {
 		type: types.GET_KIRTAN_BY_UUID,
 		payload: {
-			kirtan: data.data.kirtan
-		}
+			kirtan: data.data.kirtan,
+		},
 	};
 }
 
-export function updateCounters(body) {
+export function updateCounters (body) {
 	return dispatch => {
 		kirtanApi
 			.updateCounters(body)
@@ -56,9 +56,15 @@ export function updateCounters(body) {
 	};
 }
 
-export function updateCountersAction(data) {
+export function updateCountersAction (data) {
 	return {
 		type: types.UPDATE_COUNTERS,
-		payload: data
+		payload: data,
+	};
+}
+
+export function resetState () {
+	return {
+		type: 'RESET_STATE_KIRTAN',
 	};
 }
