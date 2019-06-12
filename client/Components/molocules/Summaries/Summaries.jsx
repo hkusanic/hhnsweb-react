@@ -122,7 +122,6 @@ export class Summaries extends Component {
 	};
 
 	render() {
-		console.log("this.props.lecturesDetails.lectures ====>>>", this.props.lecturesDetails.lectures);
 		return (
 			<div>
 				<section

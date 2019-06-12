@@ -133,7 +133,13 @@ export class Transcritpion extends Component {
 
 	render() {
 		if(!this.props.lecturesDetails.lectures){
-			return <div>Data is loading...</div>
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">
+						 Hare Krishna...
+					</p>
+				</div>
+			);
 		}
 		return (
 			<div>

@@ -3,7 +3,7 @@ import { Button, Table } from 'antd';
 import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import { connect } from 'react-redux';
-import { searchKirtan } from '../../../actions/kirtanAction';
+import { searchKirtan, resetState } from '../../../actions/kirtanAction';
 import Auth from '../../../utils/Auth';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
@@ -27,6 +27,8 @@ export class Kirtan extends Component {
 			pagination: {},
 			loading: false,
 		};
+		const { resetState } = this.props;
+		resetState();
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
@@ -125,6 +127,16 @@ export class Kirtan extends Component {
 				key: 'downloads',
 			},
 		];
+
+		if(!this.props.kirtanDetails.kirtans.length > 0){
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">
+						 Hare Krishna...
+					</p>
+				</div>
+			);
+		}
 		return (
 			<div>
 				<section
@@ -181,12 +193,12 @@ export class Kirtan extends Component {
 								</div>
 							)}
 							<div className="table-responsive wow fadeIn">
-								{this.state.kirtans.length > 0 ? (
+								{this.props.kirtanDetails.kirtans.length > 0 ? (
 									<div>
 										<Table
 											columns={columns}
 											rowKey={record => record.uuid}
-											dataSource={this.state.kirtans}
+											dataSource={this.props.kirtanDetails.kirtans}
 											pagination={this.state.pagination}
 											loading={this.state.loading}
 											onChange={this.handleTableChange}
@@ -226,6 +238,9 @@ const mapDispatchToProps = dispatch => {
 		searchKirtan: body => {
 			dispatch(searchKirtan(body));
 		},
+		resetState: () => {
+			dispatch(resetState())
+		}
 	};
 };
 

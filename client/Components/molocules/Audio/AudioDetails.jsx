@@ -49,7 +49,13 @@ export class AudioDetails extends Component {
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
 		if (!lectureDetails) {
-			return <div>Data is loading...</div>;
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">
+						 Hare Krishna...
+					</p>
+				</div>
+			);
 		}
 
 		if (!localStorage.getItem('user')) {

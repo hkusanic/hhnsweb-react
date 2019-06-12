@@ -47,7 +47,13 @@ export class TranscriptionDetails extends React.Component {
 		const maxWidth = window.screen.width;
 
 		if (!lectureDetails) {
-			return <div>Data Loading..........</div>;
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">
+						 Hare Krishna...
+					</p>
+				</div>
+			);
 		}
 
 		if (!localStorage.getItem('user')) {
