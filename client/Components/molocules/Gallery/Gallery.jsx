@@ -11,6 +11,9 @@ import {
 import { handleFilterGallery } from '../../../utils/custom';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
+import script from '../../../assets/script.js';
+
 
 const { Meta } = Card;
 
@@ -22,6 +25,7 @@ export class Gallery extends React.Component {
 		};
 	}
 	componentDidMount () {
+		script();
 		const isUserLogin = Auth.isUserAuthenticated();
 		this.setState({
 			isUserLogin,
@@ -36,9 +40,7 @@ export class Gallery extends React.Component {
 
 		if (!localStorage.getItem('user')) {
 			return (
-				<div className="loginText">
-					<p className="bookingForm">Please log in to continue</p>
-				</div>
+				<QuoteOfDay />
 			);
 		}
 
@@ -124,11 +126,7 @@ export class Gallery extends React.Component {
 							</div>
 						</div>
 					</section>
-				) : (
-					<div className="loginText">
-						<p className="bookingForm">Please log in to continue</p>
-					</div>
-				)}
+				) : <QuoteOfDay />}
 			</div>
 		);
 	}

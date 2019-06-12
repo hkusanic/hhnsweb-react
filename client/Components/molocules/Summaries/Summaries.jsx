@@ -9,40 +9,9 @@ import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
-const columns = [
-	{
-		title: 'Title',
-		dataIndex: renderHTML(
-			reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
-		),
-		render: (text, record, index) => (
-			<Link
-				to={{
-					pathname: `/summariesDetails/${record.uuid}`,
-					state: record,
-				}}
-			>
-				{renderHTML(
-					reactCookie.load('languageCode') === 'en'
-						? record.en.title
-						: record.ru.title
-				)}
-			</Link>
-		),
-	},
-	{
-		title: 'View',
-		dataIndex: renderHTML(
-			reactCookie.load('languageCode') === 'en'
-				? 'counters.en_summary_view'
-				: 'counters.ru_summary_view'
-		),
-	},
-];
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 
 const defaultPageSize = 20;
-
 export class Summaries extends Component {
 	constructor(props) {
 		super(props);
@@ -60,19 +29,6 @@ export class Summaries extends Component {
 			loading: false,
 		};
 	}
-
-	handleTableChange = (pagination, filters, sorter) => {
-		const pager = { ...this.state.pagination };
-		pager.current = pagination.current;
-		pager.total = this.props.lecturesDetails.totalLectures;
-		this.setState({
-			pagination: pager,
-		});
-
-		let body = { ...this.state.body };
-		body.page = pagination.current;
-		this.props.searchLecture(body);
-	};
 
 	componentDidMount() {
 		let body = { ...this.state.body };
@@ -110,6 +66,20 @@ export class Summaries extends Component {
 			this.props.searchLecture(body);
 		}
 	}
+
+	handleTableChange = (pagination, filters, sorter) => {
+		const pager = { ...this.state.pagination };
+		pager.current = pagination.current;
+		pager.total = this.props.lecturesDetails.totalLectures;
+		this.setState({
+			pagination: pager,
+		});
+
+		let body = { ...this.state.body };
+		body.page = pagination.current;
+		this.props.searchLecture(body);
+	};
+
 	searchData = body => {
 		body.summaries = true;
 		this.setState({ body, isSearch: true }, () => {
@@ -122,6 +92,36 @@ export class Summaries extends Component {
 	};
 
 	render() {
+		const columns = [
+			{
+				title: 'Title',
+				dataIndex: renderHTML(
+					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+				),
+				render: (text, record, index) => (
+					<Link
+						to={{
+							pathname: `/summariesDetails/${record.uuid}`,
+							state: record,
+						}}
+					>
+						{renderHTML(
+							reactCookie.load('languageCode') === 'en'
+								? record.en.title
+								: record.ru.title
+						)}
+					</Link>
+				),
+			},
+			{
+				title: 'View',
+				dataIndex: renderHTML(
+					reactCookie.load('languageCode') === 'en'
+						? 'counters.en_summary_view'
+						: 'counters.ru_summary_view'
+				),
+			},
+		];
 		return (
 			<div>
 				<section
@@ -205,11 +205,7 @@ export class Summaries extends Component {
 							</div>
 						</div>
 					</div>
-				) : (
-					<div className="loginText">
-						<p className="bookingForm">Please log in to continue</p>
-					</div>
-				)}
+				) : <QuoteOfDay />}
 			</div>
 		);
 	}

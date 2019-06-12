@@ -12,6 +12,7 @@ import { Collapse } from 'react-collapse';
 import Auth from '../../../utils/Auth';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 
 const defaultPageSize = 20;
 
@@ -34,19 +35,6 @@ export class VideoList extends Component {
 		const { resetState } = this.props;
 		resetState();
 	}
-
-	handleTableChange = (pagination, filters, sorter) => {
-		const pager = { ...this.state.pagination };
-		pager.current = pagination.current;
-		pager.total = this.props.lecturesDetails.totalLectures;
-		this.setState({
-			pagination: pager,
-		});
-
-		let body = { ...this.state.body };
-		body.page = pagination.current;
-		this.props.searchLecture(body);
-	};
 
 	componentDidMount() {
 		const isUserLogin = Auth.isUserAuthenticated();
@@ -89,6 +77,19 @@ export class VideoList extends Component {
 			this.props.searchLecture(body);
 		}
 	}
+
+	handleTableChange = (pagination, filters, sorter) => {
+		const pager = { ...this.state.pagination };
+		pager.current = pagination.current;
+		pager.total = this.props.lecturesDetails.totalLectures;
+		this.setState({
+			pagination: pager,
+		});
+
+		let body = { ...this.state.body };
+		body.page = pagination.current;
+		this.props.searchLecture(body);
+	};
 
 	showing100Characters = sentence => {
 		var result = sentence;
@@ -226,11 +227,7 @@ export class VideoList extends Component {
 							</div>
 						</div>
 					</div>
-				) : (
-					<div className="loginText">
-						<p className="bookingForm">Please log in to continue</p>
-					</div>
-				)}
+				) : <QuoteOfDay />}
 			</div>
 		);
 	}

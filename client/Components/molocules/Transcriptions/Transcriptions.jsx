@@ -12,40 +12,9 @@ import reactCookie from 'react-cookies';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
-const columns = [
-	{
-		title: 'Title',
-		dataIndex: renderHTML(
-			reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
-		),
-		render: (text, record, index) => (
-			<Link
-				to={{
-					pathname: `/transcriptionDetails/${record.uuid}`,
-					state: record,
-				}}
-			>
-				{renderHTML(
-					reactCookie.load('languageCode') === 'en'
-						? record.en.title
-						: record.ru.title
-				)}
-			</Link>
-		),
-	},
-	{
-		title: 'View',
-		dataIndex: renderHTML(
-			reactCookie.load('languageCode') === 'en'
-				? 'counters.en_transcription_view'
-				: 'counters.ru_transcription_view'
-		),
-	},
-];
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 
 const defaultPageSize = 20;
-
 export class Transcritpion extends Component {
 	constructor(props) {
 		super(props);
@@ -132,6 +101,36 @@ export class Transcritpion extends Component {
 	};
 
 	render() {
+		const columns = [
+			{
+				title: 'Title',
+				dataIndex: renderHTML(
+					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+				),
+				render: (text, record, index) => (
+					<Link
+						to={{
+							pathname: `/transcriptionDetails/${record.uuid}`,
+							state: record,
+						}}
+					>
+						{renderHTML(
+							reactCookie.load('languageCode') === 'en'
+								? record.en.title
+								: record.ru.title
+						)}
+					</Link>
+				),
+			},
+			{
+				title: 'View',
+				dataIndex: renderHTML(
+					reactCookie.load('languageCode') === 'en'
+						? 'counters.en_transcription_view'
+						: 'counters.ru_transcription_view'
+				),
+			},
+		];
 		if(!this.props.lecturesDetails.lectures){
 			return (
 				<div style={{ textAlign: 'center' }}>
@@ -225,11 +224,7 @@ export class Transcritpion extends Component {
 							</div>
 						</div>
 					</div>
-				) : (
-					<div className="loginText">
-						<p className="bookingForm">Please log in to continue</p>
-					</div>
-				)}
+				) :<QuoteOfDay />}
 			</div>
 		);
 	}

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getMkv } from '../../../actions/mkv';
 import Auth from '../../../utils/Auth';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 export class MKV extends Component {
 	constructor(props) {
 		super(props);
@@ -39,9 +40,7 @@ export class MKV extends Component {
 
 		if (!localStorage.getItem('user')) {
 			return (
-				<div className="loginText">
-					<p className="bookingForm">Please log in to continue</p>
-				</div>
+				<QuoteOfDay />
 			);
 		}
 
@@ -96,11 +95,7 @@ export class MKV extends Component {
 							</div>
 						</div>
 					</section>
-				) : (
-					<div className="loginText">
-						<p className="bookingForm">Please log in to continue</p>
-					</div>
-				)}
+				) : <QuoteOfDay /> }
 				{this.state.showTabs ? (
 					<section className="section section-lg">
 						<div className="container centerAlign">
