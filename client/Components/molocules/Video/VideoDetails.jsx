@@ -50,7 +50,7 @@ export class VideoDetails extends React.Component {
 			return <div>Error Occured..........</div>;
 		}
 
-		if (!sessionStorage.getItem('user')) {
+		if (!localStorage.getItem('user')) {
 			return (
 				<div className="loginText">
 					<p className="bookingForm">Please log in to continue</p>

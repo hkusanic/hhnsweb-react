@@ -37,7 +37,7 @@ export class MKV extends Component {
 			return <p>Loading...</p>;
 		}
 
-		if (!sessionStorage.getItem('user')) {
+		if (!localStorage.getItem('user')) {
 			return (
 				<div className="loginText">
 					<p className="bookingForm">Please log in to continue</p>

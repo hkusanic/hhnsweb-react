@@ -42,7 +42,7 @@ export class Navigation extends Component {
 			content_ru: DATA.BIOGRAPHY.two_content_ru,
 		};
 		const isUserLogin = Auth.isUserAuthenticated();
-		let tabIndex = sessionStorage.getItem('tabIndex');
+		let tabIndex = localStorage.getItem('tabIndex');
 		if (tabIndex) {
 			tabIndex = parseInt(tabIndex, 10);
 		}
@@ -109,7 +109,7 @@ export class Navigation extends Component {
 		if (index) {
 			this.setState({ index });
 		}
-		sessionStorage.setItem('tabIndex', index);
+		localStorage.setItem('tabIndex', index);
 	};
 
 	handleBiographyClick = () => {
