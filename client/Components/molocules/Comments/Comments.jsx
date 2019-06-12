@@ -27,7 +27,8 @@ export class Comments extends React.Component {
 		const user = JSON.parse(sessionStorage.getItem('user'));
 		this.setState(
 			{
-				user,
+        user,
+        username: `${user.name.first} ${user.name.last}`
 			},
 			() => {
 				this.props.getComments({
@@ -91,13 +92,14 @@ export class Comments extends React.Component {
 		});
 	};
 	submitComment = event => {
-		event.preventDefault();
+    event.preventDefault();
 		const body = {
 			lecture_uuid: this.props.lecture_uuid,
 			uuid: this.uuidv4(),
-			message: this.state.comment,
+      message: this.state.comment,
+      subject: this.state.subject,
 			author_email: this.state.user.email,
-			author_name: `${this.state.user.firstName} ${this.state.user.last}`,
+			author_name: `${this.state.username}`,
 			approved: '2',
 		};
 		this.props.createCommet(body);
@@ -139,9 +141,7 @@ export class Comments extends React.Component {
 										type="text"
 										name="name"
 										readOnly={true}
-										value={`${this.state.user.firstName} ${
-											this.state.user.last
-										}`}
+                    value={this.state.username}
 										onChange={event => {
 											this.handleUsername(event);
 										}}
