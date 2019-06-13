@@ -201,7 +201,7 @@ export class Navigation extends Component {
 									src="https://ik.imagekit.io/gcwjdmqwwznjl/banner1_HyhqTWrIE.png"
 								/>
 							</div>
-							<div className="bg-gray-100" style={{width: '100vw'}}>
+							<div className="bg-gray-100" style={{width: '100vw', backgroundColor:'#f6f6f6'}}>
 							<div className="rd-navbar-main-outer menubanner container">
 								{/* <div className="menulogoDiv">
 									<img

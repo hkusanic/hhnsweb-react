@@ -24,10 +24,11 @@ class ContentDetails extends Component {
 	render() {
 		return (
 
-			<section className='section section-lg text-center'>
-				<div className='container'>
-					<div className='row row-50' >
-						<Card title='Recent Activities' style={{ width: '400px' ,marginLeft :"8%"}}>
+			<section className="section section-lg text-center">
+				<div className="container">
+				<div className="row row-50">
+					<div className="col-12 col-md-6">
+						<Card className="centerAlign recentActivityCard" title='Recent Activities' >
 							{this.props.contentDetails &&
 								this.props.contentDetails.content &&
 								this.props.contentDetails.content.map(eachContent => {
@@ -37,10 +38,13 @@ class ContentDetails extends Component {
 									</div>
 								})}
 						</Card>
-						<Card title='Lecture Dubbed in Russian' style={{ marginLeft: '15%', width: '400px' }}>
+						</div>
+						<div className="col-12 col-md-6">
+						<Card className="centerAlign recentActivityCard" title='Lecture Dubbed in Russian' >
 							<RussiaDubbedLectures />
 						</Card>
 					</div>
+				</div>
 				</div>
 			</section>
 

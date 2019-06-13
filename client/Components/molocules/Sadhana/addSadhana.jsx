@@ -23,6 +23,7 @@ class AddSadhana extends React.Component {
 			time_rising: '',
 		};
 		this.disabledDate = this.disabledDate.bind(this);
+		this.dateRender = this.dateRender.bind(this);
 	}
 
 	componentDidMount() {
@@ -52,7 +53,7 @@ class AddSadhana extends React.Component {
 
 	uuidv4 = () => {
 		// eslint-disable-next-line func-names
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
 			// eslint-disable-next-line no-bitwise
 			const r = (Math.random() * 16) | 0;
 
@@ -64,23 +65,23 @@ class AddSadhana extends React.Component {
 	disabledDate(current) {
 		const notAllowedDates = this.props.notAllowedDates;
 		let days = 2;
-		if(process.env.sadhanaSheetAllowedDays){
-		days = process.env.sadhanaSheetAllowedDays;
+		if (process.env.sadhanaSheetAllowedDays) {
+			days = process.env.sadhanaSheetAllowedDays;
 		}
-		if(current > moment().endOf('day') || current < moment().subtract(days, 'days'))
+		if (current > moment().endOf('day') || current < moment().subtract(days, 'days'))
 			return true
-		
-		else{
-			for(let i = 0; i< notAllowedDates.length; i++){
-				if(moment(current).toDate().toISOString().substring(0,10) == notAllowedDates[i].toISOString().substring(0,10))
+
+		else {
+			for (let i = 0; i < notAllowedDates.length; i++) {
+				if (moment(current).toDate().toISOString().substring(0, 10) == notAllowedDates[i].toISOString().substring(0, 10))
 					return true
 				else
 					return false
 			}
-			
+
 		}
-		
-	  }
+
+	}
 	handleSubmit = event => {
 		event.preventDefault();
 		const { form } = this.props;
@@ -136,7 +137,29 @@ class AddSadhana extends React.Component {
 
 		return dateString;
 	};
+	dateRender = current => {
+		const style = {};
+		let days = 2;
+		if (process.env.sadhanaSheetAllowedDays) {
+			days = process.env.sadhanaSheetAllowedDays;
+		}
+		const notAllowedDates = this.props.notAllowedDates;
+		
+		if (current <= moment().endOf('day') && current >= moment().subtract(days, 'days')){
+			style.color = 'green';
+			for (let i = 0; i < notAllowedDates.length; i++) {
+			if (moment(current).toDate().toISOString().substring(0, 10) == notAllowedDates[i].toISOString().substring(0, 10))
+				style.color = 'red';
+		}
+		}
+			
 
+		return (
+			<div className="ant-calendar-date" style={style}>
+				{current.date()}
+			</div>
+		);
+	}
 	render() {
 		const { language, firstName, lastName, email } = this.state;
 		const { form } = this.props;
@@ -179,103 +202,107 @@ class AddSadhana extends React.Component {
 				</section> */}
 				<div className="row justify-content-center">
 					<section className="card col-lg-8 sadhanaAdd">
-					
+
 						<div className="card-body">
-						<Button type="danger" onClick={this.props.addSadhanaSheet}
-				className="closeAddSadhanaCard">X</Button>
 							<div>
-								<Form className="mt-3">
-								<div className="row">
-								<div className="col-12 my-1 col-md-6">
-								<Form.Item label={language ? 'First Name' : 'First Name'}>
-											{form.getFieldDecorator('firstname', {
-												initialValue: firstName,
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-											})(<Input disabled placeholder="Name" name="name" />)}
-										</Form.Item>
-								</div>
-								<div className="col-12 my-1 col-md-6">
-								<Form.Item label={language ? 'Last Name' : 'Last Name'}>
-											{form.getFieldDecorator('lastname', {
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-												initialValue: lastName,
-											})(<Input disabled placeholder="Name" name="name" />)}
-										</Form.Item>
-								</div>
-								<div className="col-12 my-1 col-md-6">
-								<Form.Item label={language ? 'Email' : 'Email'}>
-											{form.getFieldDecorator('email', {
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-												initialValue: email,
-											})(<Input disabled placeholder="Email" name="email" />)}
-										</Form.Item>
-								</div>
-								<div className="col-12 my-1 col-md-6">
-								<Form.Item label={language ? 'Date' : 'Date'}>
-											{form.getFieldDecorator('date', {
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-											})(<DatePicker  disabledDate={this.disabledDate}/>)}
-										</Form.Item>
-								</div>
-								<div className="col-12 my-1 col-md-6">
-								<Form.Item label={language ? 'Time Rising' : 'Time Rising'}>
-											{form.getFieldDecorator('time_rising', {
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-												initialValue: '',
-											})(
-												<TimePicker
-													use12Hours
-													format="h:mm a"
-													onChange={this.onChange}
-												/>
-											)}
-										</Form.Item>
-								</div>
-								<div className="col-12 my-1 col-md-6">
-								<Form.Item label={language ? 'Rounds' : 'Rounds'}>
-											{form.getFieldDecorator('rounds', {
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-												initialValue: '',
-											})(
-												<Input
-													placeholder="Rounds"
-													type="number"
-													name="rounds"
-												/>
-											)}
-										</Form.Item>
-								</div>
-								</div>
+								<Form>
+									<div className="row">
+										<div className="col-12">
+											<Button type="danger" onClick={this.props.addSadhanaSheet}
+												className="closeAddSadhanaCard">X</Button>
+										</div>
+
+										<div className="col-12 my-1 col-md-6">
+											<Form.Item label={language ? 'First Name' : 'First Name'}>
+												{form.getFieldDecorator('firstname', {
+													initialValue: firstName,
+													rules: [
+														{
+															required: true,
+															message: 'This field is required',
+														},
+													],
+												})(<Input disabled placeholder="Name" name="name" />)}
+											</Form.Item>
+										</div>
+										<div className="col-12 my-1 col-md-6">
+											<Form.Item label={language ? 'Last Name' : 'Last Name'}>
+												{form.getFieldDecorator('lastname', {
+													rules: [
+														{
+															required: true,
+															message: 'This field is required',
+														},
+													],
+													initialValue: lastName,
+												})(<Input disabled placeholder="Name" name="name" />)}
+											</Form.Item>
+										</div>
+										<div className="col-12 my-1 col-md-6">
+											<Form.Item label={language ? 'Email' : 'Email'}>
+												{form.getFieldDecorator('email', {
+													rules: [
+														{
+															required: true,
+															message: 'This field is required',
+														},
+													],
+													initialValue: email,
+												})(<Input disabled placeholder="Email" name="email" />)}
+											</Form.Item>
+										</div>
+										<div className="col-12 my-1 col-md-6">
+											<Form.Item label={language ? 'Date' : 'Date'}>
+												{form.getFieldDecorator('date', {
+													rules: [
+														{
+															required: true,
+															message: 'This field is required',
+														},
+													],
+												})(<DatePicker dateRender={this.dateRender}
+													disabledDate={this.disabledDate} />)}
+											</Form.Item>
+										</div>
+										<div className="col-12 my-1 col-md-6">
+											<Form.Item label={language ? 'Time Rising' : 'Time Rising'}>
+												{form.getFieldDecorator('time_rising', {
+													rules: [
+														{
+															required: true,
+															message: 'This field is required',
+														},
+													],
+													initialValue: '',
+												})(
+													<TimePicker
+														use12Hours
+														format="h:mm a"
+														onChange={this.onChange}
+													/>
+												)}
+											</Form.Item>
+										</div>
+										<div className="col-12 my-1 col-md-6">
+											<Form.Item label={language ? 'Rounds' : 'Rounds'}>
+												{form.getFieldDecorator('rounds', {
+													rules: [
+														{
+															required: true,
+															message: 'This field is required',
+														},
+													],
+													initialValue: '',
+												})(
+													<Input
+														placeholder="Rounds"
+														type="number"
+														name="rounds"
+													/>
+												)}
+											</Form.Item>
+										</div>
+									</div>
 									{/* <div className="form-group inline-block-element inline-block-children">
 										<Form.Item label={language ? 'First Name' : 'First Name'}>
 											{form.getFieldDecorator('firstname', {
@@ -466,10 +493,10 @@ class AddSadhana extends React.Component {
 													Discard
 												</Button>
 												<Button type="danger" onClick={this.props.addSadhanaSheet}
-												style={{marginLeft:20}}>
+													style={{ marginLeft: 20 }}>
 													Close
 												</Button>
-												
+
 											</div>
 										</Form.Item>
 									</div>
