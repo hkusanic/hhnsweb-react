@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { Component } from 'react';
 import { Icon } from 'antd';
 import renderHTML from 'react-render-html';
@@ -148,7 +147,10 @@ export class BlogDetails extends Component {
 											<a>Blog</a>
 										</li>
 									</ul>
-									<div style={{paddingTop: '15px'}} className="col mx-3 textContent">
+									<div
+										style={{ paddingTop: '15px' }}
+										className="col mx-3 textContent"
+									>
 										{blogDetails &&
 											renderHTML(
 												reactCookie.load('languageCode') === 'en'
@@ -189,5 +191,3 @@ export default connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(BlogDetails);
-
-// export default BlogDetails;

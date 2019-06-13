@@ -64,19 +64,19 @@ export class Comments extends React.Component {
 			});
 		}
 	}
-	handleSubject = event => {
+	handleSubject = (event) => {
 		const value = event.target.value;
 		this.setState({
 			subject: value,
 		});
 	};
-	handleComment = event => {
+	handleComment = (event) => {
 		const value = event;
 		this.setState({
 			comment: value,
 		});
 	};
-	handleUsername = event => {
+	handleUsername = (event) => {
 		const value = event.target.value;
 		this.setState({
 			username: value,
@@ -90,16 +90,18 @@ export class Comments extends React.Component {
 			return v.toString(16);
 		});
 	};
-	submitComment = event => {
+	submitComment = (event) => {
 		event.preventDefault();
 		const body = {
 			lecture_uuid: this.props.lecture_uuid,
 			uuid: this.uuidv4(),
 			message: this.state.comment,
+			subject: this.state.subject,
 			author_email: this.state.user.email,
 			author_name: `${this.state.user.firstName} ${this.state.user.last}`,
-			approved: 2,
-		};
+			approved: '2',
+    };
+    console.log('body===>',body)
 		this.props.createCommet(body);
 	};
 
@@ -113,7 +115,7 @@ export class Comments extends React.Component {
 					{this.props.commentReducer.comments.map((comment, index) => {
 						return (
 							<Comment
-							 	key={index}
+								key={index}
 								comment={comment}
 								replies={this.props.commentReducer.replies}
 								user={this.state.user}
@@ -142,7 +144,7 @@ export class Comments extends React.Component {
 										value={`${this.state.user.firstName} ${
 											this.state.user.last
 										}`}
-										onChange={event => {
+										onChange={(event) => {
 											this.handleUsername(event);
 										}}
 									/>
@@ -159,7 +161,7 @@ export class Comments extends React.Component {
 										type="text"
 										name="text"
 										value={this.state.subject}
-										onChange={event => {
+										onChange={(event) => {
 											this.handleSubject(event);
 										}}
 									/>
@@ -183,10 +185,9 @@ export class Comments extends React.Component {
 							<div className="wow-outer">
 								<button
 									className="button button-primary button-winona"
-									onClick={event => {
+									onClick={(event) => {
 										this.submitComment(event);
-									}}
-								>
+									}}>
 									<span>Comment</span>
 								</button>
 							</div>
@@ -198,27 +199,27 @@ export class Comments extends React.Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		commentReducer: state.commentReducer,
 	};
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
-		getComments: body => {
+		getComments: (body) => {
 			dispatch(getComments(body));
 		},
-		getReplies: body => {
+		getReplies: (body) => {
 			dispatch(getReplies(body));
 		},
-		createCommet: body => {
+		createCommet: (body) => {
 			dispatch(createCommet(body));
 		},
-		createReply: body => {
+		createReply: (body) => {
 			dispatch(createReply(body));
 		},
-		deleteComment: uuid => {
+		deleteComment: (uuid) => {
 			dispatch(deleteComment(uuid));
 		},
 		resetState: () => {

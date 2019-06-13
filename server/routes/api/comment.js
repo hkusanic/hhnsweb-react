@@ -9,7 +9,7 @@ exports.list = function (req, res) {
 	logger.info({
 		req: req,
 	}, 'API get comment');
-	Comment.model.find().where({ lecture_uuid: req.query.uuid, approved: true }).exec(function (err, item) {
+  Comment.model.find().where({ lecture_uuid: req.query.uuid, approved: '0' }).exec(function (err, item) {
 		if (err) {
 			logger.error({
 				error: err,

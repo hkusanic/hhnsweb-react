@@ -16,6 +16,11 @@ Comment.add({
 		index: true,
 		default: '',
 	},
+	subject: {
+		type: String,
+		required: true,
+		default: '',
+	},
 	author_name: { type: String },
 	author_email: { type: String },
 	lecture_uuid: { type: String },
@@ -26,7 +31,7 @@ Comment.add({
 		default: '2',
 	},
 	dateCreated: { type: Types.Date, default: Date.now },
-	created_date_time: { type: Types.Date, default: Date.now }
+	created_date_time: { type: Types.Date, default: Date.now },
 });
 
 Comment.register();

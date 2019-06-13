@@ -31,6 +31,13 @@ export class TranscriptionDetails extends React.Component {
 		this.props.updateCounters(body);
 		this.props.getLectureByUuid(body);
 	}
+	handleUpdate = uuid => {
+		const body = {
+			uuid: uuid,
+			downloads: true,
+		};
+		this.props.updateCounters(body);
+	};
 
 	handleUpdate = uuid => {
 		const body = {
