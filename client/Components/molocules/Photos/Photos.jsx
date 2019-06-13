@@ -19,12 +19,51 @@ export class Photos extends Component {
 	render () {
 		return (
 			<div>
+				<section
+					className="bg-gray-100"
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
+					}}
+				>
+					<div class="breadcrumbs-custom-inner headingImage">
+						<div class="container breadcrumbs-custom-container">
+							<ul class="breadcrumbs-custom-path">
+								<li>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<Link
+										to=" "
+										onClick={() => this.props.history.push('/gallery')}
+									>
+										<Breadcrumb.Item>Gallery</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<Link to=" " onClick={() => this.props.history.goBack()}>
+										<Breadcrumb.Item>
+											{this.props.location.state.gallery}
+										</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<a className="textColor">
+										{this.props.location.state.title_en}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
 				<section className="oh text-center text-sm-left padBottom">
 					<div style={{ textAlign: 'center' }}>
 						<p className="bookingForm">Photos</p>
 					</div>
 					<div className="container">
-						<Breadcrumb>
+						{/* <Breadcrumb>
 							<Link to=" " onClick={() => this.props.history.push('/')}>
 								<Breadcrumb.Item>Home</Breadcrumb.Item>
 							</Link>
@@ -38,7 +77,7 @@ export class Photos extends Component {
 							</Link>
 							<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
 							<Breadcrumb.Item active>{this.props.location.state.title_en}</Breadcrumb.Item>
-						</Breadcrumb>
+						</Breadcrumb> */}
 						<div
 							className="isotope isotope-responsive row"
 							data-isotope-layout="masonry"

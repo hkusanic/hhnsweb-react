@@ -43,7 +43,7 @@ export class BlogDetails extends Component {
 		if (!blogDetails) {
 			return <div>Error Occured..........</div>;
 		}
-		
+
 		if (!localStorage.getItem('user')) {
 			return (
 				<div className="loginText">
@@ -76,7 +76,7 @@ export class BlogDetails extends Component {
 								</li>
 								<li>
 									<a className="textColor">
-									{renderHTML(
+										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.title_en
 												: this.props.location.state.title_ru
@@ -91,7 +91,7 @@ export class BlogDetails extends Component {
 					<div className="container padTop">
 						{/* <div style={{ paddingLeft: '15%' }} className="row row-100">
 							<div className="col-lg-12"> */}
-								{/* <Breadcrumb>
+						{/* <Breadcrumb>
 									<Link to=" " onClick={() => this.props.history.push('/')}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
 									</Link>
@@ -122,7 +122,7 @@ export class BlogDetails extends Component {
 										)}
 									</Breadcrumb.Item>
 								</Breadcrumb> */}
-							{/* </div>
+						{/* </div>
 						</div> */}
 						<div className="row row-100">
 							<div className="col-lg-12">
@@ -148,16 +148,18 @@ export class BlogDetails extends Component {
 											<a>Blog</a>
 										</li>
 									</ul>
-									{blogDetails &&
-										renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? blogDetails.body_en
-												: blogDetails.body_ru
-										)}
-							<div>
-								<p className="bookingForm">Comments</p>
-							</div>
-							<Comments lecture_uuid={this.props.location.state.uuid} />
+									<div style={{paddingTop: '15px'}} className="col mx-3 textContent">
+										{blogDetails &&
+											renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? blogDetails.body_en
+													: blogDetails.body_ru
+											)}
+									</div>
+									<div>
+										<p className="bookingForm">Comments</p>
+									</div>
+									<Comments lecture_uuid={this.props.location.state.uuid} />
 								</article>
 							</div>
 							{/* <div className="col-lg-4" /> */}
