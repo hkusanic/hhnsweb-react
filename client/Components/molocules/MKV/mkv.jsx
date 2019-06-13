@@ -39,9 +39,7 @@ export class MKV extends Component {
 		}
 
 		if (!localStorage.getItem('user')) {
-			return (
-				<QuoteOfDay />
-			);
+			return <QuoteOfDay />;
 		}
 
 		return (
@@ -95,7 +93,9 @@ export class MKV extends Component {
 							</div>
 						</div>
 					</section>
-				) : <QuoteOfDay /> }
+				) : (
+					<QuoteOfDay />
+				)}
 				{this.state.showTabs ? (
 					<section className="section section-lg">
 						<div className="container centerAlign">

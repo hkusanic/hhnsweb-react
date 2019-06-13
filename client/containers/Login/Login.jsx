@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { isValidEmail, isNotEmpty, isMatch } from '../../utils/validation';
 import LoginForm from '../../Components/organisms/Form/LoginFrom';
 import IntlTelInput from 'react-intl-tel-input';
+import { Input, Tooltip, Icon, Menu, Dropdown, Button } from 'antd';
 
 export class Login extends Component {
   constructor(props) {
@@ -23,7 +24,8 @@ export class Login extends Component {
       password_signup: '',
       confirmPassword: '',
       error: '',
-      regError: ''
+      regError: '',
+      fullName: ''
     }
   }
 
@@ -33,7 +35,12 @@ export class Login extends Component {
       isUserLogin,
       error: '',
       regError: '',
-    })
+    });
+    if (!isUserLogin) {
+      const userDetails = JSON.parse(Auth.getUserDetails());
+      const name = `${userDetails.firstName} ${userDetails.last}`;
+      this.setState({ fullName: name });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -137,19 +144,21 @@ export class Login extends Component {
     let login_modal_2 = '';
     let res_modal_1 = '';
     let res_modal_2 = '';
-   
+
     if (!this.props.notActive) {
       login_modal_1 = "rd-navbar-popup-toggle login-modal-1";
       login_modal_2 = "rd-navbar-popup bg-gray-700 margin-left-login-modal login-modal-2";
       res_modal_1 = 'rd-navbar-popup-toggle register-modal-1';
       res_modal_2 = 'rd-navbar-popup bg-gray-700 margin-left-register-modal register-modal-2';
-       }
+    }
     else if (this.props.notActive) {
       login_modal_1 = "rd-navbar-popup-toggle login-modal-mb";
       login_modal_2 = "rd-navbar-popup bg-gray-700";
       res_modal_1 = 'rd-navbar-popup-toggle register-modal-1';
       res_modal_2 = 'rd-navbar-popup bg-gray-700 ';
-        }
+    }
+
+
 
     return (
       <div>
@@ -168,10 +177,10 @@ export class Login extends Component {
             logout = translate('HOME.log_out')
             return <div className="rd-navbar-block">
               {this.state.isUserLogin ?
-                <ul className="list-inline-bordered" style={{color: '#122e44' }}>
+                <ul className="list-inline-bordered" style={{ color: '#122e44' }}>
 
                   <li>
-                    <li className={login_modal_1} onClick={() => {this.props.handleLogin()}} data-rd-navbar-toggle="#rd-navbar-login-5">
+                    <li className={login_modal_1} onClick={() => { this.props.handleLogin() }} data-rd-navbar-toggle="#rd-navbar-login-5">
                       {log_in}
                     </li>
                     <div className={login_modal_2} id="rd-navbar-login-5">
@@ -179,13 +188,13 @@ export class Login extends Component {
                         {log_in}
                       </h4>
                       <LoginForm loginUser={this.props.loginUser} error={this.state.error} />
-                      <p onClick={() => {this.handleRemoveModal()}}>
-                          <Link to='/forgotPassword'> {forgot_password}</Link>
+                      <p onClick={() => { this.handleRemoveModal() }}>
+                        <Link to='/forgotPassword'> {forgot_password}</Link>
                       </p>
                     </div>
                   </li>
                   <li>
-                    <li className={res_modal_1} onClick={() => {this.props.handleRedirect()}} data-rd-navbar-toggle="#rd-navbar-register-5" >
+                    <li className={res_modal_1} onClick={() => { this.props.handleRedirect() }} data-rd-navbar-toggle="#rd-navbar-register-5" >
                       {registration}
                     </li>
                     <div className={res_modal_2} id="rd-navbar-register-5">
@@ -258,14 +267,32 @@ export class Login extends Component {
                     </div>
                   </li>
                 </ul>
-                : <ul className="list-inline-bordered" style={{color: '#122e44' }}>
-                  <li>
-                    <button className="rd-navbar-popup-toggle">
-                      <Link to='/profile'>{profile}</Link>
+                // : <ul className="list-inline-bordered" style={{color: '#122e44' }}>
+                //   <li>
+                //     <button className="rd-navbar-popup-toggle">
+                //       <Link to='/profile'>{profile}</Link>
+                //       </button>
+                //   </li>
+                //   <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>{logout}</button></li>
+                // </ul>}
+                :
+                <Dropdown overlay={
+                  <Menu>
+                    <Menu.Item>
+                      <button className="logoutButton">
+                        <Link to='/profile'>{profile}</Link>
                       </button>
-                  </li>
-                  <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>{logout}</button></li>
-                </ul>}
+                    </Menu.Item>
+                    <Menu.Item>
+                      <button className="logoutButton" onClick={this.logoutSubmit}>{logout}</button>
+                    </Menu.Item>
+                  </Menu>
+                } placement="bottomCenter">
+                  <a className="ant-dropdown-link" href="#">
+                    {this.state.fullName} <Icon type="down" />
+                  </a>
+                </Dropdown>
+              }
             </div>;
           }}
         </Translate>

@@ -11,7 +11,6 @@ import {
 import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
-
 const Panel = Collapse.Panel;
 export class SummariesDetails extends React.Component {
 	constructor(props) {
@@ -47,9 +46,7 @@ export class SummariesDetails extends React.Component {
 		if (!lectureDetails) {
 			return (
 				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">
-						 Hare Krishna...
-					</p>
+					<p className="bookingForm">Hare Krishna...</p>
 				</div>
 			);
 		}
@@ -138,11 +135,12 @@ export class SummariesDetails extends React.Component {
 										header="Audio Details"
 										key="1"
 										style={{
-											borderTop: '1px solid #e8e8e8',
+											borderTop: '2px solid #e8e8e8',
 											borderBottom: 'none',
+											fontSize: '1.5rem',
 										}}
 									>
-										<div style={{ paddingTop: '20px' }}>
+										<div style={{ paddingTop: '20px', fontSize: '14px' }}>
 											<table className="maintable">
 												<tbody>
 													<tr>
@@ -152,30 +150,13 @@ export class SummariesDetails extends React.Component {
 																{maxWidth > mobileBrkPnt ? ':' : null}
 															</b>
 														</td>
-														<td className="padLeftRow downloadDiv">
-															<audio
-																style={{ height: '30px' }}
-																controlsList="nodownload"
-																controls
-															>
+														<td className="padLeftRow">
+															<audio style={{ height: '30px' }} controls>
 																<source
 																	src={renderHTML(lectureDetails.audio_link)}
 																	type="audio/mpeg"
 																/>
 															</audio>
-															<a
-																className="downloadIcon"
-																href={lectureDetails.audio_link}
-																onClick={() => {
-																	this.handleUpdate(lectureDetails.uuid);
-																}}
-																download="download"
-															>
-																<Icon
-																	type="download"
-																	style={{ fontSize: '1.5rem' }}
-																/>
-															</a>
 														</td>
 													</tr>
 													<tr>
@@ -236,18 +217,16 @@ export class SummariesDetails extends React.Component {
 															</td>
 														</tr>
 													) : null}
-													{lectureDetails.duration ? (
-														<tr>
-															<td>
-																<b>
-																	<span>Durations</span> :
-																</b>
-															</td>
-															<td className="padLeftRow">
-																{lectureDetails.duration}
-															</td>
-														</tr>
-													) : null}
+													<tr>
+														<td>
+															<b>
+																<span>Durations</span> :
+															</b>
+														</td>
+														<td className="padLeftRow">
+															{lectureDetails.duration}
+														</td>
+													</tr>
 													<tr>
 														<td>
 															<b>

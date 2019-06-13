@@ -51,9 +51,7 @@ export class AudioDetails extends Component {
 		if (!lectureDetails) {
 			return (
 				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">
-						 Hare Krishna...
-					</p>
+					<p className="bookingForm">Hare Krishna...</p>
 				</div>
 			);
 		}

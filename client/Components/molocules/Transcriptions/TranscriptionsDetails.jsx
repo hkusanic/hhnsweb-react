@@ -11,7 +11,6 @@ import {
 import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
-
 const Panel = Collapse.Panel;
 export class TranscriptionDetails extends React.Component {
 	constructor(props) {
@@ -49,9 +48,7 @@ export class TranscriptionDetails extends React.Component {
 		if (!lectureDetails) {
 			return (
 				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">
-						 Hare Krishna...
-					</p>
+					<p className="bookingForm">Hare Krishna...</p>
 				</div>
 			);
 		}
@@ -137,44 +134,28 @@ export class TranscriptionDetails extends React.Component {
 										header="Audio Details"
 										key="1"
 										style={{
-											borderTop: '1px solid #e8e8e8',
+											borderTop: '2px solid #e8e8e8',
 											borderBottom: 'none',
+											fontSize: '1.5rem',
 										}}
 									>
-										<div style={{ paddingTop: '20px' }}>
+										<div style={{ paddingTop: '20px', fontSize: '14px' }}>
 											<table className="maintable">
 												<tbody>
-													<tr className="">
+													<tr>
 														<td>
 															<b>
 																<span>Audio</span>{' '}
 																{maxWidth > mobileBrkPnt ? ':' : null}
 															</b>
 														</td>
-														<td className="padLeftRow downloadDiv">
-															<audio
-																style={{ height: '30px' }}
-																controls
-																controlsList="nodownload"
-															>
+														<td className="padLeftRow">
+															<audio style={{ height: '30px' }} controls>
 																<source
 																	src={renderHTML(lectureDetails.audio_link)}
 																	type="audio/mpeg"
 																/>
 															</audio>
-															<a
-																className="downloadIcon"
-																href={lectureDetails.audio_link}
-																onClick={() => {
-																	this.handleUpdate(lectureDetails.uuid);
-																}}
-																download="download"
-															>
-																<Icon
-																	type="download"
-																	style={{ fontSize: '1.5rem' }}
-																/>
-															</a>
 														</td>
 													</tr>
 													<tr>
@@ -311,7 +292,6 @@ export class TranscriptionDetails extends React.Component {
 										</div>
 									</Panel>
 								</Collapse>
-
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>

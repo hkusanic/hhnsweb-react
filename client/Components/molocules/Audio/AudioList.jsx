@@ -286,7 +286,9 @@ export class AudioList extends Component {
 							</div>
 						</div>
 					</div>
-				) : <QuoteOfDay />}
+				) : (
+					<QuoteOfDay />
+				)}
 			</div>
 		);
 	}

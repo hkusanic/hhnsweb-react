@@ -9,11 +9,11 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 const { Meta } = Card;
 
 export class SubGallery extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {};
 	}
-	componentDidMount () {
+	componentDidMount() {
 		const body = {
 			gallery:
 				reactCookie.load('languageCode') === 'en'
