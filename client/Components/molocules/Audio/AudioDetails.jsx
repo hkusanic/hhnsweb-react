@@ -45,11 +45,7 @@ export class AudioDetails extends Component {
 	};
 
 	render() {
-<<<<<<< HEAD
-		const { lectureDetails } = this.state;
-=======
 		const { lectureDetails } = this.props;
->>>>>>> origin/develop
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
 		if (!lectureDetails) {
@@ -153,11 +149,7 @@ export class AudioDetails extends Component {
 										download="download"
 									>
 										<Icon type="download" style={{ fontSize: '1.5rem' }} />
-<<<<<<< HEAD
-										{maxWidth <= mobileBrkPnt?' Download':null}
-=======
 										{maxWidth <= mobileBrkPnt ? ' Download' : null}
->>>>>>> origin/develop
 									</a>
 								</div>
 

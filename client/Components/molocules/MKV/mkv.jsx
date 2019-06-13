@@ -70,11 +70,7 @@ export class MKV extends Component {
 							<div style={{ textAlign: 'center' }}>
 								<p className="title">MKV</p>
 							</div>
-<<<<<<< HEAD
-							<div className="row" style={{margin: 0, textAlign:"center"}}>
-=======
 							<div className="row" style={{ margin: 0, textAlign: 'center' }}>
->>>>>>> origin/develop
 								{this.state.array.map((item, key) => {
 									return (
 										

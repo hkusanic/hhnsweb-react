@@ -184,9 +184,6 @@ export class QuoteOfDay extends React.Component {
 												/>
 											</div>
 											<div class="quote-modern-info">
-<<<<<<< HEAD
-												<cite class="quote-modern-cite">Srila Prabhupada</cite>
-=======
 												<cite class="quote-modern-cite">
 													{this.props
 														&& this.props.quote
@@ -194,7 +191,6 @@ export class QuoteOfDay extends React.Component {
 														&& this.props.quote.quotes[1]
 														&& titleCase(this.props.quote.quotes[1].author)}
 												</cite>
->>>>>>> origin/develop
 												<p class="quote-modern-caption">
 													{reactCookie.load('languageCode') === 'en'
 														? this.props

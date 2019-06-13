@@ -1,9 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
-import { Icon, Collapse} from 'antd';
-=======
 import { Icon, Collapse } from 'antd';
->>>>>>> origin/develop
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
@@ -43,18 +39,6 @@ export class TranscriptionDetails extends React.Component {
 		this.props.updateCounters(body);
 	};
 
-<<<<<<< HEAD
-	static getDerivedStateFromProps(nextProps, prevState) {
-		if (nextProps.lectureDetails !== prevState.lectureDetails) {
-			return { lectureDetails: nextProps.lectureDetails };
-		} else return null;
-	}
-
-	render() {
-		const { lectureDetails } = this.state;
-		const mobileBrkPnt = 767;
-		const maxWidth = window.screen.width;
-=======
 	handleUpdate = uuid => {
 		const body = {
 			uuid: uuid,
@@ -68,7 +52,6 @@ export class TranscriptionDetails extends React.Component {
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
 
->>>>>>> origin/develop
 		if (!lectureDetails) {
 			return (
 				<div style={{ textAlign: 'center' }}>
@@ -76,8 +59,6 @@ export class TranscriptionDetails extends React.Component {
 				</div>
 			);
 		}
-<<<<<<< HEAD
-=======
 
 		if (!localStorage.getItem('user')) {
 			return (
@@ -86,7 +67,6 @@ export class TranscriptionDetails extends React.Component {
 				</div>
 			);
 		}
->>>>>>> origin/develop
 		return (
 			<div>
 				<section
@@ -147,11 +127,7 @@ export class TranscriptionDetails extends React.Component {
 										</li>
 									</ul>
 									<div className="row">
-<<<<<<< HEAD
-										<div className="col mx-3">
-=======
 										<div className="col mx-3 textContent">
->>>>>>> origin/develop
 											{renderHTML(
 												reactCookie.load('languageCode') === 'en'
 													? lectureDetails.en.transcription.text
@@ -160,11 +136,6 @@ export class TranscriptionDetails extends React.Component {
 										</div>
 									</div>
 								</article>
-<<<<<<< HEAD
-								<Collapse bordered={false} style={{marginTop: '10px'}}>
-									<Panel header="Audio Details" key="1" style={{borderTop: '2px solid #e8e8e8', borderBottom: 'none', fontSize:'1.5rem'}}>
-										<div style={{ paddingTop: '20px', fontSize:'14px' }}>
-=======
 								<Collapse bordered={false} style={{ marginTop: '10px' }}>
 									<Panel
 										header="Audio Details"
@@ -176,30 +147,19 @@ export class TranscriptionDetails extends React.Component {
 										}}
 									>
 										<div style={{ paddingTop: '20px', fontSize: '14px' }}>
->>>>>>> origin/develop
 											<table className="maintable">
 												<tbody>
 													<tr>
 														<td>
 															<b>
-<<<<<<< HEAD
-																<span>Audio</span> {maxWidth > mobileBrkPnt ? ':' : null}
-=======
 																<span>Audio</span>{' '}
 																{maxWidth > mobileBrkPnt ? ':' : null}
->>>>>>> origin/develop
 															</b>
 														</td>
 														<td className="padLeftRow">
 															<audio style={{ height: '30px' }} controls>
 																<source
-<<<<<<< HEAD
-																	src={renderHTML(
-																		lectureDetails.audio_link
-																	)}
-=======
 																	src={renderHTML(lectureDetails.audio_link)}
->>>>>>> origin/develop
 																	type="audio/mpeg"
 																/>
 															</audio>
@@ -288,18 +248,6 @@ export class TranscriptionDetails extends React.Component {
 															</td>
 														</tr>
 													) : null}
-<<<<<<< HEAD
-													<tr>
-														<td>
-															<b>
-																<span>Durations</span> :
-															</b>
-														</td>
-														<td className="padLeftRow">
-															{lectureDetails.duration}
-														</td>
-													</tr>
-=======
 													{lectureDetails.duration ? (
 														<tr>
 															<td>
@@ -312,7 +260,6 @@ export class TranscriptionDetails extends React.Component {
 															</td>
 														</tr>
 													) : null}
->>>>>>> origin/develop
 													<tr>
 														<td>
 															<b>
@@ -352,10 +299,6 @@ export class TranscriptionDetails extends React.Component {
 										</div>
 									</Panel>
 								</Collapse>
-<<<<<<< HEAD
-								
-=======
->>>>>>> origin/develop
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>

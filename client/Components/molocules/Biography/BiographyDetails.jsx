@@ -18,52 +18,16 @@ export class BiographyDetails extends Component {
 		return (
 			<div>
 				<section className="section section-lg">
-<<<<<<< HEAD
-					
-								<article className="post-creative">
-								<div className="container">
-									<div className="row">
-										<div className="col-12">
-											<h3 className="post-creative-title centerAlign alignment">
-												{renderHTML(
-													reactCookie.load('languageCode') === 'en'
-														? this.props.location.state.title_en
-														: this.props.location.state.title_ru
-												)}
-											</h3>
-										</div>
-									</div>
-									<div className="row">
-										<div className="col">
-										<div className="floated">
-										<img style={{objectFit: 'cover'}} src={this.props.location.state.img} />
-										</div>
-										{renderHTML(
-										reactCookie.load('languageCode') === 'en'
-											? this.props.location.state.content_en
-											: this.props.location.state.content_ru
-									)}
-										</div>
-									</div>
-								</div>
-									{/* <h3 className="post-creative-title centerAlign alignment">
-=======
 					<article className="post-creative">
 						<div className="container">
 							<div className="row">
 								<div className="col-12">
 									<h3 className="post-creative-title centerAlign alignment">
->>>>>>> origin/develop
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.title_en
 												: this.props.location.state.title_ru
 										)}
-<<<<<<< HEAD
-									</h3> */}
-									{/* <img src={this.props.location.state.img} /> */}
-									{/* {renderHTML(
-=======
 									</h3>
 								</div>
 							</div>
@@ -94,19 +58,11 @@ export class BiographyDetails extends Component {
 									</h3> */}
 						{/* <img src={this.props.location.state.img} /> */}
 						{/* {renderHTML(
->>>>>>> origin/develop
 										reactCookie.load('languageCode') === 'en'
 											? this.props.location.state.content_en
 											: this.props.location.state.content_ru
 									)} */}
-<<<<<<< HEAD
-								</article>
-							
-							
-					
-=======
 					</article>
->>>>>>> origin/develop
 				</section>
 			</div>
 		);

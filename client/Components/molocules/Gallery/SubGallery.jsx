@@ -23,13 +23,8 @@ export class SubGallery extends React.Component {
 		this.props.getSubGalleryByGallery(body);
 	}
 
-<<<<<<< HEAD
-	render() {
-		if (!sessionStorage.getItem('user')) {
-=======
 	render () {
 		if (!localStorage.getItem('user')) {
->>>>>>> origin/develop
 			return (
 				<div className="loginText">
 					<p className="bookingForm">Please log in to continue</p>
@@ -90,11 +85,7 @@ export class SubGallery extends React.Component {
 						<div class="row row-50 row-lg-70 offset-top-2">
 							{this.props.subGalleries && this.props.subGalleries.length > 0
 								? this.props.subGalleries.map(item => {
-<<<<<<< HEAD
-									let background = item.photos && item.photos? item.photos[0]: 'images/tour-5-270x200.jpg'
-=======
 									let background = item.photos && item.photos ? item.photos[0] : 'images/tour-5-270x200.jpg';
->>>>>>> origin/develop
 									return (
 										<div class="col-sm-6 col-lg-3 wow-outer">
 											<article
@@ -109,11 +100,7 @@ export class SubGallery extends React.Component {
 														cover={
 															<div className="subGalleryImg"
 																style={{
-<<<<<<< HEAD
-																	backgroundImage: `url('${background}')`
-=======
 																	backgroundImage: `url('${background}')`,
->>>>>>> origin/develop
 																}}></div>
 															// <img
 															// 	src={

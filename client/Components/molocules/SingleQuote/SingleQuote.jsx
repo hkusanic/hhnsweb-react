@@ -42,13 +42,9 @@ export class SingleQuote extends React.Component {
 						</div>
 						<div class="quote-modern-meta">
 							<div class="quote-modern-info">
-<<<<<<< HEAD
-								<cite style={{fontSize: 16}} class="quote-modern-text">{this.props.quote.en.source_of_quote}</cite>
-=======
 								<cite style={{ fontSize: 16 }} class="quote-modern-text">
 									{this.props.quote.en.source_of_quote}
 								</cite>
->>>>>>> origin/develop
 							</div>
 						</div>
 					</blockquote>

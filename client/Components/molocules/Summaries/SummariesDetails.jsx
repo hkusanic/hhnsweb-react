@@ -31,10 +31,6 @@ export class SummariesDetails extends React.Component {
 		this.props.getLectureByUuid(body);
 	}
 
-<<<<<<< HEAD
-	render () {
-		const { lectureDetails } = this.state;
-=======
 	handleUpdate = uuid => {
 		const body = {
 			uuid: uuid,
@@ -45,7 +41,6 @@ export class SummariesDetails extends React.Component {
 
 	render() {
 		const { lectureDetails } = this.props;
->>>>>>> origin/develop
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
 		if (!lectureDetails) {
@@ -135,133 +130,6 @@ export class SummariesDetails extends React.Component {
 											)}
 									</div>
 								</article>
-<<<<<<< HEAD
-								<Collapse bordered={false} style={{marginTop: '10px'}}>
-									<Panel header="Audio Details" key="1" style={{borderTop: '2px solid #e8e8e8', borderBottom: 'none', fontSize:'1.5rem'}}>
-										
-								<div style={{ paddingTop: '20px', fontSize:'14px' }}>
-									<table className="maintable">
-										<tbody>
-											<tr>
-												<td>
-													<b>
-														<span>Audio</span> {maxWidth > mobileBrkPnt?':':null}
-													</b>
-												</td>
-												<td className="padLeftRow">
-													<audio style={{ height: '30px' }} controls>
-														<source
-															src={renderHTML(
-																lectureDetails.audio_link
-															)}
-															type="audio/mpeg"
-														/>
-													</audio>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Event</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.ru.event}
-												</td>
-											</tr>
-											{lectureDetails.part ? (
-												<tr>
-													<td>
-														<b>
-															<span>Part</span> :
-														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.part}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.chapter ? (
-												<tr>
-													<td>
-														<b>
-															<span>Chapter</span> :
-														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.chapter}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.verse ? (
-												<tr>
-													<td>
-														<b>
-															<span>Verse</span> :
-														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.verse}
-													</td>
-												</tr>
-											) : null}
-											{lectureDetails.author ? (
-												<tr>
-													<td>
-														<b>
-															<span>Author</span> :
-														</b>
-													</td>
-													<td className="padLeftRow">
-														{lectureDetails.author}
-													</td>
-												</tr>
-											) : null}
-											<tr>
-												<td>
-													<b>
-														<span>Durations</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.duration}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Location</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.ru.location}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Downloads</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.counters.downloads}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Topic</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.ru.topic}
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								</Panel>
-=======
 								<Collapse bordered={false} style={{ marginTop: '10px' }}>
 									<Panel
 										header="Audio Details"
@@ -393,7 +261,6 @@ export class SummariesDetails extends React.Component {
 											</table>
 										</div>
 									</Panel>
->>>>>>> origin/develop
 								</Collapse>
 								<div>
 									<p className="bookingForm">Comments</p>

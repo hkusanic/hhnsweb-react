@@ -55,12 +55,9 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-<<<<<<< HEAD
-=======
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "tough-cookie": "^3.0.0",
->>>>>>> origin/develop
     "scroll-to-element": "^2.0.3",
     "underscore": "^1.9.1",
     "uuid": "^3.3.2"

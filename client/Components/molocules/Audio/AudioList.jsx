@@ -129,11 +129,7 @@ export class AudioList extends Component {
 		const mobileBrkPnt = 767;
 		const columns = [
 			{
-<<<<<<< HEAD
-				title: maxWidth > mobileBrkPnt?'Title':'',
-=======
 				title: maxWidth > mobileBrkPnt ? 'Title' : '',
->>>>>>> origin/develop
 				className: 'audioTable_title',
 				dataIndex: renderHTML(
 					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
@@ -156,11 +152,7 @@ export class AudioList extends Component {
 				),
 			},
 			{
-<<<<<<< HEAD
-				title: maxWidth > mobileBrkPnt?'Audio':'',
-=======
 				title: maxWidth > mobileBrkPnt ? 'Audio' : '',
->>>>>>> origin/develop
 				dataIndex: 'audio_link',
 				className: 'audioTable_audio',
 				render: (text, record, index) => (
@@ -177,11 +169,7 @@ export class AudioList extends Component {
 				),
 			},
 			{
-<<<<<<< HEAD
-				title: maxWidth > mobileBrkPnt?'Downloads':'',
-=======
 				title: maxWidth > mobileBrkPnt ? 'Downloads' : '',
->>>>>>> origin/develop
 				dataIndex: 'counters.downloads',
 				className: 'downloadSign',
 				render: (text, record, index) => (
@@ -196,11 +184,7 @@ export class AudioList extends Component {
 							download="download"
 						>
 							<Icon type="download" style={{ fontSize: '1.5rem' }} />
-<<<<<<< HEAD
-							{maxWidth <= mobileBrkPnt?' Download':null}
-=======
 							{maxWidth <= mobileBrkPnt ? ' Download' : null}
->>>>>>> origin/develop
 						</a>
 					</React.Fragment>
 				),
@@ -238,13 +222,8 @@ export class AudioList extends Component {
 							</ul>
 						</div>
 					</div>
-<<<<<<< HEAD
-					</section>
-				
-=======
 				</section>
 
->>>>>>> origin/develop
 				{!this.state.isUserLogin ? (
 					<div className="PadTop">
 						<div className="container mt-5">

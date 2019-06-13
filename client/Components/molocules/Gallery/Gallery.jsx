@@ -68,20 +68,6 @@ export class Gallery extends React.Component {
 				{!this.state.isUserLogin ? (
 					<section class="section-lg text-center bg-gray-100">
 						<div class="container">
-<<<<<<< HEAD
-							{/* <div className="row justify-content-center align-items-center">
-								<div className="col-lg-10"> */}
-									<Breadcrumb>
-										<Link to="" onClick={() => this.props.history.push('/')}>
-											<Breadcrumb.Item>Home</Breadcrumb.Item>
-										</Link>
-										<Icon type="double-right" style={{ alignSelf: 'center', paddingLeft: 5, paddingRight: 5 }} />
-										<Breadcrumb.Item active>Gallery</Breadcrumb.Item>
-									</Breadcrumb>
-								{/* </div>
-							</div> */}
-=======
->>>>>>> origin/develop
 							<div class="row row-50 row-lg-70 offset-top-2">
 								{mainGallery && mainGallery.length > 0
 									? mainGallery.map(item => {
@@ -92,20 +78,7 @@ export class Gallery extends React.Component {
 												data-wow-delay=".1s"
 											> */}
 												<Link to={{ pathname: '/subGallery', state: item }}>
-<<<<<<< HEAD
-													<Card
-														hoverable
-														style={{ width: 240, margin:'auto' }}
-														cover={
-															<img
-																src="https://nrs-site.s3.amazonaws.com/styles/gallery_images/s3/default_images/004.jpg?itok=xizRm1w6"
-																alt=""
-															/>
-														}
-													>
-=======
 													<Card hoverable>
->>>>>>> origin/develop
 														<Meta
 															title={
 																reactCookie.load('languageCode') === 'en'

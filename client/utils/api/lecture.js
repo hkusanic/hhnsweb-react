@@ -34,13 +34,8 @@ const utils = {
 			+ (chapter ? '&chapter=' + chapter : '')
 			+ (author ? '&author=' + author : '')
 			+ (translation ? '&translation=' + translation : '')
-<<<<<<< HEAD
-			+ (video ? '&video=' + video : '');
-		console.log(`API URL: ${url}`);
-=======
 			+ (video ? '&video=' + video : '')
 			+ (limit ? '&limit=' + limit : '');
->>>>>>> origin/develop
 		return axios.get(url);
 	},
 
