@@ -5,14 +5,20 @@ import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { connect } from 'react-redux';
-import { getKirtanByUuid, updateCounters } from '../../../actions/kirtanAction';
+import {
+	getKirtanByUuid,
+	updateCounters,
+	resetState,
+} from '../../../actions/kirtanAction';
 
 export class KirtanDetails extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			kirtanDetails: null,
-		};
+		// this.state = {
+		// 	kirtanDetails: null,
+		// };
+		const { resetState } = this.props;
+		resetState();
 	}
 
 	componentDidMount() {
@@ -22,9 +28,9 @@ export class KirtanDetails extends Component {
 		this.props.updateCounters(body);
 		this.props.getKirtanByUuid(body);
 
-		if (this.props.kirtanDetails) {
-			this.setState({ kirtanDetails: this.props.kirtanDetails });
-		}
+		// if (this.props.kirtanDetails) {
+		// 	this.setState({ kirtanDetails: this.props.kirtanDetails });
+		// }
 	}
 
 	handleUpdate = uuid => {
@@ -33,23 +39,27 @@ export class KirtanDetails extends Component {
 			downloads: true,
 		};
 		this.props.updateCounters(body);
-	}
+	};
 
-	static getDerivedStateFromProps(nextProps, prevState) {
-		if (nextProps.kirtanDetails !== prevState.kirtanDetails) {
-			return { kirtanDetails: nextProps.kirtanDetails };
-		} else return null;
-	}
+	// static getDerivedStateFromProps(nextProps, prevState) {
+	// 	if (nextProps.kirtanDetails !== prevState.kirtanDetails) {
+	// 		return { kirtanDetails: nextProps.kirtanDetails };
+	// 	} else return null;
+	// }
 
 	render() {
-		const { kirtanDetails } = this.state;
+		const { kirtanDetails } = this.props;
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
 		if (!kirtanDetails) {
-			return <div>Error Occured..........</div>;
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">Hare Krishna...</p>
+				</div>
+			);
 		}
 
-		if (!sessionStorage.getItem('user')) {
+		if (!localStorage.getItem('user')) {
 			return (
 				<div className="loginText">
 					<p className="bookingForm">Please log in to continue</p>
@@ -124,16 +134,18 @@ export class KirtanDetails extends Component {
 											<tr>
 												<td>
 													<b>
-														<span>Audio</span> {maxWidth > mobileBrkPnt ? ':' : null}
+														<span>Audio</span>{' '}
+														{maxWidth > mobileBrkPnt ? ':' : null}
 													</b>
 												</td>
 												<td className="padLeftRow downloadDiv">
-													<audio style={{ height: '30px' }}
-														controlsList="nodownload" controls>
+													<audio
+														style={{ height: '30px' }}
+														controlsList="nodownload"
+														controls
+													>
 														<source
-															src={renderHTML(
-																kirtanDetails.audio_link
-															)}
+															src={renderHTML(kirtanDetails.audio_link)}
 															type="audio/mpeg"
 														/>
 													</audio>
@@ -145,8 +157,15 @@ export class KirtanDetails extends Component {
 														}}
 														download="download"
 													>
-														<Icon type="download" style={{ fontSize: '1.5rem' }} />
-													</a></td></tr></tbody></table>
+														<Icon
+															type="download"
+															style={{ fontSize: '1.5rem' }}
+														/>
+													</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 								<div>
 									<table className="maintable">
@@ -200,26 +219,26 @@ export class KirtanDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{kirtanDetails.counters && kirtanDetails.counters.downloads}
+													{kirtanDetails.counters &&
+														kirtanDetails.counters.downloads}
 												</td>
 											</tr>
-											{reactCookie.load('languageCode') === 'en'
-												? kirtanDetails.en.topic
-												: kirtanDetails.ru.topic
-													? (
-														<tr>
-															<td>
-																<b>
-																	<span>Topic</span> :
-																</b>
-															</td>
-															<td className="padLeftRow">
-																{reactCookie.load('languageCode') === 'en'
-																	? kirtanDetails.en.topic
-																	: kirtanDetails.ru.topic}
-															</td>
-														</tr>
-													) : null}
+											{reactCookie.load('languageCode') === 'en' ? (
+												kirtanDetails.en.topic
+											) : kirtanDetails.ru.topic ? (
+												<tr>
+													<td>
+														<b>
+															<span>Topic</span> :
+														</b>
+													</td>
+													<td className="padLeftRow">
+														{reactCookie.load('languageCode') === 'en'
+															? kirtanDetails.en.topic
+															: kirtanDetails.ru.topic}
+													</td>
+												</tr>
+											) : null}
 										</tbody>
 									</table>
 								</div>
@@ -244,7 +263,10 @@ const mapDispatchToProps = dispatch => {
 		},
 		updateCounters: body => {
 			dispatch(updateCounters(body));
-		}
+		},
+		resetState: () => {
+			dispatch(resetState());
+		},
 	};
 };
 

@@ -141,11 +141,7 @@ export class Blogs extends Component {
 							</div>
 						</div>
 					</section>
-				) : (
-					<div className="loginText">
-						<p className="bookingForm">Please log in to continue</p>
-					</div>
-				)}
+				) : <QuoteOfDay /> }
 			</div>
 		);
 	}

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { quoteOfDay } from '../../../actions/quoteActions';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
+import script from '../../../assets/script.js';
 
 export class QuoteOfDay extends React.Component {
 	constructor (props) {
@@ -14,6 +15,7 @@ export class QuoteOfDay extends React.Component {
 		};
 	}
 	componentDidMount () {
+		script();
 		let authorList = ['Niranjana Swami', 'Srila Prabhupada'];
 		this.props.quoteOfDay(authorList);
 		this.setState({
@@ -59,11 +61,23 @@ export class QuoteOfDay extends React.Component {
 										<div class="quote-modern-text">
 											<p className="quotesFont">
 												{renderHTML(
-													reactCookie.load('languageCode') === 'en' ?
-														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[0] && this.props.quote.quotes[0].en && this.props.quote.quotes[0].en.body ? this.props.quote.quotes[0].en.body : "Sorry, No data available in this translation"
-														:
-														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[0] && this.props.quote.quotes[0].ru && this.props.quote.quotes[0].ru.body ? this.props.quote.quotes[0].ru.body : "Sorry, No data available in this translation"
-
+													reactCookie.load('languageCode') === 'en'
+														? this.props
+														  && this.props.quote
+														  && this.props.quote.quotes
+														  && this.props.quote.quotes[0]
+														  && this.props.quote.quotes[0].en
+														  && this.props.quote.quotes[0].en.body
+															? this.props.quote.quotes[0].en.body
+															: 'Sorry, No data available in this translation'
+														: this.props
+														  && this.props.quote
+														  && this.props.quote.quotes
+														  && this.props.quote.quotes[0]
+														  && this.props.quote.quotes[0].ru
+														  && this.props.quote.quotes[0].ru.body
+															? this.props.quote.quotes[0].ru.body
+															: 'Sorry, No data available in this translation'
 												)}
 											</p>
 										</div>
@@ -77,15 +91,31 @@ export class QuoteOfDay extends React.Component {
 												/>
 											</div>
 											<div class="quote-modern-info">
-												<cite class="quote-modern-cite">{this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[0] && titleCase(this.props.quote.quotes[0].author)}</cite>
+												<cite class="quote-modern-cite">
+													{this.props
+														&& this.props.quote
+														&& this.props.quote.quotes
+														&& this.props.quote.quotes[0]
+														&& titleCase(this.props.quote.quotes[0].author)}
+												</cite>
 												<p class="quote-modern-caption">
-													{
-														reactCookie.load('languageCode') === 'en' ?
-															this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[0] && this.props.quote.quotes[0].en && this.props.quote.quotes[0].en.source_of_quote ? this.props.quote.quotes[0].en.source_of_quote : "Sorry, No data available in this translation"
-															:
-															this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[0] && this.props.quote.quotes[0].ru && this.props.quote.quotes[0].ru.source_of_quote ? this.props.quote.quotes[0].ru.source_of_quote : "Sorry, No data avaialable in this translation"
-
-													}
+													{reactCookie.load('languageCode') === 'en'
+														? this.props
+														  && this.props.quote
+														  && this.props.quote.quotes
+														  && this.props.quote.quotes[0]
+														  && this.props.quote.quotes[0].en
+														  && this.props.quote.quotes[0].en.source_of_quote
+															? this.props.quote.quotes[0].en.source_of_quote
+															: 'Sorry, No data available in this translation'
+														: this.props
+														  && this.props.quote
+														  && this.props.quote.quotes
+														  && this.props.quote.quotes[0]
+														  && this.props.quote.quotes[0].ru
+														  && this.props.quote.quotes[0].ru.source_of_quote
+															? this.props.quote.quotes[0].ru.source_of_quote
+															: 'Sorry, No data avaialable in this translation'}
 												</p>
 											</div>
 										</div>
@@ -122,11 +152,25 @@ export class QuoteOfDay extends React.Component {
 										<div class="quote-modern-text">
 											<p className="quotesFont">
 												{renderHTML(
-													reactCookie.load('languageCode') === 'en' ?
-														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[1] && this.props.quote.quotes[1].en && this.props.quote.quotes[1].en.body && this.props.quote.quotes[1].en.body ? this.props.quote.quotes[1].en.body : "Sorry ,No data available in this translation"
-														:
-														this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[1] && this.props.quote.quotes[1].ru && this.props.quote.quotes[1].ru.body && this.props.quote.quotes[1].ru.body ? this.props.quote.quotes[1].ru.body : "Sorry, No data available in this translation"
-
+													reactCookie.load('languageCode') === 'en'
+														? this.props
+														  && this.props.quote
+														  && this.props.quote.quotes
+														  && this.props.quote.quotes[1]
+														  && this.props.quote.quotes[1].en
+														  && this.props.quote.quotes[1].en.body
+														  && this.props.quote.quotes[1].en.body
+															? this.props.quote.quotes[1].en.body
+															: 'Sorry ,No data available in this translation'
+														: this.props
+														  && this.props.quote
+														  && this.props.quote.quotes
+														  && this.props.quote.quotes[1]
+														  && this.props.quote.quotes[1].ru
+														  && this.props.quote.quotes[1].ru.body
+														  && this.props.quote.quotes[1].ru.body
+															? this.props.quote.quotes[1].ru.body
+															: 'Sorry, No data available in this translation'
 												)}
 											</p>
 										</div>
@@ -140,15 +184,31 @@ export class QuoteOfDay extends React.Component {
 												/>
 											</div>
 											<div class="quote-modern-info">
-												<cite class="quote-modern-cite">{this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[1] && titleCase(this.props.quote.quotes[1].author)}</cite>
+												<cite class="quote-modern-cite">
+													{this.props
+														&& this.props.quote
+														&& this.props.quote.quotes
+														&& this.props.quote.quotes[1]
+														&& titleCase(this.props.quote.quotes[1].author)}
+												</cite>
 												<p class="quote-modern-caption">
-													{
-														reactCookie.load('languageCode') === 'en' ?
-															this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[1] && this.props.quote.quotes[1].en && this.props.quote.quotes[1].en.source_of_quote ? this.props.quote.quotes[1].en.source_of_quote : "Sorry, No data available in this translation"
-															:
-															this.props && this.props.quote && this.props.quote.quotes && this.props.quote.quotes[1] && this.props.quote.quotes[1].ru && this.props.quote.quotes[1].ru.source_of_quote ? this.props.quote.quotes[1].ru.source_of_quote : "Sorry, No data available in this translation"
-
-													}
+													{reactCookie.load('languageCode') === 'en'
+														? this.props
+														  && this.props.quote
+														  && this.props.quote.quotes
+														  && this.props.quote.quotes[1]
+														  && this.props.quote.quotes[1].en
+														  && this.props.quote.quotes[1].en.source_of_quote
+															? this.props.quote.quotes[1].en.source_of_quote
+															: 'Sorry, No data available in this translation'
+														: this.props
+														  && this.props.quote
+														  && this.props.quote.quotes
+														  && this.props.quote.quotes[1]
+														  && this.props.quote.quotes[1].ru
+														  && this.props.quote.quotes[1].ru.source_of_quote
+															? this.props.quote.quotes[1].ru.source_of_quote
+															: 'Sorry, No data available in this translation'}
 												</p>
 											</div>
 										</div>

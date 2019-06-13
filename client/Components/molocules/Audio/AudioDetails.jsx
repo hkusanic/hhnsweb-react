@@ -2,23 +2,21 @@ import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
-
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
 import { Link, withRouter } from 'react-router-dom';
 import { Icon } from 'antd';
+import Comments from '../Comments/Comments';
 import {
 	updateCounters,
 	getLectureByUuid,
+	resetState,
 } from '../../../actions/lectureActions';
-import Comments from '../Comments/Comments';
 
 export class AudioDetails extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			lectureDetails: null,
-		};
+		const { resetState } = this.props;
+		resetState();
 	}
 
 	componentDidMount() {
@@ -28,15 +26,6 @@ export class AudioDetails extends Component {
 		};
 		this.props.updateCounters(body);
 		this.props.getLectureByUuid(body);
-		if (this.props.lectureDetails) {
-			this.setState({ lectureDetails: this.props.lectureDetails });
-		}
-	}
-
-	static getDerivedStateFromProps(nextProps, prevState) {
-		if (nextProps.lectureDetails !== prevState.lectureDetails) {
-			return { lectureDetails: nextProps.lectureDetails };
-		} else return null;
 	}
 
 	updateAudioCount = () => {
@@ -56,14 +45,18 @@ export class AudioDetails extends Component {
 	};
 
 	render() {
-		const { lectureDetails } = this.state;
+		const { lectureDetails } = this.props;
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
 		if (!lectureDetails) {
-			return <div>Error Occured..........</div>;
+			return (
+				<div style={{ textAlign: 'center' }}>
+					<p className="bookingForm">Hare Krishna...</p>
+				</div>
+			);
 		}
 
-		if (!sessionStorage.getItem('user')) {
+		if (!localStorage.getItem('user')) {
 			return (
 				<div className="loginText">
 					<p className="bookingForm">Please log in to continue</p>
@@ -156,7 +149,7 @@ export class AudioDetails extends Component {
 										download="download"
 									>
 										<Icon type="download" style={{ fontSize: '1.5rem' }} />
-										{maxWidth <= mobileBrkPnt?' Download':null}
+										{maxWidth <= mobileBrkPnt ? ' Download' : null}
 									</a>
 								</div>
 
@@ -219,16 +212,18 @@ export class AudioDetails extends Component {
 													</td>
 												</tr>
 											) : null}
-											{lectureDetails.duration ? <tr>
-												<td>
-													<b>
-														<span>Durations</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.duration}
-												</td>
-											</tr> :null}
+											{lectureDetails.duration ? (
+												<tr>
+													<td>
+														<b>
+															<span>Durations</span> :
+														</b>
+													</td>
+													<td className="padLeftRow">
+														{lectureDetails.duration}
+													</td>
+												</tr>
+											) : null}
 											<tr>
 												<td>
 													<b>
@@ -292,6 +287,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		getLectureByUuid: body => {
 			dispatch(getLectureByUuid(body));
+		},
+		resetState: () => {
+			dispatch(resetState());
 		},
 	};
 };

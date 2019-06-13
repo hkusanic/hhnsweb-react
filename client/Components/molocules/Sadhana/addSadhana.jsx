@@ -6,6 +6,7 @@ import Auth from '../../../utils/Auth';
 import moment from 'moment';
 import { createSadhana } from '../../../actions/sadhanaAction';
 import { connect } from 'react-redux';
+import { relative } from 'path';
 
 const { TextArea } = Input;
 
@@ -21,6 +22,7 @@ class AddSadhana extends React.Component {
 			userId: '',
 			time_rising: '',
 		};
+		this.disabledDate = this.disabledDate.bind(this);
 	}
 
 	componentDidMount() {
@@ -38,7 +40,8 @@ class AddSadhana extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.sadhana.isCreated) {
-			this.props.history.push('/sadhanaList');
+			// this.props.history.push('/sadhanaList');
+			this.props.refreshPage();
 		}
 	}
 
@@ -58,7 +61,26 @@ class AddSadhana extends React.Component {
 			return v.toString(16);
 		});
 	};
-
+	disabledDate(current) {
+		const notAllowedDates = this.props.notAllowedDates;
+		let days = 2;
+		if(process.env.sadhanaSheetAllowedDays){
+		days = process.env.sadhanaSheetAllowedDays;
+		}
+		if(current > moment().endOf('day') || current < moment().subtract(days, 'days'))
+			return true
+		
+		else{
+			for(let i = 0; i< notAllowedDates.length; i++){
+				if(moment(current).toDate().toISOString().substring(0,10) == notAllowedDates[i].toISOString().substring(0,10))
+					return true
+				else
+					return false
+			}
+			
+		}
+		
+	  }
 	handleSubmit = event => {
 		event.preventDefault();
 		const { form } = this.props;
@@ -83,7 +105,7 @@ class AddSadhana extends React.Component {
 						lastName: values.lastname,
 						email: values.email,
 						creation_date_time: new Date(),
-						date: this.formatDate(new Date()),
+						date: values.date,
 						time_rising: time_rising,
 						rounds: values.rounds,
 						reading: values.reading,
@@ -100,7 +122,6 @@ class AddSadhana extends React.Component {
 	};
 
 	onChange = (time, timeString) => {
-		console.log(time, timeString);
 		this.setState({
 			time_rising: timeString,
 		});
@@ -126,7 +147,7 @@ class AddSadhana extends React.Component {
 		}
 		return (
 			<React.Fragment>
-				<section
+				{/* <section
 					className="bg-gray-100"
 					style={{
 						backgroundImage:
@@ -155,13 +176,107 @@ class AddSadhana extends React.Component {
 							</ul>
 						</div>
 					</div>
-				</section>
+				</section> */}
 				<div className="row justify-content-center">
 					<section className="card col-lg-8 sadhanaAdd">
+					
 						<div className="card-body">
+						<Button type="danger" onClick={this.props.addSadhanaSheet}
+				className="closeAddSadhanaCard">X</Button>
 							<div>
 								<Form className="mt-3">
-									<div className="form-group">
+								<div className="row">
+								<div className="col-12 my-1 col-md-6">
+								<Form.Item label={language ? 'First Name' : 'First Name'}>
+											{form.getFieldDecorator('firstname', {
+												initialValue: firstName,
+												rules: [
+													{
+														required: true,
+														message: 'This field is required',
+													},
+												],
+											})(<Input disabled placeholder="Name" name="name" />)}
+										</Form.Item>
+								</div>
+								<div className="col-12 my-1 col-md-6">
+								<Form.Item label={language ? 'Last Name' : 'Last Name'}>
+											{form.getFieldDecorator('lastname', {
+												rules: [
+													{
+														required: true,
+														message: 'This field is required',
+													},
+												],
+												initialValue: lastName,
+											})(<Input disabled placeholder="Name" name="name" />)}
+										</Form.Item>
+								</div>
+								<div className="col-12 my-1 col-md-6">
+								<Form.Item label={language ? 'Email' : 'Email'}>
+											{form.getFieldDecorator('email', {
+												rules: [
+													{
+														required: true,
+														message: 'This field is required',
+													},
+												],
+												initialValue: email,
+											})(<Input disabled placeholder="Email" name="email" />)}
+										</Form.Item>
+								</div>
+								<div className="col-12 my-1 col-md-6">
+								<Form.Item label={language ? 'Date' : 'Date'}>
+											{form.getFieldDecorator('date', {
+												rules: [
+													{
+														required: true,
+														message: 'This field is required',
+													},
+												],
+											})(<DatePicker  disabledDate={this.disabledDate}/>)}
+										</Form.Item>
+								</div>
+								<div className="col-12 my-1 col-md-6">
+								<Form.Item label={language ? 'Time Rising' : 'Time Rising'}>
+											{form.getFieldDecorator('time_rising', {
+												rules: [
+													{
+														required: true,
+														message: 'This field is required',
+													},
+												],
+												initialValue: '',
+											})(
+												<TimePicker
+													use12Hours
+													format="h:mm a"
+													onChange={this.onChange}
+												/>
+											)}
+										</Form.Item>
+								</div>
+								<div className="col-12 my-1 col-md-6">
+								<Form.Item label={language ? 'Rounds' : 'Rounds'}>
+											{form.getFieldDecorator('rounds', {
+												rules: [
+													{
+														required: true,
+														message: 'This field is required',
+													},
+												],
+												initialValue: '',
+											})(
+												<Input
+													placeholder="Rounds"
+													type="number"
+													name="rounds"
+												/>
+											)}
+										</Form.Item>
+								</div>
+								</div>
+									{/* <div className="form-group inline-block-element inline-block-children">
 										<Form.Item label={language ? 'First Name' : 'First Name'}>
 											{form.getFieldDecorator('firstname', {
 												initialValue: firstName,
@@ -174,7 +289,7 @@ class AddSadhana extends React.Component {
 											})(<Input disabled placeholder="Name" name="name" />)}
 										</Form.Item>
 									</div>
-									<div className="form-group">
+									<div className="form-group inline-block-element inline-block-element-right inline-block-children">
 										<Form.Item label={language ? 'Last Name' : 'Last Name'}>
 											{form.getFieldDecorator('lastname', {
 												rules: [
@@ -187,7 +302,7 @@ class AddSadhana extends React.Component {
 											})(<Input disabled placeholder="Name" name="name" />)}
 										</Form.Item>
 									</div>
-									<div className="form-group">
+									<div className="form-group inline-block-element inline-block-children">
 										<Form.Item label={language ? 'Email' : 'Email'}>
 											{form.getFieldDecorator('email', {
 												rules: [
@@ -200,7 +315,7 @@ class AddSadhana extends React.Component {
 											})(<Input disabled placeholder="Email" name="email" />)}
 										</Form.Item>
 									</div>
-									<div className="form-group">
+									<div className="form-group inline-block-element inline-block-element-right inline-block-children">
 										<Form.Item label={language ? 'Date' : 'Date'}>
 											{form.getFieldDecorator('date', {
 												rules: [
@@ -210,10 +325,11 @@ class AddSadhana extends React.Component {
 													},
 												],
 												initialValue: moment(new Date(), dateFormat),
-											})(<DatePicker disabled />)}
+											})(<DatePicker  disabledDate={this.disabledDate}/>)}
 										</Form.Item>
-									</div>
-									<div className="form-group">
+									</div> 
+									
+									<div className="form-group inline-block-element">
 										<Form.Item label={language ? 'Time Rising' : 'Time Rising'}>
 											{form.getFieldDecorator('time_rising', {
 												rules: [
@@ -232,7 +348,7 @@ class AddSadhana extends React.Component {
 											)}
 										</Form.Item>
 									</div>
-									<div className="form-group">
+									<div className="form-group inline-block-element inline-block-element-right">
 										<Form.Item label={language ? 'Rounds' : 'Rounds'}>
 											{form.getFieldDecorator('rounds', {
 												rules: [
@@ -250,7 +366,7 @@ class AddSadhana extends React.Component {
 												/>
 											)}
 										</Form.Item>
-									</div>
+									</div> */}
 									<div className="form-group">
 										<Form.Item label={language ? 'Reading' : 'Reading'}>
 											{form.getFieldDecorator('reading', {
@@ -338,7 +454,7 @@ class AddSadhana extends React.Component {
 												<span className="mr-3">
 													<Button
 														type="primary"
-														className="sadhanaButton"
+														className="sadhanaSubmitButton"
 														onClick={event => {
 															this.handleSubmit(event);
 														}}
@@ -349,6 +465,11 @@ class AddSadhana extends React.Component {
 												<Button type="danger" onClick={this.handleReset}>
 													Discard
 												</Button>
+												<Button type="danger" onClick={this.props.addSadhanaSheet}
+												style={{marginLeft:20}}>
+													Close
+												</Button>
+												
 											</div>
 										</Form.Item>
 									</div>

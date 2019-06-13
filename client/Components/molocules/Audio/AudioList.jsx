@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Table, Icon, Button } from 'antd';
-import { searchLecture, updateCounters } from '../../../actions/lectureActions';
+import {
+	searchLecture,
+	updateCounters,
+	resetState,
+} from '../../../actions/lectureActions';
 import Auth from '../../../utils/Auth';
-import { Translate } from 'react-localize-redux';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 
 const defaultPageSize = 20;
 
@@ -18,7 +22,6 @@ export class AudioList extends Component {
 		super(props);
 		this.state = {
 			isUserLogin: true,
-			totalItem: null,
 			currentPage: null,
 			page: null,
 			lectures: [],
@@ -29,6 +32,47 @@ export class AudioList extends Component {
 			pagination: {},
 			loading: false,
 		};
+		const { resetState } = this.props;
+		resetState();
+	}
+
+	componentDidMount() {
+		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({ loading: true });
+
+		let body = { ...this.state.body };
+		body.page = this.props.lecturesDetails.currentPage || 1;
+		const pagination = { ...this.state.pagination };
+		pagination.total = this.props.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = this.props.lecturesDetails.currentPage || 1;
+
+		this.setState({
+			currentPage: this.props.lecturesDetails.currentPage,
+			isUserLogin,
+			loading: false,
+			pagination,
+		});
+
+		this.props.searchLecture(body);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		let body = { ...this.state.body };
+		body.page = nextProps.lecturesDetails.currentPage;
+		const pagination = { ...this.state.pagination };
+		pagination.total = nextProps.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = nextProps.lecturesDetails.currentPage;
+
+		this.setState({
+			currentPage: nextProps.lecturesDetails.currentPage,
+			pagination,
+		});
+
+		if (nextProps.lecturesDetails.Count) {
+			this.props.searchLecture(body);
+		}
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
@@ -43,49 +87,6 @@ export class AudioList extends Component {
 		body.page = pagination.current;
 		this.props.searchLecture(body);
 	};
-
-	componentDidMount() {
-		const isUserLogin = Auth.isUserAuthenticated();
-		this.setState({ loading: true });
-
-		let body = { ...this.state.body };
-		body.page = this.props.lecturesDetails.currentPage || 1;
-		const pagination = { ...this.state.pagination };
-		pagination.total = this.props.lecturesDetails.totalLectures;
-		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = this.props.lecturesDetails.currentPage || 1;
-
-		this.setState({
-			lectures: this.props.lecturesDetails.lectures,
-			currentPage: this.props.lecturesDetails.currentPage,
-			totalItem: this.props.lecturesDetails.totalLectures,
-			isUserLogin,
-			loading: false,
-			pagination,
-		});
-
-		this.props.searchLecture(body);
-	}
-
-	componentWillReceiveProps(nextProps) {
-		let body = { ...this.state.body };
-		body.page = nextProps.lecturesDetails.currentPage;
-		const pagination = { ...this.state.pagination };
-		pagination.total = nextProps.lecturesDetails.totalLectures;
-		pagination.defaultPageSize = 20;
-		pagination.current = nextProps.lecturesDetails.currentPage;
-
-		this.setState({
-			lectures: nextProps.lecturesDetails.lectures,
-			currentPage: nextProps.lecturesDetails.currentPage,
-			totalItem: nextProps.lecturesDetails.totalLectures,
-			pagination,
-		});
-
-		if (nextProps.lecturesDetails.Count) {
-			this.props.searchLecture(body);
-		}
-	}
 
 	showing100Characters = sentence => {
 		var result = sentence;
@@ -259,7 +260,7 @@ export class AudioList extends Component {
 							<div className="row justify-content-center">
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
-										{this.state.lectures.length > 0 ? (
+										{this.props.lecturesDetails.lectures.length > 0 ? (
 											<div>
 												<Table
 													columns={columns}
@@ -286,9 +287,7 @@ export class AudioList extends Component {
 						</div>
 					</div>
 				) : (
-					<div className="loginText">
-						<p className="bookingForm">Please log in to continue</p>
-					</div>
+					<QuoteOfDay />
 				)}
 			</div>
 		);
@@ -308,6 +307,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		updateCounters: body => {
 			dispatch(updateCounters(body));
+		},
+		resetState: () => {
+			dispatch(resetState());
 		},
 	};
 };

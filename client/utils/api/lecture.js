@@ -36,7 +36,6 @@ const utils = {
 			+ (translation ? '&translation=' + translation : '')
 			+ (video ? '&video=' + video : '')
 			+ (limit ? '&limit=' + limit : '');
-		console.log(`API URL: ${url}`);
 		return axios.get(url);
 	},
 

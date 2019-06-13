@@ -5,7 +5,6 @@ import SingleQuote from '../../Components/molocules/SingleQuote/SingleQuote';
 import { connect } from 'react-redux';
 import { searchQuote } from '../../actions/quoteActions';
 import Auth from '../../utils/Auth';
-import { Translate } from 'react-localize-redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 export class Quotes extends Component {
@@ -19,10 +18,10 @@ export class Quotes extends Component {
 			quotes: [],
 		};
 	}
+
 	componentDidMount() {
 		const isUserLogin = Auth.isUserAuthenticated();
 		const author = this.props.location.state;
-		console.log(this.props.quoteDetails.totalQuotes);
 		this.setState({
 			quotes: this.props.quoteDetails.quotes,
 			currentPage: this.props.quoteDetails.currentPage,
@@ -107,10 +106,9 @@ export class Quotes extends Component {
 						itemClass="page-item"
 						linkClass="page-link button-winona"
 						activePage={this.state.currentPage}
-						itemsCountPerPage={20}
 						total={this.state.totalItem}
-						pageRangeDisplayed={10}
 						onChange={this.handlePageChange}
+						pageSize={20}
 					/>
 				</div>
 			</div>

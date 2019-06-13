@@ -11,6 +11,8 @@ import {
 import { handleFilterGallery } from '../../../utils/custom';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
+import script from '../../../assets/script.js';
 
 const { Meta } = Card;
 
@@ -22,6 +24,7 @@ export class Gallery extends React.Component {
 		};
 	}
 	componentDidMount () {
+		script();
 		const isUserLogin = Auth.isUserAuthenticated();
 		this.setState({
 			isUserLogin,
@@ -34,12 +37,8 @@ export class Gallery extends React.Component {
 		let { mainGallery } = galleryReducer;
 		mainGallery = handleFilterGallery(mainGallery);
 
-		if (!sessionStorage.getItem('user')) {
-			return (
-				<div className="loginText">
-					<p className="bookingForm">Please log in to continue</p>
-				</div>
-			);
+		if (!localStorage.getItem('user')) {
+			return <QuoteOfDay />;
 		}
 
 		return (
@@ -69,24 +68,6 @@ export class Gallery extends React.Component {
 				{!this.state.isUserLogin ? (
 					<section class="section-lg text-center bg-gray-100">
 						<div class="container">
-							{/* <div className="row justify-content-center align-items-center">
-								<div className="col-lg-10"> */}
-							{/* <Breadcrumb>
-								<Link to="" onClick={() => this.props.history.push('/')}>
-									<Breadcrumb.Item>Home</Breadcrumb.Item>
-								</Link>
-								<Icon
-									type="double-right"
-									style={{
-										alignSelf: 'center',
-										paddingLeft: 5,
-										paddingRight: 5,
-									}}
-								/>
-								<Breadcrumb.Item active>Gallery</Breadcrumb.Item>
-							</Breadcrumb> */}
-							{/* </div>
-							</div> */}
 							<div class="row row-50 row-lg-70 offset-top-2">
 								{mainGallery && mainGallery.length > 0
 									? mainGallery.map(item => {
@@ -97,16 +78,7 @@ export class Gallery extends React.Component {
 												data-wow-delay=".1s"
 											> */}
 												<Link to={{ pathname: '/subGallery', state: item }}>
-													<Card
-														hoverable
-														// style={{ width: 240, margin: 'auto' }}
-														// cover={
-														// 	<img
-														// 		src="https://nrs-site.s3.amazonaws.com/styles/gallery_images/s3/default_images/004.jpg?itok=xizRm1w6"
-														// 		alt=""
-														// 	/>
-														// }
-													>
+													<Card hoverable>
 														<Meta
 															title={
 																reactCookie.load('languageCode') === 'en'
@@ -116,7 +88,6 @@ export class Gallery extends React.Component {
 														/>
 													</Card>
 												</Link>
-												{/* </article> */}
 											</div>
 										);
 									  })
@@ -125,9 +96,7 @@ export class Gallery extends React.Component {
 						</div>
 					</section>
 				) : (
-					<div className="loginText">
-						<p className="bookingForm">Please log in to continue</p>
-					</div>
+					<QuoteOfDay />
 				)}
 			</div>
 		);
