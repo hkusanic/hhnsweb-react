@@ -11,6 +11,7 @@
     "cloudinary-react": "^1.1.0",
     "connect-multiparty": "^2.2.0",
     "dotenv": "^6.2.0",
+    "fs-readfile-promise": "^3.0.1",
     "history": "^4.7.2",
     "install": "^0.12.2",
     "keystone": "^4.0.0",
@@ -54,6 +55,12 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+<<<<<<< HEAD
+=======
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "tough-cookie": "^3.0.0",
+>>>>>>> origin/develop
     "scroll-to-element": "^2.0.3",
     "underscore": "^1.9.1",
     "uuid": "^3.3.2"

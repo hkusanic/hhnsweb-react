@@ -132,9 +132,6 @@ exports.deleteFile = (req, res) => {
 // More about keystone api here: https://gist.github.com/JedWatson/9741171
 exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
-
-	let DateSort = 'date';
-
 	logger.info(
 		{
 			req: req,
@@ -144,7 +141,7 @@ exports.list = function (req, res) {
 	Blog.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
-	}).sort(DateSort).exec(function (err, items) {
+	}).sort({created_date_time:"desc"}).exec(function (err, items) {
 		if (err) {
 			logger.error(
 				{
@@ -202,7 +199,7 @@ exports.get = function (req, res) {
 exports.create = function (req, res) {
 	var item = new Blog.model();
 	var data = req.method === 'POST' ? req.body : req.query;
-	data.date = todayDate();
+	// data.date = todayDate();
 	logger.info(
 		{
 			req: req,

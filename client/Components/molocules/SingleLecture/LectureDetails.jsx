@@ -41,10 +41,10 @@ export class LectureDetails extends React.Component {
 			return <div>Error Occured..........</div>;
 		}
 
-		if (!sessionStorage.getItem('user')) {
+		if (!localStorage.getItem('user')) {
 			return (
-				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">Please Log in to continue</p>
+				<div className="loginText">
+					<p className="bookingForm">Please log in to continue</p>
 				</div>
 			);
 		}

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getMkv } from '../../../actions/mkv';
 import Auth from '../../../utils/Auth';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 export class MKV extends Component {
 	constructor(props) {
 		super(props);
@@ -37,12 +38,8 @@ export class MKV extends Component {
 			return <p>Loading...</p>;
 		}
 
-		if (!sessionStorage.getItem('user')) {
-			return (
-				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">Please Log in to continue</p>
-				</div>
-			);
+		if (!localStorage.getItem('user')) {
+			return <QuoteOfDay />;
 		}
 
 		return (
@@ -73,7 +70,11 @@ export class MKV extends Component {
 							<div style={{ textAlign: 'center' }}>
 								<p className="title">MKV</p>
 							</div>
+<<<<<<< HEAD
 							<div className="row" style={{margin: 0, textAlign:"center"}}>
+=======
+							<div className="row" style={{ margin: 0, textAlign: 'center' }}>
+>>>>>>> origin/develop
 								{this.state.array.map((item, key) => {
 									return (
 										
@@ -99,9 +100,7 @@ export class MKV extends Component {
 						</div>
 					</section>
 				) : (
-					<div style={{ textAlign: 'center' }}>
-						<p className="bookingForm">Please Log in to continue</p>
-					</div>
+					<QuoteOfDay />
 				)}
 				{this.state.showTabs ? (
 					<section className="section section-lg">

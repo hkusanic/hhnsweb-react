@@ -2,80 +2,94 @@ import lectureApi from '../utils/api/lecture';
 import * as types from '../constants/index';
 
 export function searchLecture (body) {
-	return (dispatch) => {
+	return dispatch => {
 		lectureApi
 			.searchLecture(body)
-			.then((response) => {
+			.then(response => {
 				// response.data.lecture.currentPage = body.page;
 				dispatch(searchLectureAction(response));
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.error(err);
 			});
 	};
 }
 export function searchLectureVideo (body) {
-	return (dispatch) => {
+	return dispatch => {
 		lectureApi
 			.searchLecture(body)
-			.then((response) => {
+			.then(response => {
 				// response.data.lecture.currentPage = body.page;
 				dispatch(searchLectureActionVideo(response));
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.error(err);
 			});
 	};
 }
 
 export function searchLectureTranscriptions (body) {
-	return (dispatch) => {
+	return dispatch => {
 		lectureApi
 			.searchLecture(body)
-			.then((response) => {
+			.then(response => {
 				// response.data.lecture.currentPage = body.page;
 				dispatch(searchLectureActionTranscriptions(response));
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.error(err);
 			});
 	};
 }
 
 export function searchLectureSummaries (body) {
-	return (dispatch) => {
+	return dispatch => {
 		lectureApi
 			.searchLecture(body)
-			.then((response) => {
+			.then(response => {
 				// response.data.lecture.currentPage = body.page;
 				dispatch(searchLectureActionSummaries(response));
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.error(err);
 			});
 	};
 }
 
 export function updateCounters (body) {
-	return (dispatch) => {
+	return dispatch => {
 		lectureApi
 			.updateCounters(body)
-			.then((response) => {
+			.then(response => {
 				dispatch(updateCountersAction(response));
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.log(err);
 			});
 	};
 }
 
 export function getLectureByUuid (body) {
-	return (dispatch) => {
-		lectureApi.fetchLecture(body)
-			.then((response) => {
+	return dispatch => {
+		lectureApi
+			.fetchLecture(body)
+			.then(response => {
 				dispatch(fetchLectureByUuid(response));
 			})
-			.catch((err) => {
+			.catch(err => {
+				console.log(err);
+			});
+	};
+}
+
+export function getRussianDubbedLecture (body) {
+	return dispatch => {
+		lectureApi
+			.searchLecture(body)
+			.then(response => {
+				dispatch(searchLectureAction(response));
+			})
+			.catch(err => {
 				console.log(err);
 			});
 	};
@@ -121,5 +135,11 @@ export function fetchLectureByUuid (data) {
 		payload: {
 			lecture: data.data.lecture,
 		},
+	};
+}
+
+export function resetState () {
+	return {
+		type: 'RESET_STATE_LECTURE',
 	};
 }

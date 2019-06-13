@@ -27,6 +27,20 @@ const kirtanReducer = (state = initialState, action) => {
 				kirtan: action.payload.kirtan,
 			};
 			break;
+		case types.UPDATE_COUNTERS:
+			state = {
+				...state,
+				Count: true,
+				kirtan: action.payload.data.kirtan,
+			};
+			break;
+		case 'RESET_STATE_KIRTAN':
+			state = {
+				...state,
+				kirtan: null,
+				kirtans: [],
+			};
+			break;
 	}
 	return state;
 };

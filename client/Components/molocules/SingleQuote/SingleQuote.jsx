@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import moment from 'moment';
 
-
-export class SingleQuote extends Component {
+export class SingleQuote extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {};
@@ -28,21 +27,28 @@ export class SingleQuote extends Component {
 						<div class="quote-modern-text">
 							<div class="quote-modern-info">
 								<cite class="quote-modern-cite">
-									{moment(
-										this.props.quote.date,
-										'YYYYMMDDTHHmmssZ'
-									).format('MMM Do')}
+									{moment(this.props.quote.date, 'YYYYMMDDTHHmmssZ').format(
+										'MMM Do'
+									)}
 								</cite>
 							</div>
 							<p className="quotesFont">
-								{renderHTML(reactCookie.load('languageCode') === 'en'
-									? this.props.quote.en.body
-									: this.props.quote.ru.body)}
+								{renderHTML(
+									reactCookie.load('languageCode') === 'en'
+										? this.props.quote.en.body
+										: this.props.quote.ru.body
+								)}
 							</p>
 						</div>
 						<div class="quote-modern-meta">
 							<div class="quote-modern-info">
+<<<<<<< HEAD
 								<cite style={{fontSize: 16}} class="quote-modern-text">{this.props.quote.en.source_of_quote}</cite>
+=======
+								<cite style={{ fontSize: 16 }} class="quote-modern-text">
+									{this.props.quote.en.source_of_quote}
+								</cite>
+>>>>>>> origin/develop
 							</div>
 						</div>
 					</blockquote>

@@ -12,7 +12,7 @@ import Router from 'react-router-dom';
 const defaultPageSize = 20;
 
 export class SadhanaList extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			isUserLogin: true,
@@ -24,7 +24,7 @@ export class SadhanaList extends React.Component {
 		};
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		const isUserLogin = Auth.isUserAuthenticated();
 		if (!isUserLogin) {
 			const userDetails = JSON.parse(Auth.getUserDetails());
@@ -37,7 +37,7 @@ export class SadhanaList extends React.Component {
 				{
 					user_id: userDetails.user_id,
 					isUserLogin,
-					pagination
+					pagination,
 				},
 				() => {
 					const body = {
@@ -50,14 +50,14 @@ export class SadhanaList extends React.Component {
 		}
 	}
 
-	componentWillReceiveProps(nextProps){
+	componentWillReceiveProps(nextProps) {
 		const pagination = { ...this.state.pagination };
 		pagination.total = nextProps.sadhana.totalSadhanaSheet;
 		pagination.defaultPageSize = defaultPageSize;
 		pagination.current = nextProps.sadhana.currentPage;
 		let sadhanaList = nextProps.sadhana.sadhanaList.map((obj, index) => {
 			let obj1 = {
-				additional_comments:obj.additional_comments.substring(0, 200),
+				additional_comments: obj.additional_comments.substring(0, 200),
 				approved: obj.approved,
 				association: obj.association.substring(0, 200),
 				comments: obj.comments.substring(0, 200),
@@ -71,12 +71,12 @@ export class SadhanaList extends React.Component {
 				uuid: obj.uuid,
 				__v: obj.__v,
 				_id: obj._id,
-			}
+			};
 			return obj1;
 		});
 		this.setState({
 			pagination,
-			sadhanaList : sadhanaList,
+			sadhanaList: sadhanaList,
 		});
 	}
 
@@ -90,8 +90,7 @@ export class SadhanaList extends React.Component {
 
 		let body = Object.assign({}, this.state.body);
 		body.pageNumber = pagination.current;
-		body.userId = this.state.user_id,
-		this.props.getSadhanaList(body, 'list');
+		(body.userId = this.state.user_id), this.props.getSadhanaList(body, 'list');
 	};
 
 	formatDate = date => {
@@ -108,87 +107,107 @@ export class SadhanaList extends React.Component {
 		const body = {
 			pageNumber: 1,
 			userId: this.state.user_id,
-			date: dateString
+			date: dateString,
 		};
 		this.props.getSadhanaList(body, 'list');
-	}
+	};
 
 	checkTodaySadhanaSubmitted = () => {
 		let days = 2;
-		if(process.env.sadhanaSheetAllowedDays)
+		if (process.env.sadhanaSheetAllowedDays)
 			days = process.env.sadhanaSheetAllowedDays;
 		const { sadhana } = this.props;
 		const { sadhanaList } = sadhana;
 		let arDate = [];
-		let ctr =0;
-		for(let i = 0; i < days; i++){
-			let oldDate = new Date(); 
-			oldDate.setDate(oldDate.getDate()-i);
+		let ctr = 0;
+		for (let i = 0; i < days; i++) {
+			let oldDate = new Date();
+			oldDate.setDate(oldDate.getDate() - i);
 			arDate.push(oldDate);
 		}
 		let notAllowedDates = [];
-		for(let i=0; i<sadhanaList.length; i++){
-			for(let j = 0; j< arDate.length; j++){
-				if(sadhanaList[i].date.substring(0,10) === this.formatDate(arDate[j]).substring(0,10)){
+		for (let i = 0; i < sadhanaList.length; i++) {
+			for (let j = 0; j < arDate.length; j++) {
+				if (
+					sadhanaList[i].date.substring(0, 10) ===
+					this.formatDate(arDate[j]).substring(0, 10)
+				) {
 					ctr++;
 					notAllowedDates.push(arDate[j]);
 				}
 			}
 		}
-		this.setState({notAllowedDates: notAllowedDates});
-		if(ctr === arDate.length)
-			return true
-		else
-			return false;
-	}
+		this.setState({ notAllowedDates: notAllowedDates });
+		if (ctr === arDate.length) return true;
+		else return false;
+	};
 
 	addSadhanaSheet = () => {
 		const { history } = this.props;
 		let val = this.state.showSadhanaForm;
-		if(!this.checkTodaySadhanaSubmitted()){
-			this.setState({showSadhanaForm: !val});
+		if (!this.checkTodaySadhanaSubmitted()) {
+			this.setState({ showSadhanaForm: !val });
 		} else {
 			notification.error({
 				message: 'Error',
 				description: `You have already Submitted the sadhana sheet for the allowed days.`,
 				style: {
 					marginTop: 50,
-				  },
-			})
+				},
+			});
 		}
-		
-		
-		
-	}
+	};
 	refreshPage = () => {
 		location.reload();
-	}
-	render () {
-		console.log("whole reducer -====>>>>", this.props.redu)
+	};
+	render() {
+		console.log('whole reducer -====>>>>', this.props.redu);
 		const columns = [
 			{
 				title: 'Date',
 				dataIndex: 'date',
 				key: 'date',
-				render: date => <div><div className="sadhnaTable_headers">Date</div><div className="sadhnaTable_columns">{`${new Date(date).toDateString()}`}</div></div>,
+				render: date => (
+					<div>
+						<div className="sadhnaTable_headers">Date</div>
+						<div className="sadhnaTable_columns">{`${new Date(
+							date
+						).toDateString()}`}</div>
+					</div>
+				),
 			},
 			{
 				title: 'Time Rising',
 				dataIndex: 'time_rising',
 				key: 'time_rising',
-				render: time_rising => <div><div className="sadhnaTable_headers">Time Rising</div><div className="sadhnaTable_columns">{time_rising}</div></div>
+				render: time_rising => (
+					<div>
+						<div className="sadhnaTable_headers">Time Rising</div>
+						<div className="sadhnaTable_columns">{time_rising}</div>
+					</div>
+				),
 			},
 			{
 				title: 'Rounds',
 				dataIndex: 'rounds',
 				key: 'rounds',
-				render: rounds => <div><div className="sadhnaTable_headers">Rounds</div><div className="sadhnaTable_columns">{rounds}</div></div>
+				render: rounds => (
+					<div>
+						<div className="sadhnaTable_headers">Rounds</div>
+						<div className="sadhnaTable_columns">{rounds}</div>
+					</div>
+				),
 			},
 			{
 				title: 'Reading',
 				dataIndex: 'reading',
 				key: 'reading',
-				render: reading => <div><div className="sadhnaTable_headers">Reading</div><div>{reading}</div></div>
+				render: reading => (
+					<div>
+						<div className="sadhnaTable_headers">Reading</div>
+						<div>{reading}</div>
+					</div>
+				),
 			},
 		];
 		return (
@@ -222,24 +241,32 @@ export class SadhanaList extends React.Component {
 								className="row justify-content-center"
 								style={{ marginTop: '0', marginBottom: '0' }}
 							>
-								{!this.state.showSadhanaForm?<div className="col-lg-12">
-									<div className="centerAlign">
-										{/* <DatePicker onChange={this.handleDateChange} className="datePickerFilter" /> */}
-										<Button
-											type="primary"
-											className="sadhanaButton"
-											onClick={this.addSadhanaSheet}
-										>
-										Add Sadhana Sheet
-										</Button>
+								{!this.state.showSadhanaForm ? (
+									<div className="col-lg-12">
+										<div className="centerAlign">
+											{/* <DatePicker onChange={this.handleDateChange} className="datePickerFilter" /> */}
+											<Button
+												type="primary"
+												className="sadhanaButton"
+												onClick={this.addSadhanaSheet}
+											>
+												Add Sadhana Sheet
+											</Button>
+										</div>
 									</div>
-								</div>:null}
+								) : null}
 							</div>
-							
-							{this.state.showSadhanaForm? <div>
-								<AddSadhana addSadhanaSheet={this.addSadhanaSheet} refreshPage={this.refreshPage} notAllowedDates={this.state.notAllowedDates} />
-							</div>: null}	
-							
+
+							{this.state.showSadhanaForm ? (
+								<div>
+									<AddSadhana
+										addSadhanaSheet={this.addSadhanaSheet}
+										refreshPage={this.refreshPage}
+										notAllowedDates={this.state.notAllowedDates}
+									/>
+								</div>
+							) : null}
+
 							<div className="row justify-content-center">
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
@@ -254,19 +281,22 @@ export class SadhanaList extends React.Component {
 													)}
 													onRow={(record, index) => {
 														return {
-															onClick: event => { this.props.history.push(
-																{
+															onClick: event => {
+																this.props.history.push({
 																	pathname: `/sadhanaDetails/${record.uuid}`,
 																	state: record,
-																}
-															); },
-														}; }
-													}
+																});
+															},
+														};
+													}}
 													pagination={this.state.pagination}
 													loading={this.state.loading}
 													onChange={this.handlePagination}
 													rowClassName={(record, index) => {
-													return index%2===0?"tableRow grey":"tableRow white" }}
+														return index % 2 === 0
+															? 'tableRow grey'
+															: 'tableRow white';
+													}}
 												/>
 											</div>
 										) : (

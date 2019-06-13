@@ -11,6 +11,7 @@ let Role = new keystone.List('Role', {
 Role.add({
 	title: { type: String, required: true, index: true },
 	description: { type: String, initial: true, required: false, index: true },
+
 });
 
 Role.register();

@@ -1,0 +1,57 @@
+<html>
+	<head>
+		Script Parser
+	</head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
+	<script
+		src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous"
+	></script>
+	<script>
+
+    // calling createBulk user api using createBulk approach
+		$.getJSON('UserProfileData.json', function(data) {
+			(function($) {
+				$.ajax({
+					type: 'POST',
+					url: 'http://localhost:3000/api/user/createBulk/',
+					data: data,
+					success: data => {
+						console.log('data ===>>>>', data);
+					},
+					error: function() {
+						console.log('failed');
+					}
+				});
+			})(jQuery);
+    });
+    
+ 
+    //calling create user api using promises approach 
+    /* 
+	 	$.getJSON('UserProfileData.json', function(data) {
+			const PromiseArr = data.map((item, i) => {
+				return (function($) {
+					$.ajax({
+						type: 'POST',
+						url: 'http://localhost:3000/api/user/create/',
+						data: item,
+						success: data => {
+							console.log('data ===>>>>', data);
+						},
+						error: function() {
+							console.log('failed');
+						}
+					});
+				})(jQuery);
+			});
+
+			Promise.all(PromiseArr).then(data => {
+				console.log('length ===>>', data.length);
+			});
+    });
+    */
+	</script>
+	<body></body>
+</html>

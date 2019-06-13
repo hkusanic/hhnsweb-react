@@ -15,6 +15,7 @@ Replies.add({
 	comment_uuid: { type: String },
 	approved: { type: Boolean },
 	dateCreated: { type: Types.Date, default: Date.now },
+
 });
 
 Replies.register();

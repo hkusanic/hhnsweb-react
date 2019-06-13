@@ -5,9 +5,7 @@ import SingleQuote from '../../Components/molocules/SingleQuote/SingleQuote';
 import { connect } from 'react-redux';
 import { searchQuote } from '../../actions/quoteActions';
 import Auth from '../../utils/Auth';
-import { Translate } from 'react-localize-redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
 
 export class Quotes extends Component {
 	constructor(props) {
@@ -20,10 +18,10 @@ export class Quotes extends Component {
 			quotes: [],
 		};
 	}
+
 	componentDidMount() {
 		const isUserLogin = Auth.isUserAuthenticated();
 		const author = this.props.location.state;
-		console.log(this.props.quoteDetails.totalQuotes);
 		this.setState({
 			quotes: this.props.quoteDetails.quotes,
 			currentPage: this.props.quoteDetails.currentPage,
@@ -92,34 +90,27 @@ export class Quotes extends Component {
 						</div>
 					) : null}
 				</section>
-				{!this.state.isUserLogin ? (
-					<div className="container">
-						<div style={{ textAlign: 'center' }}>
-							<p className="bookingForm">{this.props.location.state}</p>
-						</div>
-						<div className="row row-50 row-xxl-70 centerAlign">
-							{this.state.quotes.map((item, key) => {
-								return <SingleQuote quote={item} key={key} />;
-							})}
-						</div>
-						<Pagination
-							className="paginationStyle antPage"
-							innerClass="pagination"
-							activeClass="page-item active"
-							itemClass="page-item"
-							linkClass="page-link button-winona"
-							activePage={this.state.currentPage}
-							itemsCountPerPage={20}
-							total={this.state.totalItem}
-							pageRangeDisplayed={10}
-							onChange={this.handlePageChange}
-						/>
-					</div>
-				) : (
+				<div className="container">
 					<div style={{ textAlign: 'center' }}>
-						<p className="bookingForm">Please Log in to Continue</p>
+						<p className="bookingForm">{this.props.location.state}</p>
 					</div>
-				)}
+					<div className="row row-50 row-xxl-70 centerAlign">
+						{this.state.quotes.map((item, key) => {
+							return <SingleQuote quote={item} key={key} />;
+						})}
+					</div>
+					<Pagination
+						className="paginationStyle antPage"
+						innerClass="pagination"
+						activeClass="page-item active"
+						itemClass="page-item"
+						linkClass="page-link button-winona"
+						activePage={this.state.currentPage}
+						total={this.state.totalItem}
+						onChange={this.handlePageChange}
+						pageSize={20}
+					/>
+				</div>
 			</div>
 		);
 	}

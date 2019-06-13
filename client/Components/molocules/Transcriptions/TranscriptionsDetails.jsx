@@ -1,22 +1,26 @@
 import React from 'react';
+<<<<<<< HEAD
 import { Icon, Collapse} from 'antd';
+=======
+import { Icon, Collapse } from 'antd';
+>>>>>>> origin/develop
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 import { connect } from 'react-redux';
-import { updateCounters, getLectureByUuid } from '../../../actions/lectureActions';
-// eslint-disable-next-line no-unused-vars
+import {
+	updateCounters,
+	getLectureByUuid,
+	resetState,
+} from '../../../actions/lectureActions';
 import Comments from '../Comments/Comments';
-
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
 const Panel = Collapse.Panel;
 export class TranscriptionDetails extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			text: '',
-			lectureDetails: null,
-		};
+		const { resetState } = this.props;
+		resetState();
 	}
 
 	componentDidMount() {
@@ -30,11 +34,16 @@ export class TranscriptionDetails extends React.Component {
 		}
 		this.props.updateCounters(body);
 		this.props.getLectureByUuid(body);
-		if (this.props.lectureDetails) {
-			this.setState({ lectureDetails: this.props.lectureDetails });
-		}
 	}
+	handleUpdate = uuid => {
+		const body = {
+			uuid: uuid,
+			downloads: true,
+		};
+		this.props.updateCounters(body);
+	};
 
+<<<<<<< HEAD
 	static getDerivedStateFromProps(nextProps, prevState) {
 		if (nextProps.lectureDetails !== prevState.lectureDetails) {
 			return { lectureDetails: nextProps.lectureDetails };
@@ -45,17 +54,39 @@ export class TranscriptionDetails extends React.Component {
 		const { lectureDetails } = this.state;
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
-		if (!lectureDetails) {
-			return <div>Error Occured..........</div>;
-		}
+=======
+	handleUpdate = uuid => {
+		const body = {
+			uuid: uuid,
+			downloads: true,
+		};
+		this.props.updateCounters(body);
+	};
 
-		if (!sessionStorage.getItem('user')) {
+	render() {
+		const { lectureDetails } = this.props;
+		const mobileBrkPnt = 767;
+		const maxWidth = window.screen.width;
+
+>>>>>>> origin/develop
+		if (!lectureDetails) {
 			return (
 				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">Please Log in to continue</p>
+					<p className="bookingForm">Hare Krishna...</p>
 				</div>
 			);
 		}
+<<<<<<< HEAD
+=======
+
+		if (!localStorage.getItem('user')) {
+			return (
+				<div className="loginText">
+					<p className="bookingForm">Please log in to continue</p>
+				</div>
+			);
+		}
+>>>>>>> origin/develop
 		return (
 			<div>
 				<section
@@ -107,9 +138,7 @@ export class TranscriptionDetails extends React.Component {
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(
-													lectureDetails.created_date
-												).toDateString()}
+												{new Date(lectureDetails.created_date).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -118,7 +147,11 @@ export class TranscriptionDetails extends React.Component {
 										</li>
 									</ul>
 									<div className="row">
+<<<<<<< HEAD
 										<div className="col mx-3">
+=======
+										<div className="col mx-3 textContent">
+>>>>>>> origin/develop
 											{renderHTML(
 												reactCookie.load('languageCode') === 'en'
 													? lectureDetails.en.transcription.text
@@ -127,23 +160,46 @@ export class TranscriptionDetails extends React.Component {
 										</div>
 									</div>
 								</article>
+<<<<<<< HEAD
 								<Collapse bordered={false} style={{marginTop: '10px'}}>
 									<Panel header="Audio Details" key="1" style={{borderTop: '2px solid #e8e8e8', borderBottom: 'none', fontSize:'1.5rem'}}>
 										<div style={{ paddingTop: '20px', fontSize:'14px' }}>
+=======
+								<Collapse bordered={false} style={{ marginTop: '10px' }}>
+									<Panel
+										header="Audio Details"
+										key="1"
+										style={{
+											borderTop: '2px solid #e8e8e8',
+											borderBottom: 'none',
+											fontSize: '1.5rem',
+										}}
+									>
+										<div style={{ paddingTop: '20px', fontSize: '14px' }}>
+>>>>>>> origin/develop
 											<table className="maintable">
 												<tbody>
 													<tr>
 														<td>
 															<b>
+<<<<<<< HEAD
 																<span>Audio</span> {maxWidth > mobileBrkPnt ? ':' : null}
+=======
+																<span>Audio</span>{' '}
+																{maxWidth > mobileBrkPnt ? ':' : null}
+>>>>>>> origin/develop
 															</b>
 														</td>
 														<td className="padLeftRow">
 															<audio style={{ height: '30px' }} controls>
 																<source
+<<<<<<< HEAD
 																	src={renderHTML(
 																		lectureDetails.audio_link
 																	)}
+=======
+																	src={renderHTML(lectureDetails.audio_link)}
+>>>>>>> origin/develop
 																	type="audio/mpeg"
 																/>
 															</audio>
@@ -232,6 +288,7 @@ export class TranscriptionDetails extends React.Component {
 															</td>
 														</tr>
 													) : null}
+<<<<<<< HEAD
 													<tr>
 														<td>
 															<b>
@@ -242,6 +299,20 @@ export class TranscriptionDetails extends React.Component {
 															{lectureDetails.duration}
 														</td>
 													</tr>
+=======
+													{lectureDetails.duration ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Durations</span> :
+																</b>
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.duration}
+															</td>
+														</tr>
+													) : null}
+>>>>>>> origin/develop
 													<tr>
 														<td>
 															<b>
@@ -281,7 +352,10 @@ export class TranscriptionDetails extends React.Component {
 										</div>
 									</Panel>
 								</Collapse>
+<<<<<<< HEAD
 								
+=======
+>>>>>>> origin/develop
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>
@@ -309,6 +383,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		getLectureByUuid: body => {
 			dispatch(getLectureByUuid(body));
+		},
+		resetState: () => {
+			dispatch(resetState());
 		},
 	};
 };

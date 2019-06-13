@@ -56,28 +56,28 @@ export class Lectures extends Component {
 		return (
 			<div>
 				<section
-				className="bg-gray-100"
-				style={{
-					backgroundImage:
-						'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
-				}}
+					className="bg-gray-100"
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
+					}}
 				>
 					{!this.state.isUserLogin ? (
-					<div class="breadcrumbs-custom-inner headingImage">
-						<div class="container breadcrumbs-custom-container">
-							<ul class="breadcrumbs-custom-path">
-								<li>
-									<Link to="" onClick={() => this.props.history.push('/')}>
-										<Breadcrumb.Item>Home</Breadcrumb.Item>
-									</Link>
-								</li>
-								<li>
-									<a className="textColor">Lecture</a>
-								</li>
-							</ul>
+						<div class="breadcrumbs-custom-inner headingImage">
+							<div class="container breadcrumbs-custom-container">
+								<ul class="breadcrumbs-custom-path">
+									<li>
+										<Link to="" onClick={() => this.props.history.push('/')}>
+											<Breadcrumb.Item>Home</Breadcrumb.Item>
+										</Link>
+									</li>
+									<li>
+										<a className="textColor">Lecture</a>
+									</li>
+								</ul>
+							</div>
 						</div>
-					</div>
-					) : null }
+					) : null}
 				</section>
 				{!this.state.isUserLogin ? (
 					<div className="container">
@@ -129,8 +129,8 @@ export class Lectures extends Component {
 						/>
 					</div>
 				) : (
-					<div style={{ textAlign: 'center' }}>
-						<p className="bookingForm">Please Log in to Continue</p>
+					<div className="loginText">
+						<p className="bookingForm">Please log in to continue</p>
 					</div>
 				)}
 			</div>

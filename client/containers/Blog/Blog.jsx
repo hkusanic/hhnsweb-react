@@ -8,6 +8,7 @@ import { getBlogs, getBlog } from '../../actions/blogActions';
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from  '../../Components/molocules/SingleQuote/QuotesOfDay';
 
 const defaultPageSize = 20;
 
@@ -140,9 +141,7 @@ export class Blogs extends Component {
 							</div>
 						</div>
 					</section>
-				) : (
-					null
-				)}
+				) : <QuoteOfDay /> }
 			</div>
 		);
 	}

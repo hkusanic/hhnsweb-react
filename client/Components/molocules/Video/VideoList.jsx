@@ -5,13 +5,14 @@ import { connect } from 'react-redux';
 import { Button, Table, Icon } from 'antd';
 import {
 	searchLecture,
-	searchLectureVideo,
+	resetState,
 } from '../../../actions/lectureActions';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import Auth from '../../../utils/Auth';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 
 const defaultPageSize = 20;
 
@@ -20,10 +21,7 @@ export class VideoList extends Component {
 		super(props);
 		this.state = {
 			isUserLogin: true,
-			totalItem: null,
-			currentPage: null,
 			page: null,
-			videos: [],
 			iconSearch: true,
 			isSearch: false,
 			body: {
@@ -34,6 +32,50 @@ export class VideoList extends Component {
 			pagination: {},
 			loading: false,
 		};
+		const { resetState } = this.props;
+		resetState();
+	}
+
+	componentDidMount() {
+		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({ loading: true });
+
+		let body = { ...this.state.body };
+		body.page = this.props.lecturesDetails.currentPage || 1;
+		body.video = true;
+
+		const pagination = { ...this.state.pagination };
+		pagination.total = this.props.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = this.props.lecturesDetails.currentPage || 1;
+
+		this.setState({
+			videos: this.props.lecturesDetails.lectures,
+			isUserLogin,
+			loading: false,
+			pagination,
+		});
+
+		this.props.searchLecture(body);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		let body = { ...this.state.body };
+		body.page = nextProps.lecturesDetails.currentPage;
+		body.video = true;
+
+		const pagination = { ...this.state.pagination };
+		pagination.total = nextProps.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = nextProps.lecturesDetails.currentPage;
+
+		this.setState({
+			pagination,
+		});
+
+		if (nextProps.lecturesDetails.Count) {
+			this.props.searchLecture(body);
+		}
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
@@ -48,51 +90,6 @@ export class VideoList extends Component {
 		body.page = pagination.current;
 		this.props.searchLecture(body);
 	};
-
-	componentDidMount() {
-		const isUserLogin = Auth.isUserAuthenticated();
-		this.setState({ loading: true });
-
-		let body = { ...this.state.body };
-		body.page = this.props.lecturesDetails.videoCurrentPage || 1;
-		body.video = true;
-
-		const pagination = { ...this.state.pagination };
-		pagination.total = this.props.lecturesDetails.totalLectures;
-		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = this.props.lecturesDetails.videoCurrentPage || 1;
-
-		this.setState({
-			videos: this.props.lecturesDetails.lectures,
-			totalItem: this.props.lecturesDetails.totalLectures,
-			isUserLogin,
-			loading: false,
-			pagination,
-		});
-
-		this.props.searchLecture(body);
-	}
-
-	componentWillReceiveProps(nextProps) {
-		let body = { ...this.state.body };
-		body.page = nextProps.lecturesDetails.videoCurrentPage;
-		body.video = true;
-
-		const pagination = { ...this.state.pagination };
-		pagination.total = nextProps.lecturesDetails.totalLectures;
-		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = nextProps.lecturesDetails.videoCurrentPage;
-
-		this.setState({
-			videos: nextProps.lecturesDetails.lectures,
-			totalItem: nextProps.lecturesDetails.totalLectures,
-			pagination,
-		});
-
-		if (nextProps.lecturesDetails.Count) {
-			this.props.searchLecture(body);
-		}
-	}
 
 	showing100Characters = sentence => {
 		var result = sentence;
@@ -205,7 +202,7 @@ export class VideoList extends Component {
 							<div className="row  justify-content-center">
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
-										{this.state.videos.length > 0 ? (
+										{this.props.lecturesDetails.lectures.length > 0 ? (
 											<div>
 												<Table
 													columns={columns}
@@ -218,7 +215,6 @@ export class VideoList extends Component {
 											</div>
 										) : (
 											<div style={{ textAlign: 'center' }}>
-												<p className="bookingForm">No Records Found</p>
 												<p className="bookingForm">
 													{this.state.isSearch
 														? 'No Record Found'
@@ -231,11 +227,7 @@ export class VideoList extends Component {
 							</div>
 						</div>
 					</div>
-				) : (
-					<div style={{ textAlign: 'center' }}>
-						<p className="bookingForm">Please Log in to continue</p>
-					</div>
-				)}
+				) : <QuoteOfDay />}
 			</div>
 		);
 	}
@@ -250,7 +242,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		searchLecture: body => {
-			dispatch(searchLectureVideo(body));
+			dispatch(searchLecture(body));
+		},
+		resetState: () => {
+			dispatch(resetState());
 		},
 	};
 };

@@ -6,6 +6,7 @@ import Biography from '../Biography/Biography';
 import Announcement from '../../organisms/Announcement/Announcement';
 import GridLayoutMenus from '../../organisms/GridLayoutMenu/GridLayoutMenus';
 import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
+import ContentDetails from '../../../containers/contents/ContentDetails';
 import './index.css';
 
 export class Carousel2 extends Component {
@@ -23,20 +24,20 @@ export class Carousel2 extends Component {
 				{/* <Carousel autoplay={true} arrows={true} autoplaySpeed={3000}>
 					<div>
 						<img
-							src="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_portrait_no_logo_rJorBWrIN.jpg"
-							alt="image1"
+							src='https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_portrait_no_logo_rJorBWrIN.jpg'
+							alt='image1'
 						/>
 					</div>
 					<div>
 						<img
-							src="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture-abhishek_no_logo_rk3rB-HLV.jpg"
-							alt="image2"
+							src='https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture-abhishek_no_logo_rk3rB-HLV.jpg'
+							alt='image2'
 						/>
 					</div>
 					<div>
 						<img
-							src="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_kirtan_no_logo_HJiHHWrLN.jpg"
-							alt="image3"
+							src='https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_kirtan_no_logo_HJiHHWrLN.jpg'
+							alt='image3'
 						/>
 					</div>
 				</Carousel> */}
@@ -46,7 +47,8 @@ export class Carousel2 extends Component {
 					data-autoplay="5000"
 					data-simulate-touch="false"
 					data-custom-slide-effect="inter-leave-effect"
-					data-inter-leave-offset="-.5">
+					data-inter-leave-offset="-.5"
+				>
 					<div className="swiper-wrapper">
 						<SingleCarousel
 							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_portrait_no_logo_rJorBWrIN.jpg"
@@ -74,6 +76,7 @@ export class Carousel2 extends Component {
 				<QuoteOfDay />
 				<GridLayoutMenus />
 				<Biography {...this.props} />
+				<ContentDetails />
 				<Announcement />
 			</div>
 		);

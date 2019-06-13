@@ -14,6 +14,7 @@ const initialState = {
 };
 
 const lectureReducer = (state = initialState, action) => {
+	console.log("action===>>>>", action);
 	switch (action.type) {
 		case types.SEARCH_LECTURE:
 			const data = action.payload.data.lecture;
@@ -26,6 +27,7 @@ const lectureReducer = (state = initialState, action) => {
 				Count: false,
 			};
 			break;
+
 		case types.SEARCH_LECTURE_VIDEO:
 			const dataVideo = action.payload.data.lecture;
 			state = {
@@ -69,6 +71,14 @@ const lectureReducer = (state = initialState, action) => {
 			state = {
 				...state,
 				Count: true,
+				lecture: action.payload.data.Lecture,
+			};
+			break;
+		case 'RESET_STATE_LECTURE':
+			state = {
+				...state,
+				lecture: null,
+				lectures: [],
 			};
 			break;
 	}

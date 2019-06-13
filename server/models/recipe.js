@@ -55,6 +55,7 @@ Recipe.add({
 		wysiwyg: true,
 		height: 500,
 	},
+
 });
 
 // Setting the default order of the columns on the admin tab

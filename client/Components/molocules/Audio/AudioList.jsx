@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Table, Icon, Button } from 'antd';
-import { searchLecture, updateCounters } from '../../../actions/lectureActions';
+import {
+	searchLecture,
+	updateCounters,
+	resetState,
+} from '../../../actions/lectureActions';
 import Auth from '../../../utils/Auth';
-import { Translate } from 'react-localize-redux';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import reactCookie from 'react-cookies';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 
 const defaultPageSize = 20;
 
@@ -18,7 +22,6 @@ export class AudioList extends Component {
 		super(props);
 		this.state = {
 			isUserLogin: true,
-			totalItem: null,
 			currentPage: null,
 			page: null,
 			lectures: [],
@@ -29,6 +32,47 @@ export class AudioList extends Component {
 			pagination: {},
 			loading: false,
 		};
+		const { resetState } = this.props;
+		resetState();
+	}
+
+	componentDidMount() {
+		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({ loading: true });
+
+		let body = { ...this.state.body };
+		body.page = this.props.lecturesDetails.currentPage || 1;
+		const pagination = { ...this.state.pagination };
+		pagination.total = this.props.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = this.props.lecturesDetails.currentPage || 1;
+
+		this.setState({
+			currentPage: this.props.lecturesDetails.currentPage,
+			isUserLogin,
+			loading: false,
+			pagination,
+		});
+
+		this.props.searchLecture(body);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		let body = { ...this.state.body };
+		body.page = nextProps.lecturesDetails.currentPage;
+		const pagination = { ...this.state.pagination };
+		pagination.total = nextProps.lecturesDetails.totalLectures;
+		pagination.defaultPageSize = defaultPageSize;
+		pagination.current = nextProps.lecturesDetails.currentPage;
+
+		this.setState({
+			currentPage: nextProps.lecturesDetails.currentPage,
+			pagination,
+		});
+
+		if (nextProps.lecturesDetails.Count) {
+			this.props.searchLecture(body);
+		}
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
@@ -43,49 +87,6 @@ export class AudioList extends Component {
 		body.page = pagination.current;
 		this.props.searchLecture(body);
 	};
-
-	componentDidMount() {
-		const isUserLogin = Auth.isUserAuthenticated();
-		this.setState({ loading: true });
-
-		let body = { ...this.state.body };
-		body.page = this.props.lecturesDetails.currentPage || 1;
-		const pagination = { ...this.state.pagination };
-		pagination.total = this.props.lecturesDetails.totalLectures;
-		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = this.props.lecturesDetails.currentPage || 1;
-
-		this.setState({
-			lectures: this.props.lecturesDetails.lectures,
-			currentPage: this.props.lecturesDetails.currentPage,
-			totalItem: this.props.lecturesDetails.totalLectures,
-			isUserLogin,
-			loading: false,
-			pagination,
-		});
-
-		this.props.searchLecture(body);
-	}
-
-	componentWillReceiveProps(nextProps) {
-		let body = { ...this.state.body };
-		body.page = nextProps.lecturesDetails.currentPage;
-		const pagination = { ...this.state.pagination };
-		pagination.total = nextProps.lecturesDetails.totalLectures;
-		pagination.defaultPageSize = 20;
-		pagination.current = nextProps.lecturesDetails.currentPage;
-
-		this.setState({
-			lectures: nextProps.lecturesDetails.lectures,
-			currentPage: nextProps.lecturesDetails.currentPage,
-			totalItem: nextProps.lecturesDetails.totalLectures,
-			pagination,
-		});
-
-		if (nextProps.lecturesDetails.Count) {
-			this.props.searchLecture(body);
-		}
-	}
 
 	showing100Characters = sentence => {
 		var result = sentence;
@@ -128,7 +129,11 @@ export class AudioList extends Component {
 		const mobileBrkPnt = 767;
 		const columns = [
 			{
+<<<<<<< HEAD
 				title: maxWidth > mobileBrkPnt?'Title':'',
+=======
+				title: maxWidth > mobileBrkPnt ? 'Title' : '',
+>>>>>>> origin/develop
 				className: 'audioTable_title',
 				dataIndex: renderHTML(
 					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
@@ -151,7 +156,11 @@ export class AudioList extends Component {
 				),
 			},
 			{
+<<<<<<< HEAD
 				title: maxWidth > mobileBrkPnt?'Audio':'',
+=======
+				title: maxWidth > mobileBrkPnt ? 'Audio' : '',
+>>>>>>> origin/develop
 				dataIndex: 'audio_link',
 				className: 'audioTable_audio',
 				render: (text, record, index) => (
@@ -168,7 +177,11 @@ export class AudioList extends Component {
 				),
 			},
 			{
+<<<<<<< HEAD
 				title: maxWidth > mobileBrkPnt?'Downloads':'',
+=======
+				title: maxWidth > mobileBrkPnt ? 'Downloads' : '',
+>>>>>>> origin/develop
 				dataIndex: 'counters.downloads',
 				className: 'downloadSign',
 				render: (text, record, index) => (
@@ -183,7 +196,11 @@ export class AudioList extends Component {
 							download="download"
 						>
 							<Icon type="download" style={{ fontSize: '1.5rem' }} />
+<<<<<<< HEAD
 							{maxWidth <= mobileBrkPnt?' Download':null}
+=======
+							{maxWidth <= mobileBrkPnt ? ' Download' : null}
+>>>>>>> origin/develop
 						</a>
 					</React.Fragment>
 				),
@@ -202,15 +219,18 @@ export class AudioList extends Component {
 			<div>
 				<section
 					className="bg-gray-100"
-					style={{backgroundImage: "url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)"}}
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
+					}}
 				>
 					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
 							<ul class="breadcrumbs-custom-path">
 								<li>
-								<Link to="" onClick={() => this.props.history.push('/')}>
-									<Breadcrumb.Item>Home</Breadcrumb.Item>
-								</Link>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
 								</li>
 								<li>
 									<a className="textColor">Audio</a>
@@ -218,8 +238,13 @@ export class AudioList extends Component {
 							</ul>
 						</div>
 					</div>
+<<<<<<< HEAD
 					</section>
 				
+=======
+				</section>
+
+>>>>>>> origin/develop
 				{!this.state.isUserLogin ? (
 					<div className="PadTop">
 						<div className="container mt-5">
@@ -256,7 +281,7 @@ export class AudioList extends Component {
 							<div className="row justify-content-center">
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
-										{this.state.lectures.length > 0 ? (
+										{this.props.lecturesDetails.lectures.length > 0 ? (
 											<div>
 												<Table
 													columns={columns}
@@ -283,9 +308,7 @@ export class AudioList extends Component {
 						</div>
 					</div>
 				) : (
-					<div style={{ textAlign: 'center' }}>
-						<p className="bookingForm">Please Log in to continue</p>
-					</div>
+					<QuoteOfDay />
 				)}
 			</div>
 		);
@@ -305,6 +328,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		updateCounters: body => {
 			dispatch(updateCounters(body));
+		},
+		resetState: () => {
+			dispatch(resetState());
 		},
 	};
 };

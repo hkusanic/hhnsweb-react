@@ -23,20 +23,56 @@ export class SubGallery extends React.Component {
 		this.props.getSubGalleryByGallery(body);
 	}
 
+<<<<<<< HEAD
 	render() {
 		if (!sessionStorage.getItem('user')) {
+=======
+	render () {
+		if (!localStorage.getItem('user')) {
+>>>>>>> origin/develop
 			return (
-				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">Please Log in to continue</p>
+				<div className="loginText">
+					<p className="bookingForm">Please log in to continue</p>
 				</div>
 			);
 		}
 
 		return (
 			<div>
+				<section
+					className="bg-gray-100"
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
+					}}
+				>
+					<div class="breadcrumbs-custom-inner headingImage">
+						<div class="container breadcrumbs-custom-container">
+							<ul class="breadcrumbs-custom-path">
+								<li>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<Link to=" " onClick={() => this.props.history.goBack()}>
+										<Breadcrumb.Item>Gallery</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<a className="textColor">
+										{reactCookie.load('languageCode') === 'en'
+											? this.props.location.state.name_en
+											: this.props.location.state.name_ru}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
 				<section class="section-lg text-center bg-gray-100">
 					<div class="container">
-						<Breadcrumb>
+						{/* <Breadcrumb>
 							<Link to=" " onClick={() => this.props.history.push('/')}>
 								<Breadcrumb.Item>Home</Breadcrumb.Item>
 							</Link>
@@ -50,11 +86,15 @@ export class SubGallery extends React.Component {
 									? this.props.location.state.name_en
 									: this.props.location.state.name_ru}
 							</Breadcrumb.Item>
-						</Breadcrumb>
+						</Breadcrumb> */}
 						<div class="row row-50 row-lg-70 offset-top-2">
 							{this.props.subGalleries && this.props.subGalleries.length > 0
 								? this.props.subGalleries.map(item => {
+<<<<<<< HEAD
 									let background = item.photos && item.photos? item.photos[0]: 'images/tour-5-270x200.jpg'
+=======
+									let background = item.photos && item.photos ? item.photos[0] : 'images/tour-5-270x200.jpg';
+>>>>>>> origin/develop
 									return (
 										<div class="col-sm-6 col-lg-3 wow-outer">
 											<article
@@ -69,7 +109,11 @@ export class SubGallery extends React.Component {
 														cover={
 															<div className="subGalleryImg"
 																style={{
+<<<<<<< HEAD
 																	backgroundImage: `url('${background}')`
+=======
+																	backgroundImage: `url('${background}')`,
+>>>>>>> origin/develop
 																}}></div>
 															// <img
 															// 	src={

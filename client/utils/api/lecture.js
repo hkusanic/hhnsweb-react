@@ -17,6 +17,7 @@ const utils = {
 		const transcriptions = body.transcriptions || false;
 		const summaries = body.summaries || false;
 		const video = body.video || false;
+		const limit = body.limit || 20;
 		let url
 			= serverAddress
 			+ '/api/lecture?page='
@@ -33,8 +34,13 @@ const utils = {
 			+ (chapter ? '&chapter=' + chapter : '')
 			+ (author ? '&author=' + author : '')
 			+ (translation ? '&translation=' + translation : '')
+<<<<<<< HEAD
 			+ (video ? '&video=' + video : '');
 		console.log(`API URL: ${url}`);
+=======
+			+ (video ? '&video=' + video : '')
+			+ (limit ? '&limit=' + limit : '');
+>>>>>>> origin/develop
 		return axios.get(url);
 	},
 

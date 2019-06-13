@@ -231,9 +231,9 @@ exports.list = function (req, res) {
 		};
 
 		// if (req.cookies.languageCode === 'en')
-		// transcription_query = {"en.transcription.text" : {"$exists" : true, "$ne" : ""}}
+		// transcription_query = {'en.transcription.text' : {'$exists' : true, '$ne' : ''}}
 		// if (req.cookies.languageCode === 'ru')
-		// transcription_query = {"ru.transcription.text" : {"$exists" : true, "$ne" : ""}}
+		// transcription_query = {'ru.transcription.text' : {'$exists' : true, '$ne' : ''}}
 
 		query.push(transcription_query);
 	}
@@ -242,9 +242,9 @@ exports.list = function (req, res) {
 		let summaries_query = { 'ru.summary.text': { $exists: true, $ne: '' } };
 
 		// if (req.cookies.languageCode === 'en')
-		// summaries_query =  {"en.summary.text" : {"$exists" : true, "$ne" : ""}}
+		// summaries_query =  {'en.summary.text' : {'$exists' : true, '$ne' : ''}}
 		// if (req.cookies.languageCode === 'ru')
-		// summaries_query =  {"ru.summary.text" : {"$exists" : true, "$ne" : ""}}
+		// summaries_query =  {'ru.summary.text' : {'$exists' : true, '$ne' : ''}}
 
 		query.push(summaries_query);
 	}
@@ -283,16 +283,14 @@ exports.list = function (req, res) {
 		query.push(date_query);
 	}
 
-	let createdDateSort = '-created_date';
+	let createdDateSort = '-created_date_time';
 
 	if (req.query.createdDateSort) {
 		if (req.query.createdDateSort === 'asc') {
-			createdDateSort = 'created_date';
+			createdDateSort = 'created_date_time'; 
+		} else {
+			createdDateSort = '-created_date_time';
 		}
-		else {
-			createdDateSort = '-created_date';
-		}
-
 	}
 
 	let filters = {};
@@ -309,28 +307,41 @@ exports.list = function (req, res) {
 		},
 		'API list lecture'
 	);
-	Lecture.paginate({
-		page: req.query.page || 1,
-		perPage: 20,
-		filters: filters,
-	}).sort(createdDateSort).exec(function (err, items) {
-		if (err) {
-			logger.error(
-				{
-					error: err,
-				},
-				'API list lecture'
-			);
-			return res.apiError('database error', err);
-		}
-		return res.apiResponse({
-			success: true,
-			lecture: items,
-			total: items.results.length,
+	let queryObj = {};
+	if (req.query.limit) {
+		queryObj = {
+			page: req.query.page || 1,
+			perPage: req.query.limit,
+			filters: filters,
+		};
+	} else {
+		queryObj = {
+			page: req.query.page || 1,
+			perPage: 20,
+			filters: filters,
+		};
+	}
+
+	Lecture.paginate(queryObj)
+		.sort(createdDateSort)
+		.exec(function (err, items) {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API list lecture'
+				);
+				return res.apiError('database error', err);
+			}
+			return res.apiResponse({
+				success: true,
+				lecture: items,
+				total: items.results.length,
+			});
+			// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
+			// This is handy if we want to speed up loading times once our recipe collection grows
 		});
-		// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
-		// This is handy if we want to speed up loading times once our recipe collection grows
-	});
 };
 
 exports.create = function (req, res) {
@@ -462,9 +473,27 @@ exports.update = function (req, res) {
 		},
 		'API update lecture'
 	);
-	Lecture.model
-		.findOne({ uuid: req.params.id })
-		.exec(function (err, item) {
+	Lecture.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
+		if (err) {
+			logger.error(
+				{
+					error: err,
+				},
+				'API update lecture'
+			);
+			return res.apiError('database error', err);
+		}
+		if (!item) {
+			logger.error(
+				{
+					error: 'No Item',
+				},
+				'API update lecture'
+			);
+			return res.apiError('not found');
+		}
+
+		item.getUpdateHandler(req).process(req.body, function (err) {
 			if (err) {
 				logger.error(
 					{
@@ -472,34 +501,14 @@ exports.update = function (req, res) {
 					},
 					'API update lecture'
 				);
-				return res.apiError('database error', err);
-			}
-			if (!item) {
-				logger.error(
-					{
-						error: 'No Item',
-					},
-					'API update lecture'
-				);
-				return res.apiError('not found');
+				return res.apiError('create error', err);
 			}
 
-			item.getUpdateHandler(req).process(req.body, function (err) {
-				if (err) {
-					logger.error(
-						{
-							error: err,
-						},
-						'API update lecture'
-					);
-					return res.apiError('create error', err);
-				}
-
-				res.apiResponse({
-					Lecture: item,
-				});
+			res.apiResponse({
+				Lecture: item,
 			});
 		});
+	});
 };
 
 exports.updateCounters = function (req, res) {
@@ -624,21 +633,30 @@ exports.remove = function (req, res) {
 
 exports.getlecturebyid = function (req, res) {
 	if (!req.body.uuid) {
-		res.json({ error: { title: 'Id is Required', detail: 'Mandatory values are missing. Please check.' } });
+		res.json({
+			error: {
+				title: 'Id is Required',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
 	}
 
-	Lecture.model.findOne().where('uuid', req.body.uuid).exec((err, lecture) => {
-
-		if (err || !lecture) {
-			logger.error({
-				error: err,
-			}, 'API getlecturebyid');
-			return res.json({ error: { title: 'Not able to find lecture' } });
-		}
-		res.json({
-			lecture: lecture,
-			success: true,
+	Lecture.model
+		.findOne()
+		.where('uuid', req.body.uuid)
+		.exec((err, lecture) => {
+			if (err || !lecture) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API getlecturebyid'
+				);
+				return res.json({ error: { title: 'Not able to find lecture' } });
+			}
+			res.json({
+				lecture: lecture,
+				success: true,
+			});
 		});
-	});
-
 };

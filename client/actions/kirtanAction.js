@@ -42,3 +42,29 @@ export function fetchKirtanByUuid (data) {
 		},
 	};
 }
+
+export function updateCounters (body) {
+	return dispatch => {
+		kirtanApi
+			.updateCounters(body)
+			.then(response => {
+				dispatch(updateCountersAction(response));
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+}
+
+export function updateCountersAction (data) {
+	return {
+		type: types.UPDATE_COUNTERS,
+		payload: data,
+	};
+}
+
+export function resetState () {
+	return {
+		type: 'RESET_STATE_KIRTAN',
+	};
+}

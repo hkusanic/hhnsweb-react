@@ -13,6 +13,7 @@ import mkvReducer from './mkvReducer/mkvReducer';
 import commentReducer from './commentReducer/commentReducer';
 import galleryReducer from './galleryReducer/galleryReducer';
 import sadhanaReducer from './sadhanaReducer/sadhanaReducer';
+import contentReducer from './content/contentReducer';
 
 import { routerReducer } from 'react-router-redux';
 
@@ -32,6 +33,7 @@ const reducers = combineReducers({
 	galleryReducer: galleryReducer,
 	sadhanaReducer: sadhanaReducer,
 	routing: routerReducer,
+	contentReducer: contentReducer,
 });
 
 export default reducers;
