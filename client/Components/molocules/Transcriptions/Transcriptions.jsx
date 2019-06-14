@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { Button, Table, Icon } from 'antd';
 import Auth from '../../../utils/Auth';
 import { connect } from 'react-redux';
-import {
-	searchLecture,
-	resetState,
-} from '../../../actions/lectureActions';
+import { searchLecture, resetState } from '../../../actions/lectureActions';
 import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
@@ -39,7 +36,10 @@ export class Transcritpion extends Component {
 		let body = { ...this.state.body };
 		body.page = this.props.lecturesDetails.currentPage || 1;
 
-		console.log("this.props.lecturesDetails ===>>>>", this.props.lecturesDetails);
+		console.log(
+			'this.props.lecturesDetails ===>>>>',
+			this.props.lecturesDetails
+		);
 		this.setState({ loading: true });
 		const pagination = { ...this.state.pagination };
 		pagination.total = this.props.lecturesDetails.totalLectures;
@@ -57,7 +57,7 @@ export class Transcritpion extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		let body = { ...this.state.body };
-		console.log("nextProps.lecturesDetails ===>>>>", nextProps.lecturesDetails);
+		console.log('nextProps.lecturesDetails ===>>>>', nextProps.lecturesDetails);
 
 		body.page = nextProps.lecturesDetails.currentPage;
 		body.transcriptions = true;
@@ -105,7 +105,11 @@ export class Transcritpion extends Component {
 			{
 				title: 'Title',
 				dataIndex: renderHTML(
-					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+					reactCookie.load('languageCode') === 'en'
+						? 'en.title'
+						: 'ru.title'
+						? 'ru.title'
+						: 'en.title'
 				),
 				render: (text, record, index) => (
 					<Link
@@ -118,6 +122,8 @@ export class Transcritpion extends Component {
 							reactCookie.load('languageCode') === 'en'
 								? record.en.title
 								: record.ru.title
+								? record.ru.title
+								: record.en.title
 						)}
 					</Link>
 				),
@@ -128,15 +134,15 @@ export class Transcritpion extends Component {
 					reactCookie.load('languageCode') === 'en'
 						? 'counters.en_transcription_view'
 						: 'counters.ru_transcription_view'
+						? 'counters.ru_transcription_view'
+						: 'counters.en_transcription_view'
 				),
 			},
 		];
-		if(!this.props.lecturesDetails.lectures){
+		if (!this.props.lecturesDetails.lectures) {
 			return (
 				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">
-						 Hare Krishna...
-					</p>
+					<p className="bookingForm">Hare Krishna...</p>
 				</div>
 			);
 		}
@@ -224,7 +230,9 @@ export class Transcritpion extends Component {
 							</div>
 						</div>
 					</div>
-				) :<QuoteOfDay />}
+				) : (
+					<QuoteOfDay />
+				)}
 			</div>
 		);
 	}
@@ -240,6 +248,9 @@ const mapDispatchToProps = dispatch => {
 	return {
 		searchLecture: body => {
 			dispatch(searchLecture(body));
+		},
+		resetState: () => {
+			dispatch(resetState());
 		},
 		resetState: () => {
 			dispatch(resetState())

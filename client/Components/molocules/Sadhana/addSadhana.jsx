@@ -202,8 +202,9 @@ class AddSadhana extends React.Component {
 				</section> */}
 				<div className="row justify-content-center">
 					<section className="card col-lg-8 sadhanaAdd">
-
 						<div className="card-body">
+						<Button type="danger" onClick={this.props.addSadhanaSheet}
+				className="closeAddSadhanaCard">X</Button>
 							<div>
 								<Form>
 									<div className="row">

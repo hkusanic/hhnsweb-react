@@ -24,7 +24,6 @@ export class TranscriptionDetails extends React.Component {
 		const { resetState } = this.props;
 		resetState();
 	}
-	
 	componentDidMount() {
 		let body = {
 			uuid: this.props.match.params.uuid,
@@ -73,6 +72,8 @@ export class TranscriptionDetails extends React.Component {
 				</div>
 			);
 		}
+
+		console.log("lectureDetails ====>>>>", lectureDetails);
 		return (
 			<div>
 				<section
@@ -101,6 +102,8 @@ export class TranscriptionDetails extends React.Component {
 											reactCookie.load('languageCode') === 'en'
 												? lectureDetails.en.title
 												: lectureDetails.ru.title
+												? lectureDetails.ru.title
+												: lectureDetails.en.title
 										)}
 									</a>
 								</li>
@@ -137,6 +140,8 @@ export class TranscriptionDetails extends React.Component {
 											{renderHTML(
 												reactCookie.load('languageCode') === 'en'
 													? lectureDetails.en.transcription.text
+													: lectureDetails.ru.transcription.text
+													? lectureDetails.ru.transcription.text
 													: lectureDetails.en.transcription.text
 											)}
 										</div>
@@ -146,7 +151,11 @@ export class TranscriptionDetails extends React.Component {
 									<Panel
 										header="Audio Details"
 										key="1"
-										style={customPanelStyle}
+										style={{
+											borderTop: '2px solid #e8e8e8',
+											borderBottom: 'none',
+											fontSize: '1.5rem',
+										}}
 									>
 										<div style={{ paddingTop: '20px', fontSize: '14px' }}>
 											<table className="maintable">
@@ -176,16 +185,28 @@ export class TranscriptionDetails extends React.Component {
 														<td className="padLeftRow text-truncate">
 															<a
 																href={
-																	lectureDetails.en.transcription
-																		.attachment_link
+																	reactCookie.load('languageCode') === 'en'
+																		? lectureDetails.en.transcription
+																				.attachment_link
+																		: lectureDetails.ru.transcription
+																				.attachment_link
+																		? lectureDetails.ru.transcription
+																				.attachment_link
+																		: lectureDetails.en.transcription
+																				.attachment_link
 																}
 																target="_blank"
 															>
 																<span>
-																	{
-																		lectureDetails.en.transcription
-																			.attachment_name
-																	}
+																	{reactCookie.load('languageCode') === 'en'
+																		? lectureDetails.en.transcription
+																				.attachment_name
+																		: lectureDetails.ru.transcription
+																				.attachment_name
+																		? lectureDetails.ru.transcription
+																				.attachment_name
+																		: lectureDetails.en.transcription
+																				.attachment_name}
 																</span>
 															</a>
 														</td>
@@ -199,7 +220,9 @@ export class TranscriptionDetails extends React.Component {
 														<td className="padLeftRow">
 															{reactCookie.load('languageCode') === 'en'
 																? lectureDetails.en.event
-																: lectureDetails.ru.event}
+																: lectureDetails.ru.event
+																? lectureDetails.ru.event
+																: lectureDetails.en.event}
 														</td>
 													</tr>
 													{lectureDetails.part ? (
@@ -271,6 +294,8 @@ export class TranscriptionDetails extends React.Component {
 														<td className="padLeftRow">
 															{reactCookie.load('languageCode') === 'en'
 																? lectureDetails.en.location
+																: lectureDetails.ru.location
+																? lectureDetails.ru.location
 																: lectureDetails.en.location}
 														</td>
 													</tr>
@@ -293,7 +318,9 @@ export class TranscriptionDetails extends React.Component {
 														<td className="padLeftRow">
 															{reactCookie.load('languageCode') === 'en'
 																? lectureDetails.en.topic
-																: lectureDetails.ru.topic}
+																: lectureDetails.ru.topic
+																? lectureDetails.ru.topic
+																: lectureDetails.en.topic}
 														</td>
 													</tr>
 												</tbody>

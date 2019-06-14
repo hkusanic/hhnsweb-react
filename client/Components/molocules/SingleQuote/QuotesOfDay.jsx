@@ -24,6 +24,9 @@ export class QuoteOfDay extends React.Component {
 	}
 
 	render () {
+		if (!this.props.quote) {
+			<div>Loading...</div>;
+		}
 		return (
 			<div>
 				<section class="section section-lg text-center">
@@ -77,7 +80,7 @@ export class QuoteOfDay extends React.Component {
 														  && this.props.quote.quotes[0].ru
 														  && this.props.quote.quotes[0].ru.body
 															? this.props.quote.quotes[0].ru.body
-															: 'Sorry, No data available in this translation'
+															: this.props.quote.quotes[0].en.body
 												)}
 											</p>
 										</div>
@@ -115,7 +118,7 @@ export class QuoteOfDay extends React.Component {
 														  && this.props.quote.quotes[0].ru
 														  && this.props.quote.quotes[0].ru.source_of_quote
 															? this.props.quote.quotes[0].ru.source_of_quote
-															: 'Sorry, No data avaialable in this translation'}
+															: this.props.quote.quotes[0].en.source_of_quote}
 												</p>
 											</div>
 										</div>
@@ -170,7 +173,7 @@ export class QuoteOfDay extends React.Component {
 														  && this.props.quote.quotes[1].ru.body
 														  && this.props.quote.quotes[1].ru.body
 															? this.props.quote.quotes[1].ru.body
-															: 'Sorry, No data available in this translation'
+															: this.props.quote.quotes[1].en.body
 												)}
 											</p>
 										</div>
@@ -208,7 +211,7 @@ export class QuoteOfDay extends React.Component {
 														  && this.props.quote.quotes[1].ru
 														  && this.props.quote.quotes[1].ru.source_of_quote
 															? this.props.quote.quotes[1].ru.source_of_quote
-															: 'Sorry, No data available in this translation'}
+															: this.props.quote.quotes[1].en.source_of_quote}
 												</p>
 											</div>
 										</div>

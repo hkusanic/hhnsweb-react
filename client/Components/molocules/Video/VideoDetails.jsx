@@ -80,7 +80,7 @@ export class VideoDetails extends React.Component {
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
 												? lectureDetails.en.title
-												: lectureDetails.ru.title
+												: (lectureDetails.ru.title ? lectureDetails.ru.title : lectureDetails.en.title)
 										)}
 									</a>
 								</li>
@@ -97,7 +97,7 @@ export class VideoDetails extends React.Component {
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
 												? lectureDetails.en.title
-												: lectureDetails.ru.title
+												: (lectureDetails.ru.title ? lectureDetails.ru.title : lectureDetails.en.title)
 										)}
 									</h3>
 									<ul class="post-creative-meta">

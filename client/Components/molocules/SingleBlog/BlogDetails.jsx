@@ -79,6 +79,8 @@ export class BlogDetails extends Component {
 											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.title_en
 												: this.props.location.state.title_ru
+												? this.props.location.state.title_ru
+												: this.props.location.state.title_en
 										)}
 									</a>
 								</li>
@@ -132,6 +134,8 @@ export class BlogDetails extends Component {
 												reactCookie.load('languageCode') === 'en'
 													? blogDetails.title_en
 													: blogDetails.title_ru
+													? blogDetails.title_ru
+													: blogDetails.title_en
 											)}
 									</h3>
 									<ul className="post-creative-meta">
@@ -156,6 +160,8 @@ export class BlogDetails extends Component {
 												reactCookie.load('languageCode') === 'en'
 													? blogDetails.body_en
 													: blogDetails.body_ru
+													? blogDetails.body_ru
+													: blogDetails.body_en
 											)}
 									</div>
 									<div>

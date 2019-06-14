@@ -37,13 +37,19 @@ export class SingleQuote extends React.Component {
 									reactCookie.load('languageCode') === 'en'
 										? this.props.quote.en.body
 										: this.props.quote.ru.body
+											? this.props.quote.ru.body
+											: this.props.quote.en.body
 								)}
 							</p>
 						</div>
 						<div class="quote-modern-meta">
 							<div class="quote-modern-info">
 								<cite style={{ fontSize: 16 }} class="quote-modern-text">
-									{this.props.quote.en.source_of_quote}
+									{reactCookie.load('languageCode') === 'en'
+										? this.props.quote.en.source_of_quote
+										: this.props.quote.ru.source_of_quote
+											? this.props.quote.ru.source_of_quote
+											: this.props.quote.en.source_of_quote}
 								</cite>
 							</div>
 						</div>

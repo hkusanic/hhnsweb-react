@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
-import { Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
@@ -77,6 +75,8 @@ export class LectureDetails extends React.Component {
 											reactCookie.load('languageCode') === 'en'
 												? lectureDetails.en.title
 												: lectureDetails.ru.title
+													? lectureDetails.ru.title
+													: lectureDetails.en.title
 										)}
 									</a>
 								</li>
@@ -86,37 +86,6 @@ export class LectureDetails extends React.Component {
 				</section>
 				<section className="section section-lg">
 					<div className="container padTop">
-						{/* <Breadcrumb>
-							<Link to=" " onClick={() => this.props.history.push('/')}>
-								<Breadcrumb.Item>Home</Breadcrumb.Item>
-							</Link>
-							<Icon
-								type="double-right"
-								style={{
-									alignSelf: 'center',
-									paddingLeft: 5,
-									paddingRight: 5,
-								}}
-							/>
-							<Link to=" " onClick={() => this.props.history.goBack()}>
-								<Breadcrumb.Item>Lecture</Breadcrumb.Item>
-							</Link>
-							<Icon
-								type="double-right"
-								style={{
-									alignSelf: 'center',
-									paddingLeft: 5,
-									paddingRight: 5,
-								}}
-							/>
-							<Breadcrumb.Item active>
-								{renderHTML(
-									reactCookie.load('languageCode') === 'en'
-										? lectureDetails.en.title
-										: lectureDetails.ru.title
-								)}
-							</Breadcrumb.Item>
-						</Breadcrumb> */}
 						<div className="row row-100">
 							<div className="col-lg-12">
 								<article className="post-creative">
@@ -125,6 +94,8 @@ export class LectureDetails extends React.Component {
 											reactCookie.load('languageCode') === 'en'
 												? lectureDetails.en.title
 												: lectureDetails.ru.title
+													? lectureDetails.ru.title
+													: lectureDetails.en.title
 										)}
 									</h3>
 									<ul className="post-creative-meta">
@@ -152,7 +123,9 @@ export class LectureDetails extends React.Component {
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
 														? lectureDetails.en.event
-														: lectureDetails.ru.event}
+														: lectureDetails.ru.event
+															? lectureDetails.ru.event
+															: lectureDetails.en.event}
 												</td>
 											</tr>
 											{lectureDetails.part ? (
@@ -218,7 +191,9 @@ export class LectureDetails extends React.Component {
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
 														? lectureDetails.en.location
-														: lectureDetails.ru.location}
+														: lectureDetails.ru.location
+															? lectureDetails.ru.location
+															: lectureDetails.en.location}
 												</td>
 											</tr>
 											<tr>
@@ -240,7 +215,9 @@ export class LectureDetails extends React.Component {
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
 														? lectureDetails.en.topic
-														: lectureDetails.ru.topic}
+														: lectureDetails.ru.topic
+															? lectureDetails.ru.topic
+															: lectureDetails.en.topic}
 												</td>
 											</tr>
 										</tbody>

@@ -25,6 +25,8 @@ export class QuoteDetails extends React.Component {
 											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.en.title
 												: this.props.location.state.ru.title
+													? this.props.location.state.ru.title
+													: this.props.location.state.en.title
 										)}
 									</h3>
 									<ul className="post-creative-meta">
@@ -54,7 +56,9 @@ export class QuoteDetails extends React.Component {
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
 														? this.props.location.state.en.body
-														: this.props.location.state.ru.body}
+														: this.props.location.state.ru.body
+															? this.props.location.state.ru.body
+															: this.props.location.state.en.body}
 												</td>
 											</tr>
 										</tbody>

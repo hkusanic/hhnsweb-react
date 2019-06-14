@@ -92,6 +92,8 @@ export class AudioDetails extends Component {
 											reactCookie.load('languageCode') === 'en'
 												? lectureDetails.en.title
 												: lectureDetails.ru.title
+												? lectureDetails.ru.title
+												: lectureDetails.en.title
 										)}
 									</a>
 								</li>
@@ -109,6 +111,8 @@ export class AudioDetails extends Component {
 											reactCookie.load('languageCode') === 'en'
 												? lectureDetails.en.title
 												: lectureDetails.ru.title
+												? lectureDetails.ru.title
+												: lectureDetails.en.title
 										)}
 									</h3>
 									<ul className="post-creative-meta">
@@ -165,7 +169,9 @@ export class AudioDetails extends Component {
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
 														? lectureDetails.en.event
-														: lectureDetails.ru.event}
+														: lectureDetails.ru.event
+														? lectureDetails.ru.event
+														: lectureDetails.en.event}
 												</td>
 											</tr>
 											{lectureDetails.part ? (
@@ -233,7 +239,9 @@ export class AudioDetails extends Component {
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
 														? lectureDetails.en.location
-														: lectureDetails.ru.location}
+														: lectureDetails.ru.event
+														? lectureDetails.ru.event
+														: lectureDetails.en.event}
 												</td>
 											</tr>
 											<tr>
@@ -255,7 +263,9 @@ export class AudioDetails extends Component {
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
 														? lectureDetails.en.topic
-														: lectureDetails.ru.topic}
+														: lectureDetails.ru.topic
+														? lectureDetails.ru.topic
+														: lectureDetails.en.topic}
 												</td>
 											</tr>
 										</tbody>

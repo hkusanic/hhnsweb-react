@@ -215,6 +215,8 @@ export class UserProfile extends Component {
                                             </div>
                                         {/* } */}
                                     </div>
+                                    <br /><br />
+                                    <ReactPhoneInput defaultCountry={['us']} onChange={this.handleOnChange}/>
                                     <div className="group group-middle">
                                         {<Translate>
                                             {({ translate }) => {

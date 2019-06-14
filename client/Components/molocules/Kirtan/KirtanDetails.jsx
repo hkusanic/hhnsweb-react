@@ -95,6 +95,8 @@ export class KirtanDetails extends Component {
 											reactCookie.load('languageCode') === 'en'
 												? kirtanDetails.en.title
 												: kirtanDetails.ru.title
+												? kirtanDetails.ru.title
+												: kirtanDetails.en.title
 										)}
 									</a>
 								</li>
@@ -112,6 +114,8 @@ export class KirtanDetails extends Component {
 											reactCookie.load('languageCode') === 'en'
 												? kirtanDetails.en.title
 												: kirtanDetails.ru.title
+												? kirtanDetails.ru.title
+												: kirtanDetails.en.title
 										)}
 									</h3>
 									<ul className="post-creative-meta">
@@ -179,7 +183,9 @@ export class KirtanDetails extends Component {
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
 														? kirtanDetails.en.event
-														: kirtanDetails.ru.event}
+														: kirtanDetails.ru.event
+														? kirtanDetails.ru.event
+														: kirtanDetails.en.event}
 												</td>
 											</tr>
 											{kirtanDetails.author ? (
@@ -209,7 +215,9 @@ export class KirtanDetails extends Component {
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
 														? kirtanDetails.en.location
-														: kirtanDetails.ru.location}
+														: kirtanDetails.ru.location
+														? kirtanDetails.ru.location
+														: kirtanDetails.en.location}
 												</td>
 											</tr>
 											<tr>
@@ -225,7 +233,11 @@ export class KirtanDetails extends Component {
 											</tr>
 											{reactCookie.load('languageCode') === 'en' ? (
 												kirtanDetails.en.topic
-											) : kirtanDetails.ru.topic ? (
+											) : (kirtanDetails.ru.topic ? (
+													kirtanDetails.ru.topic
+											  ) : (
+													kirtanDetails.en.topic
+											  )) ? (
 												<tr>
 													<td>
 														<b>
@@ -235,7 +247,9 @@ export class KirtanDetails extends Component {
 													<td className="padLeftRow">
 														{reactCookie.load('languageCode') === 'en'
 															? kirtanDetails.en.topic
-															: kirtanDetails.ru.topic}
+															: kirtanDetails.ru.topic
+															? kirtanDetails.ru.topic
+															: kirtanDetails.en.topic}
 													</td>
 												</tr>
 											) : null}
@@ -256,6 +270,7 @@ const mapStateToProps = state => {
 		kirtanDetails: state.kirtanReducer.kirtan,
 	};
 };
+
 const mapDispatchToProps = dispatch => {
 	return {
 		getKirtanByUuid: body => {
