@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import scrollToElement from 'scroll-to-element';
 import { connect } from 'react-redux';
+import reactCookie from 'react-cookies';
 import { Input, Tooltip, Icon, Menu, Dropdown, Button } from 'antd';
 import {
 	getEvents,
 	getLocations,
 	getTopics,
 } from '../../../actions/searchFilter';
-import { react } from 'babel-types';
 
 export class SearchFilter extends Component {
 	constructor(props) {
@@ -34,7 +34,6 @@ export class SearchFilter extends Component {
 		const years = this.getYearsList(1980);
 		this.setState({ years });
 		scrollToElement();
-		
 	}
 
 	renderOptions = (item, key, type) => {
@@ -83,21 +82,24 @@ export class SearchFilter extends Component {
 	};
 
 	reset = () => {
-		this.canto
-		this.setState({
-			event: '',
-			location: '',
-			topic: '',
-			year: '',
-			title: '',
-			author: '',
-			translation: '',
-			verse: '',
-			chapter: '',
-			songs: '',
-		}, () => {
-			this.handleSearchData();
-		});
+		this.canto;
+		this.setState(
+			{
+				event: '',
+				location: '',
+				topic: '',
+				year: '',
+				title: '',
+				author: '',
+				translation: '',
+				verse: '',
+				chapter: '',
+				songs: '',
+			},
+			() => {
+				this.handleSearchData();
+			}
+		);
 	};
 
 	getYearsList = endYear => {
@@ -125,14 +127,16 @@ export class SearchFilter extends Component {
 		};
 		this.props.searchData(body);
 	};
+
 	scrollToElement = () => {
 		console.log('came here');
 		scrollToElement('#id', {
 			offset: -150,
 			ease: 'linear',
-			duration: 1000
+			duration: 1000,
 		});
-	}
+	};
+
 	render() {
 		if (!this.props.searchFilterReducer.events.length > 0) {
 			return <div>Loading...</div>;
@@ -163,9 +167,22 @@ export class SearchFilter extends Component {
 						return (
 							<Menu.Item
 								key={index}
-								onClick={() => this.handleChange('location', item.title)}
+								onClick={() =>
+									this.handleChange(
+										'location',
+										reactCookie.load('languageCode') === 'en'
+											? item.title_en
+											: item.title_ru
+											? item.title_ru
+											: item.title_en
+									)
+								}
 							>
-								{item.title}
+								{reactCookie.load('languageCode') === 'en'
+									? item.title_en
+									: item.title_ru
+									? item.title_ru
+									: item.title_en}
 							</Menu.Item>
 						);
 					})}
@@ -178,9 +195,22 @@ export class SearchFilter extends Component {
 					? this.props.searchFilterReducer.topics.map((item, index) => (
 							<Menu.Item
 								key={index}
-								onClick={() => this.handleChange('topic', item.title)}
+								onClick={() =>
+									this.handleChange(
+										'topic',
+										reactCookie.load('languageCode') === 'en'
+											? item.title_en
+											: item.title_ru
+											? item.title_ru
+											: item.title_en
+									)
+								}
 							>
-								{item.title}
+								{reactCookie.load('languageCode') === 'en'
+									? item.title_en
+									: item.title_ru
+									? item.title_ru
+									: item.title_en}
 							</Menu.Item>
 					  ))
 					: null}
@@ -193,9 +223,22 @@ export class SearchFilter extends Component {
 					? this.props.searchFilterReducer.events.map((item, index) => (
 							<Menu.Item
 								key={index}
-								onClick={() => this.handleChange('event', item.title)}
+								onClick={() =>
+									this.handleChange(
+										'event',
+										reactCookie.load('languageCode') === 'en'
+											? item.title_en
+											: item.title_ru
+											? item.title_ru
+											: item.title_en
+									)
+								}
 							>
-								{item.title}
+								{reactCookie.load('languageCode') === 'en'
+									? item.title_en
+									: item.title_ru
+									? item.title_ru
+									: item.title_en}
 							</Menu.Item>
 					  ))
 					: null}
@@ -277,8 +320,10 @@ export class SearchFilter extends Component {
 						</div>
 						<div className="col-6 my-1 col-md-3 ">
 							<Dropdown overlay={yearMenu} overlayClassName="searchDropDownDiv">
-								<Button className="w-100"
-								onClick={()=>this.scrollToElement()}>
+								<Button
+									className="w-100"
+									onClick={() => this.scrollToElement()}
+								>
 									{this.state.year ? this.state.year : 'Year'}{' '}
 									<Icon type="down" />
 								</Button>
@@ -287,72 +332,91 @@ export class SearchFilter extends Component {
 					</div>
 				</div>
 				<div className="container titleDiv">
-				<div className="row">
-					<div className="col-6 my-1 col-md-3">
-						<Dropdown overlay={translationMenu} overlayClassName="searchDropDownDiv">
-							<Button className="w-100"
-							onClick={()=>this.scrollToElement()}>
-								{this.state.translation
-									? this.state.translation
-									: 'Translation'}{' '}
-								<Icon type="down" />
-							</Button>
-						</Dropdown>
+					<div className="row">
+						<div className="col-6 my-1 col-md-3">
+							<Dropdown
+								overlay={translationMenu}
+								overlayClassName="searchDropDownDiv"
+							>
+								<Button
+									className="w-100"
+									onClick={() => this.scrollToElement()}
+								>
+									{this.state.translation
+										? this.state.translation
+										: 'Translation'}{' '}
+									<Icon type="down" />
+								</Button>
+							</Dropdown>
+						</div>
+						<div className="col-6 my-1 col-md-3">
+							<Dropdown
+								overlay={locationMenu}
+								overlayClassName="searchDropDownDiv"
+							>
+								<Button
+									className="w-100"
+									onClick={() => this.scrollToElement()}
+								>
+									{this.state.location ? this.state.location : 'Location'}{' '}
+									<Icon type="down" />
+								</Button>
+							</Dropdown>
+						</div>
+						<div className="col-6 my-1 col-md-3">
+							<Dropdown
+								overlay={topicMenu}
+								overlayClassName="searchDropDownDiv"
+							>
+								<Button
+									className="w-100"
+									onClick={() => this.scrollToElement()}
+								>
+									{this.state.topic ? this.state.topic : 'Topic'}{' '}
+									<Icon type="down" />
+								</Button>
+							</Dropdown>
+						</div>
+						<div className="col-6 my-1 col-md-3">
+							<Dropdown
+								overlay={eventMenu}
+								overlayClassName="searchDropDownDiv"
+							>
+								<Button
+									className="w-100"
+									onClick={() => this.scrollToElement()}
+								>
+									{this.state.event ? this.state.event : 'Event'}{' '}
+									<Icon type="down" />
+								</Button>
+							</Dropdown>
+						</div>
 					</div>
-					<div className="col-6 my-1 col-md-3">
-						<Dropdown overlay={locationMenu} overlayClassName="searchDropDownDiv">
-							<Button className="w-100"
-							onClick={()=>this.scrollToElement()}>
-								{this.state.location ? this.state.location : 'Location'}{' '}
-								<Icon type="down" />
-							</Button>
-						</Dropdown>
-					</div>
-					<div className="col-6 my-1 col-md-3">
-						<Dropdown overlay={topicMenu} overlayClassName="searchDropDownDiv">
-							<Button className="w-100"
-							onClick={()=>this.scrollToElement()}>
-								{this.state.topic ? this.state.topic : 'Topic'}{' '}
-								<Icon type="down" />
-							</Button>
-						</Dropdown>
-					</div>
-					<div className="col-6 my-1 col-md-3">
-						<Dropdown overlay={eventMenu} overlayClassName="searchDropDownDiv">
-							<Button className="w-100"
-							onClick={()=>this.scrollToElement()}>
-								{this.state.event ? this.state.event : 'Event'}{' '}
-								<Icon type="down" />
-							</Button>
-						</Dropdown>
-					</div>
-				</div>
 				</div>
 
 				<div className="container titleDiv">
-					
 					<div className="row">
-					<div className="col-12 my-1 col-md-3">
-						<Button
-							className="w-100 searchButtonColor searchIconBorder"
-							type="primary"
-							icon="search"
-							onClick={this.handleSearchData}
-						>
-							Search
-						</Button>
+						<div className="col-12 my-1 col-md-3">
+							<Button
+								className="w-100 searchButtonColor searchIconBorder"
+								type="primary"
+								icon="search"
+								onClick={this.handleSearchData}
+							>
+								Search
+							</Button>
+						</div>
+						<div className="col-12 my-1 col-md-3">
+							<Button
+								className="w-100"
+								type="danger"
+								icon="reset"
+								onClick={this.reset}
+							>
+								Reset
+							</Button>
+						</div>
 					</div>
-					<div className="col-12 my-1 col-md-3">
-						<Button
-							className="w-100"
-							type="danger"
-							icon="reset"
-							onClick={this.reset}
-						>
-							Reset
-						</Button>
-					</div>
-				</div>
 				</div>
 			</div>
 		);

@@ -59,7 +59,7 @@ export class Summaries extends Component {
 		pagination.current = nextProps.lecturesDetails.currentPage;
 
 		this.setState({
-			pagination
+			pagination,
 		});
 
 		if (nextProps.lecturesDetails.Count) {
@@ -96,7 +96,11 @@ export class Summaries extends Component {
 			{
 				title: 'Title',
 				dataIndex: renderHTML(
-					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+					reactCookie.load('languageCode') === 'en'
+						? 'en.title'
+						: 'ru.title'
+						? 'ru.title'
+						: 'en.title'
 				),
 				render: (text, record, index) => (
 					<Link
@@ -109,6 +113,8 @@ export class Summaries extends Component {
 							reactCookie.load('languageCode') === 'en'
 								? record.en.title
 								: record.ru.title
+								? record.ru.title
+								: record.en.title
 						)}
 					</Link>
 				),
@@ -118,6 +124,8 @@ export class Summaries extends Component {
 				dataIndex: renderHTML(
 					reactCookie.load('languageCode') === 'en'
 						? 'counters.en_summary_view'
+						: 'counters.ru_summary_view'
+						? 'counters.ru_summary_view'
 						: 'counters.ru_summary_view'
 				),
 			},
@@ -205,7 +213,9 @@ export class Summaries extends Component {
 							</div>
 						</div>
 					</div>
-				) : <QuoteOfDay />}
+				) : (
+					<QuoteOfDay />
+				)}
 			</div>
 		);
 	}
@@ -224,7 +234,7 @@ const mapDispatchToProps = dispatch => {
 		},
 		resetState: () => {
 			dispatch(resetState());
-		}
+		},
 	};
 };
 

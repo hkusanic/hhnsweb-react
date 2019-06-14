@@ -130,7 +130,7 @@ export class VideoList extends Component {
 							this.showing100Characters(
 								reactCookie.load('languageCode') === 'en'
 									? record.en.title
-									: record.ru.title
+									: ( record.ru.title ? record.ru.title : record.en.title )
 							)
 						)}
 					</Link>

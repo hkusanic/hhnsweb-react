@@ -105,7 +105,11 @@ export class Kirtan extends Component {
 			{
 				title: 'Title',
 				dataIndex: renderHTML(
-					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+					reactCookie.load('languageCode') === 'en'
+						? 'en.title'
+						: 'ru.title'
+						? 'ru.title'
+						: 'en.title'
 				),
 				render: (text, record, index) => (
 					<Link
@@ -118,6 +122,8 @@ export class Kirtan extends Component {
 							reactCookie.load('languageCode') === 'en'
 								? record.en.title
 								: record.ru.title
+								? record.ru.title
+								: record.en.title
 						)}
 					</Link>
 				),
@@ -129,12 +135,10 @@ export class Kirtan extends Component {
 			},
 		];
 
-		if(!this.props.kirtanDetails.kirtans.length > 0){
+		if (!this.props.kirtanDetails.kirtans.length > 0) {
 			return (
 				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">
-						 Hare Krishna...
-					</p>
+					<p className="bookingForm">Hare Krishna...</p>
 				</div>
 			);
 		}
@@ -218,7 +222,9 @@ export class Kirtan extends Component {
 							</div>
 						</div>
 					</div>
-				) : <QuoteOfDay />}
+				) : (
+					<QuoteOfDay />
+				)}
 			</div>
 		);
 	}
@@ -236,8 +242,8 @@ const mapDispatchToProps = dispatch => {
 			dispatch(searchKirtan(body));
 		},
 		resetState: () => {
-			dispatch(resetState())
-		}
+			dispatch(resetState());
+		},
 	};
 };
 

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Icon, Pagination } from 'antd';
+import { Pagination } from 'antd';
 import { Link } from 'react-router-dom';
 import SingleLecture from '../../Components/molocules/SingleLecture/SingleLecture';
-// import Pagination from 'react-js-pagination';
 import { connect } from 'react-redux';
 import { searchLecture, updateCounters } from '../../actions/lectureActions';
 import Auth from '../../utils/Auth';
@@ -52,6 +51,7 @@ export class Lectures extends Component {
 		}
 		return result;
 	};
+
 	render() {
 		return (
 			<div>
@@ -93,28 +93,6 @@ export class Lectures extends Component {
 								return <SingleLecture lecture={item} key={key} />;
 							})}
 						</div>
-						{/* <div className="table-responsive wow fadeIn">
-                            <table className="table table-hover table-job-positions">
-                                <thead>
-                                    <tr>
-                                        <th style={{ textAlign: 'center' }}>Title</th>
-                                        <th>Event</th>
-                                        <th>date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        this.state.lectures.map((item, key) => {
-                                            return <tr key={key}>
-                                                <td style={{ color: '#ff830a' }}>{renderHTML(this.showing100Characters(item.title.en))}</td>
-                                                <td>{item.event}</td>
-                                                <td>{ new Date(item.date).getDate()}</td>
-                                            </tr>
-                                        })
-                                    }
-                                </tbody>
-                            </table>
-                        </div> */}
 						<Pagination
 							className="paginationStyle antPage"
 							innerClass="pagination"

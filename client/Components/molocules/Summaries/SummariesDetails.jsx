@@ -87,6 +87,8 @@ export class SummariesDetails extends React.Component {
 											reactCookie.load('languageCode') === 'en'
 												? lectureDetails.en.title
 												: lectureDetails.ru.title
+												? lectureDetails.ru.title
+												: lectureDetails.en.title
 										)}
 									</a>
 								</li>
@@ -105,6 +107,8 @@ export class SummariesDetails extends React.Component {
 												reactCookie.load('languageCode') === 'en'
 													? lectureDetails.en.title
 													: lectureDetails.ru.title
+													? lectureDetails.ru.title
+													: lectureDetails.en.title
 											)}
 									</h3>
 									<ul className="post-creative-meta dataUL">
@@ -125,8 +129,10 @@ export class SummariesDetails extends React.Component {
 										{lectureDetails &&
 											renderHTML(
 												reactCookie.load('languageCode') === 'en'
-													? lectureDetails.ru.summary.text
+													? lectureDetails.en.summary.text
 													: lectureDetails.ru.summary.text
+													? lectureDetails.ru.summary.text
+													: lectureDetails.en.summary.text
 											)}
 									</div>
 								</article>
@@ -166,7 +172,11 @@ export class SummariesDetails extends React.Component {
 															</b>
 														</td>
 														<td className="padLeftRow">
-															{lectureDetails.ru.event}
+															{reactCookie.load('languageCode') === 'en'
+																? lectureDetails.en.event
+																: lectureDetails.ru.event
+																? lectureDetails.ru.event
+																: lectureDetails.en.event}
 														</td>
 													</tr>
 													{lectureDetails.part ? (
@@ -234,7 +244,11 @@ export class SummariesDetails extends React.Component {
 															</b>
 														</td>
 														<td className="padLeftRow">
-															{lectureDetails.ru.location}
+															{reactCookie.load('languageCode') === 'en'
+																? lectureDetails.en.location
+																: lectureDetails.ru.location
+																? lectureDetails.ru.location
+																: lectureDetails.en.location}
 														</td>
 													</tr>
 													<tr>
@@ -254,7 +268,11 @@ export class SummariesDetails extends React.Component {
 															</b>
 														</td>
 														<td className="padLeftRow">
-															{lectureDetails.ru.topic}
+															{reactCookie.load('languageCode') === 'en'
+																? lectureDetails.en.topic
+																: lectureDetails.ru.topic
+																? lectureDetails.ru.topic
+																: lectureDetails.en.topic}
 														</td>
 													</tr>
 												</tbody>

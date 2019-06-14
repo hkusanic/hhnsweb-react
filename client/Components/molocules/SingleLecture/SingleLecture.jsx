@@ -16,7 +16,10 @@ export class SingleLecture extends Component {
 					<article className="post-modern">
 						<h4 className="post-modern-title">
 							<Link
-								to={{ pathname: `/lectureDetails/${this.props.lecture.uuid}`, state: this.props.lecture }}
+								to={{
+									pathname: `/lectureDetails/${this.props.lecture.uuid}`,
+									state: this.props.lecture,
+								}}
 							>
 								{renderHTML(this.props.lecture.en.title)}
 							</Link>
@@ -25,7 +28,9 @@ export class SingleLecture extends Component {
 							<li>
 								{reactCookie.load('languageCode') === 'en'
 									? this.props.lecture.en.event
-									: this.props.lecture.ru.event}
+									: this.props.lecture.ru.event
+										? this.props.lecture.ru.event
+										: this.props.lecture.en.event}
 							</li>
 							<li>
 								{this.props.lecture.created_date

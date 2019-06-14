@@ -132,7 +132,11 @@ export class AudioList extends Component {
 				title: maxWidth > mobileBrkPnt ? 'Title' : '',
 				className: 'audioTable_title',
 				dataIndex: renderHTML(
-					reactCookie.load('languageCode') === 'en' ? 'en.title' : 'ru.title'
+					reactCookie.load('languageCode') === 'en'
+						? 'en.title'
+						: 'ru.title'
+						? 'ru.title'
+						: 'en.title'
 				),
 				render: (text, record, index) => (
 					<Link
@@ -146,6 +150,8 @@ export class AudioList extends Component {
 								reactCookie.load('languageCode') === 'en'
 									? record.en.title
 									: record.ru.title
+									? record.ru.title
+									: record.en.title
 							)
 						)}
 					</Link>

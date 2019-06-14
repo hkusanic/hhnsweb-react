@@ -42,12 +42,16 @@ const SingleBiography = props => {
 								reactCookie.load('languageCode') === 'en'
 									? props.title_en
 									: props.title_ru
+										? props.title_ru
+										: props.title_en
 							}
 							description={renderHTML(
 								showing100Characters(
 									reactCookie.load('languageCode') === 'en'
 										? props.content_en
 										: props.content_ru
+											? props.content_ru
+											: props.content_en
 								)
 							)}
 						/>

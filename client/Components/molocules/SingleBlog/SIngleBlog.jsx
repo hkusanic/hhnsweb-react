@@ -10,7 +10,7 @@ export class SingleBlog extends Component {
 		this.state = {};
 	}
 
-	showing100Characters = (sentence) => {
+	showing100Characters = sentence => {
 		var result = sentence;
 		var resultArray = result.split(' ');
 		if (resultArray.length > 10) {
@@ -26,11 +26,18 @@ export class SingleBlog extends Component {
 				<div className="wow scaleFadeIn" data-wow-delay=".1s">
 					<article className="post-modern">
 						<h4 className="post-modern-title">
-							<Link to={{ pathname: `/blogDetails/${this.props.blog.uuid}`, state: this.props.blog }}>
+							<Link
+								to={{
+									pathname: `/blogDetails/${this.props.blog.uuid}`,
+									state: this.props.blog,
+								}}
+							>
 								{renderHTML(
 									reactCookie.load('languageCode') === 'en'
 										? this.props.blog.title_en
 										: this.props.blog.title_ru
+										? this.props.blog.title_ru
+										: this.props.blog.title_en
 								)}
 							</Link>
 						</h4>
@@ -47,8 +54,10 @@ export class SingleBlog extends Component {
 								reactCookie.load('languageCode') === 'en'
 									? this.props.blog.body_en
 									: this.props.blog.body_ru
+									? this.props.blog.body_ru
+									: this.props.blog.body_en
 							)
-           				 )}
+						)}
 					</article>
 				</div>
 			</div>
