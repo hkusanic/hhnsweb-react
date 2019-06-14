@@ -12,13 +12,19 @@ import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
 const Panel = Collapse.Panel;
+const customPanelStyle = {
+	fontSize: '25px',
+    color: '#eb7217',
+    borderTop: '2px solid #e8e8e8',
+	borderBottom: 'none',
+  };
 export class TranscriptionDetails extends React.Component {
 	constructor(props) {
 		super(props);
 		const { resetState } = this.props;
 		resetState();
 	}
-
+	
 	componentDidMount() {
 		let body = {
 			uuid: this.props.match.params.uuid,
@@ -140,11 +146,7 @@ export class TranscriptionDetails extends React.Component {
 									<Panel
 										header="Audio Details"
 										key="1"
-										style={{
-											borderTop: '2px solid #e8e8e8',
-											borderBottom: 'none',
-											fontSize: '1.5rem',
-										}}
+										style={customPanelStyle}
 									>
 										<div style={{ paddingTop: '20px', fontSize: '14px' }}>
 											<table className="maintable">

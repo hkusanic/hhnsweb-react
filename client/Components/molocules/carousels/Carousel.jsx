@@ -42,7 +42,7 @@ export class Carousel2 extends Component {
 					</div>
 				</Carousel> */}
 				<section
-					className="swiper-container swiper-slider swiper-slider-light bg-gray-700"
+					className="swiper-container swiper-slider swiper-slider-light bg-gray-700 carouselMargin"
 					data-loop="true"
 					data-autoplay="5000"
 					data-simulate-touch="false"
