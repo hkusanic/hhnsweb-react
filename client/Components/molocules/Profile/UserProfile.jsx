@@ -54,6 +54,7 @@ export class UserProfile extends Component {
             mobileNumber: user.mobileNumber,
             countryCode: user.countryCode
         })
+        console.log(user.mobileNumber);
     }
     handleEditing = (event) => {
         event.preventDefault();
@@ -167,7 +168,7 @@ export class UserProfile extends Component {
                                                     value={this.state.email} />
                                             </div>
                                         </div>
-                                        {this.state.editing ?
+                                        {/* {this.state.editing ?
                                             <div className="col-md-10 wow-outer">
                                                 <div className="form-wrap wow fadeSlideInUp">
                                                     <label className="form-label-outside" htmlFor="contact-phone"><Translate>
@@ -194,11 +195,12 @@ export class UserProfile extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
-                                            :
+                                            : */}
                                             <div className="col-md-10 form-wrap">
                                                 <label className="form-label-outside" htmlFor="contact-phone">Mobile Number</label>
-                                                <IntlTelInput
+                                                {/* <IntlTelInput
                                                     containerClassName="intl-tel-input"
                                                     defaultValue={this.state.mobileNumber}
                                                     defaultCountry='india'
@@ -207,9 +209,11 @@ export class UserProfile extends Component {
                                                     separateDialCode={true}
                                                     inputClassName="form-control"
                                                     onPhoneNumberChange={(validate, number, data) => { this.handle(validate, number, data) }}
-                                                />
+                                                /> */}
+                                                <ReactPhoneInput onChange={this.handleOnChange} disabled={this.state.editing}
+                                    value={this.state.mobileNumber}/>
                                             </div>
-                                        }
+                                        {/* } */}
                                     </div>
                                     <br /><br />
                                     <ReactPhoneInput defaultCountry={['us']} onChange={this.handleOnChange}/>

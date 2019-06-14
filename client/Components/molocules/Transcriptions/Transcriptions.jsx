@@ -252,6 +252,9 @@ const mapDispatchToProps = dispatch => {
 		resetState: () => {
 			dispatch(resetState());
 		},
+		resetState: () => {
+			dispatch(resetState())
+		}
 	};
 };
 

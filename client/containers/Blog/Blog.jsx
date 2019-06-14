@@ -141,9 +141,7 @@ export class Blogs extends Component {
 							</div>
 						</div>
 					</section>
-				) : (
-					<QuoteOfDay />
-				)}
+				) : <QuoteOfDay /> }
 			</div>
 		);
 	}
