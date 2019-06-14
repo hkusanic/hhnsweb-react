@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getRussianDubbedLecture } from "../../actions/lectureActions"
 import { Link } from 'react-router-dom'
+import { Card } from 'antd';
 
 class RussiaDubbedLectures extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class RussiaDubbedLectures extends Component {
 
     render() {
         return (
-            <div>
+            <Card className="centerAlign recentActivityCard" title='Lecture Dubbed in Russian' >
                 {this.props.lectureDetails &&
                     this.props.lectureDetails.lectures &&
                     this.props.lectureDetails.lectures.map(eachLecture => {
@@ -30,7 +31,7 @@ class RussiaDubbedLectures extends Component {
                             <p style={{ marginTop: "0px" }} key={eachLecture.id}>{`Posted On     ${(new Date(eachLecture.created_date)).toLocaleString("en-GB")}`}</p>
                         </div>
                     })}
-            </div>
+            </Card>
         );
     }
 }

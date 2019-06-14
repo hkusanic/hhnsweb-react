@@ -198,7 +198,8 @@ export class UserProfile extends Component {
 
                                             </div>
                                             : */}
-                                            <div className="col-md-10 form-wrap">
+                                            <div className="col-md-10 wow-outer">
+                                            <div className="form-wrap wow fadeSlideInUp">
                                                 <label className="form-label-outside" htmlFor="contact-phone">Mobile Number</label>
                                                 {/* <IntlTelInput
                                                     containerClassName="intl-tel-input"
@@ -210,8 +211,9 @@ export class UserProfile extends Component {
                                                     inputClassName="form-control"
                                                     onPhoneNumberChange={(validate, number, data) => { this.handle(validate, number, data) }}
                                                 /> */}
-                                                <ReactPhoneInput onChange={this.handleOnChange} disabled={this.state.editing}
-                                    value={this.state.mobileNumber}/>
+                                                <ReactPhoneInput onChange={this.handleOnChange} inputClass={this.state.editing?'react-tel-input-disabled':null} disabled={this.state.editing}
+                                    value={this.state.mobileNumber} className="phoneInput" />
+                                            </div>
                                             </div>
                                         {/* } */}
                                     </div>

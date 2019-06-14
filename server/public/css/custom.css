@@ -206,10 +206,7 @@
   .centerAlign {
       margin:auto !important;
   }
-  .recentActivityCard{
-      max-width:400px;
-      height:500px;
-  }
+  
   .padLeftBlog {
       padding-left: 7%;
   }
@@ -976,7 +973,21 @@
 }
 .ant-collapse-header{
     font-size: 25px;
-    color: #eb7217 !important;									
+    color: #eb7217 !important;	
+    padding-left:0 !important;								
+}
+.ant-tabs-tab-active{
+    color: #ff830a !important;
+}
+.ant-tabs-ink-bar, .ant-tabs-ink-bar-animated{
+    background-color: #ff830a !important;
+}
+.ant-tabs-tab{
+    font-size: 15px !important; 
+}
+.ant-card-head-title{
+    color: #ff830a !important;
+    font-size:18px !important;
 }
   @media (min-width: 200px) {
       .rd-navbar-fixed .banner {
@@ -1083,8 +1094,6 @@
       }
       .white{
           background-color: #dbdbdb;
-          /* border-left:1px solid #e8e8e8 !important;
-          border-right:1px solid #e8e8e8 !important; */
       }
       .ant-table-tbody > tr > td{
           border:none !important;
@@ -1199,6 +1208,11 @@
       .loginText {
           margin-left: 5%;
       }
+  }
+  @media (min-width: 1024px){
+    .ant-tabs-tab{
+        padding-left: 0 !important;   
+    }
   }
 
 
@@ -2171,8 +2185,8 @@
 	border: 1px solid #CACACA;
 	border-radius: 5px;
 	line-height: 25px;
-	height: 35px;
-	width: 300px;
+	height: 48px;
+	width: 100%;
 	outline: none
 }
 
@@ -2332,4 +2346,7 @@
 .react-tel-input .country-list .no-entries-message {
 	padding: 7px 10px 11px;
 	opacity: .7
+}
+.react-tel-input-disabled{
+    background: none !important;
 }

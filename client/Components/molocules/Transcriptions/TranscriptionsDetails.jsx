@@ -15,8 +15,8 @@ const Panel = Collapse.Panel;
 const customPanelStyle = {
 	fontSize: '25px',
     color: '#eb7217',
-    borderTop: '2px solid #e8e8e8',
-	borderBottom: 'none',
+    borderTop: '1px solid #e8e8e8',
+	borderBottom: '1px solid #e8e8e8',
   };
 export class TranscriptionDetails extends React.Component {
 	constructor(props) {
@@ -142,7 +142,7 @@ export class TranscriptionDetails extends React.Component {
 										</div>
 									</div>
 								</article>
-								<Collapse bordered={false} style={{ marginTop: '10px' }}>
+								<Collapse expandIcon={({ isActive }) => <Icon type="caret-right" style={{display:'none'}} />} bordered={false} style={{ marginTop: '10px' }}>
 									<Panel
 										header="Audio Details"
 										key="1"

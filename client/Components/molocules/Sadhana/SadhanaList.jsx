@@ -7,7 +7,7 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { getSadhanaList } from '../../../actions/sadhanaAction';
 import { sortByDate } from '../../../utils/funct';
 import AddSadhana from './addSadhana';
-import Router from 'react-router-dom';
+const Config = require('Config');
 
 const defaultPageSize = 20;
 
@@ -114,8 +114,8 @@ export class SadhanaList extends React.Component {
 
 	checkTodaySadhanaSubmitted = () => {
 		let days = 2;
-		if (process.env.sadhanaSheetAllowedDays)
-			days = process.env.sadhanaSheetAllowedDays;
+		if (Config.sadhanaSheetAllowedDays)
+			days = Config.sadhanaSheetAllowedDays;
 		const { sadhana } = this.props;
 		const { sadhanaList } = sadhana;
 		let arDate = [];

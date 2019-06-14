@@ -7,7 +7,7 @@ import moment from 'moment';
 import { createSadhana } from '../../../actions/sadhanaAction';
 import { connect } from 'react-redux';
 import { relative } from 'path';
-
+const Config = require('Config');
 const { TextArea } = Input;
 
 class AddSadhana extends React.Component {
@@ -65,8 +65,8 @@ class AddSadhana extends React.Component {
 	disabledDate(current) {
 		const notAllowedDates = this.props.notAllowedDates;
 		let days = 2;
-		if (process.env.sadhanaSheetAllowedDays) {
-			days = process.env.sadhanaSheetAllowedDays;
+		if (Config.sadhanaSheetAllowedDays) {
+			days = Config.sadhanaSheetAllowedDays;
 		}
 		if (current > moment().endOf('day') || current < moment().subtract(days, 'days'))
 			return true
@@ -140,8 +140,8 @@ class AddSadhana extends React.Component {
 	dateRender = current => {
 		const style = {};
 		let days = 2;
-		if (process.env.sadhanaSheetAllowedDays) {
-			days = process.env.sadhanaSheetAllowedDays;
+		if (Config.sadhanaSheetAllowedDays) {
+			days = Config.sadhanaSheetAllowedDays;
 		}
 		const notAllowedDates = this.props.notAllowedDates;
 		
