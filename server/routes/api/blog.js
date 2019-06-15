@@ -76,6 +76,12 @@ function generateS3Object (awsConfig) {
 		s3BucketEndpoint: false,
 		endpoint: 'https://s3.amazonaws.com',
 	};
+
+	console.log('accessKeyId ======>>>>>>', process.env.accessKeyId);
+	console.log('secretAccessKey ======>>>>>>', process.env.secretAccessKey);
+	console.log('bucket ======>>>>>>', process.env.bucket);
+	logger.info(awsConfigObj);
+
 	AWS.config.update(awsConfigObj);
 	return new AWS.S3();
 }
@@ -141,7 +147,7 @@ exports.list = function (req, res) {
 	Blog.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
-	}).sort({created_date_time:"desc"}).exec(function (err, items) {
+	}).sort({ created_date_time: 'desc' }).exec(function (err, items) {
 		if (err) {
 			logger.error(
 				{
