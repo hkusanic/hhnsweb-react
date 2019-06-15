@@ -80,8 +80,8 @@ function generateS3Object (awsConfig) {
 	console.log('accessKeyId ======>>>>>>', process.env.accessKeyId);
 	console.log('secretAccessKey ======>>>>>>', process.env.secretAccessKey);
 	console.log('bucket ======>>>>>>', process.env.bucket);
-	logger.info(awsConfigObj);
-
+	logger.info({ awsConfigObj: awsConfigObj }, 'AWS Object');
+	logger.info({ bucketName: process.env.bucket }, 'Bucket Name');
 	AWS.config.update(awsConfigObj);
 	return new AWS.S3();
 }
