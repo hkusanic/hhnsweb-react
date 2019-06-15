@@ -747,8 +747,8 @@ exports.approvedUserForSadhana = function (req, res) {
  */
 function generateS3Object (awsConfig) {
 	const awsConfigObj = {
-		accessKeyId: process.env.ACCESSKEYID,
-		secretAccessKey: process.env.SECRETACCESSKEY,
+		accessKeyId: process.env.AWS_KEY,
+		secretAccessKey: process.env.AWS_SECRET,
 		s3BucketEndpoint: false,
 		endpoint: 'https://s3.amazonaws.com',
 	};
@@ -764,7 +764,7 @@ async function uploadToAWS (filePath, req, response) {
 		req.body.oldData.picture.filename
 	}`;
 	let params = {
-		Bucket: process.env.BUCKET,
+		Bucket: process.env.AWS_BUCKET,
 		Key: myKey,
 		Body: base64data,
 		ACL: 'public-read',

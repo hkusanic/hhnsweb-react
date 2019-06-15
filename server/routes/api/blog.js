@@ -51,7 +51,7 @@ function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
 		download: 'getObject',
 	};
 	const commonOptions = {
-		Bucket: process.env.BUCKET,
+		Bucket: process.env.AWS_BUCKET,
 		Key: myKey,
 		Expires: 100000,
 		ACL: 'public-read',
@@ -71,17 +71,17 @@ function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
  */
 function generateS3Object (awsConfig) {
 	const awsConfigObj = {
-		accessKeyId: process.env.ACCESSKEYID,
-		secretAccessKey: process.env.SECRETACCESSKEY,
+		accessKeyId: process.env.AWS_KEY,
+		secretAccessKey: process.env.AWS_SECRET,
 		s3BucketEndpoint: false,
 		endpoint: 'https://s3.amazonaws.com',
 	};
 
-	console.log('accessKeyId ======>>>>>>', process.env.ACCESSKEYID);
-	console.log('secretAccessKey ======>>>>>>', process.env.SECRETACCESSKEY);
-	console.log('bucket ======>>>>>>', process.env.BUCKET);
+	console.log('accessKeyId ======>>>>>>', process.env.AWS_KEY);
+	console.log('secretAccessKey ======>>>>>>', process.env.AWS_SECRET);
+	console.log('bucket ======>>>>>>', process.env.AWS_BUCKET);
 	logger.info({ awsConfigObj: awsConfigObj }, 'AWS Object');
-	logger.info({ bucketName: process.env.BUCKET }, 'Bucket Name');
+	logger.info({ bucketName: process.env.AWS_BUCKET }, 'Bucket Name');
 	AWS.config.update(awsConfigObj);
 	return new AWS.S3();
 }
@@ -111,7 +111,7 @@ exports.generateUploadUrl = (req, res) => {
 exports.deleteFile = (req, res) => {
 	var bucketInstance = new AWS.S3();
 	var params = {
-		Bucket: process.env.BUCKET,
+		Bucket: process.env.AWS_BUCKET,
 		Delete: { // required
 			Objects: [ // required
 			  {
