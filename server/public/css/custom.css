@@ -313,7 +313,7 @@
       width: 20%;
   }
   .mobNoDiv {
-      width: 80%;
+      width: 100%;
   }
   .carouselFont {
       font-family: 'Roboto_New' !important;
@@ -2348,5 +2348,5 @@
 	opacity: .7
 }
 .react-tel-input-disabled{
-    background: none !important;
+    background-color: none !important;
 }
