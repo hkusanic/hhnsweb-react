@@ -9,6 +9,7 @@ let Comment = new keystone.List('Comment', {
 
 Comment.add({
 	uuid: { type: String, unique: true, index: true },
+	content_type: { type: String },
 	message: {
 		type: String,
 		initial: true,
@@ -24,7 +25,6 @@ Comment.add({
 	author_name: { type: String },
 	author_email: { type: String },
 	lecture_uuid: { type: String },
-	// approved: { type: Boolean },
 	approved: {
 		type: Types.Select,
 		options: ['0', '1', '2'],

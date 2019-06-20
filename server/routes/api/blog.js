@@ -38,9 +38,10 @@ function todayDate () {
 	return today;
 }
 function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
-
 	if (type === 'upload' && !fileDetails.type) {
-		throw new Error('Missing arguments : Please specify the mime type of file.');
+		throw new Error(
+			'Missing arguments : Please specify the mime type of file.'
+		);
 	}
 
 	const myKey = fileDetails.name;
@@ -86,12 +87,17 @@ function generateS3Object (awsConfig) {
 	return new AWS.S3();
 }
 
-
 exports.generateUploadUrl = (req, res) => {
 	let isError = false;
 	const errors = [];
-	if (!req.query.name) { isError = true; handleErr('noVideoName', errors); }
-	if (!req.query.type) { isError = true; handleErr('noVideoType', errors); }
+	if (!req.query.name) {
+		isError = true;
+		handleErr('noVideoName', errors);
+	}
+	if (!req.query.type) {
+		isError = true;
+		handleErr('noVideoType', errors);
+	}
 	if (isError) {
 		logger.error({ err: errors });
 		return res.status(400).json({ errors });
@@ -112,13 +118,15 @@ exports.deleteFile = (req, res) => {
 	var bucketInstance = new AWS.S3();
 	var params = {
 		Bucket: process.env.AWS_BUCKET,
-		Delete: { // required
-			Objects: [ // required
-			  {
+		Delete: {
+			// required
+			Objects: [
+				// required
+				{
 					Key: req.query.filename, // required
-			  },
+				},
 			],
-		  },
+		},
 	};
 	bucketInstance.deleteObjects(params, function (err, data) {
 		if (data) {
@@ -126,13 +134,11 @@ exports.deleteFile = (req, res) => {
 				data: data,
 				success: true,
 			});
-		}
-		else {
+		} else {
 			return res.apiError('not found/deleted', err);
 		}
 	});
 };
-
 
 // Creating the API end point
 // More about keystone api here: https://gist.github.com/JedWatson/9741171
@@ -147,24 +153,26 @@ exports.list = function (req, res) {
 	Blog.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
-	}).sort({ created_date_time: 'desc' }).exec(function (err, items) {
-		if (err) {
-			logger.error(
-				{
-					error: err,
-				},
-				'API list blog'
-			);
-			return res.apiError('database error', err);
-		}
-		res.apiResponse({
-			// Filter page by
-			blog: items,
-		});
+	})
+		.sort({ created_date_time: 'desc' })
+		.exec(function (err, items) {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API list blog'
+				);
+				return res.apiError('database error', err);
+			}
+			res.apiResponse({
+				// Filter page by
+				blog: items,
+			});
 
-		// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
-		// This is handy if we want to speed up loading times once our blog collection grows
-	});
+			// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
+			// This is handy if we want to speed up loading times once our blog collection grows
+		});
 };
 
 exports.get = function (req, res) {
@@ -229,92 +237,119 @@ exports.create = function (req, res) {
 	});
 };
 
-
 exports.getblogbyid = function (req, res) {
 	if (!req.body.uuid) {
-		res.json({ error: { title: 'Id is Required', detail: 'Mandatory values are missing. Please check.' } });
+		res.json({
+			error: {
+				title: 'Id is Required',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
 	}
 
-	Blog.model.findOne().where('uuid', req.body.uuid).exec((err, blog) => {
-
-		if (err || !blog) {
-			logger.error({
-				error: err,
-			}, 'API getblogbyid');
-			return res.json({ error: { title: 'Not able to find blog' } });
-		}
-		res.json({
-			blog: blog,
-			success: true,
+	Blog.model
+		.findOne()
+		.where('uuid', req.body.uuid)
+		.exec((err, blog) => {
+			if (err || !blog) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API getblogbyid'
+				);
+				return res.json({ error: { title: 'Not able to find blog' } });
+			}
+			res.json({
+				blog: blog,
+				success: true,
+			});
 		});
-	});
-
 };
 
 exports.update = function (req, res) {
-	logger.info({
-		req: req,
-	}, 'API update blog');
+	logger.info(
+		{
+			req: req,
+		},
+		'API update blog'
+	);
 
 	Blog.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
-
 		if (err) {
-			logger.error({
-				error: err,
-			}, 'API update blog');
+			logger.error(
+				{
+					error: err,
+				},
+				'API update blog'
+			);
 			return res.apiError('database error', err);
 		}
 		if (!item) {
-			logger.error({
-				error: 'Item not found',
-			}, 'API update blog');
+			logger.error(
+				{
+					error: 'Item not found',
+				},
+				'API update blog'
+			);
 			return res.apiError('not found');
 		}
 
-		var data = (req.method === 'POST') ? req.body : req.query;
+		var data = req.method === 'POST' ? req.body : req.query;
 
 		item.getUpdateHandler(req).process(data, function (err) {
-
 			if (err) {
-				logger.error({
-					error: err,
-				}, 'API update blog');
+				logger.error(
+					{
+						error: err,
+					},
+					'API update blog'
+				);
 				return res.apiError('create error', err);
 			}
 
 			res.apiResponse({
 				Blog: item,
 			});
-
 		});
-
 	});
 };
 
 exports.remove = function (req, res) {
-	logger.info({
-		req: req,
-	}, 'API remove blog');
+	logger.info(
+		{
+			req: req,
+		},
+		'API remove blog'
+	);
 	Blog.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
-
 		if (err) {
-			logger.error({
-				error: err,
-			}, 'API remove blog');
+			logger.error(
+				{
+					error: err,
+				},
+				'API remove blog'
+			);
 			return res.apiError('database error', err);
 		}
 		if (!item) {
-			logger.error({
-				error: 'No Item',
-			}, 'API remove blog');
+			logger.error(
+				{
+					error: 'No Item',
+				},
+				'API remove blog'
+			);
 			return res.apiError('not found');
 		}
 
 		item.remove(function (err) {
 			if (err) {
-				logger.error({
-					error: err,
-				}, 'API remove blog');
+				logger.error(
+					{
+						error: err,
+					},
+					'API remove blog'
+				);
 				return res.apiError('database error', err);
 			}
 
@@ -322,6 +357,99 @@ exports.remove = function (req, res) {
 				Blog: true,
 			});
 		});
-
 	});
+};
+
+exports.createBulkNew = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API createBulk blog'
+	);
+	keystone.createItems(
+		{
+			Blog: req.body,
+		},
+		function (err, stats) {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API createBulk blog'
+				);
+				return res.apiError('error', err);
+			}
+			return res.apiResponse({
+				Blog: true,
+			});
+		}
+	);
+};
+
+exports.updateBulkNew = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API updateBulk blog'
+	);
+	if (!req.body) {
+		logger.error(
+			{
+				error: 'No Data',
+			},
+			'API updateBulk blog'
+		);
+		res.json({
+			error: {
+				title: 'Data is Reqired',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
+	}
+	let data = req.body;
+	for (let i = 0; i < data.length; i++) {
+		Blog.model
+			.findOne({
+				tnid: data[i].tnid,
+			})
+			.exec(function (err, item) {
+				if (err) {
+					logger.error(
+						{
+							error: err,
+						},
+						'API updateBulk blog'
+					);
+					return;
+				}
+				if (!item) {
+					logger.error(
+						{
+							error: 'No Item',
+						},
+						'API updateBulk blog'
+					);
+					return;
+				}
+
+				item.getUpdateHandler(req).process(data[i], function (err) {
+					if (err) {
+						logger.error(
+							{
+								error: err,
+							},
+							'API updateBulk blog'
+						);
+						return;
+					}
+
+					res.apiResponse({
+						Blog: item,
+					});
+				});
+			});
+	}
 };
