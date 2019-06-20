@@ -11,33 +11,39 @@ let Lecture = new keystone.List("Lecture", {
 
 Lecture.add({
 	uuid: { type: String, unique: true, index: true },
-	created_date: { type: String },
+	tnid: { type: String },
+	lecture_date: { type: String },
 	published_date: { type: String },
 	duration: { type: String },
 	author: { type: String },
 	audio_link: { type: Types.Url },
 	soundcloud_link: { type: Types.Url },
 	service: { type: String },
-	dub: { type: String },
+	dub: { type: String }, //Rusian Dub
 	publish_in_book: { type: String },
-	transcribe: { type: String },
+	transcribe_filter: { type: Boolean, default: false },
 	translation_required: { type: Boolean, default: true },
 	youtube: { type: Types.TextArray },
 	part: { type: String },
 	chapter: { type: String },
 	verse: { type: String },
 	transcribe_required: { type: Boolean, default: false },
+	languages: { type: String },
 	en: {
+		nid: { type: String },
 		title: { type: String },
 		event: { type: String },
 		topic: { type: String },
 		transcription: {
+			nid: { type: String },
+			title: { type: String },
 			text: { type: Types.Text },
 			attachment_name: { type: String },
 			attachment_link: { type: Types.TextArray }
 		},
 		location: { type: String },
 		summary: {
+			nid: { type: String },
 			text: { type: Types.Text },
 			attachment_name: { type: String },
 			attachment_link: { type: Types.TextArray }
@@ -45,16 +51,20 @@ Lecture.add({
 		translation: { type: String }
 	},
 	ru: {
+		nid: { type: String },
 		title: { type: String },
 		event: { type: String },
 		topic: { type: String },
 		transcription: {
+			nid: { type: String },
+			title: { type: String },
 			text: { type: Types.Text },
 			attachment_name: { type: String },
 			attachment_link: { type: Types.TextArray }
 		},
 		location: { type: String },
 		summary: {
+			nid: { type: String },
 			text: { type: Types.Text },
 			attachment_name: { type: String },
 			attachment_link: { type: Types.TextArray }
@@ -77,12 +87,12 @@ Lecture.add({
 
 // Lecture.schema.add({ data: mongoose.Schema.Types.Mixed }); // you can add mongoose types like this.. but they should be defined outside .add()
 
-Lecture.schema.pre("save", function(next) {
+Lecture.schema.pre("save", function (next) {
 	next();
 });
 
 function uuidv4() {
-	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
 		var r = (Math.random() * 16) | 0;
 		var v = c == "x" ? r : (r & 0x3) | 0x8;
 		return v.toString(16);
@@ -105,14 +115,14 @@ function todayDate() {
 	return today;
 }
 
-Lecture.schema.post("save", function(data, next) {
+Lecture.schema.post("save", function (data, next) {
 	var item = new Content.model();
 	let body = {};
 	body.content_uuid = data.uuid;
 	body.uuid = uuidv4();
 	body.content_type = "Lecture";
 
-	item.getUpdateHandler().process(body, function(err) {
+	item.getUpdateHandler().process(body, function (err) {
 		if (err) {
 			console.log(err);
 			logger.error(
@@ -127,11 +137,11 @@ Lecture.schema.post("save", function(data, next) {
 	next();
 });
 
-Lecture.schema.post("validate", function(err, next) {
+Lecture.schema.post("validate", function (err, next) {
 	next();
 });
 
-Lecture.schema.virtual("commentCount").get(function() {
+Lecture.schema.virtual("commentCount").get(function () {
 	return this.comments.length;
 });
 

@@ -57,6 +57,7 @@ export class TranscriptionDetails extends React.Component {
 		const { lectureDetails } = this.props;
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
+		console.log(lectureDetails);
 
 		if (!lectureDetails) {
 			return (
