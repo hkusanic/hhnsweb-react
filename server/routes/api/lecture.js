@@ -1,5 +1,7 @@
 var keystone = require('keystone');
 let logger = require('./../../logger/logger');
+const axios = require('axios');
+var fs = require("fs");
 
 /**
  * List Page
@@ -727,3 +729,77 @@ exports.updateBulkNew = function (req, res) {
 		});
 	}
   };
+
+/**
+ * To generate s3 object using configuration object
+ * @param {object} awsConfig
+ * @param {string} awsConfig.accessKeyId Access Key of AWS configuration
+ * @param {string} awsConfig.secretAccessKey Access Secret Key(Token) of AWS configuration
+ */
+function generateS3Object(awsConfig) {
+	const awsConfigObj = {
+		accessKeyId: process.env.AWS_KEY,
+		secretAccessKey: process.env.AWS_SECRET,
+		s3BucketEndpoint: false,
+		endpoint: 'https://s3.amazonaws.com'
+	};
+	AWS.config.update(awsConfigObj);
+	return new AWS.S3();
+}
+
+async function uploadpdfToAWS(filePath, req, response) {
+	console.log('uploadToAWS() ====>>> Trying to upload pdf from aws');
+	let content = await readFilePromise(filePath);
+	let base64data = new Buffer(content, 'binary');
+	let myKey = `uploads/transcription/'${Date.now()}`;
+	let params = {
+		Bucket: process.env.AWS_BUCKET,
+		Key: myKey,
+		Body: base64data,
+		ACL: 'public-read'
+	};
+	const s3 = generateS3Object();
+	s3.upload(params, (err, data) => {
+		if (err) console.error(`Upload Error ${err}`);
+		console.log('Upload Completed');
+		return response.json({
+			url: data.Location
+		});
+	});
+}
+
+exports.uploadPDF = async (req, response) => {
+	var delayInMilliseconds = 1000;
+			let filePath = './uploads/transcription/' + Date.now() + '.pdf';
+			let url = req.body.url;
+			let downloadImage = await download_pdf(url, filePath);
+			if (downloadImage.status) {
+				setTimeout(function() {
+					uploadpdfToAWS(filePath, req, response);
+					console.log('done');
+				}, delayInMilliseconds);
+			}
+		
+	
+};
+
+const download_pdf = (url, pdf_path) =>
+{
+    console.log('download_pdf() ====>>> Trying to download pdf from old server');
+	axios({
+		url: url,
+		responseType: 'stream'
+	})
+		.then(response => {
+			response.data.pipe(fs.createWriteStream(pdf_path));
+
+			return {
+				status: true,
+				error: ''
+			};
+		})
+		.catch(error => ({
+			status: false,
+			error: 'Error: ' + error.message
+		}));
+	}

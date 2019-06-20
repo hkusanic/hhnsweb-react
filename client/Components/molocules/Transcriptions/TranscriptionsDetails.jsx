@@ -134,7 +134,7 @@ export class TranscriptionDetails extends React.Component {
 										</li>
 									</ul>
 									<div className="row">
-										<div className="col mx-3 textContent">
+										<div className="col textContent">
 											{renderHTML(
 												reactCookie.load('languageCode') === 'en'
 													? lectureDetails.en.transcription.text

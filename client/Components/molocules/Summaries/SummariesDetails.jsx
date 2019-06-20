@@ -95,7 +95,7 @@ export class SummariesDetails extends React.Component {
 					</div>
 				</section>
 				<section className="section section-lg">
-					<div className="container padLeftBlog">
+					<div className="container">
 						<div className="row row-50">
 							<div className="col-lg-12">
 								<article className="post-creative">
