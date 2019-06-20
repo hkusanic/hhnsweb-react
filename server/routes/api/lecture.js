@@ -287,7 +287,7 @@ exports.list = function (req, res) {
 
 	if (req.query.createdDateSort) {
 		if (req.query.createdDateSort === 'asc') {
-			createdDateSort = 'created_date_time'; 
+			createdDateSort = 'created_date_time';
 		} else {
 			createdDateSort = '-created_date_time';
 		}
@@ -659,4 +659,70 @@ exports.getlecturebyid = function (req, res) {
 				success: true,
 			});
 		});
+};
+
+exports.updateBulkNew = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API updateBulk lecture'
+	);
+	if (!req.body) {
+		logger.error(
+			{
+				error: 'No Data',
+			},
+			'API updateBulk lecture'
+		);
+		res.json({
+			error: {
+				title: 'Data is Reqired',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
+	}
+	let data = req.body;
+	for (let i = 0; i < data.length; i++) {
+		Lecture.model
+			.findOne({
+				tnid: data[i].tnid,
+			})
+			.exec(function (err, item) {
+				if (err) {
+					logger.error(
+						{
+							error: err,
+						},
+						'API updateBulk lecture'
+					);
+					return;
+				}
+				if (!item) {
+					logger.error(
+						{
+							error: 'No Item',
+						},
+						'API updateBulk lecture'
+					);
+					return;
+				}
+
+				item.getUpdateHandler(req).process(data[i], function (err) {
+					if (err) {
+						logger.error(
+							{
+								error: err,
+							},
+							'API updateBulk lecture'
+						);
+						return res.apiError('create error', err);
+					}
+
+					res.apiResponse({
+						Blog: item,
+					});
+				});
+			});
+	}
 };

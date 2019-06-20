@@ -3,7 +3,7 @@ let logger = require('./../../logger/logger');
 var quote_LIST = require('../../constants/constant');
 
 var Quote = keystone.list('Quote');
-function todayDate() {
+function todayDate () {
 	var today = new Date();
 	var dd = today.getDate();
 	var mm = today.getMonth() + 1; // January is 0!
@@ -19,7 +19,7 @@ function todayDate() {
 	return today;
 }
 
-exports.list = function(req, res) {
+exports.list = function (req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	let query = [];
 
@@ -27,8 +27,8 @@ exports.list = function(req, res) {
 		query.push({
 			author: {
 				$regex: '.*' + req.query.author + '.*',
-				$options: 'i'
-			}
+				$options: 'i',
+			},
 		});
 	}
 
@@ -36,27 +36,27 @@ exports.list = function(req, res) {
 
 	if (query.length > 0) {
 		filters = {
-			$and: query
+			$and: query,
 		};
 	}
 
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
 		'API list Quote'
 	);
 	Quote.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
-		filters: filters
+		filters: filters,
 	})
 		.sort('-created_date_time')
-		.exec(function(err, items) {
+		.exec(function (err, items) {
 			if (err) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
 					'API list Quote'
 				);
@@ -64,7 +64,7 @@ exports.list = function(req, res) {
 			}
 			return res.apiResponse({
 				// Filter page by
-				quote: items
+				quote: items,
 			});
 
 			// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
@@ -72,22 +72,21 @@ exports.list = function(req, res) {
 		});
 };
 
-exports.create = function(req, res) {
+exports.create = function (req, res) {
 	var item = new Quote.model();
 	var data = req.method === 'POST' ? req.body : req.query;
 	data.date = data.date ? data.date : todayDate();
-	data.published_date = todayDate();
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
 		'API create quote'
 	);
-	item.getUpdateHandler(req).process(data, function(err) {
+	item.getUpdateHandler(req).process(data, function (err) {
 		if (err) {
 			logger.error(
 				{
-					error: err
+					error: err,
 				},
 				'API create quote'
 			);
@@ -95,18 +94,18 @@ exports.create = function(req, res) {
 		}
 
 		res.apiResponse({
-			quote: item
+			quote: item,
 		});
 	});
 };
 
-exports.getquotebyid = function(req, res) {
+exports.getquotebyid = function (req, res) {
 	if (!req.body.uuid) {
 		res.json({
 			error: {
 				title: 'Id is Required',
-				detail: 'Mandatory values are missing. Please check.'
-			}
+				detail: 'Mandatory values are missing. Please check.',
+			},
 		});
 	}
 
@@ -117,7 +116,7 @@ exports.getquotebyid = function(req, res) {
 			if (err || !quote) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
 					'API getblogbyid'
 				);
@@ -125,24 +124,24 @@ exports.getquotebyid = function(req, res) {
 			}
 			res.json({
 				quote: quote,
-				success: true
+				success: true,
 			});
 		});
 };
 
-exports.update = function(req, res) {
+exports.update = function (req, res) {
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
 		'API update blog'
 	);
 
-	Quote.model.findOne({ uuid: req.params.id }).exec(function(err, item) {
+	Quote.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
 		if (err) {
 			logger.error(
 				{
-					error: err
+					error: err,
 				},
 				'API update quote'
 			);
@@ -151,7 +150,7 @@ exports.update = function(req, res) {
 		if (!item) {
 			logger.error(
 				{
-					error: 'Item not found'
+					error: 'Item not found',
 				},
 				'API update quote'
 			);
@@ -160,11 +159,11 @@ exports.update = function(req, res) {
 
 		var data = req.method === 'POST' ? req.body : req.query;
 
-		item.getUpdateHandler(req).process(data, function(err) {
+		item.getUpdateHandler(req).process(data, function (err) {
 			if (err) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
 					'API update quote'
 				);
@@ -172,24 +171,24 @@ exports.update = function(req, res) {
 			}
 
 			res.apiResponse({
-				Quote: item
+				Quote: item,
 			});
 		});
 	});
 };
 
-exports.remove = function(req, res) {
+exports.remove = function (req, res) {
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
 		'API remove quote'
 	);
-	Quote.model.findOne({ uuid: req.params.id }).exec(function(err, item) {
+	Quote.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
 		if (err) {
 			logger.error(
 				{
-					error: err
+					error: err,
 				},
 				'API remove quote'
 			);
@@ -198,18 +197,18 @@ exports.remove = function(req, res) {
 		if (!item) {
 			logger.error(
 				{
-					error: 'No Item'
+					error: 'No Item',
 				},
 				'API remove quote'
 			);
 			return res.apiError('not found');
 		}
 
-		item.remove(function(err) {
+		item.remove(function (err) {
 			if (err) {
 				logger.error(
 					{
-						error: err
+						error: err,
 					},
 					'API remove quote'
 				);
@@ -217,24 +216,24 @@ exports.remove = function(req, res) {
 			}
 
 			return res.apiResponse({
-				quote: true
+				quote: true,
 			});
 		});
 	});
 };
 
-exports.quoteOfDay = async function(req, res) {
+exports.quoteOfDay = async function (req, res) {
 	if (!req.body && req.body.length < 1) {
 		return res.json({
 			error: {
 				title: 'Author for quotes is not mentioned',
-				detail: 'Mandatory values are missing. Please check.'
-			}
+				detail: 'Mandatory values are missing. Please check.',
+			},
 		});
 	}
 	logger.info(
 		{
-			req: req
+			req: req,
 		},
 		'API GET QUOTE OF THE DAY'
 	);
@@ -245,11 +244,11 @@ exports.quoteOfDay = async function(req, res) {
 		let quoote = await Quote.model
 			.findOne()
 			.where({ $and: [{ published_date: date }, { author: author }] })
-			.exec(function(err, item) {
+			.exec(function (err, item) {
 				if (err) {
 					logger.error(
 						{
-							error: err
+							error: err,
 						},
 						'API GET QUOTE OF THE DAY'
 					);
@@ -264,11 +263,11 @@ exports.quoteOfDay = async function(req, res) {
 			await Quote.model
 				.findOne()
 				.where({ author: author })
-				.exec(function(err, item) {
+				.exec(function (err, item) {
 					if (err) {
 						logger.error(
 							{
-								error: err
+								error: err,
 							},
 							'API GET QUOTE OF THE DAY'
 						);
@@ -284,7 +283,7 @@ exports.quoteOfDay = async function(req, res) {
 	if (quotesOfDay.length < 2) {
 		logger.error(
 			{
-				error: 'No Item'
+				error: 'No Item',
 			},
 			'API GET  QUOTE OF THE DAY'
 		);
@@ -314,6 +313,72 @@ exports.quoteOfDay = async function(req, res) {
 		}
 	}
 	return res.apiResponse({
-		quote: quotesOfDay
+		quote: quotesOfDay,
 	});
+};
+
+exports.updateBulkNew = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API updateBulk Quote'
+	);
+	if (!req.body) {
+		logger.error(
+			{
+				error: 'No Data',
+			},
+			'API updateBulk Quote'
+		);
+		res.json({
+			error: {
+				title: 'Data is Reqired',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
+	}
+	let data = req.body;
+	for (let i = 0; i < data.length; i++) {
+		Quote.model
+			.findOne({
+				tnid: data[i].tnid,
+			})
+			.exec(function (err, item) {
+				if (err) {
+					logger.error(
+						{
+							error: err,
+						},
+						'API updateBulk Quote'
+					);
+					return;
+				}
+				if (!item) {
+					logger.error(
+						{
+							error: 'No Item',
+						},
+						'API updateBulk Quote'
+					);
+					return;
+				}
+
+				item.getUpdateHandler(req).process(data[i], function (err) {
+					if (err) {
+						logger.error(
+							{
+								error: err,
+							},
+							'API updateBulk Quote'
+						);
+						return res.apiError('create error', err);
+					}
+
+					res.apiResponse({
+						Quote: item,
+					});
+				});
+			});
+	}
 };
