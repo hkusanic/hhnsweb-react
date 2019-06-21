@@ -125,7 +125,7 @@ export class TranscriptionDetails extends React.Component {
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(lectureDetails.created_date).toDateString()}
+												{new Date(lectureDetails.created_date_time).toDateString()}
 											</time>
 										</li>
 										<li>
