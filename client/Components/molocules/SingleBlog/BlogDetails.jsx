@@ -77,10 +77,10 @@ export class BlogDetails extends Component {
 									<a className="textColor">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.title_en
-												: this.props.location.state.title_ru
-												? this.props.location.state.title_ru
-												: this.props.location.state.title_en
+												? this.props.location.state.en.title
+												: this.props.location.state.ru.title
+												? this.props.location.state.ru.title
+												: this.props.location.state.en.title
 										)}
 									</a>
 								</li>
@@ -132,10 +132,10 @@ export class BlogDetails extends Component {
 										{blogDetails &&
 											renderHTML(
 												reactCookie.load('languageCode') === 'en'
-													? blogDetails.title_en
-													: blogDetails.title_ru
-													? blogDetails.title_ru
-													: blogDetails.title_en
+													? blogDetails.en.title
+													: blogDetails.ru.title
+													? blogDetails.ru.title
+													: blogDetails.en.title
 											)}
 									</h3>
 									<ul className="post-creative-meta">
@@ -158,10 +158,10 @@ export class BlogDetails extends Component {
 										{blogDetails &&
 											renderHTML(
 												reactCookie.load('languageCode') === 'en'
-													? blogDetails.body_en
-													: blogDetails.body_ru
-													? blogDetails.body_ru
-													: blogDetails.body_en
+													? blogDetails.en.body
+													: blogDetails.ru.body
+													? blogDetails.ru.body
+													: blogDetails.en.body
 											)}
 									</div>
 									<div>
