@@ -27,7 +27,7 @@ export class SingleQuote extends React.Component {
 						<div class="quote-modern-text">
 							<div class="quote-modern-info">
 								<cite class="quote-modern-cite">
-									{moment(this.props.quote.date, 'YYYYMMDDTHHmmssZ').format(
+									{moment(this.props.quote.quote_date, 'YYYYMMDDTHHmmssZ').format(
 										'MMM Do'
 									)}
 								</cite>
