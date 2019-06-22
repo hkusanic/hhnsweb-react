@@ -19,7 +19,7 @@ Lecture.add({
 	audio_link: { type: Types.Url },
 	soundcloud_link: { type: Types.Url },
 	service: { type: String },
-	dub: { type: String },
+	dub: { type: String }, // Rusian Dub
 	publish_in_book: { type: String },
 	transcribe_filter: { type: Boolean, default: false },
 	translation_required: { type: Boolean, default: true },

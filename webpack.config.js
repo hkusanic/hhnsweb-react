@@ -103,6 +103,11 @@ module.exports = {
 		},
 		],
 	},
+	externals: {
+		'Config': JSON.stringify({
+			sadhanaSheetAllowedDays: 5
+		})
+	  },
 	resolve: {
 		extensions: ['.js', '.jsx', '.scss'],
 	},

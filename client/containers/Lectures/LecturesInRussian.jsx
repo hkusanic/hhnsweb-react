@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getRussianDubbedLecture } from '../../actions/lectureActions';
 import { Link } from 'react-router-dom';
+=======
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getRussianDubbedLecture } from "../../actions/lectureActions"
+import { Link } from 'react-router-dom'
+import { Card } from 'antd';
+>>>>>>> df2694bcc4ef358c7f6af7ca78e4a792e6a6c19c
 
 class RussiaDubbedLectures extends Component {
 	constructor (props) {
@@ -22,30 +30,21 @@ class RussiaDubbedLectures extends Component {
 		});
 	}
 
-	render () {
-		return (
-			<div>
-				{this.props.lectureDetails
-					&& this.props.lectureDetails.lectures
-					&& this.props.lectureDetails.lectures.map(eachLecture => {
-						return (
-							<div style={{ paddingBottom: '6%' }}>
-								<Link
-									key={eachLecture.id}
-									to={`/${eachLecture.author}/${eachLecture.en.topic}`}
-								>{`New**  ${eachLecture.en.topic}`}</Link>
-								<p
-									style={{ marginTop: '0px' }}
-									key={eachLecture.id}
-								>{`Posted On     ${new Date(
-										eachLecture.created_date
-									).toLocaleString('en-GB')}`}</p>
-							</div>
-						);
-					})}
-			</div>
-		);
-	}
+
+    render() {
+        return (
+            <Card className="centerAlign recentActivityCard" title='Lecture Dubbed in Russian' >
+                {this.props.lectureDetails &&
+                    this.props.lectureDetails.lectures &&
+                    this.props.lectureDetails.lectures.map(eachLecture => {
+                        return <div style={{ paddingBottom: "6%" }} >
+                            <Link key={eachLecture.id} to={`/${eachLecture.author}/${eachLecture.en.topic}`} >{`New**     ${eachLecture.en.topic}`}</Link>
+                            <p style={{ marginTop: "0px" }} key={eachLecture.id}>{`Posted On     ${(new Date(eachLecture.created_date)).toLocaleString("en-GB")}`}</p>
+                        </div>
+                    })}
+            </Card>
+        );
+    }
 }
 
 const mapStateToProps = state => {

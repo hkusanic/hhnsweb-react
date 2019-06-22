@@ -97,7 +97,7 @@ export class SummariesDetails extends React.Component {
 					</div>
 				</section>
 				<section className="section section-lg">
-					<div className="container padLeftBlog">
+					<div className="container">
 						<div className="row row-50">
 							<div className="col-lg-12">
 								<article className="post-creative">
@@ -116,7 +116,7 @@ export class SummariesDetails extends React.Component {
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
 												{new Date(
-													this.props.location.state.created_date
+													this.props.location.state.created_date_time
 												).toDateString()}
 											</time>
 										</li>
@@ -136,14 +136,14 @@ export class SummariesDetails extends React.Component {
 											)}
 									</div>
 								</article>
-								<Collapse bordered={false} style={{ marginTop: '10px' }}>
+								<Collapse expandIcon={({ isActive }) => <Icon type="caret-right" style={{display:'none'}} />} bordered={false} style={{ marginTop: '10px' }}>
 									<Panel
 										header="Audio Details"
 										key="1"
 										style={{
-											borderTop: '2px solid #e8e8e8',
-											borderBottom: 'none',
-											fontSize: '1.5rem',
+											borderTop: '1px solid #e8e8e8',
+											borderBottom: '1px solid #e8e8e8',
+											fontSize: '25px',
 										}}
 									>
 										<div style={{ paddingTop: '20px', fontSize: '14px' }}>

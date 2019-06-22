@@ -7,7 +7,7 @@ import moment from 'moment';
 import { createSadhana } from '../../../actions/sadhanaAction';
 import { connect } from 'react-redux';
 import { relative } from 'path';
-
+const Config = require('Config');
 const { TextArea } = Input;
 
 class AddSadhana extends React.Component {
@@ -65,8 +65,8 @@ class AddSadhana extends React.Component {
 	disabledDate(current) {
 		const notAllowedDates = this.props.notAllowedDates;
 		let days = 2;
-		if (process.env.sadhanaSheetAllowedDays) {
-			days = process.env.sadhanaSheetAllowedDays;
+		if (Config.sadhanaSheetAllowedDays) {
+			days = Config.sadhanaSheetAllowedDays;
 		}
 		if (current > moment().endOf('day') || current < moment().subtract(days, 'days'))
 			return true
@@ -140,8 +140,8 @@ class AddSadhana extends React.Component {
 	dateRender = current => {
 		const style = {};
 		let days = 2;
-		if (process.env.sadhanaSheetAllowedDays) {
-			days = process.env.sadhanaSheetAllowedDays;
+		if (Config.sadhanaSheetAllowedDays) {
+			days = Config.sadhanaSheetAllowedDays;
 		}
 		const notAllowedDates = this.props.notAllowedDates;
 		
@@ -202,9 +202,11 @@ class AddSadhana extends React.Component {
 				</section> */}
 				<div className="row justify-content-center">
 					<section className="card col-lg-8 sadhanaAdd">
+<<<<<<< HEAD
+=======
+
+>>>>>>> df2694bcc4ef358c7f6af7ca78e4a792e6a6c19c
 						<div className="card-body">
-						<Button type="danger" onClick={this.props.addSadhanaSheet}
-				className="closeAddSadhanaCard">X</Button>
 							<div>
 								<Form>
 									<div className="row">

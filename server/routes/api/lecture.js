@@ -1,5 +1,7 @@
 var keystone = require('keystone');
 let logger = require('./../../logger/logger');
+const axios = require('axios');
+var fs = require('fs');
 
 /**
  * List Page
@@ -660,69 +662,144 @@ exports.getlecturebyid = function (req, res) {
 			});
 		});
 };
-
 exports.updateBulkNew = function (req, res) {
 	logger.info(
-		{
+	  {
 			req: req,
-		},
-		'API updateBulk lecture'
+	  },
+	  'API updateBulk blog'
 	);
 	if (!req.body) {
-		logger.error(
+	  logger.error(
 			{
-				error: 'No Data',
+		  error: 'No Data',
 			},
-			'API updateBulk lecture'
-		);
-		res.json({
+			'API updateBulk blog'
+	  );
+	  res.json({
 			error: {
-				title: 'Data is Reqired',
-				detail: 'Mandatory values are missing. Please check.',
+		  title: 'Data is Reqired',
+		  detail: 'Mandatory values are missing. Please check.',
 			},
-		});
+	  });
 	}
 	let data = req.body;
 	for (let i = 0; i < data.length; i++) {
-		Lecture.model
+	  Lecture.model
 			.findOne({
-				tnid: data[i].tnid,
+		  tnid: data[i].tnid,
 			})
 			.exec(function (err, item) {
-				if (err) {
+		  if (err) {
 					logger.error(
-						{
+			  {
 							error: err,
-						},
-						'API updateBulk lecture'
+			  },
+			  'API updateBulk blog'
 					);
+					// return res.apiError('database error', err);
 					return;
-				}
-				if (!item) {
+		  }
+		  if (!item) {
 					logger.error(
-						{
+			  {
 							error: 'No Item',
-						},
-						'API updateBulk lecture'
+			  },
+			  'API updateBulk blog'
 					);
+					// return res.apiError('not found !!');
 					return;
-				}
+		  }
 
-				item.getUpdateHandler(req).process(data[i], function (err) {
+		  item.getUpdateHandler(req).process(data[i], function (err) {
 					if (err) {
-						logger.error(
+			  logger.error(
 							{
-								error: err,
+				  error: err,
 							},
-							'API updateBulk lecture'
-						);
-						return res.apiError('create error', err);
+							'API updateBulk blog'
+			  );
+			  return res.apiError('create error', err);
 					}
 
 					res.apiResponse({
-						Blog: item,
+			  Blog: item,
 					});
-				});
+		  });
 			});
 	}
+};
+
+/**
+ * To generate s3 object using configuration object
+ * @param {object} awsConfig
+ * @param {string} awsConfig.accessKeyId Access Key of AWS configuration
+ * @param {string} awsConfig.secretAccessKey Access Secret Key(Token) of AWS configuration
+ */
+function generateS3Object (awsConfig) {
+	const awsConfigObj = {
+		accessKeyId: process.env.AWS_KEY,
+		secretAccessKey: process.env.AWS_SECRET,
+		s3BucketEndpoint: false,
+		endpoint: 'https://s3.amazonaws.com',
+	};
+	AWS.config.update(awsConfigObj);
+	return new AWS.S3();
+}
+
+async function uploadpdfToAWS (filePath, req, response) {
+	console.log('uploadToAWS() ====>>> Trying to upload pdf from aws');
+	let content = await readFilePromise(filePath);
+	let base64data = new Buffer(content, 'binary');
+	let myKey = `uploads/transcription/'${Date.now()}`;
+	let params = {
+		Bucket: process.env.AWS_BUCKET,
+		Key: myKey,
+		Body: base64data,
+		ACL: 'public-read',
+	};
+	const s3 = generateS3Object();
+	s3.upload(params, (err, data) => {
+		if (err) console.error(`Upload Error ${err}`);
+		console.log('Upload Completed');
+		return response.json({
+			url: data.Location,
+		});
+	});
+}
+
+exports.uploadPDF = async (req, response) => {
+	var delayInMilliseconds = 1000;
+	let filePath = './uploads/transcription/' + Date.now() + '.pdf';
+	let url = req.body.url;
+	let downloadImage = await download_pdf(url, filePath);
+	if (downloadImage.status) {
+		setTimeout(function () {
+			uploadpdfToAWS(filePath, req, response);
+			console.log('done');
+		}, delayInMilliseconds);
+	}
+
+
+};
+
+const download_pdf = (url, pdf_path) =>
+{
+	console.log('download_pdf() ====>>> Trying to download pdf from old server');
+	axios({
+		url: url,
+		responseType: 'stream',
+	})
+		.then(response => {
+			response.data.pipe(fs.createWriteStream(pdf_path));
+
+			return {
+				status: true,
+				error: '',
+			};
+		})
+		.catch(error => ({
+			status: false,
+			error: 'Error: ' + error.message,
+		}));
 };
