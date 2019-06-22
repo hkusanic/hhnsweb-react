@@ -5,13 +5,13 @@ var https = require('https');
 var httpAgent = new https.Agent();
 httpAgent.maxSockets = 30;
 const readline = require('readline');
-var fs = require("fs");
+var fs = require('fs');
 const axios = require('axios');
 const AWS = require('aws-sdk');
 
 const rl = readline.createInterface({
 	input: process.stdin,
-	output: process.stdout
+	output: process.stdout,
 });
 let apiURL = 'http://localhost:3000';
 rl.question('Please provide the api url\n', (answer) => {
@@ -42,7 +42,7 @@ rl.question('Please provide the api url\n', (answer) => {
 	});
 });
 
-function timeConverter(timestamp) {
+function timeConverter (timestamp) {
 	let date = new Date(timestamp * 1000);
 	return date;
 }
@@ -57,7 +57,7 @@ var cookiejar = rp.jar();
 cookiejar._jar.rejectPublicSuffixes = false;
 cookiejar.setCookie(cookie.toString(), 'https://nrs.niranjanaswami.net');
 
-function uuidv4() {
+function uuidv4 () {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
 		var r = (Math.random() * 16) | 0;
 		var v = c == 'x' ? r : (r & 0x3) | 0x8;
@@ -69,7 +69,7 @@ var englishDataList = [];
 var raussainDataList = [];
 var raussainfinalData = [];
 
-function getEnglishNodeList() {
+function getEnglishNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=blog&pagesize=600&&page=0',
@@ -95,7 +95,7 @@ function getEnglishNodeList() {
 		});
 }
 
-function getEnglishDatainBatches() {
+function getEnglishDatainBatches () {
 	if (englishDataList.length > 0) {
 		let ar = englishDataList.splice(0, 10);
 		getEnglishData(ar, () => {
@@ -108,7 +108,7 @@ function getEnglishDatainBatches() {
 	}
 }
 
-function getEnglishData(ar, callback) {
+function getEnglishData (ar, callback) {
 	const Englishpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -124,38 +124,38 @@ function getEnglishData(ar, callback) {
 		Englishpromise.push(rp(options));
 	});
 	Promise.all(Englishpromise).then(data => {
-			const insertDataPromise = data.map((item, i) => {
-				const body = {
-					uuid: uuidv4(),
-					author: item.name,
-					audio_files: [],
-					tnid: item.tnid,
-					languages: item.tnid != 0 ? '' : 'en',
-					en: {
-						nid: item.nid,
-						created: timeConverter(item.created),
-						changed: timeConverter(item.changed),
-						title: item.title,
-						body: item.body.und[0].value,
-						url: item.url,
-					},
-				};
-				const options = {
-					method: 'POST',
-					uri: `${apiURL}/api/blog/create/`,
-					body: body,
-					json: true,
-					pool: httpAgent,
-					timeout: 6000000,
-					headers: {
-						'User-Agent': 'Request-Promise',
-					},
-				};
-				return rp(options);
+		const insertDataPromise = data.map((item, i) => {
+			const body = {
+				uuid: uuidv4(),
+				author: item.name,
+				audio_files: [],
+				tnid: item.tnid,
+				languages: item.tnid != 0 ? '' : 'en',
+				en: {
+					nid: item.nid,
+					created: timeConverter(item.created),
+					changed: timeConverter(item.changed),
+					title: item.title,
+					body: item.body.und[0].value,
+					url: item.url,
+				},
+			};
+			const options = {
+				method: 'POST',
+				uri: `${apiURL}/api/blog/create/`,
+				body: body,
+				json: true,
+				pool: httpAgent,
+				timeout: 6000000,
+				headers: {
+					'User-Agent': 'Request-Promise',
+				},
+			};
+			return rp(options);
 
-			});
-			return Promise.all(insertDataPromise);
-		})
+		});
+		return Promise.all(insertDataPromise);
+	})
 		.then(data => {
 			console.log('data inserted =====>>>>', data.length);
 			callback();
@@ -166,7 +166,7 @@ function getEnglishData(ar, callback) {
 
 }
 
-function getRuNodeList() {
+function getRuNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=blog&pagesize=6000&&page=0',
@@ -192,7 +192,7 @@ function getRuNodeList() {
 		});
 }
 
-function getRaussainDatainBatches() {
+function getRaussainDatainBatches () {
 	if (raussainDataList.length > 0) {
 		let ar = raussainDataList.splice(0, 10);
 		getRaussainData(ar, () => {
@@ -204,7 +204,7 @@ function getRaussainDatainBatches() {
 		updateDatabase();
 	}
 }
-function getRaussainData(ar, callback) {
+function getRaussainData (ar, callback) {
 	const Raussainpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -220,51 +220,51 @@ function getRaussainData(ar, callback) {
 		Raussainpromise.push(rp(options));
 	});
 	Promise.all(Raussainpromise).then(data => {
-			console.log('data Raussainpromise inserted =====>>>>', data.length);
-			for (let i = 0; i < data.length; i++) {
-				if (data[i].tnid != 0) {
-					const temp = {
-						tnid: data[i].tnid,
-						languages: 'both',
-						ru: {
-							nid: data[i].nid,
-							created: timeConverter(data[i].created),
-							changed: timeConverter(data[i].changed),
-							title: data[i].title,
-							body: data[i].body.und[0].value,
-							url: data[i].url,
-						},
-					};
-					raussainfinalData.push(temp);
-				} else {
-					const body = {
-						uuid: uuidv4(),
-						author: data[i].name,
-						audio_files: [],
-						tnid: data[i].tnid,
-						languages: 'ru',
-						ru: {
-							nid: data[i].nid,
-							created: timeConverter(data[i].created),
-							changed: timeConverter(data[i].changed),
-							title: data[i].title,
-							body: data[i].body.und[0].value,
-							url: data[i].url,
-						},
-					};
-					createSingleRUBlogItem(body);
-				}
-
+		console.log('data Raussainpromise inserted =====>>>>', data.length);
+		for (let i = 0; i < data.length; i++) {
+			if (data[i].tnid != 0) {
+				const temp = {
+					tnid: data[i].tnid,
+					languages: 'both',
+					ru: {
+						nid: data[i].nid,
+						created: timeConverter(data[i].created),
+						changed: timeConverter(data[i].changed),
+						title: data[i].title,
+						body: data[i].body.und[0].value,
+						url: data[i].url,
+					},
+				};
+				raussainfinalData.push(temp);
+			} else {
+				const body = {
+					uuid: uuidv4(),
+					author: data[i].name,
+					audio_files: [],
+					tnid: data[i].tnid,
+					languages: 'ru',
+					ru: {
+						nid: data[i].nid,
+						created: timeConverter(data[i].created),
+						changed: timeConverter(data[i].changed),
+						title: data[i].title,
+						body: data[i].body.und[0].value,
+						url: data[i].url,
+					},
+				};
+				createSingleRUBlogItem(body);
 			}
-			callback();
-		})
+
+		}
+		callback();
+	})
 		.catch(err => {
 			console.log('error inside the getRaussainData() ===>>>', err);
 		});
 
 }
 
-function updateDatabase() {
+function updateDatabase () {
 	let options = {
 		method: 'POST',
 		uri: `${apiURL}/api/blog/updateBulkNew/`,
@@ -283,7 +283,7 @@ function updateDatabase() {
 	});
 }
 
-function createSingleRUBlogItem(body) {
+function createSingleRUBlogItem (body) {
 	const options = {
 		method: 'POST',
 		uri: `${apiURL}/api/blog/create/`,
@@ -304,14 +304,14 @@ function createSingleRUBlogItem(body) {
 
 /* #endregion*/
 
-/*#region Lectures*/
+/* #region Lectures*/
 
 var englishLectureDataList = [];
 var russianLectureDataList = [];
 var russianLectureFinalData = [];
 
 
-function getEnglishLectureNodeList() {
+function getEnglishLectureNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=lecture&pagesize=10000&&page=0',
@@ -337,7 +337,7 @@ function getEnglishLectureNodeList() {
 		});
 }
 
-function getEnglishLectureDatainBatches() {
+function getEnglishLectureDatainBatches () {
 	if (englishLectureDataList.length > 0) {
 		let ar = englishLectureDataList.splice(0, 10);
 		getEnglishLectureData(ar, () => {
@@ -350,7 +350,7 @@ function getEnglishLectureDatainBatches() {
 	}
 }
 
-function getEnglishLectureData(ar, callback) {
+function getEnglishLectureData (ar, callback) {
 	const Englishpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -366,49 +366,49 @@ function getEnglishLectureData(ar, callback) {
 		Englishpromise.push(rp(options));
 	});
 	Promise.all(Englishpromise).then(data => {
-			const insertDataPromise = data.map((item, i) => {
-				const body = {
-					uuid: uuidv4(),
-					tnid: ar[i].tnid,
-					languages: item.tnid != 0 ? '' : 'en',
-					author: item.author,
-					soundcloud_link: item.soundcloud,
-					lecture_date: item.date,
-					published_date: timeConverter(ar[i].created),
-					created_date_time: timeConverter(ar[i].created),
-					duration: item.duration,
-					part: item.part,
-					chapter: item.chapter,
-					verse: item.verse,
-					audio_link: item.file,
-					en: {
-						nid: ar[i].nid,
-						title: item.title,
-						event: item.event,
-						topic: item.topic,
-						location: item.location,
-						translation: item.translation,
-					},
-					counters: {
-						downloads: item.downloads,
-					},
-				};
-				const options = {
-					method: 'POST',
-					uri: `${apiURL}/api/lecture/create/`,
-					body: body,
-					json: true,
-					pool: httpAgent,
-					timeout: 6000000,
-					headers: {
-						'User-Agent': 'Request-Promise',
-					},
-				};
-				return rp(options);
+		const insertDataPromise = data.map((item, i) => {
+			const body = {
+				uuid: uuidv4(),
+				tnid: ar[i].tnid,
+				languages: item.tnid != 0 ? '' : 'en',
+				author: item.author,
+				soundcloud_link: item.soundcloud,
+				lecture_date: item.date,
+				published_date: timeConverter(ar[i].created),
+				created_date_time: timeConverter(ar[i].created),
+				duration: item.duration,
+				part: item.part,
+				chapter: item.chapter,
+				verse: item.verse,
+				audio_link: item.file,
+				en: {
+					nid: ar[i].nid,
+					title: item.title,
+					event: item.event,
+					topic: item.topic,
+					location: item.location,
+					translation: item.translation,
+				},
+				counters: {
+					downloads: item.downloads,
+				},
+			};
+			const options = {
+				method: 'POST',
+				uri: `${apiURL}/api/lecture/create/`,
+				body: body,
+				json: true,
+				pool: httpAgent,
+				timeout: 6000000,
+				headers: {
+					'User-Agent': 'Request-Promise',
+				},
+			};
+			return rp(options);
 
-			});
-			return Promise.all(insertDataPromise);
-		})
+		});
+		return Promise.all(insertDataPromise);
+	})
 		.then(data => {
 			console.log('data inserted =====>>>>', data.length);
 			callback();
@@ -419,7 +419,7 @@ function getEnglishLectureData(ar, callback) {
 
 }
 
-function getRuLectureNodeList() {
+function getRuLectureNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=lecture&pagesize=6000&&page=0',
@@ -445,7 +445,7 @@ function getRuLectureNodeList() {
 		});
 }
 
-function getRussianLectureDatainBatches() {
+function getRussianLectureDatainBatches () {
 	if (russianLectureDataList.length > 0) {
 		let ar = russianLectureDataList.splice(0, 10);
 		getRussianLectureData(ar, () => {
@@ -458,7 +458,7 @@ function getRussianLectureDatainBatches() {
 	}
 }
 
-function getRussianLectureData(ar, callback) {
+function getRussianLectureData (ar, callback) {
 	const Raussainpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -474,59 +474,59 @@ function getRussianLectureData(ar, callback) {
 		Raussainpromise.push(rp(options));
 	});
 	Promise.all(Raussainpromise).then(data => {
-			console.log('data Raussainpromise inserted =====>>>>', data.length);
-			for (let i = 0; i < data.length; i++) {
-				if (ar[i].tnid !== 0) {
-					const temp = {
-						tnid: ar[i].tnid,
-						languages: 'both',
-						ru: {
-							nid: ar[i].nid,
-							title: data[i].title,
-							event: data[i].event,
-							topic: data[i].topic,
-							location: data[i].location,
-							translation: data[i].translation,
-						},
-					};
-					russianLectureFinalData.push(temp);
-				} else {
-					const body = {
-						uuid: uuidv4(),
-						tnid: ar[i].tnid,
-						languages: 'ru',
-						author: data[i].author,
-						soundcloud_link: data[i].soundcloud,
-						lecture_date: data[i].date,
-						published_date: timeConverter(ar[i].created),
-						duration: data[i].duration,
-						part: data[i].part,
-						chapter: data[i].chapter,
-						verse: data[i].verse,
-						audio_link: data[i].file,
-						created_date_time: timeConverter(ar[i].created),
-						ru: {
-							nid: ar[i].nid,
-							title: data[i].title,
-							event: data[i].event,
-							topic: data[i].topic,
-							location: data[i].location,
-							translation: data[i].translation,
-						},
-					};
-					createSingleRULectureItem(body);
-				}
-
+		console.log('data Raussainpromise inserted =====>>>>', data.length);
+		for (let i = 0; i < data.length; i++) {
+			if (ar[i].tnid !== 0) {
+				const temp = {
+					tnid: ar[i].tnid,
+					languages: 'both',
+					ru: {
+						nid: ar[i].nid,
+						title: data[i].title,
+						event: data[i].event,
+						topic: data[i].topic,
+						location: data[i].location,
+						translation: data[i].translation,
+					},
+				};
+				russianLectureFinalData.push(temp);
+			} else {
+				const body = {
+					uuid: uuidv4(),
+					tnid: ar[i].tnid,
+					languages: 'ru',
+					author: data[i].author,
+					soundcloud_link: data[i].soundcloud,
+					lecture_date: data[i].date,
+					published_date: timeConverter(ar[i].created),
+					duration: data[i].duration,
+					part: data[i].part,
+					chapter: data[i].chapter,
+					verse: data[i].verse,
+					audio_link: data[i].file,
+					created_date_time: timeConverter(ar[i].created),
+					ru: {
+						nid: ar[i].nid,
+						title: data[i].title,
+						event: data[i].event,
+						topic: data[i].topic,
+						location: data[i].location,
+						translation: data[i].translation,
+					},
+				};
+				createSingleRULectureItem(body);
 			}
-			callback();
-		})
+
+		}
+		callback();
+	})
 		.catch(err => {
 			console.log('error inside the getRussianLectureData() ===>>>', err);
 		});
 
 }
 
-function updateDatabaseLectures() {
+function updateDatabaseLectures () {
 	let options = {
 		method: 'POST',
 		uri: `${apiURL}/api/lecture/updateBulkNew/`,
@@ -545,7 +545,7 @@ function updateDatabaseLectures() {
 	});
 }
 
-function createSingleRULectureItem(body) {
+function createSingleRULectureItem (body) {
 	const options = {
 		method: 'POST',
 		uri: `${apiURL}/api/lecture/create/`,
@@ -565,10 +565,10 @@ function createSingleRULectureItem(body) {
 }
 
 
-/*#endregion*/
+/* #endregion*/
 
 
-/*#region Transcription*/
+/* #region Transcription*/
 
 var englishTranscriptionDataList = [];
 var russianTranscriptionDataList = [];
@@ -576,7 +576,7 @@ var transcriptionFinalData = [];
 let errorList = [];
 let urlDataList = [];
 
-function getEnglishTranscriptionNodeList() {
+function getEnglishTranscriptionNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=transcription&pagesize=10000&&page=0',
@@ -601,7 +601,7 @@ function getEnglishTranscriptionNodeList() {
 		});
 }
 
-function getEnglishTranscriptionDatainBatches() {
+function getEnglishTranscriptionDatainBatches () {
 	if (englishTranscriptionDataList.length > 0) {
 		let ar = englishTranscriptionDataList.splice(0, 10);
 		getEnglishTranscriptionData(ar, () => {
@@ -611,11 +611,11 @@ function getEnglishTranscriptionDatainBatches() {
 		});
 	} else {
 		getRuTranscriptionNodeList();
-		//updateDatabaseTranscriptions();
+		// updateDatabaseTranscriptions();
 	}
 }
 
-function getEnglishTranscriptionData(ar, callback) {
+function getEnglishTranscriptionData (ar, callback) {
 	const Englishpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -631,50 +631,50 @@ function getEnglishTranscriptionData(ar, callback) {
 		Englishpromise.push(rp(options));
 	});
 	Promise.all(Englishpromise).then((data) => {
-			console.log('data EnglishPromise inserted =====>>>>', data.length);
-			for (let i = 0; i < data.length; i++) {
-				if (data[i].audio.nid) {
-					let filePath = './uploads/transcription/' + Date.now() + '.pdf';
-					axios({
-						url: data[i].file,
-						responseType: 'stream'
-					})
-						.then(response => {
-							response.data.pipe(fs.createWriteStream(filePath));
-							console.log('File downloaded sucessfully');
-							const temp = {
-								tnid: data[i].audio.nid,
-								en: {
-									transcription: {
-										nid: ar[i].nid,
-										title: data[i].title,
-										text: data[i].body,
-										attachment_name: data[i].file,
-										attachment_link: filePath,
-									},
+		console.log('data EnglishPromise inserted =====>>>>', data.length);
+		for (let i = 0; i < data.length; i++) {
+			if (data[i].audio.nid) {
+				let filePath = './uploads/transcription/' + Date.now() + '.pdf';
+				axios({
+					url: data[i].file,
+					responseType: 'stream',
+				})
+					.then(response => {
+						response.data.pipe(fs.createWriteStream(filePath));
+						console.log('File downloaded sucessfully');
+						const temp = {
+							tnid: data[i].audio.nid,
+							en: {
+								transcription: {
+									nid: ar[i].nid,
+									title: data[i].title,
+									text: data[i].body,
+									attachment_name: data[i].file,
+									attachment_link: filePath,
 								},
-							};
-							transcriptionFinalData.push(temp);
-						})
-						.catch(error => {
-							console.log('Error while downloading file ==>> ', error)
-						});
-					
-				} else {
-					console.log(`Invalid or Missing Reference in data with nid ${ar[i].nid}`);
-					let str = `En ${ar[i].nid}`;
-					errorList.push(str);
-				}
+							},
+						};
+						transcriptionFinalData.push(temp);
+					})
+					.catch(error => {
+						console.log('Error while downloading file ==>> ', error);
+					});
+
+			} else {
+				console.log(`Invalid or Missing Reference in data with nid ${ar[i].nid}`);
+				let str = `En ${ar[i].nid}`;
+				errorList.push(str);
 			}
-			callback();
-		})
+		}
+		callback();
+	})
 		.catch(err => {
 			console.log('error inside the getEnglishTranscriptionData() ===>>>', err);
 		});
 
 }
 
-function getRuTranscriptionNodeList() {
+function getRuTranscriptionNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=transcription&pagesize=6000&&page=0',
@@ -700,7 +700,7 @@ function getRuTranscriptionNodeList() {
 		});
 }
 
-function getRussianTranscriptionDatainBatches() {
+function getRussianTranscriptionDatainBatches () {
 	if (russianTranscriptionDataList.length > 0) {
 		let ar = russianTranscriptionDataList.splice(0, 10);
 		getRussianTranscriptionData(ar, () => {
@@ -713,7 +713,7 @@ function getRussianTranscriptionDatainBatches() {
 	}
 }
 
-function getRussianTranscriptionData(ar, callback) {
+function getRussianTranscriptionData (ar, callback) {
 	const Raussainpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -729,42 +729,42 @@ function getRussianTranscriptionData(ar, callback) {
 		Raussainpromise.push(rp(options));
 	});
 	Promise.all(Raussainpromise).then(data => {
-			console.log('data Raussainpromise inserted =====>>>>', data.length);
-			for (let i = 0; i < data.length; i++) {
-				if (data[i].audio.nid) {
-					let filePath = './uploads/transcription/' + Date.now() + '.pdf';
-					axios({
-						url: data[i].file,
-						responseType: 'stream'
-					})
-						.then(response => {
-							response.data.pipe(fs.createWriteStream(filePath));
-							console.log('File downloaded sucessfully');
-							const temp = {
-								tnid: data[i].audio.nid,
-								ru: {
-									transcription: {
-										nid: ar[i].nid,
-										title: data[i].title,
-										text: data[i].body,
-										attachment_name: data[i].file,
-										attachment_link: filePath,
-									},
+		console.log('data Raussainpromise inserted =====>>>>', data.length);
+		for (let i = 0; i < data.length; i++) {
+			if (data[i].audio.nid) {
+				let filePath = './uploads/transcription/' + Date.now() + '.pdf';
+				axios({
+					url: data[i].file,
+					responseType: 'stream',
+				})
+					.then(response => {
+						response.data.pipe(fs.createWriteStream(filePath));
+						console.log('File downloaded sucessfully');
+						const temp = {
+							tnid: data[i].audio.nid,
+							ru: {
+								transcription: {
+									nid: ar[i].nid,
+									title: data[i].title,
+									text: data[i].body,
+									attachment_name: data[i].file,
+									attachment_link: filePath,
 								},
-							};
-							transcriptionFinalData.push(temp);
-						})
-						.catch(error => {
-							console.log('Error while downloading file ==>> ', error)
-						});
-				} else {
-					console.log(`Invalid or Missing Reference in data with nid ${ar[i].nid}`);
-					let str = `Ru ${ar[i].nid}`;
-					errorList.push(str);
-				}
+							},
+						};
+						transcriptionFinalData.push(temp);
+					})
+					.catch(error => {
+						console.log('Error while downloading file ==>> ', error);
+					});
+			} else {
+				console.log(`Invalid or Missing Reference in data with nid ${ar[i].nid}`);
+				let str = `Ru ${ar[i].nid}`;
+				errorList.push(str);
 			}
-			callback();
-		})
+		}
+		callback();
+	})
 		.catch(err => {
 			console.log('error inside the getRussianTranscriptionData() ===>>>', err);
 		});
@@ -779,26 +779,25 @@ function getRussianTranscriptionData(ar, callback) {
  */
 
 
-async function generateS3Object(awsConfig) {
+async function generateS3Object (awsConfig) {
 	const awsConfigObj = {
 		accessKeyId: 'AKIAJJPND6YRD2UHG2YQ',
 		secretAccessKey: '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',
 		s3BucketEndpoint: false,
-		endpoint: 'https://s3.amazonaws.com'
+		endpoint: 'https://s3.amazonaws.com',
 	};
 	AWS.config.update(awsConfigObj);
 	return new AWS.S3();
 }
 
 
-
-async function updateDatabaseTranscriptions() {
+async function updateDatabaseTranscriptions () {
 	let counter0 = 0;
 	let counter1 = 0;
-	for(let i = 0; i< transcriptionFinalData.length; i++){
-		let filePathEN = transcriptionFinalData[i].en && transcriptionFinalData[i].en.transcription.attachment_link? transcriptionFinalData[i].en.transcription.attachment_link : null;
-		let filePathRU = transcriptionFinalData[i].ru && transcriptionFinalData[i].ru.transcription.attachment_link? transcriptionFinalData[i].ru.transcription.attachment_link : null;
-		if(filePathEN){
+	for (let i = 0; i < transcriptionFinalData.length; i++) {
+		let filePathEN = transcriptionFinalData[i].en && transcriptionFinalData[i].en.transcription.attachment_link ? transcriptionFinalData[i].en.transcription.attachment_link : null;
+		let filePathRU = transcriptionFinalData[i].ru && transcriptionFinalData[i].ru.transcription.attachment_link ? transcriptionFinalData[i].ru.transcription.attachment_link : null;
+		if (filePathEN) {
 			counter0++;
 			let content = await fs.readFileSync(filePathEN);
 			let base64data = new Buffer(content, 'binary');
@@ -807,7 +806,7 @@ async function updateDatabaseTranscriptions() {
 				Bucket: 'nrsblog',
 				Key: myKey,
 				Body: base64data,
-				ACL: 'public-read'
+				ACL: 'public-read',
 			};
 			const s3 = await generateS3Object();
 			let url;
@@ -819,11 +818,11 @@ async function updateDatabaseTranscriptions() {
 					transcriptionFinalData[i].en.transcription.attachment_link = url;
 					counter1++;
 				}
-				}
+			}
 			);
-			
+
 		}
-		if(filePathRU){
+		if (filePathRU) {
 			counter0++;
 			let content = await fs.readFileSync(filePathRU);
 			let base64data = new Buffer(content, 'binary');
@@ -832,7 +831,7 @@ async function updateDatabaseTranscriptions() {
 				Bucket: 'nrsblog',
 				Key: myKey,
 				Body: base64data,
-				ACL: 'public-read'
+				ACL: 'public-read',
 			};
 			const s3 = await generateS3Object();
 			let url;
@@ -844,13 +843,13 @@ async function updateDatabaseTranscriptions() {
 					transcriptionFinalData[i].ru.transcription.attachment_link = url;
 					counter1++;
 				}
-				}
+			}
 			);
-			
+
 		}
 	}
 	let timer = setInterval(() => {
-		if(counter1 === counter0){
+		if (counter1 === counter0) {
 			let options = {
 				method: 'POST',
 				uri: `${apiURL}/api/lecture/updateBulkNew/`,
@@ -871,27 +870,27 @@ async function updateDatabaseTranscriptions() {
 			});
 			clearInterval(timer);
 		}
-		else{
+		else {
 			console.log('Waiting for upload to complete');
 		}
-	}, 2000)
-	
+	}, 2000);
+
 }
 
-function writeErrors() {
-	fs.writeFile("transcript_errors.txt", errorList, (err) => {
+function writeErrors () {
+	fs.writeFile('transcript_errors.txt', errorList, (err) => {
 		if (err) console.log(err);
-		console.log("Successfully Written to File.");
+		console.log('Successfully Written to File.');
 	});
 }
 
-/*#endregion*/
+/* #endregion*/
 
-/*#region Summary */
+/* #region Summary */
 var russianSummaryDataList = [];
 var summaryFinalData = [];
 
-function getRuSummaryNodeList() {
+function getRuSummaryNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/rest/node.json?parameters%5Btype%5D=summary&pagesize=6000&&page=0',
@@ -917,7 +916,7 @@ function getRuSummaryNodeList() {
 		});
 }
 
-function getRussianSummaryDatainBatches() {
+function getRussianSummaryDatainBatches () {
 	if (russianSummaryDataList.length > 0) {
 		let ar = russianSummaryDataList.splice(0, 10);
 		getRussianSummaryData(ar, () => {
@@ -932,7 +931,7 @@ function getRussianSummaryDatainBatches() {
 
 }
 
-function getRussianSummaryData(ar, callback) {
+function getRussianSummaryData (ar, callback) {
 	const Raussainpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -948,41 +947,41 @@ function getRussianSummaryData(ar, callback) {
 		Raussainpromise.push(rp(options));
 	});
 	Promise.all(Raussainpromise).then(data => {
-			console.log('data Raussainpromise inserted =====>>>>', data.length);
-			for (let i = 0; i < data.length; i++) {
-				if (data[i].audio.nid && data[i].audio.nid != 0) {
-					let tnid;
-					getTNIDfromLecture(data[i].audio.nid).then((val) => {
-						tnid = val;
-						if (tnid != 0) {
-							const temp = {
-								tnid: tnid,
-								ru: {
-									summary: {
-										nid: ar[i].nid,
-										text: data[i].body,
-										attachment_name: data[i].audio.title,
-										attachment_link: data[i].audio.file,
-									},
+		console.log('data Raussainpromise inserted =====>>>>', data.length);
+		for (let i = 0; i < data.length; i++) {
+			if (data[i].audio.nid && data[i].audio.nid != 0) {
+				let tnid;
+				getTNIDfromLecture(data[i].audio.nid).then((val) => {
+					tnid = val;
+					if (tnid != 0) {
+						const temp = {
+							tnid: tnid,
+							ru: {
+								summary: {
+									nid: ar[i].nid,
+									text: data[i].body,
+									attachment_name: data[i].audio.title,
+									attachment_link: data[i].audio.file,
 								},
-							};
-							summaryFinalData.push(temp);
-						}
-					});
-				} else {
-					console.log(`Invalid or Missing Reference in data with nid ${data[i].audio.nid}`);
+							},
+						};
+						summaryFinalData.push(temp);
+					}
+				});
+			} else {
+				console.log(`Invalid or Missing Reference in data with nid ${data[i].audio.nid}`);
 
-				}
 			}
-			callback();
-		})
+		}
+		callback();
+	})
 		.catch(err => {
 			console.log('error inside the getRussianSummaryData() ===>>>', err);
 		});
 
 }
 
-function getTNIDfromLecture(nid) {
+function getTNIDfromLecture (nid) {
 	const options = {
 		method: 'GET',
 		uri: `https://nrs.niranjanaswami.net/ru/rest/node/${nid}.json`,
@@ -1001,7 +1000,7 @@ function getTNIDfromLecture(nid) {
 
 }
 
-function updateDatabaseSummary() {
+function updateDatabaseSummary () {
 	console.log('updateDatabaseSummary()', summaryFinalData.length);
 	let options = {
 		method: 'POST',
@@ -1022,5 +1021,4 @@ function updateDatabaseSummary() {
 }
 
 
-
-/*#endregion */
+/* #endregion */
