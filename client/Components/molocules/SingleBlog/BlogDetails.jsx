@@ -143,7 +143,7 @@ export class BlogDetails extends Component {
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
 												{blogDetails &&
-													new Date(blogDetails.date).toDateString()}
+													new Date(blogDetails.created_date_time).toDateString()}
 											</time>
 										</li>
 										<li>

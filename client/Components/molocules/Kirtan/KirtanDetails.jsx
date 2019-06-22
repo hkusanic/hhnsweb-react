@@ -122,7 +122,9 @@ export class KirtanDetails extends Component {
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(kirtanDetails.created_date).toDateString()}
+												{new Date(
+													kirtanDetails.created_date_time
+												).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -135,39 +137,42 @@ export class KirtanDetails extends Component {
 								<div style={{ paddingTop: '20px' }}>
 									<table className="maintable">
 										<tbody>
-											<tr>
-												<td>
-													<b>
-														<span>Audio</span>{' '}
-														{maxWidth > mobileBrkPnt ? ':' : null}
-													</b>
-												</td>
-												<td className="padLeftRow downloadDiv">
-													<audio
-														style={{ height: '30px' }}
-														controlsList="nodownload"
-														controls
-													>
-														<source
-															src={renderHTML(kirtanDetails.audio_link)}
-															type="audio/mpeg"
-														/>
-													</audio>
-													<a
-														className="downloadIcon"
-														href={kirtanDetails.audio_link}
-														onClick={() => {
-															this.handleUpdate(kirtanDetails.uuid);
-														}}
-														download="download"
-													>
-														<Icon
-															type="download"
-															style={{ fontSize: '1.5rem' }}
-														/>
-													</a>
-												</td>
-											</tr>
+											{kirtanDetails.audio_link ? (
+												<tr>
+													<td>
+														<b>
+															<span>Audio</span>{' '}
+															{maxWidth > mobileBrkPnt ? ':' : null}
+														</b>
+													</td>
+
+													<td className="padLeftRow downloadDiv">
+														<audio
+															style={{ height: '30px' }}
+															controlsList="nodownload"
+															controls
+														>
+															<source
+																src={renderHTML(kirtanDetails.audio_link)}
+																type="audio/mpeg"
+															/>
+														</audio>
+														<a
+															className="downloadIcon"
+															href={kirtanDetails.audio_link}
+															onClick={() => {
+																this.handleUpdate(kirtanDetails.uuid);
+															}}
+															download="download"
+														>
+															<Icon
+																type="download"
+																style={{ fontSize: '1.5rem' }}
+															/>
+														</a>
+													</td>
+												</tr>
+											) : null}
 										</tbody>
 									</table>
 								</div>

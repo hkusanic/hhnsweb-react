@@ -74,11 +74,6 @@ export class TranscriptionDetails extends React.Component {
 				</div>
 			);
 		}
-<<<<<<< HEAD
-
-		console.log("lectureDetails ====>>>>", lectureDetails);
-=======
->>>>>>> df2694bcc4ef358c7f6af7ca78e4a792e6a6c19c
 		return (
 			<div>
 				<section
@@ -141,11 +136,7 @@ export class TranscriptionDetails extends React.Component {
 										</li>
 									</ul>
 									<div className="row">
-<<<<<<< HEAD
-										<div className="col mx-3 textContent">
-=======
 										<div className="col textContent">
->>>>>>> df2694bcc4ef358c7f6af7ca78e4a792e6a6c19c
 											{renderHTML(
 												reactCookie.load('languageCode') === 'en'
 													? lectureDetails.en.transcription.text
@@ -156,11 +147,7 @@ export class TranscriptionDetails extends React.Component {
 										</div>
 									</div>
 								</article>
-<<<<<<< HEAD
-								<Collapse bordered={false} style={{ marginTop: '10px' }}>
-=======
 								<Collapse expandIcon={({ isActive }) => <Icon type="caret-right" style={{display:'none'}} />} bordered={false} style={{ marginTop: '10px' }}>
->>>>>>> df2694bcc4ef358c7f6af7ca78e4a792e6a6c19c
 									<Panel
 										header="Audio Details"
 										key="1"

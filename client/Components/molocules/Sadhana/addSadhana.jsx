@@ -202,10 +202,6 @@ class AddSadhana extends React.Component {
 				</section> */}
 				<div className="row justify-content-center">
 					<section className="card col-lg-8 sadhanaAdd">
-<<<<<<< HEAD
-=======
-
->>>>>>> df2694bcc4ef358c7f6af7ca78e4a792e6a6c19c
 						<div className="card-body">
 							<div>
 								<Form>

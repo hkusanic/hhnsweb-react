@@ -57,10 +57,6 @@
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-<<<<<<< HEAD
-    "tough-cookie": "^3.0.0",
-=======
->>>>>>> df2694bcc4ef358c7f6af7ca78e4a792e6a6c19c
     "scroll-to-element": "^2.0.3",
     "tough-cookie": "^3.0.0",
     "underscore": "^1.9.1",
