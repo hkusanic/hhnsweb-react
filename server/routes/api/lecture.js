@@ -664,68 +664,68 @@ exports.getlecturebyid = function (req, res) {
 };
 exports.updateBulkNew = function (req, res) {
 	logger.info(
-	  {
+		{
 			req: req,
-	  },
-	  'API updateBulk blog'
+		},
+		'API updateBulk blog'
 	);
 	if (!req.body) {
-	  logger.error(
+		logger.error(
 			{
-		  error: 'No Data',
+				error: 'No Data',
 			},
 			'API updateBulk blog'
-	  );
-	  res.json({
+		);
+		res.json({
 			error: {
-		  title: 'Data is Reqired',
-		  detail: 'Mandatory values are missing. Please check.',
+				title: 'Data is Reqired',
+				detail: 'Mandatory values are missing. Please check.',
 			},
-	  });
+		});
 	}
 	let data = req.body;
 	for (let i = 0; i < data.length; i++) {
-	  Lecture.model
+		Lecture.model
 			.findOne({
-		  tnid: data[i].tnid,
+				tnid: data[i].tnid,
 			})
 			.exec(function (err, item) {
-		  if (err) {
+				if (err) {
 					logger.error(
-			  {
+						{
 							error: err,
-			  },
-			  'API updateBulk blog'
+						},
+						'API updateBulk blog'
 					);
 					// return res.apiError('database error', err);
 					return;
-		  }
-		  if (!item) {
+				}
+				if (!item) {
 					logger.error(
-			  {
+						{
 							error: 'No Item',
-			  },
-			  'API updateBulk blog'
+						},
+						'API updateBulk blog'
 					);
 					// return res.apiError('not found !!');
 					return;
-		  }
+				}
 
-		  item.getUpdateHandler(req).process(data[i], function (err) {
+				item.getUpdateHandler(req).process(data[i], function (err) {
 					if (err) {
-			  logger.error(
+						logger.error(
 							{
-				  error: err,
+								error: err,
 							},
 							'API updateBulk blog'
-			  );
-			  return res.apiError('create error', err);
+						);
+						return res.apiError('create error', err);
 					}
 
 					res.apiResponse({
-			  Blog: item,
+						Blog: item,
 					});
-		  });
+				});
 			});
 	}
 };
