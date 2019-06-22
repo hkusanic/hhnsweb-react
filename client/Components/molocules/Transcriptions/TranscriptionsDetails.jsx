@@ -15,8 +15,8 @@ const Panel = Collapse.Panel;
 const customPanelStyle = {
 	fontSize: '25px',
     color: '#eb7217',
-    borderTop: '2px solid #e8e8e8',
-	borderBottom: 'none',
+    borderTop: '1px solid #e8e8e8',
+	borderBottom: '1px solid #e8e8e8',
   };
 export class TranscriptionDetails extends React.Component {
 	constructor(props) {
@@ -24,6 +24,7 @@ export class TranscriptionDetails extends React.Component {
 		const { resetState } = this.props;
 		resetState();
 	}
+	
 	componentDidMount() {
 		let body = {
 			uuid: this.props.match.params.uuid,
@@ -56,6 +57,7 @@ export class TranscriptionDetails extends React.Component {
 		const { lectureDetails } = this.props;
 		const mobileBrkPnt = 767;
 		const maxWidth = window.screen.width;
+		console.log(lectureDetails);
 
 		if (!lectureDetails) {
 			return (
@@ -72,8 +74,6 @@ export class TranscriptionDetails extends React.Component {
 				</div>
 			);
 		}
-
-		console.log("lectureDetails ====>>>>", lectureDetails);
 		return (
 			<div>
 				<section
@@ -127,7 +127,7 @@ export class TranscriptionDetails extends React.Component {
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(lectureDetails.created_date).toDateString()}
+												{new Date(lectureDetails.created_date_time).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -136,7 +136,7 @@ export class TranscriptionDetails extends React.Component {
 										</li>
 									</ul>
 									<div className="row">
-										<div className="col mx-3 textContent">
+										<div className="col textContent">
 											{renderHTML(
 												reactCookie.load('languageCode') === 'en'
 													? lectureDetails.en.transcription.text
@@ -147,7 +147,7 @@ export class TranscriptionDetails extends React.Component {
 										</div>
 									</div>
 								</article>
-								<Collapse bordered={false} style={{ marginTop: '10px' }}>
+								<Collapse expandIcon={({ isActive }) => <Icon type="caret-right" style={{display:'none'}} />} bordered={false} style={{ marginTop: '10px' }}>
 									<Panel
 										header="Audio Details"
 										key="1"

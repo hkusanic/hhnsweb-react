@@ -34,10 +34,10 @@ export class SingleBlog extends Component {
 							>
 								{renderHTML(
 									reactCookie.load('languageCode') === 'en'
-										? this.props.blog.title_en
-										: this.props.blog.title_ru
-										? this.props.blog.title_ru
-										: this.props.blog.title_en
+										? this.props.blog.en.title
+										: this.props.blog.ru.title
+										? this.props.blog.en.title
+										: this.props.blog.ru.title
 								)}
 							</Link>
 						</h4>
@@ -52,10 +52,10 @@ export class SingleBlog extends Component {
 						{renderHTML(
 							this.showing100Characters(
 								reactCookie.load('languageCode') === 'en'
-									? this.props.blog.body_en
-									: this.props.blog.body_ru
-									? this.props.blog.body_ru
-									: this.props.blog.body_en
+									? this.props.blog.en.body
+									: this.props.blog.ru.body
+									? this.props.blog.ru.body
+									: this.props.blog.en.body
 							)
 						)}
 					</article>

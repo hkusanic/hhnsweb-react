@@ -131,7 +131,7 @@ exports = module.exports = function (app) {
 	app.post('/api/quote/updateBulkNew/', keystone.middleware.api, routes.api.quote.updateBulkNew);
 	app.post('/api/kirtan/updateBulkNew/', keystone.middleware.api, routes.api.kirtan.updateBulkNew);
 	app.post('/api/lecture/updateBulkNew/', keystone.middleware.api, routes.api.lecture.updateBulkNew);
-
+	app.post('/api/lecture/uploadPdfToS3/', keystone.middleware.api, routes.api.lecture.uploadPDF);
 
 	app.options('/api*', function (req, res) { res.send(200); });
 
