@@ -426,7 +426,7 @@ exports.updateBulk = function (req, res) {
 	for (let i = 0; i < data.length; i++) {
 		Lecture.model
 			.findOne({
-				uuid: data[i].uuid,
+				tnid: data[i].tnid,
 			})
 			.exec(function (err, item) {
 				if (err) {

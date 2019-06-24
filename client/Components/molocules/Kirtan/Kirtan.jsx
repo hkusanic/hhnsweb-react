@@ -106,10 +106,9 @@ export class Kirtan extends Component {
 				title: 'Title',
 				dataIndex: renderHTML(
 					reactCookie.load('languageCode') === 'en'
-						? 'en.title'
-						: 'ru.title'
-						? 'ru.title'
-						: 'en.title'
+						? 'en.title' ? 'en.title' : ''
+						: 'ru.title' ? 'ru.title' : ''
+						
 				),
 				render: (text, record, index) => (
 					<Link

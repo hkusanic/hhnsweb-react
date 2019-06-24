@@ -36,13 +36,13 @@ rl.question('Please provide the api url\n', (answer) => {
 				getRuSummaryNodeList();
 				break;
 			case '5': console.log('Populating Quotes Data');
-				// getQutoesEnglishNodeList();
-				getQuotesRuNodeList();
+				getQutoesEnglishNodeList();
+				// getQuotesRuNodeList();
 				break;
 			case '6': 
 				console.log('Populating Kirtan Data');
-				// getEnglishKirtanNodeList();
-				getRuKirtanNodeList();
+				getEnglishKirtanNodeList();
+				// getRuKirtanNodeList();
 				break;
 
 		}
@@ -57,7 +57,7 @@ function timeConverter (timestamp) {
 }
 const cookie = new tough.Cookie({
 	key: 'SSESS8c0f16dd6e4ff53e267519930069d1e3',
-	value: 'c0SPzkeq2rcbK8bKiVlUdHiTegRIGsYtUVJwexuWZxA',
+	value: 'XUfGmT8GfOHDJsh_5Pnit_eUpvmu9CrGqYbRyBr4vho',
 	domain: 'nrs.niranjanaswami.net',
 	httpOnly: false,
 	maxAge: 3153600000000,
@@ -1122,7 +1122,7 @@ function getQuotesData(ar, callback) {
 			};
 			const options = {
 				method: 'POST',
-				uri: 'http://dev.niranjanaswami.net/api/quote/create/',
+				uri: `${apiURL}/api/quote/create/`,
 				body: body,
 				json: true,
 				pool: httpAgent,
@@ -1271,7 +1271,7 @@ function updateQuoteDatabase(batchArray, callback) {
 	console.log("inside update")
 	let options = {
 		method: 'POST',
-		uri: 'http://dev.niranjanaswami.net/api/quote/updateBulkNew/',
+		uri: `${apiURL}/api/quote/updateBulkNew/`,
 		body: batchArray,
 		json: true,
 		pool: httpAgent,
@@ -1333,7 +1333,6 @@ function getEnglishKirtanNodeList() {
 		.then(function (body) {
 			// console.log('body===>',body)
 			englishKirtanDataList = body;
-			englishKirtanDataList.splice(0, 870);
 			console.log(
 				'getEnglishList() function is successfully executed',
 				englishKirtanDataList.length,
@@ -1401,7 +1400,7 @@ function getEnglishKirtanData(ar, callback) {
 				};
 				const options = {
 					method: 'POST',
-					uri: `http://dev.niranjanaswami.net/api/kirtan/create/`,
+					uri: `${apiURL}/api/kirtan/create/`,
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -1437,7 +1436,6 @@ function getRuKirtanNodeList() {
 	rp(options)
 		.then(function (body) {
 			raussainKirtanDataList = body;
-			raussainKirtanDataList.splice(0, 860);
 			console.log(
 				'getRuNodeList() function is successfully executed',
 				raussainKirtanDataList.length,
@@ -1484,6 +1482,7 @@ function getRaussainKirtanData(ar, callback) {
 			let raussainKirtanfinalData = [];
 
 			for (let i = 0; i < data.length; i++) {
+				console.log(data[i].tnid)
 				if (data[i].tnid != 0) {
 					const temp = {
 						uuid: uuidv4(),
@@ -1557,25 +1556,22 @@ function createSingleRUKirtanItem(body) {
 }
 
 function updateKirtanDatabase(array, callback) {
-	console.log("inside update kirtan ===>>>", array.length);
-	let options = {
-		method: 'POST',
-		uri: `http://dev.niranjanaswami.net/api/kirtan/updateBulkNew/`,
-		body: array,
-		json: true,
-		pool: httpAgent,
-		timeout: 60000000,
-		headers: {
-			'User-Agent': 'Request-Promise',
-		},
-	};
-	rp(options)
-		.then((data) => {
-			console.log('success updated kirtan');
+		let options = {
+			method: 'POST',
+			uri: `${apiURL}/api/kirtan/updateBulkNew/`,
+			body: array,
+			json: true,
+			pool: httpAgent,
+			timeout: 60000,
+			headers: {
+				'User-Agent': 'Request-Promise',
+			},
+		};
+		rp(options).then(data => {
+			console.log('success');
 			callback();
-		})
-		.catch((err) => {
-			console.log('errr===>>', err);
+		}).catch(err => {
+			console.log('Error in updateDatabaseSummary()', err);
 		});
 }
 
