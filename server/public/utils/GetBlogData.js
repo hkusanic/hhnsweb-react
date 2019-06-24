@@ -48,7 +48,7 @@ function timeConverter(timestamp) {
 }
 const cookie = new tough.Cookie({
 	key: 'SSESS8c0f16dd6e4ff53e267519930069d1e3',
-	value: 'c0SPzkeq2rcbK8bKiVlUdHiTegRIGsYtUVJwexuWZxA',
+	value: 'YCdek1Z7ROdGXdN70R3IfUMODs61efzefGDT05wH0KA',
 	domain: 'nrs.niranjanaswami.net',
 	httpOnly: false,
 	maxAge: 3153600000000,
@@ -955,18 +955,29 @@ function getRussianSummaryData(ar, callback) {
 					getTNIDfromLecture(data[i].audio.nid).then((val) => {
 						tnid = val;
 						if (tnid != 0) {
-							const temp = {
-								tnid: tnid,
-								ru: {
-									summary: {
-										nid: ar[i].nid,
-										text: data[i].body,
-										attachment_name: data[i].audio.title,
-										attachment_link: data[i].audio.file,
-									},
-								},
-							};
-							summaryFinalData.push(temp);
+							let filePath = './uploads/summaries/' + Date.now() + '.mp3';
+							axios({
+								url: data[i].audio.file,
+								responseType: 'stream'
+							})
+								.then(response => {
+									response.data.pipe(fs.createWriteStream(filePath));
+									console.log('File downloaded sucessfully');
+									const temp = {
+										tnid: tnid,
+										ru: {
+											summary: {
+												nid: ar[i].nid,
+												text: data[i].body,
+												attachment_name: data[i].audio.title,
+												attachment_link: filePath,
+											},
+										},
+									};
+									summaryFinalData.push(temp);
+								}).catch(error => {
+									console.log('Error while downloading file ==>> ', error)
+								});
 						}
 					});
 				} else {
@@ -1001,24 +1012,70 @@ function getTNIDfromLecture(nid) {
 
 }
 
-function updateDatabaseSummary() {
+async function updateDatabaseSummary() {
+	
 	console.log('updateDatabaseSummary()', summaryFinalData.length);
-	let options = {
-		method: 'POST',
-		uri: `${apiURL}/api/lecture/updateBulkNew/`,
-		body: summaryFinalData,
-		json: true,
-		pool: httpAgent,
-		timeout: 60000,
-		headers: {
-			'User-Agent': 'Request-Promise',
-		},
-	};
-	rp(options).then(data => {
-		console.log('success');
-	}).catch(err => {
-		console.log('Error in updateDatabaseSummary()', err);
-	});
+	let counter0 = 0;
+	let counter1 = 0;
+	for(let i = 0; i< summaryFinalData.length; i++){
+		let filePathRU = summaryFinalData[i].ru && summaryFinalData[i].ru.summary.attachment_link? summaryFinalData[i].ru.summary.attachment_link : null;
+		if(filePathRU){
+			counter0++;
+			let content = await fs.readFileSync(filePathRU);
+			let base64data = new Buffer(content, 'binary');
+			let myKey = `uploads/summaries/${Date.now()}.mp3`;
+			let params = {
+				Bucket: 'nrsblog',
+				Key: myKey,
+				Body: base64data,
+				ACL: 'public-read'
+			};
+			const s3 = await generateS3Object();
+			let url;
+			s3.upload((params), (err, data) => {
+				if (err) console.error(`Upload Error ${err}`);
+				else {
+					url = data.Location;
+					console.log('Upload Completed, url ==>> ', url);
+					summaryFinalData[i].ru.summary.attachment_link = url;
+					counter1++;
+				}
+				}
+			);
+			
+		}
+	}
+	let timer = setInterval(() => {
+		if(counter1 === counter0){
+			function postSummaryData(){
+				if(summaryFinalData.length>0){
+					let ar = summaryFinalData.splice(0,10);
+					let options = {
+						method: 'POST',
+						uri: `${apiURL}/api/lecture/updateBulkNew/`,
+						body: summaryFinalData,
+						json: true,
+						pool: httpAgent,
+						timeout: 60000,
+						headers: {
+							'User-Agent': 'Request-Promise',
+						},
+					};
+					rp(options).then(data => {
+						console.log('success');
+						postSummaryData();
+					}).catch(err => {
+						console.log('Error in updateDatabaseSummary()', err);
+					});
+				}
+			}
+			postSummaryData();
+			clearInterval(timer);
+		}
+		else{
+			console.log('Waiting for upload to complete');
+		}
+	}, 2000)
 }
 
 
