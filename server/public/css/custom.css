@@ -206,10 +206,10 @@
   .centerAlign {
       margin:auto !important;
   }
-  .recentActivityCard{
+  /* .recentActivityCard{
       max-width:400px;
       height:500px;
-  }
+  } */
   .padLeftBlog {
       padding-left: 7%;
   }

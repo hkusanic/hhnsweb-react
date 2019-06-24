@@ -325,7 +325,7 @@ exports.list = function (req, res) {
 	}
 
 	Lecture.paginate(queryObj)
-		.sort(createdDateSort)
+		.sort({ lecture_date: 'desc' })
 		.exec(function (err, items) {
 			if (err) {
 				logger.error(

@@ -120,10 +120,9 @@ export class Kirtan extends Component {
 					>
 						{renderHTML(
 							reactCookie.load('languageCode') === 'en'
-								? record.en.title
-								: record.ru.title
-								? record.ru.title
-								: record.en.title
+								? record.en.title ? record.en.title : ''
+								: record.ru.title ? record.ru.title : ''
+								
 						)}
 					</Link>
 				),

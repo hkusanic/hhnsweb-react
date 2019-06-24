@@ -51,7 +51,7 @@ exports.list = function (req, res) {
 		perPage: 20,
 		filters: filters,
 	})
-		.sort('-created_date_time')
+		.sort({ quote_date: 'desc' })
 		.exec(function (err, items) {
 			if (err) {
 				logger.error(

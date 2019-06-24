@@ -153,6 +153,7 @@ exports.signin = function (req, res) {
 						date: new Date().getTime(),
 						admin: user.canAccessKeystone,
 						loginUser: {
+							user: user._id,
 							id: user.id,
 							email: user.email,
 							firstName: user.name.first,

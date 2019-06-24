@@ -30,7 +30,7 @@ exports.list = function (req, res) {
 	Video.paginate({
 		page: req.query.page || 1,
 		perPage: 20,
-	}).sort('-date').exec(function (err, items) {
+	}).sort({ video_date: 'desc' }).exec(function (err, items) {
 		if (err) {
 			logger.error(
 				{

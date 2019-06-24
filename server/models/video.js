@@ -10,7 +10,7 @@ let Video = new keystone.List("Video", {
 
 Video.add({
 	uuid: { type: String, index: true, unique: true },
-	date: { type: String },
+	video_date: { type: String },
 	published_date: { type: String },
 	language: { type: String },
 	type: { type: String },

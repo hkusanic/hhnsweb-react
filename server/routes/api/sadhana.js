@@ -118,6 +118,7 @@ exports.get = function (req, res) {
 exports.create = function (req, res) {
 	var item = new Sadhana.model();
 	var data = req.method === 'POST' ? req.body : req.query;
+	data.user = mongoose.Types.ObjectId(data.user);
 	// data.date = todayDate();
 	logger.info(
 		{

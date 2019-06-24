@@ -153,7 +153,7 @@ exports.list = function (req, res) {
 		perPage: 20,
 		filters: filters,
 	})
-		.sort(createdDateSort)
+		.sort({ kirtan_creation_date: 'desc' })
 		.exec(function (err, items) {
 			if (err) {
 				logger.error(

@@ -154,7 +154,7 @@ exports.list = function (req, res) {
 		page: req.query.page || 1,
 		perPage: 20,
 	})
-		.sort({ created_date_time: 'desc' })
+	.sort({ blog_creation_date: 'desc' })
 		.exec(function (err, items) {
 			if (err) {
 				logger.error(

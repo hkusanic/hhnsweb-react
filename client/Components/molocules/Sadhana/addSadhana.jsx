@@ -100,6 +100,7 @@ class AddSadhana extends React.Component {
 			],
 			(err, values) => {
 				if (!err) {
+					const userDetails = JSON.parse(localStorage.getItem('user'));
 					const body = {
 						uuid: this.uuidv4(),
 						firstName: values.firstname,
@@ -115,6 +116,8 @@ class AddSadhana extends React.Component {
 						lectures: form.getFieldValue('lectures'),
 						additional_comments: form.getFieldValue('additional_comments'),
 						userId,
+						user: userDetails.user
+
 					};
 					this.props.createSadhana(body);
 				}

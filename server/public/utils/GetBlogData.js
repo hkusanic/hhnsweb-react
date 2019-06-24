@@ -17,7 +17,7 @@ let apiURL = 'http://localhost:3000';
 rl.question('Please provide the api url\n', (answer) => {
 	apiURL = answer ? answer : 'http://localhost:3000';
 	console.log(`API url: ${apiURL}`);
-	rl.question('What do you like to do? \n1.Populate Blog Data\n2.Populate Lecture Data\n3.Insert Transcription Data into Lectures\n4.Insert Summary Data into Lectures\n', (answer) => {
+	rl.question('What do you like to do? \n1.Populate Blog Data\n2.Populate Lecture Data\n3.Insert Transcription Data into Lectures\n4.Insert Summary Data into Lectures\n5.Insert Quotes Data\n6.Insert Kirtan Data\n', (answer) => {
 		switch (answer) {
 			case '1':
 				console.log('Populating Blog Data');
@@ -34,6 +34,15 @@ rl.question('Please provide the api url\n', (answer) => {
 			case '4':
 				console.log('Populating Summary Data');
 				getRuSummaryNodeList();
+				break;
+			case '5': console.log('Populating Quotes Data');
+				// getQutoesEnglishNodeList();
+				getQuotesRuNodeList();
+				break;
+			case '6': 
+				console.log('Populating Kirtan Data');
+				// getEnglishKirtanNodeList();
+				getRuKirtanNodeList();
 				break;
 
 		}
@@ -64,12 +73,13 @@ function uuidv4 () {
 		return v.toString(16);
 	});
 }
+
 /* #region Blog*/
 var englishDataList = [];
 var raussainDataList = [];
 var raussainfinalData = [];
 
-function getEnglishNodeList () {
+function getEnglishNodeList() {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=blog&pagesize=600&&page=0',
@@ -95,81 +105,47 @@ function getEnglishNodeList () {
 		});
 }
 
-function getEnglishDatainBatches () {
+function getEnglishDatainBatches() {
 	if (englishDataList.length > 0) {
 		let ar = englishDataList.splice(0, 10);
 		getEnglishData(ar, () => {
 			setTimeout(() => {
 				getEnglishDatainBatches();
-			}, 2000);
+			}, 4000);
 		});
 	} else {
 		getRuNodeList();
 	}
 }
 
-function getEnglishData (ar, callback) {
-	const Englishpromise = [];
-	ar.map((item, i) => {
-		const options = {
-			method: 'GET',
-			uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
-			json: true,
-			jar: cookiejar,
-			timeout: 6000000,
-			headers: {
-				'User-Agent': 'Request-Promise',
-			},
-		};
-		Englishpromise.push(rp(options));
-	});
-	Promise.all(Englishpromise).then(data => {
-		const insertDataPromise = data.map((item, i) => {
-			const body = {
-				uuid: uuidv4(),
-				author: item.name,
-				audio_files: [],
-				tnid: item.tnid,
-				languages: item.tnid != 0 ? '' : 'en',
-				en: {
-					nid: item.nid,
-					created: timeConverter(item.created),
-					changed: timeConverter(item.changed),
-					title: item.title,
-					body: item.body.und[0].value,
-					url: item.url,
-				},
-			};
-			const options = {
-				method: 'POST',
-				uri: `${apiURL}/api/blog/create/`,
-				body: body,
-				json: true,
-				pool: httpAgent,
-				timeout: 6000000,
-				headers: {
-					'User-Agent': 'Request-Promise',
-				},
-			};
-			return rp(options);
-
+function getRaussainDatainBatches() {
+	if (raussainDataList.length > 0) {
+		let ar = raussainDataList.splice(0, 10);
+		getRaussainData(ar, () => {
+			setTimeout(() => {
+				getRaussainDatainBatches();
+			}, 4000);
 		});
-		return Promise.all(insertDataPromise);
-	})
-		.then(data => {
-			console.log('data inserted =====>>>>', data.length);
-			callback();
-		})
-		.catch(err => {
-			console.log('error inside the profile api ===>>>', err, 'data: ', data);
-		});
-
+	} else {
+		updateDatabaseInBatches();
+	}
 }
 
-function getRuNodeList () {
+function updateDatabaseInBatches() {
+	if (raussainfinalData.length > 0) {
+		let batchArray = raussainfinalData.splice(0, 10);
+		updateDatabase(batchArray, () => {
+			setTimeout(() => {
+				updateDatabaseInBatches();
+			}, 1000);
+		});
+	}
+}
+
+function getRuNodeList() {
 	const options = {
 		method: 'GET',
-		uri: 'https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=blog&pagesize=6000&&page=0',
+		uri: 'https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=blog&pagesize=600&&page=0',
 		jar: cookiejar,
 		json: true,
 		headers: {
@@ -192,24 +168,12 @@ function getRuNodeList () {
 		});
 }
 
-function getRaussainDatainBatches () {
-	if (raussainDataList.length > 0) {
-		let ar = raussainDataList.splice(0, 10);
-		getRaussainData(ar, () => {
-			setTimeout(() => {
-				getRaussainDatainBatches();
-			}, 2000);
-		});
-	} else {
-		updateDatabase();
-	}
-}
-function getRaussainData (ar, callback) {
+function getRaussainData(ar, callback) {
 	const Raussainpromise = [];
 	ar.map((item, i) => {
 		const options = {
 			method: 'GET',
-			uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
+			uri: `https://nrs.niranjanaswami.net/ru/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -222,34 +186,33 @@ function getRaussainData (ar, callback) {
 	Promise.all(Raussainpromise).then(data => {
 		console.log('data Raussainpromise inserted =====>>>>', data.length);
 		for (let i = 0; i < data.length; i++) {
-			if (data[i].tnid != 0) {
+			if (ar[i].tnid !== 0) {
 				const temp = {
-					tnid: data[i].tnid,
+					tnid: ar[i].tnid,
 					languages: 'both',
 					ru: {
-						nid: data[i].nid,
-						created: timeConverter(data[i].created),
-						changed: timeConverter(data[i].changed),
+						nid: ar[i].nid,
 						title: data[i].title,
-						body: data[i].body.und[0].value,
-						url: data[i].url,
+						body: data[i].body,
 					},
 				};
 				raussainfinalData.push(temp);
-			} else {
+			}
+			else {
 				const body = {
 					uuid: uuidv4(),
-					author: data[i].name,
+					author: 'Niranjana Swami',
 					audio_files: [],
-					tnid: data[i].tnid,
-					languages: 'ru',
+					tnid: ar[i].tnid,
+					blog_creation_date: data[i].date,
+					created_date_time: timeConverter(ar[i].created),
+					publish_date: timeConverter(ar[i].created),
+					languages: ar[i].tnid !== 0 ? '' : 'en',
+					comments: data[i].comments,
 					ru: {
 						nid: data[i].nid,
-						created: timeConverter(data[i].created),
-						changed: timeConverter(data[i].changed),
 						title: data[i].title,
-						body: data[i].body.und[0].value,
-						url: data[i].url,
+						body: data[i].body,
 					},
 				};
 				createSingleRUBlogItem(body);
@@ -259,16 +222,16 @@ function getRaussainData (ar, callback) {
 		callback();
 	})
 		.catch(err => {
-			console.log('error inside the getRaussainData() ===>>>', err);
+			console.log('error inside the profile api ===>>>', err);
 		});
 
 }
 
-function updateDatabase () {
+function updateDatabase(batchArray, callback) {
 	let options = {
 		method: 'POST',
-		uri: `${apiURL}/api/blog/updateBulkNew/`,
-		body: raussainfinalData,
+		uri: 'http://localhost:3000/api/blog/updateBulkNew/',
+		body: batchArray,
 		json: true,
 		pool: httpAgent,
 		timeout: 600000,
@@ -278,15 +241,15 @@ function updateDatabase () {
 	};
 	rp(options).then(data => {
 		console.log('success');
+		callback();
 	}).catch(err => {
-		console.log('errr');
+		console.log('errr', err);
 	});
 }
-
-function createSingleRUBlogItem (body) {
+function createSingleRUBlogItem(body) {
 	const options = {
 		method: 'POST',
-		uri: `${apiURL}/api/blog/create/`,
+		uri: 'http://localhost:3000/api/blog/create/',
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -301,7 +264,64 @@ function createSingleRUBlogItem (body) {
 		console.log(err);
 	});
 }
+function getEnglishData(ar, callback) {
+	const Englishpromise = [];
+	ar.map((item, i) => {
+		const options = {
+			method: 'GET',
+			uri: `https://nrs.niranjanaswami.net/en/rest/object/${item.nid}.json`,
+			json: true,
+			jar: cookiejar,
+			timeout: 6000000,
+			headers: {
+				'User-Agent': 'Request-Promise',
+			},
+		};
+		Englishpromise.push(rp(options));
+	});
+	Promise.all(Englishpromise).then(data => {
+		const insertDataPromise = data.map((item, i) => {
+			const body = {
+				uuid: uuidv4(),
+				author: 'Niranjana Swami',
+				audio_files: [],
+				tnid: ar[i].tnid,
+				blog_creation_date: item.date,
+				created_date_time: timeConverter(ar[i].created),
+				publish_date: timeConverter(ar[i].created),
+				languages: item.tnid !== 0 ? '' : 'en',
+				comments: item.comments,
+				en: {
+					nid: ar[i].nid,
+					title: item.title,
+					body: item.body,
+				},
+			};
+			const options = {
+				method: 'POST',
+				uri: 'http://localhost:3000/api/blog/create/',
+				body: body,
+				json: true,
+				pool: httpAgent,
+				timeout: 6000000,
+				headers: {
+					'User-Agent': 'Request-Promise',
+				},
+			};
+			return rp(options);
 
+		});
+		return Promise.all(insertDataPromise);
+	})
+		.then(data => {
+			console.log('data inserted =====>>>>', data.length);
+			callback();
+		})
+		.catch(err => {
+			console.log('error inside the profile api ===>>>', err);
+		});
+
+}
 /* #endregion*/
 
 /* #region Lectures*/
@@ -1022,3 +1042,541 @@ function updateDatabaseSummary () {
 
 
 /* #endregion */
+
+/* Quotes Script Start point */
+
+var quotesEnglishNodeList = [];
+var quotesRaussainNodeList = [];
+// var quotesFinalRaussainData = [];
+
+function getQutoesEnglishNodeList() {
+	const options = {
+		method: 'GET',
+		uri: 'https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=quote&pagesize=6000&&page=0',
+		jar: cookiejar,
+		json: true,
+		headers: {
+			'User-Agent': 'Request-Promise',
+		},
+	};
+
+	rp(options)
+		.then(function (body) {
+			quotesEnglishNodeList = body;
+			// quotesEnglishNodeList.splice(0, 5216);
+			console.log(
+				'getQutoesEnglishNodeList() function is successfully executed',
+				quotesEnglishNodeList.length,
+				'data received'
+			);
+			getQuotesDatainBatches();
+		})
+		.catch(function (err) {
+			console.log('Error inside getQutoesEnglishNodeList() function ====>>>>', err);
+		});
+}
+
+function getQuotesDatainBatches() {
+	if (quotesEnglishNodeList.length > 0) {
+		let ar = quotesEnglishNodeList.splice(0, 10);
+		getQuotesData(ar, () => {
+			setTimeout(() => {
+				getQuotesDatainBatches();
+			}, 3000);
+		});
+	} else {
+		getQuotesRuNodeList();
+	}
+}
+
+function getQuotesData(ar, callback) {
+	const Quotespromise = [];
+	ar.map((item, i) => {
+		const options = {
+			method: 'GET',
+			uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
+			json: true,
+			jar: cookiejar,
+			timeout: 6000000,
+			headers: {
+				'User-Agent': 'Request-Promise',
+			},
+		};
+		Quotespromise.push(rp(options));
+	});
+	Promise.all(Quotespromise).then(data => {
+		const insertQuotesDataPromise = data.map((item, i) => {
+			const body = {
+				uuid: uuidv4(),
+				author: item.author,
+				tnid: ar[i].tnid,
+				created_date_time: timeConverter(ar[i].created),
+				published_date: timeConverter(ar[i].created),
+				comments: item.comments,
+				en: {
+					nid: ar[i].nid,
+					title: item.title,
+					body: item.body && item.body.length > 0 ? getQuotesBody(item.body) : '',
+					source_of_quote: item.body && item.body.length > 0 ? getQuotesSource(item.body) : '',
+				},
+			};
+			const options = {
+				method: 'POST',
+				uri: 'http://dev.niranjanaswami.net/api/quote/create/',
+				body: body,
+				json: true,
+				pool: httpAgent,
+				timeout: 6000000,
+				headers: {
+					'User-Agent': 'Request-Promise',
+				},
+			};
+			return rp(options);
+
+		});
+		return Promise.all(insertQuotesDataPromise);
+
+	}).then(data => {
+		console.log('submitted successfully ====>>>> data', data.length);
+		callback();
+	})
+		.catch(err => {
+			console.log('error inside getQuotesData===>>>', err);
+		});
+
+}
+
+function getQuotesBody(body) {
+	const startIndex = body.indexOf('</p>');
+	return body.substr(0, startIndex + 4);
+}
+
+function getQuotesSource(body) {
+	const startIndex = body.indexOf('</p>');
+	return body.substr(startIndex + 5);
+}
+
+function getQuotesRuNodeList() {
+	const options = {
+		method: 'GET',
+		uri: 'https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=quote&pagesize=6000&&page=0',
+		jar: cookiejar,
+		json: true,
+		headers: {
+			'User-Agent': 'Request-Promise',
+		},
+	};
+
+	rp(options)
+		.then(function (body) {
+			quotesRaussainNodeList = body;
+			quotesRaussainNodeList.splice(0, 3000);
+			console.log(
+				'gerQuotesRuNodeList() function is successfully executed',
+				quotesRaussainNodeList.length,
+				'data received'
+			);
+			getQuotesRaussainDatainBatches();
+		})
+		.catch(function (err) {
+			console.log('Error inside gerQuotesRuNodeList() function ====>>>>', err);
+		});
+}
+
+function getQuotesRaussainDatainBatches() {
+	if (quotesRaussainNodeList.length > 0) {
+		let ar = quotesRaussainNodeList.splice(0, 10);
+		getQuotesRaussainData(ar, () => {
+			setTimeout(() => {
+				getQuotesRaussainDatainBatches();
+			}, 3000);
+		});
+	}
+	// else {
+	// updateQuoteDatabaseInBatches();
+	// }
+}
+
+function getQuotesRaussainData(ar, callback) {
+	const QuotesRaussainpromise = [];
+	ar.map((item, i) => {
+		const options = {
+			method: 'GET',
+			uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
+			json: true,
+			jar: cookiejar,
+			timeout: 6000000,
+			headers: {
+				'User-Agent': 'Request-Promise',
+			},
+		};
+		QuotesRaussainpromise.push(rp(options));
+	});
+	Promise.all(QuotesRaussainpromise).then(data => {
+		let quotesFinalRaussainData = [];
+		for (let i = 0; i < data.length; i++) {
+			if (ar[i].tnid !== 0) {
+				console.log('presetn tnid');
+				const temp = {
+					tnid: ar[i].tnid,
+					ru: {
+						nid: ar[i].nid,
+						title: data[i].title,
+						body: data[i].body && data[i].body.length > 0 ? getQuotesBody(data[i].body) : '',
+						source_of_quote: data[i].body && data[i].body.length > 0 ? getQuotesSource(data[i].body) : '',
+					},
+				};
+				quotesFinalRaussainData.push(temp);
+			} else {
+				console.log('not presetn tnid');
+				const body = {
+					uuid: uuidv4(),
+					author: data[i].author,
+					tnid: ar[i].tnid,
+					created_date_time: timeConverter(ar[i].created),
+					published_date: timeConverter(ar[i].created),
+					comments: data[i].comments,
+					ru: {
+						nid: ar[i].nid,
+						title: data[i].title,
+						body: data[i].body.length > 0 ? getQuotesBody(data[i].body) : '',
+						source_of_quote: data[i].body.length > 0 ? getQuotesSource(data[i].body) : '',
+					},
+				};
+				createSingleRUQuoteItem(body);
+			}
+		}
+		console.log("outside for loop")
+
+		updateQuoteDatabase(quotesFinalRaussainData, callback);
+		// callback();
+
+	}).catch(err => {
+		console.log('error inside the profile api ===>>>', err);
+	});
+}
+
+function updateQuoteDatabaseInBatches() {
+	if (quotesFinalRaussainData.length > 0) {
+		let batchArray = quotesFinalRaussainData.splice(0, 10);
+		updateQuoteDatabase(batchArray, () => {
+			setTimeout(() => {
+				updateQuoteDatabaseInBatches();
+			}, 2000);
+		});
+	}
+}
+
+function updateQuoteDatabase(batchArray, callback) {
+	console.log("inside update")
+	let options = {
+		method: 'POST',
+		uri: 'http://dev.niranjanaswami.net/api/quote/updateBulkNew/',
+		body: batchArray,
+		json: true,
+		pool: httpAgent,
+		timeout: 6000000,
+		headers: {
+			'User-Agent': 'Request-Promise',
+		},
+	};
+	rp(options).then(data => {
+		console.log('success 1111');
+		callback();
+	}).catch(err => {
+		console.log(err);
+	});
+}
+
+function createSingleRUQuoteItem(body) {
+	console.log('create api');
+	console.log('single create api for quotes');
+	const options = {
+		method: 'POST',
+		uri: 'http://dev.niranjanaswami.net/api/quote/create/',
+		body: body,
+		json: true,
+		pool: httpAgent,
+		timeout: 6000000,
+		headers: {
+			'User-Agent': 'Request-Promise',
+		},
+	};
+	rp(options).then(data => {
+		console.log('Single RU Quotes inserted');
+	}).catch(err => {
+		console.log(err);
+	});
+}
+/* Quotes Script End point */
+
+
+/* kirtan Script Start point */
+
+var englishKirtanDataList = [];
+var raussainKirtanDataList = [];
+var raussainKirtanfinalData = [];
+
+function getEnglishKirtanNodeList() {
+	const options = {
+		method: 'GET',
+		uri:
+			'https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=kirtan&pagesize=10000&&page=0',
+		jar: cookiejar,
+		json: true,
+		headers: {
+			'User-Agent': 'Request-Promise',
+		},
+	};
+
+	rp(options)
+		.then(function (body) {
+			// console.log('body===>',body)
+			englishKirtanDataList = body;
+			englishKirtanDataList.splice(0, 870);
+			console.log(
+				'getEnglishList() function is successfully executed',
+				englishKirtanDataList.length,
+				'data received'
+			);
+			getEnglishKirtanDatainBatches();
+		})
+		.catch(function (err) {
+			console.log('Error inside getUserList() function ====>>>>', err);
+		});
+}
+
+function getEnglishKirtanDatainBatches() {
+	// console.log('englishDataList===>',englishDataList)
+	if (englishKirtanDataList.length > 0) {
+		let ar = englishKirtanDataList.splice(0, 10);
+		getEnglishKirtanData(ar, () => {
+			setTimeout(() => {
+				getEnglishKirtanDatainBatches();
+			}, 2000);
+		});
+	} else {
+		getRuKirtanNodeList();
+	}
+}
+
+function getEnglishKirtanData(ar, callback) {
+	const Englishpromise = [];
+	ar.map((item, i) => {
+		const options = {
+			method: 'GET',
+			// uri: `https://nrs.niranjanaswami.net/en/rest/node/${item.nid}.json`,
+			uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
+			json: true,
+			jar: cookiejar,
+			timeout: 6000000,
+			headers: {
+				'User-Agent': 'Request-Promise',
+			},
+		};
+		Englishpromise.push(rp(options));
+	});
+	Promise.all(Englishpromise)
+		.then((data) => {
+			const insertDataPromise = data.map((item, i) => {
+				const body = {
+					uuid: uuidv4(),
+					tnid: ar[i].tnid,
+					author: item.artist,
+					audio_files: item.file,
+					type: item.type,
+					soundcloud_link: item.soundcloud,
+					duration: item.duration,
+					created_date_time: timeConverter(ar[i].created),
+					published_date: timeConverter(ar[i].created),
+					counter: { downloads: item.downloads },
+					language: ar[i].tnid !== 0 ? '' : 'en',
+					kirtan_creation_date: typeof data[i].date === 'string' ? data[i].date : '',
+					en: {
+						nid: ar[i].nid,
+						title: item.title,
+						event: item.event,
+						location: item.location,
+					},
+				};
+				const options = {
+					method: 'POST',
+					uri: `http://dev.niranjanaswami.net/api/kirtan/create/`,
+					body: body,
+					json: true,
+					pool: httpAgent,
+					timeout: 6000000,
+					headers: {
+						'User-Agent': 'Request-Promise',
+					},
+				};
+				return rp(options);
+			});
+			return Promise.all(insertDataPromise);
+		})
+		.then((data) => {
+			console.log('data inserted =====>>>>', data.length);
+			callback();
+		})
+		.catch((err) => {
+			console.log('error inside the profile api ===>>>', err);
+		});
+}
+
+function getRuKirtanNodeList() {
+	const options = {
+		method: 'GET',
+		uri: 'https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=kirtan&pagesize=10000&&page=0',
+		jar: cookiejar,
+		json: true,
+		headers: {
+			'User-Agent': 'Request-Promise',
+		},
+	};
+
+	rp(options)
+		.then(function (body) {
+			raussainKirtanDataList = body;
+			raussainKirtanDataList.splice(0, 860);
+			console.log(
+				'getRuNodeList() function is successfully executed',
+				raussainKirtanDataList.length,
+				'data received'
+			);
+			getRaussainKirtanDatainBatches();
+		})
+		.catch(function (err) {
+			console.log('Error inside getRuNodeList() function ====>>>>', err);
+		});
+}
+
+function getRaussainKirtanDatainBatches() {
+	if (raussainKirtanDataList.length > 0) {
+		let ar = raussainKirtanDataList.splice(0, 10);
+		getRaussainKirtanData(ar, () => {
+			setTimeout(() => {
+				getRaussainKirtanDatainBatches();
+			}, 2000);
+		});
+	} else {
+		updateKirtanDatabase();
+	}
+}
+
+function getRaussainKirtanData(ar, callback) {
+	const Raussainpromise = [];
+	ar.map((item, i) => {
+		const options = {
+			method: 'GET',
+			uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
+			json: true,
+			jar: cookiejar,
+			timeout: 6000000,
+			headers: {
+				'User-Agent': 'Request-Promise',
+			},
+		};
+		Raussainpromise.push(rp(options));
+	});
+	Promise.all(Raussainpromise)
+		.then((data) => {
+			console.log("successfully executed====>>>>", data.length);
+			let raussainKirtanfinalData = [];
+
+			for (let i = 0; i < data.length; i++) {
+				if (data[i].tnid != 0) {
+					const temp = {
+						uuid: uuidv4(),
+						tnid: ar[i].tnid,
+						author: data[i].artist,
+						audio_files: data[i].file,
+						type: data[i].type,
+						soundcloud_link: data[i].soundcloud,
+						duration: data[i].duration,
+						counter: {
+							downloads: data[i].downloads,
+						},
+						language: ar[i].tnid !== 0 ? '' : 'both',
+						ru: {
+							nid: ar[i].nid,
+							title: data[i].title,
+							event: data[i].event,
+							location: data[i].location,
+						},
+					};
+					raussainKirtanfinalData.push(temp);
+				} else {
+					const body = {
+						uuid: uuidv4(),
+						tnid: ar[i].tnid,
+						author: data[i].artist,
+						audio_files: data[i].file,
+						type: data[i].type,
+						soundcloud_link: data[i].soundcloud,
+						duration: data[i].duration,
+						counter: {
+							downloads: data[i].downloads,
+						},
+						language: 'ru',
+						ru: {
+							nid: ar[i].nid,
+							title: data[i].title,
+							event: data[i].event,
+							location: data[i].location,
+						},
+					};
+					createSingleRUKirtanItem(body);
+				}
+			}
+			updateKirtanDatabase(raussainKirtanfinalData, callback);
+		})
+		.catch((err) => {
+			console.log('error inside the profile api ===>>>', err);
+		});
+}
+
+function createSingleRUKirtanItem(body) {
+	const options = {
+		method: 'POST',
+		uri: 'http://dev.niranjanaswami.net/api/kirtan/create/',
+		body: body,
+		json: true,
+		pool: httpAgent,
+		timeout: 6000000,
+		headers: {
+			'User-Agent': 'Request-Promise',
+		},
+	};
+	rp(options)
+		.then((data) => {
+			console.log('Single RU Blog inserted');
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+}
+
+function updateKirtanDatabase(array, callback) {
+	console.log("inside update kirtan ===>>>", array.length);
+	let options = {
+		method: 'POST',
+		uri: `http://dev.niranjanaswami.net/api/kirtan/updateBulkNew/`,
+		body: array,
+		json: true,
+		pool: httpAgent,
+		timeout: 60000000,
+		headers: {
+			'User-Agent': 'Request-Promise',
+		},
+	};
+	rp(options)
+		.then((data) => {
+			console.log('success updated kirtan');
+			callback();
+		})
+		.catch((err) => {
+			console.log('errr===>>', err);
+		});
+}
+
+/* kirtan Script End point */
