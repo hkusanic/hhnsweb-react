@@ -1,34 +1,34 @@
-// /**
-//  * Welcome to your Workbox-powered service worker!
-//  *
-//  * You'll need to register this file in your web app and you should
-//  * disable HTTP caching for this file too.
-//  * See https://goo.gl/nhQhGp
-//  *
-//  * The rest of the code is auto-generated. Please don't update this file
-//  * directly; instead, make changes to your Workbox build configuration
-//  * and re-run your build process.
-//  * See https://goo.gl/2aRDsh
-//  */
+/**
+ * Welcome to your Workbox-powered service worker!
+ *
+ * You'll need to register this file in your web app and you should
+ * disable HTTP caching for this file too.
+ * See https://goo.gl/nhQhGp
+ *
+ * The rest of the code is auto-generated. Please don't update this file
+ * directly; instead, make changes to your Workbox build configuration
+ * and re-run your build process.
+ * See https://goo.gl/2aRDsh
+ */
 
-// importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
-// importScripts(
-//   "/precache-manifest.16707b6528ba8fc401abcbca7fcbb465.js"
-// );
+importScripts(
+  "/precache-manifest.942b876733b1bb9f4fe12a8c4a26ef63.js"
+);
 
-// workbox.clientsClaim();
+workbox.clientsClaim();
 
-// /**
-//  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
-//  * requests for URLs in the manifest.
-//  * See https://goo.gl/S9QRab
-//  */
-// self.__precacheManifest = [].concat(self.__precacheManifest || []);
-// workbox.precaching.suppressWarnings();
-// workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+/**
+ * The workboxSW.precacheAndRoute() method efficiently caches and responds to
+ * requests for URLs in the manifest.
+ * See https://goo.gl/S9QRab
+ */
+self.__precacheManifest = [].concat(self.__precacheManifest || []);
+workbox.precaching.suppressWarnings();
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-// workbox.routing.registerNavigationRoute("/index.html", {
-
-//   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
-// });
+workbox.routing.registerNavigationRoute("/index.html", {
+  
+  blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
+});
