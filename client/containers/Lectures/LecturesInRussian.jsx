@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getRussianDubbedLecture } from '../../actions/lectureActions';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getRussianDubbedLecture } from "../../actions/lectureActions"
+import { Link } from 'react-router-dom'
 import { Card } from 'antd';
 
 class RussiaDubbedLectures extends Component {

@@ -152,9 +152,9 @@ export class TranscriptionDetails extends React.Component {
 										header="Audio Details"
 										key="1"
 										style={{
-											borderTop: '2px solid #e8e8e8',
-											borderBottom: 'none',
-											fontSize: '1.5rem',
+											borderTop: '1px solid #e8e8e8',
+											borderBottom: '1px solid #e8e8e8',
+											fontSize: '25px',
 										}}
 									>
 										<div style={{ paddingTop: '20px', fontSize: '14px' }}>

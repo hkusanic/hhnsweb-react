@@ -102,7 +102,7 @@ export class QuoteOfDay extends React.Component {
 														&& titleCase(this.props.quote.quotes[0].author)}
 												</cite>
 												<p class="quote-modern-caption">
-													{reactCookie.load('languageCode') === 'en'
+													{renderHTML(reactCookie.load('languageCode') === 'en'
 														? this.props
 														  && this.props.quote
 														  && this.props.quote.quotes
@@ -118,7 +118,7 @@ export class QuoteOfDay extends React.Component {
 														  && this.props.quote.quotes[0].ru
 														  && this.props.quote.quotes[0].ru.source_of_quote
 															? this.props.quote.quotes[0].ru.source_of_quote
-															: 'Sorry, No data available'}
+															: 'Sorry, No data available')}
 												</p>
 											</div>
 										</div>
@@ -195,7 +195,7 @@ export class QuoteOfDay extends React.Component {
 														&& titleCase(this.props.quote.quotes[1].author)}
 												</cite>
 												<p class="quote-modern-caption">
-													{reactCookie.load('languageCode') === 'en'
+													{renderHTML(reactCookie.load('languageCode') === 'en'
 														? this.props
 														  && this.props.quote
 														  && this.props.quote.quotes
@@ -211,7 +211,7 @@ export class QuoteOfDay extends React.Component {
 														  && this.props.quote.quotes[1].ru
 														  && this.props.quote.quotes[1].ru.source_of_quote
 															? this.props.quote.quotes[1].ru.source_of_quote
-															: 'Sorry, No data available'}
+															: 'Sorry, No data available')}
 												</p>
 											</div>
 										</div>

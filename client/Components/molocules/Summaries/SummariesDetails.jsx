@@ -129,10 +129,8 @@ export class SummariesDetails extends React.Component {
 										{lectureDetails &&
 											renderHTML(
 												reactCookie.load('languageCode') === 'en'
-													? lectureDetails.en.summary.text
-													: lectureDetails.ru.summary.text
-													? lectureDetails.ru.summary.text
-													: lectureDetails.en.summary.text
+													? lectureDetails.en.summary.text ? lectureDetails.en.summary.text : lectureDetails.ru.summary.text ? lectureDetails.ru.summary.text : ''
+													: lectureDetails.ru.summary.text ?  lectureDetails.ru.summary.text: lectureDetails.en.summary.text ? lectureDetails.en.summary.text : ''
 											)}
 									</div>
 								</article>
@@ -159,7 +157,7 @@ export class SummariesDetails extends React.Component {
 														<td className="padLeftRow">
 															<audio style={{ height: '30px' }} controls>
 																<source
-																	src={renderHTML(lectureDetails.audio_link)}
+																	src={renderHTML(lectureDetails.audio_link?lectureDetails.audio_link:'')}
 																	type="audio/mpeg"
 																/>
 															</audio>
@@ -187,7 +185,7 @@ export class SummariesDetails extends React.Component {
 																</b>
 															</td>
 															<td className="padLeftRow">
-																{lectureDetails.part}
+																{lectureDetails.part? lectureDetails.part: ''}
 															</td>
 														</tr>
 													) : null}
@@ -199,7 +197,7 @@ export class SummariesDetails extends React.Component {
 																</b>
 															</td>
 															<td className="padLeftRow">
-																{lectureDetails.chapter}
+																{lectureDetails.chapter? lectureDetails.chapter : ''}
 															</td>
 														</tr>
 													) : null}
@@ -211,7 +209,7 @@ export class SummariesDetails extends React.Component {
 																</b>
 															</td>
 															<td className="padLeftRow">
-																{lectureDetails.verse}
+																{lectureDetails.verse?lectureDetails.verse:''}
 															</td>
 														</tr>
 													) : null}
@@ -223,7 +221,7 @@ export class SummariesDetails extends React.Component {
 																</b>
 															</td>
 															<td className="padLeftRow">
-																{lectureDetails.author}
+																{lectureDetails.author?lectureDetails.author:''}
 															</td>
 														</tr>
 													) : null}
@@ -234,7 +232,7 @@ export class SummariesDetails extends React.Component {
 															</b>
 														</td>
 														<td className="padLeftRow">
-															{lectureDetails.duration}
+															{lectureDetails.duration?lectureDetails.duration:''}
 														</td>
 													</tr>
 													<tr>
@@ -258,7 +256,7 @@ export class SummariesDetails extends React.Component {
 															</b>
 														</td>
 														<td className="padLeftRow">
-															{lectureDetails.counters.downloads}
+															{lectureDetails.counters.downloads?lectureDetails.counters.downloads:''}
 														</td>
 													</tr>
 													<tr>
