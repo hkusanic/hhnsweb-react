@@ -102,7 +102,7 @@ export class LectureDetails extends React.Component {
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(lectureDetails.created_date).toDateString()}
+												{new Date(lectureDetails.lecture_date).toDateString()}
 											</time>
 										</li>
 										<li>
