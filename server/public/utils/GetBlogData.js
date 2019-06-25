@@ -36,8 +36,8 @@ rl.question('Please provide the api url\n', (answer) => {
 				getRuSummaryNodeList();
 				break;
 			case '5': console.log('Populating Quotes Data');
-				getQutoesEnglishNodeList();
-				// getQuotesRuNodeList();
+				// getQutoesEnglishNodeList();
+				getQuotesRuNodeList();
 				break;
 			case '6': 
 				console.log('Populating Kirtan Data');
@@ -1382,7 +1382,7 @@ function getEnglishKirtanData(ar, callback) {
 					uuid: uuidv4(),
 					tnid: ar[i].tnid,
 					author: item.artist,
-					audio_files: item.file,
+					audio_link: item.file,
 					type: item.type,
 					soundcloud_link: item.soundcloud,
 					duration: item.duration,
@@ -1485,17 +1485,7 @@ function getRaussainKirtanData(ar, callback) {
 				console.log(ar[i].tnid)
 				if (ar[i].tnid != 0) {
 					const temp = {
-						uuid: uuidv4(),
 						tnid: ar[i].tnid,
-						author: data[i].artist,
-						audio_files: data[i].file,
-						type: data[i].type,
-						soundcloud_link: data[i].soundcloud,
-						duration: data[i].duration,
-						counter: {
-							downloads: data[i].downloads,
-						},
-						language: ar[i].tnid !== 0 ? '' : 'both',
 						ru: {
 							nid: ar[i].nid,
 							title: data[i].title,
@@ -1509,7 +1499,7 @@ function getRaussainKirtanData(ar, callback) {
 						uuid: uuidv4(),
 						tnid: ar[i].tnid,
 						author: data[i].artist,
-						audio_files: data[i].file,
+						audio_link: data[i].file,
 						type: data[i].type,
 						soundcloud_link: data[i].soundcloud,
 						duration: data[i].duration,

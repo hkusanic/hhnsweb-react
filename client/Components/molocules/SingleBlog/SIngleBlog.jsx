@@ -45,7 +45,7 @@ export class SingleBlog extends Component {
 							<li>by {this.props.blog.author}</li>
 							<li>
 								<time dateTime="2018">
-									{new Date(this.props.blog.date).toDateString()}
+									{new Date(this.props.blog.created_date_time).toDateString()}
 								</time>
 							</li>
 						</ul>
