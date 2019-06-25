@@ -93,10 +93,9 @@ export class KirtanDetails extends Component {
 									<a className="textColor">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? kirtanDetails.en.title
-												: kirtanDetails.ru.title
-												? kirtanDetails.ru.title
-												: kirtanDetails.en.title
+												? kirtanDetails.en && kirtanDetails.en.title ? kirtanDetails.en.title : kirtanDetails.ru && kirtanDetails.ru.title ? kirtanDetails.ru.title : ''
+												: kirtanDetails.ru && kirtanDetails.ru.title ? kirtanDetails.ru.title : kirtanDetails.en && kirtanDetails.en.title ? kirtanDetails.en.title : ''
+												
 										)}
 									</a>
 								</li>
@@ -112,10 +111,9 @@ export class KirtanDetails extends Component {
 									<h3 className="post-creative-title">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? kirtanDetails.en.title
-												: kirtanDetails.ru.title
-												? kirtanDetails.ru.title
-												: kirtanDetails.en.title
+											? kirtanDetails.en && kirtanDetails.en.title ? kirtanDetails.en.title : kirtanDetails.ru && kirtanDetails.ru.title ? kirtanDetails.ru.title : ''
+											: kirtanDetails.ru && kirtanDetails.ru.title ? kirtanDetails.ru.title : kirtanDetails.en && kirtanDetails.en.title ? kirtanDetails.en.title : ''
+											
 										)}
 									</h3>
 									<ul className="post-creative-meta">
@@ -187,10 +185,10 @@ export class KirtanDetails extends Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? kirtanDetails.en.event
-														: kirtanDetails.ru.event
-														? kirtanDetails.ru.event
-														: kirtanDetails.en.event}
+														? kirtanDetails.en && kirtanDetails.en.event ? kirtanDetails.en.event : kirtanDetails.ru && kirtanDetails.ru.event ? kirtanDetails.ru.event : ''
+														: kirtanDetails.ru && kirtanDetails.ru.event ? kirtanDetails.ru.event : kirtanDetails.en && kirtanDetails.en.event ? kirtanDetails.en.event : ''
+														
+														}
 												</td>
 											</tr>
 											{kirtanDetails.author ? (
@@ -219,10 +217,9 @@ export class KirtanDetails extends Component {
 												</td>
 												<td className="padLeftRow">
 													{reactCookie.load('languageCode') === 'en'
-														? kirtanDetails.en.location
-														: kirtanDetails.ru.location
-														? kirtanDetails.ru.location
-														: kirtanDetails.en.location}
+														? kirtanDetails.en && kirtanDetails.en.location ? kirtanDetails.en.location : kirtanDetails.ru && kirtanDetails.ru.location ? kirtanDetails.ru.location : ''
+														: kirtanDetails.ru && kirtanDetails.ru.location ? kirtanDetails.ru.location : kirtanDetails.en && kirtanDetails.en.location ? kirtanDetails.en.location : ''
+														}
 												</td>
 											</tr>
 											<tr>
@@ -236,13 +233,10 @@ export class KirtanDetails extends Component {
 														kirtanDetails.counters.downloads}
 												</td>
 											</tr>
-											{reactCookie.load('languageCode') === 'en' ? (
-												kirtanDetails.en.topic
-											) : (kirtanDetails.ru.topic ? (
-													kirtanDetails.ru.topic
-											  ) : (
-													kirtanDetails.en.topic
-											  )) ? (
+											{reactCookie.load('languageCode') === 'en' 
+												? kirtanDetails.en && kirtanDetails.en.topic ? kirtanDetails.en.topic : kirtanDetails.ru && kirtanDetails.ru.topic ? kirtanDetails.ru.topic : ''
+												: kirtanDetails.ru && kirtanDetails.ru.topic ? kirtanDetails.ru.topic : kirtanDetails.en && kirtanDetails.en.topic ? kirtanDetails.en.topic : ''
+												? (
 												<tr>
 													<td>
 														<b>
@@ -251,10 +245,9 @@ export class KirtanDetails extends Component {
 													</td>
 													<td className="padLeftRow">
 														{reactCookie.load('languageCode') === 'en'
-															? kirtanDetails.en.topic
-															: kirtanDetails.ru.topic
-															? kirtanDetails.ru.topic
-															: kirtanDetails.en.topic}
+															? kirtanDetails.en && kirtanDetails.en.topic ? kirtanDetails.en.topic : kirtanDetails.ru && kirtanDetails.ru.topic ? kirtanDetails.ru.topic : ''
+															: kirtanDetails.ru && kirtanDetails.ru.topic ? kirtanDetails.ru.topic : kirtanDetails.en && kirtanDetails.en.topic ? kirtanDetails.en.topic : ''
+															}
 													</td>
 												</tr>
 											) : null}

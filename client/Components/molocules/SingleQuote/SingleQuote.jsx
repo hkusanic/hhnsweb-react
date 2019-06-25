@@ -35,10 +35,9 @@ export class SingleQuote extends React.Component {
 							<p className="quotesFont">
 								{renderHTML(
 									reactCookie.load('languageCode') === 'en'
-										? this.props.quote.en.body
-										: this.props.quote.ru.body
-											? this.props.quote.ru.body
-											: this.props.quote.en.body
+										? this.props.quote.en && this.props.quote.en.body ? this.props.quote.en.body : this.props.quote.ru && this.props.quote.ru.body ? this.props.quote.ru.body : ''
+										: this.props.quote.ru && this.props.quote.ru.body ? this.props.quote.ru.body : this.props.quote.en && this.props.quote.en.body ? this.props.quote.en.body : ''
+											
 								)}
 							</p>
 						</div>
@@ -46,10 +45,9 @@ export class SingleQuote extends React.Component {
 							<div class="quote-modern-info">
 								<cite style={{ fontSize: 16 }} class="quote-modern-text">
 									{renderHTML(reactCookie.load('languageCode') === 'en'
-										? this.props.quote.en.source_of_quote
-										: this.props.quote.ru.source_of_quote
-											? this.props.quote.ru.source_of_quote
-											: this.props.quote.en.source_of_quote)}
+										? this.props.quote.en && this.props.quote.en.source_of_quote ? this.props.quote.en.source_of_quote : this.props.quote.ru && this.props.quote.ru.source_of_quote ? this.props.quote.ru.source_of_quote : ''
+										: this.props.quote.ru && this.props.quote.ru.source_of_quote ? this.props.quote.ru.source_of_quote : this.props.quote.en && this.props.quote.en.source_of_quote ? this.props.quote.en.source_of_quote : ''
+										)}
 								</cite>
 							</div>
 						</div>

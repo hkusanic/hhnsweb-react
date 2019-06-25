@@ -153,7 +153,7 @@ export class BlogDetails extends Component {
 									</ul>
 									<div
 										style={{ paddingTop: '15px' }}
-										className="col textContent"
+										className="textContent"
 									>
 										{blogDetails &&
 											renderHTML(

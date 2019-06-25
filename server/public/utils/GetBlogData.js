@@ -1482,8 +1482,8 @@ function getRaussainKirtanData(ar, callback) {
 			let raussainKirtanfinalData = [];
 
 			for (let i = 0; i < data.length; i++) {
-				console.log(data[i].tnid)
-				if (data[i].tnid != 0) {
+				console.log(ar[i].tnid)
+				if (ar[i].tnid != 0) {
 					const temp = {
 						uuid: uuidv4(),
 						tnid: ar[i].tnid,
@@ -1548,7 +1548,7 @@ function createSingleRUKirtanItem(body) {
 	};
 	rp(options)
 		.then((data) => {
-			console.log('Single RU Blog inserted');
+			console.log('Single RU Kirtan inserted');
 		})
 		.catch((err) => {
 			console.log(err);
