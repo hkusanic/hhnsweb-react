@@ -24,7 +24,7 @@ export class Blogs extends Component {
 			pagination: {},
 		};
 
-		this.props.getBlog({ uuid: '02d47a4e-2dfc-11e9-b210-d663bd873d93' });
+		//this.props.getBlog({ uuid: '02d47a4e-2dfc-11e9-b210-d663bd873d93' });
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
