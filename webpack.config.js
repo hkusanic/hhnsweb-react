@@ -105,7 +105,7 @@ module.exports = {
 	},
 	externals: {
 		'Config': JSON.stringify({
-			sadhanaSheetAllowedDays: 5
+			sadhanaSheetAllowedDays: 2
 		})
 	  },
 	resolve: {
