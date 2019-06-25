@@ -41,8 +41,8 @@ rl.question('Please provide the api url\n', (answer) => {
 				break;
 			case '6': 
 				console.log('Populating Kirtan Data');
-				getEnglishKirtanNodeList();
-				// getRuKirtanNodeList();
+				// getEnglishKirtanNodeList();
+				getRuKirtanNodeList();
 				break;
 
 		}
