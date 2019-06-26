@@ -52,6 +52,9 @@ Gallery.schema.post("save", function(data, next) {
 	body.content_uuid = data.uuid;
 	body.uuid = uuidv4();
 	body.content_type = "Gallery";
+	body.content_title_en = data.title_en? data.title_en: data.title_ru? data.title_ru : '';
+	body.content_title_ru = data.title_ru? data.title_ru: data.title_en? data.title_en : '';
+
 	item.getUpdateHandler().process(body, function(err) {
 		if (err) {
 			logger.error(

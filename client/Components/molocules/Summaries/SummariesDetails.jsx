@@ -116,7 +116,7 @@ export class SummariesDetails extends React.Component {
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
 												{new Date(
-													this.props.location.state.created_date_time
+													lectureDetails.created_date_time
 												).toDateString()}
 											</time>
 										</li>

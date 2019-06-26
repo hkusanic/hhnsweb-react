@@ -10,6 +10,7 @@ export class QuoteDetails extends React.Component {
 	}
 
 	render () {
+		console.log(this.props.location.state)
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}

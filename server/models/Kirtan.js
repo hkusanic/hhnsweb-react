@@ -70,6 +70,9 @@ Kirtan.schema.post('save', function (data, next) {
 	body.content_uuid = data.uuid;
 	body.uuid = uuidv4();
 	body.content_type = 'Kirtan';
+	body.content_title_en = data.en.title? data.en.title: data.ru.title? data.ru.title : '';
+	body.content_title_ru = data.ru.title? data.ru.title: data.en.title? data.en.title : '';
+
 	item.getUpdateHandler().process(body, function (err) {
 		if (err) {
 			logger.error(

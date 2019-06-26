@@ -77,10 +77,9 @@ export class BlogDetails extends Component {
 									<a className="textColor">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.en.title
-												: this.props.location.state.ru.title
-												? this.props.location.state.ru.title
-												: this.props.location.state.en.title
+												? blogDetails.en.title ? blogDetails.en.title : blogDetails.ru.title? blogDetails.ru.title : ''
+												: blogDetails.ru.title ? tblogDetails.ru.title : blogDetails.en.title ? blogDetails.en.title : ''
+												
 										)}
 									</a>
 								</li>
@@ -167,7 +166,7 @@ export class BlogDetails extends Component {
 									<div>
 										<p className="bookingForm">Comments</p>
 									</div>
-									<Comments lecture_uuid={this.props.location.state.uuid} />
+									<Comments lecture_uuid={blogDetails.uuid} />
 								</article>
 							</div>
 							{/* <div className="col-lg-4" /> */}
