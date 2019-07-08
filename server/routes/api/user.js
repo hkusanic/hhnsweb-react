@@ -831,3 +831,87 @@ const download_image = (url, image_path) =>
 			status: false,
 			error: 'Error: ' + error.message,
 		}));
+
+
+exports.updateRegistration = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API updateRegistration'
+	);
+	const msg = {
+		to: req.body.email,
+		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
+		subject: '',
+		html: '',
+	};
+	if (!req.body.email) {
+		res.json({
+			error: {
+				title: 'Email is Reqired',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
+	}
+
+	keystone
+		.list('User')
+		.model.findOne()
+		.where('email', req.body.email)
+		.exec((err, userFound) => {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API updateRegistration'
+				);
+				return res.json({ error: { title: 'Not able to send email' } });
+			}
+
+			userFound.accessKeyId = keystone.utils.randomString();
+			userFound.save(err => {
+				if (err) {
+					logger.error(
+						{
+							error: err,
+						},
+						'API updateRegistration'
+					);
+					return res.json({ error: { title: 'Not able to send email' } });
+				}
+				msg.subject = 'Update Profile';
+				msg.html = `
+			  <p>Hare Krishna,</p>
+			  <p>Please accept our humble obeisances.</p>
+			  <p>All glories to Srila Prabhupada!</p>
+			  <br/>
+			  <p>Please click on the following link <a href='${EMAIL_CONFIG.CONSTANTS
+		.SITE_URL
+					+ '/reset-password?accessid='
+					+ userFound.accessKeyId}'>here </a>to update your profile</p>
+			  <br/>
+			  <p>Your servants always,</p>
+			  <p>Site administrators</p>
+			  `;
+
+				sendMail(msg.from, userFound.email, msg.subject, msg.html)
+					.then(res => {
+						console.log('email was sent', res);
+					})
+					.catch(err => {
+						logger.error(
+							{
+								error: err,
+							},
+							'API forgotpassword'
+						);
+						console.error(err);
+					});
+				res.json({
+					success: true,
+				});
+			});
+		});
+};
