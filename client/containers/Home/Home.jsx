@@ -19,6 +19,7 @@ import VideoDetails from '../../Components/molocules/Video/VideoDetails';
 import ForgotPassword from '../../Components/organisms/Form/ForgotPassword';
 import ShellCompoenent from '../../Components/organisms/ShellComponent/ShellComponent';
 import ResetPassword from '../../Components/organisms/Form/ResetPasswordForm';
+import updatePassword from '../../Components/organisms/Form/updatePassword';
 import UserProfile from '../../Components/molocules/Profile/UserProfile';
 import Registration from '../../Components/molocules/Registration/Registration';
 import Contact from '../../Components/organisms/Form/Contact';
@@ -37,6 +38,7 @@ import MKV from '../../Components/molocules/MKV/mkv';
 import SadhanaList from '../../Components/molocules/Sadhana/SadhanaList';
 import SadhanaDetails from '../../Components/molocules/Sadhana/SadhanaDetails';
 import AddSadhana from '../../Components/molocules/Sadhana/addSadhana';
+import UpdateProfile from '../../Components/molocules/UpdateProfile/UpdateProfile';
 
 import { Route, Switch } from 'react-router-dom';
 
@@ -64,8 +66,9 @@ export class Home extends Component {
 							<Route exact path="/" component={Carousel} />
 							<Route path="/forgotPassword" component={ForgotPassword} />
 							<Route path="/reset-password" component={ResetPassword} />
+							<Route path="/updatePassword" component={updatePassword} />
 							<Route path="/biograhyDetails" component={BiographyDetails} />
-							<Route path="/registration" component={Registration} />
+
 							<Route path="/contact" component={Contact} />
 							<Route path="/appointmentList" component={AppointmentListing} />
 							<Route path="/photos" component={Photos} />
@@ -73,11 +76,13 @@ export class Home extends Component {
 							<Route path="/subGallery" component={SubGallery} />
 							<Route path="/quotes" component={Quotes} />
 							<Route path="/quoteDetails" component={QuoteDetails} />
+							<Route path="/registration" component={Registration} />
 							<ShellCompoenent>
 								<Route path="/blog" component={Blog} />
 								<Route path="/booking" component={Booking} />
 								<Route path="/calender" component={Calender} />
 								<Route path="/lectures" component={Lectures} />
+								<Route path="/updateProfile" component={UpdateProfile} />
 								<Route path="/blogDetails/:uuid" component={BlogDetails} />
 								<Route
 									path="/lectureDetails/:uuid"

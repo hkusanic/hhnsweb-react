@@ -14,7 +14,6 @@ const initialState = {
 };
 
 const lectureReducer = (state = initialState, action) => {
-	console.log("action===>>>>", action);
 	switch (action.type) {
 		case types.SEARCH_LECTURE:
 			const data = action.payload.data.lecture;

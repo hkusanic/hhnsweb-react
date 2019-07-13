@@ -162,6 +162,7 @@ exports.signin = function (req, res) {
 							countryCode: user.countryCode,
 							user_id: user.user_id,
 							youbookme_url: process.env.YOUBOOKME_URL,
+							disciple: user.disciple,
 						},
 					});
 				},
@@ -594,7 +595,7 @@ exports.resetpassword = function (req, res) {
 		});
 };
 
-exports.editprofile = function (req, res) {
+exports.editprofile1 = function (req, res) {
 	if (!req.body.firstName || !req.body.lastName || !req.body.mobileNumber) {
 		res.json({
 			error: {
@@ -831,3 +832,285 @@ const download_image = (url, image_path) =>
 			status: false,
 			error: 'Error: ' + error.message,
 		}));
+
+
+exports.updateRegistration = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API updateRegistration'
+	);
+	const msg = {
+		to: req.body.email,
+		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
+		subject: '',
+		html: '',
+	};
+	if (!req.body.email) {
+		res.json({
+			error: {
+				title: 'Email is Reqired',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
+	}
+
+	keystone
+		.list('User')
+		.model.findOne()
+		.where('email', req.body.email)
+		.exec((err, userFound) => {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API updateRegistration'
+				);
+				return res.json({ error: { title: 'Not able to send email' } });
+			}
+
+			userFound.accessKeyId = keystone.utils.randomString();
+			userFound.save(err => {
+				if (err) {
+					logger.error(
+						{
+							error: err,
+						},
+						'API updateRegistration'
+					);
+					return res.json({ error: { title: 'Not able to send email' } });
+				}
+				msg.subject = 'Update Profile';
+				msg.html = `
+			  <p>Hare Krishna,</p>
+			  <p>Please accept our humble obeisances.</p>
+			  <p>All glories to Srila Prabhupada!</p>
+			  <br/>
+			  <p>Please click on the following link <a href='${EMAIL_CONFIG.CONSTANTS
+		.SITE_URL
+					+ '/updatePassword?accessid='
+					+ userFound.accessKeyId}'>here </a>to update your profile</p>
+			  <br/>
+			  <p>Your servants always,</p>
+			  <p>Site administrators</p>
+			  `;
+
+				sendMail(msg.from, userFound.email, msg.subject, msg.html)
+					.then(res => {
+						console.log('email was sent', res);
+					})
+					.catch(err => {
+						logger.error(
+							{
+								error: err,
+							},
+							'API forgotpassword'
+						);
+						console.error(err);
+					});
+				res.json({
+					success: true,
+				});
+			});
+		});
+};
+
+exports.updatePassword = function (req, res) {
+	const msg = {
+		to: req.body.email,
+		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
+		subject: '',
+		html: '',
+	};
+
+	if (!req.body.email || !req.body.accessid || !req.body.password) {
+		res.json({
+			error: {
+				title: 'Email, Password and Accessid is Reqired',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
+	}
+
+	keystone
+		.list('User')
+		.model.findOne()
+		.where('accessKeyId', req.body.accessid)
+		.exec((err, userFound) => {
+			if (err || !userFound) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API resetpassword'
+				);
+				return res.json({ error: { title: 'Not able to find user' } });
+			}
+			keystone
+				.list('User')
+				.model.findOne()
+				.where('email', req.body.email)
+				.exec((err, userFound) => {
+					if (err || !userFound) {
+						logger.error(
+							{
+								error: err,
+							},
+							'API resetpassword'
+						);
+						return res.json({ error: { title: 'Not able to reset password' } });
+					}
+					userFound.password = req.body.password;
+					let userPassword = userFound.password;
+					userFound.accessKeyId = '';
+					userFound.save(err => {
+						if (err) {
+							logger.error(
+								{
+									error: err,
+								},
+								'API resetpassword'
+							);
+							return res.json({
+								error: { title: 'Not able to reset password' },
+							});
+						}
+						msg.subject = 'Your Password is Successfully Changed';
+						msg.html = `
+				<p>Hare Krishna,</p>
+				<p>Please accept our humble obeisances.</p>
+				<p>All glories to Srila Prabhupada!</p>
+				<br/>
+				<p>Your password is reset and the new password is - ${userPassword}</p>
+				<br/>
+				<p>Your servants always,</p>
+				<p>Site administrators</p>
+				`;
+
+						sendMail(msg.from, userFound.email, msg.subject, msg.html)
+							.then(res => {
+								console.log('email was sent', res);
+							})
+							.catch(err => {
+								logger.error(
+									{
+										error: err,
+									},
+									'API resetpassword'
+								);
+								console.error(err);
+							});
+					}).then(() => {
+						console.log('inside then ===?????');
+						keystone.session.signin(
+							{ email: userFound.email, password: req.body.password },
+							req,
+							res,
+							function (user) {
+								return res.json({
+									success: true,
+									session: true,
+									date: new Date().getTime(),
+									admin: user.canAccessKeystone,
+									loginUser: {
+										user: user._id,
+										id: user.id,
+										email: user.email,
+										firstName: user.name.first,
+										last: user.name.last,
+										mobileNumber: user.mobileNumber,
+										countryCode: user.countryCode,
+										user_id: user.user_id,
+										youbookme_url: process.env.YOUBOOKME_URL,
+										disciple: user.disciple,
+									},
+								});
+							},
+							function (err) {
+								console.log('inside error ===?????');
+
+								logger.error(
+									{
+										error: err,
+									},
+									'API signin user'
+								);
+
+								return res.json({
+									success: false,
+									session: false,
+									message:
+										(err && err.message ? err.message : false)
+										|| 'Sorry, there was an issue signing you in, please try again.',
+								});
+							}
+						);
+					});
+
+				});
+		});
+};
+
+
+exports.editprofile = function (req, res) {
+	if (!req.body.email || !req.body.mobileNumber) {
+		res.json({
+			error: {
+				title: 'Required',
+				detail: 'Mandatory values are missing. Please check.',
+			},
+		});
+	}
+
+	keystone
+		.list('User')
+		.model.findOne()
+		.where('email', req.user.email)
+		.exec((err, userFound) => {
+			if (err || !userFound) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API editprofile'
+				);
+				return res.json({ error: { title: 'Not able to reset password' } });
+			}
+
+			userFound.name.first = req.body.first;
+			userFound.name.last = req.body.last;
+			userFound.mobileNumber = req.body.mobileNumber;
+			userFound.disciple_profile = req.body.disciple_profile;
+			userFound.userName = req.body.userName;
+			userFound.profile_pic = req.body.profile_pic;
+			userFound.address = req.body.address;
+			userFound.timeZone = req.body.timeZone;
+
+			userFound.save(err => {
+				if (err) {
+					logger.error(
+						{
+							error: err,
+						},
+						'API editprofile'
+					);
+					return res.json({ error: { title: 'Not able to reset password' } });
+				}
+
+				res.json({
+					success: true,
+					loginUser: {
+						id: userFound.id,
+						email: userFound.email,
+						firstName: userFound.name.first,
+						last: userFound.name.last,
+						mobileNumber: userFound.mobileNumber,
+						user_id: userFound.user_id,
+						youbookme_url: process.env.YOUBOOKME_URL,
+					},
+				});
+			});
+		});
+};

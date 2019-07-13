@@ -51,7 +51,14 @@ User.add({
 		education: { type: String },
 	},
 	profile_pic: { type: String },
-	created_date_time: { type: Types.Date, default: Date.now }
+	address: {
+		street: { type: String },
+		landmark: { type: String },
+		city: { type: String },
+		country: { type: String },
+		postalcode: { type: String },
+	},
+	created_date_time: { type: Types.Date, default: Date.now },
 
 });
 

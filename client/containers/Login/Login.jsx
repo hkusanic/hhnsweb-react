@@ -44,7 +44,7 @@ export class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.login !== this.props.login) {
+    if ((nextProps.login !== this.props.login) && nextProps.login.isLogin && !this.props.login.isLogin ) {
       const isUserLogin = Auth.isUserAuthenticated();
       if (!isUserLogin) {
         this.setState({
