@@ -7,6 +7,9 @@ export const SIGNUP = 'SIGNUP';
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
 export const CONTACT_US = 'CONTACT_US';
+export const GET_USER_DETAILS_BY_USER_ID = 'GET_USER_DETAILS_BY_USER_ID';
+export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
+
 
 // Blog Constants
 export const GET_BLOGS = 'GET_BLOGS';

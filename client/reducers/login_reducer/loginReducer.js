@@ -19,6 +19,7 @@ const initialState = {
 	contactError: '',
 	isContactSubmitted: false,
 	isProfileEdited: false,
+	isPasswordChanged: false,
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -36,8 +37,7 @@ const loginReducer = (state = initialState, action) => {
 					session: user.session,
 					error: '',
 				};
-			}
-			else if (!user.session) {
+			} else if (!user.session) {
 				state = {
 					...state,
 					error: user.message,
@@ -70,8 +70,7 @@ const loginReducer = (state = initialState, action) => {
 					session: signedUser.session,
 					regError: '',
 				};
-			}
-			else if (signedUser.error) {
+			} else if (signedUser.error) {
 				Auth.deauthenticateUser();
 				state = {
 					...state,
@@ -91,8 +90,7 @@ const loginReducer = (state = initialState, action) => {
 					forgotPasswordSentEmail: true,
 					forgotError: '',
 				};
-			}
-			else if (response.error) {
+			} else if (response.error) {
 				state = {
 					...state,
 					forgotError: response.error.title,
@@ -140,6 +138,7 @@ const loginReducer = (state = initialState, action) => {
 			const profileRespon = action.payload.data;
 			if (profileRespon.success) {
 				Auth.authenticateUser(profileRespon.success, profileRespon.loginUser);
+				// eslint-disable-next-line no-lone-blocks
 				{
 					state = {
 						...state,
@@ -163,8 +162,7 @@ const loginReducer = (state = initialState, action) => {
 					...state,
 					isContactSubmitted: true,
 				};
-			}
-			else {
+			} else {
 				state = {
 					...state,
 					isContactSubmitted: false,
@@ -173,6 +171,36 @@ const loginReducer = (state = initialState, action) => {
 			}
 			break;
 
+		case types.GET_USER_DETAILS_BY_USER_ID:
+			const userDetails = action.payload.data;
+			console.log('userDetails ===>>>>', userDetails);
+
+			break;
+
+		case types.UPDATE_PASSWORD:
+			const updatedUSer = action.payload.data;
+			if (updatedUSer.session && updatedUSer.loginUser) {
+				Auth.authenticateUser(updatedUSer.session, updatedUSer.loginUser);
+				state = {
+					...state,
+					isPasswordChanged: true,
+					isComplete: updatedUSer.success,
+					loginUser: updatedUSer.loginUser,
+					isAdmin: updatedUSer.admin,
+					session: updatedUSer.session,
+					regError: '',
+				};
+			} else if (updatedUSer.error) {
+				Auth.deauthenticateUser();
+				state = {
+					...state,
+					regError: updatedUSer.error.title,
+					isPasswordChanged: false,
+					session: false,
+					loginUser: {},
+				};
+			}
+			break;
 	}
 	return state;
 };

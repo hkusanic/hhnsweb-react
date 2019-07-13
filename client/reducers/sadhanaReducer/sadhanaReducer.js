@@ -13,7 +13,6 @@ const initialState = {
 };
 
 const sadhanaReducer = (state = initialState, action) => {
-	console.log('action.payload =======>>>>>', action.payload);
 	switch (action.type) {
 		case types.GET_SADHANA_LIST:
 			const data = action.payload.data.sadhana;

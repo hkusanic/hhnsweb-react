@@ -1,8 +1,10 @@
 import React from 'react';
 import { Form, Input, Select, Upload, Button } from 'antd';
 import $ from 'jquery';
+import IntlTelInput from 'react-intl-tel-input';
 
 const FormItem = Form.Item;
+const Option = Select.Option
 
 const AvatarView = ({ profilePic }) => (
 	<React.Fragment>
@@ -16,7 +18,6 @@ const AvatarView = ({ profilePic }) => (
 		</Upload>
 	</React.Fragment>
 );
-
 
 const timeZones = [
 	'Africa/Abidjan',
@@ -696,6 +697,8 @@ export class BasicProfile extends React.Component {
 				const finalUrl = temp.substr(0, temp.lastIndexOf('?'));
 				this.setState({
 					profilePic:finalUrl
+				}, () => {
+					this.props.handleUserDetails('profile_pic', finalUrl);
 				})
 				this.uploadFileToS3UsingPresignedUrl(data.presignedUrl, file);
 			},
@@ -727,11 +730,23 @@ export class BasicProfile extends React.Component {
 		});
 	};
 
+	handleMobileNumber = (validate, number, data) => {
+		const countryCode = data.dialCode;
+
+		if (validate) {
+			this.props.handleUserDetails('mobileNumber', number)
+		}
+}
+
 	dummyRequest = ({ file, onSuccess }) => {
 		setTimeout(() => {
 		  onSuccess('ok')
 		}, 0)
-	  }
+	}
+
+	handleCountry = (country) => {
+		this.props.handleUpdateCountry(country)
+	}
 
 	render() {
 		const { form, userDetails } = this.props;
@@ -751,7 +766,11 @@ export class BasicProfile extends React.Component {
 												userDetails && userDetails.name
 													? userDetails.name.first
 													: '',
-										})(<Input autoComplete="off" type="text" />)}
+										})(<Input
+													onChange={(event) => {this.props.handleUpdateProfile('first', event)}}
+													autoComplete="off"
+													type="text"
+											/>)}
 									</FormItem>
 								</div>
 								<div className="col-lg-4">
@@ -761,7 +780,11 @@ export class BasicProfile extends React.Component {
 												userDetails && userDetails.name
 													? userDetails.name.last
 													: '',
-										})(<Input autoComplete="off" type="text" />)}
+										})(<Input
+													onChange={(event) => {this.props.handleUpdateProfile('last', event)}}
+													autoComplete="off"
+													type="text"
+											/>)}
 									</FormItem>
 								</div>
 								<div className="col-lg-4">
@@ -777,7 +800,11 @@ export class BasicProfile extends React.Component {
 													message: 'Please input your Nickname!',
 												},
 											],
-										})(<Input autoComplete="off" type="text" />)}
+										})(<Input
+													onChange={(event) => {this.props.handleUpdateProfile('userName', event)}}
+													autoComplete="off"
+													type="text"
+											/>)}
 									</FormItem>
 								</div>
 							</div>
@@ -793,7 +820,9 @@ export class BasicProfile extends React.Component {
 											<Select style={{ maxWidth: 220 }}>
 												{timeZones.map((item, index) => {
 													return (
-														<Option key={index} value={item}>
+														<Option key={index} value={item} onClick={() => {
+															this.props.handleTimeZoneChange(item)
+														  }}>
 															{item}
 														</Option>
 													);
@@ -816,8 +845,8 @@ export class BasicProfile extends React.Component {
 												style={{ width: '100%' }}
 												optionFilterProp="children"
 											>
-												<Option value="en">English</Option>
-												<Option value="ru">Russian</Option>
+												<Option onClick={() => {this.props.handleLanguage("en")}}  value="en">English</Option>
+												<Option onClick={() => {this.props.handleLanguage("ru")}} value="ru">Russian</Option>
 											</Select>
 										)}
 									</FormItem>
@@ -851,18 +880,21 @@ export class BasicProfile extends React.Component {
 												userDetails && userDetails.email
 													? userDetails.email
 													: '',
-										})(<Input autoComplete="off" type="email" />)}
+										})(<Input onChange={(event) => {this.props.handleUpdateProfile('email', event)}} autoComplete="off" type="email" />)}
 									</FormItem>
 								</div>
 								<div className="col-lg-6">
-									<FormItem label="Phone Number">
-										{getFieldDecorator('phoneNumber', {
-											initialValue:
-												userDetails && userDetails.mobileNumber
-													? userDetails.mobileNumber
-													: '',
-										})(<Input autoComplete="off" type="text" />)}
-									</FormItem>
+									 <IntlTelInput
+										containerClassName="intl-tel-input"
+										defaultValue={userDetails && userDetails.mobileNumber ? userDetails.mobileNumber : ''}
+										defaultCountry='india'
+										autoHideDialCode={true}
+										format={true}
+										nationalMode={false}
+										separateDialCode={false}
+										inputClassName="form-control"
+										onPhoneNumberChange={(validate, number, data) => { this.handleMobileNumber(validate, number, data) }}
+									/>
 								</div>
 							</div>
 						</div>
@@ -870,7 +902,7 @@ export class BasicProfile extends React.Component {
 						<div className="col-lg-4 imageDiv">
 							{/* <AvatarView profilePic={this.getProfileUrl()} /> */}
 							<div className="avatar">
-								<img src={this.getProfileUrl()} alt="avatar" className="avatar_img" />
+								<img src={profilePic ? profilePic : 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'} alt="avatar" className="avatar_img" />
 							</div>
 							<Upload onChange={this.handleFileChange} customRequest={this.dummyRequest} showUploadList={false} >
 								<div className="button_view">
@@ -883,14 +915,14 @@ export class BasicProfile extends React.Component {
 					<div className="row">
 						<div className="col-lg-8">
 							<FormItem label="Address">
-								<Input autoComplete="off" type="text" />
+								<Input onChange={(event) => {this.props.handleUpdateAddress('street', event)}} autoComplete="off" type="text" />
 							</FormItem>
 						</div>
 					</div>
 					<div className="row">
 						<div className="col-lg-8">
 							<FormItem label="Landmark (Optional)">
-								<Input autoComplete="off" type="text" />
+								<Input onChange={(event) => {this.props.handleUpdateAddress('landmark', event)}} autoComplete="off" type="text" />
 							</FormItem>
 						</div>
 					</div>
@@ -905,7 +937,7 @@ export class BasicProfile extends React.Component {
 												message: 'Please input your city name!',
 											},
 										],
-									})(<Input autoComplete="off" type="text" />)}
+									})(<Input onChange={(event) => {this.props.handleUpdateAddress('city', event)}} autoComplete="off" type="text" />)}
 								</Form.Item>
 							</div>
 							<div className="col-lg-4">
@@ -917,7 +949,7 @@ export class BasicProfile extends React.Component {
 												message: 'Please input your postal Code!',
 											},
 										],
-									})(<Input type="number" autoComplete="off" />)}
+									})(<Input onChange={(event) => {this.props.handleUpdateAddress('postalCode', event)}} type="number" autoComplete="off" />)}
 								</Form.Item>
 							</div>
 							<div className="col-lg-4">
@@ -925,7 +957,7 @@ export class BasicProfile extends React.Component {
 									<Select style={{ maxWidth: 220 }}>
 										{countries.map((item, index) => {
 											return (
-												<Option key={index} value={item.name}>
+												<Option onClick={() => {this.handleCountry(item.name)}} key={index} value={item.name}>
 													{item.name}
 												</Option>
 											);

@@ -41,6 +41,18 @@ const utils = {
 		let url = serverAddress + '/api/contactus/';
 		return axios.post(url, body);
 	},
+
+	updatePassword: (body) => {
+		let url = serverAddress + '/api/updatePassword';
+		return axios.post(url, body);
+	},
+
+	getUserDetails: (body) => {
+		alert('hello');
+		let url = serverAddress + '/api/user/getUserByUserId';
+		return axios.post(url, body);
+
+	},
 };
 
 export default utils;
