@@ -105,7 +105,6 @@ export class Navigation extends Component {
 	};
 
 	handleTabIndex = index => {
-		// alert('inside handletabindex: ' + index);
 		if (index) {
 			this.setState({ index });
 		}

@@ -1,28 +1,27 @@
 import React from 'react';
 import { Form, Input, Button, DatePicker } from 'antd';
-import moment from 'moment'
+import moment from 'moment';
 
 const FormItem = Form.Item;
 
 export class DiscipleProfile extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {};
 	}
 
 	handleFirstInitiationDate = (date, dateString) => {
 		this.props.handleDiscipleDate('first_initiation_date', dateString);
-	}
+	};
 
 	handleSecondInitiationDate = (date, dateString) => {
 		this.props.handleDiscipleDate('second_initiation_date', dateString);
-	}
+	};
 
-	render () {
-		const { form } = this.props;
+	render() {
+		const { form, userDetails } = this.props;
 		const { getFieldDecorator } = form;
-		const dateFormat = 'YYYY-MM-DD'
-
+		const dateFormat = 'YYYY-MM-DD';
 
 		return (
 			<div>
@@ -31,21 +30,42 @@ export class DiscipleProfile extends React.Component {
 						<div className="row">
 							<div className="col-lg-6">
 								<FormItem label="Disciple Name">
-									<Input
-										onChange={(event) => { this.props.handleDiscipleDetails('spiritual_name', event); }}
-										autoComplete="off"
-										type="text"
-									/>
+									{getFieldDecorator('spiritual_name', {
+										initialValue:
+											userDetails && userDetails.disciple_profile
+												? userDetails.disciple_profile.spiritual_name
+												: '',
+									})(
+										<Input
+											onChange={event => {
+												this.props.handleDiscipleDetails(
+													'spiritual_name',
+													event
+												);
+											}}
+											autoComplete="off"
+											type="text"
+										/>
+									)}
 								</FormItem>
 							</div>
 
 							<div className="col-lg-6">
 								<FormItem label="Temple">
-									<Input
-										onChange={(event) => { this.props.handleDiscipleDetails('temple', event); }}
-										autoComplete="off"
-										type="text"
-									/>
+									{getFieldDecorator('spiritual_name', {
+										initialValue:
+											userDetails && userDetails.disciple_profile
+												? userDetails.disciple_profile.temple
+												: '',
+									})(
+										<Input
+											onChange={event => {
+												this.props.handleDiscipleDetails('temple', event);
+											}}
+											autoComplete="off"
+											type="text"
+										/>
+									)}
 								</FormItem>
 							</div>
 						</div>
@@ -53,21 +73,45 @@ export class DiscipleProfile extends React.Component {
 						<div className="row">
 							<div className="col-lg-6">
 								<FormItem label="First Initiation Date">
-								{getFieldDecorator('publish_date', {
-									rules: [
-										{
-										required: true,
-										message: 'Publish Date is required',
-										},
-									],
-                              		initialValue: moment(new Date(), dateFormat),
-                            	})(<DatePicker onChange={this.handleFirstInitiationDate} name="firstDate" />)}
+									{getFieldDecorator('first_initiation_date', {
+										rules: [
+											{
+												required: true,
+												message: 'First Initiation Date is required',
+											},
+										],
+										initialValue:
+														userDetails && userDetails.disciple_profile
+                                  ? moment(new Date(userDetails.disciple_profile.first_initiation_date), dateFormat)
+                                  : moment(new Date(), dateFormat),
+									})(
+										<DatePicker
+											onChange={this.handleFirstInitiationDate}
+											name="firstDate"
+										/>
+									)}
 								</FormItem>
 							</div>
 
 							<div className="col-lg-6">
 								<FormItem label="Second Initiation Date">
-									<DatePicker onChange={this.handleSecondInitiationDate} name="secondDate" />
+									{getFieldDecorator('second_initiation_date', {
+										rules: [
+											{
+												required: true,
+												message: 'Second Initiation Date is required',
+											},
+										],
+										initialValue:
+														userDetails && userDetails.disciple_profile
+                                  ? moment(new Date(userDetails.disciple_profile.second_initiation_date), dateFormat)
+                                  : moment(new Date(), dateFormat),
+									})(
+										<DatePicker
+											onChange={this.handleSecondInitiationDate}
+											name="firstDate"
+										/>
+									)}
 								</FormItem>
 							</div>
 						</div>
@@ -75,21 +119,42 @@ export class DiscipleProfile extends React.Component {
 						<div className="row">
 							<div className="col-lg-6">
 								<FormItem label="Marital Status">
-									<Input
-										onChange={(event) => { this.props.handleDiscipleDetails('marital_status', event); }}
-										autoComplete="off"
-										type="text"
-									/>
+									{getFieldDecorator('marital_status', {
+										initialValue:
+											userDetails && userDetails.disciple_profile
+												? userDetails.disciple_profile.marital_status
+												: '',
+									})(
+										<Input
+											onChange={event => {
+												this.props.handleDiscipleDetails(
+													'marital_status',
+													event
+												);
+											}}
+											autoComplete="off"
+											type="text"
+										/>
+									)}
 								</FormItem>
 							</div>
 
 							<div className="col-lg-6">
 								<FormItem label="Verifier">
-									<Input
-										onChange={(event) => { this.props.handleDiscipleDetails('verifier', event); }}
-										autoComplete="off"
-										type="text"
-									/>
+									{getFieldDecorator('verifier', {
+										initialValue:
+											userDetails && userDetails.disciple_profile
+												? userDetails.disciple_profile.verifier
+												: '',
+									})(
+										<Input
+											onChange={event => {
+												this.props.handleDiscipleDetails('verifier', event);
+											}}
+											autoComplete="off"
+											type="text"
+										/>
+									)}
 								</FormItem>
 							</div>
 						</div>

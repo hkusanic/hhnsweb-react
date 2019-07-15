@@ -48,7 +48,6 @@ const utils = {
 	},
 
 	getUserDetails: (body) => {
-		alert('hello');
 		let url = serverAddress + '/api/user/getUserByUserId';
 		return axios.post(url, body);
 

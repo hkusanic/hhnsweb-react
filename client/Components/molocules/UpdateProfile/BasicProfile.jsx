@@ -4,7 +4,7 @@ import $ from 'jquery';
 import IntlTelInput from 'react-intl-tel-input';
 
 const FormItem = Form.Item;
-const Option = Select.Option
+const Option = Select.Option;
 
 const AvatarView = ({ profilePic }) => (
 	<React.Fragment>
@@ -659,25 +659,35 @@ export class BasicProfile extends React.Component {
 		super(props);
 		this.state = {
 			upoading: true,
-			profilePic: ''
+			profilePic: '',
 		};
-		this.getProfileUrl();
 	}
 
 	componentDidMount() {
-		this.getProfileUrl();
+		const { userDetails } = this.props;
+		const profilePic = this.getProfileUrl(userDetails);
+
+		this.setState({
+			profilePic
+		});
 	}
 
-	getProfileUrl = () => {
-		const { userDetails } = this.props;
+	componentWillReceiveProps(nextProps){
+		const profilePic = this.getProfileUrl(nextProps.userDetails);
+
+		this.setState({
+			profilePic
+		});
+	}
+
+	getProfileUrl = (userDetails) => {
 		if (userDetails.profile_pic === 'Profile pic not available') {
-			return 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'
-		}   
-		    return userDetails.profile_pic
+			return 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png';
+		}
+		return userDetails.profile_pic;
 	};
 
-	handleFileChange = (info) => {
-
+	handleFileChange = info => {
 		if (info.file.status === 'done') {
 			this.setState({ upoading: false }, () => {
 				this.uploads3(info.file);
@@ -686,7 +696,6 @@ export class BasicProfile extends React.Component {
 	};
 
 	uploads3 = file => {
-		console.log('Uploads3-->>', file);
 		const fileName = file.name;
 		const fileType = file.type;
 		$.ajax({
@@ -695,11 +704,14 @@ export class BasicProfile extends React.Component {
 			success: data => {
 				const temp = data.presignedUrl.toString();
 				const finalUrl = temp.substr(0, temp.lastIndexOf('?'));
-				this.setState({
-					profilePic:finalUrl
-				}, () => {
-					this.props.handleUserDetails('profile_pic', finalUrl);
-				})
+				this.setState(
+					{
+						profilePic: finalUrl,
+					},
+					() => {
+						this.props.handleUserDetails('profile_pic', finalUrl);
+					}
+				);
 				this.uploadFileToS3UsingPresignedUrl(data.presignedUrl, file);
 			},
 			error() {
@@ -722,10 +734,10 @@ export class BasicProfile extends React.Component {
 			},
 			processData: false,
 			success: data => {
-				console.log("succes")
+				console.log('succes');
 			},
 			error() {
-				console.error("error")
+				console.error('error');
 			},
 		});
 	};
@@ -734,19 +746,19 @@ export class BasicProfile extends React.Component {
 		const countryCode = data.dialCode;
 
 		if (validate) {
-			this.props.handleUserDetails('mobileNumber', number)
+			this.props.handleUserDetails('mobileNumber', number);
 		}
-}
+	};
 
 	dummyRequest = ({ file, onSuccess }) => {
 		setTimeout(() => {
-		  onSuccess('ok')
-		}, 0)
-	}
+			onSuccess('ok');
+		}, 0);
+	};
 
-	handleCountry = (country) => {
-		this.props.handleUpdateCountry(country)
-	}
+	handleCountry = country => {
+		this.props.handleUpdateCountry(country);
+	};
 
 	render() {
 		const { form, userDetails } = this.props;
@@ -766,11 +778,15 @@ export class BasicProfile extends React.Component {
 												userDetails && userDetails.name
 													? userDetails.name.first
 													: '',
-										})(<Input
-													onChange={(event) => {this.props.handleUpdateProfile('first', event)}}
-													autoComplete="off"
-													type="text"
-											/>)}
+										})(
+											<Input
+												onChange={event => {
+													this.props.handleUpdateProfile('first', event);
+												}}
+												autoComplete="off"
+												type="text"
+											/>
+										)}
 									</FormItem>
 								</div>
 								<div className="col-lg-4">
@@ -780,11 +796,15 @@ export class BasicProfile extends React.Component {
 												userDetails && userDetails.name
 													? userDetails.name.last
 													: '',
-										})(<Input
-													onChange={(event) => {this.props.handleUpdateProfile('last', event)}}
-													autoComplete="off"
-													type="text"
-											/>)}
+										})(
+											<Input
+												onChange={event => {
+													this.props.handleUpdateProfile('last', event);
+												}}
+												autoComplete="off"
+												type="text"
+											/>
+										)}
 									</FormItem>
 								</div>
 								<div className="col-lg-4">
@@ -800,11 +820,15 @@ export class BasicProfile extends React.Component {
 													message: 'Please input your Nickname!',
 												},
 											],
-										})(<Input
-													onChange={(event) => {this.props.handleUpdateProfile('userName', event)}}
-													autoComplete="off"
-													type="text"
-											/>)}
+										})(
+											<Input
+												onChange={event => {
+													this.props.handleUpdateProfile('userName', event);
+												}}
+												autoComplete="off"
+												type="text"
+											/>
+										)}
 									</FormItem>
 								</div>
 							</div>
@@ -820,9 +844,13 @@ export class BasicProfile extends React.Component {
 											<Select style={{ maxWidth: 220 }}>
 												{timeZones.map((item, index) => {
 													return (
-														<Option key={index} value={item} onClick={() => {
-															this.props.handleTimeZoneChange(item)
-														  }}>
+														<Option
+															key={index}
+															value={item}
+															onClick={() => {
+																this.props.handleTimeZoneChange(item);
+															}}
+														>
 															{item}
 														</Option>
 													);
@@ -845,30 +873,31 @@ export class BasicProfile extends React.Component {
 												style={{ width: '100%' }}
 												optionFilterProp="children"
 											>
-												<Option onClick={() => {this.props.handleLanguage("en")}}  value="en">English</Option>
-												<Option onClick={() => {this.props.handleLanguage("ru")}} value="ru">Russian</Option>
+												<Option
+													onClick={() => {
+														this.props.handleLanguage('en');
+													}}
+													value="en"
+												>
+													English
+												</Option>
+												<Option
+													onClick={() => {
+														this.props.handleLanguage('ru');
+													}}
+													value="ru"
+												>
+													Russian
+												</Option>
 											</Select>
 										)}
 									</FormItem>
 								</div>
 								<div className="col-lg-4">
 									<FormItem label="Sadhana Sheets">
-										{form.getFieldDecorator('sadhanaSheet', {
-											initialValue:
-												userDetails && userDetails.sadhanaSheetEnable
-													? userDetails.sadhanaSheetEnable
-													: '',
-										})(
-											<Select
-												id="product-edit-colors"
-												showSearch
-												style={{ width: '100%' }}
-												optionFilterProp="children"
-											>
-												<Option value="true">Enable</Option>
-												<Option value="false">Disable</Option>
-											</Select>
-										)}
+										{form.getFieldDecorator('sadhanaSheetEnable', {
+											initialValue: userDetails.sadhanaSheetEnable
+										})(<Input disabled autoComplete="off" type="text" />)}
 									</FormItem>
 								</div>
 							</div>
@@ -880,20 +909,35 @@ export class BasicProfile extends React.Component {
 												userDetails && userDetails.email
 													? userDetails.email
 													: '',
-										})(<Input onChange={(event) => {this.props.handleUpdateProfile('email', event)}} autoComplete="off" type="email" />)}
+										})(
+											<Input
+												onChange={event => {
+													this.props.handleUpdateProfile('email', event);
+												}}
+												disabled
+												autoComplete="off"
+												type="email"
+											/>
+										)}
 									</FormItem>
 								</div>
 								<div className="col-lg-6">
-									 <IntlTelInput
+									<IntlTelInput
 										containerClassName="intl-tel-input"
-										defaultValue={userDetails && userDetails.mobileNumber ? userDetails.mobileNumber : ''}
-										defaultCountry='india'
+										defaultValue={
+											userDetails && userDetails.mobileNumber
+												? userDetails.mobileNumber
+												: ''
+										}
+										defaultCountry="india"
 										autoHideDialCode={true}
 										format={true}
 										nationalMode={false}
 										separateDialCode={false}
 										inputClassName="form-control"
-										onPhoneNumberChange={(validate, number, data) => { this.handleMobileNumber(validate, number, data) }}
+										onPhoneNumberChange={(validate, number, data) => {
+											this.handleMobileNumber(validate, number, data);
+										}}
 									/>
 								</div>
 							</div>
@@ -902,9 +946,21 @@ export class BasicProfile extends React.Component {
 						<div className="col-lg-4 imageDiv">
 							{/* <AvatarView profilePic={this.getProfileUrl()} /> */}
 							<div className="avatar">
-								<img src={profilePic ? profilePic : 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'} alt="avatar" className="avatar_img" />
+								<img
+									src={
+										profilePic
+											? profilePic
+											: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'
+									}
+									alt="avatar"
+									className="avatar_img"
+								/>
 							</div>
-							<Upload onChange={this.handleFileChange} customRequest={this.dummyRequest} showUploadList={false} >
+							<Upload
+								onChange={this.handleFileChange}
+								customRequest={this.dummyRequest}
+								showUploadList={false}
+							>
 								<div className="button_view">
 									<Button icon="upload">Upload Profile Pic</Button>
 								</div>
@@ -915,14 +971,40 @@ export class BasicProfile extends React.Component {
 					<div className="row">
 						<div className="col-lg-8">
 							<FormItem label="Address">
-								<Input onChange={(event) => {this.props.handleUpdateAddress('street', event)}} autoComplete="off" type="text" />
+								{getFieldDecorator('street', {
+									initialValue:
+										userDetails && userDetails.address
+											? userDetails.address.street
+											: '',
+								})(
+									<Input
+										onChange={event => {
+											this.props.handleUpdateAddress('street', event);
+										}}
+										autoComplete="off"
+										type="text"
+									/>
+								)}
 							</FormItem>
 						</div>
 					</div>
 					<div className="row">
 						<div className="col-lg-8">
 							<FormItem label="Landmark (Optional)">
-								<Input onChange={(event) => {this.props.handleUpdateAddress('landmark', event)}} autoComplete="off" type="text" />
+								{getFieldDecorator('landmark', {
+									initialValue:
+										userDetails && userDetails.address
+											? userDetails.address.landmark
+											: '',
+								})(
+									<Input
+										onChange={event => {
+											this.props.handleUpdateAddress('landmark', event);
+										}}
+										autoComplete="off"
+										type="text"
+									/>
+								)}
 							</FormItem>
 						</div>
 					</div>
@@ -937,7 +1019,19 @@ export class BasicProfile extends React.Component {
 												message: 'Please input your city name!',
 											},
 										],
-									})(<Input onChange={(event) => {this.props.handleUpdateAddress('city', event)}} autoComplete="off" type="text" />)}
+										initialValue:
+											userDetails && userDetails.address
+												? userDetails.address.city
+												: '',
+									})(
+										<Input
+											onChange={event => {
+												this.props.handleUpdateAddress('city', event);
+											}}
+											autoComplete="off"
+											type="text"
+										/>
+									)}
 								</Form.Item>
 							</div>
 							<div className="col-lg-4">
@@ -949,21 +1043,46 @@ export class BasicProfile extends React.Component {
 												message: 'Please input your postal Code!',
 											},
 										],
-									})(<Input onChange={(event) => {this.props.handleUpdateAddress('postalCode', event)}} type="number" autoComplete="off" />)}
+										initialValue:
+											userDetails && userDetails.address
+												? userDetails.address.postalcode
+												: '',
+									})(
+										<Input
+											onChange={event => {
+												this.props.handleUpdateAddress('postalcode', event);
+											}}
+											type="number"
+											autoComplete="off"
+										/>
+									)}
 								</Form.Item>
 							</div>
 							<div className="col-lg-4">
-								<Form.Item label="Country">
-									<Select style={{ maxWidth: 220 }}>
-										{countries.map((item, index) => {
-											return (
-												<Option onClick={() => {this.handleCountry(item.name)}} key={index} value={item.name}>
-													{item.name}
-												</Option>
-											);
-										})}
-									</Select>
-								</Form.Item>
+								<FormItem label="Timezone">
+									{form.getFieldDecorator('timezone', {
+										initialValue:
+											userDetails && userDetails.address
+												? userDetails.address.country
+												: '',
+									})(
+										<Select>
+											{countries.map((item, index) => {
+												return (
+													<Option
+														onClick={() => {
+															this.handleCountry(item.name);
+														}}
+														key={index}
+														value={item.name}
+													>
+														{item.name}
+													</Option>
+												);
+											})}
+										</Select>
+									)}
+								</FormItem>
 							</div>
 						</div>
 					</div>
