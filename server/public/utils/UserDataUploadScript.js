@@ -8,10 +8,10 @@ httpAgent.maxSockets = 30;
 
 let cookie = new tough.Cookie({
 	key: 'SSESS8c0f16dd6e4ff53e267519930069d1e3',
-	value: 'G_mIrsNllS7rkTjnc6bVLZTUe9NSeG5-6rjH-kKSc0o',
+	value: '97C21W_Ije01zUIN4-wZRvzDEjGV9z0GidNhBoXvbrk',
 	domain: 'nrs.niranjanaswami.net',
 	httpOnly: false,
-	maxAge: 3153600000000000
+	maxAge: 3153600000000000,
 });
 var cookiejar = rp.jar();
 cookiejar._jar.rejectPublicSuffixes = false;
@@ -23,37 +23,37 @@ var normalUserDetailsList = [];
 var discipleUserDetailsList = [];
 var finalUserData = [];
 
-function uuidv4() {
-	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+function uuidv4 () {
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
 		var r = (Math.random() * 16) | 0;
 		var v = c == 'x' ? r : (r & 0x3) | 0x8;
 		return v.toString(16);
 	});
 }
 
-function getDiscipleUserDetails() {
+function getDiscipleUserDetails () {
 	const DisPromiseArr = [];
 
-	for (let k = 0; k < 4400; k++) {
+	for (let k = 0; k < normalUserDetailsList.length; k++) {
 		for (let m = 0; m < discipleUserList.length; m++) {
 			if (
-				normalUserDetailsList[k].uid !== undefined &&
-				discipleUserList[m].uid !== undefined
+				normalUserDetailsList[k] && normalUserDetailsList[k].uid !== undefined
+				&& discipleUserList[m] && discipleUserList[m].uid !== undefined
 			) {
 				if (normalUserDetailsList[k].uid === discipleUserList[m].uid) {
 					let options = {
 						method: 'GET',
 						uri:
-							'https://nrs.niranjanaswami.net/en/rest/node/' +
-							discipleUserList[m].nid +
-							'.json',
+							'https://nrs.niranjanaswami.net/en/rest/node/'
+							+ discipleUserList[m].nid
+							+ '.json',
 						jar: cookiejar,
 						json: true,
 						timeout: 600000,
 						pool: httpAgent,
 						headers: {
-							'User-Agent': 'Request-Promise'
-						}
+							'User-Agent': 'Request-Promise',
+						},
 					};
 					DisPromiseArr.push(rp(options));
 				}
@@ -71,7 +71,7 @@ function getDiscipleUserDetails() {
 			for (let u = 0; u < normalUserDetailsList.length; u++) {
 				if (normalUserDetailsList[u] && normalUserDetailsList[u].uid) {
 					let data = {
-						oldData: {}
+						oldData: {},
 					};
 					data.user_id = uuidv4();
 					data.userName = normalUserDetailsList[u].name;
@@ -89,9 +89,13 @@ function getDiscipleUserDetails() {
 					data.oldData.uid = normalUserDetailsList[u].uid;
 					data.oldData.init = normalUserDetailsList[u].init;
 					data.oldData.picture = normalUserDetailsList[u].picture;
-					data.oldData.path =
-						'https://nrs.niranjanaswami.net/en/rest/user/' +
-						normalUserDetailsList[u].uid;
+					data.oldData.path
+						= 'https://nrs.niranjanaswami.net/en/rest/user/'
+						+ normalUserDetailsList[u].field_disciple;
+					data.disciple = normalUserDetailsList[u].field_disciple.und
+						? normalUserDetailsList[u].field_disciple
+							.und[0].value
+						: 'No';
 					for (let v = 0; v < discipleUserDetailsList.length; v++) {
 						if (discipleUserDetailsList[v] && discipleUserDetailsList[v].uid) {
 							if (
@@ -103,13 +107,13 @@ function getDiscipleUserDetails() {
 									v
 								].field_first_initiation_date.und
 									? discipleUserDetailsList[v].field_first_initiation_date
-											.und[0].value
+										.und[0].value
 									: '';
 								data.disciple_profile.second_initiation_date = discipleUserDetailsList[
 									v
 								].field_second_initiation_date.und
 									? discipleUserDetailsList[v].field_second_initiation_date
-											.und[0].value
+										.und[0].value
 									: '';
 								data.disciple_profile.spiritual_name = discipleUserDetailsList[
 									v
@@ -120,9 +124,9 @@ function getDiscipleUserDetails() {
 									.field_temple.und
 									? discipleUserDetailsList[v].field_temple.und[0].value
 									: '';
-								data.disciple_profile.verifier =
-									discipleUserDetailsList[v].verifier &&
-									discipleUserDetailsList[v].verifier.und
+								data.disciple_profile.verifier
+									= discipleUserDetailsList[v].verifier
+									&& discipleUserDetailsList[v].verifier.und
 										? discipleUserDetailsList[v].verifier.und[0].value
 										: '';
 								data.disciple_profile.marital_status = discipleUserDetailsList[
@@ -152,7 +156,6 @@ function getDiscipleUserDetails() {
 									: '';
 								data.oldData.vid = discipleUserDetailsList[v].vid;
 								data.oldData.nid = discipleUserDetailsList[v].nid;
-								data.disciple = 'Disciple';
 							}
 						}
 					}
@@ -164,6 +167,10 @@ function getDiscipleUserDetails() {
 			return finalUserData;
 		})
 		.then(data => {
+			var json1 = JSON.stringify(finalUserData, null, 2);
+			fs.writeFile('withoutProfilepicData.json', json1, 'utf8', () => {
+				console.log('success');
+			});
 			console.log(
 				'final User data is integrated  total user is :',
 				finalUserData.length
@@ -177,8 +184,8 @@ function getDiscipleUserDetails() {
 					pool: httpAgent,
 					timeout: 600000,
 					headers: {
-						'User-Agent': 'Request-Promise'
-					}
+						'User-Agent': 'Request-Promise',
+					},
 				};
 				return rp(options);
 			});
@@ -188,7 +195,7 @@ function getDiscipleUserDetails() {
 						finalUserData[p].profile_pic = data[p].url;
 					}
 					var json = JSON.stringify(finalUserData, null, 2);
-					fs.writeFile('UserData.json', json, 'utf8', () => {
+					fs.writeFile('UpdatedUserData.json', json, 'utf8', () => {
 						console.log('success');
 					});
 				})
@@ -204,23 +211,26 @@ function getDiscipleUserDetails() {
 		});
 }
 
-function getNormalUserDetails() {
+function getNormalUserDetails () {
 	console.log('length ===>>>', normalUserList.length);
 	const PromiseArr = normalUserList.map((item, i) => {
-		if (i < 4400) {
+		if (i < normalUserList.length) {
 			const uid = normalUserList[i].uid;
-			let options = {
-				method: 'GET',
-				uri: 'https://nrs.niranjanaswami.net/en/rest/user/' + uid + '.json',
-				jar: cookiejar,
-				json: true,
-				pool: httpAgent,
-				timeout: 600000,
-				headers: {
-					'User-Agent': 'Request-Promise'
-				}
-			};
-			return rp(options);
+			// console.log('uid ====>>>', uid);
+			if (normalUserList[i].uid !== undefined && normalUserList[i].uid !== '0' && normalUserList[i].uid !== null) {
+				let options = {
+					method: 'GET',
+					uri: 'https://nrs.niranjanaswami.net/en/rest/user/' + uid + '.json',
+					jar: cookiejar,
+					json: true,
+					pool: httpAgent,
+					timeout: 600000,
+					headers: {
+						'User-Agent': 'Request-Promise',
+					},
+				};
+				return rp(options);
+			}
 		}
 	});
 
@@ -239,7 +249,7 @@ function getNormalUserDetails() {
 		});
 }
 
-function getDiscipleUserList() {
+function getDiscipleUserList () {
 	let options = {
 		method: 'GET',
 		uri:
@@ -247,12 +257,12 @@ function getDiscipleUserList() {
 		jar: cookiejar,
 		json: true,
 		headers: {
-			'User-Agent': 'Request-Promise'
-		}
+			'User-Agent': 'Request-Promise',
+		},
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(function (body) {
 			discipleUserList = body;
 			getNormalUserDetails();
 			console.log(
@@ -261,24 +271,24 @@ function getDiscipleUserList() {
 				'data received'
 			);
 		})
-		.catch(function(err) {
+		.catch(function (err) {
 			console.log('Error inside getDiscipleUserList() function ====>>>>', err);
 		});
 }
 
-function getUserList() {
+function getUserList () {
 	let options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/rest/user.json?pagesize=5000&page=0',
 		jar: cookiejar,
 		json: true,
 		headers: {
-			'User-Agent': 'Request-Promise'
-		}
+			'User-Agent': 'Request-Promise',
+		},
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(function (body) {
 			normalUserList = body;
 			getDiscipleUserList();
 			console.log(
@@ -287,7 +297,7 @@ function getUserList() {
 				'data received'
 			);
 		})
-		.catch(function(err) {
+		.catch(function (err) {
 			console.log('Error inside getUserList() function ====>>>>', err);
 		});
 }
