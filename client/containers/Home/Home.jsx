@@ -75,7 +75,7 @@ export class Home extends Component {
 							<Route path="/gallery" component={Gallery} />
 							<Route path="/subGallery" component={SubGallery} />
 							<Route path="/quotes" component={Quotes} />
-							<Route path="/quoteDetails" component={QuoteDetails} />
+							<Route path="/quoteDetails/:uuid" component={QuoteDetails} />
 							<Route path="/registration" component={Registration} />
 							<ShellCompoenent>
 								<Route path="/blog" component={Blog} />

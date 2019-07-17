@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getRussianDubbedLecture } from "../../actions/lectureActions"
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getRussianDubbedLecture } from '../../actions/lectureActions';
+import { Link } from 'react-router-dom';
 import { Card } from 'antd';
 
 class RussiaDubbedLectures extends Component {
@@ -31,7 +31,7 @@ class RussiaDubbedLectures extends Component {
                     && this.props.lectureDetails.lectures
                     && this.props.lectureDetails.lectures.map(eachLecture => {
                     	return <div style={{ paddingBottom: '6%' }} >
-                    		<Link key={eachLecture.id} to={`/${eachLecture.author}/${eachLecture.en.topic}`} >{`New**     ${eachLecture.en.topic}`}</Link>
+                    		<Link key={eachLecture.id} to={`/lectureDetails/${eachLecture.uuid}`} >{`New**  ${eachLecture.en.topic}`}</Link>
                     		<p style={{ marginTop: '0px' }} key={eachLecture.id}>{`Posted On     ${(new Date(eachLecture.created_date_time)).toLocaleString('en-GB')}`}</p>
                     	</div>;
                     })}

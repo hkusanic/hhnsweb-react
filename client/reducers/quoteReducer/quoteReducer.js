@@ -6,7 +6,8 @@ const initialState = {
 	totalQuotes: '',
 	isCompleted: false,
 	error: '',
-	Count: false
+	Count: false,
+	quote: null,
 };
 
 const quoteReducer = (state = initialState, action) => {
@@ -19,13 +20,19 @@ const quoteReducer = (state = initialState, action) => {
 				totalQuotes: data.total,
 				currentPage: data.currentPage,
 				isCompleted: true,
-				Count: false
+				Count: false,
 			};
 			break;
 		case types.SEARCH_QUOTE_OF_DAY:
 			state = {
 				...state,
-				quotes: action.payload.data.quote
+				quotes: action.payload.data.quote,
+			};
+			break;
+		case types.GET_QUOTE_BY_UUID:
+			state = {
+				...state,
+				quote: action.payload.data.quote,
 			};
 			break;
 	}
