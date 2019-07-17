@@ -1,7 +1,8 @@
 import quoteApi from '../utils/api/quote';
 import * as types from '../constants/index';
+import { func } from 'prop-types';
 
-export function searchQuote(body) {
+export function searchQuote (body) {
 	return dispatch => {
 		quoteApi
 			.searchQuote(body)
@@ -14,14 +15,14 @@ export function searchQuote(body) {
 	};
 }
 
-export function searchQuoteAction(data) {
+export function searchQuoteAction (data) {
 	return {
 		type: types.SEARCH_QUOTE,
-		payload: data
+		payload: data,
 	};
 }
 
-export function quoteOfDay(body) {
+export function quoteOfDay (body) {
 	return dispatch => {
 		quoteApi
 			.quoteOfDay(body)
@@ -35,9 +36,29 @@ export function quoteOfDay(body) {
 }
 
 
-export function searchQuoteOfDay(data) {
+export function searchQuoteOfDay (data) {
 	return {
 		type: types.SEARCH_QUOTE_OF_DAY,
-		payload: data
+		payload: data,
+	};
+}
+
+export function getQuoteByUuid (body) {
+	return dispatch => {
+		quoteApi
+			.getQuotesByUuid(body)
+			.then(response => {
+				dispatch(getQuoteByUuidAction(response));
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+}
+
+export function getQuoteByUuidAction (data) {
+	return {
+		type: types.GET_QUOTE_BY_UUID,
+		payload: data,
 	};
 }

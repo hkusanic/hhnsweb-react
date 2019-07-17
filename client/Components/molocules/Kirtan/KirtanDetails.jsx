@@ -130,6 +130,17 @@ export class KirtanDetails extends Component {
 											<a>Kirtan</a>
 										</li>
 									</ul>
+									<div className="row" style={{paddingTop: '20px'}}>
+										<div className="col textContent">
+											{renderHTML(
+												reactCookie.load('languageCode') === 'en'
+													? kirtanDetails.en.body
+													: kirtanDetails.ru.body
+													? kirtanDetails.ru.body
+													: kirtanDetails.en.body
+											)}
+										</div>
+									</div>
 								</article>
 
 								<div style={{ paddingTop: '20px' }}>
