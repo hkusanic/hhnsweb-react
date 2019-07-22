@@ -52,7 +52,7 @@ export class Login extends Component {
           regError: nextProps.login.regError,
           isUserLogin
         }, () => {
-          location.reload();
+          // location.reload();
         })
 
       } else {
@@ -128,6 +128,12 @@ export class Login extends Component {
     }
   }
 
+  handleLoginRedirect = () => {
+    alert("login component");
+    console.log("this.props===>>>>", this.props)
+    this.props.history.push("/login");
+  }
+
   render() {
     let log_in = '';
     let forgot_password = '';
@@ -180,10 +186,10 @@ export class Login extends Component {
                 <ul className="list-inline-bordered" style={{ color: '#122e44' }}>
 
                   <li>
-                    <li className={login_modal_1} onClick={() => { this.props.handleLogin() }} data-rd-navbar-toggle="#rd-navbar-login-5">
-                      {log_in}
-                    </li>
-                    <div className={login_modal_2} id="rd-navbar-login-5">
+                    {/* <li className={login_modal_1} onClick={() => { this.handleLoginRedirect() }} data-rd-navbar-toggle="#rd-navbar-login-5"> */}
+                      <Link to="/login">{log_in}</Link>
+                    {/* </li> */}
+                    {/* <div className={login_modal_2} id="rd-navbar-login-5">
                       <h4>
                         {log_in}
                       </h4>
@@ -191,7 +197,7 @@ export class Login extends Component {
                       <p onClick={() => { this.handleRemoveModal() }}>
                         <Link to='/forgotPassword'> {forgot_password}</Link>
                       </p>
-                    </div>
+                    </div> */}
                   </li>
                   <li>
                     <li className={res_modal_1} onClick={() => { this.props.handleRedirect() }} data-rd-navbar-toggle="#rd-navbar-register-5" >

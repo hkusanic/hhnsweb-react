@@ -39,7 +39,7 @@ import SadhanaList from '../../Components/molocules/Sadhana/SadhanaList';
 import SadhanaDetails from '../../Components/molocules/Sadhana/SadhanaDetails';
 import AddSadhana from '../../Components/molocules/Sadhana/addSadhana';
 import UpdateProfile from '../../Components/molocules/UpdateProfile/UpdateProfile';
-
+import Login from '../../Components/molocules/Login/Login';
 import { Route, Switch } from 'react-router-dom';
 
 export class Home extends Component {
@@ -68,7 +68,7 @@ export class Home extends Component {
 							<Route path="/reset-password" component={ResetPassword} />
 							<Route path="/updatePassword" component={updatePassword} />
 							<Route path="/biograhyDetails" component={BiographyDetails} />
-
+							<Route path="/login" component={Login} />
 							<Route path="/contact" component={Contact} />
 							<Route path="/appointmentList" component={AppointmentListing} />
 							<Route path="/photos" component={Photos} />
