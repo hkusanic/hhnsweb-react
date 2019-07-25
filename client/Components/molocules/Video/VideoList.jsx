@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button, Table, Icon } from 'antd';
 import {
-	searchLecture,
+	getVideoList,
 	resetState,
-} from '../../../actions/lectureActions';
+} from '../../../actions/video';
 import SearchFilter from '../SeachFilter/SearchFilter';
 import { Collapse } from 'react-collapse';
 import Auth from '../../../utils/Auth';
@@ -41,54 +41,52 @@ export class VideoList extends Component {
 		this.setState({ loading: true });
 
 		let body = { ...this.state.body };
-		body.page = this.props.lecturesDetails.currentPage || 1;
-		body.video = true;
+		body.page = this.props.VideoData.currentPage || 1;
 
 		const pagination = { ...this.state.pagination };
-		pagination.total = this.props.lecturesDetails.totalLectures;
+		pagination.total = this.props.VideoData.totalVideos;
 		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = this.props.lecturesDetails.currentPage || 1;
+		pagination.current = this.props.VideoData.currentPage || 1;
 
 		this.setState({
-			videos: this.props.lecturesDetails.lectures,
+			videos: this.props.VideoData.videoList,
 			isUserLogin,
 			loading: false,
 			pagination,
 		});
 
-		this.props.searchLecture(body);
+		this.props.getVideoList(body);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		let body = { ...this.state.body };
-		body.page = nextProps.lecturesDetails.currentPage;
-		body.video = true;
+		body.page = nextProps.VideoData.currentPage;
 
 		const pagination = { ...this.state.pagination };
-		pagination.total = nextProps.lecturesDetails.totalLectures;
+		pagination.total = nextProps.VideoData.totalVideos;
 		pagination.defaultPageSize = defaultPageSize;
-		pagination.current = nextProps.lecturesDetails.currentPage;
+		pagination.current = nextProps.VideoData.currentPage;
 
 		this.setState({
 			pagination,
 		});
 
-		if (nextProps.lecturesDetails.Count) {
-			this.props.searchLecture(body);
+		if (nextProps.VideoData.Count) {
+			this.props.getVideoList(body);
 		}
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
 		const pager = { ...this.state.pagination };
 		pager.current = pagination.current;
-		pager.total = this.props.lecturesDetails.totalLectures;
+		pager.total = this.props.VideoData.totalVideos;
 		this.setState({
 			pagination: pager,
 		});
 
 		let body = { ...this.state.body };
 		body.page = pagination.current;
-		this.props.searchLecture(body);
+		this.props.getVideoList(body);
 	};
 
 	showing100Characters = sentence => {
@@ -106,9 +104,8 @@ export class VideoList extends Component {
 	};
 
 	searchData = body => {
-		body.video = true;
 		this.setState({ body, isSearch: false }, () => {
-			this.props.searchLecture(body);
+			this.props.getVideoList(body);
 		});
 	};
 
@@ -139,7 +136,7 @@ export class VideoList extends Component {
 			{
 				title: 'Views',
 				dataIndex: 'counters.video_page_view',
-				render: (text, record, index) => record.counters.video_page_view,
+				render: (text, record, index) =>  record.counters && record.counters.video_page_view ? record.counters.video_page_view : 0 ,
 			},
 		];
 
@@ -202,12 +199,12 @@ export class VideoList extends Component {
 							<div className="row  justify-content-center">
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
-										{this.props.lecturesDetails.lectures.length > 0 ? (
+										{this.props.VideoData.videoList.length > 0 ? (
 											<div>
 												<Table
 													columns={columns}
 													rowKey={record => record.uuid}
-													dataSource={this.props.lecturesDetails.lectures}
+													dataSource={this.props.VideoData.videoList}
 													pagination={this.state.pagination}
 													loading={this.state.loading}
 													onChange={this.handleTableChange}
@@ -235,14 +232,14 @@ export class VideoList extends Component {
 
 const mapStateToProps = state => {
 	return {
-		lecturesDetails: state.lectureReducer,
+		VideoData: state.videoReducer,
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		searchLecture: body => {
-			dispatch(searchLecture(body));
+		getVideoList: body => {
+			dispatch(getVideoList(body));
 		},
 		resetState: () => {
 			dispatch(resetState());

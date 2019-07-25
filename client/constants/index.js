@@ -68,3 +68,8 @@ export const GET_CONTENTS = 'GET_CONTENTS';
 export const GET_LECTURE_DUBBED_IN_RUSSIAN = 'GET_LECTURE_DUBBED_IN_RUSSIAN';
 export const SEARCH_QUOTE_OF_DAY = 'SEARCH_QUOTE_OF_DAY';
 export const GET_QUOTE_BY_UUID = 'GET_QUOTE_BY_UUID';
+
+// Video action Type
+
+export const GET_VIDEO_LIST = 'GET_VIDEO_LIST';
+export const GET_VIDEO_BY_ID = 'GET_VIDEO_BY_ID';

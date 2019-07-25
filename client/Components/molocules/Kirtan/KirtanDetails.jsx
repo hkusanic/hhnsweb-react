@@ -133,12 +133,11 @@ export class KirtanDetails extends Component {
 									<div className="row" style={{paddingTop: '20px'}}>
 										<div className="col textContent">
 											{renderHTML(
-												reactCookie.load('languageCode') === 'en'
-													? kirtanDetails.en.body
-													: kirtanDetails.ru.body
-													? kirtanDetails.ru.body
-													: kirtanDetails.en.body
-											)}
+											reactCookie.load('languageCode') === 'en'
+											? kirtanDetails.en && kirtanDetails.en.body ? kirtanDetails.en.body : kirtanDetails.ru && kirtanDetails.ru.body ? kirtanDetails.ru.body : "<p></p>"
+											: kirtanDetails.ru && kirtanDetails.ru.body ? kirtanDetails.ru.body : kirtanDetails.en && kirtanDetails.en.body ? kirtanDetails.en.body : "<p></p>"
+											
+										)}
 										</div>
 									</div>
 								</article>
