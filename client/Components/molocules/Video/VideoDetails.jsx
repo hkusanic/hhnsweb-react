@@ -5,10 +5,9 @@ import { Translate } from 'react-localize-redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
-	updateCounters,
-	getLectureByUuid,
+	getVideoById,
 	resetState,
-} from '../../../actions/lectureActions';
+} from '../../../actions/video';
 import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
@@ -24,8 +23,7 @@ export class VideoDetails extends React.Component {
 			uuid: this.props.match.params.uuid,
 			video_page_view: true,
 		};
-		this.props.updateCounters(body);
-		this.props.getLectureByUuid(body);
+		this.props.getVideoById(body);
 	}
 
 	goBack = () => {
@@ -33,9 +31,10 @@ export class VideoDetails extends React.Component {
 	};
 
 	render() {
-		const { lectureDetails } = this.props;
+		const { singleVideo } = this.props;
 
-		if (!lectureDetails) {
+
+		if (!singleVideo) {
 			return (
 				<div style={{ textAlign: 'center' }}>
 					<p className="bookingForm">
@@ -79,8 +78,8 @@ export class VideoDetails extends React.Component {
 									<a className="textColor">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? lectureDetails.en.title
-												: (lectureDetails.ru.title ? lectureDetails.ru.title : lectureDetails.en.title)
+												? singleVideo.en.title
+												: (singleVideo.ru.title ? singleVideo.ru.title : singleVideo.en.title)
 										)}
 									</a>
 								</li>
@@ -96,15 +95,15 @@ export class VideoDetails extends React.Component {
 									<h3 class="post-creative-title">
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
-												? lectureDetails.en.title
-												: (lectureDetails.ru.title ? lectureDetails.ru.title : lectureDetails.en.title)
+												? singleVideo.en.title
+												: (singleVideo.ru.title ? singleVideo.ru.title : singleVideo.en.title)
 										)}
 									</h3>
 									<ul class="post-creative-meta">
 										<li>
 											<span class="icon mdi mdi-calendar-clock" />
 											<time datetime="2018">
-												{new Date(lectureDetails.lecture_date).toDateString()}
+												{new Date(singleVideo.video_date).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -119,8 +118,8 @@ export class VideoDetails extends React.Component {
 								</article>
 								<div>
 									<div className="row row-50 row-xxl-70 padTop flexDiv padLeftRow">
-										{lectureDetails.youtube
-											? lectureDetails.youtube.map((item, key) => {
+										{singleVideo.urls
+											? singleVideo.urls.map((item, key) => {
 													return (
 														<div key={key} className="flexRow">
 															<iframe className="iframeStyle" src={item} />
@@ -135,7 +134,7 @@ export class VideoDetails extends React.Component {
 								<div>
 									<p className="bookingForm">Comments</p>
 								</div>
-								<Comments lecture_uuid={lectureDetails.uuid} />
+								<Comments lecture_uuid={singleVideo.uuid} />
 							</div>
 							<div class="col-lg-4" />
 						</div>
@@ -148,17 +147,13 @@ export class VideoDetails extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		Count: state.lectureReducer.Count,
-		lectureDetails: state.lectureReducer.lecture,
+		singleVideo: state.videoReducer.singleVideo,
 	};
 };
 const mapDispatchToProps = dispatch => {
 	return {
-		updateCounters: body => {
-			dispatch(updateCounters(body));
-		},
-		getLectureByUuid: body => {
-			dispatch(getLectureByUuid(body));
+		getVideoById: body => {
+			dispatch(getVideoById(body));
 		},
 		resetState: () => {
 			dispatch(resetState());

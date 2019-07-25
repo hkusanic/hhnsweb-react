@@ -14,6 +14,8 @@ import commentReducer from './commentReducer/commentReducer';
 import galleryReducer from './galleryReducer/galleryReducer';
 import sadhanaReducer from './sadhanaReducer/sadhanaReducer';
 import contentReducer from './content/contentReducer';
+import videoReducer from './videoReducer/videoReducer';
+
 
 import { routerReducer } from 'react-router-redux';
 
@@ -34,6 +36,7 @@ const reducers = combineReducers({
 	sadhanaReducer: sadhanaReducer,
 	routing: routerReducer,
 	contentReducer: contentReducer,
+	videoReducer: videoReducer,
 });
 
 export default reducers;
