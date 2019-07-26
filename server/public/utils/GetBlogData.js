@@ -39,7 +39,7 @@ rl.question('Please provide the api url\n', (answer) => {
 				// getQutoesEnglishNodeList();
 				getQuotesRuNodeList();
 				break;
-			case '6': 
+			case '6':
 				console.log('Populating Kirtan Data');
 				// getEnglishKirtanNodeList();
 				getRuKirtanNodeList();
@@ -79,7 +79,7 @@ var englishDataList = [];
 var raussainDataList = [];
 var raussainfinalData = [];
 
-function getEnglishNodeList() {
+function getEnglishNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=blog&pagesize=600&&page=0',
@@ -105,7 +105,7 @@ function getEnglishNodeList() {
 		});
 }
 
-function getEnglishDatainBatches() {
+function getEnglishDatainBatches () {
 	if (englishDataList.length > 0) {
 		let ar = englishDataList.splice(0, 10);
 		getEnglishData(ar, () => {
@@ -118,7 +118,7 @@ function getEnglishDatainBatches() {
 	}
 }
 
-function getRaussainDatainBatches() {
+function getRaussainDatainBatches () {
 	if (raussainDataList.length > 0) {
 		let ar = raussainDataList.splice(0, 10);
 		getRaussainData(ar, () => {
@@ -131,7 +131,7 @@ function getRaussainDatainBatches() {
 	}
 }
 
-function updateDatabaseInBatches() {
+function updateDatabaseInBatches () {
 	if (raussainfinalData.length > 0) {
 		let batchArray = raussainfinalData.splice(0, 10);
 		updateDatabase(batchArray, () => {
@@ -142,7 +142,7 @@ function updateDatabaseInBatches() {
 	}
 }
 
-function getRuNodeList() {
+function getRuNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=blog&pagesize=600&&page=0',
@@ -168,7 +168,7 @@ function getRuNodeList() {
 		});
 }
 
-function getRaussainData(ar, callback) {
+function getRaussainData (ar, callback) {
 	const Raussainpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -227,7 +227,7 @@ function getRaussainData(ar, callback) {
 
 }
 
-function updateDatabase(batchArray, callback) {
+function updateDatabase (batchArray, callback) {
 	let options = {
 		method: 'POST',
 		uri: 'http://localhost:3000/api/blog/updateBulkNew/',
@@ -246,7 +246,7 @@ function updateDatabase(batchArray, callback) {
 		console.log('errr', err);
 	});
 }
-function createSingleRUBlogItem(body) {
+function createSingleRUBlogItem (body) {
 	const options = {
 		method: 'POST',
 		uri: 'http://localhost:3000/api/blog/create/',
@@ -264,7 +264,7 @@ function createSingleRUBlogItem(body) {
 		console.log(err);
 	});
 }
-function getEnglishData(ar, callback) {
+function getEnglishData (ar, callback) {
 	const Englishpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -1049,7 +1049,7 @@ var quotesEnglishNodeList = [];
 var quotesRaussainNodeList = [];
 // var quotesFinalRaussainData = [];
 
-function getQutoesEnglishNodeList() {
+function getQutoesEnglishNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=quote&pagesize=6000&&page=0',
@@ -1076,7 +1076,7 @@ function getQutoesEnglishNodeList() {
 		});
 }
 
-function getQuotesDatainBatches() {
+function getQuotesDatainBatches () {
 	if (quotesEnglishNodeList.length > 0) {
 		let ar = quotesEnglishNodeList.splice(0, 10);
 		getQuotesData(ar, () => {
@@ -1089,7 +1089,7 @@ function getQuotesDatainBatches() {
 	}
 }
 
-function getQuotesData(ar, callback) {
+function getQuotesData (ar, callback) {
 	const Quotespromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -1146,17 +1146,17 @@ function getQuotesData(ar, callback) {
 
 }
 
-function getQuotesBody(body) {
+function getQuotesBody (body) {
 	const startIndex = body.indexOf('</p>');
 	return body.substr(0, startIndex + 4);
 }
 
-function getQuotesSource(body) {
+function getQuotesSource (body) {
 	const startIndex = body.indexOf('</p>');
 	return body.substr(startIndex + 5);
 }
 
-function getQuotesRuNodeList() {
+function getQuotesRuNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=quote&pagesize=6000&&page=0',
@@ -1183,7 +1183,7 @@ function getQuotesRuNodeList() {
 		});
 }
 
-function getQuotesRaussainDatainBatches() {
+function getQuotesRaussainDatainBatches () {
 	if (quotesRaussainNodeList.length > 0) {
 		let ar = quotesRaussainNodeList.splice(0, 10);
 		getQuotesRaussainData(ar, () => {
@@ -1197,7 +1197,7 @@ function getQuotesRaussainDatainBatches() {
 	// }
 }
 
-function getQuotesRaussainData(ar, callback) {
+function getQuotesRaussainData (ar, callback) {
 	const QuotesRaussainpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -1246,7 +1246,7 @@ function getQuotesRaussainData(ar, callback) {
 				createSingleRUQuoteItem(body);
 			}
 		}
-		console.log("outside for loop")
+		console.log('outside for loop');
 
 		updateQuoteDatabase(quotesFinalRaussainData, callback);
 		// callback();
@@ -1256,7 +1256,7 @@ function getQuotesRaussainData(ar, callback) {
 	});
 }
 
-function updateQuoteDatabaseInBatches() {
+function updateQuoteDatabaseInBatches () {
 	if (quotesFinalRaussainData.length > 0) {
 		let batchArray = quotesFinalRaussainData.splice(0, 10);
 		updateQuoteDatabase(batchArray, () => {
@@ -1267,8 +1267,8 @@ function updateQuoteDatabaseInBatches() {
 	}
 }
 
-function updateQuoteDatabase(batchArray, callback) {
-	console.log("inside update")
+function updateQuoteDatabase (batchArray, callback) {
+	console.log('inside update');
 	let options = {
 		method: 'POST',
 		uri: `${apiURL}/api/quote/updateBulkNew/`,
@@ -1288,7 +1288,7 @@ function updateQuoteDatabase(batchArray, callback) {
 	});
 }
 
-function createSingleRUQuoteItem(body) {
+function createSingleRUQuoteItem (body) {
 	console.log('create api');
 	console.log('single create api for quotes');
 	const options = {
@@ -1317,7 +1317,7 @@ var englishKirtanDataList = [];
 var raussainKirtanDataList = [];
 var raussainKirtanfinalData = [];
 
-function getEnglishKirtanNodeList() {
+function getEnglishKirtanNodeList () {
 	const options = {
 		method: 'GET',
 		uri:
@@ -1345,7 +1345,7 @@ function getEnglishKirtanNodeList() {
 		});
 }
 
-function getEnglishKirtanDatainBatches() {
+function getEnglishKirtanDatainBatches () {
 	// console.log('englishDataList===>',englishDataList)
 	if (englishKirtanDataList.length > 0) {
 		let ar = englishKirtanDataList.splice(0, 10);
@@ -1359,7 +1359,7 @@ function getEnglishKirtanDatainBatches() {
 	}
 }
 
-function getEnglishKirtanData(ar, callback) {
+function getEnglishKirtanData (ar, callback) {
 	const Englishpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -1422,7 +1422,7 @@ function getEnglishKirtanData(ar, callback) {
 		});
 }
 
-function getRuKirtanNodeList() {
+function getRuKirtanNodeList () {
 	const options = {
 		method: 'GET',
 		uri: 'https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=kirtan&pagesize=10000&&page=0',
@@ -1448,7 +1448,7 @@ function getRuKirtanNodeList() {
 		});
 }
 
-function getRaussainKirtanDatainBatches() {
+function getRaussainKirtanDatainBatches () {
 	if (raussainKirtanDataList.length > 0) {
 		let ar = raussainKirtanDataList.splice(0, 10);
 		getRaussainKirtanData(ar, () => {
@@ -1461,7 +1461,7 @@ function getRaussainKirtanDatainBatches() {
 	}
 }
 
-function getRaussainKirtanData(ar, callback) {
+function getRaussainKirtanData (ar, callback) {
 	const Raussainpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -1478,11 +1478,11 @@ function getRaussainKirtanData(ar, callback) {
 	});
 	Promise.all(Raussainpromise)
 		.then((data) => {
-			console.log("successfully executed====>>>>", data.length);
+			console.log('successfully executed====>>>>', data.length);
 			let raussainKirtanfinalData = [];
 
 			for (let i = 0; i < data.length; i++) {
-				console.log(ar[i].tnid)
+				console.log(ar[i].tnid);
 				if (ar[i].tnid != 0) {
 					const temp = {
 						tnid: ar[i].tnid,
@@ -1524,7 +1524,7 @@ function getRaussainKirtanData(ar, callback) {
 		});
 }
 
-function createSingleRUKirtanItem(body) {
+function createSingleRUKirtanItem (body) {
 	const options = {
 		method: 'POST',
 		uri: 'http://dev.niranjanaswami.net/api/kirtan/create/',
@@ -1545,24 +1545,24 @@ function createSingleRUKirtanItem(body) {
 		});
 }
 
-function updateKirtanDatabase(array, callback) {
-		let options = {
-			method: 'POST',
-			uri: `${apiURL}/api/kirtan/updateBulkNew/`,
-			body: array,
-			json: true,
-			pool: httpAgent,
-			timeout: 60000,
-			headers: {
-				'User-Agent': 'Request-Promise',
-			},
-		};
-		rp(options).then(data => {
-			console.log('success');
-			callback();
-		}).catch(err => {
-			console.log('Error in updateDatabaseSummary()', err);
-		});
+function updateKirtanDatabase (array, callback) {
+	let options = {
+		method: 'POST',
+		uri: `${apiURL}/api/kirtan/updateBulkNew/`,
+		body: array,
+		json: true,
+		pool: httpAgent,
+		timeout: 60000,
+		headers: {
+			'User-Agent': 'Request-Promise',
+		},
+	};
+	rp(options).then(data => {
+		console.log('success');
+		callback();
+	}).catch(err => {
+		console.log('Error in updateDatabaseSummary()', err);
+	});
 }
 
 /* kirtan Script End point */
