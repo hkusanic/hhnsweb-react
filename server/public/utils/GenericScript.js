@@ -19,7 +19,7 @@ rl.question('What do you like to do? \n1.Populate Blog Data\n2.Populate Lecture 
 		case '2': console.log('Populating Lecture Data');
 			getEnglishLectureNodeList();
 			break;
-		case '3': console.log('Populating Transcription Data');
+		case '3': console.log('Populating Transcription Data'); ``;
 			getEnglishTranscriptionNodeList();
 			break;
 		case '5': console.log('Populating Quotes Data');

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import {
 	getVideoById,
 	resetState,
-	updateVideoPageViews
+	updateVideoPageViews,
 } from '../../../actions/video';
 import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -25,23 +25,30 @@ export class VideoDetails extends React.Component {
 			video_page_view: true,
 		};
 		this.props.getVideoById(body);
-		this.props.updateVideoPageViews(body)
+		this.props.updateVideoPageViews(body);
 	}
 
 	goBack = () => {
 		this.props.history.goBack();
 	};
 
+	vidoeUrl = (url) => {
+		const VideoUrl = url.toString();
+		if (VideoUrl.includes('youtu.be')){
+			const newUrl = VideoUrl.replace('youtu.be', 'www.youtube.com/embed');
+			return newUrl
+		}		
+		return VideoUrl
+	}
+
 	render() {
 		const { singleVideo } = this.props;
-		console.log()
+		console.log();
 
 		if (!singleVideo) {
 			return (
 				<div style={{ textAlign: 'center' }}>
-					<p className="bookingForm">
-						 Hare Krishna...
-					</p>
+					<p className="bookingForm">Hare Krishna...</p>
 				</div>
 			);
 		}
@@ -81,7 +88,9 @@ export class VideoDetails extends React.Component {
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
 												? singleVideo.en.title
-												: (singleVideo.ru.title ? singleVideo.ru.title : singleVideo.en.title)
+												: singleVideo.ru.title
+												? singleVideo.ru.title
+												: singleVideo.en.title
 										)}
 									</a>
 								</li>
@@ -98,7 +107,9 @@ export class VideoDetails extends React.Component {
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
 												? singleVideo.en.title
-												: (singleVideo.ru.title ? singleVideo.ru.title : singleVideo.en.title)
+												: singleVideo.ru.title
+												? singleVideo.ru.title
+												: singleVideo.en.title
 										)}
 									</h3>
 									<ul class="post-creative-meta">
@@ -124,7 +135,10 @@ export class VideoDetails extends React.Component {
 											? singleVideo.urls.map((item, key) => {
 													return (
 														<div key={key} className="flexRow">
-															<iframe className="iframeStyle" src={item} />
+															<iframe
+																className="iframeStyle"
+																src={this.vidoeUrl(item)}
+															/>
 														</div>
 													);
 											  })
@@ -162,7 +176,7 @@ const mapDispatchToProps = dispatch => {
 		},
 		updateVideoPageViews: body => {
 			dispatch(updateVideoPageViews(body));
-		}
+		},
 	};
 };
 
