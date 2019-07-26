@@ -43,7 +43,6 @@ export class VideoDetails extends React.Component {
 
 	render() {
 		const { singleVideo } = this.props;
-		console.log();
 
 		if (!singleVideo) {
 			return (
