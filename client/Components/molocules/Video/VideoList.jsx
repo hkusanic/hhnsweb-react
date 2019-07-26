@@ -136,7 +136,7 @@ export class VideoList extends Component {
 			{
 				title: 'Views',
 				dataIndex: 'counters.video_page_view',
-				render: (text, record, index) =>  record.counters && record.counters.video_page_view ? record.counters.video_page_view : 0 ,
+				render: (text, record, index) =>  record && record.video_page_view ? record.video_page_view : 0 ,
 			},
 		];
 

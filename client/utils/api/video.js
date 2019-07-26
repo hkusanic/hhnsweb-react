@@ -26,6 +26,11 @@ const utils = {
 		let url = serverAddress + '/api/video/getvideobyid/';
 		return axios.post(url, body);
 	},
+
+	updateVideoPageViews: body => {
+		let url = serverAddress + '/api/video/updatePageView';
+		return axios.post(url, body);
+	},
 };
 
 export default utils;

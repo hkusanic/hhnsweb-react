@@ -26,6 +26,17 @@ export function getVideoById (body) {
 	};
 }
 
+export function updateVideoPageViews (body) {
+	return dispatch => {
+		VideoApi.updateVideoPageViews(body)
+			.then(response => {
+				dispatch(updateVideoPageViewAction(response));
+			})
+			.catch(err => {
+				console.log('err =========>>>>', err);
+			});
+	};
+}
 
 export function getVideoListAction (data) {
 	return {
@@ -37,6 +48,13 @@ export function getVideoListAction (data) {
 export function getVideoByIdAction (data) {
 	return {
 		type: types.GET_VIDEO_BY_ID,
+		payload: data,
+	};
+}
+
+export function updateVideoPageViewAction (data) {
+	return {
+		type: types.UPDATE_VIDEO_PAGE_VIEW,
 		payload: data,
 	};
 }

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import {
 	getVideoById,
 	resetState,
+	updateVideoPageViews
 } from '../../../actions/video';
 import Comments from '../Comments/Comments';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -24,6 +25,7 @@ export class VideoDetails extends React.Component {
 			video_page_view: true,
 		};
 		this.props.getVideoById(body);
+		this.props.updateVideoPageViews(body)
 	}
 
 	goBack = () => {
@@ -32,7 +34,7 @@ export class VideoDetails extends React.Component {
 
 	render() {
 		const { singleVideo } = this.props;
-
+		console.log()
 
 		if (!singleVideo) {
 			return (
@@ -158,6 +160,9 @@ const mapDispatchToProps = dispatch => {
 		resetState: () => {
 			dispatch(resetState());
 		},
+		updateVideoPageViews: body => {
+			dispatch(updateVideoPageViews(body));
+		}
 	};
 };
 

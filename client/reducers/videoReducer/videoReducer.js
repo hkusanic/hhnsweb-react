@@ -8,6 +8,7 @@ const initialState = {
 	currentPage: 1,
 	isCompleted: false,
 	error: '',
+	updateCount: false,
 };
 
 const videoReducer = (state = initialState, action) => {
@@ -20,6 +21,7 @@ const videoReducer = (state = initialState, action) => {
 				totalVideos: data.total,
 				currentPage: data.currentPage,
 				isCompleted: true,
+				updateCount: false,
 			};
 			break;
 
@@ -28,6 +30,15 @@ const videoReducer = (state = initialState, action) => {
 			state = {
 				...state,
 				singleVideo: singleVideoData,
+				updateCount: false,
+			};
+			break;
+
+		case types.UPDATE_VIDEO_PAGE_VIEW:
+			state = {
+				...state,
+				updateCount: true,
+				singleVideo: action.payload.data.video,
 			};
 			break;
 
@@ -35,6 +46,8 @@ const videoReducer = (state = initialState, action) => {
 			state = {
 				...state,
 				singleVideo: null,
+				updateCount: false,
+				isCompleted: false,
 				videoList: [],
 				error: '',
 			};
