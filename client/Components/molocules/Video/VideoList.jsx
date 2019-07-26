@@ -190,13 +190,24 @@ export class VideoList extends Component {
 								>
 									<div className="col-lg-12">
 										<Collapse isOpened={!this.state.iconSearch}>
-											<SearchFilter searchData={this.searchData} />
+											<SearchFilter
+												searchData={this.searchData}
+												cantoSearch= {false}
+												chapterSearch= {false}
+												verseSearch= {false}
+												translationSearch= {false}
+												yearSearch= {true}
+												locationSearch= {true}
+												topicSearch= {false}
+												eventSearch= {true}
+												isUpparRowSearch= {false}
+											/>
 										</Collapse>
 									</div>
 								</div>
 							)}
 
-							<div className="row  justify-content-center">
+							<div className="row  justify-content-center" style={{ paddingTop: '20px' }}>
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
 										{this.props.VideoData.videoList.length > 0 ? (

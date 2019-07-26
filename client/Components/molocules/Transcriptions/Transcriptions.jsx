@@ -196,13 +196,24 @@ export class Transcritpion extends Component {
 								>
 									<div className="col-lg-12">
 										<Collapse isOpened={!this.state.iconSearch}>
-											<SearchFilter searchData={this.searchData} />
+											<SearchFilter
+												searchData={this.searchData}
+												cantoSearch= {true}
+												chapterSearch= {true}
+												verseSearch= {true}
+												translationSearch= {true}
+												yearSearch= {true}
+												locationSearch= {true}
+												topicSearch= {true}
+												eventSearch= {true}
+												isUpparRowSearch= {true}
+											/>
 										</Collapse>
 									</div>
 								</div>
 							)}
 
-							<div className="row justify-content-center">
+							<div className="row justify-content-center" style={{ paddingTop: '20px' }}>
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
 										{this.props.lecturesDetails.lectures.length > 0 ? (
