@@ -107,7 +107,7 @@ exports.list = function (req, res) {
 
 	if (req.query.year) {
 		let year_query = {
-			created_date: {
+			video_date: {
 				$regex: '.*' + req.query.year + '.*',
 				$options: 'i',
 			},
@@ -309,4 +309,57 @@ exports.remove = function (req, res) {
 		});
 
 	});
+};
+
+exports.updatePageView = function (req, res) {
+	logger.info(
+		{
+			req: req,
+		},
+		'API update Video page View'
+	);
+
+	Video.model
+		.findOne({ uuid: req.body.uuid })
+		.exec(function (err, item) {
+			if (err) {
+				logger.error(
+					{
+						error: err,
+					},
+					'API update Video page View Error'
+				);
+				return res.apiError('database error', err);
+			}
+			if (!item) {
+				logger.error(
+					{
+						error: 'No Item Found',
+					},
+					'API update Vidoe page View'
+				);
+				return res.apiError('Item not found');
+			}
+
+			if (req.body.video_page_view) {
+				item.video_page_view = item.video_page_view + 1;
+			}
+
+			item.getUpdateHandler(req).process(item, function (err) {
+				if (err) {
+					logger.error(
+						{
+							error: err,
+						},
+						'API update Vidoe page View'
+					);
+					return res.apiError('create error', err);
+				}
+
+				res.apiResponse({
+					video: item,
+				});
+			});
+		});
+
 };

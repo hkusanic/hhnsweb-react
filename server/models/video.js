@@ -31,6 +31,7 @@ Video.add({
 	oldData: {
 		referenceId: { type: String },
 	},
+	video_page_view: { type: Types.Number, default: 0 },
 	reference: { type: String },
 	urls: { type: Types.TextArray },
 	audit: { type: Types.TextArray },

@@ -136,7 +136,7 @@ export class VideoList extends Component {
 			{
 				title: 'Views',
 				dataIndex: 'counters.video_page_view',
-				render: (text, record, index) =>  record.counters && record.counters.video_page_view ? record.counters.video_page_view : 0 ,
+				render: (text, record, index) =>  record && record.video_page_view ? record.video_page_view : 0 ,
 			},
 		];
 
@@ -190,13 +190,24 @@ export class VideoList extends Component {
 								>
 									<div className="col-lg-12">
 										<Collapse isOpened={!this.state.iconSearch}>
-											<SearchFilter searchData={this.searchData} />
+											<SearchFilter
+												searchData={this.searchData}
+												cantoSearch= {false}
+												chapterSearch= {false}
+												verseSearch= {false}
+												translationSearch= {false}
+												yearSearch= {true}
+												locationSearch= {true}
+												topicSearch= {false}
+												eventSearch= {true}
+												isUpparRowSearch= {false}
+											/>
 										</Collapse>
 									</div>
 								</div>
 							)}
 
-							<div className="row  justify-content-center">
+							<div className="row  justify-content-center" style={{ paddingTop: '20px' }}>
 								<div className="col-lg-12">
 									<div className="table-responsive wow fadeIn">
 										{this.props.VideoData.videoList.length > 0 ? (
