@@ -909,7 +909,7 @@
   }
   .navbarItemAlign{
       justify-content: space-between;
-      width: 1170px;
+      /* width: 1170px; */
   }
   .subGalleryImg{
       height:240px;

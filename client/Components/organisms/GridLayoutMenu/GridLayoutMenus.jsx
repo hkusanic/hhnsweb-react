@@ -30,11 +30,16 @@ export class GridLayoutMenus extends React.Component {
 		return (
 			<div>
 				<section class="section-lg text-center bg-gray-100">
+				<h3>TITLE GOES HERE </h3>
+							<h4> Lorem ipsum dolor sit amet, consectetur adipiscing elit </h4>
+							<br />
+							<br />
 					<div class="container">
 						<div class="row row-50 row-lg-70 offset-top-2">
+
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
-								image="images/tour-5-270x200.jpg"
+								image="images/audio.jpg"
 								menu={
 									<p>
 										<Translate>
@@ -42,11 +47,12 @@ export class GridLayoutMenus extends React.Component {
 										</Translate>
 									</p>
 								}
+								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/audio"
 							/>
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
-								image="images/tour-6-270x200.jpg"
+								image="images/video.jpg"
 								menu={
 									<p>
 										<Translate>
@@ -54,6 +60,7 @@ export class GridLayoutMenus extends React.Component {
 										</Translate>
 									</p>
 								}
+								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/video"
 							/>
 							<SingleGridMenu
@@ -66,6 +73,7 @@ export class GridLayoutMenus extends React.Component {
 										</Translate>
 									</p>
 								}
+								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/transcriptions"
 							/>
 							<SingleGridMenu
@@ -78,6 +86,7 @@ export class GridLayoutMenus extends React.Component {
 										</Translate>
 									</p>
 								}
+								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/summaries"
 							/>
 							<SingleGridMenu
@@ -85,6 +94,7 @@ export class GridLayoutMenus extends React.Component {
 								image="images/tour-1-270x200.jpg"
 								menu="Gallery"
 								link="/gallery"
+								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 							/>
 							{/* <SingleGridMenu 
                                 handleNavigationClick={this.handleNavigationClick} 
@@ -95,6 +105,7 @@ export class GridLayoutMenus extends React.Component {
 								handleNavigationClick={this.handleNavigationClick}
 								image="images/tour-3-270x200.jpg"
 								menu="MKV"
+								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/mkv"
 							/>
 							{/* <SingleGridMenu 
@@ -106,12 +117,14 @@ export class GridLayoutMenus extends React.Component {
 								handleNavigationClick={this.handleNavigationClick}
 								image="images/tour-4-270x200.jpg"
 								menu="Sadhana Sheet"
+								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/sadhanaList"
 							/>
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
 								image="images/tour-3-270x200.jpg"
 								menu="Kirtan"
+								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/kirtan"
 							/>
 						</div>

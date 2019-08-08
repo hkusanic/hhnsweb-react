@@ -18,7 +18,7 @@ const SingleCarousel = props => {
 									data-caption-animate="slideInDown"
 									data-wow-delay="0"
 								>
-									{props.text}
+									<h4> {props.text} </h4>
 								</span>
 							</span>
 						</h1>

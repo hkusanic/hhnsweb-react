@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Translate } from 'react-localize-redux';
 import { Link } from 'react-router-dom';
+import {Icon} from 'antd';
 export class Footer extends Component {
     constructor(props) {
         super(props);
@@ -14,11 +15,10 @@ export class Footer extends Component {
                 <div className="footer-linked-main">
                     <div className="container">
                         <div className="row row-50">
-                            <div className="col-lg-8">
+                            <div className="col-lg-4">
                                 <h4><Translate>
                                     {({ translate }) => translate('FOOTER.quick_links')}
                                 </Translate></h4>
-                                <hr className="offset-right-1" />
                                 <div className="row row-20">
                                     <div className="col-6 col-sm-3">
                                         <ul className="list list-xs">
@@ -40,22 +40,76 @@ export class Footer extends Component {
                                     </div>
                                 </div>
                             </div>
+
+                            <div className="col-md-7 col-lg-4">
+                                <h4><Translate>
+                                    {({ translate }) => translate('FOOTER.quick_links')}
+                                </Translate></h4>
+                            
+                                <div className="row row-20">
+                                    <div className="col-6 col-sm-3">
+                                        <ul className="list list-xs">
+                                            <li>
+                                                <Link to="/audio">
+                                                    <Translate>{({ translate }) => translate('HOME.audio')}</Translate>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to='/video'>
+
+                                                    <Translate>
+                                                        {({ translate }) => translate('HOME.video')}
+                                                    </Translate>
+                                                </Link>
+
+                                            </li>
+                                            <li>
+                                                <Link to='/blog'>
+
+                                                    <Translate>
+                                                        {({ translate }) => translate('HOME.blog')}
+                                                    </Translate>
+                                                </Link>
+
+                                            </li>
+                                            <li>
+                                                <Link to='/transcriptions'>
+                                                    <Translate>
+                                                        {({ translate }) => translate('HOME.Transcriptions')}
+                                                    </Translate>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to='/summaries'>
+                                                    <Translate>
+                                                        {({ translate }) => translate('HOME.Summaries')}
+                                                    </Translate>
+                                                </Link>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="col-md-7 col-lg-4">
                                 <h4><Translate>
                                     {({ translate }) => translate('FOOTER.contact_information')}
                                 </Translate></h4>
-                                <hr />
+                               
                                 <ul className="list-sm">
-                                    <li className="object-inline"><span className="icon icon-md mdi mdi-map-marker text-gray-700"></span><a className="link-default" href="#">1683 Main Street, East Hartford, CT 06183</a></li>
-                                    <li className="object-inline"><span className="icon icon-md mdi mdi-email text-gray-700"></span><a className="link-default" href="mailto:#">dgd@niranjanaswami.net</a></li>
+                                    <li className="object-inline"><Icon type="facebook" /><Icon type="instagram" /><Icon type="twitter" /> </li>
+                                    <li className="object-inline"><a className="link-default" href="#">1683 Main Street, East Hartford, CT 06183</a></li>
+                                    <li className="object-inline"><a className="link-default" href="mailto:#">dgd@niranjanaswami.net</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+                {/* <span className="icon icon-md mdi mdi-map-marker text-gray-700"></span> <span className="icon icon-md mdi mdi-email text-gray-700"></span> */}
                 <div className="footer-linked-aside">
                     <div className="container">
-                        <p className="rights">
+                        <p className="rights" style={{textAlign: "center"}}>
                             <span>&copy;&nbsp;</span><span>&nbsp;</span>
                             <span>
                                 <Translate>
@@ -65,7 +119,7 @@ export class Footer extends Component {
                         </p>
                     </div>
                 </div>
-            </footer>
+            </footer >
 
         );
     }

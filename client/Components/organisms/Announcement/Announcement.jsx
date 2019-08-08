@@ -10,7 +10,7 @@ export class Announcement extends Component {
     announcement = () => {
         if (reactCookie.load('languageCode') === 'en') {
             return (
-                <Card className="centerAlign recentActivityCard" title='Announcement' >
+                <Card className="centerAlign recentActivityCard" style={{border: "1px solid orange"}} title='Announcement' >
                     <div>
                         <p className="fontWeight">Hare Krishna!</p>
 
@@ -58,17 +58,18 @@ export class Announcement extends Component {
         return (
             <section class="section-lg bg-gray-100">
                 <div className="container">
-                    <Tabs defaultActiveKey="1" tabPosition={maxWidth > mobileBrkPnt ? "left" : "top"}>
+                {this.announcement()}
+                    {/* <Tabs defaultActiveKey="1" tabPosition={maxWidth > mobileBrkPnt ? "left" : "top"}>
                         <TabPane tab="Announcement" key={1}>
                             {this.announcement()}
                         </TabPane>
-                        <TabPane tab="Recent Activities" key={2}>
+                        {/* <TabPane tab="Recent Activities" key={2}>
                             <ContentDetails />
                         </TabPane>
                         <TabPane tab="Russian Dubbed Lectures" key={3}>
                             <RussiaDubbedLectures />
                         </TabPane>
-                    </Tabs>
+                    </Tabs>  */}
                 </div>
             </section>
         );

@@ -7,7 +7,7 @@ import Announcement from '../../organisms/Announcement/Announcement';
 import GridLayoutMenus from '../../organisms/GridLayoutMenu/GridLayoutMenus';
 import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 import ContentDetails from '../../../containers/contents/ContentDetails';
-import './index.css';
+import './index.css'; 
 
 export class Carousel2 extends Component {
 	constructor (props) {
@@ -52,18 +52,18 @@ export class Carousel2 extends Component {
 					<div className="swiper-wrapper">
 						<SingleCarousel
 							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_portrait_no_logo_rJorBWrIN.jpg"
-							heading=""
-							text=""
+							heading="Quote of the Day"
+							text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 						/>
 						<SingleCarousel
 							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture-abhishek_no_logo_rk3rB-HLV.jpg"
-							heading=""
-							text=""
+							heading="Quote of the Day"
+							text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 						/>
 						<SingleCarousel
 							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_kirtan_no_logo_HJiHHWrLN.jpg"
-							heading=""
-							text=""
+							heading="Quote of the Day"
+							text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 						/>
 					</div>
 					<div className="swiper-pagination-outer container alignment">
@@ -73,9 +73,10 @@ export class Carousel2 extends Component {
 						/>
 					</div>
 				</section>
-				<QuoteOfDay />
-				<GridLayoutMenus />
 				<Biography {...this.props} />
+				{/* <QuoteOfDay /> */}
+				<GridLayoutMenus />
+				{/* <Blog /> */}
 				<Announcement />
 			</div>
 		);

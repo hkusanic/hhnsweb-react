@@ -1,4 +1,4 @@
-import { hot } from 'react-hot-loader';
+import { hot } from 'react-hot-loader/root';
 import React, { Component } from 'react';
 import Home from './containers/Home/Home';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -36,4 +36,4 @@ export class App extends Component {
 	}
 }
 
-export default withLocalize(hot(module)(App));
+export default withLocalize(hot(App));
