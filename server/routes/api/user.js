@@ -246,15 +246,16 @@ exports.signup = function (req, res) {
 					signature: req.body.signature,
 					signature_format: req.body.signature_format,
 					canAccessKeystone: req.body.canAccessKeystone,
-					oldData: {
-						uid: req.body.oldData.uid,
-						vid: req.body.oldData.vid,
-						nid: req.body.oldData.nid,
-						init: req.body.oldData.init,
-						picture: req.body.oldData.picture,
-						path: req.body.oldData.path,
-					},
+					// oldData: {
+					// 	uid: req.body.oldData.uid,
+					// 	vid: req.body.oldData.vid,
+					// 	nid: req.body.oldData.nid,
+					// 	init: req.body.oldData.init,
+					// 	picture: req.body.oldData.picture,
+					// 	path: req.body.oldData.path,
+					// },
 				};
+				if(req.body.disciple_profile)
 				if (Object.keys(req.body.disciple_profile).length > 0) {
 					console.log('inside it');
 					userData.disciple_profile = {
@@ -398,11 +399,16 @@ exports.forgotpassword = function (req, res) {
 		},
 		'API forgotpassword'
 	);
-	const msg = {
+	let msg = {
 		to: req.body.email,
-		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
-		subject: '',
-		html: '',
+		from: 'example@example.com',
+		
+		templateId: 'd-d16fe0617ab44c92b7869dd0899d4282',
+		dynamic_template_data: {
+			Sender_Name: 'Testing Templates',
+			name: 'Some One',
+			city: 'Denver',
+		  },
 	};
 	if (!req.body.email) {
 		res.json({
@@ -449,34 +455,6 @@ exports.forgotpassword = function (req, res) {
 					);
 					return res.json({ error: { title: 'Not able to reset password' } });
 				}
-				msg.subject = 'Password Reset';
-				msg.html = `
-	  <p>Hare Krishna,</p>
-	  <p>Please accept our humble obeisances.</p>
-	  <p>All glories to Srila Prabhupada!</p>
-	  <br/>
-	  <p>Please click on the following link <a href='${EMAIL_CONFIG.CONSTANTS
-		.SITE_URL
-			+ '/reset-password?accessid='
-			+ userFound.accessKeyId}'>here </a>to reset your password</p>
-	  <br/>
-	  <p>Your servants always,</p>
-	  <p>Site administrators</p>
-	  `;
-
-				// sendMail(msg.from, userFound.email, msg.subject, msg.html)
-				// 	.then(res => {
-				// 		console.log('email was sent', res);
-				// 	})
-				// 	.catch(err => {
-				// 		logger.error(
-				// 			{
-				// 				error: err,
-				// 			},
-				// 			'API forgotpassword'
-				// 		);
-				// 		console.error(err);
-				// 	});
 
 				sgMail.send(msg)
 				.then( res => {
@@ -490,6 +468,7 @@ exports.forgotpassword = function (req, res) {
 						'API forgotpassword'
 					);
 					console.error(err);
+					
 				})
 				res.json({
 					success: true,
