@@ -8,6 +8,9 @@ const AWS = require('aws-sdk');
 const axios = require('axios');
 const fs = require('fs');
 const readFilePromise = require('fs-readfile-promise');
+const sgMail  = require('@sendgrid/mail');
+
+sgMail.setApiKey(EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.SENDGRID_API_KEY);
 
 var transporter = nodemailer.createTransport(
 	EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig
@@ -424,7 +427,17 @@ exports.forgotpassword = function (req, res) {
 				);
 				return res.json({ error: { title: 'Not able to reset password' } });
 			}
-
+			if(!userFound){
+				logger.error(
+					{
+						error: 'User Not Found'
+					},
+					'API forgotpassword'
+				);
+				return res.json({ error: { title: 'User not reistered' } })
+			}
+			
+			
 			userFound.accessKeyId = keystone.utils.randomString();
 			userFound.save(err => {
 				if (err) {
@@ -451,19 +464,33 @@ exports.forgotpassword = function (req, res) {
 	  <p>Site administrators</p>
 	  `;
 
-				sendMail(msg.from, userFound.email, msg.subject, msg.html)
-					.then(res => {
-						console.log('email was sent', res);
-					})
-					.catch(err => {
-						logger.error(
-							{
-								error: err,
-							},
-							'API forgotpassword'
-						);
-						console.error(err);
-					});
+				// sendMail(msg.from, userFound.email, msg.subject, msg.html)
+				// 	.then(res => {
+				// 		console.log('email was sent', res);
+				// 	})
+				// 	.catch(err => {
+				// 		logger.error(
+				// 			{
+				// 				error: err,
+				// 			},
+				// 			'API forgotpassword'
+				// 		);
+				// 		console.error(err);
+				// 	});
+
+				sgMail.send(msg)
+				.then( res => {
+					console.log('Email was Sent', res);
+				})
+				.catch(err => {
+					logger.error(
+						{
+							error: err
+						},
+						'API forgotpassword'
+					);
+					console.error(err);
+				})
 				res.json({
 					success: true,
 				});
