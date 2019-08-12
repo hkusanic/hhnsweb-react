@@ -14,7 +14,11 @@ keystone.init({
 	'static': [
 		'./server/public',
 		'./uploads',
+		'./admin',
 	],
+	'file limit': '150000MB',
+	'cors allow origin': true,
+	'api allow origin': true,
 	// Keystone includes an updates framework,
 	// which you can enable by setting the auto update option to true.
 	// Updates provide an easy way to seed your database,
@@ -36,14 +40,14 @@ keystone.init({
 	'wysiwyg menubar': true,
 	'wysiwyg skin': 'lightgray',
 	'wysiwyg images': true,
-	'wysiwyg additional buttons': 'searchreplace visualchars,' +
-		' charmap ltr rtl pagebreak paste, forecolor backcolor,' +
-		' emoticons media, preview print ',
-	'wysiwyg additional plugins': 'example, table, advlist, anchor,' +
-		' autolink, autosave, bbcode, charmap, contextmenu, ' +
-		' directionality, emoticons, fullpage, hr, media, pagebreak,' +
-		' paste, preview, print, searchreplace, textcolor,' +
-		' visualblocks, visualchars, wordcount',
+	'wysiwyg additional buttons': 'searchreplace visualchars,'
+		+ ' charmap ltr rtl pagebreak paste, forecolor backcolor,'
+		+ ' emoticons media, preview print ',
+	'wysiwyg additional plugins': 'example, table, advlist, anchor,'
+		+ ' autolink, autosave, bbcode, charmap, contextmenu, '
+		+ ' directionality, emoticons, fullpage, hr, media, pagebreak,'
+		+ ' paste, preview, print, searchreplace, textcolor,'
+		+ ' visualblocks, visualchars, wordcount',
 	'cloudinary config': {
 		cloud_name: 'not',
 		api_key: 'really',
@@ -68,7 +72,7 @@ keystone.init({
 				var json;
 
 				if (xhr.status !== 200) {
-					failure('HTTP Error: ' + xhr.status);
+					failure('=HTTP Error: ' + xhr.status);
 					return;
 				}
 
@@ -114,7 +118,6 @@ keystone.init({
 
 // Load your project's Models
 keystone.import('./server/models');
-
 // Add routes
 keystone.set('routes', require('./server/routes'));
 

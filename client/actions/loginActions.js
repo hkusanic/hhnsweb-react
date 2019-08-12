@@ -73,6 +73,18 @@ export function resetPassword (body) {
 	};
 }
 
+export function updatePassword (body) {
+	return (dispatch) => {
+		loginApi.updatePassword(body)
+			.then((response) => {
+				dispatch(updatePasswordAction(response));
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	};
+}
+
 export function editProfile (body) {
 	return (dispatch) => {
 		loginApi.editProfile(body)
@@ -84,6 +96,19 @@ export function editProfile (body) {
 			});
 	};
 }
+
+export function contactUs (body) {
+	return dispatch => {
+		loginApi.contactUs(body)
+			.then((response) => {
+				dispatch(contactUsAction(response));
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+}
+
 
 export function signupAction (data) {
 	return {
@@ -130,6 +155,20 @@ export function resetPasswordAction (data) {
 export function editProfileAction (data) {
 	return {
 		type: types.EDIT_PROFILE,
+		payload: data,
+	};
+}
+
+export function contactUsAction (data) {
+	return {
+		type: types.CONTACT_US,
+		payload: data,
+	};
+}
+
+export function updatePasswordAction (data) {
+	return {
+		type: types.UPDATE_PASSWORD,
 		payload: data,
 	};
 }

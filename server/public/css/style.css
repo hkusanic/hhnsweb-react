@@ -6848,7 +6848,7 @@ html:not(.tablet):not(.mobile) .profile-minimal-caption {
 	color: #74757f;
 }
 
-.comment-classic-reply {
+.comment-classic-reply .comment-classic-cancelReply .comment-classic-delete {
 	font-size: 24px;
 	line-height: 1;
 	color: #aeb1be;
@@ -6857,10 +6857,51 @@ html:not(.tablet):not(.mobile) .profile-minimal-caption {
 .comment-classic-reply::before {
 	content: '\f549';
 	font-family: 'Material Design Icons';
+	color: #aeb1be;
+}
+
+.comment-classic-cancelReply::before{
+	content: '\f250';
+	font-family: 'Material Design Icons';
+	color: #aeb1be;
+}
+
+.comment-classic-delete::before {
+	content: '\f2b5';
+	font-family: 'Material Design Icons';
+	color: #aeb1be;
+}
+
+.comment-classic-hideAll::before {
+	content: '\f235';
+	font-family: 'Material Design Icons';
+	color: #aeb1be;
+}
+
+.comment-classic-showAll::before{
+	content: '\f232';
+	font-family: 'Material Design Icons';
+	color: #9e9e9e;
 }
 
 .comment-classic-reply:hover {
-	color: #ff830a;
+	color: #ff830a !important;
+}
+
+.comment-classic-cancelReply:hover {
+	color: #ff830a !important;
+}
+
+.comment-classic-delete:hover {
+	color: #ff830a !important;
+}
+
+.comment-classic-hideAll:hover {
+	color: #ff830a !important;
+}
+
+.comment-classic-showAll:hover {
+	color: #ff830a !important;
 }
 
 * + .comment-classic-text {
@@ -6876,6 +6917,18 @@ html:not(.tablet):not(.mobile) .profile-minimal-caption {
 		margin-left: 25px;
 	}
 	.comment-classic-reply {
+		font-size: 28px;
+	}
+	.comment-classic-cancelReply {
+		font-size: 28px;
+	}
+	.comment-classic-delete {
+		font-size: 28px;
+	}
+	.comment-classic-showAll {
+		font-size: 28px;
+	}
+	.comment-classic-hideAll {
 		font-size: 28px;
 	}
 }
@@ -8418,7 +8471,6 @@ html [class*='section-'].section-bottom-0 {
 	background-position: center center;
 	background-size: cover;
 }
-
 .phone-frame {
 	max-width: 296px;
 	padding: 0 5px;
@@ -8770,11 +8822,11 @@ html:not(.lt-ie10) .not-animated {
 @keyframes fadeInUpSmall {
 	0% {
 		opacity: 0;
-		transform: translate3d(0, 20px, 0);
+		transform: translate3d(0, 100%, 0);
 	}
 	100% {
 		opacity: 1;
-		transform: none;
+		transform: translate3d(0, 0, 0);
 	}
 }
 
@@ -9405,6 +9457,8 @@ html.tablet .ui-to-top {
 
 .rd-navbar-static .rd-nav-item {
 	display: inline-block;
+	height:34px;
+	padding: 5px 0;
 }
 
 .rd-navbar-static .rd-nav-item.focus .rd-nav-link, .rd-navbar-static .rd-nav-item.opened .rd-nav-link {
@@ -9807,7 +9861,7 @@ html.tablet .ui-to-top {
 	top: 0;
 	right: 0;
 	z-index: 1080;
-	background: #fff;
+	background: #f6f6f6;
 	will-change: transform;
 }
 
@@ -10902,13 +10956,13 @@ html.rd-navbar-fixed-linked .page {
 
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-aside-outer,
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-main-outer {
-	padding-left: 15px;
-	padding-right: 15px;
+	/* padding-left: 15px;
+	padding-right: 15px; */
 }
 
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-aside,
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-main {
-	max-width: 1170px;
+	max-width: 2000px;
 	/* margin-left: auto; */
 	margin-right: auto;
 }
@@ -13201,6 +13255,7 @@ button.swiper-pagination-bullet {
 .tabs-custom .nav-link.active {
 	cursor: default;
 	border: 0;
+	background-color: rgba(211, 211, 211, 0.8) !important;
 }
 
 .tab-content > .tab-pane {
@@ -13252,6 +13307,8 @@ button.swiper-pagination-bullet {
 		color: #fff;
 		background: #ff830a;
 		border-color: #ff830a;
+		background-color: red !important;
+
 	}
 }
 
@@ -13373,11 +13430,12 @@ button.swiper-pagination-bullet {
 	}
 	.tabs-horizontal.tabs-line .nav-link {
 		position: relative;
-		padding: 0 0 13px 0;
+		/* padding: 0 0 13px 0; */
 		font-size: 20px;
 		background-color: transparent;
 		color: #9b9b9b;
 		border: 0;
+		width: 200px;
 	}
 	.tabs-horizontal.tabs-line .nav-link::after {
 		content: '';
@@ -17857,8 +17915,6 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: -10px;
-	margin-left: -10px;
 }
 
 .tour-default-caption:empty {
@@ -17868,7 +17924,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 
 .tour-default-caption > * {
 	display: inline-block;
-	margin: 0 0 10px 10px;
+	margin: auto;
 }
 
 .tour-default-price {

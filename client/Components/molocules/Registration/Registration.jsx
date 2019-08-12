@@ -49,7 +49,7 @@ export class Registration extends Component {
         return (
             <div>
                 <section className="bg-gray-100">
-                    <img src='https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v3_HJGhLISIV.png' />
+                    <img className="img-banner-width" src='https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v3_HJGhLISIV.png' />
                     <div style={{ textAlign: 'center' }}>
                         <p className="bookingForm">
                             <Translate>{({ translate }) => translate('HOME.Register')}</Translate>
@@ -59,7 +59,7 @@ export class Registration extends Component {
                                 <p><Translate>{({ translate }) => translate('REGISTER_FORM.hare_krishna')}</Translate> <b>{this.state.user.firstName} {this.state.user.last}</b>,
                         &nbsp;<Translate>{({ translate }) => translate('REGISTER_FORM.registation_msg')}</Translate></p>
                             </div> :
-                            <div className="regist-Text">
+                            <div className="container regist-Text">
                                 {this.registrationInstruction()}
                             </div>}
                     </div>

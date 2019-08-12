@@ -1,217 +1,155 @@
-/**
- * This script automatically creates a default Admin user when an
- * empty database is used for the first time. You can use this
- * technique to insert data into any List you have defined.
- *
- * Alternatively, you can export a custom function for the update:
- * module.exports = function(done) { ... }
- */
-
 exports.create = {
-	Location: [
-		{ title: 'Boston', __ref: 'Boston' },
-		{ title: 'Lithuania', __ref: 'Lithuania' },
-		{ title: 'Mayapura', __ref: 'Mayapura' },
-		{ title: 'Almaty', __ref: 'Almaty' },
-		{ title: 'Kiev', __ref: 'Kiev' },
-		{ title: 'Kishinev', __ref: 'Kishinev' },
-		{ title: 'Moscow', __ref: 'Moscow' },
-		{ title: 'Kharkov', __ref: 'Kharkov' },
-		{ title: 'Other', __ref: 'Other' },
-		{ title: 'Minsk', __ref: 'Minsk' },
-		{ title: 'Vitebsk', __ref: 'Vitebsk' },
-		{ title: 'New York', __ref: 'New-york' },
-		{ title: 'Ukraine', __ref: 'Ukraine' },
-		{ title: 'Vilnius', __ref: 'Vilnius' },
-		{ title: 'Chowpatti', __ref: 'Chowpatti' },
-		{ title: 'St. Petersburg', __ref: 'St. Petersburg' },
-		{ title: 'Ottawa', __ref: 'Ottawa' },
-		{ title: 'Lipetsk', __ref: 'Lipetsk' },
-		{ title: 'New Vraja Dhama', __ref: 'New Vraja Dhama' },
-		{ title: 'Lugansk', __ref: 'Lugansk' },
-		{ title: 'Tbilisi', __ref: 'Tbilisi' },
-		{ title: 'Anapa', __ref: 'Anapa' },
-		{ title: 'Bologna', __ref: 'Bologna' },
-		{ title: 'Istanbul', __ref: 'Istanbul' },
-		{ title: 'Germany', __ref: 'Germany' },
-		{ title: 'Magdalinivka', __ref: 'Magdalinivka' },
-		{ title: 'Tiraspol', __ref: 'Tiraspol' },
-		{ title: 'Kherson', __ref: 'Kherson' },
-		{ title: 'Beltsi', __ref: 'Beltsi' },
-		{ title: 'Mogilev', __ref: 'Mogilev' },
-		{ title: 'Hartford', __ref: 'Hartford' },
-		{ title: 'Russian Sadhu Sanga', __ref: 'Russian Sadhu Sanga' },
-		{ title: 'Taiwan', __ref: 'Taiwan' },
-		{ title: 'Berdyansk', __ref: 'Berdyansk' },
-		{ title: 'Bali', __ref: 'Bali' },
-		{ title: 'Tomsk', __ref: 'Tomsk' },
-		{ title: 'Carpathian Festival', __ref: 'Carpathian Festival' },
-		{ title: 'Budapest', __ref: 'Budapest' },
-		{ title: 'Gomel', __ref: 'Gomel' },
-		{ title: 'Dnepropetrovsk', __ref: 'Dnepropetrovsk' },
-		{ title: 'Odessa', __ref: 'Odessa' },
-		{ title: 'Donetsk', __ref: 'Donetsk' },
-		{ title: 'Evpatoriya', __ref: 'Evpatoriya' },
-		{ title: 'Pune', __ref: 'Pune' },
-		{ title: 'Bhakti Sangama Festival', __ref: 'Bhakti Sangama Festival' },
-	],
-	Lecture: [  
-		{  
-		   "title.en":"November 24, 2018 - Kiev Counselor Retreat - &quot;Guru is Servant Before Master&quot; - English/ Russian",
-		   "title.ru":"24 ноября, 2018 - Киевский ретрит наставников - &quot;Гуру - это прежде всего слуга, и лишь потом господин&quot; - Английский/ Русский",
-		   "youtube":[  
-			  "https://www.youtube.com/embed/5IKgXKxQsjA?rel=gallery-all&wmode=opaque&autoplay=0",
-			  "https://www.youtube.com/embed/R8niXGb8dtA?rel=gallery-all&wmode=opaque",
-			  "https://www.youtube.com/embed/DPJBF6b8Xmw?rel=gallery-all&wmode=opaque",
-			  "https://www.youtube.com/embed/d2QiG3ER-8w?rel=gallery-all&wmode=opaque",
-			  "https://www.youtube.com/embed/WtQHDLG4wzg?rel=gallery-all&wmode=opaque"
-		   ],
-		   "topic":"Other",
-		   "date":"2018-11-24",
-		   "event":"Retreat",
-		   "translation":"Russian",
-		   "audio":"https://nrs-site.s3.amazonaws.com/lectures/2018/2018-11/img_1173.mp3",
-		   "duration":"01:55:05",
-		   "downloads":"64",
-		   "location":"Kiev",
-		   "transcriptions":[  
-	 
-		   ]
-		},
-		 {  
-			"title.en":"August 30, 2018 - Almaty - SB 4.9.11 - &quot;Why Not Take the Easiest Path?&quot; - English/ Russian",
-			"title.ru":"30 августа, 2018 - Алматы - Ш.Б. 4.9.11 - &quot;Почему бы ни следовать по самому лёгкому пути?&quot; - Английский/ Русский",
-			"youtube":[  
-			   "https://www.youtube.com/embed/0bYWy4jQfMQ?rel=gallery-all&wmode=opaque&autoplay=0"
-			],
-			"topic":"Srimad Bhagavatam",
-			"date":"2018-08-30",
-			"event":"None",
-			"translation":"Russian",
-			"audio":"https://nrs-site.s3.amazonaws.com/lectures/2018/2018-08/niranjana_swami_-_sb_4.9.11_in_almaty_kazakhstan_eng_rus_-_30-aug-2018.mp3",
-			"duration":"01:20:34",
-			"downloads":"115",
-			"location":"Almaty",
-			"transcriptions":[  
-	  
-			]
-		 },
-		 {  
-			"title.en":"August 26, 2018 - Almaty, Kazakhstan - Balarama Purnima Class - English/ Russian",
-			"title.ru":"26 августа, 2018 - Алматы, Казахстан - Лекция на Баларама Пурниме - Английский/ Русский",
-			"youtube":[  
-			   "https://www.youtube.com/embed/jsg2S32qsdM?rel=gallery-all&wmode=opaque&autoplay=0"
-			],
-			"topic":"Srimad Bhagavatam",
-			"date":"2018-08-26",
-			"event":"Festival",
-			"translation":"Russian",
-			"audio":"https://nrs-site.s3.amazonaws.com/lectures/2018/2018-08/niranjana_swami_-_sb_7.15.45_on_balarama-purnima_-c2a0almaty_26-aug-2018.mp3",
-			"duration":"01:37:59",
-			"downloads":"138",
-			"location":"Almaty",
-			"transcriptions":[  
-	  
-			]
-		 },
-		 {  
-			"title.en":"August 9, 2018 - Disciple Retreat - Magdalinivka - Opening Talk - English/ Russian",
-			"title.ru":"9 августа, 2018 - Ретрит учеников - Магдалиновка - Лекция на открытии - Английский/ Русский",
-			"youtube":[  
-			   "https://www.youtube.com/embed/ss_Wi3V86LQ?rel=gallery-all&wmode=opaque&autoplay=0",
-			   "https://www.youtube.com/embed/IQYt6nn7luo?rel=gallery-all&wmode=opaque",
-			   "https://www.youtube.com/embed/CcahRHij_Oo?rel=gallery-all&wmode=opaque",
-			   "https://www.youtube.com/embed/NOn7A8CVV2A?rel=gallery-all&wmode=opaque",
-			   "https://www.youtube.com/embed/7MfkQ3L5JpY?rel=gallery-all&wmode=opaque"
-			],
-			"topic":"Other",
-			"date":"2018-08-09",
-			"event":"Retreat",
-			"translation":"Russian",
-			"audio":"https://nrs-site.s3.amazonaws.com/lectures/2018/2018-08/2018.08.09_e.s.nirandzhana_svami._privetstvennoe_slovo._retrit._magdalinovka.mp3",
-			"duration":"00:28:13",
-			"downloads":"86",
-			"location":"Magdalinivka",
-			"transcriptions":[  
-	  
-			]
-		 },
-		 {  
-			"title.en":"August 1, 2018 - Boston - Wednesday Evening Program - BG 11.32 - English Only",
-			"title.ru":"1 августа, 2018 - Бостон - Вечерняя программа - Б.Г. 11.32 - Только английский",
-			"youtube":[  
-			   "https://www.youtube.com/embed/L7XJk_m6Oaw?rel=gallery-all&wmode=opaque&autoplay=0",
-			   "https://www.youtube.com/embed/JLXE_Y4Khbg?rel=gallery-all&wmode=opaque",
-			   "https://www.youtube.com/embed/WxwkiIGqdBM?rel=gallery-all&wmode=opaque",
-			   "https://www.youtube.com/embed/gXJN_ZoiFQk?rel=gallery-all&wmode=opaque",
-			   "https://www.youtube.com/embed/A1T_nEYaMUE?rel=gallery-all&wmode=opaque",
-			   "https://www.youtube.com/embed/BfQngP2OZRg?rel=gallery-all&wmode=opaque"
-			],
-			"topic":"Bhagavad-gita",
-			"date":"2018-08-01",
-			"event":"None",
-			"translation":"No translation",
-			"audio":"https://nrs-site.s3.amazonaws.com/lectures/2018/2018-08/august_1_2018_-_boston_-_wednesday_program_class_-_bg_11.32_-_english_only.mp3",
-			"duration":"00:53:10",
-			"downloads":"48",
-			"location":"Boston",
-			"transcriptions":[  
-	  
-			]
-		 },
-		 {  
-			"title.en":"July 22, 2018 - Hartford - Sunday Lecture - BG 10.4-5 continuation - English Only",
-			"title.ru":"22 июля, 2018 - Хартфорд - Воскресная лекция - Б.Г. 10.4-5 - Продолжение - Только английский",
-			"youtube":[  
-			   "https://www.youtube.com/embed/Jk43wuJObJU?rel=gallery-all&wmode=opaque&autoplay=0"
-			],
-			"topic":"Bhagavad-gita",
-			"date":"2018-07-22",
-			"event":"Sunday program",
-			"translation":"No translation",
-			"audio":"https://nrs-site.s3.amazonaws.com/lectures/2018/2018-07/18.07.22_hartford.mp3",
-			"duration":"01:01:19",
-			"downloads":"65",
-			"location":"Hartford",
-			"transcriptions":[  
-	  
-			]
-		 },
-	
-	 ],
+// 	Location: [
+// 		{ title: 'Boston',  __ref: 'Boston' },
+// 		{ title: 'Lithuania', __ref: 'Lithuania' },
+// 		{ title: 'Mayapura', __ref: 'Mayapura' },
+// 		{ title: 'Almaty', __ref: 'Almaty' },
+// 		{ title: 'Kiev', __ref: 'Kiev' },
+// 		{ title: 'Kishinev', __ref: 'Kishinev' },
+// 		{ title: 'Moscow', __ref: 'Moscow' },
+// 		{ title: 'Kharkov', __ref: 'Kharkov' },
+// 		{ title: 'Other', __ref: 'Other' },
+// 		{ title: 'Minsk', __ref: 'Minsk' },
+// 		{ title: 'Vitebsk', __ref: 'Vitebsk' },
+// 		{ title: 'New York', __ref: 'New-york' },
+// 		{ title: 'Ukraine', __ref: 'Ukraine' },
+// 		{ title: 'Vilnius', __ref: 'Vilnius' },
+// 		{ title: 'Chowpatti', __ref: 'Chowpatti' },
+// 		{ title: 'St. Petersburg', __ref: 'St. Petersburg' },
+// 		{ title: 'Ottawa', __ref: 'Ottawa' },
+// 		{ title: 'Lipetsk', __ref: 'Lipetsk' },
+// 		{ title: 'New Vraja Dhama', __ref: 'New Vraja Dhama' },
+// 		{ title: 'Lugansk', __ref: 'Lugansk' },
+// 		{ title: 'Tbilisi', __ref: 'Tbilisi' },
+// 		{ title: 'Anapa', __ref: 'Anapa' },
+// 		{ title: 'Bologna', __ref: 'Bologna' },
+// 		{ title: 'Istanbul', __ref: 'Istanbul' },
+// 		{ title: 'Germany', __ref: 'Germany' },
+// 		{ title: 'Magdalinivka', __ref: 'Magdalinivka' },
+// 		{ title: 'Tiraspol', __ref: 'Tiraspol' },
+// 		{ title: 'Kherson', __ref: 'Kherson' },
+// 		{ title: 'Beltsi', __ref: 'Beltsi' },
+// 		{ title: 'Mogilev', __ref: 'Mogilev' },
+// 		{ title: 'Hartford', __ref: 'Hartford' },
+// 		{ title: 'Russian Sadhu Sanga', __ref: 'Russian Sadhu Sanga' },
+// 		{ title: 'Taiwan', __ref: 'Taiwan' },
+// 		{ title: 'Berdyansk', __ref: 'Berdyansk' },
+// 		{ title: 'Bali', __ref: 'Bali' },
+// 		{ title: 'Tomsk', __ref: 'Tomsk' },
+// 		{ title: 'Carpathian Festival', __ref: 'Carpathian Festival' },
+// 		{ title: 'Budapest', __ref: 'Budapest' },
+// 		{ title: 'Gomel', __ref: 'Gomel' },
+// 		{ title: 'Dnepropetrovsk', __ref: 'Dnepropetrovsk' },
+// 		{ title: 'Odessa', __ref: 'Odessa' },
+// 		{ title: 'Donetsk', __ref: 'Donetsk' },
+// 		{ title: 'Evpatoriya', __ref: 'Evpatoriya' },
+// 		{ title: 'Pune', __ref: 'Pune' },
+// 		{ title: 'Bhakti Sangama Festival', __ref: 'Bhakti Sangama Festival' },
+// 	],
+// Lecture: [
+// 	{
+// 	  "uuid":"f8b8dbb4-447f-11e9-b210-d663bd873d93",
+// 	  "title_link": "https://www.niranjanaswami.net/en/lecture/27586",
+// 	  "date": "2019-02-25",
+// 	  "published_date": "2019-02-25",
+// 	  "author": "Niranjana Swami",
+// 	  "event": "None",
+// 	  "part": "7",
+// 	  "verse": "22",
+// 	  "location": "Kiev",
+// 	  "field10_link": "https://www.niranjanaswami.net/download/34132",
+// 	  "duration": "1:17:31",
+// 	  "downloads": "22",
+// 	  "audio_link": "https://www.niranjanaswami.net/download/34132",
+// 	  "field1": "February 25, 2019 - Kiev - SB 7.7.22 - English/ Russian",
+// 	  "soundCloud": "https://soundcloud.com/niranjana-swami/february-25-2019-kiev-sb-7-7",
+// 	  en:{
+// 		title:"February 25, 2019 - Kiev - SB 7.7.22 - English/ Russian",
+// 		event: "None",
+// 		topic: "Srimad Bhagavatam",
+// 		transcription: "",
+// 		summary: "",
+// 		transcription_attachment: "",
+// 		summary_attachment: "",
+// 	},
+// 	ru:{
+// 		title: "25 февраля, 2019 - Киев - Ш.Б. 7.7.22 - Английский/ Русский",
+// 		event: "None",
+// 		topic: "Шримад Бхагаватам",
+// 		transcription: "",
+// 		summary: "",
+// 		transcription_attachment:"",
+// 		summary_attachment: "",
+// 	}
+// 	}
+// ]
+
+	// {
+	//   "title.en": "February 24, 2019 - Kiev - Sunday Feast Lecture - English/ Russian",
+	//   "title.ru": "24 февраля, 2019 - Киев - Воскресная лекция - Английский/ Русский",
+	//   "title_link": "https://www.niranjanaswami.net/en/lecture/27559",
+	//   "date": "2019-02-24",
+	//   "published_date": "2019-02-24",
+	//   "author": "Niranjana Swami",
+	//   "translation_en": "Russian",
+	//   "translation_ru": "Русский",
+	//   "event": "Sunday program",
+	//   "location": "Kiev",
+	//   "topic_en": "Bhagavad-gita",
+	//   "topic_ru": "Бхагавад-Гита",
+	//   "part": "",
+	//   "verse": "",
+	//   "field10_link": "https://www.niranjanaswami.net/download/34130",
+	//   "duration": "1:09:18",
+	//   "downloads": "37",
+	//   "audio_link": "https://www.niranjanaswami.net/download/34130",
+	//   "field1": "February 24, 2019 - Kiev - Sunday Feast Lecture - English/ Russian",
+	//   "soundCloud": "https://soundcloud.com/niranjana-swami/february-24-2019-kiev-sunday"
+	// },
+	// {
+	//   "title.en": "February 23, 209 - Kiev - Evening Talk on SBST's Appearance Day - Amrita Vani - English/ Russian",
+	//   "title.ru": "23 февраля, 2019 - Киев - Вечерняя лекция в День явления Шрилы Бхактисиддханты Сарасвати Тхакура - Амрита Вани - Английский/ Русский",
+	//   "title_link": "https://www.niranjanaswami.net/en/lecture/27558",
+	//   "date": "2019-02-23",
+	//   "published_date": "2019-02-23",
+	//   "author": "Niranjana Swami",
+	//   "translation_en": "Russian",
+	//   "translation_ru": "Русский",
+	//   "event": "None",
+	//   "location": "Kiev",
+	//   "topic_en": "Amrita Vani",
+	//   "topic_ru": "Амрита Вани",
+	//   "part": "",
+	//   "verse": "",
+	//   "field10_link": "https://www.niranjanaswami.net/download/34129",
+	//   "duration": "1:31:32",
+	//   "downloads": "29",
+	//   "audio_link": "https://www.niranjanaswami.net/download/34129",
+	//   "field1": "February 23, 209 - Kiev - Evening Talk on SBST's Appearance Day - Amrita Vani - English/ Russian",
+	//   "soundCloud": "https://soundcloud.com/niranjana-swami/february-23-209-kiev-evening"
+	// },
+	// {
+	//   "title.en": "February 22, 2019 - Kiev - Meeting with Counselors and Nama Hatta Leaders - Questions and Answers - English/ Russian",
+	//   "title.ru": "22 февраля, 2019 - Киев - Встреча с наставниками и лидерами нама-хатт - Вопросы и ответы - Английский/ Русский",
+	//   "title_link": "https://www.niranjanaswami.net/en/lecture/27540",
+	//   "date": "2019-02-22",
+	//   "published_date": "2019-02-22",
+	//   "author": "Niranjana Swami",
+	//   "translation_en": "Russian",
+	//   "translation_ru": "Русский",
+	//   "event": "Meeting",
+	//   "location": "Kiev",
+	//   "topic_en": "Questions and Answers",
+	//   "topic_ru": "Вопросы и Ответы",
+	//   "part": "",
+	//   "verse": "",
+	//   "field10_link": "https://www.niranjanaswami.net/download/34128",
+	//   "duration": "1:19:39",
+	//   "downloads": "46",
+	//   "audio_link": "https://www.niranjanaswami.net/download/34128",
+	//   "field1": "",
+	//   "soundCloud": ""
+	// },
+
+// ]
 };
-
-/*
-
-// This is the long-hand version of the functionality above:
-
-var keystone = require('keystone');
-var async = require('async');
-var User = keystone.list('User');
-
-var admins = [
-	{ email: 'user@keystonejs.com', password: 'admin', name: { first: 'Admin', last: 'User' } }
-];
-
-function createAdmin (admin, done) {
-
-	var newAdmin = new User.model(admin);
-
-	newAdmin.isAdmin = true;
-	newAdmin.save(function (err) {
-		if (err) {
-			console.error('Error adding admin ' + admin.email + ' to the database:');
-			console.error(err);
-		} else {
-			console.log('Added admin ' + admin.email + ' to the database.');
-		}
-		done(err);
-	});
-
-}
-
-exports = module.exports = function (done) {
-	async.forEach(admins, createAdmin, done);
-};
-
-*/

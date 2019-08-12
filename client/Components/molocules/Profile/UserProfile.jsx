@@ -4,6 +4,8 @@ import { editProfile } from '../../../actions/loginActions';
 import Auth from '../../../utils/Auth';
 import IntlTelInput from 'react-intl-tel-input';
 import { Translate } from 'react-localize-redux';
+import ReactPhoneInput from 'react-phone-input-2';
+
 export class UserProfile extends Component {
     constructor(props) {
         super(props);
@@ -18,7 +20,9 @@ export class UserProfile extends Component {
             isUpdated: false
         }
     }
-
+    handleOnChange(value) {
+        console.log(`Phone number: ${value}`);
+     }
     componentDidMount() {
         this.setState({
             editing: true,
@@ -50,12 +54,12 @@ export class UserProfile extends Component {
             mobileNumber: user.mobileNumber,
             countryCode: user.countryCode
         })
+        console.log(user.mobileNumber);
     }
     handleEditing = (event) => {
         event.preventDefault();
         this.setState({ editing: false })
     }
-
     handleChange = (type, event) => {
         const value = event.target.value;
         this.setState({
@@ -91,6 +95,7 @@ export class UserProfile extends Component {
         if (!validate) {
             this.setState({ error: 'Please Enter Mobile Number Correctly' })
         } else {
+            console.log(mobileNumber);
             this.setState({
                 mobileNumber,
                 countryCode,
@@ -163,22 +168,16 @@ export class UserProfile extends Component {
                                                     value={this.state.email} />
                                             </div>
                                         </div>
-                                        {this.state.editing ?
+                                                {/* <ReactPhoneInput onChange={this.handleOnChange} inputClass={this.state.editing?'react-tel-input-disabled':null} disabled={this.state.editing}
+                                    value={this.state.mobileNumber} className="phoneInput" /> */}
+                                            
+                                         {this.state.editing ?
                                             <div className="col-md-10 wow-outer">
                                                 <div className="form-wrap wow fadeSlideInUp">
                                                     <label className="form-label-outside" htmlFor="contact-phone"><Translate>
                                                         {({ translate }) => translate('USER_PROFILE.mobile_number')}
                                                     </Translate></label>
                                                     <div className="displayDiv">
-                                                        <div className="mobCodeDiv"><input
-                                                            className="form-input"
-                                                            style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
-                                                            id="contact-phone"
-                                                            type="text"
-                                                            name="phone"
-                                                            disabled={this.state.editing}
-                                                            value={this.state.countryCode} />
-                                                        </div>
                                                         <div className="mobNoDiv"><input
                                                             className="form-input"
                                                             style={{ backgroundColor: (this.state.editing) ? '#f6f6f6' : '' }}
@@ -200,7 +199,8 @@ export class UserProfile extends Component {
                                                     defaultCountry='india'
                                                     autoHideDialCode={true}
                                                     format={true}
-                                                    separateDialCode={true}
+                                                    nationalMode={false}
+                                                    separateDialCode={false}
                                                     inputClassName="form-control"
                                                     onPhoneNumberChange={(validate, number, data) => { this.handle(validate, number, data) }}
                                                 />

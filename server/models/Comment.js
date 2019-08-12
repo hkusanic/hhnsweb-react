@@ -1,37 +1,37 @@
 const keystone = require('keystone');
-const mongoose = require('mongoose');
 const Types = keystone.Field.Types;
 
 let Comment = new keystone.List('Comment', {
 	autokey: { path: 'slug', from: 'dateCreated _id', unique: true },
 	map: { name: 'message' },
-	defaultSort: '-dateCreated',
+	defaultSort: '-created_date_time',
 });
 
 Comment.add({
-	message: { type: String, initial: true, required: true, unique: true, index: true, default: '' },
-	author: { type: Types.Relationship, ref: 'User', index: true },
+	uuid: { type: String, unique: true, index: true },
+	content_type: { type: String },
+	message: {
+		type: String,
+		initial: true,
+		required: true,
+		index: true,
+		default: '',
+	},
+	subject: {
+		type: String,
+		required: true,
+		default: '',
+	},
+	author_name: { type: String },
+	author_email: { type: String },
+	lecture_uuid: { type: String },
+	approved: {
+		type: Types.Select,
+		options: ['0', '1', '2'],
+		default: '2',
+	},
 	dateCreated: { type: Types.Date, default: Date.now },
-});
-
-Comment.schema.pre('save', function (next) {
-	next();
-});
-
-Comment.schema.post('save', function (next) {
-	// next();
-});
-
-Comment.schema.post('validate', function (err, next) {
-	next();
-});
-
-Comment.schema.pre('remove', function (next) {
-	next();
-});
-
-Comment.schema.post('remove', function (next) {
-	next();
+	created_date_time: { type: Types.Date, default: Date.now },
 });
 
 Comment.register();

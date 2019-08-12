@@ -142,10 +142,10 @@ export class Booking extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <div>
                     <section className="bg-gray-100">
-                        <img src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v1_BJC5u2LU4.png" />
+                        <img  className="img-banner-width" src="https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v1_BJC5u2LU4.png" />
                     </section>
                 </div>
                 {
@@ -166,7 +166,7 @@ export class Booking extends Component {
                                                  </div> 
                                             */
                                         }
-                                        <div className="bookingformDiv">
+                                        <div className="bookingformDiv centerAlign">
                                             <p className="bookingForm"><Translate>
                                                 {({ translate }) => translate('BOOKING.booking_form')}
                                             </Translate></p>
@@ -181,7 +181,7 @@ export class Booking extends Component {
                                     (
                                         (this.props.appointment.appointmentData && this.props.appointment.appointmentData.Appointment && !this.props.appointment.appointmentData.Appointment.approved &&
                                             !this.props.isSubmitted) ?
-                                            < div className="requestDiv">
+                                            < div className="requestDiv centerAlign">
                                                 <p className="Bookingsubmit">
                                                     {this.ApprovedText()}
                                                 </p>

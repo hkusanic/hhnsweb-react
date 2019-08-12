@@ -22,7 +22,7 @@ export class Calender extends Component {
         return (
             <div>
                 <section className="bg-gray-100">
-                    <img src="https://ik.imagekit.io/gcwjdmqwwznjl/Calendar_Page_copy_B1kq-PHUN.png" />
+                    <img  className="img-banner-width" src="https://ik.imagekit.io/gcwjdmqwwznjl/Calendar_Page_copy_B1kq-PHUN.png" />
                 </section>
                 {
                     !this.state.isUserLogin ?
@@ -39,7 +39,7 @@ export class Calender extends Component {
                         </div>
                         : ''
 				}
-                {
+                {/* {
                     !this.state.isUserLogin ?
                         <div className="align">
                             <div style={{ textAlign: 'center' }}>
@@ -53,7 +53,7 @@ export class Calender extends Component {
                             </iframe> 
                         </div>
                         : ''
-                }
+                } */}
 
             </div>
         )

@@ -1,0 +1,88 @@
+<html>
+
+<head>Script Parser</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
+<script>
+
+    window.onload = function () {
+        document.getElementById('txtFileUpload').addEventListener('change', upload, false)
+
+    };
+
+    function upload(event) {
+        jsonObj = [];
+        var data = null;
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function (event1) {
+            var csvData = event1.target.result;
+            var data = Papa.parse(csvData, { header: true, skipEmptyLines: true });
+            for (let i = 0; i < data.data.length; i++) {
+                item = {}
+                item["Title"] = data.data[i]['Title'];
+                item["Title_link"] = data.data[i]['Title_link'];
+                item["Title1"] = data.data[i]['Title1'];
+                item["PublishTime"] = data.data[i]['PublishTime'];
+                item["Date"] = data.data[i]['Date'];
+                item["Author"] = data.data[i]['Author'];
+                item["Translation"] = data.data[i]['Translation'];
+                item["Event"] = data.data[i]['Event'];
+                item["Location"] = data.data[i]['Location'];
+                item["Topic"] = data.data[i]['Topic'];
+                item["Part"] = data.data[i]['Part'];
+                item["Chapter"] = data.data[i]['Chapter'];
+                item["Verse"] = data.data[i]['Verse'];
+                item["audio_link"] = data.data[i]['audio_link'];
+                item["Duration"] = data.data[i]['Duration'];
+                item["Downloads"] = data.data[i]['Downloads'];
+                item["Field7_link"] = "";
+                item["Field1"] = data.data[i]['Field1'];
+                item["SoundCloud"] = data.data[i]['SoundCloud'];
+
+                var str = data.data[i]['audio_link'];
+                var regex = /soundFile.*mp3/;
+                var matches = str.match(regex);
+                if (matches[0]) {
+                    item["audio_link"] = matches[0].replace('soundFile=', '');
+                    jsonObj.push(item);
+                }
+                console.log("matches======>>>", item["audio_link"]);
+            }
+            DownloadCSV(jsonObj);
+        };
+
+        reader.onerror = function () {
+            alert("unable to read " + file.fileName);
+        }
+    }
+
+    function DownloadCSV(jsonData) {
+        var csv = Papa.unparse(jsonData);
+
+        var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var csvURL = null;
+        if (navigator.msSaveBlob) {
+            csvURL = navigator.msSaveBlob(csvData, 'download.csv');
+        }
+        else {
+            csvURL = window.URL.createObjectURL(csvData);
+        }
+        var tempLink = document.createElement('a');
+        tempLink.href = csvURL;
+        tempLink.setAttribute('download', 'newScript.csv');
+        tempLink.click();
+    }
+</script>
+
+<body>
+    <div>
+        <h1>Parser</h1>
+        <div>
+            <input id="txtFileUpload" type="file" name="files" accept=".csv" />
+            <a id="downloadAnchorElem" style="display:none"></a>
+        </div>
+    </div>
+</body>
+
+</html>

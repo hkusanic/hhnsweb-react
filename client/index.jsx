@@ -5,26 +5,41 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 // Dont forget to import redux thunk
 import thunk from 'redux-thunk';
+import { createBrowserHistory } from 'history';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 // Getting our combined reducers
 import reducers from './reducers/reducers';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { LocalizeProvider } from "react-localize-redux";
+import { BrowserRouter } from 'react-router-dom';
+import { LocalizeProvider } from 'react-localize-redux';
 import App from './App';
 
+const composeEnhancers = composeWithDevTools({
+	// Specify name here, actionsBlacklist, actionsCreators and other options if needed
+});
+const store = createStore(
+	reducers,
+	/* preloadedState, */ composeEnhancers(
+		applyMiddleware(thunk)
+		// other store enhancers if any
+	)
+);
 
-const store = createStore(reducers, {}, applyMiddleware(thunk));
+// const store = createStore(reducers, {}, applyMiddleware(thunk));
 
-document.addEventListener("DOMContentLoaded", () => {
-const target = document.getElementById("react-container");
-  
-ReactDOM.render(
-  <Provider store={store}> 
-  <LocalizeProvider>
-    <Router>
-      <App />
-    </Router>
-    </LocalizeProvider>
-  </Provider>
-  , target
-)
+const history = createBrowserHistory();
+
+document.addEventListener('DOMContentLoaded', () => {
+	const target = document.getElementById('react-container');
+
+	ReactDOM.render(
+		<Provider store={store}>
+			<LocalizeProvider>
+				<BrowserRouter>
+					<App />
+				</BrowserRouter>
+			</LocalizeProvider>
+		</Provider>,
+		target
+	);
 });

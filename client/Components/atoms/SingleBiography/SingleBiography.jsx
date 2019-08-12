@@ -1,35 +1,80 @@
 import React from 'react';
 import renderHTML from 'react-render-html';
-import {
-    Link
-} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import reactCookie from 'react-cookies';
 
-function showing100Characters(sentence) {
-    var result = sentence;
-    var resultArray = result.split(' ');
-    if (resultArray.length > 10) {
-        resultArray = resultArray.slice(0, 30);
-        result = resultArray.join(' ');
-    }
-    return result;
+import { Card } from 'antd';
+const { Meta } = Card;
+
+function showing100Characters (sentence) {
+	var result = sentence;
+	var resultArray = result.split(' ');
+	if (resultArray.length > 10) {
+		resultArray = resultArray.slice(0, 30);
+		result = resultArray.join(' ');
+	}
+	return result;
 }
 
+const SingleBiography = props => {
+	return (
+		<div className="col-md-6 wow-outer">
+			<article className="post-modern wow fadeInUpSmall">
+				<Link
+					to={{
+						pathname: '/biograhyDetails',
+						state: {
+							title_en: props.title_en,
+							title_ru: props.title_ru,
+							content_en: props.content_en,
+							content_ru: props.content_ru,
+							img: props.img,
+						},
+					}}
+				>
+					<Card
+						hoverable
+						className="biographyCard"
+						cover={<img alt="example" className="img-fluid" src={props.img} />}
+					>
+						<Meta
+							title={
+								reactCookie.load('languageCode') === 'en'
+									? props.title_en
+									: props.title_ru
+										? props.title_ru
+										: props.title_en
+							}
+							description={renderHTML(
+								showing100Characters(
+									reactCookie.load('languageCode') === 'en'
+										? props.content_en
+										: props.content_ru
+											? props.content_ru
+											: props.content_en
+								)
+							)}
+						/>
+						<Link
+							className="button-winona post-modern-title"
+							to={{
+								pathname: '/biograhyDetails',
+								state: {
+									title_en: props.title_en,
+									title_ru: props.title_ru,
+									content_en: props.content_en,
+									content_ru: props.content_ru,
+									img: props.img,
+								},
+							}}
+						>
+							Read More...
+						</Link>
+					</Card>
+				</Link>
+			</article>
+		</div>
+	);
+};
 
-const SingleBiography = (props) => {
-    return (
-        <div className="col-md-6 wow-outer">
-            <article className="post-modern wow slideInLeft">
-                <Link to={{ pathname: '/biograhyDetails', state: props }}>
-                    <img src={props.img}/>            
-                </Link>
-                <h4 className="post-modern-title">{reactCookie.load('languageCode') === 'en' ? props.title_en : props.title_ru}</h4>
-                {renderHTML(showing100Characters(reactCookie.load('languageCode') === 'en' ? props.content_en : props.content_ru))}
-                <Link className="button-winona post-modern-title" to={{ pathname: '/biograhyDetails', state: props }}>Read More...</Link>
-
-            </article>
-        </div>
-    );
-}
-
-export default SingleBiography;
+export default withRouter(SingleBiography);

@@ -31,3 +31,7 @@ node_modules
 .DS_Store
 server/public/js/
 ~/.vscode-root/
+
+#mp3 and pdf files
+*.mp3
+*.pdf

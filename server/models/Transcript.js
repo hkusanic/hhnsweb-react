@@ -15,6 +15,7 @@ Transcript.add({
 	tags: {	type: Types.Relationship, ref: 'Tag', many: true },
 	body: { type: Types.Textarea },
 	slug: { type: String, index: true },
+
 });
 
 Transcript.schema.pre('save', function (next) {
