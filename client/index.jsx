@@ -14,13 +14,17 @@ import { BrowserRouter } from 'react-router-dom';
 import { LocalizeProvider } from 'react-localize-redux';
 import App from './App';
 
+import { createTracker } from 'redux-segment';
+
+const tracker = createTracker();
+
 const composeEnhancers = composeWithDevTools({
 	// Specify name here, actionsBlacklist, actionsCreators and other options if needed
 });
 const store = createStore(
 	reducers,
 	/* preloadedState, */ composeEnhancers(
-		applyMiddleware(thunk)
+		applyMiddleware(thunk, tracker)
 		// other store enhancers if any
 	)
 );

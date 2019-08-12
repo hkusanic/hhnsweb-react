@@ -1,5 +1,6 @@
 import loginApi from '../utils/api/login';
 import * as types from '../constants/index';
+import { EventTypes } from 'redux-segment'
 
 export function loginUser (credential) {
 	return (dispatch) => {
@@ -114,6 +115,17 @@ export function signupAction (data) {
 	return {
 		type: types.SIGNUP,
 		payload: data,
+		meta: {
+      analytics: {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "User signup",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -128,6 +140,28 @@ export function loginAction (data) {
 	return {
 		type: types.LOGIN,
 		payload: data,
+		meta: {
+      analytics: [
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "Login User",
+          properties: {
+            data
+          }
+        }
+      },
+      {
+      	eventType: EventTypes.alias,
+      	eventPayload: {
+        
+      	userid: data.loginUser.user_id,
+      
+      }
+      }
+      ]
+    },
+
 	};
 }
 

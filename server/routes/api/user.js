@@ -9,6 +9,7 @@ const axios = require('axios');
 const fs = require('fs');
 const readFilePromise = require('fs-readfile-promise');
 const sgMail  = require('@sendgrid/mail');
+const uuidv4 = require('uuid/v4');
 
 sgMail.setApiKey(EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.SENDGRID_API_KEY);
 
@@ -228,10 +229,10 @@ exports.signup = function (req, res) {
 			cb => {
 				let userData = {
 					name: {
-						first: req.body.name ? req.body.name.first : '',
-						last: req.body.name ? req.body.name.last : '',
+						first: req.body.firstname ? req.body.firstname : '',
+						last: req.body.lastname ? req.body.lastname : '',
 					},
-					user_id: req.body.user_id,
+					user_id: req.body.user_id ? req.body.user_id : uuidv4(),
 					userName: req.body.userName,
 					email: req.body.email,
 					password: req.body.password,
