@@ -29,17 +29,23 @@ export class GridLayoutMenus extends React.Component {
 	render() {
 		return (
 			<div>
-				<section class="section-lg text-center" >
+				<section className="section-lg text-center">
 				<h3>TITLE GOES HERE </h3>
 							<h4> Lorem ipsum dolor sit amet, consectetur adipiscing elit </h4>
 							<br />
 							<br />
-					<div class="container">
-						<div class="row row-50 row-lg-70 offset-top-2">
+					<div className="container" >
+
+					{/* style={{width: "268px", height: "289px",
+						borderRadius: "4px",
+						boxShadow: "0 22px 34px 0 rgba(0, 0, 0, 0.08)",
+						border: "solid 1px rgba(151, 151, 151, 0.17)",
+						backgroundColor: "#ffffff"}}> */}
+						<div className="row row-50 row-lg-70 offset-top-2">
 
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
-								image="images/audio.jpg"
+								image="images/audio.svg"
 								menu={
 									<p>
 										<Translate>
@@ -52,7 +58,7 @@ export class GridLayoutMenus extends React.Component {
 							/>
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
-								image="images/video.jpg"
+								image="images/video.svg"
 								menu={
 									<p>
 										<Translate>
@@ -65,7 +71,7 @@ export class GridLayoutMenus extends React.Component {
 							/>
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
-								image="images/tour-7-270x200.jpg"
+								image="images/transcriptions.svg"
 								menu={
 									<p>
 										<Translate>
@@ -78,7 +84,7 @@ export class GridLayoutMenus extends React.Component {
 							/>
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
-								image="images/tour-8-270x200.jpg"
+								image="images/summaries.svg"
 								menu={
 									<p>
 										<Translate>
@@ -91,7 +97,7 @@ export class GridLayoutMenus extends React.Component {
 							/>
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
-								image="images/tour-1-270x200.jpg"
+								image="images/gallery.svg"
 								menu="Gallery"
 								link="/gallery"
 								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
@@ -103,26 +109,28 @@ export class GridLayoutMenus extends React.Component {
                                 link="/calender" /> */}
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
-								image="images/tour-3-270x200.jpg"
+								image="images/mkv.svg"
 								menu="MKV"
 								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/mkv"
 							/>
-							{/* <SingleGridMenu 
+							<SingleGridMenu 
                                 handleNavigationClick={this.handleNavigationClick} 
-                                image='images/tour-4-270x200.jpg' 
-                                menu={<p><Translate>{({ translate }) => translate('lecturesTitle')}</Translate></p>} 
-                                link="/lectures" /> */}
-							<SingleGridMenu
+                                image='images/lectures.svg' 
+								menu={<p><Translate>{({ translate }) => translate('lecturesTitle')}</Translate></p>}
+								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit" 
+                                link="/lectures" 
+							/>
+							{/* <SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
-								image="images/tour-4-270x200.jpg"
+								image="images/lectures.svg"
 								menu="Sadhana Sheet"
 								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/sadhanaList"
-							/>
+							/> */}
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
-								image="images/tour-3-270x200.jpg"
+								image="images/kirtan.svg"
 								menu="Kirtan"
 								description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/kirtan"
