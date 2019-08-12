@@ -11,6 +11,7 @@ const readFilePromise = require('fs-readfile-promise');
 const sgMail  = require('@sendgrid/mail');
 
 sgMail.setApiKey(EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.SENDGRID_API_KEY);
+sgMail.setSubstitutionWrappers('{{','}}');
 
 var transporter = nodemailer.createTransport(
 	EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig
@@ -290,6 +291,17 @@ exports.signup = function (req, res) {
 				console.log('ERROR222', err);
 			}
 			let onSuccess = function (user) {
+				let msg = {
+					to: req.body.email,
+					from: 'harekrishna@example.com',
+					
+					templateId: 'd-bb83dedb9d5544918719c418d0db62a5',
+					
+				};
+				sgMail.send(msg)
+				.then( res => {
+					console.log('Email was Sent', res);
+				});
 				res.json({
 					success: true,
 					session: true,
@@ -399,17 +411,7 @@ exports.forgotpassword = function (req, res) {
 		},
 		'API forgotpassword'
 	);
-	let msg = {
-		to: req.body.email,
-		from: 'example@example.com',
-		
-		templateId: 'd-d16fe0617ab44c92b7869dd0899d4282',
-		dynamic_template_data: {
-			Sender_Name: 'Testing Templates',
-			name: 'Some One',
-			city: 'Denver',
-		  },
-	};
+
 	if (!req.body.email) {
 		res.json({
 			error: {
@@ -445,6 +447,17 @@ exports.forgotpassword = function (req, res) {
 			
 			
 			userFound.accessKeyId = keystone.utils.randomString();
+			let msg = {
+				to: req.body.email,
+				from: 'example@example.com',
+				
+				templateId: 'd-d16fe0617ab44c92b7869dd0899d4282',
+				dynamic_template_data: {
+					link: `${ EMAIL_CONFIG.CONSTANTS.SITE_URL+ '/reset-password?accessid='+ userFound.accessKeyId }`,
+					name: "Forgot Password",
+					id: userFound.accessKeyId					
+				}
+			};
 			userFound.save(err => {
 				if (err) {
 					logger.error(
@@ -509,11 +522,11 @@ exports.getuserbyaccessid = function (req, res) {
 };
 
 exports.resetpassword = function (req, res) {
-	const msg = {
+	let msg = {
 		to: req.body.email,
-		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
-		subject: '',
-		html: '',
+		from: 'example@example.com',
+		
+		templateId: 'd-0bc5e65b282e4e41aa84b1e102543770',
 	};
 
 	if (!req.body.email || !req.body.accessid || !req.body.password) {
@@ -568,19 +581,19 @@ exports.resetpassword = function (req, res) {
 								error: { title: 'Not able to reset password' },
 							});
 						}
-						msg.subject = 'Your Password is Successfully Changed';
-						msg.html = `
-				<p>Hare Krishna,</p>
-				<p>Please accept our humble obeisances.</p>
-				<p>All glories to Srila Prabhupada!</p>
-				<br/>
-				<p>Your password is reset and the new password is - ${userPassword}</p>
-				<br/>
-				<p>Your servants always,</p>
-				<p>Site administrators</p>
-				`;
+				// 		msg.subject = 'Your Password is Successfully Changed';
+				// 		msg.html = `
+				// <p>Hare Krishna,</p>
+				// <p>Please accept our humble obeisances.</p>
+				// <p>All glories to Srila Prabhupada!</p>
+				// <br/>
+				// <p>Your password is reset and the new password is - ${userPassword}</p>
+				// <br/>
+				// <p>Your servants always,</p>
+				// <p>Site administrators</p>
+				// `;
 
-						sendMail(msg.from, userFound.email, msg.subject, msg.html)
+						sgMail.send(msg)
 							.then(res => {
 								console.log('email was sent', res);
 							})
