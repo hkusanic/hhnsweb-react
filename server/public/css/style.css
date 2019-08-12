@@ -9127,6 +9127,8 @@ html.tablet .ui-to-top {
 	letter-spacing: .08em;
 	text-transform: uppercase; */
 	font-family: Charter;
+	font-size: 14px;
+	font-weight: bold;
 }
 
 .rd-navbar-toggle {
