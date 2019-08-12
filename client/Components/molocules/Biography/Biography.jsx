@@ -43,18 +43,19 @@ export class Biography extends Component {
 
 	render() {
 		return (
-			<section className="section section-lg text-center">
-				<div className="container">
+			<section className="section" style={{top:'100px'}}>
+				<div >
 					<div className="row row-50">
 						<SingleBiography
-							img="https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png"
+							// img="https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png"
+							img="images/person1.jpg"
 							title_en={DATA.BIOGRAPHY.two_title_en}
 							title_ru={DATA.BIOGRAPHY.two_title_ru}
 							content_en={DATA.BIOGRAPHY.two_content_en}
 							content_ru={DATA.BIOGRAPHY.two_content_ru}
 						/>
 						<SingleBiography
-							img="https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png"
+							img="images/person2.jpg"
 							title_en={DATA.BIOGRAPHY.one_title_en}
 							title_ru={DATA.BIOGRAPHY.one_title_ru}
 							content_en={DATA.BIOGRAPHY.one_content_en}

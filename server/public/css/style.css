@@ -2124,6 +2124,10 @@ html .button.button-primary-lighten:hover .icon.text-primary, html .button.butto
 	color: inherit;
 }
 
+/* .biographyDiv{
+	
+} */
+
 .button-winona {
 	position: relative;
 	overflow: hidden;
@@ -2135,7 +2139,7 @@ html .button.button-primary-lighten:hover .icon.text-primary, html .button.butto
 .button-winona .content-original,
 .button-winona .content-dubbed {
 	vertical-align: middle;
-	transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+	/* transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.2, 1, 0.3, 1); */
 }
 
 .button-winona .content-original {
@@ -2148,12 +2152,12 @@ html .button.button-primary-lighten:hover .icon.text-primary, html .button.butto
 	top: 50%;
 	left: 0;
 	opacity: 0;
-	transform: translate3d(0, 0, 0);
+	/* transform: translate3d(0, 0, 0); */
 }
 
 .button-winona:hover .content-original {
 	opacity: 0;
-	transform: translate3d(0, -30%, 0);
+	/* transform: translate3d(0, -30%, 0); */
 }
 
 .button-winona:hover .content-dubbed {
@@ -5300,11 +5304,12 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 }
 
 .footer-linked-main {
-	padding: 35px 0 15px;
+	padding: 40px 0;
+	font-size: 13px;
 }
 
 .footer-linked-aside {
-	padding: 30px 0;
+	/* padding: 30px 0; */
 }
 
 .footer-linked-layout {
@@ -5335,7 +5340,7 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 
 @media (min-width: 768px) {
 	.footer-linked-main {
-		padding: 65px 0 40px;
+		/* padding: 65px 0 40px; */
 	}
 	.footer-linked-aside {
 		padding: 30px 0;
@@ -5362,7 +5367,7 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 		margin-top: 35px;
 	}
 	.footer-linked-main {
-		padding: 90px 0 60px;
+		/* padding: 90px 0 60px; */
 	}
 	.footer-linked-aside + .container {
 		margin-top: 20px;
@@ -7636,7 +7641,7 @@ h3 + .owl-carousel, .heading-3 + .owl-carousel {
 .section-md,
 .section-lg,
 .section-xl {
-	padding: 50px 0;
+	/* padding: 50px 0; */
 }
 
 .section-1 {
