@@ -7,6 +7,7 @@ import Announcement from '../../organisms/Announcement/Announcement';
 import GridLayoutMenus from '../../organisms/GridLayoutMenu/GridLayoutMenus';
 import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 import ContentDetails from '../../../containers/contents/ContentDetails';
+import Blog from '../../organisms/BlogHome/bloghome'
 import './index.css'; 
 
 export class Carousel2 extends Component {
@@ -43,19 +44,20 @@ export class Carousel2 extends Component {
 				</Carousel> */}
 				<section
 					className="swiper-container swiper-slider swiper-slider-light bg-gray-700 carouselMargin"
-					data-loop="true"
-					data-autoplay="5000"
-					data-simulate-touch="false"
-					data-custom-slide-effect="inter-leave-effect"
-					data-inter-leave-offset="-.5"
+					// data-loop="true"
+					// data-autoplay="5000"
+					// data-simulate-touch="false"
+					// data-custom-slide-effect="inter-leave-effect"
+					// data-inter-leave-offset="-.5"
 				>
+					{/* className="swiper-wrapper" */}
 					<div className="swiper-wrapper">
 						<SingleCarousel
-							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_portrait_no_logo_rJorBWrIN.jpg"
+							image="images/4-c-7-a-9333.jpg"
 							heading="Quote of the Day"
 							text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 						/>
-						<SingleCarousel
+						{/* <SingleCarousel
 							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture-abhishek_no_logo_rk3rB-HLV.jpg"
 							heading="Quote of the Day"
 							text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
@@ -64,19 +66,19 @@ export class Carousel2 extends Component {
 							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_kirtan_no_logo_HJiHHWrLN.jpg"
 							heading="Quote of the Day"
 							text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-						/>
+						/> */}
 					</div>
-					<div className="swiper-pagination-outer container alignment">
+					{/* <div className="swiper-pagination-outer container alignment">
 						<div
 							className="swiper-pagination swiper-pagination-modern swiper-pagination-marked"
 							data-index-bullet="true"
 						/>
-					</div>
+					</div> */}
 				</section>
 				<Biography {...this.props} />
 				{/* <QuoteOfDay /> */}
 				<GridLayoutMenus />
-				{/* <Blog /> */}
+				<Blog />
 				<Announcement />
 			</div>
 		);

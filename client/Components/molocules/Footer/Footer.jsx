@@ -20,7 +20,7 @@ export class Footer extends Component {
                                     {({ translate }) => translate('FOOTER.quick_links')}
                                 </Translate></h4>
                                 <div className="row row-20">
-                                    <div className="col-6 col-sm-3">
+                                    <div className="col-6 col-sm-6">
                                         <ul className="list list-xs">
                                             <li>
                                                 <Link to="/contact">
@@ -42,9 +42,7 @@ export class Footer extends Component {
                             </div>
 
                             <div className="col-md-7 col-lg-4">
-                                <h4><Translate>
-                                    {({ translate }) => translate('FOOTER.quick_links')}
-                                </Translate></h4>
+                                <h4 style={{color:"white"}}>MENUS</h4>
                             
                                 <div className="row row-20">
                                     <div className="col-6 col-sm-3">

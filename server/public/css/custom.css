@@ -322,6 +322,7 @@
       font-family: 'Roboto_New' !important;
   }
   .MenuPad {
+      height: 77px;
       /* padding-left: 7.8% !important;
       padding-right: 8.0% !important; */
       
@@ -848,7 +849,7 @@
   }
   
   .langaugeDropDown div {
-      background-color: #f6f6f6 !important;
+      /* background-color: #f6f6f6 !important; */
   }
   
   .gridMenuText {
@@ -908,7 +909,7 @@
       margin: auto !important;
   }
   .navbarItemAlign{
-      justify-content: space-between;
+      /* justify-content: space-between; */
       /* width: 1170px; */
   }
   .subGalleryImg{

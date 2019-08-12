@@ -7520,7 +7520,7 @@ h3 + .owl-carousel, .heading-3 + .owl-carousel {
 }
 
 .row-50 > * {
-	margin-bottom: 50px;
+	margin-bottom: 30px;
 }
 
 .row-60 {
@@ -7597,7 +7597,7 @@ h3 + .owl-carousel, .heading-3 + .owl-carousel {
 		margin-bottom: 0;
 	}
 	.row-lg-70 > * {
-		margin-bottom: 70px;
+		/* margin-bottom: 70px; */
 	}
 }
 
@@ -9123,9 +9123,10 @@ html.tablet .ui-to-top {
 }
 
 .rd-nav-link {
-	font: 400 14px/20px "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	/* font: 400 14px/20px "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	letter-spacing: .08em;
-	text-transform: uppercase;
+	text-transform: uppercase; */
+	font-family: Charter;
 }
 
 .rd-navbar-toggle {
@@ -9511,7 +9512,7 @@ html.tablet .ui-to-top {
 }
 
 .rd-navbar-static .rd-nav-item + .rd-nav-item {
-	margin-left: 35px;
+	margin-left: 2%;
 }
 
 .rd-navbar-static .rd-nav-link {
@@ -9842,7 +9843,7 @@ html.tablet .ui-to-top {
 
 @media (min-width: 1200px) {
 	.rd-navbar-static .rd-nav-item + .rd-nav-item {
-		margin-left: 45px;
+		margin-left: 2%;
 	}
 }
 
@@ -9861,7 +9862,7 @@ html.tablet .ui-to-top {
 	top: 0;
 	right: 0;
 	z-index: 1080;
-	background: #f6f6f6;
+	/* background: #f6f6f6; */
 	will-change: transform;
 }
 
@@ -10994,7 +10995,7 @@ html.rd-navbar-fixed-linked .page {
 
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-main {
 	position: relative;
-	padding: 16px 0;
+	/* padding: 16px 0; */
 }
 
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-nav-wrap {
@@ -11066,7 +11067,7 @@ html.rd-navbar-fixed-linked .page {
 		margin-left: 70px;
 	}
 	.rd-navbar-corporate.rd-navbar-static .rd-nav-item + .rd-nav-item {
-		margin-left: 55px;
+		/* margin-left: 55px; */
 	}
 }
 
@@ -17894,7 +17895,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background: rgba(255, 131, 10, 0.3);
+	/* background: rgba(255, 131, 10, 0.3); */
 	transition: .22s ease-in-out;
 	opacity: 0;
 	visibility: hidden;
