@@ -53,7 +53,7 @@
 		"forum":["Forum", "Форум"],
 		"file_share": ["File Share", "Файловый ресурс"],
 		"contact_information": ["Contact Information", "Контактная информация"],
-		"copy_rights": ["2019 All Rights Reserved. His Holiness Niranjana Swami.", "2019 Все права защищены. Его Святейшество Ниранджана Свами"]
+		"copy_rights": ["2019 All Rights Reserved.", "2019 Все права защищены."]
 	},
 	"LOGIN_FORM": {
 		"log_in": ["LOG IN", "ВХОД"],

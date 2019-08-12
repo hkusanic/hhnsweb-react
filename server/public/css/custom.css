@@ -892,6 +892,16 @@
       flex-direction: row; 
   }
   
+  .foot{
+      color:white;
+       background-color: #fd8639; 
+       background-image: url('../images/footer.svg'); 
+       background-repeat: no-repeat;
+         background-size: 100%;
+       width:100%;
+       height:40% !important;
+      object-fit: contain; 
+  }
   .arrowfont {
       font-size: 20px !important;
       color: #f18130 !important;
@@ -903,9 +913,12 @@
       font-weight: 500;
   }
   .biographyCard{
-      max-width: 440px;
-      height:420px;
-      margin: auto !important;
+      max-width: 523px;
+      height:481px;
+      /* margin: auto !important; */
+      margin-top:1000px;
+      left:100px;
+      /* box-shadow: 5px 5px 5px grey; */
   }
   .navbarItemAlign{
       justify-content: space-between;

@@ -29,7 +29,7 @@ export class GridLayoutMenus extends React.Component {
 	render() {
 		return (
 			<div>
-				<section class="section-lg text-center bg-gray-100">
+				<section class="section-lg text-center" >
 				<h3>TITLE GOES HERE </h3>
 							<h4> Lorem ipsum dolor sit amet, consectetur adipiscing elit </h4>
 							<br />
