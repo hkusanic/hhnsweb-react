@@ -78,8 +78,11 @@ export class Carousel2 extends Component {
 				</section>
 				<Biography {...this.props} />
 				{/* <QuoteOfDay /> */}
+				<br />
 				<GridLayoutMenus />
+				<br />
 				<Blog />
+				<br />
 				<Announcement />
 			</div>
 		);

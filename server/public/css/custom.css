@@ -914,11 +914,11 @@
       font-weight: 500;
   }
   .biographyCard{
-      max-width: 523px;
+      /* max-width: 523px; */
       height:481px;
       /* margin: auto !important; */
       margin-top:1000px;
-      left:100px;
+      left:3%;
       /* box-shadow: 5px 5px 5px grey; */
   }
   .navbarItemAlign{

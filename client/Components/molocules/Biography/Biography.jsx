@@ -43,9 +43,9 @@ export class Biography extends Component {
 
 	render() {
 		return (
-			<section className="section" style={{top:'100px'}}>
-				<div style={{marginLeft:'35px'}}>
-					<div className="row row-50">
+			<section className="container centerAlign" style={{top:'100px'}}>
+				<div >
+					<div className="row row-50 row-xxl-70">
 						<SingleBiography
 							// img="https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png"
 							img="images/person1.jpg"

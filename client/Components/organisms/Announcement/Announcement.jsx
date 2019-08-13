@@ -13,15 +13,15 @@ export class Announcement extends Component {
 					className="centerAlign"
 					style={{
 						border: "1px solid orange",
-						width: "1114px",
-						height: "500px",
+						width: "100%",
+						// height: "500px",
 						boxShadow: "0 62px 94px 0 rgba(79, 42, 97, 0.14)"
 					}}
 				>
 					<div>
 						<div
 							style={{
-								marginTop: "60px",
+								marginTop: "25px",
 								width: "194px",
 								height: "45px",
 								borderRadius: "3px",
@@ -31,7 +31,7 @@ export class Announcement extends Component {
 							<h4
 								style={{
 									width: "169px",
-									marginTop: "40px",
+									// marginTop: "40px",
 									marginLeft: "20px",
 									height: "30px",
 									fontFamily: "Charter",
@@ -44,9 +44,14 @@ export class Announcement extends Component {
 								Announcement
 							</h4>
 						</div>
-						<p className="fontWeight">Hare Krishna!</p>
+						<p style={{
+							fontFamily: "Charter-Roman",
+							fontSize: "18px",
+							color: "#6c6c6c",
+							lineHeight: "1.78"
+						}}>Hare Krishna!</p>
 
-						<p align="justify">
+						<p style={{ textAlign: "justify", fontFamily: "Charter" }}>
 							For devotees who are visiting Mayapura between March 13-March 22
 							and wish to have darshan of Niranjana Swami during that time, we
 							have created this website{" "}
@@ -61,7 +66,7 @@ export class Announcement extends Component {
 							</span>
 						</p>
 
-						<p align="justify">
+						<p style={{ textAlign: "justify" , fontFamily: "Charter" }}>
 							This website, which is still under construction, will also be used
 							in the future to schedule meetings when Maharaja is visiting North
 							America. If you encounter any trouble, please contact Dina

@@ -75,18 +75,18 @@ export class Blogs extends Component {
 	render() {
 		return (
 			<div>
-				{/* <section
+				<section
 					className="bg-gray-100"
 					// style={{
 					// 	backgroundImage:
 					// 		'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
 					// }}
-				> */}
+				>
 					{/* <img
 						className="img-banner-width"
 						src="https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png"
 					/> */}
-					{/* <div class="breadcrumbs-custom-inner headingImage">
+					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
 							<ul class="breadcrumbs-custom-path">
 								<li>
@@ -100,7 +100,7 @@ export class Blogs extends Component {
 							</ul>
 						</div>
 					</div>
-				</section> */}
+				</section>
 				{!this.state.isUserLogin ? (
 					<section>
 						<div style={{ textAlign: 'center' }}>
