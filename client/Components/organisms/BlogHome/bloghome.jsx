@@ -8,6 +8,7 @@ import { getBlogs, getBlog } from '../../../actions/blogActions';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
+import {Redirect} from 'react-router-dom';
 
 const defaultPageSize = 20;
 
@@ -20,6 +21,7 @@ export class Blogs extends Component {
             page: null,
             blogs: [],
             isUserLogin: false,
+            blog: false,
         };
 
         //this.props.getBlog({ uuid: '02d47a4e-2dfc-11e9-b210-d663bd873d93' });
@@ -35,6 +37,13 @@ export class Blogs extends Component {
 
         this.props.getBlogs(pagination);
     };
+
+    readmoreclicked = (e) => {
+        // console.log("hi")
+        this.setState({
+            blog: true
+        })
+    }
 
     componentDidMount() {
         const pagination = { ...this.state.pagination };
@@ -71,6 +80,12 @@ export class Blogs extends Component {
     }
 
     render() {
+        // console.log(this.state.blog)
+        if(this.state.blog)
+        {
+            <Redirect to='/blog' />
+        }
+
         return (
             <div>
                 {!this.state.isUserLogin ? (
@@ -94,32 +109,41 @@ export class Blogs extends Component {
                                 <SingleBlogHome
                                     handleNavigationClick={this.handleNavigationClick}
                                     author="Juanma Gironella"
-                                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min veniam"
                                     link="/"
                                 />
                                 <SingleBlogHome
                                     handleNavigationClick={this.handleNavigationClick}
                                     author="John dinker"
-                                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min veniam"
                                     link="/"
                                 />
                                 <SingleBlogHome
                                     handleNavigationClick={this.handleNavigationClick}
                                     author="Naveen arshad"
-                                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min veniam"
                                     link="/"
                                 />
                                 <SingleBlogHome
                                     handleNavigationClick={this.handleNavigationClick}
                                     author="Juanma Gironella"
-                                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min veniam"
                                     link="/"
                                 />
                             </div>
                         </div>
                         <br />
                         <br />
-                        <div style={{ textAlign: "center" }}> <Button> Read More </Button>
+                        
+                        <div style={{ textAlign: "center" }}> <button onClick={this.readmoreclicked} style={{
+                                width: "123px",
+                                height: "47px",
+                                borderRadius: "4px",
+                                border: "1px solid rgb(255, 124, 43)",
+                                backgroundColor: "white"
+                        }}> Read More... </button>
+                        <br />
+                        <br />
                         </div>
                     </section>
                 ) : <QuoteOfDay />}

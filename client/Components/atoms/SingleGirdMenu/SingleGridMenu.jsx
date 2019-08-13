@@ -25,7 +25,7 @@ const SingleGridMenu = props => {
 				>
 					<Card 
 						style={{
-							width: "268px", height: "289px",
+							 height: "289px",
 							borderRadius: "4px",
 							// boxShadow: "0 22px 34px 0 rgba(0, 0, 0, 0.08)",
 							border: "0.1% solid gray",
