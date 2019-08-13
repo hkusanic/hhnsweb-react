@@ -118,10 +118,12 @@ export class Footer extends Component {
                            
                             <span >
                                 <img style={{width: '252.1px',height: '48.3px',objectFit: 'contain'}} src="images/SWAMI2.svg" />
-                                <span style={{fontSize:'12px'}}>&copy;&nbsp;</span><span>&nbsp;</span>  
-                                <span style={{ fontSize:'12px'}}><Translate >
+                                <span>&nbsp;</span>  
+                                <span style={{fontSize:'12px'}}>&copy;&nbsp;</span>
+                                {/* <span>&nbsp;</span>   */}
+                                <Translate >
                                     {({ translate }) => translate('FOOTER.copy_rights')}
-                                </Translate></span>
+                                </Translate>
                             </span>
                         </p>
                     </div>

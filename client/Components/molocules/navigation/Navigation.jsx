@@ -221,8 +221,9 @@ export class Navigation extends Component {
 												// height: "48.3px"
 												marginLeft: "15%"
 											}} src="images/swami.svg" /> </li>
+											<span style={{marginLeft: "13%"}}>
 											<li style={{
-												marginLeft: "13%"
+												// marginLeft: "13%"
 											}}
 												onClick={() => {
 													this.handleRemoveModal(1);
@@ -430,7 +431,7 @@ export class Navigation extends Component {
 											</li>
 
 											<li className="rd-nav-item hideMenu"> <img style={{ height: "34px", width: "34px" }} src="images/Iskcon_logo.jpg" alt="Iskcon Logo" /> </li>
-
+													</span>
 										</ul>
 										<br />
 									</div>

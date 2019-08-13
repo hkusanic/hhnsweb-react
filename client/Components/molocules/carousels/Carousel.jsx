@@ -55,7 +55,7 @@ export class Carousel2 extends Component {
 						<SingleCarousel
 							image="images/4-c-7-a-9333.jpg"
 							heading="Quote of the Day"
-							text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+							text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm tempor incididunt ut"
 							author="Niranjana Swami"
 						/>
 						{/* <SingleCarousel
