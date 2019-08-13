@@ -102,7 +102,7 @@ export class Footer extends Component {
                                 </Translate></h4>
                                
                                 <ul className="list-sm">
-                                    <li className="object-inline" style={{fontSize:'30px'}}><Icon type="facebook" /><Icon type="instagram" /><Icon type="twitter" /> </li>
+                                    <li className="object-inline" style={{fontSize:'20px'}}><Icon type="facebook" /><Icon type="instagram" /><Icon type="twitter" /> </li>
                                     <li  ><a style={{color:'white'}} href="#">1683 Main Street, East Hartford, CT 06183</a></li>
                                     <li className="object-inline"><a style={{color:'white'}}  href="mailto:#">dgd@niranjanaswami.net</a></li>
                                 </ul>

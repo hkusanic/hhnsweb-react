@@ -5321,6 +5321,31 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 	margin-bottom: 18px;
 }
 
+.quote{
+	width: 577px;
+	height: 156px;
+	font-family: Charter;
+	font-size: 40px;
+	font-weight: bold;
+	font-style: italic;
+	font-stretch: normal;
+	line-height: 1.3;
+	letter-spacing: -0.98px;
+	color: #000000;
+}
+
+.insideCarousel{
+	/* width:27%;
+	 height:10vh; */
+	 position:absolute;
+	 width: 29.282576866764277vw;
+  height: 15.220700152207002vh;
+	 /* background-image:url('../images/grad.jpg'); */
+	 background-image: linear-gradient(to right, #f25858, #ff9f63);
+	 /* background-repeat: no-repeat; */
+	 margin-left: 10%
+}
+
 .footer-linked-layout > * {
 	margin-top: 0;
 }

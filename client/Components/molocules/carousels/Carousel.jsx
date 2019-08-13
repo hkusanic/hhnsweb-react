@@ -56,6 +56,7 @@ export class Carousel2 extends Component {
 							image="images/4-c-7-a-9333.jpg"
 							heading="Quote of the Day"
 							text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+							author="Niranjana Swami"
 						/>
 						{/* <SingleCarousel
 							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture-abhishek_no_logo_rk3rB-HLV.jpg"
