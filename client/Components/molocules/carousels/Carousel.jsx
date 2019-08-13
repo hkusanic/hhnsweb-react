@@ -79,9 +79,15 @@ export class Carousel2 extends Component {
 				<Biography {...this.props} />
 				{/* <QuoteOfDay /> */}
 				<br />
-				<GridLayoutMenus />
 				<br />
+				 <div >
+				 <img src="images/circle.png" style={{width:'70px',height:'70px',opacity:'0.4',backgroundRepeat:'no-repeat',position:'absolute',zIndex:'0',marginLeft:'92%'}} />
+				 <img src="images/circle.png" style={{width:'63px',height:'63px',opacity:'0.4',backgroundRepeat:'no-repeat',position:'absolute',zIndex:'0',marginLeft:'28%',marginTop:'8%'}} />
+					 <img src="images/circle.png" style={{width:'1182px',height:'1182px',opacity:'0.4',backgroundRepeat:'no-repeat',position:'absolute',zIndex:'0',marginTop:'5%',marginLeft:'40%'}} />
+				<GridLayoutMenus />
+				<img src="images/circle.png" style={{width:'75px',height:'75px',opacity:'0.4',backgroundRepeat:'no-repeat',position:'absolute',zIndex:'0',marginLeft:'28%'}} />
 				<Blog />
+				</div>
 				<br />
 				<Announcement />
 			</div>
