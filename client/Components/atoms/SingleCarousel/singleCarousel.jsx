@@ -6,10 +6,6 @@ const SingleCarousel = props => {
 			<div className="slide-inner">
 			
 					<div className="insideCarousel">
-						{/* <div style={{fontFamily: 'Charter',
- 								fontSize: '15px',
-								  fontWeight: '900',
-								  color:'white'}}> */}
 					<img src="images/person3.png" style={{width: '90px', height: '90px',objectFit: 'contain' ,float:'left'}}/>				
 								
 						<div style={{paddingTop:'9px'}}>
@@ -28,10 +24,9 @@ const SingleCarousel = props => {
 					 <div className="swiper-slide-caption">
 			
 							<div className="row" >
-								<img src="images/quote.jpg" style={{width: '90px', height: '90px',opacity: '0.1'}}/>
+								<img src="images/quote.jpg" style={{width: '90px', height: '90px',opacity: '0.1',marginLeft:'7%',marginTop:'5%'}}/>
 										<div style={{width: '100px',
-										marginTop:'7vh',
-										//  float:'right',	
+										marginTop:'10vh',
 										fontSize:'10px',			
 										  height: '23px',
 										  padding: '4px',
