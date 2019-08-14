@@ -1,5 +1,6 @@
 import appointmentListingApi from '../utils/api/appointmentList';
 import * as types from '../constants/index';
+import { EventTypes } from 'redux-segment';
 
 export function getUserList() {
     return (dispatch) => {
@@ -40,21 +41,57 @@ export function updateAppointment(email, body) {
 export function getUserListAction(data) {
     return {
         type: types.GET_USER_LIST,
-        payload: data
+        payload: data,
+        meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "appointment user list",
+          properties: {
+            data
+          }
+        }
+      }
+    },
     }
 }
 
 export function getAppointmentListAction(data) {
     return {
         type: types.GET_APPOINTMENT_LIST,
-        payload: data
+        payload: data,
+        meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "get appointment list",
+          properties: {
+            data
+          }
+        }
+      }
+    },
     }
 }
 
 export function updateAppointmentAction(data){
     return {
         type: types.UPDATE_APPOINTMENT,
-        payload: data
+        payload: data,
+        meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "update appointment",
+          properties: {
+            data
+          }
+        }
+      }
+    },
     }
 }
 

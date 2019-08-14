@@ -1,5 +1,6 @@
 import VideoApi from '../utils/api/video';
 import * as types from '../constants/index';
+import { EventTypes } from 'redux-segment'
 
 export function getVideoList (body) {
 	return dispatch => {
@@ -42,6 +43,18 @@ export function getVideoListAction (data) {
 	return {
 		type: types.GET_VIDEO_LIST,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "videos list",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -49,6 +62,18 @@ export function getVideoByIdAction (data) {
 	return {
 		type: types.GET_VIDEO_BY_ID,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "get video by id",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -56,6 +81,18 @@ export function updateVideoPageViewAction (data) {
 	return {
 		type: types.UPDATE_VIDEO_PAGE_VIEW,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "update video page view",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 

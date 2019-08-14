@@ -1,5 +1,7 @@
 import blogApi from '../utils/api/blog';
 import * as types from '../constants/index';
+import { EventTypes } from 'redux-segment';
+
 
 export function getBlogs (page) {
 	return (dispatch) => {
@@ -17,6 +19,18 @@ export function getBlogAction (data) {
 	return {
 		type: types.GET_BLOGS,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "all blogs",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -48,6 +62,18 @@ export function getAction (data) {
 	return {
 		type: types.GET_BLOG,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "get a blog",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -57,5 +83,17 @@ export function fetchBlogByUuid (data) {
 		payload: {
 			blog: data.data.blog,
 		},
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "fetch blog by id",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 };

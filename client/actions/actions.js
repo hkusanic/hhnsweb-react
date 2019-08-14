@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { EventTypes } from 'redux-segment'
 // Exporting our actions
 export const LOADING_RECIPES = 'LOADING_RECIPES';
 export const GET_RECIPES = 'GET_RECIPES';
@@ -9,6 +9,21 @@ export function loadingRecipes (loading) {
 	return {
 		type: LOADING_RECIPES,
 		payload: loading,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "loading recipes",
+          properties: {
+             loading
+          }
+        }
+      }
+      
+      	
+      
+    },
 	};
 }
 
@@ -17,6 +32,20 @@ export function fetchRecipes (data) {
 	return {
 		type: GET_RECIPES,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "fetch recipes",
+          properties: {
+            data
+          }
+        }
+      }
+      
+      
+    },
 	};
 }
 

@@ -1,5 +1,7 @@
 import lectureApi from '../utils/api/lecture';
 import * as types from '../constants/index';
+import { EventTypes } from 'redux-segment';
+
 
 export function searchLecture (body) {
 	return dispatch => {
@@ -14,6 +16,7 @@ export function searchLecture (body) {
 			});
 	};
 }
+
 export function searchLectureVideo (body) {
 	return dispatch => {
 		lectureApi
@@ -99,12 +102,36 @@ export function searchLectureAction (data) {
 	return {
 		type: types.SEARCH_LECTURE,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "Audios list",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 export function searchLectureActionVideo (data) {
 	return {
 		type: types.SEARCH_LECTURE_VIDEO,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "searching lecture video",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -112,6 +139,18 @@ export function searchLectureActionTranscriptions (data) {
 	return {
 		type: types.SEARCH_LECTURE_TRANSCRIPTIONS,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "searching lecture transcriptions",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -119,6 +158,18 @@ export function searchLectureActionSummaries (data) {
 	return {
 		type: types.SEARCH_LECTURE_SUMMARIES,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "searching lecture summaries",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -126,6 +177,18 @@ export function updateCountersAction (data) {
 	return {
 		type: types.UPDATE_COUNTERS,
 		payload: data,
+		meta: {
+      analytics:
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "updating counter",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -135,6 +198,18 @@ export function fetchLectureByUuid (data) {
 		payload: {
 			lecture: data.data.lecture,
 		},
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "fetch lecture by id",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 

@@ -116,7 +116,8 @@ export function signupAction (data) {
 		type: types.SIGNUP,
 		payload: data,
 		meta: {
-      analytics: {
+      analytics: [
+      {
         eventType: EventTypes.track,
         eventPayload: {
           event: "User signup",
@@ -124,7 +125,16 @@ export function signupAction (data) {
             data
           }
         }
+      },
+      {
+      	eventType: EventTypes.identify,
+      	eventPayload: {
+        
+      	userId: data.loginUser.user_id,
+      
       }
+      }
+      ]
     },
 	};
 }
@@ -133,6 +143,18 @@ export function logoutAction (data) {
 	return {
 		type: types.LOGOUT,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "logout",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -145,14 +167,14 @@ export function loginAction (data) {
       {
         eventType: EventTypes.track,
         eventPayload: {
-          event: "Login User",
+          event: "User Login",
           properties: {
             data
           }
         }
       },
       {
-      	eventType: EventTypes.alias,
+      	eventType: EventTypes.identify,
       	eventPayload: {
         
       	userid: data.loginUser.user_id,
@@ -169,6 +191,18 @@ export function forgotPasswordAction (data) {
 	return {
 		type: types.FORGOT_PASSWORD,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "forgot password",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -176,6 +210,18 @@ export function getUserByAccessIdAction (data) {
 	return {
 		type: types.GET_USER_BY_ACCESS_ID,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "Get user by id",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -183,6 +229,18 @@ export function resetPasswordAction (data) {
 	return {
 		type: types.RESET_PASSWORD,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "reset password",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -190,6 +248,18 @@ export function editProfileAction (data) {
 	return {
 		type: types.EDIT_PROFILE,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "edit profile",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -197,6 +267,18 @@ export function contactUsAction (data) {
 	return {
 		type: types.CONTACT_US,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "contact us",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -204,6 +286,18 @@ export function updatePasswordAction (data) {
 	return {
 		type: types.UPDATE_PASSWORD,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "update password",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -214,6 +308,18 @@ export function checkLogin () {
 			.then((response) => {
 				return response.data;
 			}),
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "check login",
+          
+        }
+      }
+      
+      
+    },	
 	};
 
 }

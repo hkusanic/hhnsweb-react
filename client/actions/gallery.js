@@ -1,5 +1,7 @@
 import galleryApi from '../utils/api/gallery';
 import * as types from '../constants/index';
+import { EventTypes } from 'redux-segment';
+
 
 export function getGalleries () {
 	return dispatch => {
@@ -44,6 +46,18 @@ export function getGalleriesAction (data) {
 	return {
 		type: types.GET_GALLERY,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "all Galleries",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -51,6 +65,18 @@ export function getStaticGalleryListAction (data) {
 	return {
 		type: types.GET_STATIC_GALLERY,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "get static gallery",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -58,5 +84,17 @@ export function getSubGalleryByGalleryAction (data) {
 	return {
 		type: types.GET_SUB_GALLERY,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "geting subgallery by gallery",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }

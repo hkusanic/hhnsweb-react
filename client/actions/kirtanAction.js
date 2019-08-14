@@ -1,5 +1,7 @@
 import kirtanApi from '../utils/api/kirtan';
 import * as types from '../constants/index';
+import { EventTypes } from 'redux-segment';
+
 
 export function searchKirtan (body) {
 	return dispatch => {
@@ -31,6 +33,18 @@ export function searchKirtanAction (data) {
 	return {
 		type: types.SEARCH_KIRTAN,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "search kirtan",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -40,6 +54,18 @@ export function fetchKirtanByUuid (data) {
 		payload: {
 			kirtan: data.data.kirtan,
 		},
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "fetch kirtan by id",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -60,11 +86,25 @@ export function updateCountersAction (data) {
 	return {
 		type: types.UPDATE_COUNTERS,
 		payload: data,
-	};
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "updating counter",
+          properties: {
+            data
+          }
+        }
+      }
+    },
+};
+
 }
 
 export function resetState () {
 	return {
 		type: 'RESET_STATE_KIRTAN',
+    
 	};
 }

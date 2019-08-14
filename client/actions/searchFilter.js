@@ -1,5 +1,6 @@
 import searchFilterApi from '../utils/api/searchFilter';
 import * as types from '../constants/index';
+import { EventTypes } from 'redux-segment'
 
 export function getEvents() {
 	return (dispatch) => {
@@ -44,20 +45,56 @@ export function getTopics() {
 export function getEventsAction(data) {
 	return {
 		type: types.GET_EVENTS,
-		payload: data
+		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "event action",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
 export function getLocationsAction(data) {
 	return {
 		type: types.GET_LOCATIONS,
-		payload: data
+		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "search location action",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
 export function getTopicsAction(data) {
 	return {
 		type: types.GET_TOPIC,
-		payload: data
+		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "topic action",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }

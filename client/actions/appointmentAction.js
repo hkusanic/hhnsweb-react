@@ -1,5 +1,6 @@
 import appointmentApi from '../utils/api/appointment';
 import * as types from '../constants/index';
+import { EventTypes } from 'redux-segment';
 
 export function createAppointment (body) {
 	return (dispatch) => {
@@ -17,6 +18,18 @@ export function createAction (data) {
 	return {
 		type: types.CREATE_APPOINTMENT,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "creating appointment",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -24,6 +37,19 @@ export function createError (data) {
 	return {
 		type: types.CREATE_APPOINTMENT_ERROR,
 		payload: data,
+
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "creating appointment error",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -55,6 +81,18 @@ export function getBookingStatusAction (data) {
 	return {
 		type: types.GET_BOOKING_STATUS,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "get appointment booking status",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
@@ -62,6 +100,18 @@ export function getAppointmentAction (data) {
 	return {
 		type: types.GET_APPOINTMENT,
 		payload: data,
+		meta: {
+      analytics: 
+      {
+        eventType: EventTypes.track,
+        eventPayload: {
+          event: "get appointment",
+          properties: {
+            data
+          }
+        }
+      }
+    },
 	};
 }
 
