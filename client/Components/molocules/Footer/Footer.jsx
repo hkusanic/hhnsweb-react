@@ -49,7 +49,7 @@ export class Footer extends Component {
                                     <div className="col-6 col-sm-3">
                                         <ul className="list ">
                                         <li style={{color:'white'}}>
-                                                <Link to="/biography" style={{color:'white'}}>
+                                                <Link to="/biograhyDetails" style={{color:'white'}}>
                                                     <Translate>{({ translate }) => translate('HOME.biography')}</Translate>
                                                 </Link>
                                             </li>

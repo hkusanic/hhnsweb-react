@@ -11037,7 +11037,7 @@ html.rd-navbar-fixed-linked .page {
 
 .rd-navbar-corporate.rd-navbar-static .rd-navbar-nav-wrap {
 	position: relative;
-	display: flex;
+	/* display: flex; */
 	/* flex-direction: row-reverse; */
 	align-items: center;
 	justify-content: space-between;

@@ -8,7 +8,7 @@ import { getBlogs, getBlog } from '../../../actions/blogActions';
 import Auth from '../../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const defaultPageSize = 20;
 
@@ -81,8 +81,7 @@ export class Blogs extends Component {
 
     render() {
         // console.log(this.state.blog)
-        if(this.state.blog)
-        {
+        if (this.state.blog) {
             <Redirect to='/blog' />
         }
 
@@ -134,16 +133,16 @@ export class Blogs extends Component {
                         </div>
                         <br />
                         <br />
-                        
+
                         <div style={{ textAlign: "center" }}> <button onClick={this.readmoreclicked} style={{
-                                width: "123px",
-                                height: "47px",
-                                borderRadius: "4px",
-                                border: "1px solid rgb(255, 124, 43)",
-                                backgroundColor: "white"
+                            width: "123px",
+                            height: "47px",
+                            borderRadius: "4px",
+                            border: "1px solid rgb(255, 124, 43)",
+                            backgroundColor: "white"
                         }}> Read More... </button>
-                        <br />
-                        <br />
+                            <br />
+                            <br />
                         </div>
                     </section>
                 ) : <QuoteOfDay />}

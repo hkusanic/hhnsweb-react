@@ -84,13 +84,13 @@ const SingleBiography = props => {
 						</div> */}
 						<br />
 						{renderHTML("<div style={{ width: '415px',height: '125px' fontFamily: 'Charter-Roman',fontSize: '16px',color: '#787878',textAlign: 'justify'}}> " + showing100Characters(
-									reactCookie.load('languageCode') === 'en'
-										? props.content_en
-										: props.content_ru
-											? props.content_ru
-											: props.content_en
-								)
-								+ "</div>"
+							reactCookie.load('languageCode') === 'en'
+								? props.content_en
+								: props.content_ru
+									? props.content_ru
+									: props.content_en
+						)
+							+ "</div>"
 						)}
 						<Link
 							// className="button-winona post-modern-title"
