@@ -43,7 +43,7 @@ export class Biography extends Component {
 
 	render() {
 		return (
-			<section className="container centerAlign" style={{top:'100px'}}>
+			<section className="container centerAlign" style={{top:'100px', objectPosition: "100px"}}>
 				<div >
 					<div className="row row-50 row-xxl-70">
 						<SingleBiography

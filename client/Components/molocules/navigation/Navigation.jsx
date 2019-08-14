@@ -1,62 +1,62 @@
-import React, { Component } from 'react';
-import { setActiveLanguage, withLocalize } from 'react-localize-redux';
-import { Select } from 'antd';
-import Login from './../../../containers/Login/Login';
-import { Link, Redirect } from 'react-router-dom';
-import Auth from '../../../utils/Auth';
-import { Translate } from 'react-localize-redux';
-import { LanguageSwitch } from '../../atoms/LanguageSwitch/LanguageSwitch';
-import * as DATA from '../../../constants/biographies';
-import reactCookie from 'react-cookies';
-import {throttle} from 'lodash';
-
+import React, { Component } from "react";
+import { throttle } from "lodash";
+import { setActiveLanguage, withLocalize } from "react-localize-redux";
+import { Select } from "antd";
+import Login from "./../../../containers/Login/Login";
+import { Link, Redirect } from "react-router-dom";
+import Auth from "../../../utils/Auth";
+import { Translate } from "react-localize-redux";
+import { LanguageSwitch } from "../../atoms/LanguageSwitch/LanguageSwitch";
+import * as DATA from "../../../constants/biographies";
+import reactCookie from "react-cookies";
+import Column from "antd/lib/table/Column";
 
 const Option = Select.Option;
 
 export class Navigation extends Component {
 	constructor(props) {
 		super(props);
-		this.resize = throttle(this.resize.bind(this), 100)
+		this.resize = throttle(this.resize.bind(this), 100);
 		this.state = {
 			isUserLogin: true,
-			Niranjana_swami_bio: '',
-			Prabhupada_swami_bio: '',
-			floatImage: '',
+			Niranjana_swami_bio: "",
+			Prabhupada_swami_bio: "",
+			floatImage: "",
 			index: 1,
 			redirect: false,
-			login: false,
+			login: false
 		};
 	}
 
-	resize = () => this.forceUpdate()
+	resize = () => this.forceUpdate();
 
-    // componentDidMount() {
-       
-    //   }
-    
-      componentWillUnmount() {
-        window.removeEventListener('resize', this.resize)
-      }
+	// componentDidMount() {
+	// 	window.addEventListener("resize", this.resize);
+	// }
 
+	// componentWillUnmount() {
+	// 	window.removeEventListener("resize", this.resize);
+	// }
 
 	componentDidMount() {
-		window.addEventListener('resize', this.resize)
+		window.addEventListener("resize", this.resize);
+		// window.addEventListener("click", this.)
 		const Prabhupada_swami_bio = {
-			img: 'https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png',
+			img: "https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png",
 			title_en: DATA.BIOGRAPHY.one_title_en,
 			title_ru: DATA.BIOGRAPHY.one_title_ru,
 			content_en: DATA.BIOGRAPHY.one_content_en,
-			content_ru: DATA.BIOGRAPHY.one_content_ru,
+			content_ru: DATA.BIOGRAPHY.one_content_ru
 		};
 		const Niranjana_swami_bio = {
-			img: 'https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png',
+			img: "https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png",
 			title_en: DATA.BIOGRAPHY.two_title_en,
 			title_ru: DATA.BIOGRAPHY.two_title_ru,
 			content_en: DATA.BIOGRAPHY.two_content_en,
-			content_ru: DATA.BIOGRAPHY.two_content_ru,
+			content_ru: DATA.BIOGRAPHY.two_content_ru
 		};
 		const isUserLogin = Auth.isUserAuthenticated();
-		let tabIndex = localStorage.getItem('tabIndex');
+		let tabIndex = localStorage.getItem("tabIndex");
 		if (tabIndex) {
 			tabIndex = parseInt(tabIndex, 10);
 		}
@@ -64,10 +64,10 @@ export class Navigation extends Component {
 			isUserLogin,
 			Niranjana_swami_bio,
 			Prabhupada_swami_bio,
-			index: tabIndex ? tabIndex : 1,
+			index: tabIndex ? tabIndex : 1
 		});
 
-		window.addEventListener('scroll', this.handleScroll);
+		window.addEventListener("scroll", this.handleScroll);
 	}
 
 	handleRedirect = () => {
@@ -84,64 +84,63 @@ export class Navigation extends Component {
 	}
 
 	componentWillMount() {
-		window.removeEventListener('scroll', this.handleScroll);
+		window.removeEventListener("scroll", this.handleScroll);
 	}
 
 	handleScroll = event => {
-		if ($('.rd-navbar--is-stuck')) {
-			if ($('.rd-navbar--is-stuck').length === 1) {
-				if (this.state.floatImage === '')
-					this.setState({ floatImage: 'styleImage' });
+		if ($(".rd-navbar--is-stuck")) {
+			if ($(".rd-navbar--is-stuck").length === 1) {
+				if (this.state.floatImage === "")
+					this.setState({ floatImage: "styleImage" });
 			} else {
-				if (this.state.floatImage === 'styleImage')
-					this.setState({ floatImage: '' });
+				if (this.state.floatImage === "styleImage")
+					this.setState({ floatImage: "" });
 			}
 		}
 	};
 
 	handleNavigationClick = index => {
 		this.handleTabIndex(index);
-		$('.login-modal-2').removeClass('active');
-		$('.register-modal-2').removeClass('active');
+		$(".login-modal-2").removeClass("active");
+		$(".register-modal-2").removeClass("active");
 		if (this.state.isUserLogin) {
-			$('.login-modal-2').addClass('active');
-			$('.rd-navbar-toggle').removeClass('active');
-			$('.rd-navbar-nav-wrap').removeClass('active');
+			$(".login-modal-2").addClass("active");
+			$(".rd-navbar-toggle").removeClass("active");
+			$(".rd-navbar-nav-wrap").removeClass("active");
 		}
 	};
 
 	handleRemoveModal = index => {
 		this.handleTabIndex(index);
-		$('.login-modal-2').removeClass('active');
-		$('.rd-navbar-nav-wrap').removeClass('active');
-		$('.register-modal-2').removeClass('active');
-		$('.rd-navbar-toggle').removeClass('active');
+		$(".login-modal-2").removeClass("active");
+		$(".rd-navbar-nav-wrap").removeClass("active");
+		$(".register-modal-2").removeClass("active");
+		$(".rd-navbar-toggle").removeClass("active");
 	};
 
 	handleTabIndex = index => {
 		if (index) {
 			this.setState({ index });
 		}
-		localStorage.setItem('tabIndex', index);
+		localStorage.setItem("tabIndex", index);
 	};
 
 	handleBiographyClick = () => {
-		$('.biography-submenu').removeClass('focus');
-		$('.biography-submenu').removeClass('opened');
+		$(".biography-submenu").removeClass("focus");
+		$(".biography-submenu").removeClass("opened");
 	};
 
 	languageToggle(language) {
 		setActiveLanguage(language);
-		reactCookie.save('languageCode', language, { path: '/' });
+		reactCookie.save("languageCode", language, { path: "/" });
 		window.location.reload();
-
 	}
 
 	render() {
 		const maxWidth = window.screen.width;
-		let currentLanguage = 'en';
-		if (reactCookie.load('languageCode')) {
-			currentLanguage = reactCookie.load('languageCode');
+		let currentLanguage = "en";
+		if (reactCookie.load("languageCode")) {
+			currentLanguage = reactCookie.load("languageCode");
 		}
 		return (
 			<div>
@@ -166,18 +165,33 @@ export class Navigation extends Component {
 							data-xl-stick-up="true"
 							data-xxl-stick-up="true"
 						>
-							{/* <div className="rd-navbar-aside-outer banner outSideBanner banner1"> */}
-							{maxWidth <= 1210 ? (
+							{/* <div className="rd-navbar-aside-outer"> */}
+							{maxWidth <= 1210 && maxWidth >= 600 ? (
 								<div className="rd-navbar-aside head ">
 									<div className="rd-navbar-panel">
 										<button
-											className="rd-navbar-toggle"
+											className="rd-navbar-toggle toggle-original"
 											data-rd-navbar-toggle="#rd-navbar-nav-wrap-1"
 										>
 											<span />
 										</button>
-										<div style={{ width: '100%' }}>
-											<div className="topMenu" style={{ float: 'right' }}>
+										<div style={{ width: "100%" }}>
+											<div className="topMenu" style={{ float: "left" }}>
+												<ul className="rd-navbar-nav">
+													<li className="rd-nav-item">
+														<img
+															// style={{
+															// 	// width: "252.1px",
+															// 	// height: "48.3px"
+															// 	// style={{ marginLeft: "13%" }}
+															// 	marginLeft: "15%"
+															// }}
+															src="images/swami.svg"
+														/>
+													</li>
+												</ul>
+											</div>
+											<div className="topMenu" style={{ float: "right" }}>
 												<ul className="rd-navbar-nav">
 													<li className="rd-nav-item">
 														<li>
@@ -195,7 +209,7 @@ export class Navigation extends Component {
 											</div>
 											<div
 												className="topMenu languageToggle"
-											style={{ float: 'right' }}
+												style={{ float: "right" }}
 											>
 												<ul className="rd-navbar-nav">
 													<li className="rd-nav-item">
@@ -207,15 +221,74 @@ export class Navigation extends Component {
 									</div>
 								</div>
 							) : (
-									''
-								)}
+								""
+							)}
+
+							{maxWidth <= 600 ? (
+								<div className="rd-navbar-aside head ">
+									<div className="rd-navbar-panel">
+										<button
+											className="rd-navbar-toggle toggle-original"
+											data-rd-navbar-toggle="#rd-navbar-nav-wrap-1"
+										>
+											<span />
+										</button>
+										<div style={{ width: "100%" }}>
+											{/* <div className="topMenu" style={{ float: "left" }}>
+												<ul className="rd-navbar-nav">
+													<li className="rd-nav-item">
+														<img
+															// style={{
+															// 	// width: "252.1px",
+															// 	// height: "48.3px"
+															// 	// style={{ marginLeft: "13%" }}
+															// 	marginLeft: "15%"
+															// }}
+															src="images/swami.svg"
+														/>
+													</li>
+												</ul>
+											</div> */}
+											<div className="topMenu" style={{ float: "right" }}>
+												<ul className="rd-navbar-nav">
+													<li className="rd-nav-item">
+														<li>
+															<a className="rd-nav-link">
+																<Login
+																	notActive={false}
+																	handleRedirect={this.handleRedirect}
+																	handleLogin={this.handleLogin}
+																	handleTabIndex={this.handleTabIndex}
+																/>
+															</a>
+														</li>
+													</li>
+												</ul>
+											</div>
+											<div
+												className="topMenu languageToggle"
+												style={{ float: "right" }}
+											>
+												<ul className="rd-navbar-nav">
+													<li className="rd-nav-item">
+														<LanguageSwitch />
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							) : (
+								""
+							)}
+
 							{/* <img
 									className="img-banner-width"
 									src="https://ik.imagekit.io/gcwjdmqwwznjl/banner1_HyhqTWrIE.png"
 								/> */}
 							{/* </div> */}
 							<div>
-								{/* <div className="rd-navbar-main-outer menubanner container"> */}
+								{/* <div className="rd-navbar-main-outer container"> */}
 								{/* <div className="menulogoDiv">
 									<img
 										className={'menulogoImg' + ' ' + this.state.floatImage}
@@ -225,233 +298,294 @@ export class Navigation extends Component {
 								</div> */}
 								<div>
 									<div
-										className="1.6%-navbar-nav-wrap padTopMenu"
+										className="rd-navbar-nav-wrap padTopMenu"
 										id="rd-navbar-nav-wrap-1"
 										// style={{backgroundColor: "white"}}
 									>
-										<ul className={maxWidth >= 1200 ? "rd-navbar-nav navbarItemAlign" : "rd-navbar-nav"}>
-											<li className="rd-nav-item hideMenu"> <img style={{
-												// width: "252.1px",
-												// height: "48.3px"
-												marginLeft: "15%"
-											}} src="images/swami.svg" /> </li>
-											<span style={{marginLeft: "13%"}}>
-											<li style={{
-												// marginLeft: "13%"
-											}}
-												onClick={() => {
-													this.handleRemoveModal(1);
-												}}
-												className="rd-nav-item"
+										<ul
+											className={
+												maxWidth >= 1200
+													? "rd-navbar-nav navbarItemAlign"
+													: "rd-navbar-nav"
+											}
+										>
+											<li className="rd-nav-item hideMenu">
+												{" "}
+												<img
+													style={{
+														// width: "252.1px",
+														// height: "48.3px"
+														// style={{ marginLeft: "13%" }}
+														marginLeft: "15%"
+													}}
+													src="images/swami.svg"
+												/>{" "}
+											</li>
+											{/* <span style={{ marginLeft: "13%", float: "right" }}> */}
+											<span
+												style={
+													maxWidth <= 1210
+														? {
+																float: "right",
+																justifyContent: "space-between",
+																display: "flex",
+																marginRight: "5%",
+																flexDirection: "column"
+														  }
+														: {
+																float: "right",
+																justifyContent: "space-between",
+																display: "flex",
+																marginRight: "5%"
+														  }
+												}
 											>
-												<Link
-													className={`rd-nav-link ${
-														this.state.index === 1 ? 'active1' : ''
-														} `}
-													to="/"
+												<li
+													// style={{
+													// 	marginLeft: "13%"
+													// }}
+													onClick={() => {
+														this.handleRemoveModal(1);
+													}}
+													className="rd-nav-item"
 												>
-													{/* <Translate>
+													<Link
+														className={`rd-nav-link ${
+															this.state.index === 1 ? "active1" : ""
+														} `}
+														to="/"
+													>
+														{/* <Translate>
 														{({ translate }) => translate('HOME.home')}
 													</Translate> */}
-													Home
-												</Link>
-											</li>
-											<li className="rd-nav-item biography-submenu">
-												<a
-													className={`rd-nav-link ${
-														this.state.index === 2 ? 'active1' : ''
+														Home
+													</Link>
+												</li>
+												<li className="rd-nav-item biography-submenu">
+													<a
+														className={`rd-nav-link ${
+															this.state.index === 2 ? "active1" : ""
 														} `}
-												>
-													Biography
-													{/* <Translate>
+													>
+														Biography
+														{/* <Translate>
 														{({ translate }) => translate('HOME.biography')}
 													</Translate> */}
-												</a>
-												<ul className="rd-menu rd-navbar-dropdown">
-													<li
-														onClick={() => {
-															this.handleRemoveModal(2);
-														}}
-														className="rd-dropdown-item"
-													>
-														<Link
-															to={{
-																pathname: '/biograhyDetails',
-																state: this.state.Niranjana_swami_bio,
+													</a>
+													<ul className="rd-menu rd-navbar-dropdown">
+														<li
+															onClick={() => {
+																this.handleRemoveModal(2);
 															}}
-															onClick={this.handleBiographyClick}
-															className="rd-dropdown-link"
+															className="rd-dropdown-item"
 														>
-															<Translate>
-																{({ translate }) =>
-																	translate('HOME.niranjanaswami')
-																}
-															</Translate>
-														</Link>
-													</li>
-													<li
-														onClick={() => {
-															this.handleRemoveModal(2);
-														}}
-														className="rd-dropdown-item"
-													>
-														<Link
-															to={{
-																pathname: '/biograhyDetails',
-																state: this.state.Prabhupada_swami_bio,
+															<Link
+																to={{
+																	pathname: "/biograhyDetails",
+																	state: this.state.Niranjana_swami_bio
+																}}
+																onClick={this.handleBiographyClick}
+																className="rd-dropdown-link"
+															>
+																<Translate>
+																	{({ translate }) =>
+																		translate("HOME.niranjanaswami")
+																	}
+																</Translate>
+															</Link>
+														</li>
+														<li
+															onClick={() => {
+																this.handleRemoveModal(2);
 															}}
-															onClick={this.handleBiographyClick}
-															className="rd-dropdown-link"
+															className="rd-dropdown-item"
 														>
-															<Translate>
-																{({ translate }) =>
-																	translate('HOME.swami_prabhupada')
-																}
-															</Translate>
-														</Link>
-													</li>
-
-												</ul>
-											</li>
-											<li className="rd-nav-item">
-												<Link
-													className={`rd-nav-link ${
-														this.state.index === 10 ? 'active1' : ''
-														} `}
-													to={{
-														pathname: '/audio',
-														// state: {
-														// 	handleNavigationClick: 'this.handleNavigationClick'
-														// }
-													}}
-													onClick={() => {
-														this.handleNavigationClick(10);
-													}}
-												>
-													<Translate>
-														{({ translate }) => translate('HOME.audio')}
-													</Translate>
-												</Link>
-											</li>
-											<li className="rd-nav-item">
-												<Link
-													className={`rd-nav-link ${
-														this.state.index === 11 ? 'active1' : ''
-														} `}
-													to="/video"
-													onClick={() => {
-														this.handleNavigationClick(11);
-													}}
-												>
-													<Translate>
-														{({ translate }) => translate('HOME.video')}
-													</Translate>
-												</Link>
-											</li>
-											<li className="rd-nav-item">
-												<Link
-													className={`rd-nav-link ${
-														this.state.index === 3 ? 'active1' : ''
-														} `}
-													to="/blog"
-													onClick={() => {
-														this.handleNavigationClick(3);
-													}}
-												>
-													Blog
-													{/* <Translate>
-														{({ translate }) => translate('HOME.blog')}
-													</Translate> */}
-												</Link>
-											</li>
-											<li className="rd-nav-item">
-												<Link
-													className={`rd-nav-link ${
-														this.state.index === 4 ? 'active1' : ''
-														} `}
-													to="/transcriptions"
-													onClick={() => {
-														this.handleNavigationClick(4);
-													}}
-												>
-													<Translate>
-														{({ translate }) =>
-															translate('HOME.Transcriptions')
-														}
-													</Translate>
-												</Link>
-											</li>
-											<li className="rd-nav-item">
-												<Link
-													className={`rd-nav-link ${
-														this.state.index === 5 ? 'active1' : ''
-														} `}
-													to="/summaries"
-													onClick={() => {
-														this.handleNavigationClick(5);
-													}}
-												>
-													<Translate>
-														{({ translate }) => translate('HOME.Summaries')}
-													</Translate>
-												</Link>
-											</li>
-											{this.props.isAdmin && this.props.isLogin ? (
+															<Link
+																to={{
+																	pathname: "/biograhyDetails",
+																	state: this.state.Prabhupada_swami_bio
+																}}
+																onClick={this.handleBiographyClick}
+																className="rd-dropdown-link"
+															>
+																<Translate>
+																	{({ translate }) =>
+																		translate("HOME.swami_prabhupada")
+																	}
+																</Translate>
+															</Link>
+														</li>
+													</ul>
+												</li>
 												<li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 6 ? 'active1' : ''
-															} `}
-														to="/"
+															this.state.index === 10 ? "active1" : ""
+														} `}
+														to={{
+															pathname: "/audio"
+															// state: {
+															// 	handleNavigationClick: 'this.handleNavigationClick'
+															// }
+														}}
+														onClick={() => {
+															this.handleNavigationClick(10);
+														}}
 													>
-														Admin
+														<Translate>
+															{({ translate }) => translate("HOME.audio")}
+														</Translate>
 													</Link>
 												</li>
-											) : (
-													''
+												<li className="rd-nav-item">
+													<Link
+														className={`rd-nav-link ${
+															this.state.index === 11 ? "active1" : ""
+														} `}
+														to="/video"
+														onClick={() => {
+															this.handleNavigationClick(11);
+														}}
+													>
+														<Translate>
+															{({ translate }) => translate("HOME.video")}
+														</Translate>
+													</Link>
+												</li>
+												<li className="rd-nav-item">
+													<Link
+														className={`rd-nav-link ${
+															this.state.index === 3 ? "active1" : ""
+														} `}
+														to="/blog"
+														onClick={() => {
+															this.handleNavigationClick(3);
+														}}
+													>
+														Blog
+														{/* <Translate>
+														{({ translate }) => translate('HOME.blog')}
+													</Translate> */}
+													</Link>
+												</li>
+												<li className="rd-nav-item">
+													<Link
+														className={`rd-nav-link ${
+															this.state.index === 4 ? "active1" : ""
+														} `}
+														to="/transcriptions"
+														onClick={() => {
+															this.handleNavigationClick(4);
+														}}
+													>
+														<Translate>
+															{({ translate }) =>
+																translate("HOME.Transcriptions")
+															}
+														</Translate>
+													</Link>
+												</li>
+												<li className="rd-nav-item">
+													<Link
+														className={`rd-nav-link ${
+															this.state.index === 5 ? "active1" : ""
+														} `}
+														to="/summaries"
+														onClick={() => {
+															this.handleNavigationClick(5);
+														}}
+													>
+														<Translate>
+															{({ translate }) => translate("HOME.Summaries")}
+														</Translate>
+													</Link>
+												</li>
+												{this.props.isAdmin && this.props.isLogin ? (
+													<li className="rd-nav-item">
+														<Link
+															className={`rd-nav-link ${
+																this.state.index === 6 ? "active1" : ""
+															} `}
+															to="/"
+														>
+															Admin
+														</Link>
+													</li>
+												) : (
+													""
 												)}
-											<li className="rd-nav-item hideMenu">
-												<a className="rd-nav-link">
-													<Login
-														notActive={false}
-														handleRedirect={this.handleRedirect}
-														handleLogin={this.handleLogin}
-														handleTabIndex={this.handleTabIndex}
-													/>
-												</a>
-											</li>
-
-											<li className={`rd-nav-item hideMenu ${reactCookie.load('languageCode') === 'en' ? 'enToggle' : 'ruToggle'} `}
-											// style={{ padding: 0 , float: "right"}} 
-											>
-												{/* <LanguageSwitch /> */}
-												<select
-													showSearch
-													className="langaugeDropDown"
-													style={{ width: "70px", color: '#000', backgroundColor: 'white', border: "1px solid white" }}
-													defaultValue={currentLanguage}
-													placeholder="Select language"
-													optionFilterProp="children"
-													onChange={this.languageToggle}
-													filterOption={(input, option) =>
-														option.props.children
-															.toLowerCase()
-															.indexOf(input.toLowerCase()) >= 0
-													}
+												<li
+													className="rd-nav-item hideMenu"
+													style={{ width: "7%" }}
 												>
-													<option style={{ border: "1px solid white" }} value="en">Eng</option>
-													<option style={{ border: "1px solid white" }} value="ru">Rus</option>
-												</select>
-											</li>
+													<a className="rd-nav-link">
+														<Login
+															notActive={false}
+															handleRedirect={this.handleRedirect}
+															handleLogin={this.handleLogin}
+															handleTabIndex={this.handleTabIndex}
+														/>
+													</a>
+												</li>
 
-											<li className="rd-nav-item hideMenu"> <img style={{ height: "34px", width: "34px" }} src="images/Iskcon_logo.jpg" alt="Iskcon Logo" /> </li>
-													</span>
+												<li
+													className={`rd-nav-item hideMenu ${
+														reactCookie.load("languageCode") === "en"
+															? "enToggle"
+															: "ruToggle"
+													} `}
+													style={{ width: "15%" }}
+												>
+													{/* <LanguageSwitch /> */}
+													<Select
+														showSearch
+														className="langaugeDropDown"
+														style={{
+															width: "90px",
+															color: "#000",
+															backgroundColor: "white",
+															border: "1px solid white"
+														}}
+														defaultValue={currentLanguage}
+														placeholder="Select language"
+														optionFilterProp="children"
+														onChange={this.languageToggle}
+														filterOption={(input, option) =>
+															option.props.children
+																.toLowerCase()
+																.indexOf(input.toLowerCase()) >= 0
+														}
+													>
+														<Option
+															style={{ border: "1px solid white" }}
+															value="en"
+														>
+															Eng
+														</Option>
+														<Option
+															style={{ border: "1px solid white" }}
+															value="ru"
+														>
+															Rus
+														</Option>
+													</Select>
+												</li>
+
+												<li className="rd-nav-item hideMenu">
+													{" "}
+													<img
+														style={{ height: "34px", width: "34px" }}
+														src="images/Iskcon_logo.jpg"
+														alt="Iskcon Logo"
+													/>{" "}
+												</li>
+											</span>
 										</ul>
 										<br />
 									</div>
 								</div>
-								{this.state.redirect ? <Redirect to="/registration" /> : ''}
-								{this.state.login ? <Redirect to="/" /> : ''}
+								{this.state.redirect ? <Redirect to="/registration" /> : ""}
+								{this.state.login ? <Redirect to="/" /> : ""}
 							</div>
 							{/* </div> */}
 						</nav>

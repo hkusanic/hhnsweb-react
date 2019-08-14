@@ -44,12 +44,16 @@ export class Announcement extends Component {
 								Announcement
 							</h4>
 						</div>
-						<p style={{
-							fontFamily: "Charter-Roman",
-							fontSize: "18px",
-							color: "#6c6c6c",
-							lineHeight: "1.78"
-						}}>Hare Krishna!</p>
+						<p
+							style={{
+								fontFamily: "Charter-Roman",
+								fontSize: "18px",
+								color: "#6c6c6c",
+								lineHeight: "1.78"
+							}}
+						>
+							Hare Krishna!
+						</p>
 
 						<p style={{ textAlign: "justify", fontFamily: "Charter" }}>
 							For devotees who are visiting Mayapura between March 13-March 22
@@ -66,7 +70,7 @@ export class Announcement extends Component {
 							</span>
 						</p>
 
-						<p style={{ textAlign: "justify" , fontFamily: "Charter" }}>
+						<p style={{ textAlign: "justify", fontFamily: "Charter" }}>
 							This website, which is still under construction, will also be used
 							in the future to schedule meetings when Maharaja is visiting North
 							America. If you encounter any trouble, please contact Dina

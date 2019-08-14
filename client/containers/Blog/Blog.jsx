@@ -77,10 +77,10 @@ export class Blogs extends Component {
 			<div>
 				<section
 					className="bg-gray-100"
-					// style={{
-					// 	backgroundImage:
-					// 		'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
-					// }}
+					style={{
+						backgroundImage:
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
+					}}
 				>
 					{/* <img
 						className="img-banner-width"
