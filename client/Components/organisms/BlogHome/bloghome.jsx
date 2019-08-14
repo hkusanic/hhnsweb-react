@@ -96,7 +96,7 @@ export class Blogs extends Component {
                                     {({ translate }) => translate('HOME.blog')}
                                 </Translate>
                             </p> */}
-                            <h3> BLOGS </h3>
+                            <h3 style={{marginTop:'25px'}}> BLOGS </h3>
                             <h4> Lorem ipsum dolor sit amet, consectetur adipiscing elit </h4>
                             <br />
                             <br />

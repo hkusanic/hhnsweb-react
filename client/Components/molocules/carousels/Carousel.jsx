@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import { Carousel, Icon } from 'antd';
-import script from '../../../assets/script';
-import SingleCarousel from '../../atoms/SingleCarousel/singleCarousel';
-import Biography from '../Biography/Biography';
-import Announcement from '../../organisms/Announcement/Announcement';
-import GridLayoutMenus from '../../organisms/GridLayoutMenu/GridLayoutMenus';
-import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
-import ContentDetails from '../../../containers/contents/ContentDetails';
-import Blog from '../../organisms/BlogHome/bloghome'
-import './index.css'; 
+import script from "../../../assets/script";
+import SingleCarousel from "../../atoms/SingleCarousel/singleCarousel";
+import Biography from "../Biography/Biography";
+import Announcement from "../../organisms/Announcement/Announcement";
+import GridLayoutMenus from "../../organisms/GridLayoutMenu/GridLayoutMenus";
+import QuoteOfDay from "../../molocules/SingleQuote/QuotesOfDay";
+import ContentDetails from "../../../containers/contents/ContentDetails";
+import Blog from "../../organisms/BlogHome/bloghome";
+import "./index.css";
 
 export class Carousel2 extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {};
 	}
-	componentDidMount () {
+	componentDidMount() {
 		script();
 	}
 
-	render () {
+	render() {
 		return (
 			<div>
 				{/* <Carousel autoplay={true} arrows={true} autoplaySpeed={3000}>
@@ -80,13 +80,59 @@ export class Carousel2 extends Component {
 				{/* <QuoteOfDay /> */}
 				<br />
 				<br />
-				 <div >
-				 <img src="images/circle.png" style={{width:'70px',height:'70px',opacity:'0.4',backgroundRepeat:'no-repeat',position:'absolute',zIndex:'0',marginLeft:'92%'}} />
-				 <img src="images/circle.png" style={{width:'63px',height:'63px',opacity:'0.4',backgroundRepeat:'no-repeat',position:'absolute',zIndex:'0',marginLeft:'28%',marginTop:'8%'}} />
-					 <img src="images/circle.png" style={{width:'1182px',height:'1182px',opacity:'0.4',backgroundRepeat:'no-repeat',position:'absolute',zIndex:'0',marginTop:'5%',marginLeft:'40%'}} />
-				<GridLayoutMenus />
-				<img src="images/circle.png" style={{width:'75px',height:'75px',opacity:'0.4',backgroundRepeat:'no-repeat',position:'absolute',zIndex:'0',marginLeft:'28%'}} />
-				<Blog />
+				<div>
+					<img
+						src="images/circle.png"
+						style={{
+							width: "70px",
+							height: "70px",
+							opacity: "0.4",
+							backgroundRepeat: "no-repeat",
+							position: "absolute",
+							zIndex: "0",
+							marginLeft: "92%"
+						}}
+					/>
+					<img
+						src="images/circle.png"
+						style={{
+							width: "63px",
+							height: "63px",
+							opacity: "0.4",
+							backgroundRepeat: "no-repeat",
+							position: "absolute",
+							zIndex: "0",
+							marginLeft: "28%",
+							marginTop: "8%"
+						}}
+					/>
+					<img
+						src="images/circle.png"
+						style={{
+							width: "1182px",
+							height: "1182px",
+							opacity: "0.4",
+							backgroundRepeat: "no-repeat",
+							position: "absolute",
+							zIndex: "0",
+							marginTop: "5%",
+							marginLeft: "40%"
+						}}
+					/>
+					<GridLayoutMenus />
+					<img
+						src="images/circle.png"
+						style={{
+							width: "75px",
+							height: "75px",
+							opacity: "0.4",
+							backgroundRepeat: "no-repeat",
+							position: "absolute",
+							zIndex: "0",
+							marginLeft: "28%"
+						}}
+					/>
+					<Blog />
 				</div>
 				<br />
 				<Announcement />

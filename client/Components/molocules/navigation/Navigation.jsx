@@ -8,6 +8,7 @@ import { Translate } from 'react-localize-redux';
 import { LanguageSwitch } from '../../atoms/LanguageSwitch/LanguageSwitch';
 import * as DATA from '../../../constants/biographies';
 import reactCookie from 'react-cookies';
+import {throttle} from 'lodash';
 
 
 const Option = Select.Option;
@@ -15,6 +16,7 @@ const Option = Select.Option;
 export class Navigation extends Component {
 	constructor(props) {
 		super(props);
+		this.resize = throttle(this.resize.bind(this), 100)
 		this.state = {
 			isUserLogin: true,
 			Niranjana_swami_bio: '',
@@ -26,7 +28,19 @@ export class Navigation extends Component {
 		};
 	}
 
+	resize = () => this.forceUpdate()
+
+    // componentDidMount() {
+       
+    //   }
+    
+      componentWillUnmount() {
+        window.removeEventListener('resize', this.resize)
+      }
+
+
 	componentDidMount() {
+		window.addEventListener('resize', this.resize)
 		const Prabhupada_swami_bio = {
 			img: 'https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png',
 			title_en: DATA.BIOGRAPHY.one_title_en,

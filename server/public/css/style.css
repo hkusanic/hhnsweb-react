@@ -5304,8 +5304,15 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 }
 
 .footer-linked-main {
+	display: flex;
+  flex-direction: column-reverse;
 	padding: 40px 0;
 	font-size: 13px;
+	width:100%;
+	padding-right: 20%;
+	padding-left: 20%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .footer-linked-aside {
