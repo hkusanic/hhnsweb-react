@@ -902,17 +902,10 @@
 }
 
 .foot-small {
-	color: white;
-	/* display:flex;
-    flex-direction: row; */
-	/* flex-wrap:  */
-	padding-top: 20px;
+    color: white;
+    font-size: 2vw;
+	padding-top: 45px;
 	background-color: #fd8639;
-	/* background-image: url('../images/footer.svg');  */
-	/* background-repeat: no-repeat;
-      background-size: 100%; */
-	/* width:100%;
-      */
 	object-fit: contain;
 	height: 345px !important;
 }

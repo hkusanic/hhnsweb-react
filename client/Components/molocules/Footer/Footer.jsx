@@ -22,7 +22,7 @@ export class Footer extends Component {
 
 	render() {
 		const maxWidth = window.screen.width;
-		if (maxWidth >= 786) {
+		if (maxWidth >= 1024) {
 			return (
 				<footer className="section footer-linked foot">
 					{/* <img src="images/footer.svg"  style={{width: '1440px',height:'489px',objectFit: 'contain'}}/> */}
@@ -30,7 +30,13 @@ export class Footer extends Component {
 						<div className="footer-container">
 							<div className="row">
 								<div className="col-lg-4 col-4">
-									<h4 style={{ color: "white", paddingBottom: "10px" }}>
+									<h4
+										style={{
+											color: "white",
+											paddingBottom: "10px",
+											
+										}}
+									>
 										<Translate>
 											{({ translate }) => translate("FOOTER.quick_links")}
 										</Translate>
@@ -85,7 +91,13 @@ export class Footer extends Component {
 								</div>
 
 								<div className="col-md-7 col-lg-4">
-									<h4 style={{ color: "white", paddingBottom: "10px" }}>
+									<h4
+										style={{
+											color: "white",
+											paddingBottom: "10px",
+											
+										}}
+									>
 										MENUS
 									</h4>
 
@@ -209,7 +221,7 @@ export class Footer extends Component {
 				>
 					<div className="row-small">
 						<div className="col-4">
-							<h4 style={{ color: "white", paddingBottom: "10px" }}>
+							<h4 style={{ color: "white", paddingBottom: "10px" ,fontSize: "4vw"}}>
 								<Translate>
 									{({ translate }) => translate("FOOTER.quick_links")}
 								</Translate>
@@ -260,8 +272,62 @@ export class Footer extends Component {
 								</div>
 							</div>
 						</div>
+						<div className="col-md-7 col-lg-4">
+							<h4 style={{ color: "white", paddingBottom: "10px" ,fontSize: "4vw"}}>MENUS</h4>
+
+							<div className="row row-20">
+								<div className="col-6 col-sm-3 col-4">
+									<ul className="list ">
+										<li style={{ color: "white" }}>
+											<Link to="/biography" style={{ color: "white" }}>
+												<Translate>
+													{({ translate }) => translate("HOME.biography")}
+												</Translate>
+											</Link>
+										</li>
+										<li style={{ color: "white" }}>
+											<Link to="/audio" style={{ color: "white" }}>
+												<Translate>
+													{({ translate }) => translate("HOME.audio")}
+												</Translate>
+											</Link>
+										</li>
+										<li style={{ color: "white" }}>
+											<Link to="/video" style={{ color: "white" }}>
+												<Translate>
+													{({ translate }) => translate("HOME.video")}
+												</Translate>
+											</Link>
+										</li>
+										<li style={{ color: "white" }}>
+											<Link to="/blog" style={{ color: "white" }}>
+												<Translate>
+													{({ translate }) => translate("HOME.blog")}
+												</Translate>
+											</Link>
+										</li>
+										<li style={{ color: "white" }}>
+											<Link to="/transcriptions" style={{ color: "white" }}>
+												<Translate style={{ color: "white" }}>
+													{({ translate }) => translate("HOME.Transcriptions")}
+												</Translate>
+											</Link>
+										</li>
+										<li style={{ color: "white" }}>
+											<Link to="/summaries" style={{ color: "white" }}>
+												<Translate>
+													{({ translate }) => translate("HOME.Summaries")}
+												</Translate>
+											</Link>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
 						<div className="col-md-7 col-lg-4" style={{ paddingTop: "20px" }}>
-							<h4 style={{ color: "white" }}>
+							<h4
+								style={{ marginTop: "-20px", fontSize: "4vw", color: "white" }}
+							>
 								<Translate>
 									{({ translate }) => translate("FOOTER.contact_information")}
 								</Translate>

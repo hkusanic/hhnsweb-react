@@ -5349,7 +5349,7 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 
 .insideCarousel{
 	 position:absolute;
-	 margin-top: 3%;
+	 margin-top: -11%;
 	 /* width: 29.282576866764277vw;
   height: 15.220700152207002vh; */
   width:400px;
@@ -12252,9 +12252,31 @@ button.swiper-pagination-bullet {
 	background-position: 55% center;
 }
 
+.swiper-slide-small {
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	width: 100%;
+	height: 100%;
+	white-space: nowrap;
+	background-position: 55% center;
+}
+
 .swiper-slide > * {
 	width: 100%;
+	height:236px;
 	white-space: normal;
+	margin-top: -117px;
+
+}
+
+.swiper-slide-small > * {
+	width: 100%;
+	height:236px;
+	white-space: normal;
+	margin-top: -117px;
+
 }
 
 .swiper-slide .container {
@@ -12265,7 +12287,7 @@ button.swiper-pagination-bullet {
 	min-height: 40.41667vw;
 }
 
-.swiper-slider-light .swiper-slide::before {
+/* .swiper-slider-light .swiper-slide::before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -12274,7 +12296,7 @@ button.swiper-pagination-bullet {
 	left: 0;
 	background: linear-gradient(to right, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
 	pointer-events: none;
-}
+} */
 
 .swiper-slider-light[data-custom-slide-effect='inter-leave-effect'] .slide-inner {
 	background: inherit;
