@@ -49,8 +49,11 @@ export function getVideoListAction (data) {
         eventType: EventTypes.track,
         eventPayload: {
           event: "videos list",
-          properties: {
-            data
+           properties: {
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
@@ -69,7 +72,10 @@ export function getVideoByIdAction (data) {
         eventPayload: {
           event: "get video by id",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
@@ -88,7 +94,10 @@ export function updateVideoPageViewAction (data) {
         eventPayload: {
           event: "update video page view",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }

@@ -58,7 +58,7 @@ export function searchQuoteOfDay (data) {
       {
         eventType: EventTypes.track,
         eventPayload: {
-          event: "searching quote of tha day",
+          event: "searching quote of the day",
           properties: {
             data
           }

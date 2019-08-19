@@ -26,8 +26,11 @@ export function getContentAction(data) {
         eventType: EventTypes.track,
         eventPayload: {
           event: "get contents",
-          properties: {
-            data
+         properties: {
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }

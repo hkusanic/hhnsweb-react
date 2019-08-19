@@ -109,7 +109,10 @@ export function searchLectureAction (data) {
         eventPayload: {
           event: "Audios list",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
@@ -127,7 +130,10 @@ export function searchLectureActionVideo (data) {
         eventPayload: {
           event: "searching lecture video",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }

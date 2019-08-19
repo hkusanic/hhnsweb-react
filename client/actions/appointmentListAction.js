@@ -49,7 +49,10 @@ export function getUserListAction(data) {
         eventPayload: {
           event: "appointment user list",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
@@ -68,7 +71,10 @@ export function getAppointmentListAction(data) {
         eventPayload: {
           event: "get appointment list",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }

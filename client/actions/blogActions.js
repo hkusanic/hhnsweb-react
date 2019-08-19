@@ -25,8 +25,11 @@ export function getBlogAction (data) {
         eventType: EventTypes.track,
         eventPayload: {
           event: "all blogs",
-          properties: {
-            data
+           properties: {
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
@@ -69,7 +72,10 @@ export function getAction (data) {
         eventPayload: {
           event: "get a blog",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
@@ -90,7 +96,10 @@ export function fetchBlogByUuid (data) {
         eventPayload: {
           event: "fetch blog by id",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }

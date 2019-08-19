@@ -25,7 +25,10 @@ export function createAction (data) {
         eventPayload: {
           event: "creating appointment",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
@@ -88,7 +91,10 @@ export function getBookingStatusAction (data) {
         eventPayload: {
           event: "get appointment booking status",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
@@ -107,7 +113,10 @@ export function getAppointmentAction (data) {
         eventPayload: {
           event: "get appointment",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }

@@ -26,7 +26,10 @@ export function getMkvAction (data) {
         eventPayload: {
           event: "Get MKV",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }

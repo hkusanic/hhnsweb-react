@@ -52,9 +52,13 @@ export function getGalleriesAction (data) {
         eventType: EventTypes.track,
         eventPayload: {
           event: "all Galleries",
-          properties: {
-            data
+           properties: {
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
+       
         }
       }
     },
@@ -72,7 +76,10 @@ export function getStaticGalleryListAction (data) {
         eventPayload: {
           event: "get static gallery",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }

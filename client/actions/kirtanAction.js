@@ -40,7 +40,10 @@ export function searchKirtanAction (data) {
         eventPayload: {
           event: "search kirtan",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
@@ -61,7 +64,10 @@ export function fetchKirtanByUuid (data) {
         eventPayload: {
           event: "fetch kirtan by id",
           properties: {
-            data
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }

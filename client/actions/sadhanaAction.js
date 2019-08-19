@@ -113,8 +113,11 @@ export function getSadhanaListAction (data) {
         eventType: EventTypes.track,
         eventPayload: {
           event: "sadhana list",
-          properties: {
-            data
+           properties: {
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
@@ -132,8 +135,11 @@ export function createSadhanaSheetAction (data) {
         eventType: EventTypes.track,
         eventPayload: {
           event: "create sadhana sheet",
-          properties: {
-            data
+         properties: {
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
@@ -170,8 +176,11 @@ export function getSadhanaByIdAction (data) {
         eventType: EventTypes.track,
         eventPayload: {
           event: "get sadhana by id",
-          properties: {
-            data
+         properties: {
+            data:data,
+            user: JSON.parse(localStorage.getItem("user")),
+
+
           }
         }
       }
