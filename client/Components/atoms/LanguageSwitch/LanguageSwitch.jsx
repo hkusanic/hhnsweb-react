@@ -28,7 +28,7 @@ export class LanguageSwitch extends Component {
 			currentLanguage = reactCookie.load("languageCode");
 		}
 		return (
-			<span style={{ paddingTop: "10%" }}>
+			<span>
 				<a
 					className={
 						currentLanguage === "en" ? "color-toggle" : "color-toggle-cursor"

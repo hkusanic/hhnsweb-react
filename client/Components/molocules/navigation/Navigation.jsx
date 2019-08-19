@@ -13,6 +13,7 @@ import Column from "antd/lib/table/Column";
 
 const Option = Select.Option;
 const maxWidth = window.screen.width;
+const screenwidth = window.innerWidth;
 export class Navigation extends Component {
 	constructor(props) {
 		super(props);
@@ -24,11 +25,51 @@ export class Navigation extends Component {
 			floatImage: "",
 			index: 1,
 			redirect: false,
-			login: false
+			login: false,
+			width: screenwidth
 		};
 	}
 
-	resize = () => (window.location.href = window.location.href);
+	resize = () => {
+		console.log(maxWidth);
+		let width = window.innerWidth;
+		// if (width - this.state.width >= 200 || width - this.state.width <= -200) {
+		// 	console.log(width);
+		// 	// window.location.href = window.location.href;
+		// 	window.location.reload(false);
+		// }
+		if (this.state.width > 1210 && (width >= 0 && width <= 1210)) {
+			console.log("state width ===> " + this.state.width);
+			console.log("width===>" + width);
+			this.setState({
+				width: width
+			});
+			window.location.reload(false);
+		}
+		if (this.state.width <= 600 && width >= 600) {
+			console.log("state width ===> " + this.state.width);
+			console.log("width===>" + width);
+			this.setState({
+				width: width
+			});
+			window.location.reload(false);
+		}
+		if (
+			this.state.width > 600 &&
+			this.state.width <= 1210 &&
+			(width >= 1210 || width <= 600)
+		) {
+			// this.setState({
+			// 	reload: true
+			// });
+			console.log("state width ===> " + this.state.width);
+			console.log("width===>" + width);
+			this.setState({
+				width: width
+			});
+			window.location.reload(false);
+		}
+	};
 
 	// this.forceUpdate();
 	// window.location.href = window.location.href;
@@ -39,35 +80,7 @@ export class Navigation extends Component {
 	// componentWillUnmount() {
 	// 	window.removeEventListener("resize", this.resize);
 	// }
-	// componentDidUpdate() {
-	// 	const Prabhupada_swami_bio = {
-	// 		img: "https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png",
-	// 		title_en: DATA.BIOGRAPHY.one_title_en,
-	// 		title_ru: DATA.BIOGRAPHY.one_title_ru,
-	// 		content_en: DATA.BIOGRAPHY.one_content_en,
-	// 		content_ru: DATA.BIOGRAPHY.one_content_ru
-	// 	};
-	// 	const Niranjana_swami_bio = {
-	// 		img: "https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png",
-	// 		title_en: DATA.BIOGRAPHY.two_title_en,
-	// 		title_ru: DATA.BIOGRAPHY.two_title_ru,
-	// 		content_en: DATA.BIOGRAPHY.two_content_en,
-	// 		content_ru: DATA.BIOGRAPHY.two_content_ru
-	// 	};
-	// 	const isUserLogin = Auth.isUserAuthenticated();
-	// 	let tabIndex = localStorage.getItem("tabIndex");
-	// 	if (tabIndex) {
-	// 		tabIndex = parseInt(tabIndex, 10);
-	// 	}
-	// 	// this.setState({
-	// 	// 	isUserLogin,
-	// 	// 	Niranjana_swami_bio,
-	// 	// 	Prabhupada_swami_bio,
-	// 	// 	index: tabIndex ? tabIndex : 1
-	// 	// });
 
-	// 	window.addEventListener("scroll", this.handleScroll);
-	// }
 	componentDidMount() {
 		window.addEventListener("resize", this.resize);
 		// window.addEventListener("click", this.)
@@ -208,25 +221,28 @@ export class Navigation extends Component {
 											<div className="topMenu" style={{ float: "left" }}>
 												<ul className="rd-navbar-nav">
 													<li
-														onClick={() => {
-															this.handleRemoveModal(1);
-														}}
+														// onClick={() => {
+														// 	this.handleRemoveModal(1);
+														// }}
 														className="rd-nav-item"
 													>
 														<Link
+															style={{ backgroundColor: "white" }}
 															className={`rd-nav-link ${
 																this.state.index === 1 ? "active1" : ""
 															} `}
 															to="/"
 														>
 															<img
-																style={{
-																	// width: "252.1px",
-																	// height: "48.3px"
-																	// style={{ marginLeft: "13%" }}
-																	paddingLeft: "4%",
-																	paddingTop: "3%"
-																}}
+																style={
+																	{
+																		// width: "252.1px",
+																		// height: "48.3px"
+																		// style={{ marginLeft: "13%" }}
+																		// paddingLeft: "4%",
+																		// paddingTop: "3%"
+																	}
+																}
 																src="images/swami.svg"
 															/>
 														</Link>
@@ -237,7 +253,7 @@ export class Navigation extends Component {
 												<ul className="rd-navbar-nav">
 													<li
 														className="rd-nav-item"
-														style={{ paddingTop: "10%" }}
+														// style={{ paddingTop: "10%" }}
 													>
 														<li>
 															<a className="rd-nav-link">
@@ -259,7 +275,7 @@ export class Navigation extends Component {
 												<ul className="rd-navbar-nav">
 													<li
 														className="rd-nav-item"
-														style={{ paddingTop: "23%" }}
+														// style={{ paddingTop: "23%" }}
 													>
 														<LanguageSwitch />
 													</li>
@@ -352,7 +368,7 @@ export class Navigation extends Component {
 									>
 										<ul
 											className={
-												maxWidth >= 1200
+												maxWidth >= 1210
 													? "rd-navbar-nav navbarItemAlign"
 													: "rd-navbar-nav"
 											}
