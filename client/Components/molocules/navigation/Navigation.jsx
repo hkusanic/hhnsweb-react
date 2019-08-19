@@ -208,12 +208,13 @@ export class Navigation extends Component {
 											<div className="topMenu" style={{ float: "left" }}>
 												<ul className="rd-navbar-nav">
 													<li
-														onClick={() => {
-															this.handleRemoveModal(1);
-														}}
+														// onClick={() => {
+														// 	this.handleRemoveModal(1);
+														// }}
 														className="rd-nav-item"
 													>
 														<Link
+															style={{ backgroundColor: "white" }}
 															className={`rd-nav-link ${
 																this.state.index === 1 ? "active1" : ""
 															} `}
