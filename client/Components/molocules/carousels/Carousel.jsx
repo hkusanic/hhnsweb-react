@@ -53,7 +53,7 @@ export class Carousel2 extends Component {
 					{/* className="swiper-wrapper" */}
 					<div className="swiper-wrapper">
 						<SingleCarousel
-							image="images/4-c-7-a-9333.jpg"
+							image="https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"
 							heading="Quote of the Day"
 							text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm tempor incididunt ut"
 							author="Niranjana Swami"
