@@ -90,7 +90,8 @@ export class Carousel2 extends Component {
 							backgroundRepeat: "no-repeat",
 							position: "absolute",
 							zIndex: "0",
-							marginLeft: "92%"
+							marginLeft: "914px",
+							marginTop: "-39px"
 						}}
 					/>
 					<img

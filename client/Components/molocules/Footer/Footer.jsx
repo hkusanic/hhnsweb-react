@@ -33,8 +33,7 @@ export class Footer extends Component {
 									<h4
 										style={{
 											color: "white",
-											paddingBottom: "10px",
-											
+											paddingBottom: "10px"
 										}}
 									>
 										<Translate>
@@ -94,8 +93,7 @@ export class Footer extends Component {
 									<h4
 										style={{
 											color: "white",
-											paddingBottom: "10px",
-											
+											paddingBottom: "10px"
 										}}
 									>
 										MENUS
@@ -221,7 +219,13 @@ export class Footer extends Component {
 				>
 					<div className="row-small">
 						<div className="col-4">
-							<h4 style={{ color: "white", paddingBottom: "10px" ,fontSize: "4vw"}}>
+							<h4
+								style={{
+									color: "white",
+									paddingBottom: "10px",
+									fontSize: "3vw"
+								}}
+							>
 								<Translate>
 									{({ translate }) => translate("FOOTER.quick_links")}
 								</Translate>
@@ -273,7 +277,15 @@ export class Footer extends Component {
 							</div>
 						</div>
 						<div className="col-md-7 col-lg-4">
-							<h4 style={{ color: "white", paddingBottom: "10px" ,fontSize: "4vw"}}>MENUS</h4>
+							<h4
+								style={{
+									color: "white",
+									paddingBottom: "10px",
+									fontSize: "3vw"
+								}}
+							>
+								MENUS
+							</h4>
 
 							<div className="row row-20">
 								<div className="col-6 col-sm-3 col-4">
@@ -326,7 +338,7 @@ export class Footer extends Component {
 						</div>
 						<div className="col-md-7 col-lg-4" style={{ paddingTop: "20px" }}>
 							<h4
-								style={{ marginTop: "-20px", fontSize: "4vw", color: "white" }}
+								style={{ marginTop: "-20px", fontSize: "3vw", color: "white" }}
 							>
 								<Translate>
 									{({ translate }) => translate("FOOTER.contact_information")}

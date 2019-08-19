@@ -23,7 +23,7 @@ class SingleCarousel extends Component {
 	const maxWidth = window.screen.width;
 	if (maxWidth <= 425) {
 		return (
-			<div className="swiper-slide" data-slide-bg={this.props.image}>
+			<div className="swiper-slide" data-slide-bg={this.props.image} style={{height:'244px'}}>
 				<div className="slide-inner">
 					<div className="container textCarousel">
 						{/* <div className="insideCarousel">
@@ -80,12 +80,12 @@ class SingleCarousel extends Component {
 											marginTop: "-30%"
 										}}
 									/> */}
-									{/* <div
+									 <div
 										style={{
-											width: "100px",
-											marginTop: "-13vh",
-											marginLeft: "-79px",
-											fontSize: "10px",
+											width: "81px",
+											marginTop: "-5vh",
+											marginLeft: "-61px",
+											fontSize: "8px",
 											height: "23px",
 											padding: "4px",
 											borderRadius: "4px",
@@ -94,10 +94,10 @@ class SingleCarousel extends Component {
 												"linear-gradient(to right, #f25858, #ff9f63)"
 										}}
 										data-caption-animate="slideInDown"
-									> */}
-									{/* {props.heading}
+									> 
+									 {this.props.heading}
 										<br />{" "}
-									</div> */}
+									</div> 
 									{/* </span> */}
 								</div>
 							</div>
@@ -118,6 +118,7 @@ class SingleCarousel extends Component {
 										fontWeight: "bold",
 										fontFamily: "Charter",
 										width: "32.445095vw"
+										
 									}}
 								>
 									{" "}
@@ -125,8 +126,8 @@ class SingleCarousel extends Component {
 								</h4>
 								<p
 									style={{
-										marginLeft: "35px",
-										fontSize: "1.4641288433382138vw"
+										marginLeft: "11px",
+										fontSize: "2.4641288433382138vw"
 									}}
 								>
 									-{this.props.author}
@@ -144,7 +145,7 @@ class SingleCarousel extends Component {
 			<div
             className="swiper-slide"
             data-slide-bg={this.props.image}
-            style={{ width: "100%", height: "116.28614916286149vh" }}
+            style={{ width: "100%", height: "116.28614916286149vh"}}
         >
             <div className="slide-inner">
                 <div className="insideCarousel">
@@ -198,13 +199,13 @@ class SingleCarousel extends Component {
                                     height: "90px",
                                     opacity: "0.1",
                                     marginLeft: "7%",
-                                    marginTop: "5%"
+                                    marginTop: "6vh"
                                 }}
                             />
                             <div
                                 style={{
                                     width: "100px",
-                                    marginTop: "10vh",
+                                    marginTop: "12vh",
                                     fontSize: "10px",
                                     height: "23px",
                                     padding: "4px",
@@ -228,7 +229,7 @@ class SingleCarousel extends Component {
                                 <h4
                                     style={{
 										color: "black",
-										
+										width: '45.961933vw',
                                         marginLeft: " 2.562225475841874vw",
                                         fontSize: "2.9282576866764276vw",
                                         fontStyle: "italic",
