@@ -12,7 +12,7 @@ import reactCookie from "react-cookies";
 import Column from "antd/lib/table/Column";
 
 const Option = Select.Option;
-
+const maxWidth = window.screen.width;
 export class Navigation extends Component {
 	constructor(props) {
 		super(props);
@@ -28,8 +28,10 @@ export class Navigation extends Component {
 		};
 	}
 
-	resize = () => this.forceUpdate();
+	resize = () => (window.location.href = window.location.href);
 
+	// this.forceUpdate();
+	// window.location.href = window.location.href;
 	// componentDidMount() {
 	// 	window.addEventListener("resize", this.resize);
 	// }
@@ -37,7 +39,35 @@ export class Navigation extends Component {
 	// componentWillUnmount() {
 	// 	window.removeEventListener("resize", this.resize);
 	// }
+	// componentDidUpdate() {
+	// 	const Prabhupada_swami_bio = {
+	// 		img: "https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png",
+	// 		title_en: DATA.BIOGRAPHY.one_title_en,
+	// 		title_ru: DATA.BIOGRAPHY.one_title_ru,
+	// 		content_en: DATA.BIOGRAPHY.one_content_en,
+	// 		content_ru: DATA.BIOGRAPHY.one_content_ru
+	// 	};
+	// 	const Niranjana_swami_bio = {
+	// 		img: "https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png",
+	// 		title_en: DATA.BIOGRAPHY.two_title_en,
+	// 		title_ru: DATA.BIOGRAPHY.two_title_ru,
+	// 		content_en: DATA.BIOGRAPHY.two_content_en,
+	// 		content_ru: DATA.BIOGRAPHY.two_content_ru
+	// 	};
+	// 	const isUserLogin = Auth.isUserAuthenticated();
+	// 	let tabIndex = localStorage.getItem("tabIndex");
+	// 	if (tabIndex) {
+	// 		tabIndex = parseInt(tabIndex, 10);
+	// 	}
+	// 	// this.setState({
+	// 	// 	isUserLogin,
+	// 	// 	Niranjana_swami_bio,
+	// 	// 	Prabhupada_swami_bio,
+	// 	// 	index: tabIndex ? tabIndex : 1
+	// 	// });
 
+	// 	window.addEventListener("scroll", this.handleScroll);
+	// }
 	componentDidMount() {
 		window.addEventListener("resize", this.resize);
 		// window.addEventListener("click", this.)
@@ -60,13 +90,13 @@ export class Navigation extends Component {
 		if (tabIndex) {
 			tabIndex = parseInt(tabIndex, 10);
 		}
+
 		this.setState({
 			isUserLogin,
 			Niranjana_swami_bio,
 			Prabhupada_swami_bio,
 			index: tabIndex ? tabIndex : 1
 		});
-
 		window.addEventListener("scroll", this.handleScroll);
 	}
 
@@ -137,7 +167,6 @@ export class Navigation extends Component {
 	}
 
 	render() {
-		const maxWidth = window.screen.width;
 		let currentLanguage = "en";
 		if (reactCookie.load("languageCode")) {
 			currentLanguage = reactCookie.load("languageCode");
@@ -178,22 +207,38 @@ export class Navigation extends Component {
 										<div style={{ width: "100%" }}>
 											<div className="topMenu" style={{ float: "left" }}>
 												<ul className="rd-navbar-nav">
-													<li className="rd-nav-item">
-														<img
-															// style={{
-															// 	// width: "252.1px",
-															// 	// height: "48.3px"
-															// 	// style={{ marginLeft: "13%" }}
-															// 	marginLeft: "15%"
-															// }}
-															src="images/swami.svg"
-														/>
+													<li
+														onClick={() => {
+															this.handleRemoveModal(1);
+														}}
+														className="rd-nav-item"
+													>
+														<Link
+															className={`rd-nav-link ${
+																this.state.index === 1 ? "active1" : ""
+															} `}
+															to="/"
+														>
+															<img
+																style={{
+																	// width: "252.1px",
+																	// height: "48.3px"
+																	// style={{ marginLeft: "13%" }}
+																	paddingLeft: "4%",
+																	paddingTop: "3%"
+																}}
+																src="images/swami.svg"
+															/>
+														</Link>
 													</li>
 												</ul>
 											</div>
 											<div className="topMenu" style={{ float: "right" }}>
 												<ul className="rd-navbar-nav">
-													<li className="rd-nav-item">
+													<li
+														className="rd-nav-item"
+														style={{ paddingTop: "10%" }}
+													>
 														<li>
 															<a className="rd-nav-link">
 																<Login
@@ -212,7 +257,10 @@ export class Navigation extends Component {
 												style={{ float: "right" }}
 											>
 												<ul className="rd-navbar-nav">
-													<li className="rd-nav-item">
+													<li
+														className="rd-nav-item"
+														style={{ paddingTop: "23%" }}
+													>
 														<LanguageSwitch />
 													</li>
 												</ul>
@@ -309,34 +357,47 @@ export class Navigation extends Component {
 													: "rd-navbar-nav"
 											}
 										>
-											<li className="rd-nav-item hideMenu">
-												{" "}
-												<img
-													style={{
-														// width: "252.1px",
-														// height: "48.3px"
-														// style={{ marginLeft: "13%" }}
-														marginLeft: "15%"
-													}}
-													src="images/swami.svg"
-												/>{" "}
+											<li
+												onClick={() => {
+													this.handleRemoveModal(1);
+												}}
+												className="rd-nav-item hideMenu"
+											>
+												<Link
+													className={`rd-nav-link ${
+														this.state.index === 1 ? "active1" : ""
+													} `}
+													to="/"
+												>
+													<img
+														style={{
+															// width: "252.1px",
+															// height: "48.3px"
+															// style={{ marginLeft: "13%" }}
+															marginLeft: "15%"
+														}}
+														src="images/swami.svg"
+													/>{" "}
+												</Link>
 											</li>
 											{/* <span style={{ marginLeft: "13%", float: "right" }}> */}
 											<span
 												style={
 													maxWidth <= 1210
 														? {
-																float: "right",
+																// float: "right",
+																// justifyContent: "space-between",
+																// display: "flex",
+																marginRight: "5%"
+																// flexDirection: "column"
+														  }
+														: {
+																// float: "right",
 																justifyContent: "space-between",
 																display: "flex",
 																marginRight: "5%",
-																flexDirection: "column"
-														  }
-														: {
-																float: "right",
-																justifyContent: "space-between",
-																display: "flex",
-																marginRight: "5%"
+																marginTop: "-2%",
+																marginLeft: "42%"
 														  }
 												}
 											>
@@ -429,6 +490,7 @@ export class Navigation extends Component {
 															// }
 														}}
 														onClick={() => {
+															this.handleRemoveModal(10);
 															this.handleNavigationClick(10);
 														}}
 													>
@@ -444,6 +506,7 @@ export class Navigation extends Component {
 														} `}
 														to="/video"
 														onClick={() => {
+															this.handleRemoveModal(11);
 															this.handleNavigationClick(11);
 														}}
 													>
@@ -459,6 +522,7 @@ export class Navigation extends Component {
 														} `}
 														to="/blog"
 														onClick={() => {
+															this.handleRemoveModal(3);
 															this.handleNavigationClick(3);
 														}}
 													>
@@ -475,6 +539,7 @@ export class Navigation extends Component {
 														} `}
 														to="/transcriptions"
 														onClick={() => {
+															this.handleRemoveModal(4);
 															this.handleNavigationClick(4);
 														}}
 													>
@@ -492,6 +557,7 @@ export class Navigation extends Component {
 														} `}
 														to="/summaries"
 														onClick={() => {
+															this.handleRemoveModal(5);
 															this.handleNavigationClick(5);
 														}}
 													>
@@ -516,7 +582,7 @@ export class Navigation extends Component {
 												)}
 												<li
 													className="rd-nav-item hideMenu"
-													style={{ width: "7%" }}
+													// style={{ width: "7%" }}
 												>
 													<a className="rd-nav-link">
 														<Login
@@ -534,14 +600,14 @@ export class Navigation extends Component {
 															? "enToggle"
 															: "ruToggle"
 													} `}
-													style={{ width: "15%" }}
+													// style={{ width: "15%" }}
 												>
 													{/* <LanguageSwitch /> */}
-													<Select
+													<select
 														showSearch
 														className="langaugeDropDown"
 														style={{
-															width: "90px",
+															// width: "90px",
 															color: "#000",
 															backgroundColor: "white",
 															border: "1px solid white"
@@ -556,19 +622,19 @@ export class Navigation extends Component {
 																.indexOf(input.toLowerCase()) >= 0
 														}
 													>
-														<Option
+														<option
 															style={{ border: "1px solid white" }}
 															value="en"
 														>
 															Eng
-														</Option>
-														<Option
+														</option>
+														<option
 															style={{ border: "1px solid white" }}
 															value="ru"
 														>
 															Rus
-														</Option>
-													</Select>
+														</option>
+													</select>
 												</li>
 
 												<li className="rd-nav-item hideMenu">
