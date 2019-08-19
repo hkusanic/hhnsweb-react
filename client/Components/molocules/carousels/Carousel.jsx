@@ -84,8 +84,8 @@ export class Carousel2 extends Component {
 					<img
 						src="images/circle.png"
 						style={{
-							width: "70px",
-							height: "70px",
+							width: "5.124450951683748vw",
+							height: "10.46337817638266vh",
 							opacity: "0.4",
 							backgroundRepeat: "no-repeat",
 							position: "absolute",
