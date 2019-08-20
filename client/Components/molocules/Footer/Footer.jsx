@@ -25,7 +25,6 @@ export class Footer extends Component {
 		if (maxWidth >= 1024) {
 			return (
 				<footer className="section footer-linked foot">
-					{/* <img src="images/footer.svg"  style={{width: '1440px',height:'489px',objectFit: 'contain'}}/> */}
 					<div className="footer-linked-main">
 						<div className="footer-container">
 							<div className="row">
@@ -181,7 +180,7 @@ export class Footer extends Component {
 							</div>
 						</div>
 					</div>
-					{/* <span className="icon icon-md mdi mdi-map-marker text-gray-700"></span> <span className="icon icon-md mdi mdi-email text-gray-700"></span> */}
+
 					<div style={{ marginBottom: "26px" }}>
 						<div className="footer-container">
 							<hr style={{ width: "60%" }} />
@@ -201,7 +200,7 @@ export class Footer extends Component {
 									/>
 									<span>&nbsp;</span>
 									<span style={{ fontSize: "12px" }}>&copy;&nbsp;</span>
-									{/* <span>&nbsp;</span>   */}
+
 									<Translate>
 										{({ translate }) => translate("FOOTER.copy_rights")}
 									</Translate>
@@ -382,7 +381,7 @@ export class Footer extends Component {
 									/>
 									<span>&nbsp;</span>
 									<span style={{ fontSize: "12px" }}>&copy;&nbsp;</span>
-									{/* <span>&nbsp;</span>   */}
+
 									<Translate>
 										{({ translate }) => translate("FOOTER.copy_rights")}
 									</Translate>

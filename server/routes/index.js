@@ -145,7 +145,7 @@ exports = module.exports = function (app) {
 		// Render some simple boilerplate html
 		console.log('====>', req.originalUrl);
 
-		function renderFullPage (result) {
+		function renderFullPage(result) {
 			// Note the div class name here, we will use that as a hook for our React code
 			// static menu
 			return `
@@ -162,7 +162,8 @@ exports = module.exports = function (app) {
                         <link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
                         <link rel="stylesheet" href="../css/bootstrap.css">
                         <link rel="stylesheet" href="../css/fonts.css">
-                        <link rel="stylesheet" href="../css/custom.css">
+						<link rel="stylesheet" href="../css/custom.css">
+						<link rel="stylesheet" href="../css/style1.css">
                         <link rel="stylesheet" href="../css/cus.css">
                         <link rel="stylesheet" href="../css/mobilevalidation.css">
 						<link rel="stylesheet" href="../css/codeFlag.css">
@@ -186,8 +187,7 @@ exports = module.exports = function (app) {
 			if (req.originalUrl.includes('/admin')) {
 				res.sendFile(path.join(__dirname, '../../admin/', 'index1.html'));
 			}
-			else
-			{ res.send(renderFullPage(result)); }
+			else { res.send(renderFullPage(result)); }
 		});
 
 

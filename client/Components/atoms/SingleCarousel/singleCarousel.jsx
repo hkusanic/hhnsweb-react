@@ -26,42 +26,7 @@ class SingleCarousel extends Component {
 			<div className="swiper-slide" data-slide-bg={this.props.image} style={{height:'244px'}}>
 				<div className="slide-inner">
 					<div className="container textCarousel">
-						{/* <div className="insideCarousel">
-							<img
-								src="images/person3.png"
-								style={{
-									width: "90px",
-									height: "90px",
-									objectFit: "contain",
-									float: "left"
-								}}
-							/>
-
-							<div style={{ paddingTop: "9px" }}>
-								<p
-									style={{
-										fontFamily: "Charter",
-										fontSize: "20px",
-										fontWeight: "900",
-										color: "white",
-										lineHeight: "0.1",
-										marginTop: "7%"
-									}}
-								>
-									ISKCON Founder - Acarya{" "}
-								</p>
-
-								<p
-									style={{
-										fontFamily: "Charter",
-										fontSize: "15px",
-										color: "white"
-									}}
-								>
-									A.C Bhakthivedanta swami prabhupada
-								</p>
-							</div>
-						</div> */}
+					
 
 						<div
 							className="container "
@@ -70,16 +35,7 @@ class SingleCarousel extends Component {
 						>
 							<div>
 								<div className="row">
-									{/* <img
-										src="images/quote.jpg"
-										style={{
-											width: "55px",
-											height: "55px",
-											opacity: "0.1",
-											marginLeft: "-32%",
-											marginTop: "-30%"
-										}}
-									/> */}
+									
 									 <div
 										style={{
 											width: "81px",
@@ -98,7 +54,7 @@ class SingleCarousel extends Component {
 									 {this.props.heading}
 										<br />{" "}
 									</div> 
-									{/* </span> */}
+									
 								</div>
 							</div>
 						</div>
@@ -134,7 +90,7 @@ class SingleCarousel extends Component {
 								</p>
 							</span>
 						</div>
-						{/* </h1> */}
+					
 					</div>
 				</div>
 			</div>
@@ -218,7 +174,7 @@ class SingleCarousel extends Component {
                                 {this.props.heading}
                                 <br />{" "}
                             </div>
-                            {/* </span> */}
+                           
                         </div>
                         <div>
                             <span
@@ -245,7 +201,6 @@ class SingleCarousel extends Component {
                                 </p>
                             </span>
                         </div>
-                        {/* </h1> */}
                     </div>
                 </div>
             </div>

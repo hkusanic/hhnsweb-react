@@ -1,0 +1,145 @@
+.singleblog_button {
+    width: 95px;
+    height: 40px;
+    border-radius: 22.5px;
+    border: 1px solid #eae8ea;
+    background-color: #eae8ea;
+    font-family: Charter;
+    font-size: 14px;
+    font-weight: bold;
+    color: #242422;
+}
+
+.singleblog_time {
+    font-family: Charter-Roman;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.13;
+    color: black;
+}
+
+.singleblog_author {
+    font-family: Charter;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.13;
+    color: #ff7c2b;
+}
+
+.singleblog_div {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.singleblog_description {
+    font-family: "Charter-Roman";
+    font-size: 16px;
+    line-height: 1.38;
+}
+
+.singleblog_title {
+    font-family: Charter;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav_span_small {
+    margin-right: 5%;
+}
+
+.nav_span_lg {
+    justify-content: space-between;
+    display: flex;
+    margin-right: 5%;
+    margin-top: -2%;
+    margin-left: 38%;
+}
+
+.nav_language {
+    color: #000;
+    background-color: white;
+    border: 1px solid white;
+}
+
+.img1 {
+    width: 5.124450951683748vw;
+    height: 10.46337817638266vh;
+    opacity: 0.4;
+    background-repeat: no-repeat;
+    position: absolute;
+    z-index: 0;
+    margin-left: 914px;
+    margin-top: -39px;
+}
+
+.img2 {
+    width: 63px;
+    height: 63px;
+    opacity: 0.4;
+    background-repeat: no-repeat;
+    position: absolute;
+    z-index: 0;
+    margin-left: 28%;
+    margin-top: 8%;
+}
+
+.img3 {
+    width: 1182px;
+    height: 1182px;
+    opacity: 0.4;
+    background-repeat: no-repeat;
+    position: absolute;
+    z-index: 0;
+    margin-top: 5%;
+    margin-left: 40%
+}
+
+.img4 {
+    width: 75px;
+    height: 75px;
+    opacity: 0.4;
+    background-repeat: no-repeat;
+    position: absolute;
+    z-index: 0;
+    margin-left: 28%;
+}
+
+.announcement_card {
+    border: 1px solid orange;
+    width: 100%;
+    box-shadow: 0 62px 94px 0 rgba(79, 42, 97, 0.14);
+}
+
+.announcement_div {
+    margin-top: 25px;
+    width: 194px;
+    height: 45px;
+    border-radius: 3px;
+    background-color: #FAE5D3;
+}
+
+.announcement_heading {
+    width: 169px;
+    margin-left: 20px;
+    height: 30px;
+    font-family: Charter;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff7c2b;
+}
+
+.announcement_hare {
+    font-family: Charter-Roman;
+    font-size: 18px;
+    color: #6c6c6c;
+    line-height: 1.78;
+}
+
+.bloghome_button {
+    width: 123px;
+    height: 47px;
+    border-radius: 4px;
+    border: 1px solid rgb(255, 124, 43);
+    background-color: white;
+}

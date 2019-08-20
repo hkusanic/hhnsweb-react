@@ -31,24 +31,14 @@ export class Navigation extends Component {
 	}
 
 	resize = () => {
-		console.log(maxWidth);
 		let width = window.innerWidth;
-		// if (width - this.state.width >= 200 || width - this.state.width <= -200) {
-		// 	console.log(width);
-		// 	// window.location.href = window.location.href;
-		// 	window.location.reload(false);
-		// }
 		if (this.state.width > 1210 && (width >= 0 && width <= 1210)) {
-			console.log("state width ===> " + this.state.width);
-			console.log("width===>" + width);
 			this.setState({
 				width: width
 			});
 			window.location.reload(false);
 		}
-		if (this.state.width <= 600 && width >= 600) {
-			console.log("state width ===> " + this.state.width);
-			console.log("width===>" + width);
+		if (this.state.width < 600 && width >= 600) {
 			this.setState({
 				width: width
 			});
@@ -59,11 +49,6 @@ export class Navigation extends Component {
 			this.state.width <= 1210 &&
 			(width >= 1210 || width <= 600)
 		) {
-			// this.setState({
-			// 	reload: true
-			// });
-			console.log("state width ===> " + this.state.width);
-			console.log("width===>" + width);
 			this.setState({
 				width: width
 			});
@@ -71,19 +56,8 @@ export class Navigation extends Component {
 		}
 	};
 
-	// this.forceUpdate();
-	// window.location.href = window.location.href;
-	// componentDidMount() {
-	// 	window.addEventListener("resize", this.resize);
-	// }
-
-	// componentWillUnmount() {
-	// 	window.removeEventListener("resize", this.resize);
-	// }
-
 	componentDidMount() {
 		window.addEventListener("resize", this.resize);
-		// window.addEventListener("click", this.)
 		const Prabhupada_swami_bio = {
 			img: "https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png",
 			title_en: DATA.BIOGRAPHY.one_title_en,
@@ -207,7 +181,6 @@ export class Navigation extends Component {
 							data-xl-stick-up="true"
 							data-xxl-stick-up="true"
 						>
-							{/* <div className="rd-navbar-aside-outer"> */}
 							{maxWidth <= 1210 && maxWidth >= 600 ? (
 								<div className="rd-navbar-aside head ">
 									<div className="rd-navbar-panel">
@@ -220,12 +193,7 @@ export class Navigation extends Component {
 										<div style={{ width: "100%" }}>
 											<div className="topMenu" style={{ float: "left" }}>
 												<ul className="rd-navbar-nav">
-													<li
-														// onClick={() => {
-														// 	this.handleRemoveModal(1);
-														// }}
-														className="rd-nav-item"
-													>
+													<li className="rd-nav-item">
 														<Link
 															style={{ backgroundColor: "white" }}
 															className={`rd-nav-link ${
@@ -233,30 +201,22 @@ export class Navigation extends Component {
 															} `}
 															to="/"
 														>
-															<img
-																style={
-																	{
-																		// width: "252.1px",
-																		// height: "48.3px"
-																		// style={{ marginLeft: "13%" }}
-																		// paddingLeft: "4%",
-																		// paddingTop: "3%"
-																	}
-																}
-																src="images/swami.svg"
-															/>
+															<img src="images/swami.svg" />
 														</Link>
 													</li>
 												</ul>
 											</div>
 											<div className="topMenu" style={{ float: "right" }}>
 												<ul className="rd-navbar-nav">
-													<li
-														className="rd-nav-item"
-														// style={{ paddingTop: "10%" }}
-													>
+													<li className="rd-nav-item">
 														<li>
-															<a className="rd-nav-link">
+															<a
+																style={{
+																	marginTop: "21px",
+																	backgroundColor: "white"
+																}}
+																className="rd-nav-link"
+															>
 																<Login
 																	notActive={false}
 																	handleRedirect={this.handleRedirect}
@@ -274,8 +234,8 @@ export class Navigation extends Component {
 											>
 												<ul className="rd-navbar-nav">
 													<li
+														style={{ marginTop: "21px" }}
 														className="rd-nav-item"
-														// style={{ paddingTop: "23%" }}
 													>
 														<LanguageSwitch />
 													</li>
@@ -288,7 +248,7 @@ export class Navigation extends Component {
 								""
 							)}
 
-							{maxWidth <= 600 ? (
+							{maxWidth < 600 ? (
 								<div className="rd-navbar-aside head ">
 									<div className="rd-navbar-panel">
 										<button
@@ -298,21 +258,6 @@ export class Navigation extends Component {
 											<span />
 										</button>
 										<div style={{ width: "100%" }}>
-											{/* <div className="topMenu" style={{ float: "left" }}>
-												<ul className="rd-navbar-nav">
-													<li className="rd-nav-item">
-														<img
-															// style={{
-															// 	// width: "252.1px",
-															// 	// height: "48.3px"
-															// 	// style={{ marginLeft: "13%" }}
-															// 	marginLeft: "15%"
-															// }}
-															src="images/swami.svg"
-														/>
-													</li>
-												</ul>
-											</div> */}
 											<div className="topMenu" style={{ float: "right" }}>
 												<ul className="rd-navbar-nav">
 													<li className="rd-nav-item">
@@ -346,29 +291,15 @@ export class Navigation extends Component {
 								""
 							)}
 
-							{/* <img
-									className="img-banner-width"
-									src="https://ik.imagekit.io/gcwjdmqwwznjl/banner1_HyhqTWrIE.png"
-								/> */}
-							{/* </div> */}
 							<div>
-								{/* <div className="rd-navbar-main-outer container"> */}
-								{/* <div className="menulogoDiv">
-									<img
-										className={'menulogoImg' + ' ' + this.state.floatImage}
-										src="https://ik.imagekit.io/gcwjdmqwwznjl/logo_S1yq6Zr8N.png"
-									/>
-									className="rd-navbar-main MenuPad"
-								</div> */}
 								<div>
 									<div
 										className="rd-navbar-nav-wrap padTopMenu"
 										id="rd-navbar-nav-wrap-1"
-										// style={{backgroundColor: "white"}}
 									>
 										<ul
 											className={
-												maxWidth >= 1210
+												maxWidth > 1210
 													? "rd-navbar-nav navbarItemAlign"
 													: "rd-navbar-nav"
 											}
@@ -387,40 +318,19 @@ export class Navigation extends Component {
 												>
 													<img
 														style={{
-															// width: "252.1px",
-															// height: "48.3px"
-															// style={{ marginLeft: "13%" }}
 															marginLeft: "15%"
 														}}
 														src="images/swami.svg"
 													/>{" "}
 												</Link>
 											</li>
-											{/* <span style={{ marginLeft: "13%", float: "right" }}> */}
+
 											<span
-												style={
-													maxWidth <= 1210
-														? {
-																// float: "right",
-																// justifyContent: "space-between",
-																// display: "flex",
-																marginRight: "5%"
-																// flexDirection: "column"
-														  }
-														: {
-																// float: "right",
-																justifyContent: "space-between",
-																display: "flex",
-																marginRight: "5%",
-																marginTop: "-2%",
-																marginLeft: "42%"
-														  }
+												className={
+													maxWidth <= 1210 ? "nav_span_small" : "nav_span_lg"
 												}
 											>
 												<li
-													// style={{
-													// 	marginLeft: "13%"
-													// }}
 													onClick={() => {
 														this.handleRemoveModal(1);
 													}}
@@ -432,9 +342,6 @@ export class Navigation extends Component {
 														} `}
 														to="/"
 													>
-														{/* <Translate>
-														{({ translate }) => translate('HOME.home')}
-													</Translate> */}
 														Home
 													</Link>
 												</li>
@@ -445,9 +352,6 @@ export class Navigation extends Component {
 														} `}
 													>
 														Biography
-														{/* <Translate>
-														{({ translate }) => translate('HOME.biography')}
-													</Translate> */}
 													</a>
 													<ul className="rd-menu rd-navbar-dropdown">
 														<li
@@ -501,9 +405,6 @@ export class Navigation extends Component {
 														} `}
 														to={{
 															pathname: "/audio"
-															// state: {
-															// 	handleNavigationClick: 'this.handleNavigationClick'
-															// }
 														}}
 														onClick={() => {
 															this.handleRemoveModal(10);
@@ -543,9 +444,6 @@ export class Navigation extends Component {
 														}}
 													>
 														Blog
-														{/* <Translate>
-														{({ translate }) => translate('HOME.blog')}
-													</Translate> */}
 													</Link>
 												</li>
 												<li className="rd-nav-item">
@@ -596,10 +494,7 @@ export class Navigation extends Component {
 												) : (
 													""
 												)}
-												<li
-													className="rd-nav-item hideMenu"
-													// style={{ width: "7%" }}
-												>
+												<li className="rd-nav-item hideMenu">
 													<a className="rd-nav-link">
 														<Login
 															notActive={false}
@@ -616,18 +511,10 @@ export class Navigation extends Component {
 															? "enToggle"
 															: "ruToggle"
 													} `}
-													// style={{ width: "15%" }}
 												>
-													{/* <LanguageSwitch /> */}
-													<select
+													<Select
 														showSearch
-														className="langaugeDropDown"
-														style={{
-															// width: "90px",
-															color: "#000",
-															backgroundColor: "white",
-															border: "1px solid white"
-														}}
+														className="langaugeDropDown nav_language"
 														defaultValue={currentLanguage}
 														placeholder="Select language"
 														optionFilterProp="children"
@@ -637,20 +524,29 @@ export class Navigation extends Component {
 																.toLowerCase()
 																.indexOf(input.toLowerCase()) >= 0
 														}
+														style={{
+															color: "black",
+															fontFamily: "Charter",
+															fontWeight: "bold"
+														}}
 													>
-														<option
-															style={{ border: "1px solid white" }}
+														<Option
+															style={{
+																color: "orange"
+															}}
 															value="en"
 														>
-															Eng
-														</option>
-														<option
-															style={{ border: "1px solid white" }}
+															ENG
+														</Option>
+														<Option
+															style={{
+																color: "orange"
+															}}
 															value="ru"
 														>
-															Rus
-														</option>
-													</select>
+															RUS
+														</Option>
+													</Select>
 												</li>
 
 												<li className="rd-nav-item hideMenu">
@@ -669,7 +565,6 @@ export class Navigation extends Component {
 								{this.state.redirect ? <Redirect to="/registration" /> : ""}
 								{this.state.login ? <Redirect to="/" /> : ""}
 							</div>
-							{/* </div> */}
 						</nav>
 					</div>
 				</header>

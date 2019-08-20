@@ -9,51 +9,12 @@ export class Announcement extends Component {
 	announcement = () => {
 		if (reactCookie.load("languageCode") === "en") {
 			return (
-				<Card
-					className="centerAlign"
-					style={{
-						border: "1px solid orange",
-						width: "100%",
-						// height: "500px",
-						boxShadow: "0 62px 94px 0 rgba(79, 42, 97, 0.14)"
-					}}
-				>
+				<Card className="centerAlign announcement_card">
 					<div>
-						<div
-							style={{
-								marginTop: "25px",
-								width: "194px",
-								height: "45px",
-								borderRadius: "3px",
-								backgroundColor: "#FAE5D3"
-							}}
-						>
-							<h4
-								style={{
-									width: "169px",
-									// marginTop: "40px",
-									marginLeft: "20px",
-									height: "30px",
-									fontFamily: "Charter",
-									fontSize: "24px",
-									fontWeight: "bold",
-									// textAlign: "center",
-									color: "#ff7c2b"
-								}}
-							>
-								Announcement
-							</h4>
+						<div className="announcement_div">
+							<h4 className="announcement_heading">Announcement</h4>
 						</div>
-						<p
-							style={{
-								fontFamily: "Charter-Roman",
-								fontSize: "18px",
-								color: "#6c6c6c",
-								lineHeight: "1.78"
-							}}
-						>
-							Hare Krishna!
-						</p>
+						<p className="announcement_hare">Hare Krishna!</p>
 
 						<p style={{ textAlign: "justify", fontFamily: "Charter" }}>
 							For devotees who are visiting Mayapura between March 13-March 22
@@ -141,51 +102,10 @@ export class Announcement extends Component {
 		const mobileBrkPnt = 1023;
 		return (
 			<section>
-				<div className="container">
-					{this.announcement()}
-					{/* <Tabs defaultActiveKey="1" tabPosition={maxWidth > mobileBrkPnt ? "left" : "top"}>
-                        <TabPane tab="Announcement" key={1}>
-                            {this.announcement()}
-                        </TabPane>
-                        {/* <TabPane tab="Recent Activities" key={2}>
-                            <ContentDetails />
-                        </TabPane>
-                        <TabPane tab="Russian Dubbed Lectures" key={3}>
-                            <RussiaDubbedLectures />
-                        </TabPane>
-                    </Tabs>  */}
-				</div>
+				<div className="container">{this.announcement()}</div>
 			</section>
 		);
 	}
-
-	// render() {
-	//     return (
-	//         <section class="section-lg text-center bg-gray-100">
-	//             <div className="container">
-	//                 <div className="row row-50">
-	//                     <div className="col-12 col-md-4">
-	//                         {this.announcement()}
-	//                     </div>
-	//                     <div className="col-12 col-md-4">
-	//                         <ContentDetails />
-	//                     </div>
-	//                     <div className="col-12 col-md-4">
-	//                         <RussiaDubbedLectures />
-	//                     </div>
-	//                 </div>
-	//             </div>
-	//         </section>
-	//     );
-	// }
 }
 
 export default Announcement;
-
-{
-	/* <h3 class="wow-outer"><span class="wow slideInUp bookingForm">
-                            <Translate>
-                                {({ translate }) => translate('HOME.announcement')}
-                            </Translate></span></h3>
-                        <div className="announcementDiv">{this.announcement()}</div> */
-}

@@ -19,7 +19,6 @@ function showing100Characters(sentence) {
 
 const SingleBiography = props => {
 	return (
-		//
 		<div
 			class="col-sm-12 col-lg-6"
 			style={{
@@ -29,7 +28,6 @@ const SingleBiography = props => {
 				zIndex: "1"
 			}}
 		>
-			{/* <article className="post-modern wow fadeInUpSmall"> */}
 			<article>
 				<Link
 					to={{
@@ -81,29 +79,7 @@ const SingleBiography = props => {
 								? props.title_ru
 								: props.title_en}
 						</div>
-						{/* <div style={{
-							width: '415px',
-							height: '125px',
-							fontFamily: 'Charter-Roman',
-							fontSize: '16px',
-							fontWeight: 'normal',
-							fontStyle: 'normal',
-							fontStretch: 'normal',
-							lineHeight: '1.56',
-							letterSpacing: 'normal',
-							color: '#787878',
-							textAlign:"justify"
-						}}>
-							{renderHTML(
-								showing100Characters(
-									reactCookie.load('languageCode') === 'en'
-										? props.content_en
-										: props.content_ru
-											? props.content_ru
-											: props.content_en
-								)
-							)}
-						</div> */}
+
 						<br />
 						<div
 							style={{
@@ -128,7 +104,6 @@ const SingleBiography = props => {
 							)}{" "}
 						</div>
 						<Link
-							// className="button-winona post-modern-title"
 							to={{
 								pathname: "/biograhyDetails",
 								state: {

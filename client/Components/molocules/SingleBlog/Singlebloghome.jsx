@@ -1,170 +1,67 @@
-import React from "react";
+import React, { Component } from "react";
 import { Card } from "antd";
+import renderHTML from "react-render-html";
 import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
-const SingleBlogHome = props => {
-	return (
-		<div class="col-sm-12 col-lg-6 page1">
-			{/* <article
-			> */}
-			{/* <Link
-            wow-outer
-					to={props.link}
-					class="tour-default-figure"
-					onClick={props.handleNavigationClick}
-				> */}
-			<Card
-				style={{
-					// width: "268px", height: "289px",
-					borderRadius: "4px"
-					// boxShadow: "0 22px 34px 0 rgba(0, 0, 0, 0.08)",
-					// border: "0.1% solid gray",
-					// backgroundColor: "#ffffff"
+export class SingleBlogHome extends Component {
+	constructor(props) {
+		super(props);
+	}
+
+	showing100Characters = sentence => {
+		var result = sentence;
+		var resultArray = result.split(" ");
+		if (resultArray.length > 10) {
+			resultArray = resultArray.slice(0, 10);
+			result = resultArray.join(" ") + "...";
+		}
+		return result;
+	};
+	render() {
+		return (
+			<Link
+				to={{
+					pathname: `/blogDetails/${this.props.uuid}`,
+					state: this.props.blog
 				}}
 			>
-				{/* <img style={{
-							marginTop: "25px",
-							marginLeft: "15px",
-							// margin: "auo",
-							// marginRight "99px",
-							width: "74px",
-							height: "74px",
-							objectFit: "contain",
-							// margin: "auto"
-						}} src={props.image} alt="" /> */}
-
-				<div
-					style={{
-						fontFamily: "Charter",
-						fontSize: "24px",
-						fontWeight: "bold"
-					}}
-				>
-					Title goes here
-				</div>
-				<br />
-				<div
-					style={{
-						fontFamily: "Charter-Roman",
-						fontSize: "16px",
-						lineHeight: "1.38"
-					}}
-				>
-					{props.description}
-				</div>
-				<br />
-				<hr />
-				<br />
-				<div
-					style={{
-						display: "flex",
-						justifyContent: "space-between",
-						flexWrap: "wrap"
-					}}
-				>
-					<div
+				<div class="col-sm-12 col-lg-6 page1">
+					<Card
 						style={{
-							// float: "left",
-							fontFamily: "Charter",
-							fontSize: "16px",
-							fontWeight: "bold",
-							lineHeight: "1.13",
-							color: "#ff7c2b"
+							borderRadius: "4px"
 						}}
 					>
-						{" "}
-						{props.author}
+						<div className="singleblog_title">{this.props.title}</div>
 						<br />
-						<div
-							style={{
-								// float: "left",
-								fontFamily: "Charter-Roman",
-								fontSize: "13px",
-								fontWeight: "bold",
-								lineHeight: "1.13",
-								color: "black"
-							}}
-						>
-							{" "}
-							1 month ago{" "}
+						<div className="singleblog_description">
+							{/* {props.description} */}
+							{renderHTML(this.showing100Characters(this.props.description))}
 						</div>
-					</div>
-					<div>
-						<button
-							style={{
-								// float: "right",
-								// style={{ marginLeft: "36%" }}
-								width: "95px",
-								height: "40px",
-								borderRadius: "22.5px",
-								border: "1px solid #eae8ea",
-								backgroundColor: "#eae8ea",
-								fontFamily: "Charter",
-								fontSize: "14px",
-								fontWeight: "bold",
-								color: "#242422"
-								// opacity: "0.29"
-							}}
-						>
-							{" "}
-							Devotee{" "}
-						</button>
-						<button
-							style={{
-								// float: "right",
-								width: "95px",
-								height: "40px",
-								borderRadius: "22.5px",
-								border: "1px solid #eae8ea",
-								backgroundColor: "#eae8ea",
-								fontFamily: "Charter",
-								fontSize: "14px",
-								fontWeight: "bold",
-								color: "#242422"
-								// opacity: "0.29"
-							}}
-						>
-							India
-						</button>
-						<button
-							style={{
-								// float: "right",
-								width: "95px",
-								height: "40px",
-								borderRadius: "22.5px",
-								border: "1px solid #eae8ea",
-								backgroundColor: "#eae8ea",
-								fontFamily: "Charter",
-								fontSize: "14px",
-								fontWeight: "bold",
-								color: "#242422"
-								// opacity: "0.29"
-							}}
-						>
-							Quote
-						</button>
-					</div>
-					{/* <br />
-                    <div style={{
-                        float: "left",
-                        fontFamily: "Charter-Roman",
-                        fontSize: "13px",
-                        fontWeight: "bold",
-                        lineHeight: "1.13",
-
-                    }} > 1 month ago </div> */}
-					{/* <div style={{ float: "right" }}> */}
-
-					{/* </div> */}
+						<br />
+						<hr />
+						<br />
+						<div className="singleblog_div">
+							<div className="singleblog_author">
+								{" "}
+								{this.props.author}
+								<br />
+								<div className="singleblog_time">
+									{new Date(this.props.date).toDateString()}
+								</div>
+							</div>
+							<div>
+								<button className="singleblog_button"> Devotee </button>
+								<button className="singleblog_button">India</button>
+								<button className="singleblog_button">Quote</button>
+							</div>
+						</div>
+					</Card>
 				</div>
-				{/* className="tour-default-title CommonFontFamily gridMenuText" */}
-			</Card>
-			{/* </Link> */}
-			{/* </article> */}
-		</div>
-	);
-};
+			</Link>
+		);
+	}
+}
 
 export default SingleBlogHome;
