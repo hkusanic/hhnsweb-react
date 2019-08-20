@@ -9950,8 +9950,8 @@ html.tablet .ui-to-top {
 	z-index: 1080;
 	display: flex;
 	align-items: center;
-	height: 91px;
-	padding: 8px;
+	/* height: 91px; */
+	/* padding: 8px; */
 }
 
 .rd-navbar-fixed .rd-navbar-nav-wrap {

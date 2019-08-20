@@ -162,7 +162,8 @@ exports = module.exports = function (app) {
                         <link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
                         <link rel="stylesheet" href="../css/bootstrap.css">
                         <link rel="stylesheet" href="../css/fonts.css">
-                        <link rel="stylesheet" href="../css/custom.css">
+						<link rel="stylesheet" href="../css/custom.css">
+						<link rel="stylesheet" href="../css/style1.css">
                         <link rel="stylesheet" href="../css/cus.css">
                         <link rel="stylesheet" href="../css/mobilevalidation.css">
 						<link rel="stylesheet" href="../css/codeFlag.css">

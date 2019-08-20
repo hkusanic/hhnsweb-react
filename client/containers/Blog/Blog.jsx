@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Pagination, Icon } from 'antd';
-import renderHTML from 'react-render-html';
-import SingleBlog from '../../Components/molocules/SingleBlog/SIngleBlog';
-import { connect } from 'react-redux';
-import { getBlogs, getBlog } from '../../actions/blogActions';
-import Auth from '../../utils/Auth';
-import { Translate } from 'react-localize-redux';
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import QuoteOfDay from '../../Components/molocules/SingleQuote/QuotesOfDay';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { Pagination, Icon } from "antd";
+import renderHTML from "react-render-html";
+import SingleBlog from "../../Components/molocules/SingleBlog/SIngleBlog";
+import { connect } from "react-redux";
+import { getBlogs, getBlog } from "../../actions/blogActions";
+import Auth from "../../utils/Auth";
+import { Translate } from "react-localize-redux";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
+import QuoteOfDay from "../../Components/molocules/SingleQuote/QuotesOfDay";
 
 const defaultPageSize = 20;
 
@@ -21,10 +21,8 @@ export class Blogs extends Component {
 			page: null,
 			blogs: [],
 			isUserLogin: false,
-			pagination: {},
+			pagination: {}
 		};
-
-		//this.props.getBlog({ uuid: '02d47a4e-2dfc-11e9-b210-d663bd873d93' });
 	}
 
 	handleTableChange = (pagination, filters, sorter) => {
@@ -32,7 +30,7 @@ export class Blogs extends Component {
 		pager.current = pagination;
 		pager.total = this.props.blogsDetails.totalBlogs;
 		this.setState({
-			pagination: pager,
+			pagination: pager
 		});
 
 		this.props.getBlogs(pagination);
@@ -50,7 +48,7 @@ export class Blogs extends Component {
 			blogs: this.props.blogsDetails.blogs,
 			currentPage: this.props.blogsDetails.currentPage,
 			isUserLogin,
-			pagination,
+			pagination
 		});
 		this.props.getBlogs(this.props.blogsDetails.currentPage || 1);
 	}
@@ -68,7 +66,7 @@ export class Blogs extends Component {
 			blogs: nextprops.blogsDetails.blogs,
 			currentPage: nextprops.blogsDetails.currentPage,
 			isUserLogin,
-			pagination,
+			pagination
 		});
 	}
 
@@ -79,18 +77,14 @@ export class Blogs extends Component {
 					className="bg-gray-100"
 					style={{
 						backgroundImage:
-							'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
+							"url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)"
 					}}
 				>
-					{/* <img
-						className="img-banner-width"
-						src="https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png"
-					/> */}
 					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
 							<ul class="breadcrumbs-custom-path">
 								<li>
-									<Link to="" onClick={() => this.props.history.push('/')}>
+									<Link to="" onClick={() => this.props.history.push("/")}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
 									</Link>
 								</li>
@@ -103,29 +97,14 @@ export class Blogs extends Component {
 				</section>
 				{!this.state.isUserLogin ? (
 					<section>
-						<div style={{ textAlign: 'center' }}>
+						<div style={{ textAlign: "center" }}>
 							<p className="bookingForm">
 								<Translate>
-									{({ translate }) => translate('HOME.blog')}
+									{({ translate }) => translate("HOME.blog")}
 								</Translate>
 							</p>
 						</div>
 						<div className="container centerAlign">
-							{/* <Breadcrumb>
-								<Link to=" " onClick={() => this.props.history.push('/')}>
-									<Breadcrumb.Item>Home</Breadcrumb.Item>
-								</Link>
-								<Icon
-									type="double-right"
-									style={{
-										alignSelf: 'center',
-										paddingLeft: 5,
-										paddingRight: 5,
-									}}
-								/>
-								<Breadcrumb.Item active>Blog</Breadcrumb.Item>
-							</Breadcrumb> */}
-
 							<div className="row row-50 row-xxl-70">
 								{this.state.blogs.map((item, key) => {
 									return <SingleBlog blog={item} key={key} />;
@@ -141,7 +120,9 @@ export class Blogs extends Component {
 							</div>
 						</div>
 					</section>
-				) : <QuoteOfDay /> }
+				) : (
+					<QuoteOfDay />
+				)}
 			</div>
 		);
 	}
@@ -149,7 +130,7 @@ export class Blogs extends Component {
 
 const mapStateToProps = state => {
 	return {
-		blogsDetails: state.blogReducer,
+		blogsDetails: state.blogReducer
 	};
 };
 
@@ -160,7 +141,7 @@ const mapDispatchToProps = dispatch => {
 		},
 		getBlog: body => {
 			dispatch(getBlog(body));
-		},
+		}
 	};
 };
 

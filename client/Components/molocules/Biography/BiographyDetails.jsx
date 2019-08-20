@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import renderHTML from 'react-render-html';
-import reactCookie from 'react-cookies';
+import React, { Component } from "react";
+import renderHTML from "react-render-html";
+import reactCookie from "react-cookies";
 
 export class BiographyDetails extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		window.scrollTo(0, 0);
 	}
 
-	render () {
+	render() {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -24,7 +24,7 @@ export class BiographyDetails extends Component {
 								<div className="col-12">
 									<h3 className="post-creative-title centerAlign alignment">
 										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
+											reactCookie.load("languageCode") === "en"
 												? this.props.location.state.title_en
 												: this.props.location.state.title_ru
 										)}
@@ -35,13 +35,13 @@ export class BiographyDetails extends Component {
 								<div className="col">
 									<div className="floated">
 										<img
-											style={{ objectFit: 'cover' }}
+											style={{ objectFit: "cover" }}
 											src={this.props.location.state.img}
 										/>
 									</div>
 									<div className="textContent">
 										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
+											reactCookie.load("languageCode") === "en"
 												? this.props.location.state.content_en
 												: this.props.location.state.content_ru
 										)}
@@ -49,19 +49,6 @@ export class BiographyDetails extends Component {
 								</div>
 							</div>
 						</div>
-						{/* <h3 className="post-creative-title centerAlign alignment">
-										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.title_en
-												: this.props.location.state.title_ru
-										)}
-									</h3> */}
-						{/* <img src={this.props.location.state.img} /> */}
-						{/* {renderHTML(
-										reactCookie.load('languageCode') === 'en'
-											? this.props.location.state.content_en
-											: this.props.location.state.content_ru
-									)} */}
 					</article>
 				</section>
 			</div>
