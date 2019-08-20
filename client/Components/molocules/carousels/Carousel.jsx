@@ -30,7 +30,6 @@ export class Carousel2 extends Component {
 	}
 
 	render() {
-		console.log("quotes=========>", this.props.quote.quotes);
 		return (
 			<div>
 				<section className="swiper-container swiper-slider swiper-slider-light bg-gray-700 carouselMargin">

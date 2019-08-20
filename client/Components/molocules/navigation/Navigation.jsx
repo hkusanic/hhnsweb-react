@@ -262,7 +262,10 @@ export class Navigation extends Component {
 												<ul className="rd-navbar-nav">
 													<li className="rd-nav-item">
 														<li>
-															<a className="rd-nav-link">
+															<a
+																style={{ backgroundColor: "white" }}
+																className="rd-nav-link"
+															>
 																<Login
 																	notActive={false}
 																	handleRedirect={this.handleRedirect}

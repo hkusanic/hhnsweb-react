@@ -37,8 +37,6 @@ export class Blogs extends Component {
 	}
 
 	render() {
-		console.log(this.state.blogs);
-		console.log(this.state.totalItem);
 		return (
 			<div>
 				<section>
