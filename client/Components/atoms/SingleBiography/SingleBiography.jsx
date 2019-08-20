@@ -19,7 +19,6 @@ function showing100Characters(sentence) {
 
 const SingleBiography = props => {
 	return (
-		//
 		<div
 			class="col-sm-12 col-lg-6"
 			style={{
@@ -29,7 +28,6 @@ const SingleBiography = props => {
 				zIndex: "1"
 			}}
 		>
-			{/* <article className="post-modern wow fadeInUpSmall"> */}
 			<article>
 				<Link
 					to={{
@@ -49,72 +47,20 @@ const SingleBiography = props => {
 						cover={
 							<img
 								alt="example"
-								style={{
-									width: "123px",
-									height: "123px",
-									objectFit: "contain",
-									marginTop: "34px",
-									marginLeft: "5%",
-									marginRight: "353px"
-								}}
-								className="img-fluid"
+								className="singleBiography_cover img-fluid"
 								src={props.img}
 							/>
 						}
 					>
-						<div
-							style={{
-								marginLeft: "5%",
-								fontFamily: "Charter",
-								fontSize: "18px",
-								fontWeight: "bold",
-								fontStyle: "normal",
-								fontStretch: "normal",
-								lineHeight: "normal",
-								letterSpacing: "normal",
-								color: "#000000"
-							}}
-						>
+						<div class="singleBiography_card">
 							{reactCookie.load("languageCode") === "en"
 								? props.title_en
 								: props.title_ru
 								? props.title_ru
 								: props.title_en}
 						</div>
-						{/* <div style={{
-							width: '415px',
-							height: '125px',
-							fontFamily: 'Charter-Roman',
-							fontSize: '16px',
-							fontWeight: 'normal',
-							fontStyle: 'normal',
-							fontStretch: 'normal',
-							lineHeight: '1.56',
-							letterSpacing: 'normal',
-							color: '#787878',
-							textAlign:"justify"
-						}}>
-							{renderHTML(
-								showing100Characters(
-									reactCookie.load('languageCode') === 'en'
-										? props.content_en
-										: props.content_ru
-											? props.content_ru
-											: props.content_en
-								)
-							)}
-						</div> */}
 						<br />
-						<div
-							style={{
-								marginLeft: "5%",
-								marginRight: "5%",
-								fontFamily: "Charter-Roman",
-								fontSize: "16px",
-								color: "#787878",
-								textAlign: "justify"
-							}}
-						>
+						<div className="singleBiography_text">
 							{renderHTML(
 								"<div > " +
 									showing100Characters(
@@ -128,7 +74,6 @@ const SingleBiography = props => {
 							)}{" "}
 						</div>
 						<Link
-							// className="button-winona post-modern-title"
 							to={{
 								pathname: "/biograhyDetails",
 								state: {
@@ -140,21 +85,7 @@ const SingleBiography = props => {
 								}
 							}}
 						>
-							<button
-								style={{
-									width: "123px",
-									height: "47px",
-									borderRadius: "4px",
-									border: "solid 1px #ff7c2b",
-									backgroundColor: "white",
-									marginTop: "5%",
-									marginLeft: "5%",
-									marginRight: "353px",
-									position: "absolute"
-								}}
-							>
-								Read More...
-							</button>
+							<button className="singleBiography_button">Read More...</button>
 						</Link>
 					</Card>
 				</Link>

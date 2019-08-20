@@ -145,7 +145,7 @@ exports = module.exports = function (app) {
 		// Render some simple boilerplate html
 		console.log('====>', req.originalUrl);
 
-		function renderFullPage (result) {
+		function renderFullPage(result) {
 			// Note the div class name here, we will use that as a hook for our React code
 			// static menu
 			return `
@@ -167,6 +167,7 @@ exports = module.exports = function (app) {
                         <link rel="stylesheet" href="../css/mobilevalidation.css">
 						<link rel="stylesheet" href="../css/codeFlag.css">
 						<link rel="stylesheet" href="../css/antd.css">
+						<link rel="stylesheet" href="../css/style1.css">
 						<link rel="stylesheet" href="../css/SingleGridMenu.css" id="main-styles-link">
                         <link rel="stylesheet" href="../css/style.css" id="main-styles-link">
                         <script type="text/javascript" src="../js/bundle.js"></script>
@@ -186,8 +187,7 @@ exports = module.exports = function (app) {
 			if (req.originalUrl.includes('/admin')) {
 				res.sendFile(path.join(__dirname, '../../admin/', 'index1.html'));
 			}
-			else
-			{ res.send(renderFullPage(result)); }
+			else { res.send(renderFullPage(result)); }
 		});
 
 

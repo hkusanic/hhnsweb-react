@@ -276,7 +276,7 @@ export class AudioList extends Component {
 
 							<div className="row justify-content-center" style={{ paddingTop: '20px' }}>
 								<div className="col-lg-12">
-									<div className="table-responsive wow fadeIn">
+									<div className="table-responsive wow ">
 										{this.props.lecturesDetails.lectures.length > 0 ? (
 											<div>
 												<Table

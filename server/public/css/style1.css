@@ -1,0 +1,178 @@
+.singleCarousel_heading_sm {
+	width: 81px;
+	margin-top: -5vh;
+	margin-left: -61px;
+	font-size: 8px;
+	height: 23px;
+	padding: 4px;
+	border-radius: 4px;
+	color: white;
+	background-image: linear-gradient(to right, #f25858, #ff9f63);
+}
+
+.singleCarousel_text_sm {
+	/* color: black; */
+	margin-left: 2.562225475841874vw;
+	font-size: 2.9282576866764276vw;
+	font-style: italic;
+	font-weight: bold;
+	font-family: Charter;
+	width: 32.445095vw;
+}
+.singleCarousel_image {
+	width: 90px;
+	height: 90px;
+	object-fit: contain;
+	float: left;
+}
+
+.singleCarousel_p1_lg {
+	font-family: Charter;
+	font-size: 20px;
+	font-weight: 900;
+	color: white;
+	line-height: 0.1;
+	margin-top: 7%;
+}
+
+.singleCarousel_p2_lg {
+	font-family: Charter;
+	font-size: 15px;
+	color: white;
+}
+
+.singleCarousel_quotes {
+	width: 90px;
+	height: 90px;
+	opacity: 0.1;
+	margin-left: 7%;
+	margin-top: 6vh;
+}
+
+.singleCarousel_heading_lg {
+	width: 100px;
+	margin-top: 12vh;
+	font-size: 10px;
+	height: 23px;
+	padding: 4px;
+	border-radius: 4px;
+	color: white;
+	background-image: linear-gradient(to right, #f25858, #ff9f63);
+}
+
+.singleCarousel_text_lg {
+	/* color: black; */
+	width: 45.961933vw;
+	margin-left: 2.562225475841874vw;
+	font-size: 2.9282576866764276vw;
+	font-style: italic;
+	font-weight: bold;
+	font-family: Charter;
+}
+
+.singleBiography_cover {
+	width: 123px;
+	height: 123px;
+	object-fit: contain;
+	margin-top: 34px;
+	margin-left: 5%;
+	margin-right: 353px;
+}
+
+.singleBiography_card {
+	margin-left: 5%;
+	font-family: Charter;
+	font-size: 18px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #000000;
+}
+
+.singleBiography_text {
+	margin-left: 5%;
+	margin-right: 5%;
+	font-family: Charter-Roman;
+	font-size: 16px;
+	color: #787878;
+	text-align: justify;
+}
+.singleBiography_button {
+	width: 123px;
+	height: 47px;
+	border-radius: 4px;
+	border: solid 1px #ff7c2b;
+	background-color: white;
+	margin-top: 5%;
+	margin-left: 5%;
+	margin-right: 353px;
+	position: absolute;
+}
+
+.singleGrid_card {
+	height: 289px;
+	border-radius: 4px;
+	border: 0.1% solid gray;
+	background-color: #ffffff;
+}
+
+.singleGrid_img {
+	margin-top: 25px;
+	margin-left: 15px;
+	width: 74px;
+	height: 74px;
+	object-fit: contain;
+}
+
+.singleGrid_menu {
+	height: 22px;
+	margin-top: 35px;
+	font-family: Charter;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	color: #000000;
+}
+.singleGrid_description {
+	height: 44px;
+	font-family: Charter-Roman;
+	font-size: 15px;
+	line-height: 1.47;
+	text-align: center;
+	color: #727272;
+}
+
+.footer_h4_sm {
+	color: white;
+	padding-bottom: 10px;
+	font-size: 3vw;
+}
+
+.footer_h4_menu {
+	color: white;
+	padding-bottom: 10px;
+}
+
+.footer_lg_img {
+	width: 252.1px;
+	height: 48.3px;
+	object-fit: contain;
+}
+
+.footer_sm_img {
+	width: 252.1px;
+	height: 48.3px;
+	object-fit: contain;
+}
+
+.footer_div {
+	padding-top: 10px;
+	height: 40px;
+}
+
+.footer_rights {
+	color: white;
+	text-align: center;
+}

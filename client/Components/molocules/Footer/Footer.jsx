@@ -22,10 +22,9 @@ export class Footer extends Component {
 
 	render() {
 		const maxWidth = window.screen.width;
-		if (maxWidth >= 1024) {
+		if (maxWidth >= 1022) {
 			return (
 				<footer className="section footer-linked foot">
-					{/* <img src="images/footer.svg"  style={{width: '1440px',height:'489px',objectFit: 'contain'}}/> */}
 					<div className="footer-linked-main">
 						<div className="footer-container">
 							<div className="row">
@@ -90,47 +89,33 @@ export class Footer extends Component {
 								</div>
 
 								<div className="col-md-7 col-lg-4">
-									<h4
-										style={{
-											color: "white",
-											paddingBottom: "10px"
-										}}
-									>
-										MENUS
-									</h4>
+									<h4 className="footer_h4_menu">MENUS</h4>
 
 									<div className="row row-20">
 										<div className="col-6 col-sm-3 col-4">
 											<ul className="list ">
-												<li style={{ color: "white" }}>
-													<Link to="/biography" style={{ color: "white" }}>
-														<Translate>
-															{({ translate }) => translate("HOME.biography")}
-														</Translate>
-													</Link>
-												</li>
-												<li style={{ color: "white" }}>
+												<li>
 													<Link to="/audio" style={{ color: "white" }}>
 														<Translate>
 															{({ translate }) => translate("HOME.audio")}
 														</Translate>
 													</Link>
 												</li>
-												<li style={{ color: "white" }}>
+												<li>
 													<Link to="/video" style={{ color: "white" }}>
 														<Translate>
 															{({ translate }) => translate("HOME.video")}
 														</Translate>
 													</Link>
 												</li>
-												<li style={{ color: "white" }}>
+												<li>
 													<Link to="/blog" style={{ color: "white" }}>
 														<Translate>
 															{({ translate }) => translate("HOME.blog")}
 														</Translate>
 													</Link>
 												</li>
-												<li style={{ color: "white" }}>
+												<li>
 													<Link to="/transcriptions" style={{ color: "white" }}>
 														<Translate style={{ color: "white" }}>
 															{({ translate }) =>
@@ -139,7 +124,7 @@ export class Footer extends Component {
 														</Translate>
 													</Link>
 												</li>
-												<li style={{ color: "white" }}>
+												<li>
 													<Link to="/summaries" style={{ color: "white" }}>
 														<Translate>
 															{({ translate }) => translate("HOME.Summaries")}
@@ -181,27 +166,16 @@ export class Footer extends Component {
 							</div>
 						</div>
 					</div>
-					{/* <span className="icon icon-md mdi mdi-map-marker text-gray-700"></span> <span className="icon icon-md mdi mdi-email text-gray-700"></span> */}
+
 					<div style={{ marginBottom: "26px" }}>
 						<div className="footer-container">
 							<hr style={{ width: "60%" }} />
-							<p
-								style={{ color: "white" }}
-								className="rights"
-								style={{ textAlign: "center" }}
-							>
+							<p className="rights footer_rights">
 								<span>
-									<img
-										style={{
-											width: "252.1px",
-											height: "48.3px",
-											objectFit: "contain"
-										}}
-										src="images/SWAMI2.svg"
-									/>
+									<img className="footer_lg_img" src="images/SWAMI2.svg" />
 									<span>&nbsp;</span>
 									<span style={{ fontSize: "12px" }}>&copy;&nbsp;</span>
-									{/* <span>&nbsp;</span>   */}
+
 									<Translate>
 										{({ translate }) => translate("FOOTER.copy_rights")}
 									</Translate>
@@ -219,13 +193,7 @@ export class Footer extends Component {
 				>
 					<div className="row-small">
 						<div className="col-4">
-							<h4
-								style={{
-									color: "white",
-									paddingBottom: "10px",
-									fontSize: "3vw"
-								}}
-							>
+							<h4 className="footer_h4_sm">
 								<Translate>
 									{({ translate }) => translate("FOOTER.quick_links")}
 								</Translate>
@@ -290,42 +258,35 @@ export class Footer extends Component {
 							<div className="row row-20">
 								<div className="col-6 col-sm-3 col-4">
 									<ul className="list ">
-										<li style={{ color: "white" }}>
-											<Link to="/biography" style={{ color: "white" }}>
-												<Translate>
-													{({ translate }) => translate("HOME.biography")}
-												</Translate>
-											</Link>
-										</li>
-										<li style={{ color: "white" }}>
+										<li>
 											<Link to="/audio" style={{ color: "white" }}>
 												<Translate>
 													{({ translate }) => translate("HOME.audio")}
 												</Translate>
 											</Link>
 										</li>
-										<li style={{ color: "white" }}>
+										<li>
 											<Link to="/video" style={{ color: "white" }}>
 												<Translate>
 													{({ translate }) => translate("HOME.video")}
 												</Translate>
 											</Link>
 										</li>
-										<li style={{ color: "white" }}>
+										<li>
 											<Link to="/blog" style={{ color: "white" }}>
 												<Translate>
 													{({ translate }) => translate("HOME.blog")}
 												</Translate>
 											</Link>
 										</li>
-										<li style={{ color: "white" }}>
+										<li>
 											<Link to="/transcriptions" style={{ color: "white" }}>
 												<Translate style={{ color: "white" }}>
 													{({ translate }) => translate("HOME.Transcriptions")}
 												</Translate>
 											</Link>
 										</li>
-										<li style={{ color: "white" }}>
+										<li>
 											<Link to="/summaries" style={{ color: "white" }}>
 												<Translate>
 													{({ translate }) => translate("HOME.Summaries")}
@@ -365,24 +326,16 @@ export class Footer extends Component {
 						</div>
 					</div>
 					<div style={{ marginBottom: "26px" }}>
-						<div style={{ paddingTop: "10px", height: "40px" }}>
+						<div className="footer_div">
 							<hr style={{ width: "60%" }} />
 							<p
 								style={{ color: "white", textAlign: "center" }}
 								className="rights"
 							>
 								<span>
-									<img
-										style={{
-											width: "252.1px",
-											height: "48.3px",
-											objectFit: "contain"
-										}}
-										src="images/SWAMI2.svg"
-									/>
+									<img className="footer_sm_img" src="images/SWAMI2.svg" />
 									<span>&nbsp;</span>
 									<span style={{ fontSize: "12px" }}>&copy;&nbsp;</span>
-									{/* <span>&nbsp;</span>   */}
 									<Translate>
 										{({ translate }) => translate("FOOTER.copy_rights")}
 									</Translate>

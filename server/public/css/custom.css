@@ -73,6 +73,29 @@
 	background-color: transparent;
 }
 
+.singleCarousel_heading_sm {
+	width: 81px;
+	margin-top: -5vh;
+	margin-left: -61px;
+	font-size: 8px;
+	height: 23px;
+	padding: 4px;
+	border-radius: 4px;
+	color: white;
+	background-image: linear-gradient(to right, #f25858, #ff9f63);
+}
+
+.singleCarousel_text_sm {
+	color: black;
+	margin-left: 2.562225475841874vw;
+	font-size: 2.9282576866764276vw;
+	font-style: italic;
+	font-weight: bold;
+	font-family: Charter;
+	width: 32.445095vw;
+}
+
+
 .banner {
 	/*background-image: url("data:../../../../../client/assets/images/banner.png");*/
 }
@@ -902,8 +925,8 @@
 }
 
 .foot-small {
-    color: white;
-    font-size: 2vw;
+	color: white;
+	font-size: 2vw;
 	padding-top: 45px;
 	background-color: #fd8639;
 	background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/footer_nnP5lJ5_6.svg");

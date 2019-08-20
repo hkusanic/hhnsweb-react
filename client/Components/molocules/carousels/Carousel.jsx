@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 // import { Carousel, Icon } from 'antd';
 import script from "../../../assets/script";
+import renderHTML from "react-render-html";
+import reactCookie from "react-cookies";
 import SingleCarousel from "../../atoms/SingleCarousel/singleCarousel";
 import Biography from "../Biography/Biography";
 import Announcement from "../../organisms/Announcement/Announcement";
@@ -9,17 +11,27 @@ import QuoteOfDay from "../../molocules/SingleQuote/QuotesOfDay";
 import ContentDetails from "../../../containers/contents/ContentDetails";
 import Blog from "../../organisms/BlogHome/bloghome";
 import "./index.css";
+import { connect } from "react-redux";
+import { quoteOfDay } from "../../../actions/quoteActions";
 
 export class Carousel2 extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			quotes: []
+		};
 	}
 	componentDidMount() {
 		script();
+		let authorList = ["Niranjana Swami", "Srila Prabhupada"];
+		this.props.quoteOfDay(authorList);
+		this.setState({
+			quotes: this.props.quoteOfDay.quotes
+		});
 	}
 
 	render() {
+		console.log("quotes=========>", this.props.quote.quotes);
 		return (
 			<div>
 				{/* <Carousel autoplay={true} arrows={true} autoplaySpeed={3000}>
@@ -55,7 +67,7 @@ export class Carousel2 extends Component {
 						<SingleCarousel
 							image="https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"
 							heading="Quote of the Day"
-							text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm tempor incididunt ut"
+							text="The desire for fame and recognition is an anarthа."
 							author="Niranjana Swami"
 						/>
 						{/* <SingleCarousel
@@ -142,4 +154,21 @@ export class Carousel2 extends Component {
 	}
 }
 
-export default Carousel2;
+const mapStateToProps = state => {
+	return {
+		quote: state.quoteReducer
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		quoteOfDay: authorList => {
+			dispatch(quoteOfDay(authorList));
+		}
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Carousel2);
