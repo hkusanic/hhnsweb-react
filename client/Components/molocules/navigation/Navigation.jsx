@@ -237,7 +237,7 @@ export class Navigation extends Component {
 															} `}
 															to="/"
 														>
-															<img src="images/swami.svg" />
+															<img src="https://ik.imagekit.io/gcwjdmqwwznjl/swami__v3cKrjXs.svg" />
 														</Link>
 													</li>
 												</ul>
@@ -359,7 +359,7 @@ export class Navigation extends Component {
 														style={{
 															marginLeft: "15%"
 														}}
-														src="images/swami.svg"
+														src="https://ik.imagekit.io/gcwjdmqwwznjl/swami__v3cKrjXs.svg"
 														alt="Niranjana Swami"
 													/>{" "}
 												</Link>
@@ -613,7 +613,7 @@ export class Navigation extends Component {
 													{" "}
 													<img
 														style={{ height: "34px", width: "34px" }}
-														src="images/Iskcon_logo.jpg"
+														src="https://ik.imagekit.io/gcwjdmqwwznjl/Iskcon_logo_C-Q4c8R4B.jpg"
 														alt="Iskcon Logo"
 													/>{" "}
 												</li>

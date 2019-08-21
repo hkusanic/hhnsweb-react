@@ -181,7 +181,7 @@ export class Footer extends Component {
 								<span>
 									<img
 										className="footer_lg_img"
-										src="images/SWAMI2.svg"
+										src="https://ik.imagekit.io/gcwjdmqwwznjl/SWAMI2_s6R_72Bx0.svg"
 										alt="Niranjana Swami"
 									/>
 									<span>&nbsp;</span>
@@ -351,7 +351,10 @@ export class Footer extends Component {
 								className="rights"
 							>
 								<span>
-									<img className="footer_sm_img" src="images/SWAMI2.svg" />
+									<img
+										className="footer_sm_img"
+										src="https://ik.imagekit.io/gcwjdmqwwznjl/SWAMI2_s6R_72Bx0.svg"
+									/>
 									<span>&nbsp;</span>
 									<span style={{ fontSize: "12px" }}>&copy;&nbsp;</span>
 									<Translate>
