@@ -180,12 +180,16 @@ export class Login extends Component {
                 <ul className="list-inline-bordered" style={{ color: '#122e44' }}>
 
                   <li>
-                    <li className={login_modal_1} onClick={() => { this.props.handleLogin() }} data-rd-navbar-toggle="#rd-navbar-login-5">
-                      {log_in}
+                    <li style={{ fontFamily: "Charter",
+	                            fontSize: "14px",
+	                          fontWeight: "bold"}} className={login_modal_1} onClick={() => { this.props.handleLogin() }} data-rd-navbar-toggle="#rd-navbar-login-5">
+                      Login
                     </li>
                     <div className={login_modal_2} id="rd-navbar-login-5">
-                      <h4>
-                        {log_in}
+                      <h4 style={{ fontFamily: "Charter",
+	                            fontSize: "14px",
+	                          fontWeight: "bold"}}>
+                       Login
                       </h4>
                       <LoginForm loginUser={this.props.loginUser} error={this.state.error} />
                       <p onClick={() => { this.handleRemoveModal() }}>
@@ -194,11 +198,15 @@ export class Login extends Component {
                     </div>
                   </li>
                   <li>
-                    <li className={res_modal_1} onClick={() => { this.props.handleRedirect() }} data-rd-navbar-toggle="#rd-navbar-register-5" >
-                      {registration}
+                    <li style={{ fontFamily: "Charter",
+	                            fontSize: "14px",
+	                          fontWeight: "bold"}} className={res_modal_1} onClick={() => { this.props.handleRedirect() }} data-rd-navbar-toggle="#rd-navbar-register-5" >
+                      Register
                     </li>
                     <div className={res_modal_2} id="rd-navbar-register-5">
-                      <h4> {registration}</h4>
+                      <h4 style={{ fontFamily: "Charter",
+	                            fontSize: "14px",
+	                          fontWeight: "bold"}}> Register </h4>
                       <form className="rd-form rd-form-small">
                         <div className="form-wrap">
                           <input

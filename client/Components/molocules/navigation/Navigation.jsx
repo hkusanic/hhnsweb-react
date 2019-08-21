@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { throttle } from "lodash";
 import { setActiveLanguage, withLocalize } from "react-localize-redux";
-import { Select } from "antd";
+import { Select, Menu, Dropdown, Icon } from "antd";
 import Login from "./../../../containers/Login/Login";
 import { Link, Redirect } from "react-router-dom";
 import Auth from "../../../utils/Auth";
@@ -155,9 +155,45 @@ export class Navigation extends Component {
 
 	render() {
 		let currentLanguage = "en";
+		let Rus = "Rus";
+		let Eng = "Eng";
 		if (reactCookie.load("languageCode")) {
 			currentLanguage = reactCookie.load("languageCode");
 		}
+		const menu = (
+			<Menu>
+				<Menu.Item
+					style={{ position: "relative", zIndex: "4000" }}
+					onClick={() => this.languageToggle("en")}
+				>
+					<a
+						style={{
+							color: "orange"
+						}}
+						value="en"
+						// target="_blank"
+						// rel="noopener noreferrer"
+					>
+						Eng
+					</a>
+				</Menu.Item>
+				<Menu.Item
+					style={{ position: "relative", zIndex: "4000" }}
+					onClick={() => this.languageToggle("ru")}
+				>
+					<a
+						style={{
+							color: "orange"
+						}}
+						value="ru"
+						// target="_blank"
+						// rel="noopener noreferrer"
+					>
+						Rus
+					</a>
+				</Menu.Item>
+			</Menu>
+		);
 		return (
 			<div>
 				<header className="section page-header">
@@ -342,7 +378,8 @@ export class Navigation extends Component {
 													<Link
 														className={`rd-nav-link ${
 															this.state.index === 1 ? "active1" : ""
-														} `}
+														} 
+														${maxWidth <= 1210 ? "gap" : " "}`}
 														to="/"
 													>
 														Home
@@ -352,7 +389,9 @@ export class Navigation extends Component {
 													<a
 														className={`rd-nav-link ${
 															this.state.index === 2 ? "active1" : ""
-														} `}
+														} 
+														${maxWidth <= 1210 ? "gap" : " "}
+														`}
 													>
 														Biography
 													</a>
@@ -405,7 +444,8 @@ export class Navigation extends Component {
 													<Link
 														className={`rd-nav-link ${
 															this.state.index === 10 ? "active1" : ""
-														} `}
+														} ${maxWidth <= 1210 ? "gap" : " "}
+														`}
 														to={{
 															pathname: "/audio"
 														}}
@@ -423,7 +463,9 @@ export class Navigation extends Component {
 													<Link
 														className={`rd-nav-link ${
 															this.state.index === 11 ? "active1" : ""
-														} `}
+														} 
+														${maxWidth <= 1210 ? "gap" : " "}
+														`}
 														to="/video"
 														onClick={() => {
 															this.handleRemoveModal(11);
@@ -439,7 +481,9 @@ export class Navigation extends Component {
 													<Link
 														className={`rd-nav-link ${
 															this.state.index === 3 ? "active1" : ""
-														} `}
+														} 
+														${maxWidth <= 1210 ? "gap" : " "}
+														`}
 														to="/blog"
 														onClick={() => {
 															this.handleRemoveModal(3);
@@ -453,7 +497,8 @@ export class Navigation extends Component {
 													<Link
 														className={`rd-nav-link ${
 															this.state.index === 4 ? "active1" : ""
-														} `}
+														} ${maxWidth <= 1210 ? "gap" : " "}
+														`}
 														to="/transcriptions"
 														onClick={() => {
 															this.handleRemoveModal(4);
@@ -471,7 +516,8 @@ export class Navigation extends Component {
 													<Link
 														className={`rd-nav-link ${
 															this.state.index === 5 ? "active1" : ""
-														} `}
+														} ${maxWidth <= 1210 ? "gap" : " "}
+														`}
 														to="/summaries"
 														onClick={() => {
 															this.handleRemoveModal(5);
@@ -515,7 +561,34 @@ export class Navigation extends Component {
 															: "ruToggle"
 													} `}
 												>
-													<Select
+													<Dropdown
+														// showSearch
+														// className="langaugeDropDown nav_language"
+														// defaultValue={currentLanguage}
+														// placeholder="Select language"
+														optionFilterProp="children"
+														onChange={this.languageToggle}
+														// filterOption={(input, option) =>
+														// 	option.props.children
+														// 		.toLowerCase()
+														// 		.indexOf(input.toLowerCase()) >= 0
+														// }
+														overlay={menu}
+													>
+														<a
+															style={{
+																color: "black",
+																fontFamily: "Charter",
+																fontWeight: "bold"
+															}}
+															className="ant-dropdown-link"
+															href="#"
+														>
+															{currentLanguage === "ru" ? Rus : Eng}{" "}
+															<Icon type="down" />
+														</a>
+													</Dropdown>
+													{/* <Select
 														showSearch
 														className="langaugeDropDown nav_language"
 														defaultValue={currentLanguage}
@@ -549,7 +622,7 @@ export class Navigation extends Component {
 														>
 															RUS
 														</Option>
-													</Select>
+													</Select> */}
 												</li>
 
 												<li className="rd-nav-item hideMenu">

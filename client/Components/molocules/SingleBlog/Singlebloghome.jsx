@@ -13,30 +13,31 @@ export class SingleBlogHome extends Component {
 	showing100Characters = sentence => {
 		var result = sentence;
 		var resultArray = result.split(" ");
-		if (resultArray.length > 10) {
-			resultArray = resultArray.slice(0, 10);
+		if (resultArray.length > 100) {
+			resultArray = resultArray.slice(0, 100);
 			result = resultArray.join(" ") + "...";
 		}
 		return result;
 	};
 	render() {
 		return (
-			<Link
-				to={{
-					pathname: `/blogDetails/${this.props.uuid}`,
-					state: this.props.blog
-				}}
-			>
-				<div class="col-sm-12 col-lg-6 page1">
-					<Card
-						style={{
-							borderRadius: "4px"
+			<div className="col-md-6 page1">
+				<Card
+					hoverable
+					style={{
+						borderRadius: "4px",
+						width: "100%"
+					}}
+				>
+					<Link
+						to={{
+							pathname: `/blogDetails/${this.props.uuid}`,
+							state: this.props.blog
 						}}
 					>
 						<div className="singleblog_title">{this.props.title}</div>
 						<br />
 						<div className="singleblog_description">
-							{/* {props.description} */}
 							{renderHTML(this.showing100Characters(this.props.description))}
 						</div>
 						<br />
@@ -57,9 +58,9 @@ export class SingleBlogHome extends Component {
 								<button className="singleblog_button">Quote</button>
 							</div>
 						</div>
-					</Card>
-				</div>
-			</Link>
+					</Link>
+				</Card>
+			</div>
 		);
 	}
 }

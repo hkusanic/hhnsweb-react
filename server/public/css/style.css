@@ -9959,7 +9959,7 @@ html.tablet .ui-to-top {
 	left: 0;
 	top: -56px;
 	bottom: -56px;
-	z-index: 1079;
+	z-index: 2;
 	width: 270px;
 	padding: 112px 0 81px;
 	overflow-y: auto;
@@ -10009,6 +10009,7 @@ html.tablet .ui-to-top {
 .rd-navbar-fixed .rd-nav-link {
 	display: block;
 	padding: 14px 56px 14px 18px;
+	/* padding-top: 0px !important */
 }
 
 .rd-navbar-fixed li.opened > .rd-navbar-dropdown {
@@ -10292,6 +10293,7 @@ html.tablet .ui-to-top {
 	color: #122e44;
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
 	background: #fff;
+	z-index: 3;
 }
 
 .rd-navbar-fixed .rd-navbar-nav-wrap {
@@ -11116,7 +11118,8 @@ html.rd-navbar-fixed-linked .page {
 }
 
 .rd-navbar-corporate.rd-navbar-static.rd-navbar--is-stuck, .rd-navbar-corporate.rd-navbar-static.rd-navbar--is-clone {
-	border-bottom-color: #e8e9ee;
+	/* border-bottom-color: #e8e9ee; */
+	z-index: 3;
 }
 
 .rd-navbar-corporate.rd-navbar-static.rd-navbar--is-stuck .rd-navbar-aside-outer, .rd-navbar-corporate.rd-navbar-static.rd-navbar--is-clone .rd-navbar-aside-outer {
