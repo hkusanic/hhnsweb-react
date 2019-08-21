@@ -25,21 +25,27 @@ export class Carousel2 extends Component {
 		let authorList = ["Niranjana Swami", "Srila Prabhupada"];
 		this.props.quoteOfDay(authorList);
 		this.setState({
-			quotes: this.props.quoteOfDay.quotes
+			quotes: this.props.quote.quotes
 		});
 	}
 
 	render() {
+		if (!this.props.quote) {
+			<div> Loading... </div>;
+		}
 		return (
 			<div>
 				<section className="swiper-container swiper-slider swiper-slider-light bg-gray-700 carouselMargin">
 					<div className="swiper-wrapper">
-						<SingleCarousel
-							image="https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"
-							heading="Quote of the Day"
-							text="The desire for fame and recognition is an anarthа."
-							author="Niranjana Swami"
-						/>
+						{this.props.quote.quotes.length > 0 ? (
+							<SingleCarousel
+								image="https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"
+								heading="Quote of the Day"
+								text={this.props.quote.quotes[0].en.body}
+								author={this.props.quote.quotes[0].author}
+								// author="Niranjana Swami"
+							/>
+						) : null}
 					</div>
 				</section>
 				<Biography {...this.props} />

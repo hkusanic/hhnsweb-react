@@ -360,6 +360,7 @@ export class Navigation extends Component {
 															marginLeft: "15%"
 														}}
 														src="images/swami.svg"
+														alt="Niranjana Swami"
 													/>{" "}
 												</Link>
 											</li>
@@ -562,28 +563,11 @@ export class Navigation extends Component {
 													} `}
 												>
 													<Dropdown
-														// showSearch
-														// className="langaugeDropDown nav_language"
-														// defaultValue={currentLanguage}
-														// placeholder="Select language"
 														optionFilterProp="children"
 														onChange={this.languageToggle}
-														// filterOption={(input, option) =>
-														// 	option.props.children
-														// 		.toLowerCase()
-														// 		.indexOf(input.toLowerCase()) >= 0
-														// }
 														overlay={menu}
 													>
-														<a
-															style={{
-																color: "black",
-																fontFamily: "Charter",
-																fontWeight: "bold"
-															}}
-															className="ant-dropdown-link"
-															href="#"
-														>
+														<a className="ant-dropdown-link nav_lang" href="#">
 															{currentLanguage === "ru" ? Rus : Eng}{" "}
 															<Icon type="down" />
 														</a>
