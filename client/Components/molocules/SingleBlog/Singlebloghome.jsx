@@ -27,10 +27,12 @@ export class SingleBlogHome extends Component {
 					state: this.props.blog
 				}}
 			>
-				<div class="col-sm-12 col-lg-6 page1">
+				<div class="col-md-12 col-lg-6 page1 col-12">
 					<Card
 						style={{
 							borderRadius: "4px"
+							// width: "37.62811127379209vw"
+							// height: "30.441400304414003vh"
 						}}
 					>
 						<div className="singleblog_title">{this.props.title}</div>

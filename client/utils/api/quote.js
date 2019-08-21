@@ -15,6 +15,7 @@ const utils = {
 	},
 
 	quoteOfDay: body => {
+		console.log("quotes api calling")
 		let url = serverAddress + '/api/quote/quoteOfDay';
 		return axios.post(url, body);
 	},
