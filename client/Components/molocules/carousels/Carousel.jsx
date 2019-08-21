@@ -21,32 +21,16 @@ export class Carousel2 extends Component {
 		};
 	}
 
-	// componentWillReceiveProps(nextProps) {
-	//     if (nextProps.quote !== this.props.post) {
-	//         this.state = {
-
-	//         }
-	//     }
-	// }
-
 	componentDidMount() {
 		script();
 		let authorList = ["Niranjana Swami", "Srila Prabhupada"];
 		this.props.quoteOfDay(authorList);
-		console.log("after calling api");
-		this.setState(
-			{
-				quotes: this.props.quoteOfDay.quotes
-			},
-			() => {
-				console.log("quotes ===>>>", JSON.stringify(this.state.quotes));
-				console.log("quotes ===>>>", this.props.quote.quotes);
-			}
-		);
+		this.setState({
+			quotes: this.props.quoteOfDay.quotes
+		});
 	}
 
 	render() {
-		console.log(this.props.quoteOfDay.quotes);
 		return (
 			<div>
 				<section className="swiper-container swiper-slider swiper-slider-light bg-gray-700 carouselMargin">

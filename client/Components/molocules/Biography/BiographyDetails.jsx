@@ -22,7 +22,10 @@ export class BiographyDetails extends Component {
 						<div className="container">
 							<div className="row">
 								<div className="col-12">
-									<h3 className="post-creative-title centerAlign alignment">
+									<h3
+										className="post-creative-title centerAlign alignment"
+										style={{ marginTop: "-7px" }}
+									>
 										{renderHTML(
 											reactCookie.load("languageCode") === "en"
 												? this.props.location.state.title_en
