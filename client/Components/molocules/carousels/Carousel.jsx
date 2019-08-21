@@ -20,6 +20,7 @@ export class Carousel2 extends Component {
 			quotes: []
 		};
 	}
+
 	componentDidMount() {
 		script();
 		let authorList = ["Niranjana Swami", "Srila Prabhupada"];
