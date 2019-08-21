@@ -46,12 +46,12 @@ Appointment.add({
 	},
 	requestedFor: {
 		type: Types.Select,
-		options: ['Darshan-15', 'Darshan-30', 'Darshan-45', 'Darshan-60'],
+		options: ['Darshan-15', 'Darshan-20', 'Darshan-30', 'Darshan-45', 'Darshan-60'],
 		default: 'Darshan-15',
 	},
 	approvedFor: {
 		type: Types.Select,
-		options: ['Darshan-15', 'Darshan-30', 'Darshan-45', 'Darshan-60'],
+		options: ['Darshan-15', 'Darshan-20', 'Darshan-30', 'Darshan-45', 'Darshan-60'],
 		default: 'Darshan-15',
 	},
 	disciple: {
