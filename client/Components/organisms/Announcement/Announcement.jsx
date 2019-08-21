@@ -55,44 +55,50 @@ export class Announcement extends Component {
 			);
 		} else {
 			return (
-				<div className="padTop">
-					<p className="fontWeight">Харе Кришна!</p>
+				<Card className="centerAlign announcement_card">
+					<div>
+						<div className="announcement_div">
+							<h4 className="announcement_heading">Announcement</h4>
+						</div>
 
-					<p align="justify">
-						Для преданных, которые посещают Маяпур в период с 13 по 22 марта и
-						хотят получить даршан с Ниранджаной Свами в течение этого времени,
-						мы создали следующий веб-сайт{" "}
-						<a href="https://booking.niranjanaswami.net" target="_blank">
-							https://booking.niranjanaswami.net
-						</a>{" "}
-						для организации индивидуальных встреч.
-						<span className="fontWeight">
-							Это единственный способ запросить встречу с Ниранджаной Свами во
-							время этого визита.
-						</span>
-					</p>
+						<p className="fontWeight">Харе Кришна!</p>
 
-					<p align="justify">
-						Этот веб-сайт, который все еще находится в стадии разработки, также
-						будет использоваться в будущем для планирования встреч, когда
-						Махарадж посещает Северную Америку. Если у вас возникнут какие-либо
-						проблемы, пожалуйста, свяжитесь с Dina Gauranga dasa по электронной
-						почте, указанной в нижней части этой страницы. В течение следующих
-						нескольких недель{" "}
-						<a href="https://booking.niranjanaswami.net" target="_blank">
-							https://booking.niranjanaswami.net
-						</a>{" "}
-						и{" "}
-						<a href="https://www.niranjanaswami.net" target="_blank">
-							https://www.niranjanaswami.net
-						</a>{" "}
-						будут объединены в один веб-сайт. Следите за подробностями!
-					</p>
+						<p align="justify">
+							Для преданных, которые посещают Маяпур в период с 13 по 22 марта и
+							хотят получить даршан с Ниранджаной Свами в течение этого времени,
+							мы создали следующий веб-сайт{" "}
+							<a href="https://booking.niranjanaswami.net" target="_blank">
+								https://booking.niranjanaswami.net
+							</a>{" "}
+							для организации индивидуальных встреч.
+							<span className="fontWeight">
+								Это единственный способ запросить встречу с Ниранджаной Свами во
+								время этого визита.
+							</span>
+						</p>
 
-					<p className="fontWeight">Ваши слуги</p>
+						<p align="justify">
+							Этот веб-сайт, который все еще находится в стадии разработки,
+							также будет использоваться в будущем для планирования встреч,
+							когда Махарадж посещает Северную Америку. Если у вас возникнут
+							какие-либо проблемы, пожалуйста, свяжитесь с Dina Gauranga dasa по
+							электронной почте, указанной в нижней части этой страницы. В
+							течение следующих нескольких недель{" "}
+							<a href="https://booking.niranjanaswami.net" target="_blank">
+								https://booking.niranjanaswami.net
+							</a>{" "}
+							и{" "}
+							<a href="https://www.niranjanaswami.net" target="_blank">
+								https://www.niranjanaswami.net
+							</a>{" "}
+							будут объединены в один веб-сайт. Следите за подробностями!
+						</p>
 
-					<p>Администраторы сайта</p>
-				</div>
+						<p className="fontWeight">Ваши слуги</p>
+
+						<p>Администраторы сайта</p>
+					</div>
+				</Card>
 			);
 		}
 	};
