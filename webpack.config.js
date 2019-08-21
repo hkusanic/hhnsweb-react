@@ -8,6 +8,7 @@ module.exports = {
 	// This will be the entry file for all of our React code
 	entry: [
 		'./client/index.jsx',
+
 	],
 	// This will be where the final bundle file will be outputed
 	output: {
@@ -15,13 +16,14 @@ module.exports = {
 		filename: 'bundle.js',
 		publicPath: 'js/',
 	},
+
 	// Adding babel loader to compile our javascript and jsx files
 	module: {
 		rules: [{
 			test: /\.(js|jsx)$/,
 			exclude: /node_modules/,
 			use: {
-				loader: 'babel-loader',
+				loader: "babel-loader",
 				options: {
 					presets: [
 						'react',

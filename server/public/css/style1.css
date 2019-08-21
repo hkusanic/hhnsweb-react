@@ -19,6 +19,7 @@
 	font-family: Charter;
 	width: 32.445095vw;
 }
+
 .singleCarousel_image {
 	width: 90px;
 	height: 90px;
@@ -99,6 +100,7 @@
 	color: #787878;
 	text-align: justify;
 }
+
 .singleBiography_button {
 	width: 123px;
 	height: 47px;
@@ -135,6 +137,7 @@
 	text-align: center;
 	color: #000000;
 }
+
 .singleGrid_description {
 	height: 44px;
 	font-family: Charter-Roman;
@@ -176,6 +179,7 @@
 	color: white;
 	text-align: center;
 }
+
 .singleblog_button {
 	width: 95px;
 	height: 40px;
@@ -214,24 +218,26 @@
 	font-family: "Charter-Roman";
 	font-size: 16px;
 	line-height: 1.38;
+	color: black;
 }
 
 .singleblog_title {
 	font-family: Charter;
 	font-size: 24px;
 	font-weight: bold;
+	color: black;
 }
 
-.nav_span_small {
-	margin-right: 5%;
-}
+/* .nav_span_small {
+    margin-right: 5%;
+} */
 
 .nav_span_lg {
 	justify-content: space-between;
 	display: flex;
 	margin-right: 5%;
 	margin-top: -2%;
-	margin-left: 38%;
+	margin-left: 30%;
 }
 
 .nav_language {
@@ -320,4 +326,9 @@
 	border-radius: 4px;
 	border: 1px solid rgb(255, 124, 43);
 	background-color: white;
+}
+
+.gap {
+	padding-top: 14px !important;
+	padding-bottom: 0px !important;
 }
