@@ -147,9 +147,16 @@ export class Footer extends Component {
 
 									<ul className="list-sm">
 										<li className="object-inline" style={{ fontSize: "20px" }}>
-											<Icon type="facebook" />
-											<Icon type="instagram" />
-											<Icon type="twitter" />{" "}
+											<a style={{ color: "white" }} href="#">
+												{" "}
+												<Icon type="facebook" />{" "}
+											</a>
+											<a style={{ color: "white" }} href="#">
+												<Icon type="instagram" />{" "}
+											</a>
+											<a style={{ color: "white" }} href="#">
+												<Icon type="twitter" />{" "}
+											</a>{" "}
 										</li>
 										<li>
 											<a style={{ color: "white" }} href="#">
@@ -172,7 +179,11 @@ export class Footer extends Component {
 							<hr style={{ width: "60%" }} />
 							<p className="rights footer_rights">
 								<span>
-									<img className="footer_lg_img" src="images/SWAMI2.svg" />
+									<img
+										className="footer_lg_img"
+										src="images/SWAMI2.svg"
+										alt="Niranjana Swami"
+									/>
 									<span>&nbsp;</span>
 									<span style={{ fontSize: "12px" }}>&copy;&nbsp;</span>
 
@@ -308,9 +319,16 @@ export class Footer extends Component {
 
 							<ul className="list-sm">
 								<li className="object-inline" style={{ fontSize: "20px" }}>
-									<Icon type="facebook" />
-									<Icon type="instagram" />
-									<Icon type="twitter" />{" "}
+									<a style={{ color: "white" }} href="#">
+										{" "}
+										<Icon type="facebook" />{" "}
+									</a>
+									<a style={{ color: "white" }} href="#">
+										<Icon type="instagram" />{" "}
+									</a>
+									<a style={{ color: "white" }} href="#">
+										<Icon type="twitter" />{" "}
+									</a>{" "}
 								</li>
 								<li>
 									<a style={{ color: "white" }} href="#">

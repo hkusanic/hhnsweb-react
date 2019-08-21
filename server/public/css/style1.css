@@ -332,3 +332,34 @@
 	padding-top: 14px !important;
 	padding-bottom: 0px !important;
 }
+
+.caraousel {
+	width: 100% !important;
+	height: 116.28614916286149vh !important;
+	background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg");
+	background-size: cover;
+}
+
+.caraousel_sm {
+	height: 244px !important;
+	background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg");
+	background-size: cover;
+}
+
+.nav_lang {
+	color: black;
+	font-family: Charter;
+	font-weight: bold;
+}
+
+.nav_lang:hover {
+	color: orange;
+	font-family: Charter;
+	font-weight: bold;
+}
+
+.nav_lang:active {
+	color: orange;
+	font-family: Charter;
+	font-weight: bold;
+}

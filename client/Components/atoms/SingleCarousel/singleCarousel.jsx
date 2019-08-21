@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { throttle } from "lodash";
+import renderHTML from "react-render-html";
 
 class SingleCarousel extends Component {
 	constructor(props) {
@@ -22,9 +23,8 @@ class SingleCarousel extends Component {
 		if (maxWidth <= 425) {
 			return (
 				<div
-					className="swiper-slide"
+					className="swiper-slide caraousel_sm"
 					data-slide-bg={this.props.image}
-					style={{ height: "244px" }}
 				>
 					<div className="slide-inner">
 						<div className="container textCarousel">
@@ -59,7 +59,7 @@ class SingleCarousel extends Component {
 										}}
 									>
 										{" "}
-										"{this.props.text}"{" "}
+										{renderHTML(this.props.text)}{" "}
 									</h4>
 									<p
 										style={{
@@ -78,9 +78,8 @@ class SingleCarousel extends Component {
 		} else {
 			return (
 				<div
-					className="swiper-slide"
+					className="swiper-slide caraousel"
 					data-slide-bg={this.props.image}
-					style={{ width: "100%", height: "116.28614916286149vh" }}
 				>
 					<div className="slide-inner">
 						<div className="insideCarousel">
@@ -127,7 +126,7 @@ class SingleCarousel extends Component {
 											}}
 										>
 											{" "}
-											"{this.props.text}"{" "}
+											{renderHTML(this.props.text)}{" "}
 										</h4>
 										<p style={{ marginLeft: "35px", fontSize: "20px" }}>
 											-{this.props.author}
