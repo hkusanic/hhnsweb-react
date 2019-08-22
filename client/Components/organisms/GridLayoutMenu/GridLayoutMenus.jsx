@@ -33,8 +33,8 @@ export class GridLayoutMenus extends React.Component {
 					className="section-lg text-center"
 					style={{ position: "relative", zIndex: "1" }}
 				>
-					<h3>TITLE GOES HERE </h3>
-					<h4> Lorem ipsum dolor sit amet, consectetur adipiscing elit </h4>
+					{/* <h3>TITLE GOES HERE </h3>
+					<h4> Lorem ipsum dolor sit amet, consectetur adipiscing elit </h4> */}
 					<br />
 					<br />
 					<div className="container">

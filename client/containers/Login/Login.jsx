@@ -297,7 +297,7 @@ export class Login extends Component {
                   </Menu>
                 } placement="bottomCenter">
                   <a className="ant-dropdown-link" href="#">
-                    {this.state.fullName} <Icon type="down" />
+                    {this.state.fullName === "UNDEFINED UNDEFINED" ? "" : this.state.fullName} <Icon type="down" />
                   </a>
                 </Dropdown>
               }

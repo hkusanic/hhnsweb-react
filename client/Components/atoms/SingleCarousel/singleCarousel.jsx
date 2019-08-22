@@ -89,7 +89,7 @@ class SingleCarousel extends Component {
 								<p className="singleCarousel_p1_lg">ISKCON Founder - Acarya </p>
 
 								<p className="singleCarousel_p2_lg">
-									A.C Bhakthivedanta swami prabhupada
+									A.C Bhakthivedanta Swami Prabhupada
 								</p>
 							</div>
 						</div>

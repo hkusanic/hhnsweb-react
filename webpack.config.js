@@ -3,11 +3,18 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
 module.exports = {
+	plugins: [
+    // OccurrenceOrderPlugin is needed for webpack 1.x only
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    // Use NoErrorsPlugin for webpack 1.x
+    new webpack.NoEmitOnErrorsPlugin()
+],
 	// Since webpack 4 we will need to set in what mode webpack is running
 	mode: 'development',
 	// This will be the entry file for all of our React code
 	entry: [
-		'./client/index.jsx',
+		'webpack-hot-middleware/client','./client/index.jsx',
 
 	],
 	// This will be where the final bundle file will be outputed

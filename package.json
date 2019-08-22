@@ -1,4 +1,3 @@
-
 {
   "name": "keystone-react",
   "version": "0.0.1",
@@ -95,8 +94,9 @@
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "3.1.14",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.1.14",
+    "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.1",
     "webpack-node-externals": "^1.7.2"
   },
@@ -104,6 +104,7 @@
     "lint": "eslint .",
     "start": "webpack --config webpack.config.js && node keystone.js",
     "build": "webpack --config webpack.config.js",
-    "compile": "webpack --config webpack.config.js --hot"
+    "compile": "webpack --config webpack.config.js --hot",
+    "dev": "webpack-dev-server --config webpack.config.js && node keystone.js"
   }
 }

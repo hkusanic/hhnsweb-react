@@ -1,6 +1,9 @@
 var keystone = require('keystone');
 let modelHelper = require('../helpers/modelHelper');
 var path = require('path');
+var webpack = require('webpack');
+var webpackConfig = require('../../webpack.config');
+var compiler = webpack(webpackConfig)
 
 
 // Then to get access to our API route we will use importer
@@ -12,9 +15,28 @@ var routes = {
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
+
 // Export our app routes
 exports = module.exports = function (app) {
 	// Get access to the API route in our app
+	app.use(require("webpack-dev-middleware")(compiler, {
+		hot: true, noInfo: true,
+		// contentBase: '/server/public',
+		publicPath: webpackConfig.output.publicPath,
+		historyApiFallBack: true,
+		proxy: {
+			"*": "http://localhost:3000"
+		},
+	}));
+	app.use(require("webpack-hot-middleware")(compiler, {
+		hot: true, noInfo: true,
+		// contentBase: '/server/public/',
+		publicPath: webpackConfig.output.publicPath,
+		historyApiFallBack: true,
+		proxy: {
+			"*": "http://localhost:3000"
+		},
+	}));
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
 	app.get('/api/content/', keystone.middleware.api, routes.api.content.list);
 	app.get('/api/content/getLimitedList', keystone.middleware.api, routes.api.content.getlimitedlist);
@@ -147,9 +169,9 @@ exports = module.exports = function (app) {
 
 		function renderFullPage(result) {
 			// Note the div class name here, we will use that as a hook for our React code
-			// static menu
+			// static menu  <!doctype html>
 			return `
-                <!doctype html>
+               
                 <html class="wide wow-animation">
 					<head>
 						<meta name="format-detection" content="telephone=no">
@@ -171,7 +193,7 @@ exports = module.exports = function (app) {
 						<link rel="stylesheet" href="../css/style1.css">
 						<link rel="stylesheet" href="../css/SingleGridMenu.css" id="main-styles-link">
                         <link rel="stylesheet" href="../css/style.css" id="main-styles-link">
-                        <script type="text/javascript" src="../js/bundle.js"></script>
+						<script type="text/javascript" src="../js/bundle.js"></script>
                         <script src="../js/core.min.js"></script>
                     </head>
                     <body>
@@ -180,7 +202,7 @@ exports = module.exports = function (app) {
                 </html>
                 `;
 		}
-
+		// <script type="text/javascript" src="../js/bundle.js"></script> <script type="text/javascript src="/bundle.js”></script>
 		modelHelper.getStaticNavigation().then((result) => {
 			console.log('KEYSTONE STATIC MENU RESTORED');
 			console.dir(result);
