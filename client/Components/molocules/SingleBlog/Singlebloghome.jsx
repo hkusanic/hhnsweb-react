@@ -9,16 +9,6 @@ export class SingleBlogHome extends Component {
 	constructor(props) {
 		super(props);
 	}
-
-	showing100Characters = sentence => {
-		var result = sentence;
-		var resultArray = result.split(" ");
-		if (resultArray.length > 100) {
-			resultArray = resultArray.slice(0, 100);
-			result = resultArray.join(" ") + "...";
-		}
-		return result;
-	};
 	render() {
 		return (
 			<div className="col-md-6 page1">
@@ -29,16 +19,16 @@ export class SingleBlogHome extends Component {
 						width: "100%"
 					}}
 				>
-					<Link
-						to={{
-							pathname: `/blogDetails/${this.props.uuid}`,
-							state: this.props.blog
-						}}
-					>
-						<div className="singleblog_title">{this.props.title}</div>
+					<Link to={this.props.to}>
+						<img
+							style={{ height: "132px" }}
+							alt="author photo"
+							src={this.props.image}
+						/>
+						<div className="singleblog_title">{this.props.author}</div>
 						<br />
 						<div className="singleblog_description">
-							{renderHTML(this.showing100Characters(this.props.description))}
+							{renderHTML(this.props.description)}
 						</div>
 						<br />
 						<hr />
@@ -46,16 +36,11 @@ export class SingleBlogHome extends Component {
 						<div className="singleblog_div">
 							<div className="singleblog_author">
 								{" "}
-								{this.props.author}
+								{this.props.source}
 								<br />
 								<div className="singleblog_time">
 									{new Date(this.props.date).toDateString()}
 								</div>
-							</div>
-							<div>
-								<button className="singleblog_button"> Devotee </button>
-								<button className="singleblog_button">India</button>
-								<button className="singleblog_button">Quote</button>
 							</div>
 						</div>
 					</Link>

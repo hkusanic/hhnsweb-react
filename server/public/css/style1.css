@@ -224,10 +224,10 @@
 
 .singleblog_author {
 	font-family: Charter;
-	font-size: 16px;
+	font-size: 12px;
 	font-weight: bold;
 	line-height: 1.13;
-	color: #ff7c2b;
+	color: #aeb1be;
 }
 
 .singleblog_div {
@@ -237,17 +237,17 @@
 }
 
 .singleblog_description {
-	font-family: "Charter-Roman";
-	font-size: 16px;
-	line-height: 1.38;
-	color: black;
+	font-family: "Charter-Roman" !important;
+	font-size: 16px !important;
+	line-height: 1.38 !important;
+	color: black !important;
 }
 
 .singleblog_title {
 	font-family: Charter;
-	font-size: 24px;
+	font-size: 20px;
 	font-weight: bold;
-	color: black;
+	color: #ff7c2b;
 }
 
 /* .nav_span_small {
