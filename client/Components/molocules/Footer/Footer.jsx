@@ -22,7 +22,7 @@ export class Footer extends Component {
 
 	render() {
 		const maxWidth = window.screen.width;
-		if (maxWidth >= 1022) {
+		if (maxWidth >= 1024) {
 			return (
 				<footer className="section footer-linked foot">
 					<div className="footer-linked-main">
@@ -89,7 +89,11 @@ export class Footer extends Component {
 								</div>
 
 								<div className="col-md-7 col-lg-4">
-									<h4 className="footer_h4_menu">MENUS</h4>
+									<h4 className="footer_h4_menu">
+										<Translate>
+											{({ translate }) => translate("HOME.menu")}
+										</Translate>
+									</h4>
 
 									<div className="row row-20">
 										<div className="col-6 col-sm-3 col-4">
@@ -160,7 +164,7 @@ export class Footer extends Component {
 										</li>
 										<li>
 											<a style={{ color: "white" }} href="#">
-												1683 Main Street, East Hartford, CT 06183
+												1683 Main Street, East Hartford, CT 06108
 											</a>
 										</li>
 										<li className="object-inline">
@@ -263,7 +267,9 @@ export class Footer extends Component {
 									fontSize: "3vw"
 								}}
 							>
-								MENUS
+								<Translate>
+									{({ translate }) => translate("HOME.menu")}
+								</Translate>
 							</h4>
 
 							<div className="row row-20">
@@ -332,7 +338,7 @@ export class Footer extends Component {
 								</li>
 								<li>
 									<a style={{ color: "white" }} href="#">
-										1683 Main Street, East Hartford, CT 06183
+										1683 Main Street, East Hartford, CT 06108
 									</a>
 								</li>
 								<li className="object-inline">

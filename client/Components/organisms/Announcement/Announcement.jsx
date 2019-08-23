@@ -58,7 +58,7 @@ export class Announcement extends Component {
 				<Card className="centerAlign announcement_card">
 					<div>
 						<div className="announcement_div">
-							<h4 className="announcement_heading">Announcement</h4>
+							<h4 className="announcement_heading">Объявление</h4>
 						</div>
 
 						<p className="fontWeight">Харе Кришна!</p>

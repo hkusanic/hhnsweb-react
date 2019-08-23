@@ -2,6 +2,7 @@ import React from "react";
 import renderHTML from "react-render-html";
 import { Link, withRouter } from "react-router-dom";
 import reactCookie from "react-cookies";
+import { Translate } from "react-localize-redux";
 
 import { Card } from "antd";
 import TextArea from "antd/lib/input/TextArea";
@@ -85,7 +86,11 @@ const SingleBiography = props => {
 								}
 							}}
 						>
-							<button className="singleBiography_button">Read More...</button>
+							<button className="singleBiography_button">
+								<Translate>
+									{({ translate }) => translate("FOOTER.readmore")}
+								</Translate>
+							</button>
 						</Link>
 					</Card>
 				</Link>

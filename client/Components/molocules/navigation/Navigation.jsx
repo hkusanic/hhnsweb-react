@@ -383,10 +383,12 @@ export class Navigation extends Component {
 														${maxWidth <= 1210 ? "gap" : " "}`}
 														to="/"
 													>
-														Home
+														<Translate>
+															{({ translate }) => translate("HOME.home")}
+														</Translate>
 													</Link>
 												</li>
-												<li className="rd-nav-item biography-submenu">
+												<li className="rd-nav-item ">
 													<a
 														className={`rd-nav-link ${
 															this.state.index === 2 ? "active1" : ""
@@ -394,7 +396,9 @@ export class Navigation extends Component {
 														${maxWidth <= 1210 ? "gap" : " "}
 														`}
 													>
-														Biography
+														<Translate>
+															{({ translate }) => translate("HOME.biography")}
+														</Translate>
 													</a>
 													<ul className="rd-menu rd-navbar-dropdown">
 														<li
@@ -491,7 +495,9 @@ export class Navigation extends Component {
 															this.handleNavigationClick(3);
 														}}
 													>
-														Blog
+														<Translate>
+															{({ translate }) => translate("HOME.blog")}
+														</Translate>
 													</Link>
 												</li>
 												<li className="rd-nav-item">

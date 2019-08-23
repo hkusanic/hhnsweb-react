@@ -26,51 +26,16 @@ class SingleCarousel extends Component {
 					className="swiper-slide caraousel_sm"
 					data-slide-bg={this.props.image}
 				>
-					<div className="slide-inner">
-						<div className="container textCarousel">
-							<div
-								className="container "
-								style={{ marginLeft: "70px", marginTop: "40px" }}
-								data-caption-animate="slideInDown"
-							>
-								<div>
-									<div className="row">
-										<div
-											className="singleCarousel_heading_sm"
-											data-caption-animate="slideInDown"
-										>
-											{this.props.heading}
-											<br />{" "}
-										</div>
-									</div>
-								</div>
-							</div>
+					<div className="slide-inner" />
+					<div className="insideCarousel_sm">
+						<img src="images/person3.png" className="singleCarousel_image_sm" />
 
-							<div>
-								<span
-									className="quote"
-									data-caption-animate="slideInDown"
-									data-wow-delay="0"
-								>
-									<h4
-										className="singleCarousel_text_sm"
-										style={{
-											color: "black"
-										}}
-									>
-										{" "}
-										{renderHTML(this.props.text)}{" "}
-									</h4>
-									<p
-										style={{
-											marginLeft: "11px",
-											fontSize: "2.4641288433382138vw"
-										}}
-									>
-										-{this.props.author}
-									</p>
-								</span>
-							</div>
+						<div style={{ paddingTop: "9px" }}>
+							<p className="singleCarousel_p1_sm">ISKCON Founder - Acarya </p>
+
+							<p className="singleCarousel_p2_sm">
+								A.C Bhakthivedanta Swami Prabhupada
+							</p>
 						</div>
 					</div>
 				</div>
@@ -91,48 +56,6 @@ class SingleCarousel extends Component {
 								<p className="singleCarousel_p2_lg">
 									A.C Bhakthivedanta Swami Prabhupada
 								</p>
-							</div>
-						</div>
-
-						<div
-							className="container "
-							style={{ marginLeft: "70px", marginTop: "40px" }}
-							data-caption-animate="slideInDown"
-						>
-							<div className="swiper-slide-caption">
-								<div className="row">
-									<img
-										src="images/quote.jpg"
-										className="singleCarousel_quotes"
-									/>
-									<div
-										className="singleCarousel_heading_lg"
-										data-caption-animate="slideInDown"
-									>
-										{this.props.heading}
-										<br />{" "}
-									</div>
-								</div>
-								<div>
-									<span
-										className="quote"
-										data-caption-animate="slideInDown"
-										data-wow-delay="0"
-									>
-										<h4
-											className="singleCarousel_text_lg"
-											style={{
-												color: "black"
-											}}
-										>
-											{" "}
-											{renderHTML(this.props.text)}{" "}
-										</h4>
-										<p style={{ marginLeft: "35px", fontSize: "20px" }}>
-											-{this.props.author}
-										</p>
-									</span>
-								</div>
 							</div>
 						</div>
 					</div>
