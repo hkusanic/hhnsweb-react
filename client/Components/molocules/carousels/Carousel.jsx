@@ -59,7 +59,8 @@ export class Carousel2 extends Component {
 					<img className="img3" src="images/circle.png" />
 					<GridLayoutMenus />
 					<img className="img4" src="images/circle.png" />
-					<Blog {...this.props} />
+					{/* <Blog {...this.props}/> */}
+					<QuoteOfDay />
 				</div>
 				<br />
 				<Announcement />
