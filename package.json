@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@sendgrid/mail": "^6.3.1",
+    "@sendgrid/mail": "^6.4.0",
     "antd": "^3.16.6",
     "antd-init": "^2.0.7",
     "axios": "^0.18.1",
@@ -22,6 +22,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.4.4",
     "nodemailer": "^5.1.1",
+    "pg": "^7.12.1",
     "pug": "^2.0.3",
     "query-string": "^6.2.0",
     "rand-token": "^0.4.0",
@@ -60,9 +61,11 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "scroll-to-element": "^2.0.3",
+    "sendgrid": "^5.2.3",
     "tough-cookie": "^3.0.0",
     "underscore": "^1.9.1",
-    "uuid": "^3.3.2"
+    "unirest": "^0.6.0",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

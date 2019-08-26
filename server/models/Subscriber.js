@@ -1,11 +1,12 @@
 const keystone = require("keystone");
 const Types = keystone.Field.Types;
 
-// First we gonna create our User list
-let User = new keystone.List("User");
+// First we gonna create our Subscriber list
+let Subscriber = new keystone.List("Subscriber");
 
 // Then we gonna add the fields
-User.add({
+Subscriber.add({
+	subscriber_id: { type: String },
 	user_id: { type: String },
 	name: { type: Types.Name },
 	userName: { type: String },
@@ -61,4 +62,4 @@ User.add({
 	created_date_time: { type: Types.Date, default: Date.now }
 });
 
-User.register();
+Subscriber.register();
