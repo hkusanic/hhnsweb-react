@@ -525,7 +525,7 @@ exports = module.exports = function(app) {
 	app.post(
 		"/api/user/subscribe/",
 		keystone.middleware.api,
-		routes.api.user.subscription
+		routes.api.subscriber.subscription
 	);
 	app.post(
 		"/api/addrecipient/",

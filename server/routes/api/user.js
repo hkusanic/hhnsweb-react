@@ -14,8 +14,8 @@ var request = require("request");
 var unirest = require("unirest");
 var rp = require("request-promise");
 const UUID = require("uuid");
-
-const subscribeList = null;
+var cron = require("node-cron");
+//var schedule = require("node-schedule");
 
 sgMail.setApiKey(
 	"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"
@@ -244,8 +244,8 @@ exports.signup = function(req, res) {
 				console.log("hereeeeeeeeeeeeeeeeee");
 				let userData = {
 					name: {
-						first: req.body.name ? req.body.name.first : "",
-						last: req.body.name ? req.body.name.last : ""
+						first: req.body.firstName ? req.body.firstName : "",
+						last: req.body.lastName ? req.body.lastName : ""
 					},
 					user_id: req.body.user_id,
 					userName: req.body.userName,
@@ -832,9 +832,7 @@ async function uploadToAWS(filePath, req, response) {
 	console.log("...came to upload aws");
 	let content = await readFilePromise(filePath);
 	let base64data = new Buffer(content, "binary");
-	let myKey = `profilePictures/pictures/${req.body.uid}/${
-		req.body.oldData.picture.filename
-	}`;
+	let myKey = `profilePictures/pictures/${req.body.uid}/${req.body.oldData.picture.filename}`;
 	let params = {
 		Bucket: process.env.AWS_BUCKET,
 		Key: myKey,

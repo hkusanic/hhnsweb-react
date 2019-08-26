@@ -1,7 +1,7 @@
-// const { Client } = require("pg");
-// const sgMail = require("@sendgrid/mail");
-// const request = require("request");
-// var rp = require("request-promise");
+const { Client } = require("pg");
+const sgMail = require("@sendgrid/mail");
+const request = require("request");
+var rp = require("request-promise");
 
 // sgMail.setApiKey(
 // 	"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"
@@ -77,20 +77,12 @@
 // 				// POST succeeded...
 // 			})
 // 			.catch(function(err) {
-// 				console.log("err>>>>>>>>>>>>>>>>>>>>", err);
+// 				console.log("err", err);
 // 				// POST failed...
 // 			});
 // 		client.end();
 // 	}
 // );
-
-// const demolist = [
-// 	{ email: "anurag@cronj.com", name: "anurag" },
-// 	{ email: "prateek@cronj.com", name: "prateek" },
-// 	{ email: "ayush@cronj.com", name: "ayush" },
-// 	{ email: "dilip@cronj.com", name: "dilip" },
-// 	{ email: "priyanka@cronj.com", name: "priyanka" }
-// ];
 
 // const options = {
 // 	method: "POST",
