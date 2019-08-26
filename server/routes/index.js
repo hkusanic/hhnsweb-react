@@ -16,6 +16,7 @@ var multipartMiddleware = multipart();
 exports = module.exports = function (app) {
 	// Get access to the API route in our app
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
+	app.post('/api/newsletter/subscribe', keystone.middleware.api, routes.api.newsletter.subscribe);
 	app.get('/api/content/', keystone.middleware.api, routes.api.content.list);
 	app.get('/api/content/getLimitedList', keystone.middleware.api, routes.api.content.getlimitedlist);
 	app.all('/api/appointment/:id/update', keystone.middleware.api, routes.api.appointment.update);
