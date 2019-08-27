@@ -2,6 +2,7 @@ const cron = require("node-cron");
 const keystone = require('keystone');
 const Subscription = keystone.list('Subscription');
 const request = require('request');
+const EMAIL_CONFIG = require('../constants/constant');
 
 const getEmails = () => {
     let emailListRu = [];
@@ -29,7 +30,8 @@ const getEmails = () => {
             let obj1 = {
                 to: [{ email: obj.email }],
                 dynamic_template_data: {
-                    name: obj.name,
+                    header:'News Letter',
+                    link:'New Blog'
                 }
             };
             personalisationArEn.push(obj1);
@@ -38,7 +40,8 @@ const getEmails = () => {
             let obj1 = {
                 to: [{ email: obj.email }],
                 dynamic_template_data: {
-                    name: obj.name,
+                    header:'Новостная рассылка',
+                    link:'новый блог'
                 }
             };
             personalisationArRu.push(obj1);
@@ -47,18 +50,18 @@ const getEmails = () => {
         const dataEn = {
             personalizations: personalisationArEn,
             from: {
-                email: "manas@cronj.com",
-                name: "manas"
+                email: "harekrishna@hhniranjanaswami.net",
+                name: "H.H.Niranjana Swami"
             },
-            template_id: "d-bb83dedb9d5544918719c418d0db62a5"
+            template_id: "d-ad15e920ea404de5954e817c03d3cc9f"
         };
         const dataRu = {
             personalizations: personalisationArRu,
             from: {
-                email: "manas@cronj.com",
-                name: "manas"
+                email: "harekrishna@hhniranjanaswami.net",
+                name: "H.H.Niranjana Swami"
             },
-            template_id: "d-d16fe0617ab44c92b7869dd0899d4282"
+            template_id: "d-a8bdbe7b41b84b8585501b81073c0079"
         };        
 
          const postdataEn = JSON.stringify(dataEn);
@@ -69,7 +72,7 @@ const getEmails = () => {
             	uri: "https://api.sendgrid.com/v3/mail/send",
             	headers: {
             		authorization:
-            			"Bearer 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",
+                        `Bearer ${ EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.SENDGRID_API_KEY }`,
             		"Content-Type": "application/json"
             	},
             	body: postdataEn
@@ -79,7 +82,7 @@ const getEmails = () => {
             uri: "https://api.sendgrid.com/v3/mail/send",
             headers: {
                 authorization:
-                    "Bearer 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",
+                `Bearer ${ EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.SENDGRID_API_KEY }`,
                 "Content-Type": "application/json"
             },
             body: postdataRu
