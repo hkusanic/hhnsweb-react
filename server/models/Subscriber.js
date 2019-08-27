@@ -8,6 +8,7 @@ let Subscriber = new keystone.List("Subscriber");
 Subscriber.add({
 	subscriber_id: { type: String },
 	user_id: { type: String },
+	isRegistered: { type: Boolean, initial: false, required: true },
 	name: { type: Types.Name },
 	userName: { type: String },
 	discipleName: { type: String },

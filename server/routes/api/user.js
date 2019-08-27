@@ -18,7 +18,7 @@ var cron = require("node-cron");
 //var schedule = require("node-schedule");
 
 sgMail.setApiKey(
-	"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"
+	"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"
 );
 
 // var transporter = nodemailer.createTransport(
@@ -313,9 +313,9 @@ exports.signup = function(req, res) {
 				to: req.body.email,
 				from: "anurag@cronj.com",
 				subject: "Registration Successful through sendgrid",
-				templateId: "d-c89034444bca44b0882f7f1bef971de2",
+				templateId: "d-f070f473e65542f9b132e28a0ecb6ce3",
 				dynamic_template_data: {
-					name: req.body.firstname
+					name: req.body.firstName + " " + req.body.lastName
 				}
 			};
 			let onSuccess = function(user) {
@@ -488,7 +488,7 @@ exports.forgotpassword = function(req, res) {
 					to: req.body.email,
 					from: "anurag@cronj.com",
 					subject: "Password Reset",
-					templateId: "d-1b7e4524ce2c4079ad5fce0f04520dcb",
+					templateId: "d-838c17b0e7504c6886f52131c228b576",
 					dynamic_template_data: {
 						link: url
 					}
@@ -637,7 +637,7 @@ exports.resetpassword = function(req, res) {
 							to: req.body.email,
 							from: "anurag@cronj.com",
 							subject: "Your Password is Successfully Changed",
-							templateId: "d-452092f2428443c7a67b57a230d4634a",
+							templateId: "d-67c3985046ba44afa7d824e1bf06f83d",
 							dynamic_template_data: {
 								userPassword: userPassword
 							}

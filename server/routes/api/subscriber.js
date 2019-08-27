@@ -103,9 +103,9 @@ exports.subscription = function(req, res) {
 		},
 		"API subscription user"
 	);
-	const { firstName, lastName, email } = req.body;
+	const { firstName, lastName, email, language } = req.body;
 	console.log("firstName", firstName);
-	if (!firstName || !lastName || !email) {
+	if (!firstName || !lastName || !email || !language) {
 		return res.json({
 			error: {
 				title: "Name and Email both are required",
@@ -149,6 +149,142 @@ exports.subscription = function(req, res) {
 				// 		console.log("err>>>>>>>>>>>>>>", err);
 				// 		// API call failed...
 				// 	});
+
+				async.series(
+					[
+						cb => {
+							keystone.list("Subscriber").model.findOne(
+								{
+									email: req.body.email
+								},
+								(err, user) => {
+									if (err || user) {
+										return res.json({
+											error: {
+												title: "Already Subscribed with that email",
+												detail: "Please try with another email"
+											}
+										});
+									}
+									return cb();
+								}
+							);
+						},
+						cb => {
+							console.log("hereeeeeeeeeeeeeeeeee");
+							let subscriberData = {
+								name: {
+									first: req.body.firstName ? req.body.firstName : "",
+									last: req.body.lastName ? req.body.lastName : ""
+								},
+								subscriber_id: req.body.subscriber_id,
+								user_id: "null",
+								isRegistered: false,
+								//userName: userFound.userName,
+								email: req.body.email,
+								//mobileNumber: userFound.mobileNumber,
+								countryCode: req.body.countryCode,
+								disciple: req.body.disciple,
+								timezone: req.body.timezone,
+								language: req.body.language,
+								created: req.body.created,
+								// access: req.body.access,
+								// login: req.body.login,
+								// signature: req.body.signature,
+								// signature_format: req.body.signature_format,
+								canAccessKeystone: req.body.canAccessKeystone
+								// oldData: {
+								// 	uid: req.body.oldData.uid,
+								// 	vid: req.body.oldData.vid,
+								// 	nid: req.body.oldData.nid,
+								// 	init: req.body.oldData.init,
+								// 	picture: req.body.oldData.picture,
+								// 	path: req.body.oldData.path
+								// }
+							};
+							if (
+								req.body.disciple_profile &&
+								Object.keys(req.body.disciple_profile).length > 0
+							) {
+								console.log("inside it");
+								subscriberData.disciple_profile = {
+									first_initiation_date:
+										req.body.disciple_profile.first_initiation_date,
+									second_initiation_date:
+										req.body.disciple_profile.second_initiation_date,
+									spiritual_name: req.body.disciple_profile.spiritual_name,
+									temple: req.body.disciple_profile.temple,
+									verifier: req.body.disciple_profile.verifier,
+									marital_status: req.body.disciple_profile.marital_status,
+									education: req.body.disciple_profile.education
+								};
+							}
+
+							let Subscriber = keystone.list("Subscriber").model;
+							let newSubscriber = new Subscriber(subscriberData);
+
+							newSubscriber.save(err => {
+								console.trace("Trace*******", err);
+								return cb("err>>>>>>>>>>>>>>>>>>>>>>>>", err);
+							});
+						}
+					],
+					err => {
+						if (err) {
+							logger.error(
+								{
+									error: err
+								},
+								"API subscribe user"
+							);
+							console.log("ERROR222", err);
+						}
+						// let onSuccess = function(user) {
+						// 	console.log("Im here");
+						// 	res.json({
+						// 		success: true,
+						// 		session: true,
+						// 		date: new Date().getTime(),
+						// 		admin: subscriber.canAccessKeystone,
+						// 		loginUser: {
+						// 			id: user.id,
+						// 			email: user.email,
+						// 			firstName: user.name.first,
+						// 			last: user.name.last,
+						// 			mobileNumber: user.mobileNumber,
+						// 			countryCode: user.countryCode,
+						// 			user_id: user.user_id,
+						// 			youbookme_url: process.env.YOUBOOKME_URL
+						// 		}
+						// 	});
+						// 	//return sgMail.send(msg);
+						// };
+
+						// let onFail = function(e) {
+						// 	logger.error(
+						// 		{
+						// 			error: e
+						// 		},
+						// 		"API signup user"
+						// 	);
+						// 	res.json({
+						// 		error: {
+						// 			title: "Sign up error",
+						// 			detail: "There was a problem signing you up, please try again"
+						// 		}
+						// 	});
+						// 	console.log("ERROR111", e);
+						// };
+
+						// keystone.session.signin(
+						// 	{ email: req.body.email, password: req.body.password },
+						// 	req,
+						// 	res,
+						// 	onSuccess,
+						// 	onFail
+						// );
+					}
+				);
 
 				const data = {
 					list_ids: ["d044f9b8-7742-49ac-be7b-6c65c56f67a7"],
@@ -219,6 +355,7 @@ exports.subscription = function(req, res) {
 								},
 								subscriber_id: req.body.subscriber_id,
 								user_id: userFound._id,
+								isRegistered: true,
 								//userName: userFound.userName,
 								email: req.body.email,
 								password: userFound.password,
@@ -298,7 +435,7 @@ exports.subscription = function(req, res) {
 									youbookme_url: process.env.YOUBOOKME_URL
 								}
 							});
-							return sgMail.send(msg);
+							//return sgMail.send(msg);
 						};
 
 						let onFail = function(e) {
@@ -317,53 +454,53 @@ exports.subscription = function(req, res) {
 							console.log("ERROR111", e);
 						};
 
-						keystone.session.signin(
-							{ email: req.body.email, password: req.body.password },
-							req,
-							res,
-							onSuccess,
-							onFail
-						);
+						// keystone.session.signin(
+						// 	{ email: req.body.email, password: req.body.password },
+						// 	req,
+						// 	res,
+						// 	onSuccess,
+						// 	onFail
+						// );
 					}
 				);
-				// const data = {
-				// 	list_ids: ["7bf9530e-4a7b-48ae-996f-93c0ad704423"],
-				// 	contacts: [
-				// 		{
-				// 			//address_line_1: "string (optional)",
-				// 			//address_line_2: "string (optional)",
-				// 			//alternate_emails: ["string"],
-				// 			//city: "string (optional)",
-				// 			//country: "string (optional)",
-				// 			email: email,
-				// 			first_name: firstname,
-				// 			id: UUID(),
-				// 			last_name: lastname
-				// 			//postal_code: "string (optional)",
-				// 			//state_province_region: "string (optional)",
-				// 			//custom_fields: {
-				// 			//	status: 'subscribed'
-				// 			//}
-				// 		}
-				// 	]
-				// };
-				// const putdata = JSON.stringify(data);
-				// const options = {
-				// 	method: "PUT",
-				// 	url: "https://api.sendgrid.com/v3/marketing/contacts/lists",
-				// 	headers: {
-				// 		authorization:
-				// 			"Bearer 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"
-				// 	},
-				// 	body: putdata
-				// };
-				// rp(options)
-				// 	.then(function(parsedBody) {
-				// 		console.log("body>>>>>", parsedBody);
-				// 	})
-				// 	.catch(function(err) {
-				// 		console.log("err>>>>>>>>>>>>", err);
-				// 	});
+				const data = {
+					list_ids: ["7bf9530e-4a7b-48ae-996f-93c0ad704423"],
+					contacts: [
+						{
+							//address_line_1: "string (optional)",
+							//address_line_2: "string (optional)",
+							//alternate_emails: ["string"],
+							//city: "string (optional)",
+							//country: "string (optional)",
+							email: email,
+							first_name: firstname,
+							id: UUID(),
+							last_name: lastname
+							//postal_code: "string (optional)",
+							//state_province_region: "string (optional)",
+							//custom_fields: {
+							//	status: 'subscribed'
+							//}
+						}
+					]
+				};
+				const putdata = JSON.stringify(data);
+				const options = {
+					method: "PUT",
+					url: "https://api.sendgrid.com/v3/marketing/contacts/lists",
+					headers: {
+						authorization:
+							"Bearer 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"
+					},
+					body: putdata
+				};
+				rp(options)
+					.then(function(parsedBody) {
+						console.log("body>>>>>", parsedBody);
+					})
+					.catch(function(err) {
+						console.log("err>>>>>>>>>>>>", err);
+					});
 			}
 		});
 };

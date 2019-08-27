@@ -126,62 +126,82 @@ keystone.set("routes", require("./server/routes"));
 // Start Keystone
 keystone.start();
 
-const url = "http://localhost:3000/audio";
-const demolist = [
-	{ email: "anurag@cronj.com", name: "anurag" },
-	{ email: "prateek@cronj.com", name: "prateek" },
-	{ email: "ayush@cronj.com", name: "ayush" },
-	{ email: "dilip@cronj.com", name: "dilip" },
-	{ email: "priyanka@cronj.com", name: "priyanka" }
-];
+//const url = "http://localhost:3000/audio";
+const emailList = [];
+// const demolist = [
+// 	{ email: "anurag@cronj.com", name: "anurag" },
+// 	{ email: "prateek@cronj.com", name: "prateek" },
+// 	{ email: "ayush@cronj.com", name: "ayush" },
+// 	{ email: "dilip@cronj.com", name: "dilip" },
+// 	{ email: "priyanka@cronj.com", name: "priyanka" }
+// ];
 
-cron.schedule("*/1 * * * *", () => {
-	// let personalisationAr = [];
-	// demolist.map(obj => {
-	// 	let obj1 = {
-	// 		to: [{ email: obj.email }],
-	// 		dynamic_template_data: {
-	// 			name: obj.name,
-	// 			link: url
-	// 		},
-	// 		subject: "Review Audio"
-	// 	};
-	// 	personalisationAr.push(obj1);
-	// });
-
-	// const data = {
-	// 	personalizations: personalisationAr,
-	// 	from: {
-	// 		email: "anurag@cronj.com",
-	// 		name: "anurag"
-	// 	},
-	// 	template_id: "d-59f330b284be4970bf6d9075054f525b"
-	// };
-
-	// const postdata = JSON.stringify(data);
-
-	// console.log("postdata>>>>>>>>>>>>", postdata);
-
-	// var options = {
-	// 	method: "POST",
-	// 	uri: "https://api.sendgrid.com/v3/mail/send",
-	// 	headers: {
-	// 		authorization:
-	// 			"Bearer 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",
-	// 		"Content-Type": "application/json"
-	// 	},
-	// 	body: postdata
-	// 	//json: true // Automatically stringifies the body to JSON
-	// };
-
-	// rp(options)
-	// 	.then(function(parsedBody) {
-	// 		console.log("succeeded");
-	// 		// POST succeeded...
-	// 	})
-	// 	.catch(function(err) {
-	// 		console.log("err", err);
-	// 		// POST failed...
-	// 	});
-	console.log("hello");
+cron.schedule("*/2 * * * *", () => {
+	keystone
+		.list("Subscriber")
+		.model.find()
+		.exec((err, subscriberList) => {
+			if (err || !subscriberList) {
+				logger.error(
+					{
+						error: err
+					},
+					"API subscriberList"
+				);
+				return res.json({
+					error: {
+						title: "Not able to get the subscriber list or list is empty"
+					}
+				});
+			}
+			console.log(subscriberList);
+			for (let subscriber of subscriberList) {
+				emailList.push({
+					email: subscriber.email,
+					name: subscriber.name.first + " " + subscriber.name.last
+				});
+			}
+		});
+	let personalisationAr = [];
+	demolist.map(obj => {
+		let obj1 = {
+			to: [{ email: obj.email }],
+			dynamic_template_data: {
+				name: obj.name,
+				link: url
+			},
+			subject: "Review Audio"
+		};
+		personalisationAr.push(obj1);
+	});
+	const data = {
+		personalizations: personalisationAr,
+		from: {
+			email: "anurag@cronj.com",
+			name: "anurag"
+		},
+		template_id: "d-59f330b284be4970bf6d9075054f525b"
+	};
+	const postdata = JSON.stringify(data);
+	console.log("postdata>>>>>>>>>>>>", postdata);
+	var options = {
+		method: "POST",
+		uri: "https://api.sendgrid.com/v3/mail/send",
+		headers: {
+			authorization:
+				"Bearer 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",
+			"Content-Type": "application/json"
+		},
+		body: postdata
+		//json: true // Automatically stringifies the body to JSON
+	};
+	rp(options)
+		.then(function(parsedBody) {
+			console.log("succeeded");
+			// POST succeeded...
+		})
+		.catch(function(err) {
+			console.log("err", err);
+			// POST failed...
+		});
 });

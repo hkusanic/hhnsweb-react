@@ -1,11 +1,11 @@
-const { Client } = require("pg");
-const sgMail = require("@sendgrid/mail");
-const request = require("request");
-var rp = require("request-promise");
+// const { Client } = require("pg");
+// const sgMail = require("@sendgrid/mail");
+// const request = require("request");
+// var rp = require("request-promise");
 
-// sgMail.setApiKey(
-// 	"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"
-// );
+// // sgMail.setApiKey(
+// // 	"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"
+// // );
 
 // const client = new Client({
 // 	connectionString:
