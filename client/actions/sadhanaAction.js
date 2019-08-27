@@ -115,6 +115,7 @@ export function getSadhanaListAction (data) {
           event: "sadhana list",
            properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 
@@ -137,6 +138,7 @@ export function createSadhanaSheetAction (data) {
           event: "create sadhana sheet",
          properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 
@@ -178,6 +180,8 @@ export function getSadhanaByIdAction (data) {
           event: "get sadhana by id",
          properties: {
             data:data,
+
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 

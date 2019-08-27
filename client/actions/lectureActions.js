@@ -110,6 +110,7 @@ export function searchLectureAction (data) {
           event: "Audios list",
           properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 
@@ -131,6 +132,7 @@ export function searchLectureActionVideo (data) {
           event: "searching lecture video",
           properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 
@@ -152,7 +154,8 @@ export function searchLectureActionTranscriptions (data) {
         eventPayload: {
           event: "searching lecture transcriptions",
           properties: {
-            data
+            data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
           }
         }
       }

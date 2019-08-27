@@ -26,7 +26,8 @@ export function getUserDetailsByUserIdAction (data) {
         eventPayload: {
           event: "get user details by id",
           properties: {
-            data
+            data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
           }
         }
       }

@@ -3,6 +3,14 @@ import * as types from '../constants/index';
 import { EventTypes } from 'redux-segment';
 
 
+function uuidv4() {
+	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+		var r = (Math.random() * 16) | 0;
+		var v = c == "x" ? r : (r & 0x3) | 0x8;
+		return v.toString(16);
+	});
+}
+
 export function getBlogs (page) {
 	return (dispatch) => {
 		blogApi.getBlogs(page)
@@ -27,6 +35,7 @@ export function getBlogAction (data) {
           event: "all blogs",
            properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 
@@ -73,6 +82,7 @@ export function getAction (data) {
           event: "get a blog",
           properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 
@@ -97,6 +107,7 @@ export function fetchBlogByUuid (data) {
           event: "fetch blog by id",
           properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 

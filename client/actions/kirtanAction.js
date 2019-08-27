@@ -41,6 +41,7 @@ export function searchKirtanAction (data) {
           event: "search kirtan",
           properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 
@@ -65,6 +66,7 @@ export function fetchKirtanByUuid (data) {
           event: "fetch kirtan by id",
           properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 

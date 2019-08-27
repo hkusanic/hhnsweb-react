@@ -51,6 +51,7 @@ export function getVideoListAction (data) {
           event: "videos list",
            properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 
@@ -73,6 +74,7 @@ export function getVideoByIdAction (data) {
           event: "get video by id",
           properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 
@@ -95,6 +97,7 @@ export function updateVideoPageViewAction (data) {
           event: "update video page view",
           properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 

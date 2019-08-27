@@ -122,7 +122,9 @@ export function signupAction (data) {
         eventPayload: {
           event: "User signup",
           properties: {
-            data
+            data:data,
+            userId: data.loginUser.user_id,
+
           }
         }
       },
@@ -133,6 +135,16 @@ export function signupAction (data) {
       	userId: data.loginUser.user_id,
       
       }
+      },
+      {
+      	eventType: EventTypes.track,
+        eventPayload: {
+          event: "User Login",
+          properties: {
+            data,
+            userId: data.loginUser.user_id,
+          }
+        }
       }
       ]
     },
@@ -169,7 +181,9 @@ export function loginAction (data) {
         eventPayload: {
           event: "User Login",
           properties: {
-            data
+            data,
+
+            userId: data.loginUser.user_id,
           }
         }
       },
@@ -217,7 +231,8 @@ export function getUserByAccessIdAction (data) {
         eventPayload: {
           event: "Get user by id",
           properties: {
-            data
+            data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
           }
         }
       }
@@ -255,8 +270,8 @@ export function editProfileAction (data) {
         eventPayload: {
           event: "edit profile",
           properties: {
-            data
-          }
+            data,
+  userId:JSON.parse(localStorage.getItem("user")).user_id,          }
         }
       }
     },
@@ -274,7 +289,8 @@ export function contactUsAction (data) {
         eventPayload: {
           event: "contact us",
           properties: {
-            data
+            data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
           }
         }
       }
@@ -293,8 +309,8 @@ export function updatePasswordAction (data) {
         eventPayload: {
           event: "update password",
           properties: {
-            data
-          }
+            data,
+userId:JSON.parse(localStorage.getItem("user")).user_id,          }
         }
       }
     },
@@ -314,6 +330,7 @@ export function checkLogin () {
         eventType: EventTypes.track,
         eventPayload: {
           event: "check login",
+          
           
         }
       }

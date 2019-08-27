@@ -54,6 +54,7 @@ export function getGalleriesAction (data) {
           event: "all Galleries",
            properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 
@@ -77,6 +78,7 @@ export function getStaticGalleryListAction (data) {
           event: "get static gallery",
           properties: {
             data:data,
+            userId:JSON.parse(localStorage.getItem("user")).user_id,
             user: JSON.parse(localStorage.getItem("user")),
 
 
