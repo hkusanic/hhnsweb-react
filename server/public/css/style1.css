@@ -26,6 +26,7 @@
 	object-fit: contain;
 	float: left;
 }
+
 .singleCarousel_image_sm {
 	width: 57px;
 	height: 90px;
@@ -218,7 +219,7 @@
 	font-family: Charter-Roman;
 	font-size: 13px;
 	font-weight: bold;
-	line-height: 1.13;
+	/* line-height: 1.13; */
 	color: black;
 }
 
@@ -226,7 +227,7 @@
 	font-family: Charter;
 	font-size: 12px;
 	font-weight: bold;
-	line-height: 1.13;
+	/* line-height: 1.13; */
 	color: #aeb1be;
 }
 

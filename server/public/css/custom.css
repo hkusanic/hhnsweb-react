@@ -94,7 +94,6 @@
 	width: 32.445095vw;
 }
 
-
 .banner {
 	/*background-image: url("data:../../../../../client/assets/images/banner.png");*/
 }
@@ -1124,11 +1123,14 @@
 .ant-card-head-title {
 	color: #ff830a !important;
 	font-size: 18px !important;
+	font-family: Charter-Roman !important;
+	font-weight: bold !important;
 }
 
 .recentContent_title {
 	color: rgba(0, 0, 0, 0.65);
 	font-weight: 500;
+	font-family: Charter;
 }
 
 @media (min-width: 200px) {
