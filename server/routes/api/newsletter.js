@@ -22,7 +22,9 @@ exports.subscribe = async ( req, res ) => {
             error:'Email required'
         });
     }
+
     let registered = 0;
+    
     await User.model.findOne({email: req.body.email})
     .exec( (err, user) => {
         if(err){
@@ -32,7 +34,9 @@ exports.subscribe = async ( req, res ) => {
         }
         if(user){
             registered = 1;
+        
         }
+        
     } )
 
     await Subscription.model.findOne(
@@ -56,7 +60,11 @@ exports.subscribe = async ( req, res ) => {
             let subData = {
             
                 email : req.body.email,
-                registered: registered  
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
+                registered: registered,
+                lang: req.body.lang,
+                
             }
             
             let subs = keystone.list('Subscription').model;
@@ -66,12 +74,15 @@ exports.subscribe = async ( req, res ) => {
 
             subData = {
 
-                list_ids:["890a430a-dec7-4f10-8d61-fbcbb8ed5318"],
+                list_ids:["890a4130a-dec7-4f10-8d61-fbcbb8ed5318"],
                 contacts:[
                     {
                         email: req.body.email,
+                        first_name: req.body.firstname,
+                        last_name: req.body.lastname,
                         custom_fields: {
-                            "e1_N":registered
+                            "e1_N":registered,
+                            "e3_T":req.body.lang
                         }
                     }
                 ],
@@ -103,4 +114,30 @@ exports.subscribe = async ( req, res ) => {
         }
          
     });
+}
+
+exports.listAll = function ( req, res ) {
+    logger.info({
+        req:req,
+        
+    }, 'API News letter');
+
+    Subscription.model.find()
+    .exec((err, user) => {
+        let registeredUser = user.map((data)=>{
+            if(data.registered){
+                return data;
+            }
+        });
+        
+        let unregistered = user.map( (data) => {
+            if(!data.registered)
+            return data;
+        } )
+
+        return res.json({
+            rU:registeredUser,
+            urU: unregistered
+        });
+    })
 }

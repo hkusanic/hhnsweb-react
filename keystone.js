@@ -118,6 +118,7 @@ keystone.init({
 
 // Load your project's Models
 keystone.import('./server/models');
+keystone.import('./server/cronjobs');
 // Add routes
 keystone.set('routes', require('./server/routes'));
 
