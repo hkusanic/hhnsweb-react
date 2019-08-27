@@ -8,6 +8,8 @@ import reactCookie from "react-cookies";
 import script from "../../../assets/script.js";
 import { Card } from "antd";
 import { Translate } from "react-localize-redux";
+import ContentDetails from "../../../containers/contents/ContentDetails";
+import RussianDubbedLectures from "../../../containers/Lectures/LecturesInRussian";
 
 export class QuoteOfDay extends React.Component {
 	constructor(props) {
@@ -16,6 +18,15 @@ export class QuoteOfDay extends React.Component {
 			quotes: []
 		};
 	}
+	showing100Characters = sentence => {
+		var result = sentence;
+		var resultArray = result.split(" ");
+		if (resultArray.length > 67) {
+			resultArray = resultArray.slice(0, 67);
+			result = resultArray.join(" ") + "...";
+		}
+		return result;
+	};
 	componentDidMount() {
 		script();
 		let authorList = ["Niranjana Swami", "Srila Prabhupada"];
@@ -33,14 +44,28 @@ export class QuoteOfDay extends React.Component {
 			<div>
 				<section class="section section-lg text-center">
 					<div class="container">
+						<div className="row row-50 row-xxl-70">
+							<div className="wow-outer col-md-6 col-lg-6 col-sm-12 page1">
+								<ContentDetails />
+							</div>
+							<div className="wow-outer col-md-6 col-lg-6 col-sm-12 page1">
+								<RussianDubbedLectures />
+							</div>
+						</div>
+					</div>
+					<div class="container">
 						<br />
 						<br />
 						<h3>Quotes of the day</h3>
 						<br />
 						<br />
 						<div className="row row-50 row-xxl-70">
-							<div className="wow-outer col-md-6 col-lg-6 col-sm-12 page1">
-								<Card hoverable>
+							<div
+								className="wow-outer col-md-6 col-lg-6 col-sm-12 page1"
+								style={{ padding: "2vw" }}
+							>
+								{/* <Card hoverable> */}
+								<div>
 									<Link
 										to={{
 											pathname: `/quotes/Niranjana Swami`,
@@ -61,23 +86,25 @@ export class QuoteOfDay extends React.Component {
 											<div class="quote-modern-text">
 												<p className="singleblog_description">
 													{renderHTML(
-														reactCookie.load("languageCode") === "en"
-															? this.props &&
-															  this.props.quote &&
-															  this.props.quote.quotes &&
-															  this.props.quote.quotes[0] &&
-															  this.props.quote.quotes[0].en &&
-															  this.props.quote.quotes[0].en.body
-																? this.props.quote.quotes[0].en.body
+														this.showing100Characters(
+															reactCookie.load("languageCode") === "en"
+																? this.props &&
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[0] &&
+																  this.props.quote.quotes[0].en &&
+																  this.props.quote.quotes[0].en.body
+																	? this.props.quote.quotes[0].en.body
+																	: "Sorry, No data available"
+																: this.props &&
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[0] &&
+																  this.props.quote.quotes[0].ru &&
+																  this.props.quote.quotes[0].ru.body
+																? this.props.quote.quotes[0].ru.body
 																: "Sorry, No data available"
-															: this.props &&
-															  this.props.quote &&
-															  this.props.quote.quotes &&
-															  this.props.quote.quotes[0] &&
-															  this.props.quote.quotes[0].ru &&
-															  this.props.quote.quotes[0].ru.body
-															? this.props.quote.quotes[0].ru.body
-															: "Sorry, No data available"
+														)
 													)}
 												</p>
 											</div>
@@ -136,11 +163,16 @@ export class QuoteOfDay extends React.Component {
 											{({ translate }) => translate("FOOTER.readmore")}
 										</Translate>
 									</Link>
-								</Card>
+									{/* </Card> */}
+								</div>
 							</div>
 
-							<div className="wow-outer col-md-6 col-lg-6 col-sm-12 page1">
-								<Card hoverable>
+							<div
+								className="wow-outer col-md-6 col-lg-6 col-sm-12 page1"
+								style={{ padding: "2vw" }}
+							>
+								{/* <Card hoverable> */}
+								<div>
 									<Link
 										to={{
 											pathname: "/quotes/Srila Prabhupada",
@@ -161,25 +193,27 @@ export class QuoteOfDay extends React.Component {
 											<div class="quote-modern-text">
 												<p className="singleblog_description">
 													{renderHTML(
-														reactCookie.load("languageCode") === "en"
-															? this.props &&
-															  this.props.quote &&
-															  this.props.quote.quotes &&
-															  this.props.quote.quotes[1] &&
-															  this.props.quote.quotes[1].en &&
-															  this.props.quote.quotes[1].en.body &&
-															  this.props.quote.quotes[1].en.body
-																? this.props.quote.quotes[1].en.body
-																: "Sorry ,No data available"
-															: this.props &&
-															  this.props.quote &&
-															  this.props.quote.quotes &&
-															  this.props.quote.quotes[1] &&
-															  this.props.quote.quotes[1].ru &&
-															  this.props.quote.quotes[1].ru.body &&
-															  this.props.quote.quotes[1].ru.body
-															? this.props.quote.quotes[1].ru.body
-															: "Sorry, No data available"
+														this.showing100Characters(
+															reactCookie.load("languageCode") === "en"
+																? this.props &&
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[1] &&
+																  this.props.quote.quotes[1].en &&
+																  this.props.quote.quotes[1].en.body &&
+																  this.props.quote.quotes[1].en.body
+																	? this.props.quote.quotes[1].en.body
+																	: "Sorry ,No data available"
+																: this.props &&
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[1] &&
+																  this.props.quote.quotes[1].ru &&
+																  this.props.quote.quotes[1].ru.body &&
+																  this.props.quote.quotes[1].ru.body
+																? this.props.quote.quotes[1].ru.body
+																: "Sorry, No data available"
+														)
 													)}
 												</p>
 											</div>
@@ -235,7 +269,8 @@ export class QuoteOfDay extends React.Component {
 											{({ translate }) => translate("FOOTER.readmore")}
 										</Translate>
 									</Link>
-								</Card>
+									{/* </Card> */}
+								</div>
 							</div>
 						</div>
 					</div>

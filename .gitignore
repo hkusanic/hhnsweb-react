@@ -40,3 +40,6 @@ server/public/js/
 #ignore templates
 template_58204_OGG2umm0Vll7xx7tUUPq
 __MACOSX
+
+test.js
+/localStorage
