@@ -367,7 +367,11 @@ export class Navigation extends Component {
 
 											<span
 												className={
-													maxWidth <= 1210 ? "nav_span_small" : "nav_span_lg"
+													maxWidth >= 1210
+														? maxWidth > 1440
+															? "nav_span_xlg "
+															: "nav_span_lg"
+														: "nav_span_small"
 												}
 											>
 												<li
