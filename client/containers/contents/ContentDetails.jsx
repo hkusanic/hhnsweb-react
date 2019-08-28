@@ -22,16 +22,13 @@ class ContentDetails extends Component {
 
 	render() {
 		return (
-			<Card
-				className="centerAlign recentActivityCard"
-				title="Recent Activities"
-			>
+			<Card className="recentActivityCard" title="Recent Activities">
 				{this.props.contentDetails &&
 					this.props.contentDetails.content &&
 					this.props.contentDetails.content.map(eachContent => {
 						return (
 							<div
-								style={{ paddingBottom: "3%" }}
+								style={{ paddingBottom: "3%", textAlign: "left" }}
 								key={eachContent.content_uuid}
 							>
 								<Link

@@ -1,23 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import renderHTML from 'react-render-html';
-import reactCookie from 'react-cookies';
-import Comments from '../Comments/Comments';
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { connect } from 'react-redux';
-import { getLectureByUuid } from '../../../actions/lectureActions';
+import React from "react";
+import { Link } from "react-router-dom";
+import renderHTML from "react-render-html";
+import reactCookie from "react-cookies";
+import Comments from "../Comments/Comments";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
+import { connect } from "react-redux";
+import { getLectureByUuid } from "../../../actions/lectureActions";
 export class LectureDetails extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
-			lectureDetails: null,
+			lectureDetails: null
 		};
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		const body = {
 			uuid: this.props.match.params.uuid,
-			video_page_view: true,
+			video_page_view: true
 		};
 
 		this.props.getLectureByUuid(body);
@@ -26,20 +26,20 @@ export class LectureDetails extends React.Component {
 		}
 	}
 
-	static getDerivedStateFromProps (nextProps, prevState) {
+	static getDerivedStateFromProps(nextProps, prevState) {
 		if (nextProps.lectureDetails !== prevState.lectureDetails) {
 			return { lectureDetails: nextProps.lectureDetails };
 		} else return null;
 	}
 
-	render () {
+	render() {
 		const { lectureDetails } = this.state;
 
 		if (!lectureDetails) {
 			return <div>Error Occured..........</div>;
 		}
 
-		if (!localStorage.getItem('user')) {
+		if (!localStorage.getItem("user")) {
 			return (
 				<div className="loginText">
 					<p className="bookingForm">Please log in to continue</p>
@@ -53,14 +53,14 @@ export class LectureDetails extends React.Component {
 					className="bg-gray-100"
 					style={{
 						backgroundImage:
-							'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
+							"url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)"
 					}}
 				>
 					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
 							<ul class="breadcrumbs-custom-path">
 								<li>
-									<Link to="" onClick={() => this.props.history.push('/')}>
+									<Link to="" onClick={() => this.props.history.push("/")}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
 									</Link>
 								</li>
@@ -72,11 +72,11 @@ export class LectureDetails extends React.Component {
 								<li>
 									<a className="textColor">
 										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
+											reactCookie.load("languageCode") === "en"
 												? lectureDetails.en.title
 												: lectureDetails.ru.title
-													? lectureDetails.ru.title
-													: lectureDetails.en.title
+												? lectureDetails.ru.title
+												: lectureDetails.en.title
 										)}
 									</a>
 								</li>
@@ -91,11 +91,11 @@ export class LectureDetails extends React.Component {
 								<article className="post-creative">
 									<h3 className="post-creative-title">
 										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
+											reactCookie.load("languageCode") === "en"
 												? lectureDetails.en.title
 												: lectureDetails.ru.title
-													? lectureDetails.ru.title
-													: lectureDetails.en.title
+												? lectureDetails.ru.title
+												: lectureDetails.en.title
 										)}
 									</h3>
 									<ul className="post-creative-meta">
@@ -121,11 +121,11 @@ export class LectureDetails extends React.Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load('languageCode') === 'en'
+													{reactCookie.load("languageCode") === "en"
 														? lectureDetails.en.event
 														: lectureDetails.ru.event
-															? lectureDetails.ru.event
-															: lectureDetails.en.event}
+														? lectureDetails.ru.event
+														: lectureDetails.en.event}
 												</td>
 											</tr>
 											{lectureDetails.part ? (
@@ -172,54 +172,62 @@ export class LectureDetails extends React.Component {
 													</td>
 												</tr>
 											) : null}
-											<tr>
-												<td>
-													<b>
-														<span>Durations</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.duration}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Location</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{reactCookie.load('languageCode') === 'en'
-														? lectureDetails.en.location
-														: lectureDetails.ru.location
+											{lectureDetails.duration ? (
+												<tr>
+													<td>
+														<b>
+															<span>Durations</span> :
+														</b>
+													</td>
+													<td className="padLeftRow">
+														{lectureDetails.duration}
+													</td>
+												</tr>
+											) : null}
+											{lectureDetails.en.location ? (
+												<tr>
+													<td>
+														<b>
+															<span>Location</span> :
+														</b>
+													</td>
+													<td className="padLeftRow">
+														{reactCookie.load("languageCode") === "en"
+															? lectureDetails.en.location
+															: lectureDetails.ru.location
 															? lectureDetails.ru.location
 															: lectureDetails.en.location}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Downloads</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{lectureDetails.downloads}
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<b>
-														<span>Topic</span> :
-													</b>
-												</td>
-												<td className="padLeftRow">
-													{reactCookie.load('languageCode') === 'en'
-														? lectureDetails.en.topic
-														: lectureDetails.ru.topic
+													</td>
+												</tr>
+											) : null}
+											{lectureDetails.downloads ? (
+												<tr>
+													<td>
+														<b>
+															<span>Downloads</span> :
+														</b>
+													</td>
+													<td className="padLeftRow">
+														{lectureDetails.downloads}
+													</td>
+												</tr>
+											) : null}
+											{lectureDetails.en.topic ? (
+												<tr>
+													<td>
+														<b>
+															<span>Topic</span> :
+														</b>
+													</td>
+													<td className="padLeftRow">
+														{reactCookie.load("languageCode") === "en"
+															? lectureDetails.en.topic
+															: lectureDetails.ru.topic
 															? lectureDetails.ru.topic
 															: lectureDetails.en.topic}
-												</td>
-											</tr>
+													</td>
+												</tr>
+											) : null}
 										</tbody>
 									</table>
 									<div className="padTop">
@@ -254,14 +262,14 @@ export class LectureDetails extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		lectureDetails: state.lectureReducer.lecture,
+		lectureDetails: state.lectureReducer.lecture
 	};
 };
 const mapDispatchToProps = dispatch => {
 	return {
 		getLectureByUuid: body => {
 			dispatch(getLectureByUuid(body));
-		},
+		}
 	};
 };
 

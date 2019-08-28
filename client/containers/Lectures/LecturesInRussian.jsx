@@ -33,7 +33,7 @@ class RussiaDubbedLectures extends Component {
 					this.props.lectureDetails.lectures &&
 					this.props.lectureDetails.lectures.map(eachLecture => {
 						return (
-							<div style={{ paddingBottom: "7%", fontFamily: "Charter" }}>
+							<div style={{ paddingBottom: "6%", textAlign: "left" }}>
 								<Link
 									key={eachLecture.id}
 									to={`/lectureDetails/${eachLecture.uuid}`}

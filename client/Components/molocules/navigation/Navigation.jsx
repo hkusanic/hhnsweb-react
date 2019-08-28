@@ -32,7 +32,7 @@ export class Navigation extends Component {
 
 	resize = () => {
 		let width = window.innerWidth;
-		if (this.state.width > 1210 && (width >= 0 && width <= 1210)) {
+		if (this.state.width > 1440 && (width >= 0 && width <= 1440)) {
 			this.setState({
 				width: width
 			});
@@ -48,6 +48,17 @@ export class Navigation extends Component {
 			this.state.width > 600 &&
 			this.state.width <= 1210 &&
 			(width >= 1210 || width <= 600)
+		) {
+			this.setState({
+				width: width
+			});
+			window.location.reload(false);
+		}
+
+		if (
+			this.state.width > 1210 &&
+			this.state.width <= 1440 &&
+			(width >= 1440 || width <= 1210)
 		) {
 			this.setState({
 				width: width
