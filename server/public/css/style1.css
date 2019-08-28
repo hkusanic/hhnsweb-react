@@ -133,11 +133,11 @@
 	margin-top: 5%;
 	margin-left: 5%;
 	margin-right: 353px;
-	position: absolute;
+	position: relative;
 }
 
 .singleGrid_card {
-	height: 289px;
+	height: 250px;
 	border-radius: 4px;
 	border: 0.1% solid gray;
 	background-color: #ffffff;
@@ -268,7 +268,7 @@
 	/* display: flex; */
 	/* margin-right: 5%; */
 	margin-top: -2%;
-	margin-left: 73.188em;
+	margin-left: 24%;
 }
 
 .nav_language {

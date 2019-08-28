@@ -1,35 +1,35 @@
-import React from 'react';
-import { Icon, Collapse } from 'antd';
-import renderHTML from 'react-render-html';
-import reactCookie from 'react-cookies';
-import { connect } from 'react-redux';
+import React from "react";
+import { Icon, Collapse } from "antd";
+import renderHTML from "react-render-html";
+import reactCookie from "react-cookies";
+import { connect } from "react-redux";
 import {
 	updateCounters,
 	getLectureByUuid,
-	resetState,
-} from '../../../actions/lectureActions';
-import Comments from '../Comments/Comments';
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { Link } from 'react-router-dom';
+	resetState
+} from "../../../actions/lectureActions";
+import Comments from "../Comments/Comments";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
+import { Link } from "react-router-dom";
 const Panel = Collapse.Panel;
 const customPanelStyle = {
-	fontSize: '25px',
-    color: '#eb7217',
-    borderTop: '1px solid #e8e8e8',
-	borderBottom: '1px solid #e8e8e8',
-  };
+	fontSize: "25px",
+	color: "#eb7217",
+	borderTop: "1px solid #e8e8e8",
+	borderBottom: "1px solid #e8e8e8"
+};
 export class TranscriptionDetails extends React.Component {
 	constructor(props) {
 		super(props);
 		const { resetState } = this.props;
 		resetState();
 	}
-	
+
 	componentDidMount() {
 		let body = {
-			uuid: this.props.match.params.uuid,
+			uuid: this.props.match.params.uuid
 		};
-		if (reactCookie.load('languageCode') === 'en') {
+		if (reactCookie.load("languageCode") === "en") {
 			body.en_transcription_view = true;
 		} else {
 			body.ru_transcription_view = true;
@@ -40,7 +40,7 @@ export class TranscriptionDetails extends React.Component {
 	handleUpdate = uuid => {
 		const body = {
 			uuid: uuid,
-			downloads: true,
+			downloads: true
 		};
 		this.props.updateCounters(body);
 	};
@@ -48,7 +48,7 @@ export class TranscriptionDetails extends React.Component {
 	handleUpdate = uuid => {
 		const body = {
 			uuid: uuid,
-			downloads: true,
+			downloads: true
 		};
 		this.props.updateCounters(body);
 	};
@@ -61,13 +61,13 @@ export class TranscriptionDetails extends React.Component {
 
 		if (!lectureDetails) {
 			return (
-				<div style={{ textAlign: 'center' }}>
+				<div style={{ textAlign: "center" }}>
 					<p className="bookingForm">Hare Krishna...</p>
 				</div>
 			);
 		}
 
-		if (!localStorage.getItem('user')) {
+		if (!localStorage.getItem("user")) {
 			return (
 				<div className="loginText">
 					<p className="bookingForm">Please log in to continue</p>
@@ -80,14 +80,14 @@ export class TranscriptionDetails extends React.Component {
 					className="bg-gray-100"
 					style={{
 						backgroundImage:
-							'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
+							"url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)"
 					}}
 				>
 					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
 							<ul class="breadcrumbs-custom-path">
 								<li>
-									<Link to="" onClick={() => this.props.history.push('/')}>
+									<Link to="" onClick={() => this.props.history.push("/")}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
 									</Link>
 								</li>
@@ -99,7 +99,7 @@ export class TranscriptionDetails extends React.Component {
 								<li>
 									<a className="textColor">
 										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
+											reactCookie.load("languageCode") === "en"
 												? lectureDetails.en.title
 												: lectureDetails.ru.title
 												? lectureDetails.ru.title
@@ -118,7 +118,7 @@ export class TranscriptionDetails extends React.Component {
 								<article className="post-creative">
 									<h3 className="post-creative-title dataTitle">
 										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
+											reactCookie.load("languageCode") === "en"
 												? lectureDetails.en.title
 												: lectureDetails.ru.title
 										)}
@@ -127,7 +127,9 @@ export class TranscriptionDetails extends React.Component {
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
-												{new Date(lectureDetails.created_date_time).toDateString()}
+												{new Date(
+													lectureDetails.created_date_time
+												).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -138,7 +140,7 @@ export class TranscriptionDetails extends React.Component {
 									<div className="row">
 										<div className="col textContent">
 											{renderHTML(
-												reactCookie.load('languageCode') === 'en'
+												reactCookie.load("languageCode") === "en"
 													? lectureDetails.en.transcription.text
 													: lectureDetails.ru.transcription.text
 													? lectureDetails.ru.transcription.text
@@ -147,28 +149,34 @@ export class TranscriptionDetails extends React.Component {
 										</div>
 									</div>
 								</article>
-								<Collapse expandIcon={({ isActive }) => <Icon type="caret-right" style={{display:'none'}} />} bordered={false} style={{ marginTop: '10px' }}>
+								<Collapse
+									expandIcon={({ isActive }) => (
+										<Icon type="caret-right" style={{ display: "none" }} />
+									)}
+									bordered={false}
+									style={{ marginTop: "10px" }}
+								>
 									<Panel
 										header="Audio Details"
 										key="1"
 										style={{
-											borderTop: '1px solid #e8e8e8',
-											borderBottom: '1px solid #e8e8e8',
-											fontSize: '25px',
+											borderTop: "1px solid #e8e8e8",
+											borderBottom: "1px solid #e8e8e8",
+											fontSize: "25px"
 										}}
 									>
-										<div style={{ paddingTop: '20px', fontSize: '14px' }}>
+										<div style={{ paddingTop: "20px", fontSize: "14px" }}>
 											<table className="maintable">
 												<tbody>
 													<tr>
 														<td>
 															<b>
-																<span>Audio</span>{' '}
-																{maxWidth > mobileBrkPnt ? ':' : null}
+																<span>Audio</span>{" "}
+																{maxWidth > mobileBrkPnt ? ":" : null}
 															</b>
 														</td>
 														<td className="padLeftRow">
-															<audio style={{ height: '30px' }} controls>
+															<audio style={{ height: "30px" }} controls>
 																<source
 																	src={renderHTML(lectureDetails.audio_link)}
 																	type="audio/mpeg"
@@ -185,7 +193,7 @@ export class TranscriptionDetails extends React.Component {
 														<td className="padLeftRow text-truncate">
 															<a
 																href={
-																	reactCookie.load('languageCode') === 'en'
+																	reactCookie.load("languageCode") === "en"
 																		? lectureDetails.en.transcription
 																				.attachment_link
 																		: lectureDetails.ru.transcription
@@ -198,7 +206,7 @@ export class TranscriptionDetails extends React.Component {
 																target="_blank"
 															>
 																<span>
-																	{reactCookie.load('languageCode') === 'en'
+																	{reactCookie.load("languageCode") === "en"
 																		? lectureDetails.en.transcription
 																				.attachment_name
 																		: lectureDetails.ru.transcription
@@ -218,7 +226,7 @@ export class TranscriptionDetails extends React.Component {
 															</b>
 														</td>
 														<td className="padLeftRow">
-															{reactCookie.load('languageCode') === 'en'
+															{reactCookie.load("languageCode") === "en"
 																? lectureDetails.en.event
 																: lectureDetails.ru.event
 																? lectureDetails.ru.event
@@ -292,23 +300,26 @@ export class TranscriptionDetails extends React.Component {
 															</b>
 														</td>
 														<td className="padLeftRow">
-															{reactCookie.load('languageCode') === 'en'
+															{reactCookie.load("languageCode") === "en"
 																? lectureDetails.en.location
 																: lectureDetails.ru.location
 																? lectureDetails.ru.location
 																: lectureDetails.en.location}
 														</td>
 													</tr>
-													<tr>
-														<td>
-															<b>
-																<span>Downloads</span> :
-															</b>
-														</td>
-														<td className="padLeftRow">
-															{lectureDetails.counters.downloads}
-														</td>
-													</tr>
+													{lectureDetails.counters &&
+													lectureDetails.counters.downloads ? (
+														<tr>
+															<td>
+																<b>
+																	<span>Downloads</span> :
+																</b>
+															</td>
+															<td className="padLeftRow">
+																{lectureDetails.counters.downloads}
+															</td>
+														</tr>
+													) : null}
 													<tr>
 														<td>
 															<b>
@@ -316,7 +327,7 @@ export class TranscriptionDetails extends React.Component {
 															</b>
 														</td>
 														<td className="padLeftRow">
-															{reactCookie.load('languageCode') === 'en'
+															{reactCookie.load("languageCode") === "en"
 																? lectureDetails.en.topic
 																: lectureDetails.ru.topic
 																? lectureDetails.ru.topic
@@ -345,7 +356,7 @@ export class TranscriptionDetails extends React.Component {
 const mapStateToProps = state => {
 	return {
 		Count: state.lectureReducer.Count,
-		lectureDetails: state.lectureReducer.lecture,
+		lectureDetails: state.lectureReducer.lecture
 	};
 };
 const mapDispatchToProps = dispatch => {
@@ -358,7 +369,7 @@ const mapDispatchToProps = dispatch => {
 		},
 		resetState: () => {
 			dispatch(resetState());
-		},
+		}
 	};
 };
 

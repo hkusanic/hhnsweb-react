@@ -12,7 +12,7 @@ function showing100Characters(sentence) {
 	var result = sentence;
 	var resultArray = result.split(" ");
 	if (resultArray.length > 10) {
-		resultArray = resultArray.slice(0, 30);
+		resultArray = resultArray.slice(0, 25);
 		result = resultArray.join(" ");
 	}
 	return result;
@@ -53,45 +53,53 @@ const SingleBiography = props => {
 							/>
 						}
 					>
-						<div class="singleBiography_card">
-							{reactCookie.load("languageCode") === "en"
-								? props.title_en
-								: props.title_ru
-								? props.title_ru
-								: props.title_en}
-						</div>
-						<br />
-						<div className="singleBiography_text">
-							{renderHTML(
-								"<div > " +
-									showing100Characters(
-										reactCookie.load("languageCode") === "en"
-											? props.content_en
-											: props.content_ru
-											? props.content_ru
-											: props.content_en
-									) +
-									"</div>"
-							)}{" "}
-						</div>
-						<Link
-							to={{
-								pathname: "/biograhyDetails",
-								state: {
-									title_en: props.title_en,
-									title_ru: props.title_ru,
-									content_en: props.content_en,
-									content_ru: props.content_ru,
-									img: props.img
-								}
+						<div
+							style={{
+								paddingTop: "24px !important",
+								paddingLeft: "0px !important",
+								paddingRight: "0px !important"
 							}}
 						>
-							<button className="singleBiography_button">
-								<Translate>
-									{({ translate }) => translate("FOOTER.readmore")}
-								</Translate>
-							</button>
-						</Link>
+							<div class="singleBiography_card">
+								{reactCookie.load("languageCode") === "en"
+									? props.title_en
+									: props.title_ru
+									? props.title_ru
+									: props.title_en}
+							</div>
+							<br />
+							<div className="singleBiography_text">
+								{renderHTML(
+									"<div > " +
+										showing100Characters(
+											reactCookie.load("languageCode") === "en"
+												? props.content_en
+												: props.content_ru
+												? props.content_ru
+												: props.content_en
+										) +
+										"</div>"
+								)}{" "}
+							</div>
+							<Link
+								to={{
+									pathname: "/biograhyDetails",
+									state: {
+										title_en: props.title_en,
+										title_ru: props.title_ru,
+										content_en: props.content_en,
+										content_ru: props.content_ru,
+										img: props.img
+									}
+								}}
+							>
+								<button className="singleBiography_button">
+									<Translate>
+										{({ translate }) => translate("FOOTER.readmore")}
+									</Translate>
+								</button>
+							</Link>
+						</div>
 					</Card>
 				</Link>
 			</article>
