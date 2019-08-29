@@ -394,3 +394,17 @@
 	font-family: Charter;
 	font-weight: bold;
 }
+
+.nav_image {
+	height: 34px;
+	width: 34px;
+}
+
+.nav_menu {
+	position: relative;
+	z-index: 4000;
+}
+
+.orangecolor {
+	color: orange !important;
+}

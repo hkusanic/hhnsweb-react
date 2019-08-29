@@ -112,7 +112,6 @@ export class Comments extends React.Component {
 			author_name: `${this.state.user.firstName} ${this.state.user.last}`,
 			approved: "2"
 		};
-		console.log("body===>", body);
 		this.props.createCommet(body);
 	};
 

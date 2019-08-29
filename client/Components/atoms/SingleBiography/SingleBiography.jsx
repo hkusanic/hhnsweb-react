@@ -53,13 +53,7 @@ const SingleBiography = props => {
 							/>
 						}
 					>
-						<div
-							style={{
-								paddingTop: "24px !important",
-								paddingLeft: "0px !important",
-								paddingRight: "0px !important"
-							}}
-						>
+						<div>
 							<div class="singleBiography_card">
 								{reactCookie.load("languageCode") === "en"
 									? props.title_en
@@ -79,7 +73,8 @@ const SingleBiography = props => {
 												: props.content_en
 										) +
 										"</div>"
-								)}{" "}
+								)}
+								&nbsp;
 							</div>
 							<Link
 								to={{

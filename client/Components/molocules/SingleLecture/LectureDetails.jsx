@@ -19,7 +19,6 @@ export class LectureDetails extends React.Component {
 			uuid: this.props.match.params.uuid,
 			video_page_view: true
 		};
-
 		this.props.getLectureByUuid(body);
 		if (this.props.lectureDetails) {
 			this.setState({ lectureDetails: this.props.lectureDetails });

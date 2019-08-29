@@ -171,7 +171,7 @@ export class TranscriptionDetails extends React.Component {
 													<tr>
 														<td>
 															<b>
-																<span>Audio</span>{" "}
+																<span>Audio</span>&nbsp;
 																{maxWidth > mobileBrkPnt ? ":" : null}
 															</b>
 														</td>
