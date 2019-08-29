@@ -1,6 +1,9 @@
 import loginApi from '../utils/api/login';
 import * as types from '../constants/index';
 import { EventTypes } from 'redux-segment'
+import { EventLayer } from './event-layer'
+
+const Analytics = new EventLayer();
 
 export function loginUser (credential) {
 	return (dispatch) => {
@@ -112,42 +115,53 @@ export function contactUs (body) {
 
 
 export function signupAction (data) {
+	Analytics.identify(data.loginUser.user_id,{
+		id : data.loginUser.user_id,
+		email : data.loginUser.email,
+		created_at : Math.round(data.loginUser.created_at/1000),
+	});
+	Analytics.track("User Sign up",{
+		id : data.loginUser.user_id,
+		email : data.loginUser.email,
+		firstName : data.loginUser.firstName,
+		lastName : data.loginUser.last
+	});
 	return {
 		type: types.SIGNUP,
 		payload: data,
-		meta: {
-      analytics: [
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "User signup",
-          properties: {
-            data:data,
-            userId: data.loginUser.user_id,
+	// 	meta: {
+    //   analytics: [
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "User signup",
+    //       properties: {
+    //         data:data,
+    //         userId: data.loginUser.user_id,
 
-          }
-        }
-      },
-      {
-      	eventType: EventTypes.identify,
-      	eventPayload: {
+    //       }
+    //     }
+    //   },
+    //   {
+    //   	eventType: EventTypes.identify,
+    //   	eventPayload: {
         
-      	userId: data.loginUser.user_id,
+    //   	userId: data.loginUser.user_id,
       
-      }
-      },
-      {
-      	eventType: EventTypes.track,
-        eventPayload: {
-          event: "User Login",
-          properties: {
-            data,
-            userId: data.loginUser.user_id,
-          }
-        }
-      }
-      ]
-    },
+    //   }
+    //   },
+    //   {
+    //   	eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "User Login",
+    //       properties: {
+    //         data,
+    //         userId: data.loginUser.user_id,
+    //       }
+    //     }
+    //   }
+    //   ]
+    // },
 	};
 }
 
@@ -171,32 +185,43 @@ export function logoutAction (data) {
 }
 
 export function loginAction (data) {
+	Analytics.identify(data.loginUser.user_id,{
+		id : data.loginUser.user_id,
+		email : data.loginUser.email,
+		created_at : Math.round(data.loginUser.created_at/1000),
+	});
+	Analytics.track("User Login",{
+		id : data.loginUser.user_id,
+		email : data.loginUser.email,
+		firstName : data.loginUser.firstName,
+		lastName : data.loginUser.last
+	});
 	return {
 		type: types.LOGIN,
 		payload: data,
-		meta: {
-      analytics: [
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "User Login",
-          properties: {
-            data,
+	// 	meta: {
+    //   analytics: [
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "User Login",
+    //       properties: {
+    //         data,
 
-            userId: data.loginUser.user_id,
-          }
-        }
-      },
-      {
-      	eventType: EventTypes.identify,
-      	eventPayload: {
+    //         userId: data.loginUser.user_id,
+    //       }
+    //     }
+    //   },
+    //   {
+    //   	eventType: EventTypes.identify,
+    //   	eventPayload: {
         
-      	userid: data.loginUser.user_id,
+    //   	userid: data.loginUser.user_id,
       
-      }
-      }
-      ]
-    },
+    //   }
+    //   }
+    //   ]
+    // },
 
 	};
 }

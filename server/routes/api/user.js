@@ -167,6 +167,7 @@ exports.signin = function (req, res) {
 							user_id: user.user_id,
 							youbookme_url: process.env.YOUBOOKME_URL,
 							disciple: user.disciple,
+							created_at : new Date(user.created_date_time).getTime(),
 						},
 					});
 				},
@@ -305,6 +306,7 @@ exports.signup = function (req, res) {
 						countryCode: user.countryCode,
 						user_id: user.user_id,
 						youbookme_url: process.env.YOUBOOKME_URL,
+						created_at : new Date(user.created_date_time).getTime(),
 					},
 				});
 			};
@@ -654,6 +656,7 @@ exports.editprofile1 = function (req, res) {
 						countryCode: userFound.countryCode,
 						user_id: userFound.user_id,
 						youbookme_url: process.env.YOUBOOKME_URL,
+						created_at : new Date(user.created_date_time).getTime(),
 					},
 				});
 			});
@@ -1116,6 +1119,7 @@ exports.editprofile = function (req, res) {
 						mobileNumber: userFound.mobileNumber,
 						user_id: userFound.user_id,
 						youbookme_url: process.env.YOUBOOKME_URL,
+						created_at : new Date(user.created_date_time).getTime(),
 					},
 				});
 			});

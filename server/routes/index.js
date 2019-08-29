@@ -153,13 +153,6 @@ exports = module.exports = function (app) {
                 <html class="wide wow-animation">
 					<head>
 
-					<script>
-  !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";
-  analytics.load("iEOBO3zIR90LK114Y3LhpnqnrJRBbLw3");
-  analytics.page();
-  }}();
-</script>
-
 						<meta name="format-detection" content="telephone=no">
 						<meta name="viewport" content="width=device-width height=device-height initial-scale=1.0 maximum-scale=1.0 user-scalable=0">
 						<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -178,7 +171,22 @@ exports = module.exports = function (app) {
 						<link rel="stylesheet" href="../css/SingleGridMenu.css" id="main-styles-link">
                         <link rel="stylesheet" href="../css/style.css" id="main-styles-link">
                         <script type="text/javascript" src="../js/bundle.js"></script>
-                        <script src="../js/core.min.js"></script>
+						<script src="../js/core.min.js"></script>
+						<script type="text/javascript">
+							var _cio = _cio || [];
+							(function() {
+								var a,b,c;a=function(f){return function(){_cio.push([f].
+								concat(Array.prototype.slice.call(arguments,0)))}};b=["load","identify",
+								"sidentify","track","page"];for(c=0;c<b.length;c++){_cio[b[c]]=a(b[c])};
+								var t = document.createElement('script'),
+									s = document.getElementsByTagName('script')[0];
+								t.async = true;
+								t.id    = 'cio-tracker';
+								t.setAttribute('data-site-id', 'e852e13f1e42dd7e7798');
+								t.src = 'https://assets.customer.io/assets/track.js';
+								s.parentNode.insertBefore(t, s);
+							})();
+							</script>
                     </head>
                     <body>
                         <div id="react-container" />
