@@ -734,7 +734,7 @@ export const EventLayer = (function EventLayer () {
                     uploadPromise.then(
                     function(data) {
                         console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
-                    });
+                    }).catch( err => console.log(err));
                 // }).catch(
                 // function(err) {
                 //     console.error(err, err.stack);
@@ -745,7 +745,6 @@ export const EventLayer = (function EventLayer () {
             group: function (groupId, traits) {}
         }
     };
-
     // Recursively convert an `obj`'s dates to new values, using an input function, convert().
     function convertDates (oObj, convert) {
         if (typeof(oObj) !== 'object') return oObj;
