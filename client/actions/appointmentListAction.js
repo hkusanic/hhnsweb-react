@@ -42,21 +42,21 @@ export function getUserListAction(data) {
     return {
         type: types.GET_USER_LIST,
         payload: data,
-        meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "appointment user list",
-          properties: {
-            data:data,
-            user: JSON.parse(localStorage.getItem("user")),
+    //     meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "appointment user list",
+    //       properties: {
+    //         data:data,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
     }
 }
 
@@ -64,21 +64,21 @@ export function getAppointmentListAction(data) {
     return {
         type: types.GET_APPOINTMENT_LIST,
         payload: data,
-        meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "get appointment list",
-          properties: {
-            data:data,
-            user: JSON.parse(localStorage.getItem("user")),
+    //     meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "get appointment list",
+    //       properties: {
+    //         data:data,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
     }
 }
 
@@ -86,18 +86,18 @@ export function updateAppointmentAction(data){
     return {
         type: types.UPDATE_APPOINTMENT,
         payload: data,
-        meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "update appointment",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+    //     meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "update appointment",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
     }
 }
 

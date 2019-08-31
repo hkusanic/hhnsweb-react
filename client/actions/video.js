@@ -43,22 +43,22 @@ export function getVideoListAction (data) {
 	return {
 		type: types.GET_VIDEO_LIST,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "videos list",
-           properties: {
-            data:data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "videos list",
+    //        properties: {
+    //         data:data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -66,22 +66,22 @@ export function getVideoByIdAction (data) {
 	return {
 		type: types.GET_VIDEO_BY_ID,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "get video by id",
-          properties: {
-            data:data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "get video by id",
+    //       properties: {
+    //         data:data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -89,22 +89,22 @@ export function updateVideoPageViewAction (data) {
 	return {
 		type: types.UPDATE_VIDEO_PAGE_VIEW,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "update video page view",
-          properties: {
-            data:data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "update video page view",
+    //       properties: {
+    //         data:data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 

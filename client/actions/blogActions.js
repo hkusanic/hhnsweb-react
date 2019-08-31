@@ -27,22 +27,22 @@ export function getBlogAction (data) {
 	return {
 		type: types.GET_BLOGS,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "all blogs",
-           properties: {
-            data:data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "all blogs",
+    //        properties: {
+    //         data:data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -74,22 +74,22 @@ export function getAction (data) {
 	return {
 		type: types.GET_BLOG,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "get a blog",
-          properties: {
-            data:data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "get a blog",
+    //       properties: {
+    //         data:data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -99,21 +99,21 @@ export function fetchBlogByUuid (data) {
 		payload: {
 			blog: data.data.blog,
 		},
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "fetch blog by id",
-          properties: {
-            data:data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "fetch blog by id",
+    //       properties: {
+    //         data:data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
 	};
 };

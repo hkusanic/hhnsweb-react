@@ -83,18 +83,18 @@ export function getCommentsAction (data) {
 	return {
 		type: types.GET_COMMENTS,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "get comments",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "get comments",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -102,18 +102,18 @@ export function getRepliesAction (data) {
 	return {
 		type: types.GET_REPLIES,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "get replies",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "get replies",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -121,18 +121,18 @@ export function createCommentAction (data) {
 	return {
 		type: types.CREATE_COMMENT,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "creating comment",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "creating comment",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -140,18 +140,18 @@ export function createReplyAction (data) {
 	return {
 		type: types.CREATE_REPLIES,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "creating replies",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "creating replies",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -159,18 +159,18 @@ export function deleteCommentAction (data) {
 	return {
 		type: types.DELETE_COMMENT,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "deleting comment",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "deleting comment",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -178,18 +178,18 @@ export function deleteReplyAction (data) {
 	return {
 		type: types.DELETE_REPLY,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "deleting reply",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "deleting reply",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 

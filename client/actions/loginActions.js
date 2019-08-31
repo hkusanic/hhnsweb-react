@@ -1,6 +1,5 @@
 import loginApi from '../utils/api/login';
 import * as types from '../constants/index';
-import { EventTypes } from 'redux-segment'
 import { EventLayer } from './event-layer'
 
 const Analytics = new EventLayer();
@@ -120,12 +119,12 @@ export function signupAction (data) {
 		email : data.loginUser.email,
 		created_at : Math.round(data.loginUser.created_at/1000),
 	});
-	Analytics.track("User Sign up",{
-		id : data.loginUser.user_id,
-		email : data.loginUser.email,
-		firstName : data.loginUser.firstName,
-		lastName : data.loginUser.last
-	});
+	// Analytics.track("User Sign up",{
+	// 	id : data.loginUser.user_id,
+	// 	email : data.loginUser.email,
+	// 	firstName : data.loginUser.firstName,
+	// 	lastName : data.loginUser.last
+	// });
 	return {
 		type: types.SIGNUP,
 		payload: data,
@@ -169,60 +168,45 @@ export function logoutAction (data) {
 	return {
 		type: types.LOGOUT,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "logout",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "logout",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
 export function loginAction (data) {
-	Analytics.identify(data.loginUser.user_id,{
-		id : data.loginUser.user_id,
-		email : data.loginUser.email,
-		created_at : Math.round(data.loginUser.created_at/1000),
-	});
-	Analytics.track("User Login",{
-		id : data.loginUser.user_id,
-		email : data.loginUser.email,
-		firstName : data.loginUser.firstName,
-		lastName : data.loginUser.last
-	});
-	return {
+	return dispatch => {
+		Analytics.identify(data.loginUser.user_id,{
+			id : data.loginUser.user_id,
+			email : data.loginUser.email,
+			created_at : Math.round(data.loginUser.created_at/1000),
+		}).then((res) => {
+			Analytics.page("Landing Page", "HomePage",{
+				id : data.loginUser.user_id,
+			}).then((res1) => {
+				dispatch(dispatchLogin(data));
+			})
+		}).catch((err) => {
+			console.log(err);
+		});
+	};
+	
+	
+}
+
+export function dispatchLogin(data){
+	return {	
 		type: types.LOGIN,
-		payload: data,
-	// 	meta: {
-    //   analytics: [
-    //   {
-    //     eventType: EventTypes.track,
-    //     eventPayload: {
-    //       event: "User Login",
-    //       properties: {
-    //         data,
-
-    //         userId: data.loginUser.user_id,
-    //       }
-    //     }
-    //   },
-    //   {
-    //   	eventType: EventTypes.identify,
-    //   	eventPayload: {
-        
-    //   	userid: data.loginUser.user_id,
-      
-    //   }
-    //   }
-    //   ]
-    // },
-
+		payload: data,	
 	};
 }
 
@@ -230,18 +214,18 @@ export function forgotPasswordAction (data) {
 	return {
 		type: types.FORGOT_PASSWORD,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "forgot password",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "forgot password",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -249,19 +233,19 @@ export function getUserByAccessIdAction (data) {
 	return {
 		type: types.GET_USER_BY_ACCESS_ID,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "Get user by id",
-          properties: {
-            data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "Get user by id",
+    //       properties: {
+    //         data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -269,18 +253,18 @@ export function resetPasswordAction (data) {
 	return {
 		type: types.RESET_PASSWORD,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "reset password",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "reset password",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -288,18 +272,18 @@ export function editProfileAction (data) {
 	return {
 		type: types.EDIT_PROFILE,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "edit profile",
-          properties: {
-            data,
-  userId:JSON.parse(localStorage.getItem("user")).user_id,          }
-        }
-      }
-    },
+// 		meta: {
+//       analytics: 
+//       {
+//         eventType: EventTypes.track,
+//         eventPayload: {
+//           event: "edit profile",
+//           properties: {
+//             data,
+//   userId:JSON.parse(localStorage.getItem("user")).user_id,          }
+//         }
+//       }
+//     },
 	};
 }
 
@@ -307,19 +291,19 @@ export function contactUsAction (data) {
 	return {
 		type: types.CONTACT_US,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "contact us",
-          properties: {
-            data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "contact us",
+    //       properties: {
+    //         data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -327,18 +311,18 @@ export function updatePasswordAction (data) {
 	return {
 		type: types.UPDATE_PASSWORD,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "update password",
-          properties: {
-            data,
-userId:JSON.parse(localStorage.getItem("user")).user_id,          }
-        }
-      }
-    },
+// 		meta: {
+//       analytics: 
+//       {
+//         eventType: EventTypes.track,
+//         eventPayload: {
+//           event: "update password",
+//           properties: {
+//             data,
+// userId:JSON.parse(localStorage.getItem("user")).user_id,          }
+//         }
+//       }
+//     },
 	};
 }
 
@@ -349,19 +333,19 @@ export function checkLogin () {
 			.then((response) => {
 				return response.data;
 			}),
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "check login",
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "check login",
           
           
-        }
-      }
+    //     }
+    //   }
       
       
-    },	
+    // },	
 	};
 
 }

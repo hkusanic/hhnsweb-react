@@ -33,22 +33,22 @@ export function searchKirtanAction (data) {
 	return {
 		type: types.SEARCH_KIRTAN,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "search kirtan",
-          properties: {
-            data:data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "search kirtan",
+    //       properties: {
+    //         data:data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -58,22 +58,22 @@ export function fetchKirtanByUuid (data) {
 		payload: {
 			kirtan: data.data.kirtan,
 		},
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "fetch kirtan by id",
-          properties: {
-            data:data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "fetch kirtan by id",
+    //       properties: {
+    //         data:data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -94,18 +94,18 @@ export function updateCountersAction (data) {
 	return {
 		type: types.UPDATE_COUNTERS,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "updating counter",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "updating counter",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 };
 
 }

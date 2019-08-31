@@ -20,20 +20,20 @@ export function getContentAction(data) {
 	return {
 		type: types.GET_CONTENTS,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "get contents",
-         properties: {
-            data:data,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "get contents",
+    //      properties: {
+    //         data:data,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }

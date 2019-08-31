@@ -20,18 +20,18 @@ export function searchQuoteAction (data) {
 	return {
 		type: types.SEARCH_QUOTE,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "searching quote",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "searching quote",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -53,18 +53,18 @@ export function searchQuoteOfDay (data) {
 	return {
 		type: types.SEARCH_QUOTE_OF_DAY,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "searching quote of the day",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "searching quote of the day",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -85,17 +85,17 @@ export function getQuoteByUuidAction (data) {
 	return {
 		type: types.GET_QUOTE_BY_UUID,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "getting quote by id",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "getting quote by id",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }

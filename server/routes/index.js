@@ -136,6 +136,14 @@ exports = module.exports = function (app) {
 	app.post('/api/updateRegistration/', keystone.middleware.api, routes.api.user.updateRegistration);
 	app.post('/api/updatePassword/', keystone.middleware.api, routes.api.user.updatePassword);
 
+	//------ segment api's starts -------//
+	app.post('/api/customerio/identify/', keystone.middleware.api, routes.api.customerio.signin);
+	app.post('/api/customerio/pageview/', keystone.middleware.api, routes.api.customerio.signin);
+	app.post('/api/s3/identify/', keystone.middleware.api, routes.api.s3.signin);
+
+	//------- segment api ends ---------//
+
+
 	app.options('/api*', function (req, res) { res.send(200); });
 
 	// app.post('/api/blog/generateUploadUrl', multipartMiddleware,routes.api.blog.generateUploadUrl );
@@ -172,21 +180,6 @@ exports = module.exports = function (app) {
                         <link rel="stylesheet" href="../css/style.css" id="main-styles-link">
                         <script type="text/javascript" src="../js/bundle.js"></script>
 						<script src="../js/core.min.js"></script>
-						<script type="text/javascript">
-							var _cio = _cio || [];
-							(function() {
-								var a,b,c;a=function(f){return function(){_cio.push([f].
-								concat(Array.prototype.slice.call(arguments,0)))}};b=["load","identify",
-								"sidentify","track","page"];for(c=0;c<b.length;c++){_cio[b[c]]=a(b[c])};
-								var t = document.createElement('script'),
-									s = document.getElementsByTagName('script')[0];
-								t.async = true;
-								t.id    = 'cio-tracker';
-								t.setAttribute('data-site-id', 'e852e13f1e42dd7e7798');
-								t.src = 'https://assets.customer.io/assets/track.js';
-								s.parentNode.insertBefore(t, s);
-							})();
-							</script>
                     </head>
                     <body>
                         <div id="react-container" />

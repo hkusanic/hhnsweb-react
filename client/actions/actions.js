@@ -9,21 +9,21 @@ export function loadingRecipes (loading) {
 	return {
 		type: LOADING_RECIPES,
 		payload: loading,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "loading recipes",
-          properties: {
-             loading
-          }
-        }
-      }
+		// meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "loading recipes",
+    //       properties: {
+    //          loading
+    //       }
+    //     }
+    //   }
       
       	
       
-    },
+    // },
 	};
 }
 
@@ -32,20 +32,20 @@ export function fetchRecipes (data) {
 	return {
 		type: GET_RECIPES,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "fetch recipes",
-          properties: {
-            data
-          }
-        }
-      }
+		// meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "fetch recipes",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
       
       
-    },
+    // },
 	};
 }
 

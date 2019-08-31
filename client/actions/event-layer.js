@@ -1,5 +1,6 @@
+import segmentApi from '../utils/api/segment';
 export const EventLayer = (function EventLayer () {
-
+    //
     var that = this;
 
     /**
@@ -663,39 +664,45 @@ export const EventLayer = (function EventLayer () {
         'customerio': {
             enabled: true,
             test: function () {
-                return !!(window._cio && window._cio.push !== Array.prototype.push);
+                return true;
             },
             track: function (eventName, eventProperties) {
-                if (!window._cio) return;
+                // if (!window._cio) return;
 
-                window._cio.track(eventName, eventProperties);
+                // window._cio.track(eventName, eventProperties);
             },
             identify: function (userId, userProperties) {
-                if (!window._cio) return;
-                if (!userId) return console.warn('user id required by customer.io for identify function.');
+                console.log(userProperties);
+                let promise = new Promise( (resolve, reject) => {
+                    
+                    if (!userId) return console.warn('user id required by customer.io for identify function.');
 
-                // Expects userProperties { id: string unique, email: string, created_at: unix-timestamp }
+                    // Expects userProperties { id: string unique, email: string, created_at: unix-timestamp }
 
-                // Transform createdAt -> created_at
-                if (userProperties && userProperties.createdAt && !userProperties.created_at)
-                    userProperties.created_at = userProperties.createdAt;
+                    // Transform createdAt -> created_at
+                    if (userProperties && userProperties.createdAt && !userProperties.created_at)
+                        userProperties.created_at = userProperties.createdAt;
 
-                // Add userId if no id is present
-                if (userProperties && !userProperties.id)
-                    userProperties.id = userId;
-
-                window._cio.identify(userProperties);
+                    // Add userId if no id is present
+                    if (userProperties && !userProperties.id)
+                        userProperties.id = userId;
+                   
+                    segmentApi.customerio({ process : 'identify'}, userProperties).then( (response) => {
+                        if(response.status === 200){
+                            resolve(response.data.message);
+                        }
+                    })
+                });
+                return promise;
             },
-            alias: function (userId, previousId) {
-                // Todo
-            },
-            group: function (groupId, traits) {
-                // Todo
-            },
+            // alias: function (userId, previousId) {
+            //     // Todo
+            // },
+            // group: function (groupId, traits) {
+            //     // Todo
+            // },
             page: function (category, name, properties) {
-                if (!window._cio) return;
-
-                if (!window.__currentUserId) return console.warn('You must call the Identify function for Customer.io before the page function, passing a valid userId.');
+                
                 if (!name) return console.warn('Customer.io requires a valid name property when calling the page event. Since Analytics.js expects a category field as well, this must be sent (even if it is empty). See documentation for more details.');
 
                 if (!properties) properties = {};
@@ -704,46 +711,39 @@ export const EventLayer = (function EventLayer () {
                 properties.type = 'page';
                 properties.name = name;
                 properties.category = category;
+                properties.url = location.href;
 
-                window._cio.page(location.href, properties);
+                segmentApi.customerio({ process : 'pageview'}, properties).then( (response) => {
+                    if(response.status === 200){
+                        resolve(response.data.message);
+                    }
+                })
             }
         },
         's3': { // Do not modify this template
             enabled: true,
-            test: function () {},
+            test: function () {
+                return true;
+            },
             track: function (eventName, eventProperties) {},
             identify: function (userId, userProperties) {
+                let promise = new Promise((resolve, reject) => {
 
-                var AWS = require('aws-sdk');
-                var uuid = require('uuid');
-
-                // Create unique bucket name
-                var bucketName = 'hhns';
-                // Create name for uploaded object key
-                var keyName = 'hello_world.txt';
-
-                // Create a promise on S3 service object
-                //var bucketPromise = new AWS.S3({apiVersion: '2006-03-01'}).createBucket({Bucket: bucketName}).promise();
-
-                // Handle promise fulfilled/rejected states
-                //bucketPromise.then(
-                    // Create params for putObject call
-                    var objectParams = {Bucket: bucketName, Key: keyName, Body: 'Hello World!'};
-                    // Create object upload promise
-                    var uploadPromise = new AWS.S3({apiVersion: '2006-03-01'}).putObject(objectParams).promise();
-                    uploadPromise.then(
-                    function(data) {
-                        console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
-                    }).catch( err => console.log(err));
-                // }).catch(
-                // function(err) {
-                //     console.error(err, err.stack);
-                // });
+                        segmentApi.s3({process : 'identify'}, userProperties).then( (response) => {
+                            if(response.status === 200){
+                                //alert(response.data.message);
+                                resolve(response.data.message);
+                            }
+                        }).catch( err => {console.log(err);
+                            return {error: err} ;
+                        })
+                });
+                return promise;
             },
-            page: function (category, name, properties) {},
-            alias: function (userId, previousId) {},
-            group: function (groupId, traits) {}
-        }
+            // page: function (category, name, properties) {},
+            // alias: function (userId, previousId) {},
+            // group: function (groupId, traits) {}
+        },
     };
     // Recursively convert an `obj`'s dates to new values, using an input function, convert().
     function convertDates (oObj, convert) {
@@ -795,27 +795,33 @@ export const EventLayer = (function EventLayer () {
     }
 
     function identify (userId, userProperties, options, callback) {
-        if (!thirdPartyAdapters) return; // Early return if there are no adapters
-        //alert('prateek');
-        onReady();
+        let promise = new Promise((resolve, reject) => {
+            if (!thirdPartyAdapters) return; // Early return if there are no adapters
+            onReady();
 
-        // Stash this for later
-        window.__currentUserId = userId;
+            let promiseArray = [];
 
-        for (var adapterName in thirdPartyAdapters) {
-            var adapter = thirdPartyAdapters[adapterName];
+            for (var adapterName in thirdPartyAdapters) {
+                var adapter = thirdPartyAdapters[adapterName];
 
-            // If this adapter passes it's own internal test (usually to detect if a specific source is available)
-            if (adapter.enabled && adapter.test && typeof(adapter.test) === 'function' && runTest(adapter.test)) {
-                // If everything checks out for the data we've received,
-                // pass the data to the adapter so it can be tracked
-                if (adapter.identify && typeof(adapter.identify) === 'function'){
-                    adapter.identify(userId, userProperties);
+                // If this adapter passes it's own internal test (usually to detect if a specific source is available)
+                if (adapter.enabled && adapter.test && typeof(adapter.test) === 'function' && runTest(adapter.test)) {
+                    // If everything checks out for the data we've received,
+                    // pass the data to the adapter so it can be tracked
+                    if (adapter.identify && typeof(adapter.identify) === 'function'){
+
+                        promiseArray.push(adapter.identify(userId, userProperties));
+                    }
                 }
             }
-        }
 
-        if (callback && typeof(callback) === 'function') callback();
+            Promise.all(promiseArray).then(result => {
+                resolve("updated")
+            }).catch( err => console.log(err));
+
+            if (callback && typeof(callback) === 'function') callback();
+        });
+        return promise;
     }
 
     function page (category, name, properties, options, callback) {

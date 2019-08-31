@@ -46,23 +46,23 @@ export function getGalleriesAction (data) {
 	return {
 		type: types.GET_GALLERY,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "all Galleries",
-           properties: {
-            data:data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "all Galleries",
+    //        properties: {
+    //         data:data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
+    //       }
        
-        }
-      }
-    },
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -70,22 +70,22 @@ export function getStaticGalleryListAction (data) {
 	return {
 		type: types.GET_STATIC_GALLERY,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "get static gallery",
-          properties: {
-            data:data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "get static gallery",
+    //       properties: {
+    //         data:data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -93,17 +93,17 @@ export function getSubGalleryByGalleryAction (data) {
 	return {
 		type: types.GET_SUB_GALLERY,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "geting subgallery by gallery",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "geting subgallery by gallery",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }

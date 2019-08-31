@@ -46,18 +46,18 @@ export function getEventsAction(data) {
 	return {
 		type: types.GET_EVENTS,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "event action",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "event action",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -65,18 +65,18 @@ export function getLocationsAction(data) {
 	return {
 		type: types.GET_LOCATIONS,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "search location action",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "search location action",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
 
@@ -84,17 +84,17 @@ export function getTopicsAction(data) {
 	return {
 		type: types.GET_TOPIC,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "topic action",
-          properties: {
-            data
-          }
-        }
-      }
-    },
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "topic action",
+    //       properties: {
+    //         data
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }

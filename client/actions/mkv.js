@@ -19,21 +19,21 @@ export function getMkvAction (data) {
 	return {
 		type: types.GET_MKV,
 		payload: data,
-		meta: {
-      analytics: 
-      {
-        eventType: EventTypes.track,
-        eventPayload: {
-          event: "Get MKV",
-          properties: {
-            data:data,
-            userId:JSON.parse(localStorage.getItem("user")).user_id,
-            user: JSON.parse(localStorage.getItem("user")),
+	// 	meta: {
+    //   analytics: 
+    //   {
+    //     eventType: EventTypes.track,
+    //     eventPayload: {
+    //       event: "Get MKV",
+    //       properties: {
+    //         data:data,
+    //         userId:JSON.parse(localStorage.getItem("user")).user_id,
+    //         user: JSON.parse(localStorage.getItem("user")),
 
 
-          }
-        }
-      }
-    },
+    //       }
+    //     }
+    //   }
+    // },
 	};
 }
