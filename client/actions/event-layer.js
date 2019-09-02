@@ -710,19 +710,24 @@ export const EventLayer = (function EventLayer () {
             //     // Todo
             // },
             page: function (properties) {
-                
-                if (!properties.name) return console.warn('Customer.io requires a valid name property when calling the page event. Since Analytics.js expects a category field as well, this must be sent (even if it is empty). See documentation for more details.');
+                let promise = new Promise( (resolve, reject) => {
+                    if (!properties.name) return console.warn('Customer.io requires a valid name property when calling the page event. Since Analytics.js expects a category field as well, this must be sent (even if it is empty). See documentation for more details.');
 
-                if (!properties) properties = {};
+                    if (!properties) properties = {};
 
-                properties.type = 'page';
-                properties.url = location.href;
+                    properties.type = 'page';
+                    properties.url = location.href;
 
-                segmentApi.customerio({ process : 'pageview'}, properties).then( (response) => {
-                    if(response.status === 200){
-                        response.data.message;
-                    }
-                })
+                    segmentApi.customerio({ process : 'pageview'}, properties).then( (response) => {
+                        if(response.status === 200){
+                            resolve(response.data.message);
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                        reject({error : err});
+                    })
+                });
+                return promise;
             }
         },
         's3': { // Do not modify this template
@@ -749,32 +754,58 @@ export const EventLayer = (function EventLayer () {
                         segmentApi.s3({process : 'identify'}, userProperties).then( (response) => {
                             if(response.status === 200){
                                 //alert(response.data.message);
-                                return response.data.message;
+                                resolve("updated");
                             }
                         }).catch( err => {console.log(err);
-                            return {error: err} ;
+                            reject({error: err}) ;
                         })
                 });
                 return promise;
             },
             page: function (properties) {
+                let promise = new Promise((resolve, reject) => {
                 
-                if (!properties.name) return console.warn('Customer.io requires a valid name property when calling the page event. Since Analytics.js expects a category field as well, this must be sent (even if it is empty). See documentation for more details.');
+                        if (!properties.name) return console.warn('Customer.io requires a valid name property when calling the page event. Since Analytics.js expects a category field as well, this must be sent (even if it is empty). See documentation for more details.');
 
-                if (!properties) properties = {};
+                        if (!properties) properties = {};
 
-                properties.type = 'page';
-                properties.url = location.href;
+                        properties.type = 'page';
+                        properties.url = location.href;
 
-                segmentApi.s3({ process : 'pageview'}, properties).then( (response) => {
-                    if(response.status === 200){
-                        return response.data.message;
-                    }
-                })
+                        segmentApi.s3({ process : 'pageview'}, properties).then( (response) => {
+                            if(response.status === 200){
+                                resolve(response.data.message);
+                            }
+                        }).catch( err => console.log(err));
+                });
+                return promise;
             },
             // alias: function (userId, previousId) {},
             // group: function (groupId, traits) {}
         },
+        'postgres': { // Do not modify this template
+            enabled: true,
+            test: function () {
+                return true;
+            },
+            track: function (userid, data) {
+                let promise = new Promise( (resolve, reject) => {
+                    
+                    if (!userid) return console.warn('user id required by customer.io for identify function.');
+
+                        segmentApi.postgres({ process : 'track'}, data).then( (response) => {
+                            if(response.status === 200){
+                                resolve(response.data.message);
+                            }
+                        })
+                });
+                return promise;
+            },
+            identify: function (userId, userProperties) {},
+            page: function (category, name, properties) {},
+            alias: function (userId, previousId) {},
+            group: function (groupId, traits) {}
+        }
     };
     // Recursively convert an `obj`'s dates to new values, using an input function, convert().
     function convertDates (oObj, convert) {

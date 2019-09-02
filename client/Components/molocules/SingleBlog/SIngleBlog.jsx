@@ -21,6 +21,7 @@ export class SingleBlog extends Component {
 	};
 
 	render() {
+		console.log("this.props =====>>>>", JSON.stringify(this.props.blog));
 		return (
 			<div className="col-md-6 scaleFadeInWrap">
 				<div className="wow scaleFadeIn" data-wow-delay=".1s">

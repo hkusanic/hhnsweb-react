@@ -143,6 +143,7 @@ exports = module.exports = function (app) {
 	app.post('/api/s3/identify/', keystone.middleware.api, routes.api.s3.signin);
 	app.post('/api/s3/pageview/', keystone.middleware.api, routes.api.s3.pageview);
 	app.post('/api/s3/track/', keystone.middleware.api, routes.api.s3.track);
+	app.post('/api/postgres/track/', keystone.middleware.api, routes.api.postgres.track);
 	//------- segment api ends ---------//
 
 

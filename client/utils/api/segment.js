@@ -33,6 +33,22 @@ const utils = {
 			return axios.post(url, Properties);
 		}
 	},	
+	postgres : (event, Properties) => {
+		if(event.process === 'identify'){
+			console.log(Properties);
+			//alert('here');
+			let url = serverAddress + '/api/postgres/identify/';
+			return axios.post(url, Properties);
+		} else if ( event.process === 'pageview'){
+			console.log(Properties);
+			let url = serverAddress + '/api/postgres/pageview/';
+			return axios.post(url, Properties);
+		} else if ( event.process === 'track'){
+			console.log(Properties);
+			let url = serverAddress + '/api/postgres/track/';
+			return axios.post(url, Properties);
+		}
+	},	
 };
 
 export default utils;

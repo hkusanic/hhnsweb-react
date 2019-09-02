@@ -1,15 +1,18 @@
 import lectureApi from '../utils/api/lecture';
 import * as types from '../constants/index';
-import { EventTypes } from 'redux-segment';
+import { EventLayer } from './event-layer'
+
+const Analytics = new EventLayer();
 
 
 export function searchLecture (body) {
+	alert('audio');
 	return dispatch => {
 		lectureApi
 			.searchLecture(body)
 			.then(response => {
 				// response.data.lecture.currentPage = body.page;
-				dispatch(searchLectureAction(response));
+				dispatch(dispatchSearchLecture(response));
 			})
 			.catch(err => {
 				console.error(err);
@@ -23,7 +26,7 @@ export function searchLectureVideo (body) {
 			.searchLecture(body)
 			.then(response => {
 				// response.data.lecture.currentPage = body.page;
-				dispatch(searchLectureActionVideo(response));
+				dispatch(dispatchSearchLectureVideo(response));
 			})
 			.catch(err => {
 				console.error(err);
@@ -37,7 +40,7 @@ export function searchLectureTranscriptions (body) {
 			.searchLecture(body)
 			.then(response => {
 				// response.data.lecture.currentPage = body.page;
-				dispatch(searchLectureActionTranscriptions(response));
+				dispatch(dispatchSearchLectureTranscriptions(response));
 			})
 			.catch(err => {
 				console.error(err);
@@ -51,7 +54,7 @@ export function searchLectureSummaries (body) {
 			.searchLecture(body)
 			.then(response => {
 				// response.data.lecture.currentPage = body.page;
-				dispatch(searchLectureActionSummaries(response));
+				dispatch(dispatchSearchLectureSummaries(response));
 			})
 			.catch(err => {
 				console.error(err);
@@ -90,12 +93,36 @@ export function getRussianDubbedLecture (body) {
 		lectureApi
 			.searchLecture(body)
 			.then(response => {
-				dispatch(searchLectureAction(response));
+				dispatch(dispatchSearchLecture(response));
 			})
 			.catch(err => {
 				console.log(err);
 			});
 	};
+}
+
+export function dispatchSearchLecture (data) {
+	return dispatch => {
+		//alert("blog1");;
+		Analytics.page("Audio", "Audio List Page",{
+			id : JSON.parse(localStorage.getItem("user")).user_id,
+
+		}).then((res) => {
+			//alert("blog");
+			Analytics.track(JSON.parse(localStorage.getItem("user")).user_id, {
+				id : JSON.parse(localStorage.getItem("user")).user_id,
+				name : "Audio List",
+				data : {
+					id : JSON.parse(localStorage.getItem("user")).user_id,
+					name : "Audio List",
+				},
+
+			}).then((res2) => {
+				dispatch(searchLectureAction(data));
+
+			}).catch( err => console.log(err));
+		}).catch ( err => console.log(err));
+	};	
 }
 
 export function searchLectureAction (data) {
@@ -120,6 +147,31 @@ export function searchLectureAction (data) {
     // },
 	};
 }
+
+export function dispatchSearchLectureVideo (data) {
+	return dispatch => {
+		//alert("blog1");;
+		Analytics.page("Video", "Search Video List",{
+			id : JSON.parse(localStorage.getItem("user")).user_id,
+
+		}).then((res) => {
+			//alert("blog");
+			Analytics.track(JSON.parse(localStorage.getItem("user")).user_id, {
+				id : JSON.parse(localStorage.getItem("user")).user_id,
+				name : "Search Video List",
+				data : {
+					id : JSON.parse(localStorage.getItem("user")).user_id,
+					name : "Search Video List",
+				},
+
+			}).then((res2) => {
+				dispatch(searchLectureActionVideo(data));
+
+			}).catch( err => console.log(err));
+		}).catch ( err => console.log(err));
+	};	
+}
+
 export function searchLectureActionVideo (data) {
 	return {
 		type: types.SEARCH_LECTURE_VIDEO,
@@ -143,6 +195,30 @@ export function searchLectureActionVideo (data) {
 	};
 }
 
+export function dispatchSearchLectureTranscriptions (data) {
+	return dispatch => {
+		//alert("blog1");;
+		Analytics.page("Transcripts", "Search Transcripts List",{
+			id : JSON.parse(localStorage.getItem("user")).user_id,
+
+		}).then((res) => {
+			//alert("blog");
+			Analytics.track(JSON.parse(localStorage.getItem("user")).user_id, {
+				id : JSON.parse(localStorage.getItem("user")).user_id,
+				name : "Search Transcripts List",
+				data : {
+					id : JSON.parse(localStorage.getItem("user")).user_id,
+					name : "Search Transcripts List",
+				},
+
+			}).then((res2) => {
+				dispatch(searchLectureActionTranscriptions(data));
+
+			}).catch( err => console.log(err));
+		}).catch ( err => console.log(err));
+	};	
+}
+
 export function searchLectureActionTranscriptions (data) {
 	return {
 		type: types.SEARCH_LECTURE_TRANSCRIPTIONS,
@@ -161,6 +237,30 @@ export function searchLectureActionTranscriptions (data) {
     //   }
     // },
 	};
+}
+
+export function dispatchSearchLectureSummaries (data) {
+	return dispatch => {
+		//alert("blog1");;
+		Analytics.page("Summaries", "Search Summaries List",{
+			id : JSON.parse(localStorage.getItem("user")).user_id,
+
+		}).then((res) => {
+			//alert("blog");
+			Analytics.track(JSON.parse(localStorage.getItem("user")).user_id, {
+				id : JSON.parse(localStorage.getItem("user")).user_id,
+				name : "Search Summaries List",
+				data : {
+					id : JSON.parse(localStorage.getItem("user")).user_id,
+					name : "Search Summaries List",
+				},
+
+			}).then((res2) => {
+				dispatch(searchLectureActionSummaries(data));
+
+			}).catch( err => console.log(err));
+		}).catch ( err => console.log(err));
+	};	
 }
 
 export function searchLectureActionSummaries (data) {

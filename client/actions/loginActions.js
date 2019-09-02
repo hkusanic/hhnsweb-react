@@ -188,7 +188,7 @@ export function dispatchLogin (data) {
 			created_at : Math.round(data.loginUser.created_at/1000),
 
 		}).then((res) => {
-
+			//alert('track');
 			Analytics.page("Landing Page", "HomePage",{
 				id : data.loginUser.user_id,
 
