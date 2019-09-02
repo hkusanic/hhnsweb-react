@@ -8,7 +8,7 @@ export function loginUser (credential) {
 	return (dispatch) => {
 		loginApi.login(credential)
 			.then((response) => {
-				dispatch(loginAction(response.data));
+				dispatch(dispatchLogin(response.data));
 			})
 			.catch((err) => {
 				console.error(err);
@@ -20,7 +20,8 @@ export function logoutUser () {
 	return (dispatch) => {
 		loginApi.logout()
 			.then((response) => {
-				dispatch(logoutAction(response.data));
+				alert('call');
+				dispatch(dispatchLogout(response.data));
 			})
 			.catch((err) => {
 				console.error(err);
@@ -32,7 +33,7 @@ export function signupUser (body) {
 	return (dispatch) => {
 		loginApi.signup(body)
 			.then((response) => {
-				dispatch(signupAction(response.data));
+				dispatch(dispatchSignup(response.data));
 			})
 			.catch((err) => {
 				console.error(err);
@@ -104,7 +105,7 @@ export function contactUs (body) {
 	return dispatch => {
 		loginApi.contactUs(body)
 			.then((response) => {
-				dispatch(contactUsAction(response));
+				dispatch(dispatchContactUs(response));
 			})
 			.catch((err) => {
 				console.log(err);
@@ -112,89 +113,31 @@ export function contactUs (body) {
 	};
 }
 
-
-export function signupAction (data) {
-	Analytics.identify(data.loginUser.user_id,{
-		id : data.loginUser.user_id,
-		email : data.loginUser.email,
-		created_at : Math.round(data.loginUser.created_at/1000),
-	});
-	// Analytics.track("User Sign up",{
-	// 	id : data.loginUser.user_id,
-	// 	email : data.loginUser.email,
-	// 	firstName : data.loginUser.firstName,
-	// 	lastName : data.loginUser.last
-	// });
-	return {
-		type: types.SIGNUP,
-		payload: data,
-	// 	meta: {
-    //   analytics: [
-    //   {
-    //     eventType: EventTypes.track,
-    //     eventPayload: {
-    //       event: "User signup",
-    //       properties: {
-    //         data:data,
-    //         userId: data.loginUser.user_id,
-
-    //       }
-    //     }
-    //   },
-    //   {
-    //   	eventType: EventTypes.identify,
-    //   	eventPayload: {
-        
-    //   	userId: data.loginUser.user_id,
-      
-    //   }
-    //   },
-    //   {
-    //   	eventType: EventTypes.track,
-    //     eventPayload: {
-    //       event: "User Login",
-    //       properties: {
-    //         data,
-    //         userId: data.loginUser.user_id,
-    //       }
-    //     }
-    //   }
-    //   ]
-    // },
-	};
-}
-
-export function logoutAction (data) {
-	return {
-		type: types.LOGOUT,
-		payload: data,
-	// 	meta: {
-    //   analytics: 
-    //   {
-    //     eventType: EventTypes.track,
-    //     eventPayload: {
-    //       event: "logout",
-    //       properties: {
-    //         data
-    //       }
-    //     }
-    //   }
-    // },
-	};
-}
-
-export function loginAction (data) {
+export function dispatchSignup (data) {
 	return dispatch => {
 		Analytics.identify(data.loginUser.user_id,{
 			id : data.loginUser.user_id,
 			email : data.loginUser.email,
 			created_at : Math.round(data.loginUser.created_at/1000),
+
 		}).then((res) => {
+
 			Analytics.page("Landing Page", "HomePage",{
 				id : data.loginUser.user_id,
+
 			}).then((res1) => {
-				dispatch(dispatchLogin(data));
-			})
+				Analytics.track(data.loginUser.user_id, {
+					id : data.loginUser.user_id,
+					name : "User Signup",
+					data : data,
+
+				}).then((res2) => {
+
+					dispatch(signupAction(data));
+
+				}).catch( err => console.log(err));
+
+			}).catch( err => console.log(err))
 		}).catch((err) => {
 			console.log(err);
 		});
@@ -203,7 +146,74 @@ export function loginAction (data) {
 	
 }
 
-export function dispatchLogin(data){
+export function signupAction (data) {
+	
+	return {
+		type: types.SIGNUP,
+		payload: data,
+	};
+}
+
+export function dispatchLogout (data) {
+	alert('logout');
+	return dispatch => {
+		Analytics.track(data.loginUser.user_id, {
+			id : data.loginUser.user_id,
+			name : "User Logout",
+			data : data,
+
+		}).then((res2) => {
+			alert('action');
+			dispatch(logoutAction(data));
+
+		}).catch( err => console.log(err));
+	};
+	
+	
+}
+
+export function logoutAction (data) {
+	alert('direct');
+	return {
+		type: types.LOGOUT,
+		payload: data,
+	};
+}
+
+export function dispatchLogin (data) {
+	return dispatch => {
+		Analytics.identify(data.loginUser.user_id,{
+			id : data.loginUser.user_id,
+			email : data.loginUser.email,
+			created_at : Math.round(data.loginUser.created_at/1000),
+
+		}).then((res) => {
+
+			Analytics.page("Landing Page", "HomePage",{
+				id : data.loginUser.user_id,
+
+			}).then((res1) => {
+				Analytics.track(data.loginUser.user_id, {
+					id : data.loginUser.user_id,
+					name : "User Signin",
+					data : data,
+
+				}).then((res2) => {
+
+					dispatch(loginAction(data));
+
+				}).catch( err => console.log(err));
+
+			}).catch( err => console.log(err))
+		}).catch((err) => {
+			console.log(err);
+		});
+	};
+	
+	
+}
+
+export function loginAction(data){
 	return {	
 		type: types.LOGIN,
 		payload: data,	
@@ -214,18 +224,6 @@ export function forgotPasswordAction (data) {
 	return {
 		type: types.FORGOT_PASSWORD,
 		payload: data,
-	// 	meta: {
-    //   analytics: 
-    //   {
-    //     eventType: EventTypes.track,
-    //     eventPayload: {
-    //       event: "forgot password",
-    //       properties: {
-    //         data
-    //       }
-    //     }
-    //   }
-    // },
 	};
 }
 
@@ -285,6 +283,24 @@ export function editProfileAction (data) {
 //       }
 //     },
 	};
+}
+
+export function dispatchContactUs (data) {
+	alert('logout');
+	return dispatch => {
+		Analytics.track(data.loginUser.user_id, {
+			id : data.loginUser.user_id,
+			name : "User Logout",
+			data : data,
+
+		}).then((res2) => {
+			alert('action');
+			dispatch(contactUsAction(data));
+
+		}).catch( err => console.log(err));
+	};
+	
+	
 }
 
 export function contactUsAction (data) {

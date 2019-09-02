@@ -138,9 +138,11 @@ exports = module.exports = function (app) {
 
 	//------ segment api's starts -------//
 	app.post('/api/customerio/identify/', keystone.middleware.api, routes.api.customerio.signin);
-	app.post('/api/customerio/pageview/', keystone.middleware.api, routes.api.customerio.signin);
+	app.post('/api/customerio/pageview/', keystone.middleware.api, routes.api.customerio.pageview);
+	app.post('/api/customerio/track/', keystone.middleware.api, routes.api.customerio.track);
 	app.post('/api/s3/identify/', keystone.middleware.api, routes.api.s3.signin);
-
+	app.post('/api/s3/pageview/', keystone.middleware.api, routes.api.s3.pageview);
+	app.post('/api/s3/track/', keystone.middleware.api, routes.api.s3.track);
 	//------- segment api ends ---------//
 
 

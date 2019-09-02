@@ -666,10 +666,18 @@ export const EventLayer = (function EventLayer () {
             test: function () {
                 return true;
             },
-            track: function (eventName, eventProperties) {
-                // if (!window._cio) return;
-
-                // window._cio.track(eventName, eventProperties);
+            track: function (userid, data) {
+                let promise = new Promise( (resolve, reject) => {
+                    
+                    if (!userid) return console.warn('user id required by customer.io for identify function.');
+                   
+                    segmentApi.customerio({ process : 'track'}, data).then( (response) => {
+                        if(response.status === 200){
+                            resolve(response.data.message);
+                        }
+                    })
+                });
+                return promise;
             },
             identify: function (userId, userProperties) {
                 console.log(userProperties);
@@ -701,21 +709,18 @@ export const EventLayer = (function EventLayer () {
             // group: function (groupId, traits) {
             //     // Todo
             // },
-            page: function (category, name, properties) {
+            page: function (properties) {
                 
-                if (!name) return console.warn('Customer.io requires a valid name property when calling the page event. Since Analytics.js expects a category field as well, this must be sent (even if it is empty). See documentation for more details.');
+                if (!properties.name) return console.warn('Customer.io requires a valid name property when calling the page event. Since Analytics.js expects a category field as well, this must be sent (even if it is empty). See documentation for more details.');
 
                 if (!properties) properties = {};
 
-                properties.id = window.__currentUserId;
                 properties.type = 'page';
-                properties.name = name;
-                properties.category = category;
                 properties.url = location.href;
 
                 segmentApi.customerio({ process : 'pageview'}, properties).then( (response) => {
                     if(response.status === 200){
-                        resolve(response.data.message);
+                        response.data.message;
                     }
                 })
             }
@@ -725,14 +730,26 @@ export const EventLayer = (function EventLayer () {
             test: function () {
                 return true;
             },
-            track: function (eventName, eventProperties) {},
+            track: function (userid, data) {
+                let promise = new Promise( (resolve, reject) => {
+                    
+                    if (!userid) return console.warn('user id required by customer.io for identify function.');
+                   
+                    segmentApi.s3({ process : 'track'}, data).then( (response) => {
+                        if(response.status === 200){
+                            resolve(response.data.message);
+                        }
+                    })
+                });
+                return promise;
+            },
             identify: function (userId, userProperties) {
                 let promise = new Promise((resolve, reject) => {
 
                         segmentApi.s3({process : 'identify'}, userProperties).then( (response) => {
                             if(response.status === 200){
                                 //alert(response.data.message);
-                                resolve(response.data.message);
+                                return response.data.message;
                             }
                         }).catch( err => {console.log(err);
                             return {error: err} ;
@@ -740,7 +757,21 @@ export const EventLayer = (function EventLayer () {
                 });
                 return promise;
             },
-            // page: function (category, name, properties) {},
+            page: function (properties) {
+                
+                if (!properties.name) return console.warn('Customer.io requires a valid name property when calling the page event. Since Analytics.js expects a category field as well, this must be sent (even if it is empty). See documentation for more details.');
+
+                if (!properties) properties = {};
+
+                properties.type = 'page';
+                properties.url = location.href;
+
+                segmentApi.s3({ process : 'pageview'}, properties).then( (response) => {
+                    if(response.status === 200){
+                        return response.data.message;
+                    }
+                })
+            },
             // alias: function (userId, previousId) {},
             // group: function (groupId, traits) {}
         },
@@ -769,29 +800,35 @@ export const EventLayer = (function EventLayer () {
         return false;
     }
 
-    function track (eventName, eventProperties, options, callback) {
-        if (!thirdPartyAdapters) return; // Early return if there are no adapters
+    function track (userid, data, options, callback) {
+        let promise = new Promise((resolve, reject) => {
+            if (!thirdPartyAdapters) return; // Early return if there are no adapters
+            onReady();
 
-        onReady();
+            let promiseArray = [];
 
-        for (var adapterName in thirdPartyAdapters) {
-            var adapter = thirdPartyAdapters[adapterName];
+            for (var adapterName in thirdPartyAdapters) {
+                var adapter = thirdPartyAdapters[adapterName];
 
-            // If this adapter passes it's own internal test (usually to detect if a specific source is available)
-            if (adapter.enabled && adapter.test && typeof(adapter.test) === 'function' && runTest(adapter.test)) {
-                // If everything checks out for the data we've received,
-                // pass the data to the adapter so it can be tracked
+                // If this adapter passes it's own internal test (usually to detect if a specific source is available)
+                if (adapter.enabled && adapter.test && typeof(adapter.test) === 'function' && runTest(adapter.test)) {
+                    // If everything checks out for the data we've received,
+                    // pass the data to the adapter so it can be tracked
+                    if (adapter.track && typeof(adapter.track) === 'function'){
 
-                // If TRANSLATE_EVENT_NAMES exists, use it to translate event names
-                if (window.TRANSLATE_EVENT_NAMES && typeof window.TRANSLATE_EVENT_NAMES === 'object')
-                    eventName = TRANSLATE_EVENT_NAMES(eventName);
-
-                if (adapter.track && typeof(adapter.track) === 'function')
-                    adapter.track(eventName, eventProperties);
+                        promiseArray.push(adapter.track(userid, data));
+                    }
+                }
             }
-        }
 
-        if (callback && typeof(callback) === 'function') callback();
+            Promise.all(promiseArray).then(result => {
+                resolve("updated")
+            }).catch( err => console.log(err));
+
+            if (callback && typeof(callback) === 'function') callback();
+        });
+        return promise;
+
     }
 
     function identify (userId, userProperties, options, callback) {
@@ -824,48 +861,52 @@ export const EventLayer = (function EventLayer () {
         return promise;
     }
 
-    function page (category, name, properties, options, callback) {
-        if (!thirdPartyAdapters) return; // Early return if there are no adapters
+    function page (category, name, properties, callback) {
+        // // url (canonical?), title, referrer, path
+        // var url = document.querySelector("link[rel='canonical']") ? document.querySelector("link[rel='canonical']").href : document.location.href;
+        // var title = document.title;
+        // var referrer = document.referrer;
+        // var path = location.pathname;
 
-        onReady();
+        // var props = {
+        //     url: url,
+        //     title: title,
+        //     referrer: referrer,
+        //     path: path
+        // };
 
-        // Handle not passing the category (shift right)
-        if (category && (!name || typeof(name) !== 'string')) {
-            callback = options;
-            options = properties;
-            properties = name;
-            name = category;
-            category = null;
-        }
+        let promise = new Promise((resolve, reject) => {
 
-        // url (canonical?), title, referrer, path
-        var url = document.querySelector("link[rel='canonical']") ? document.querySelector("link[rel='canonical']").href : document.location.href;
-        var title = document.title;
-        var referrer = document.referrer;
-        var path = location.pathname;
+            properties.category = category;
+            properties.name = name;
 
-        var props = {
-            url: url,
-            title: title,
-            referrer: referrer,
-            path: path
-        };
+            if (!thirdPartyAdapters) return; // Early return if there are no adapters
+            onReady();
 
-        var properties = Object.assign(props, properties);
+            let promiseArray = [];
 
-        for (var adapterName in thirdPartyAdapters) {
-            var adapter = thirdPartyAdapters[adapterName];
+            for (var adapterName in thirdPartyAdapters) {
+                var adapter = thirdPartyAdapters[adapterName];
 
-            // If this adapter passes it's own internal test (usually to detect if a specific source is available)
-            if (adapter.enabled && adapter.test && typeof(adapter.test) === 'function' && runTest(adapter.test)) {
-                // If everything checks out for the data we've received,
-                // pass the data to the adapter so it can be tracked
-                if (adapter.page && typeof(adapter.page) === 'function')
-                    adapter.page(category, name, properties);
+                // If this adapter passes it's own internal test (usually to detect if a specific source is available)
+                if (adapter.enabled && adapter.test && typeof(adapter.test) === 'function' && runTest(adapter.test)) {
+                    // If everything checks out for the data we've received,
+                    // pass the data to the adapter so it can be tracked
+                    if (adapter.page && typeof(adapter.page) === 'function'){
+
+                        promiseArray.push(adapter.page(properties));
+                    }
+                }
             }
-        }
 
-        if (callback && typeof(callback) === 'function') callback();
+            Promise.all(promiseArray).then(result => {
+                resolve("updated")
+            }).catch( err => console.log(err));
+
+            if (callback && typeof(callback) === 'function') callback();
+        });
+        return promise;
+
     }
 
     function group (groupId, traits, options, callback) {
