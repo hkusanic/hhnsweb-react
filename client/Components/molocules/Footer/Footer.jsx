@@ -152,15 +152,14 @@ export class Footer extends Component {
 									<ul className="list-sm">
 										<li className="object-inline" style={{ fontSize: "20px" }}>
 											<a style={{ color: "white" }} href="#">
-												{" "}
-												<Icon type="facebook" />{" "}
+												<Icon type="facebook" /> &nbsp;
 											</a>
 											<a style={{ color: "white" }} href="#">
-												<Icon type="instagram" />{" "}
+												<Icon type="instagram" /> &nbsp;
 											</a>
 											<a style={{ color: "white" }} href="#">
-												<Icon type="twitter" />{" "}
-											</a>{" "}
+												<Icon type="twitter" />
+											</a>
 										</li>
 										<li>
 											<a style={{ color: "white" }} href="#">
@@ -326,15 +325,14 @@ export class Footer extends Component {
 							<ul className="list-sm">
 								<li className="object-inline" style={{ fontSize: "20px" }}>
 									<a style={{ color: "white" }} href="#">
-										{" "}
-										<Icon type="facebook" />{" "}
+										<Icon type="facebook" /> &nbsp;
 									</a>
 									<a style={{ color: "white" }} href="#">
-										<Icon type="instagram" />{" "}
+										<Icon type="instagram" /> &nbsp;
 									</a>
 									<a style={{ color: "white" }} href="#">
-										<Icon type="twitter" />{" "}
-									</a>{" "}
+										<Icon type="twitter" />
+									</a>
 								</li>
 								<li>
 									<a style={{ color: "white" }} href="#">

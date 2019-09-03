@@ -174,31 +174,23 @@ export class Navigation extends Component {
 		const menu = (
 			<Menu>
 				<Menu.Item
-					style={{ position: "relative", zIndex: "4000" }}
+					className="nav_menu"
 					onClick={() => this.languageToggle("en")}
 				>
 					<a
-						style={{
-							color: "orange"
-						}}
+						className="orangecolor"
 						value="en"
-						// target="_blank"
-						// rel="noopener noreferrer"
 					>
 						Eng
 					</a>
 				</Menu.Item>
 				<Menu.Item
-					style={{ position: "relative", zIndex: "4000" }}
+					className="nav_menu"
 					onClick={() => this.languageToggle("ru")}
 				>
 					<a
-						style={{
-							color: "orange"
-						}}
+						className="orangecolor"
 						value="ru"
-						// target="_blank"
-						// rel="noopener noreferrer"
 					>
 						Rus
 					</a>
@@ -372,7 +364,7 @@ export class Navigation extends Component {
 														}}
 														src="https://ik.imagekit.io/gcwjdmqwwznjl/swami__v3cKrjXs.svg"
 														alt="Niranjana Swami"
-													/>{" "}
+													/>
 												</Link>
 											</li>
 
@@ -589,54 +581,19 @@ export class Navigation extends Component {
 														overlay={menu}
 													>
 														<a className="ant-dropdown-link nav_lang" href="#">
-															{currentLanguage === "ru" ? Rus : Eng}{" "}
+															{currentLanguage === "ru" ? Rus : Eng}&nbsp;
 															<Icon type="down" />
 														</a>
 													</Dropdown>
-													{/* <Select
-														showSearch
-														className="langaugeDropDown nav_language"
-														defaultValue={currentLanguage}
-														placeholder="Select language"
-														optionFilterProp="children"
-														onChange={this.languageToggle}
-														filterOption={(input, option) =>
-															option.props.children
-																.toLowerCase()
-																.indexOf(input.toLowerCase()) >= 0
-														}
-														style={{
-															color: "black",
-															fontFamily: "Charter",
-															fontWeight: "bold"
-														}}
-													>
-														<Option
-															style={{
-																color: "orange"
-															}}
-															value="en"
-														>
-															ENG
-														</Option>
-														<Option
-															style={{
-																color: "orange"
-															}}
-															value="ru"
-														>
-															RUS
-														</Option>
-													</Select> */}
 												</li>
 
 												<li className="rd-nav-item hideMenu">
-													{" "}
+													
 													<img
-														style={{ height: "34px", width: "34px" }}
+														className="nav_image"
 														src="https://ik.imagekit.io/gcwjdmqwwznjl/Iskcon_logo_C-Q4c8R4B.jpg"
 														alt="Iskcon Logo"
-													/>{" "}
+													/>
 												</li>
 											</span>
 										</ul>

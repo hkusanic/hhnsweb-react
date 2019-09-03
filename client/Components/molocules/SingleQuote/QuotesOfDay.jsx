@@ -153,6 +153,7 @@ export class QuoteOfDay extends React.Component {
 											{({ translate }) => translate("FOOTER.readmore")}
 										</Translate>
 									</Link>
+
 									{/* </Card> */}
 								</div>
 							</div>
@@ -259,6 +260,7 @@ export class QuoteOfDay extends React.Component {
 											{({ translate }) => translate("FOOTER.readmore")}
 										</Translate>
 									</Link>
+
 									{/* </Card> */}
 								</div>
 							</div>

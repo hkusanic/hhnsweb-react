@@ -101,45 +101,11 @@ export class Blogs extends Component {
 					) : null}
 					<br />
 					<br />
-					{/* <div style={{ textAlign: "center" }}>
-						{" "}
-						<Link
-							to={{
-								pathname: "/blog"
-							}}
-						>
-							<button className="bloghome_button">Read More...</button>
-						</Link>
-						<br />
-						<br />
-					</div> */}
 				</section>
 			</div>
 		);
 	}
 }
-
-// const mapStateToProps = state => {
-// 	return {
-// 		blogsDetails: state.blogReducer
-// 	};
-// };
-
-// const mapDispatchToProps = dispatch => {
-// 	return {
-// 		getBlogs: page => {
-// 			dispatch(getBlogs(page));
-// 		},
-// 		getBlog: body => {
-// 			dispatch(getBlog(body));
-// 		}
-// 	};
-// };
-
-// export default connect(
-// 	mapStateToProps,
-// 	mapDispatchToProps
-// )(Blogs);
 
 const mapStateToProps = state => {
 	return {

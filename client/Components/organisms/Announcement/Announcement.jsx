@@ -19,15 +19,14 @@ export class Announcement extends Component {
 						<p style={{ textAlign: "justify", fontFamily: "Charter" }}>
 							For devotees who are visiting Mayapura between March 13-March 22
 							and wish to have darshan of Niranjana Swami during that time, we
-							have created this website{" "}
+							have created this website&nbsp;
 							<a href="http://booking.niranjanswami.net" target="_blank">
 								https://booking.niranjanaswami.net
-							</a>{" "}
-							to arrange individual meetings.
+							</a>
+							&nbsp; to arrange individual meetings.
 							<span className="fontWeight">
-								{" "}
-								This is the only way to request a meeting with Niranjana Swami
-								during this visit.
+								&nbsp; This is the only way to request a meeting with Niranjana
+								Swami during this visit.
 							</span>
 						</p>
 
@@ -36,15 +35,16 @@ export class Announcement extends Component {
 							in the future to schedule meetings when Maharaja is visiting North
 							America. If you encounter any trouble, please contact Dina
 							Gauranga dasa at the email listed at the bottom of this page. Over
-							the next few weeks,{" "}
+							the next few weeks,&nbsp;
 							<a href="http://booking.niranjanaswami.net" target="_blank">
 								https://booking.niranjanaswami.net
-							</a>{" "}
-							and{" "}
+							</a>
+							&nbsp; and&nbsp;
 							<a href="http://www.niranjanaswami.net" target="_blank">
 								http://www.niranjanaswami.net
-							</a>{" "}
-							will be merged into a single website. Stay tuned for details!
+							</a>
+							&nbsp; will be merged into a single website. Stay tuned for
+							details!
 						</p>
 
 						<p className="fontWeight">Your servants</p>
@@ -66,11 +66,11 @@ export class Announcement extends Component {
 						<p align="justify">
 							Для преданных, которые посещают Маяпур в период с 13 по 22 марта и
 							хотят получить даршан с Ниранджаной Свами в течение этого времени,
-							мы создали следующий веб-сайт{" "}
+							мы создали следующий веб-сайт&nbsp;
 							<a href="https://booking.niranjanaswami.net" target="_blank">
 								https://booking.niranjanaswami.net
-							</a>{" "}
-							для организации индивидуальных встреч.
+							</a>
+							&nbsp; для организации индивидуальных встреч.
 							<span className="fontWeight">
 								Это единственный способ запросить встречу с Ниранджаной Свами во
 								время этого визита.
@@ -83,15 +83,15 @@ export class Announcement extends Component {
 							когда Махарадж посещает Северную Америку. Если у вас возникнут
 							какие-либо проблемы, пожалуйста, свяжитесь с Dina Gauranga dasa по
 							электронной почте, указанной в нижней части этой страницы. В
-							течение следующих нескольких недель{" "}
+							течение следующих нескольких недель&nbsp;
 							<a href="https://booking.niranjanaswami.net" target="_blank">
 								https://booking.niranjanaswami.net
-							</a>{" "}
-							и{" "}
+							</a>
+							&nbsp; и&nbsp;
 							<a href="https://www.niranjanaswami.net" target="_blank">
 								https://www.niranjanaswami.net
-							</a>{" "}
-							будут объединены в один веб-сайт. Следите за подробностями!
+							</a>
+							&nbsp; будут объединены в один веб-сайт. Следите за подробностями!
 						</p>
 
 						<p className="fontWeight">Ваши слуги</p>

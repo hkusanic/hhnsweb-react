@@ -58,6 +58,7 @@ const SingleBiography = props => {
 							/>
 						}
 					>
+<<<<<<< HEAD
 						<div
 							style={{
 								paddingTop: "24px !important",
@@ -72,6 +73,10 @@ const SingleBiography = props => {
 										: "singleBiography_card_white"
 								}
 							>
+=======
+						<div>
+							<div class="singleBiography_card">
+>>>>>>> f7e15012e774ef34dbafbf5158cca853370b6ce6
 								{reactCookie.load("languageCode") === "en"
 									? props.title_en
 									: props.title_ru
@@ -96,7 +101,8 @@ const SingleBiography = props => {
 												: props.content_en
 										) +
 										"</div>"
-								)}{" "}
+								)}
+								&nbsp;
 							</div>
 							<Link
 								to={{
