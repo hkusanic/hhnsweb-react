@@ -9,6 +9,7 @@ import GridLayoutMenus from "../../organisms/GridLayoutMenu/GridLayoutMenus";
 import QuoteOfDay from "../../molocules/SingleQuote/QuotesOfDay";
 import ContentDetails from "../../../containers/contents/ContentDetails";
 import Blog from "../../organisms/BlogHome/bloghome";
+import RussianDubbedLectures from "../../../containers/Lectures/LecturesInRussian";
 import "./index.css";
 import { connect } from "react-redux";
 import { quoteOfDay } from "../../../actions/quoteActions";
@@ -16,9 +17,19 @@ import { quoteOfDay } from "../../../actions/quoteActions";
 export class Carousel2 extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			quotes: []
-		};
+		var date = new Date().getSeconds();
+		console.log(date);
+		if (date % 2 === 0) {
+			this.state = {
+				quotes: [],
+				evenodd: "even"
+			};
+		} else {
+			this.state = {
+				quotes: [],
+				evenodd: "odd"
+			};
+		}
 	}
 
 	componentDidMount() {
@@ -40,11 +51,12 @@ export class Carousel2 extends Component {
 					<div className="swiper-wrapper">
 						{this.props.quote.quotes.length > 0 ? (
 							<SingleCarousel
-								image="https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"
+								// image="https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"
+								image="../images/swami-background.jpg"
 								heading="Quote of the Day"
 								text={this.props.quote.quotes[0].en.body}
 								author={this.props.quote.quotes[0].author}
-								// author="Niranjana Swami"
+								status={this.state.evenodd}
 							/>
 						) : null}
 					</div>
@@ -60,6 +72,16 @@ export class Carousel2 extends Component {
 					<GridLayoutMenus />
 					<img className="img4" src="images/circle.png" />
 					{/* <Blog {...this.props}/> */}
+					<div class="container">
+						<div className="row row-50 row-xxl-70">
+							<div className="wow-outer col-md-6 col-lg-6 col-sm-12 page1">
+								<ContentDetails />
+							</div>
+							<div className="wow-outer col-md-6 col-lg-6 col-sm-12 page1">
+								<RussianDubbedLectures />
+							</div>
+						</div>
+					</div>
 					<QuoteOfDay />
 				</div>
 				<br />

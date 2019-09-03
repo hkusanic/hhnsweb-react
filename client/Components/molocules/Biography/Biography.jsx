@@ -50,7 +50,7 @@ export class Biography extends Component {
 				<div>
 					<div className="row row-50 row-xxl-70">
 						<SingleBiography
-							img="images/person1.jpg"
+							img="images/bitmap-copy-4.png"
 							title_en={DATA.BIOGRAPHY.two_title_en}
 							title_ru={DATA.BIOGRAPHY.two_title_ru}
 							content_en={DATA.BIOGRAPHY.two_content_en}

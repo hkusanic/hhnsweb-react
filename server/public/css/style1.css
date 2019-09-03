@@ -44,19 +44,34 @@
 	margin-top: 3%;
 }
 
-.singleCarousel_p1_lg {
+.singleCarousel_p1_lg_even {
 	font-family: Charter;
 	font-size: 20px;
 	font-weight: 900;
-	color: white;
+	color: rgb(0, 0, 0);
 	line-height: 0.1;
 	margin-top: 7%;
 }
 
-.singleCarousel_p2_lg {
+.singleCarousel_p1_lg_odd {
+	font-family: Charter;
+	font-size: 20px;
+	font-weight: 900;
+	color: rgb(255, 255, 255);
+	line-height: 0.1;
+	margin-top: 7%;
+}
+
+.singleCarousel_p2_lg_even {
 	font-family: Charter;
 	font-size: 15px;
-	color: white;
+	color: rgb(5, 5, 5) !important;
+}
+
+.singleCarousel_p2_lg_odd {
+	font-family: Charter;
+	font-size: 15px;
+	color: rgb(255, 255, 255);
 }
 
 .singleCarousel_p2_sm {
@@ -103,7 +118,19 @@
 	margin-right: 353px;
 }
 
-.singleBiography_card {
+.singleBiography_card_orange {
+	margin-left: 5%;
+	font-family: Charter;
+	font-size: 18px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #ffffff;
+}
+
+.singleBiography_card_white {
 	margin-left: 5%;
 	font-family: Charter;
 	font-size: 18px;
@@ -115,7 +142,16 @@
 	color: #000000;
 }
 
-.singleBiography_text {
+.singleBiography_text_orange {
+	margin-left: 5%;
+	margin-right: 5%;
+	font-family: Charter-Roman;
+	font-size: 16px;
+	color: #faf9f9 !important;
+	text-align: justify;
+}
+
+.singleBiography_text_white {
 	margin-left: 5%;
 	margin-right: 5%;
 	font-family: Charter-Roman;
@@ -364,7 +400,13 @@
 	padding-bottom: 0px !important;
 }
 
-.caraousel {
+.caraousel_even {
+	width: 100% !important;
+	height: 116.28614916286149vh !important;
+	background-image: url("../images/swami-background.png");
+	background-size: cover;
+}
+.caraousel_odd {
 	width: 100% !important;
 	height: 116.28614916286149vh !important;
 	background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg");
@@ -373,8 +415,9 @@
 
 .caraousel_sm {
 	height: 244px !important;
-	background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg");
+	/* background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"); */
 	background-size: cover;
+	background-image: url("../images/swami-background.png");
 }
 
 .nav_lang {
@@ -389,6 +432,9 @@
 	font-weight: bold;
 }
 
+.orange {
+	background-image: linear-gradient(to right, #f25858, #ff9f63);
+}
 .nav_lang:active {
 	color: orange;
 	font-family: Charter;

@@ -41,26 +41,53 @@ class SingleCarousel extends Component {
 				</div>
 			);
 		} else {
-			return (
-				<div
-					className="swiper-slide caraousel"
-					data-slide-bg={this.props.image}
-				>
-					<div className="slide-inner">
-						<div className="insideCarousel">
-							<img src="images/person3.png" className="singleCarousel_image" />
+			if (this.props.status === "even") {
+				return (
+					<div className="swiper-slide caraousel_even">
+						<div className="slide-inner">
+							<div className="insideCarousel_even">
+								<img
+									src="images/person3.png"
+									className="singleCarousel_image"
+								/>
 
-							<div style={{ paddingTop: "9px" }}>
-								<p className="singleCarousel_p1_lg">ISKCON Founder - Acarya </p>
+								<div style={{ paddingTop: "9px" }}>
+									<p className="singleCarousel_p1_lg_even">
+										ISKCON Founder - Acarya{" "}
+									</p>
 
-								<p className="singleCarousel_p2_lg">
-									A.C Bhakthivedanta Swami Prabhupada
-								</p>
+									<p className="singleCarousel_p2_lg_even">
+										A.C Bhakthivedanta Swami Prabhupada
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			);
+				);
+			} else {
+				return (
+					<div className="swiper-slide caraousel_odd">
+						<div className="slide-inner">
+							<div className="insideCarousel_odd">
+								<img
+									src="images/person3.png"
+									className="singleCarousel_image"
+								/>
+
+								<div style={{ paddingTop: "9px" }}>
+									<p className="singleCarousel_p1_lg_odd">
+										ISKCON Founder - Acarya{" "}
+									</p>
+
+									<p className="singleCarousel_p2_lg_odd">
+										A.C Bhakthivedanta Swami Prabhupada
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				);
+			}
 		}
 	}
 }

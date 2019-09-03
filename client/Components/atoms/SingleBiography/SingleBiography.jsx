@@ -45,6 +45,11 @@ const SingleBiography = props => {
 					<Card
 						hoverable
 						className="biographyCard"
+						className={
+							props.title_en === "His Holiness Niranjana Swami"
+								? "orange"
+								: "white"
+						}
 						cover={
 							<img
 								alt="example"
@@ -60,7 +65,13 @@ const SingleBiography = props => {
 								paddingRight: "0px !important"
 							}}
 						>
-							<div class="singleBiography_card">
+							<div
+								className={
+									props.title_en === "His Holiness Niranjana Swami"
+										? "singleBiography_card_orange"
+										: "singleBiography_card_white"
+								}
+							>
 								{reactCookie.load("languageCode") === "en"
 									? props.title_en
 									: props.title_ru
@@ -68,7 +79,13 @@ const SingleBiography = props => {
 									: props.title_en}
 							</div>
 							<br />
-							<div className="singleBiography_text">
+							<div
+								className={
+									props.title_en === "His Holiness Niranjana Swami"
+										? "singleBiography_text_orange"
+										: "singleBiography_text_white"
+								}
+							>
 								{renderHTML(
 									"<div > " +
 										showing100Characters(

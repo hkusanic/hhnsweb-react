@@ -44,16 +44,6 @@ export class QuoteOfDay extends React.Component {
 			<div>
 				<section class="section section-lg text-center">
 					<div class="container">
-						<div className="row row-50 row-xxl-70">
-							<div className="wow-outer col-md-6 col-lg-6 col-sm-12 page1">
-								<ContentDetails />
-							</div>
-							<div className="wow-outer col-md-6 col-lg-6 col-sm-12 page1">
-								<RussianDubbedLectures />
-							</div>
-						</div>
-					</div>
-					<div class="container">
 						<br />
 						<br />
 						<h3>Quotes of the day</h3>

@@ -5356,15 +5356,36 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 } 
 
 
-.insideCarousel{
-	 position:absolute;
+.insideCarousel_even{
+	 /* position:absolute;
+	 margin-top: -14%;
+	 /* width: 29.282576866764277vw;
+  height: 15.220700152207002vh; */
+  /* width:400px;
+  height:100px;
+	 background-image: linear-gradient(to right, #f25858, #ff9f63);
+	 margin-left: 10% */ 
+
+	 background-color: white;
+	 position: absolute;
+	 margin-top:-25%;
+	 width: 400px;
+	 height: 100px;
+	 margin-left: 71%;
+	 color:black !important
+	 
+}
+
+.insideCarousel_odd{
+	  position:absolute;
 	 margin-top: -14%;
 	 /* width: 29.282576866764277vw;
   height: 15.220700152207002vh; */
   width:400px;
   height:100px;
 	 background-image: linear-gradient(to right, #f25858, #ff9f63);
-	 margin-left: 10%
+	 margin-left: 10% 
+
 }
 
 .footer-linked-layout > * {
