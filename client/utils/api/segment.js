@@ -33,21 +33,20 @@ const utils = {
 			return axios.post(url, Properties);
 		}
 	},	
-	postgres : (event, Properties) => {
-		if(event.process === 'identify'){
+	mixpanel : (event, Properties) => {
+		 if ( event.process === 'track'){
 			console.log(Properties);
-			//alert('here');
-			let url = serverAddress + '/api/postgres/identify/';
-			return axios.post(url, Properties);
-		} else if ( event.process === 'pageview'){
-			console.log(Properties);
-			let url = serverAddress + '/api/postgres/pageview/';
-			return axios.post(url, Properties);
-		} else if ( event.process === 'track'){
-			console.log(Properties);
-			let url = serverAddress + '/api/postgres/track/';
+			let url = serverAddress + '/api/mixpanel/track/';
 			return axios.post(url, Properties);
 		}
+	},
+	kissmetrics: (event, Properties) => {
+		if(event.process === 'alias'){
+			console.log(Properties);
+			//alert('here');
+			let url = serverAddress + '/api/kissmetrics/alias/';
+			return axios.post(url, Properties);
+		} 
 	},	
 };
 
