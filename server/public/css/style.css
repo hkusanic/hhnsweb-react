@@ -5346,7 +5346,16 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
   height: 1182px;
   /* background-image: linear-gradient(to right, rgba(255, 56, 0, 0.1), rgba(0, 105, 255, 0)); */
 }
-.insideCarousel_sm{
+.insideCarousel_sm_even{
+	position: absolute;
+    margin-top: -28%;
+    width: 164px !important;
+    height: 57px;
+    background-color: white;
+    margin-left: 47%;
+}
+
+.insideCarousel_sm_odd{
     position: absolute;
     margin-top: -14%;
     width: 164px !important;

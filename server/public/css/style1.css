@@ -1,3 +1,14 @@
+.singleCarousel_heading_sm{
+	width: 81px;
+	margin-top: -5vh;
+	margin-left: -61px;
+	font-size: 8px;
+	height: 23px;
+	padding: 4px;
+	border-radius: 4px;
+	color: black;
+}
+
 .singleCarousel_heading_sm {
 	width: 81px;
 	margin-top: -5vh;
@@ -11,7 +22,15 @@
 }
 
 .singleCarousel_text_sm {
-	/* color: black; */
+	margin-left: 2.562225475841874vw;
+	font-size: 2.9282576866764276vw;
+	font-style: italic;
+	font-weight: bold;
+	font-family: Charter;
+	width: 32.445095vw;
+}
+
+.singleCarousel_text_sm {
 	margin-left: 2.562225475841874vw;
 	font-size: 2.9282576866764276vw;
 	font-style: italic;
@@ -416,11 +435,16 @@
 	background-size: cover;
 }
 
-.caraousel_sm {
+.caraousel_sm_even {
 	height: 244px !important;
-	/* background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"); */
 	background-size: cover;
 	background-image: url("../images/swami-background.png");
+}
+
+.caraousel_sm_odd {
+	height: 244px !important;
+	background-size: cover;
+	background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg");
 }
 
 .nav_lang {
