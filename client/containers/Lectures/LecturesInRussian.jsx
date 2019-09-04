@@ -29,6 +29,13 @@ class RussiaDubbedLectures extends Component {
 				className="centerAlign recentActivityCard"
 				title="Lecture Dubbed in Russian"
 			>
+			{/* <div className="centerAlign recentActivityCard">
+				<br />
+				<h3 style={{ fontFamily: "Charter" }}> Lecture Dubbed in Russian </h3>
+				<br />
+				<hr />
+				<br />
+				<br /> */}
 				{this.props.lectureDetails &&
 					this.props.lectureDetails.lectures &&
 					this.props.lectureDetails.lectures.map(eachLecture => {
@@ -47,7 +54,8 @@ class RussiaDubbedLectures extends Component {
 							</div>
 						);
 					})}
-			</Card>
+				</Card>
+			
 		);
 	}
 }

@@ -69,7 +69,7 @@ export class QuoteOfDay extends React.Component {
 												y="0px"
 												width="35px"
 												height="25px"
-												viewbox="0 0 35 25"
+												Viewbox="0 0 35 25"
 											>
 												<path d="M27.461,10.206h7.5v15h-15v-15L25,0.127h7.5L27.461,10.206z M7.539,10.206h7.5v15h-15v-15L4.961,0.127h7.5L7.539,10.206z" />
 											</svg>
@@ -79,21 +79,21 @@ export class QuoteOfDay extends React.Component {
 														this.showing100Characters(
 															reactCookie.load("languageCode") === "en"
 																? this.props &&
-																  this.props.quote &&
-																  this.props.quote.quotes &&
-																  this.props.quote.quotes[0] &&
-																  this.props.quote.quotes[0].en &&
-																  this.props.quote.quotes[0].en.body
+																	this.props.quote &&
+																	this.props.quote.quotes &&
+																	this.props.quote.quotes[0] &&
+																	this.props.quote.quotes[0].en &&
+																	this.props.quote.quotes[0].en.body
 																	? this.props.quote.quotes[0].en.body
 																	: "Sorry, No data available"
 																: this.props &&
-																  this.props.quote &&
-																  this.props.quote.quotes &&
-																  this.props.quote.quotes[0] &&
-																  this.props.quote.quotes[0].ru &&
-																  this.props.quote.quotes[0].ru.body
-																? this.props.quote.quotes[0].ru.body
-																: "Sorry, No data available"
+																	this.props.quote &&
+																	this.props.quote.quotes &&
+																	this.props.quote.quotes[0] &&
+																	this.props.quote.quotes[0].ru &&
+																	this.props.quote.quotes[0].ru.body
+																	? this.props.quote.quotes[0].ru.body
+																	: "Sorry, No data available"
 														)
 													)}
 												</p>
@@ -119,22 +119,22 @@ export class QuoteOfDay extends React.Component {
 														{renderHTML(
 															reactCookie.load("languageCode") === "en"
 																? this.props &&
-																  this.props.quote &&
-																  this.props.quote.quotes &&
-																  this.props.quote.quotes[0] &&
-																  this.props.quote.quotes[0].en &&
-																  this.props.quote.quotes[0].en.source_of_quote
+																	this.props.quote &&
+																	this.props.quote.quotes &&
+																	this.props.quote.quotes[0] &&
+																	this.props.quote.quotes[0].en &&
+																	this.props.quote.quotes[0].en.source_of_quote
 																	? this.props.quote.quotes[0].en
-																			.source_of_quote
+																		.source_of_quote
 																	: "Sorry, No data available"
 																: this.props &&
-																  this.props.quote &&
-																  this.props.quote.quotes &&
-																  this.props.quote.quotes[0] &&
-																  this.props.quote.quotes[0].ru &&
-																  this.props.quote.quotes[0].ru.source_of_quote
-																? this.props.quote.quotes[0].ru.source_of_quote
-																: "Sorry, No data available"
+																	this.props.quote &&
+																	this.props.quote.quotes &&
+																	this.props.quote.quotes[0] &&
+																	this.props.quote.quotes[0].ru &&
+																	this.props.quote.quotes[0].ru.source_of_quote
+																	? this.props.quote.quotes[0].ru.source_of_quote
+																	: "Sorry, No data available"
 														)}
 													</p>
 												</div>
@@ -177,7 +177,7 @@ export class QuoteOfDay extends React.Component {
 												y="0px"
 												width="35px"
 												height="25px"
-												viewbox="0 0 35 25"
+												Viewbox="0 0 35 25"
 											>
 												<path d="M27.461,10.206h7.5v15h-15v-15L25,0.127h7.5L27.461,10.206z M7.539,10.206h7.5v15h-15v-15L4.961,0.127h7.5                L7.539,10.206z" />
 											</svg>
@@ -187,23 +187,23 @@ export class QuoteOfDay extends React.Component {
 														this.showing100Characters(
 															reactCookie.load("languageCode") === "en"
 																? this.props &&
-																  this.props.quote &&
-																  this.props.quote.quotes &&
-																  this.props.quote.quotes[1] &&
-																  this.props.quote.quotes[1].en &&
-																  this.props.quote.quotes[1].en.body &&
-																  this.props.quote.quotes[1].en.body
+																	this.props.quote &&
+																	this.props.quote.quotes &&
+																	this.props.quote.quotes[1] &&
+																	this.props.quote.quotes[1].en &&
+																	this.props.quote.quotes[1].en.body &&
+																	this.props.quote.quotes[1].en.body
 																	? this.props.quote.quotes[1].en.body
 																	: "Sorry ,No data available"
 																: this.props &&
-																  this.props.quote &&
-																  this.props.quote.quotes &&
-																  this.props.quote.quotes[1] &&
-																  this.props.quote.quotes[1].ru &&
-																  this.props.quote.quotes[1].ru.body &&
-																  this.props.quote.quotes[1].ru.body
-																? this.props.quote.quotes[1].ru.body
-																: "Sorry, No data available"
+																	this.props.quote &&
+																	this.props.quote.quotes &&
+																	this.props.quote.quotes[1] &&
+																	this.props.quote.quotes[1].ru &&
+																	this.props.quote.quotes[1].ru.body &&
+																	this.props.quote.quotes[1].ru.body
+																	? this.props.quote.quotes[1].ru.body
+																	: "Sorry, No data available"
 														)
 													)}
 												</p>
@@ -226,23 +226,25 @@ export class QuoteOfDay extends React.Component {
 															titleCase(this.props.quote.quotes[1].author)}
 													</cite>
 													<p class="singleblog_author">
-														{reactCookie.load("languageCode") === "en"
-															? this.props &&
-															  this.props.quote &&
-															  this.props.quote.quotes &&
-															  this.props.quote.quotes[1] &&
-															  this.props.quote.quotes[1].en &&
-															  this.props.quote.quotes[1].en.source_of_quote
-																? this.props.quote.quotes[1].en.source_of_quote
-																: "Sorry, No data available"
-															: this.props &&
-															  this.props.quote &&
-															  this.props.quote.quotes &&
-															  this.props.quote.quotes[1] &&
-															  this.props.quote.quotes[1].ru &&
-															  this.props.quote.quotes[1].ru.source_of_quote
-															? this.props.quote.quotes[1].ru.source_of_quote
-															: "Sorry, No data available"}
+														{renderHTML(
+															reactCookie.load("languageCode") === "en"
+																? this.props &&
+																	this.props.quote &&
+																	this.props.quote.quotes &&
+																	this.props.quote.quotes[1] &&
+																	this.props.quote.quotes[1].en &&
+																	this.props.quote.quotes[1].en.source_of_quote
+																	? this.props.quote.quotes[1].en.source_of_quote
+																	: "Sorry, No data available"
+																: this.props &&
+																	this.props.quote &&
+																	this.props.quote.quotes &&
+																	this.props.quote.quotes[1] &&
+																	this.props.quote.quotes[1].ru &&
+																	this.props.quote.quotes[1].ru.source_of_quote
+																	? this.props.quote.quotes[1].ru.source_of_quote
+																	: "Sorry, No data available"
+														)}
 													</p>
 												</div>
 											</div>

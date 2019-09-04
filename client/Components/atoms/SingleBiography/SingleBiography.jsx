@@ -21,7 +21,7 @@ function showing100Characters(sentence) {
 const SingleBiography = props => {
 	return (
 		<div
-			class="col-sm-12 col-lg-6"
+			className="col-sm-12 col-lg-6"
 			style={{
 				paddingRight: "0px",
 				paddingLeft: "0px",
@@ -68,8 +68,8 @@ const SingleBiography = props => {
 							{reactCookie.load("languageCode") === "en"
 								? props.title_en
 								: props.title_ru
-								? props.title_ru
-								: props.title_en}
+									? props.title_ru
+									: props.title_en}
 						</div>
 						<br />
 						<div
@@ -81,14 +81,14 @@ const SingleBiography = props => {
 						>
 							{renderHTML(
 								"<div > " +
-									showing100Characters(
-										reactCookie.load("languageCode") === "en"
-											? props.content_en
-											: props.content_ru
+								showing100Characters(
+									reactCookie.load("languageCode") === "en"
+										? props.content_en
+										: props.content_ru
 											? props.content_ru
 											: props.content_en
-									) +
-									"</div>"
+								) +
+								"</div>"
 							)}
 							&nbsp;
 						</div>

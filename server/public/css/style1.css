@@ -365,15 +365,17 @@
 .announcement_div {
 	margin-top: 25px;
 	width: 194px;
-	height: 45px;
+	/* height: 45px; */
 	border-radius: 3px;
 	background-color: #fae5d3;
 }
 
 .announcement_heading {
-	width: 169px;
-	margin-left: 20px;
-	height: 30px;
+	/* width: 169px; */
+	/* margin-left: 20px; */
+	margin: auto;
+	padding-left: 11%;
+	/* height: 30px; */
 	font-family: Charter;
 	font-size: 24px;
 	font-weight: bold;
@@ -406,6 +408,7 @@
 	background-image: url("../images/swami-background.png");
 	background-size: cover;
 }
+
 .caraousel_odd {
 	width: 100% !important;
 	height: 116.28614916286149vh !important;
@@ -435,6 +438,7 @@
 .orange {
 	background-image: linear-gradient(to right, #f25858, #ff9f63);
 }
+
 .nav_lang:active {
 	color: orange;
 	font-family: Charter;

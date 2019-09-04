@@ -18,7 +18,6 @@ export class Carousel2 extends Component {
 	constructor(props) {
 		super(props);
 		var date = new Date().getSeconds();
-		console.log(date);
 		if (date % 2 === 0) {
 			this.state = {
 				quotes: [],
@@ -72,6 +71,9 @@ export class Carousel2 extends Component {
 					<GridLayoutMenus />
 					<img className="img4" src="images/circle.png" />
 					{/* <Blog {...this.props}/> */}
+					<br />
+					<br />
+
 					<div class="container">
 						<div className="row row-50 row-xxl-70">
 							<div className="wow-outer col-md-6 col-lg-6 col-sm-12 page1">
