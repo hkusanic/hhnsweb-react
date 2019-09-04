@@ -62,7 +62,6 @@ export class Carousel2 extends Component {
 					</div>
 				</section>
 				<Biography {...this.props} />
-
 				<br />
 				<br />
 				<div>

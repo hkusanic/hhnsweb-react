@@ -22,7 +22,13 @@ class ContentDetails extends Component {
 
 	render() {
 		return (
-			<Card className="recentActivityCard" title="Recent Activities">
+			<div className="centerAlign recentActivityCard">
+				<br />
+				<h3 style={{ fontFamily: "Charter" }}> Lecture Dubbed in Russian </h3>
+				<br />
+				<hr />
+				<br />
+				<br />
 				{this.props.contentDetails &&
 					this.props.contentDetails.content &&
 					this.props.contentDetails.content.map(eachContent => {
@@ -62,7 +68,7 @@ class ContentDetails extends Component {
 							</div>
 						);
 					})}
-			</Card>
+			</div>
 		);
 	}
 }
