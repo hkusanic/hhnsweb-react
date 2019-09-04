@@ -69,7 +69,7 @@ export class QuoteOfDay extends React.Component {
 												y="0px"
 												width="35px"
 												height="25px"
-												Viewbox="0 0 35 25"
+												viewBox="0 0 35 25"
 											>
 												<path d="M27.461,10.206h7.5v15h-15v-15L25,0.127h7.5L27.461,10.206z M7.539,10.206h7.5v15h-15v-15L4.961,0.127h7.5L7.539,10.206z" />
 											</svg>
@@ -177,7 +177,7 @@ export class QuoteOfDay extends React.Component {
 												y="0px"
 												width="35px"
 												height="25px"
-												Viewbox="0 0 35 25"
+												viewBox="0 0 35 25"
 											>
 												<path d="M27.461,10.206h7.5v15h-15v-15L25,0.127h7.5L27.461,10.206z M7.539,10.206h7.5v15h-15v-15L4.961,0.127h7.5                L7.539,10.206z" />
 											</svg>

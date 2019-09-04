@@ -25,7 +25,7 @@ class SingleCarousel extends Component {
 				return (
 					<div
 						className="swiper-slide caraousel_sm_even"
-						// data-slide-bg={this.props.image}
+					// data-slide-bg={this.props.image}
 					>
 						<div className="slide-inner" />
 						<div className="insideCarousel_sm_even">
@@ -35,9 +35,9 @@ class SingleCarousel extends Component {
 							/>
 
 							<div style={{ paddingTop: "9px" }}>
-								<p className="singleCarousel_p1_sm">ISKCON Founder - Acarya </p>
+								<p className="singleCarousel_p1_sm_even">ISKCON Founder - Acarya </p>
 
-								<p className="singleCarousel_p2_sm">
+								<p className="singleCarousel_p2_sm_even">
 									A.C Bhakthivedanta Swami Prabhupada
 								</p>
 							</div>
@@ -48,7 +48,7 @@ class SingleCarousel extends Component {
 				return (
 					<div
 						className="swiper-slide caraousel_sm_odd"
-						// data-slide-bg={this.props.image}
+					// data-slide-bg={this.props.image}
 					>
 						<div className="slide-inner" />
 						<div className="insideCarousel_sm_odd">
@@ -58,9 +58,9 @@ class SingleCarousel extends Component {
 							/>
 
 							<div style={{ paddingTop: "9px" }}>
-								<p className="singleCarousel_p1_sm">ISKCON Founder - Acarya </p>
+								<p className="singleCarousel_p1_sm_odd">ISKCON Founder - Acarya </p>
 
-								<p className="singleCarousel_p2_sm">
+								<p className="singleCarousel_p2_sm_odd">
 									A.C Bhakthivedanta Swami Prabhupada
 								</p>
 							</div>

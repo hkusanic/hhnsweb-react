@@ -6,12 +6,12 @@ const { Meta } = Card;
 
 const SingleGridMenu = props => {
 	return (
-		<div class="col-sm-6 col-lg-3 wow-outer page1">
+		<div className="col-sm-6 col-lg-3 wow-outer page1">
 			<article>
 				<Card className="singleGrid_card">
 					<Link
 						to={props.link}
-						class="tour-default-figure"
+						className="tour-default-figure"
 						onClick={props.handleNavigationClick}
 					>
 						<img className="singleGrid_img" src={props.image} alt="" />
