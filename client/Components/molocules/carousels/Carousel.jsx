@@ -1,85 +1,111 @@
-import React, { Component } from 'react';
-// import { Carousel, Icon } from 'antd';
-import script from '../../../assets/script';
-import SingleCarousel from '../../atoms/SingleCarousel/singleCarousel';
-import Biography from '../Biography/Biography';
-import Announcement from '../../organisms/Announcement/Announcement';
-import GridLayoutMenus from '../../organisms/GridLayoutMenu/GridLayoutMenus';
-import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
-import ContentDetails from '../../../containers/contents/ContentDetails';
-import './index.css';
+import React, { Component } from "react";
+import script from "../../../assets/script";
+import renderHTML from "react-render-html";
+import reactCookie from "react-cookies";
+import SingleCarousel from "../../atoms/SingleCarousel/singleCarousel";
+import Biography from "../Biography/Biography";
+import Announcement from "../../organisms/Announcement/Announcement";
+import GridLayoutMenus from "../../organisms/GridLayoutMenu/GridLayoutMenus";
+import QuoteOfDay from "../../molocules/SingleQuote/QuotesOfDay";
+import ContentDetails from "../../../containers/contents/ContentDetails";
+import Blog from "../../organisms/BlogHome/bloghome";
+import RussianDubbedLectures from "../../../containers/Lectures/LecturesInRussian";
+import "./index.css";
+import { connect } from "react-redux";
+import { quoteOfDay } from "../../../actions/quoteActions";
 
 export class Carousel2 extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
-		this.state = {};
-	}
-	componentDidMount () {
-		script();
+		var date = new Date().getSeconds();
+		console.log(date);
+		if (date % 2 === 0) {
+			this.state = {
+				quotes: [],
+				evenodd: "even"
+			};
+		} else {
+			this.state = {
+				quotes: [],
+				evenodd: "odd"
+			};
+		}
 	}
 
-	render () {
+	componentDidMount() {
+		script();
+		let authorList = ["Niranjana Swami", "Srila Prabhupada"];
+		this.props.quoteOfDay(authorList);
+		this.setState({
+			quotes: this.props.quote.quotes
+		});
+	}
+
+	render() {
+		if (!this.props.quote) {
+			<div> Loading... </div>;
+		}
 		return (
 			<div>
-				{/* <Carousel autoplay={true} arrows={true} autoplaySpeed={3000}>
-					<div>
-						<img
-							src='https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_portrait_no_logo_rJorBWrIN.jpg'
-							alt='image1'
-						/>
-					</div>
-					<div>
-						<img
-							src='https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture-abhishek_no_logo_rk3rB-HLV.jpg'
-							alt='image2'
-						/>
-					</div>
-					<div>
-						<img
-							src='https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_kirtan_no_logo_HJiHHWrLN.jpg'
-							alt='image3'
-						/>
-					</div>
-				</Carousel> */}
-				<section
-					className="swiper-container swiper-slider swiper-slider-light bg-gray-700 carouselMargin"
-					data-loop="true"
-					data-autoplay="5000"
-					data-simulate-touch="false"
-					data-custom-slide-effect="inter-leave-effect"
-					data-inter-leave-offset="-.5"
-				>
+				<section className="swiper-container swiper-slider swiper-slider-light bg-gray-700 carouselMargin">
 					<div className="swiper-wrapper">
-						<SingleCarousel
-							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_portrait_no_logo_rJorBWrIN.jpg"
-							heading=""
-							text=""
-						/>
-						<SingleCarousel
-							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture-abhishek_no_logo_rk3rB-HLV.jpg"
-							heading=""
-							text=""
-						/>
-						<SingleCarousel
-							image="https://ik.imagekit.io/gcwjdmqwwznjl/Home_Page-carousel_picture_kirtan_no_logo_HJiHHWrLN.jpg"
-							heading=""
-							text=""
-						/>
-					</div>
-					<div className="swiper-pagination-outer container alignment">
-						<div
-							className="swiper-pagination swiper-pagination-modern swiper-pagination-marked"
-							data-index-bullet="true"
-						/>
+						{this.props.quote.quotes.length > 0 ? (
+							<SingleCarousel
+								// image="https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"
+								image="../images/swami-background.jpg"
+								heading="Quote of the Day"
+								text={this.props.quote.quotes[0].en.body}
+								author={this.props.quote.quotes[0].author}
+								status={this.state.evenodd}
+							/>
+						) : null}
 					</div>
 				</section>
-				<QuoteOfDay />
-				<GridLayoutMenus />
 				<Biography {...this.props} />
+
+				<br />
+				<br />
+				<div>
+					<img className="img1" src="images/circle.png" />
+					<img className="img2" src="images/circle.png" />
+					<img className="img3" src="images/circle.png" />
+					<GridLayoutMenus />
+					<img className="img4" src="images/circle.png" />
+					{/* <Blog {...this.props}/> */}
+					<div class="container">
+						<div className="row row-50 row-xxl-70">
+							<div className="wow-outer col-md-6 col-lg-6 col-sm-12 page1">
+								<ContentDetails />
+							</div>
+							<div className="wow-outer col-md-6 col-lg-6 col-sm-12 page1">
+								<RussianDubbedLectures />
+							</div>
+						</div>
+					</div>
+					<QuoteOfDay />
+				</div>
+				<br />
 				<Announcement />
 			</div>
 		);
 	}
 }
 
-export default Carousel2;
+const mapStateToProps = state => {
+	return {
+		quote: state.quoteReducer
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		quoteOfDay: authorList => {
+			dispatch(quoteOfDay(authorList));
+		}
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Carousel2);

@@ -1,144 +1,206 @@
 {
-	"homePageTitle": ["H.H. Niranjana Swami", "E.C. Ниранджана Свами"],
-	"homePageSubTitle": ["the official website", "официальный сайт"],
-	"loginButton": ["Log in", "Авторизоваться"],
-	"loginLabel": ["log in", "авторизоваться"],
-	"logoutLabel": ["log out","выйти"],
-	"emailAddress": ["Email address", "Адрес электронной почты"],
-	"password": ["Password", "пароль"],
-	"homePage": ["home", "главная страница"],
-	"emailErrorMessage": ["is not a valid email address", "Неверный адрес электронной почты"],
-	"requiredField": ["* This is a required field", "* Это обязательное поле"],
-	"navHome": ["Home", "Главная страница"],
-	"navBio": ["Biography", "биография"],
-	"navMedia": ["Media", "аудио / видео"],
-	"navLectures": ["Lectures", "Лекции"],
-	"navMeeting": ["Scheduele a meeting", "Назначь всречу"],
-	"navBlog": ["Blog", "Блог"],
-	"navContacts": ["Contacts", "контакты"],
-	"lecturesTitle": ["Lectures", "Лекции"],
-	"HOME":{
-		"iskcon_founder_text": ["ISKCON FOUNDER - Acarya A.C. Bhaktivedanta Swami Prabhupada", "Ачарья-основатель ИСККОН А.Ч. Бхактиведанта Свами Прабхупада"],
-		"en":["en" , "анг"],
-		"ru":["ru", "pyc"],
-		"home":["HOME", "ГЛАВНАЯ СТРАНИЦА"],
-		"biography": ["BIOGRAPHY", "БИОГРАФИЯ"],
-		"swami_prabhupada":["A.C. Bhaktivedanta Swami Prabhupada", "А.Ч. Бхактиведанта Свами Прабхупада"],
-		"niranjanaswami": ["H. H. Niranjana Swami", "Е. С. Ниранджана Свами"],
-		"blog": ["BLOG", "БЛОГ"],
-    	"calendar": ["Calendar", "КАЛЕНДАРЬ"],
-   		"availability": ["AVAILABILITY", "ДОСТУПНОСТЬ"],
-		"booking": ["BOOKING", "ЗАПИСЬ"],
-		"contacts": ["Contacts", "контакты"],
-		"login":["LOG IN", "АВТОРИЗОВАТЬСЯ"],
-		"Register": ["REGISTRATION", "РЕГИСТРАЦИЯ"],
-		"log_out": ["LOGOUT", "ВЫЙТИ"],
-		"profile": ["PROFILE",  "ПРОФИЛЬ"],
-		"picture_message":["The Official Website H.H. Niranjana Swami", "Официальный сайт Е.С. Ниранджана Свами"],
-		"read_more": ["Read more..", "Читать дальше..."],
-		"official_website": ["The Official Website of", "Официальный сайт"],
-		"h_h":["H.H. Niranjana Swami ", "Е.С. Ниранджана Свами"],
-		"announcement": ["Announcement", "объявление"],
-		"audio":["Audio", "аудио"],
-		"video": ["Video", "видео"],
-		"Transcriptions":["Transcriptions", "Транскрипции"],
-		"Summaries": ["Summaries", "Конспекты"],
-		"kirtan": ["Kirtan", "киртан"]
-
-
-	},
-	"FOOTER": {
-		"quick_links": ["Quick Links", "Быстрые ссылки"],
-		"vaishnava_dasa":["Vaishnava dasa","Вайшнава даса"],
-		"forum":["Forum", "Форум"],
-		"file_share": ["File Share", "Файловый ресурс"],
-		"contact_information": ["Contact Information", "Контактная информация"],
-		"copy_rights": ["2019 All Rights Reserved. His Holiness Niranjana Swami.", "2019 Все права защищены. Его Святейшество Ниранджана Свами"]
-	},
-	"LOGIN_FORM": {
-		"log_in": ["LOG IN", "ВХОД"],
-		"email": ["E-mail", "Почта"],
-		"password": ["Password", "Пароль"],
-		"login_button": ["LOG IN", "ВОЙТИ"],
-		"forgot_password": ["FORGOT PASSWORD", "ЗАБЫЛИ ПАРОЛЬ?"],
-		"please_fill":["**PLEASE FILL ALL THE FIELDS ", "**Пожалуйста заполните все поля"]
-	},
-    "REGISTER_FORM":{
-		"registration": ["REGISTRATION","РЕГИСТРАЦИЯ"],
-		"first_name": ["FIRST NAME", "Имя"],
-		"last_name": ["LAST NAME", "Фамилия"],
-		"email": ["E-mail", "Почта"],
-		"mobile_number": ["Mobile Number", "Мобильный телефон"],
-		"password": ["Password", "Пароль"],
-		"confirm_password": ["Confirm Password", "Подтвердите пароль"],
-		"create_an_account": ["CREATE AN ACCOUNT", "СОЗДАТЬ АККАУНТ"],
-		"please_fill":["**PLEASE FILL ALL THE FIELDS ", "**Пожалуйста заполните все поля"],
-		"hare_krishna":["Hare Krishna","Харе Кришна"],
-		"registation_msg": ["Thank you for registering your profile.", "Спасибо за регистрацию вашего профайла"],
-		"correct_email": ["**Please enter the correct email address", "Пожалуйста, введите правильный адрес электронной почты"],
-		"password_match": ["**Password and confirm password should match", "Пароль и Подтверждение пароля должны совпадать"]
-
-	},
-	"USER_PROFILE":{
-		"user_profile":["User Profile", "Аккаунт пользователя"],
-		"first_name": ["First Name", "Имя"],
-		"last_name": ["Last Name", "Фамилия"],
-		"email": ["E-mail","Почта"],
-		"mobile_number": ["Mobile Number", "Мобильный телефон"],
-		"edit":["EDIT","РЕДАКТИРОВАТЬ"],
-		"save": ["SAVE", "СОХРАНИТЬ"],
-		"your_profile_updated": ["Your profile has been updated successfully", "Ваш аккаунт был успешно обновлён"],
-		"please_enter_mobile": ["Please enter mobile number correctly", "Пожалуйста, введите правильный номер мобильного телефона"],
-		"please_fill": ["**Please fill all the fields","**Пожалуйста, заполните все поля"]
-
-	},
-	"FORGOT_PASSWORD":{
-		"forgot_password":["FORGOT PASSWORD","ВОССТАНОВЛЕНИЕ ПАРОЛЯ"],
-		"enter_the_email":["Enter your e-mail to get the Password", "Введите свою почту чтобы получить письмо для восстановления"],
-		"your_email":["Your e-mail","Ваша почта"],
-		"submit":["SUBMIT", "ОТПРАВИТЬ"],
-		"please_check_email": ["Please check your email", "Пожалуйста, проверьте вашу почту"],
-		"please_enter_correct_address":["**Please enter correct email address","**Пожалуйста, введите правильный адрес электронной почты"],
-		"please_enter_email":["**Please enter the email","**Пожалуйста, введите адрес электронной почты"]
-
-	},
-	"RESET_PASSWORD":{
-		"reset_password": ["RESET PASSWORD","СБРОС ПАРОЛЯ"],
-		"password":["Password","Пароль"],
-		"confirm_password":["Confirm Password", "Подтвердите пароля"],
-		"save_password":["SAVE PASSWORD", "СОХРАНИТЬ ПАРОЛЬ"],
-		"password_confirm":["Password and confrim password should match", "Пароль и Подтверждение пароля должны совпадать"],
-		"please_fill":["**Please fill all the details","**Пожалуйста, заполните все данные"],
-		"password_reset": ["Password is reset successfully", "Пароль успешно сброшен"],
-		"link_expired": ["Link is expired", "Срок действия ссылки истек"]
-	},
-	"BOOKING": {
-		"booking_form": ["Booking Form", "Форма записи на даршан"],
-		"first_name": ["First Name", "Имя"],
-		"last_name": ["Last Name", "Фамилия"],
-		"email": ["E-mail", "Почта"],
-		"mobile_number": ["Mobile Number", "Мобильный телефон"],
-		"min_15": ["15 min", "15 мин"],
-		"min_30": ["30 min", "30 мин"],
-		"min_45": ["45 min", "45 мин"],
-		"min_60": ["60 min", "60 мин"],
-		"are_you_disciple": ["Are you a disciple of HH Niranjana Swami?","Являетесь ли вы учеником Ниранджаны Свами?"],
-		"no": ["no", "Нет"],
-		"disciple": ["Disciple", "Ученик"],
-		"aspiring_disciple": ["Aspiring Disciple", "Кандидат в ученики"],
-		"submit": ["SUBMIT","ОТПРАВИТЬ"],
-		"you_have_already_booked": ["You have already booked meeting", "Вы уже записались на встречу"]
-	},
-	"CONTACT": {
-		"contact_us": ["Contact Us", "связаться с нами"],
-		"first_name": ["First Name", "Имя"],
-		"last_name": ["Last Name", "Фамилия"],
-		"email": ["E-mail", "Почта"],
-		"mobile_number": ["Mobile Number", "Мобильный телефон"],
-		"message": ["Your Message", "твое сообщение"],
-		"send_message": ["Send Message","Отправить сообщение"]
-	},
-	"QUOTE": {
-		"quote": ["Quotes", "цитаты"]
-	}
+  "homePageTitle": ["H.H. Niranjana Swami", "E.C. Ниранджана Свами"],
+  "homePageSubTitle": ["the official website", "официальный сайт"],
+  "loginButton": ["Log in", "Авторизоваться"],
+  "loginLabel": ["log in", "авторизоваться"],
+  "logoutLabel": ["log out", "выйти"],
+  "emailAddress": ["Email address", "Адрес электронной почты"],
+  "password": ["Password", "пароль"],
+  "homePage": ["home", "главная страница"],
+  "emailErrorMessage": [
+    "is not a valid email address",
+    "Неверный адрес электронной почты"
+  ],
+  "requiredField": ["* This is a required field", "* Это обязательное поле"],
+  "navHome": ["Home", "Главная страница"],
+  "navBio": ["Biography", "биография"],
+  "navMedia": ["Media", "аудио / видео"],
+  "navLectures": ["Lectures", "Лекции"],
+  "navMeeting": ["Scheduele a meeting", "Назначь всречу"],
+  "navBlog": ["Blog", "Блог"],
+  "navContacts": ["Contacts", "контакты"],
+  "lecturesTitle": ["Lectures", "Лекции"],
+  "HOME": {
+    "iskcon_founder_text": [
+      "ISKCON FOUNDER - Acarya A.C. Bhaktivedanta Swami Prabhupada",
+      "Ачарья-основатель ИСККОН А.Ч. Бхактиведанта Свами Прабхупада"
+    ],
+    "menu": ["Menu", "Меню"],
+    "en": ["en", "анг"],
+    "ru": ["ru", "pyc"],
+    "home": ["Home", "Главная"],
+    "gallery": ["Gallery", "Галерея"],
+    "biography": ["Biography", "Биография"],
+    "swami_prabhupada": [
+      "A.C. Bhaktivedanta Swami Prabhupada",
+      "А.Ч. Бхактиведанта Свами Прабхупада"
+    ],
+    "niranjanaswami": ["H. H. Niranjana Swami", "Е. С. Ниранджана Свами"],
+    "blog": ["Blog", "Блог"],
+    "calendar": ["Calendar", "КАЛЕНДАРЬ"],
+    "availability": ["AVAILABILITY", "ДОСТУПНОСТЬ"],
+    "booking": ["BOOKING", "ЗАПИСЬ"],
+    "contacts": ["Contacts", "контакты"],
+    "login": ["LOG IN", "АВТОРИЗОВАТЬСЯ"],
+    "Register": ["REGISTRATION", "РЕГИСТРАЦИЯ"],
+    "log_out": ["LOGOUT", "ВЫЙТИ"],
+    "profile": ["PROFILE", "ПРОФИЛЬ"],
+    "picture_message": [
+      "The Official Website H.H. Niranjana Swami",
+      "Официальный сайт Е.С. Ниранджана Свами"
+    ],
+    "read_more": ["Read more..", "Читать дальше..."],
+    "official_website": ["The Official Website of", "Официальный сайт"],
+    "h_h": ["H.H. Niranjana Swami ", "Е.С. Ниранджана Свами"],
+    "announcement": ["Announcement", "объявление"],
+    "audio": ["Audio", "аудио"],
+    "video": ["Video", "видео"],
+    "Transcriptions": ["Transcriptions", "Транскрипции"],
+    "Summaries": ["Summaries", "Конспекты"],
+    "kirtan": ["Kirtan", "киртан"]
+  },
+  "FOOTER": {
+    "quick_links": ["Quick Links", "Быстрые ссылки"],
+    "vaishnava_dasa": ["Vaishnava dasa", "Вайшнава даса"],
+    "forum": ["Forum", "Форум"],
+    "menu": ["Menu", "Меню"],
+    "readmore": ["Read More...", "Чтение более..."],
+    "file_share": ["File Share", "Файловый ресурс"],
+    "contact_information": ["Contact Information", "Контактная информация"],
+    "copy_rights": ["2019 All Rights Reserved.", "2019 Все права защищены."]
+  },
+  "LOGIN_FORM": {
+    "log_in": ["LOG IN", "ВХОД"],
+    "email": ["E-mail", "Почта"],
+    "password": ["Password", "Пароль"],
+    "login_button": ["LOG IN", "ВОЙТИ"],
+    "forgot_password": ["FORGOT PASSWORD", "ЗАБЫЛИ ПАРОЛЬ?"],
+    "please_fill": [
+      "**PLEASE FILL ALL THE FIELDS ",
+      "**Пожалуйста заполните все поля"
+    ]
+  },
+  "REGISTER_FORM": {
+    "registration": ["REGISTRATION", "РЕГИСТРАЦИЯ"],
+    "first_name": ["FIRST NAME", "Имя"],
+    "last_name": ["LAST NAME", "Фамилия"],
+    "email": ["E-mail", "Почта"],
+    "mobile_number": ["Mobile Number", "Мобильный телефон"],
+    "password": ["Password", "Пароль"],
+    "confirm_password": ["Confirm Password", "Подтвердите пароль"],
+    "create_an_account": ["CREATE AN ACCOUNT", "СОЗДАТЬ АККАУНТ"],
+    "please_fill": [
+      "**PLEASE FILL ALL THE FIELDS ",
+      "**Пожалуйста заполните все поля"
+    ],
+    "hare_krishna": ["Hare Krishna", "Харе Кришна"],
+    "registation_msg": [
+      "Thank you for registering your profile.",
+      "Спасибо за регистрацию вашего профайла"
+    ],
+    "correct_email": [
+      "**Please enter the correct email address",
+      "Пожалуйста, введите правильный адрес электронной почты"
+    ],
+    "password_match": [
+      "**Password and confirm password should match",
+      "Пароль и Подтверждение пароля должны совпадать"
+    ]
+  },
+  "USER_PROFILE": {
+    "user_profile": ["User Profile", "Аккаунт пользователя"],
+    "first_name": ["First Name", "Имя"],
+    "last_name": ["Last Name", "Фамилия"],
+    "email": ["E-mail", "Почта"],
+    "mobile_number": ["Mobile Number", "Мобильный телефон"],
+    "edit": ["EDIT", "РЕДАКТИРОВАТЬ"],
+    "save": ["SAVE", "СОХРАНИТЬ"],
+    "your_profile_updated": [
+      "Your profile has been updated successfully",
+      "Ваш аккаунт был успешно обновлён"
+    ],
+    "please_enter_mobile": [
+      "Please enter mobile number correctly",
+      "Пожалуйста, введите правильный номер мобильного телефона"
+    ],
+    "please_fill": [
+      "**Please fill all the fields",
+      "**Пожалуйста, заполните все поля"
+    ]
+  },
+  "FORGOT_PASSWORD": {
+    "forgot_password": ["FORGOT PASSWORD", "ВОССТАНОВЛЕНИЕ ПАРОЛЯ"],
+    "enter_the_email": [
+      "Enter your e-mail to get the Password",
+      "Введите свою почту чтобы получить письмо для восстановления"
+    ],
+    "your_email": ["Your e-mail", "Ваша почта"],
+    "submit": ["SUBMIT", "ОТПРАВИТЬ"],
+    "please_check_email": [
+      "Please check your email",
+      "Пожалуйста, проверьте вашу почту"
+    ],
+    "please_enter_correct_address": [
+      "**Please enter correct email address",
+      "**Пожалуйста, введите правильный адрес электронной почты"
+    ],
+    "please_enter_email": [
+      "**Please enter the email",
+      "**Пожалуйста, введите адрес электронной почты"
+    ]
+  },
+  "RESET_PASSWORD": {
+    "reset_password": ["RESET PASSWORD", "СБРОС ПАРОЛЯ"],
+    "password": ["Password", "Пароль"],
+    "confirm_password": ["Confirm Password", "Подтвердите пароля"],
+    "save_password": ["SAVE PASSWORD", "СОХРАНИТЬ ПАРОЛЬ"],
+    "password_confirm": [
+      "Password and confrim password should match",
+      "Пароль и Подтверждение пароля должны совпадать"
+    ],
+    "please_fill": [
+      "**Please fill all the details",
+      "**Пожалуйста, заполните все данные"
+    ],
+    "password_reset": [
+      "Password is reset successfully",
+      "Пароль успешно сброшен"
+    ],
+    "link_expired": ["Link is expired", "Срок действия ссылки истек"]
+  },
+  "BOOKING": {
+    "booking_form": ["Booking Form", "Форма записи на даршан"],
+    "first_name": ["First Name", "Имя"],
+    "last_name": ["Last Name", "Фамилия"],
+    "email": ["E-mail", "Почта"],
+    "mobile_number": ["Mobile Number", "Мобильный телефон"],
+    "min_15": ["15 min", "15 мин"],
+    "min_30": ["30 min", "30 мин"],
+    "min_45": ["45 min", "45 мин"],
+    "min_60": ["60 min", "60 мин"],
+    "are_you_disciple": [
+      "Are you a disciple of HH Niranjana Swami?",
+      "Являетесь ли вы учеником Ниранджаны Свами?"
+    ],
+    "no": ["no", "Нет"],
+    "disciple": ["Disciple", "Ученик"],
+    "aspiring_disciple": ["Aspiring Disciple", "Кандидат в ученики"],
+    "submit": ["SUBMIT", "ОТПРАВИТЬ"],
+    "you_have_already_booked": [
+      "You have already booked meeting",
+      "Вы уже записались на встречу"
+    ]
+  },
+  "CONTACT": {
+    "contact_us": ["Contact Us", "связаться с нами"],
+    "first_name": ["First Name", "Имя"],
+    "last_name": ["Last Name", "Фамилия"],
+    "email": ["E-mail", "Почта"],
+    "mobile_number": ["Mobile Number", "Мобильный телефон"],
+    "message": ["Your Message", "твое сообщение"],
+    "send_message": ["Send Message", "Отправить сообщение"]
+  },
+  "QUOTE": {
+    "quote": ["Quotes", "цитаты"]
+  }
 }

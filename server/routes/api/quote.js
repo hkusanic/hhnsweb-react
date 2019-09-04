@@ -243,7 +243,7 @@ exports.quoteOfDay = async function (req, res) {
 		let author = req.body[i];
 		let quoote = await Quote.model
 			.findOne()
-			.where({ $and: [{ published_date: date }, { author: author }] })
+			.where({ $and: [{ published_date: date }, { author: author }]  })
 			.exec(function (err, item) {
 				if (err) {
 					logger.error(
