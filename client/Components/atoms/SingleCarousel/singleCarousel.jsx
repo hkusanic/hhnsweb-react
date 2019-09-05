@@ -20,7 +20,7 @@ class SingleCarousel extends Component {
 	}
 	render() {
 		const maxWidth = window.screen.width;
-		if (maxWidth <= 425) {
+		if (maxWidth <= 592) {
 			if (this.props.status === "even") {
 				return (
 					<div

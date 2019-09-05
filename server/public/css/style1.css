@@ -181,7 +181,7 @@
 	margin-left: 5%;
 	margin-right: 5%;
 	font-family: Charter-Roman;
-	font-size: 16px;
+	font-size: 1rem;
 	color: #faf9f9 !important;
 	text-align: justify;
 }
@@ -190,7 +190,7 @@
 	margin-left: 5%;
 	margin-right: 5%;
 	font-family: Charter-Roman;
-	font-size: 16px;
+	font-size: 1rem;
 	color: #787878;
 	text-align: justify;
 }
@@ -201,10 +201,11 @@
 	border-radius: 4px;
 	border: solid 1px #ff7c2b;
 	background-color: white;
-	margin-top: 5%;
+	margin-top: 8%;
 	margin-left: 5%;
-	margin-right: 353px;
-	position: relative;
+	/* margin-right: 353px; */
+	/* bottom: 26px; */
+	position: absolute;
 }
 
 .singleGrid_card {
@@ -478,6 +479,11 @@
 
 .orange {
 	background-image: linear-gradient(to right, #f25858, #ff9f63);
+	height: 508px;
+}
+
+.white {
+	height: 508px;
 }
 
 .nav_lang:active {

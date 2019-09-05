@@ -42,8 +42,8 @@ export class QuoteOfDay extends React.Component {
 		}
 		return (
 			<div>
-				<section class="section section-lg text-center">
-					<div class="container">
+				<section className="section section-lg text-center">
+					<div className="container">
 						<br />
 						<br />
 						<h3>Quotes of the day</h3>
@@ -62,9 +62,9 @@ export class QuoteOfDay extends React.Component {
 											state: "Niranjana Swami"
 										}}
 									>
-										<blockquote class="quote-modern quote-modern-big wow fadeInUpSmall">
+										<blockquote className="quote-modern quote-modern-big wow fadeInUpSmall">
 											<svg
-												class="quote-modern-mark"
+												className="quote-modern-mark"
 												x="0px"
 												y="0px"
 												width="35px"
@@ -73,7 +73,7 @@ export class QuoteOfDay extends React.Component {
 											>
 												<path d="M27.461,10.206h7.5v15h-15v-15L25,0.127h7.5L27.461,10.206z M7.539,10.206h7.5v15h-15v-15L4.961,0.127h7.5L7.539,10.206z" />
 											</svg>
-											<div class="quote-modern-text">
+											<div className="quote-modern-text">
 												<p className="singleblog_description">
 													{renderHTML(
 														this.showing100Characters(
@@ -98,8 +98,8 @@ export class QuoteOfDay extends React.Component {
 													)}
 												</p>
 											</div>
-											<div class="quote-modern-meta">
-												<div class="quote-modern-avatar">
+											<div className="quote-modern-meta">
+												<div className="quote-modern-avatar">
 													<img
 														src="https://ik.imagekit.io/gcwjdmqwwznjl/NRSBio_HkSdTWBLE.png"
 														alt=""
@@ -107,7 +107,7 @@ export class QuoteOfDay extends React.Component {
 														height="96"
 													/>
 												</div>
-												<div class="quote-modern-info">
+												<div className="quote-modern-info">
 													<cite className="singleblog_title">
 														{this.props &&
 															this.props.quote &&
@@ -170,9 +170,9 @@ export class QuoteOfDay extends React.Component {
 											state: "Srila Prabhupada"
 										}}
 									>
-										<blockquote class="quote-modern quote-modern-big wow fadeInUpSmall">
+										<blockquote className="quote-modern quote-modern-big wow fadeInUpSmall">
 											<svg
-												class="quote-modern-mark"
+												className="quote-modern-mark"
 												x="0px"
 												y="0px"
 												width="35px"
@@ -181,7 +181,7 @@ export class QuoteOfDay extends React.Component {
 											>
 												<path d="M27.461,10.206h7.5v15h-15v-15L25,0.127h7.5L27.461,10.206z M7.539,10.206h7.5v15h-15v-15L4.961,0.127h7.5                L7.539,10.206z" />
 											</svg>
-											<div class="quote-modern-text">
+											<div className="quote-modern-text">
 												<p className="singleblog_description">
 													{renderHTML(
 														this.showing100Characters(
@@ -208,8 +208,8 @@ export class QuoteOfDay extends React.Component {
 													)}
 												</p>
 											</div>
-											<div class="quote-modern-meta">
-												<div class="quote-modern-avatar">
+											<div className="quote-modern-meta">
+												<div className="quote-modern-avatar">
 													<img
 														src="https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png"
 														alt=""
@@ -217,15 +217,15 @@ export class QuoteOfDay extends React.Component {
 														height="96"
 													/>
 												</div>
-												<div class="quote-modern-info">
-													<cite class="singleblog_title">
+												<div className="quote-modern-info">
+													<cite className="singleblog_title">
 														{this.props &&
 															this.props.quote &&
 															this.props.quote.quotes &&
 															this.props.quote.quotes[1] &&
 															titleCase(this.props.quote.quotes[1].author)}
 													</cite>
-													<p class="singleblog_author">
+													<p className="singleblog_author">
 														{renderHTML(
 															reactCookie.load("languageCode") === "en"
 																? this.props &&
