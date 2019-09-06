@@ -143,7 +143,17 @@ exports = module.exports = function (app) {
 	app.post('/api/s3/identify/', keystone.middleware.api, routes.api.s3.signin);
 	app.post('/api/s3/pageview/', keystone.middleware.api, routes.api.s3.pageview);
 	app.post('/api/s3/track/', keystone.middleware.api, routes.api.s3.track);
-	app.post('/api/postgres/track/', keystone.middleware.api, routes.api.postgres.track);
+	
+	
+	
+	app.post('/api/mixpanel/track/', keystone.middleware.api, routes.api.mixpanel.track);
+
+	//app.post('/api/kissmetrics/identify/', keystone.middleware.api, routes.api.kissmetrics.signin);
+	app.post('/api/kissmetrics/alias/', keystone.middleware.api, routes.api.kissmetrics.alias);
+	//app.post('/api/kissmetrics/pageview/', keystone.middleware.api, routes.api.kissmetrics.pageview);
+
+
+	
 	//------- segment api ends ---------//
 
 

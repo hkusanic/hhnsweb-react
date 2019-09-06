@@ -43,28 +43,71 @@ export const EventLayer = (function EventLayer () {
         'mixpanel': {
             enabled: true,
             test: function () {
-                return window.mixpanel && window.mixpanel.__loaded;
+                return true;
             },
-            identify: function (userId, userProperties, options) {
-                // Send the identify call to Mixpanel's JS library
-                // console.log('Identifying: ', userId, userProperties);
-                if (window.mixpanel && userId) mixpanel.identify(userId);
+            track: function (userid, data) {
+                let promise = new Promise( (resolve, reject) => {
+                    
+                    if (!userid) return console.warn('user id required by mixpanel for identify function.');
+                   
+                    segmentApi.mixpanel({ process : 'track'}, data).then( (response) => {
+                        if(response.status === 200){
+                            resolve(response.data.message);
+                        }
+                    })
+                });
+                return promise;
+            },
+            // identify: function (userId, userProperties) {
+            //     console.log(userProperties);
+            //     let promise = new Promise( (resolve, reject) => {
+                    
+            //         if (!userId) return console.warn('user id required by mixpanel for identify function.');
 
-                if (window.mixpanel && userProperties) {
-                    if (options && options.setOnce) {
-                        // Set people properties on our identified user, but only if they have not yet been set.
-                        mixpanel.people.set_once(userProperties);
-                    } else {
-                        // Set people properties on our identified user
-                        mixpanel.people.set(userProperties);
-                    }
-                }
-            },
-            track: function (eventName, eventProperties) {
-                // Send the tracked event to Mixpanel's JS library
-                // console.log('tracking: ', eventName, eventProperties);
-                if (window.mixpanel && eventName) mixpanel.track(eventName, eventProperties);
-            }
+            //         // Expects userProperties { id: string unique, email: string, created_at: unix-timestamp }
+
+            //         // Transform createdAt -> created_at
+            //         if (userProperties && userProperties.createdAt && !userProperties.created_at)
+            //             userProperties.created_at = userProperties.createdAt;
+
+            //         // Add userId if no id is present
+            //         if (userProperties && !userProperties.id)
+            //             userProperties.id = userId;
+                   
+            //         segmentApi.mixpanel({ process : 'identify'}, userProperties).then( (response) => {
+            //             if(response.status === 200){
+            //                 resolve(response.data.message);
+            //             }
+            //         })
+            //     });
+            //     return promise;
+            // },
+            // alias: function (userId, previousId) {
+            //     // Todo
+            // },
+            // group: function (groupId, traits) {
+            //     // Todo
+            // },
+            // page: function (properties) {
+            //     let promise = new Promise( (resolve, reject) => {
+            //         if (!properties.name) return console.warn(' mixpanel requires a valid name property when calling the page event. Since Analytics.js expects a category field as well, this must be sent (even if it is empty). See documentation for more details.');
+
+            //         if (!properties) properties = {};
+
+            //         properties.type = 'page';
+            //         properties.url = location.href;
+
+            //         segmentApi.mixpanel({ process : 'pageview'}, properties).then( (response) => {
+            //             if(response.status === 200){
+            //                 resolve(response.data.message);
+            //             }
+            //         }).catch(err => {
+            //             console.log(err);
+            //             reject({error : err});
+            //         })
+            //     });
+            //     return promise;
+            // }
         },
         'heap': {
             enabled: true,
@@ -783,28 +826,74 @@ export const EventLayer = (function EventLayer () {
             // alias: function (userId, previousId) {},
             // group: function (groupId, traits) {}
         },
-        'postgres': { // Do not modify this template
+        'kissmetrics': {
             enabled: true,
             test: function () {
                 return true;
             },
-            track: function (userid, data) {
+            alias: function (userid, data) {
                 let promise = new Promise( (resolve, reject) => {
                     
-                    if (!userid) return console.warn('user id required by customer.io for identify function.');
-
-                        segmentApi.postgres({ process : 'track'}, data).then( (response) => {
-                            if(response.status === 200){
-                                resolve(response.data.message);
-                            }
-                        })
+                    if (!userid) return console.warn('user id required by kissmetrics for identify function.');
+                   
+                    segmentApi.kissmetrics({ process : 'alias'}, data).then( (response) => {
+                        if(response.status === 200){
+                            resolve(response.data.message);
+                        }
+                    })
                 });
                 return promise;
             },
-            identify: function (userId, userProperties) {},
-            page: function (category, name, properties) {},
-            alias: function (userId, previousId) {},
-            group: function (groupId, traits) {}
+            // identify: function (userId, userProperties) {
+            //     console.log(userProperties);
+            //     let promise = new Promise( (resolve, reject) => {
+                    
+            //         if (!userId) return console.warn('user id required by kissmetrics for identify function.');
+
+            //         // Expects userProperties { id: string unique, email: string, created_at: unix-timestamp }
+
+            //         // Transform createdAt -> created_at
+            //         if (userProperties && userProperties.createdAt && !userProperties.created_at)
+            //             userProperties.created_at = userProperties.createdAt;
+
+            //         // Add userId if no id is present
+            //         if (userProperties && !userProperties.id)
+            //             userProperties.id = userId;
+                   
+            //         segmentApi.kissmetrics({ process : 'identify'}, userProperties).then( (response) => {
+            //             if(response.status === 200){
+            //                 resolve(response.data.message);
+            //             }
+            //         })
+            //     });
+            //     return promise;
+            // },
+            // alias: function (userId, previousId) {
+            //     // Todo
+            // },
+            // group: function (groupId, traits) {
+            //     // Todo
+            // },
+            // page: function (properties) {
+            //     let promise = new Promise( (resolve, reject) => {
+            //         if (!properties.name) return console.warn('kissmetrics requires a valid name property when calling the page event. Since Analytics.js expects a category field as well, this must be sent (even if it is empty). See documentation for more details.');
+
+            //         if (!properties) properties = {};
+
+            //         properties.type = 'page';
+            //         properties.url = location.href;
+
+            //         segmentApi.kissmetrics({ process : 'pageview'}, properties).then( (response) => {
+            //             if(response.status === 200){
+            //                 resolve(response.data.message);
+            //             }
+            //         }).catch(err => {
+            //             console.log(err);
+            //             reject({error : err});
+            //         })
+            //     });
+            //     return promise;
+            // }
         }
     };
     // Recursively convert an `obj`'s dates to new values, using an input function, convert().
