@@ -17,7 +17,7 @@ export class QuoteOfDay extends React.Component {
 	}
 	showing100Characters = sentence => {
 		var result = sentence;
-		function GetNthOccurance(string, seek, occurance) {
+		function getNthOccurence(string, seek, occurance) {
 			var index = 0, i = 1;
 
 			while (index !== -1) {
@@ -31,8 +31,8 @@ export class QuoteOfDay extends React.Component {
 				return index;
 			}
 		}
-		let index1 = GetNthOccurance(sentence, '>', 2);
-		if (result.length > 300) {
+		let index1 = getNthOccurence(sentence, '>', 2);
+		if (result.length > 250) {
 			result = result.substring(index1 + 1, index1 + 153) + "..."
 		}
 		return result;

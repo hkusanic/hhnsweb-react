@@ -27,43 +27,44 @@ export class Navigation extends Component {
 			width: screenwidth
 		};
 	}
+	resize = () => this.forceUpdate();
 
-	resize = () => {
-		let width = window.innerWidth;
-		if (this.state.width > 1440 && (width >= 0 && width <= 1440)) {
-			this.setState({
-				width: width
-			});
-			window.location.reload(false);
-		}
-		if (this.state.width < 600 && width >= 600) {
-			this.setState({
-				width: width
-			});
-			window.location.reload(false);
-		}
-		if (
-			this.state.width > 600 &&
-			this.state.width <= 1210 &&
-			(width >= 1210 || width <= 600)
-		) {
-			this.setState({
-				width: width
-			});
-			window.location.reload(false);
-		}
+	// resize = () => {
+	// 	let width = window.innerWidth;
+	// 	if (this.state.width > 1440 && (width >= 0 && width <= 1440)) {
+	// 		this.setState({
+	// 			width: width
+	// 		});
+	// 		window.location.reload(false);
+	// 	}
+	// 	if (this.state.width < 600 && width >= 600) {
+	// 		this.setState({
+	// 			width: width
+	// 		});
+	// 		window.location.reload(false);
+	// 	}
+	// 	if (
+	// 		this.state.width > 600 &&
+	// 		this.state.width <= 1210 &&
+	// 		(width >= 1210 || width <= 600)
+	// 	) {
+	// 		this.setState({
+	// 			width: width
+	// 		});
+	// 		window.location.reload(false);
+	// 	}
 
-		if (
-			this.state.width > 1210 &&
-			this.state.width <= 1440 &&
-			(width >= 1440 || width <= 1210)
-		) {
-			this.setState({
-				width: width
-			});
-			window.location.reload(false);
-		}
-	};
+	// 	if (
+	// 		this.state.width > 1210 &&
+	// 		this.state.width <= 1440 &&
+	// 		(width >= 1440 || width <= 1210)
+	// 	) {
+	// 		this.setState({
+	// 			width: width
+	// 		});
+	// 		window.location.reload(false);
+	// 	}
+	// };
 
 	componentDidMount() {
 		// window.addEventListener("resize", this.resize);
