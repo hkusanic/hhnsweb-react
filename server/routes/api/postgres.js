@@ -1,59 +1,341 @@
 var keystone = require('keystone');
 let CIO = require('customerio-node');
 const { Client } = require('pg');
-
-exports.signin = function (req, res) {
-	// Querying the data this works similarly to the Mongo db.collection.find() method
-	
-    const cio = new CIO("e852e13f1e42dd7e7798", "bd896e1a2113b9f7cf2f");
-    console.log(req.body);
-    cio.identify(req.body.id, req.body).then(() => {
-        res.status(200).json({message : "data send to cusomer.io"});
-    });
+let uuid =require('uuid');
 
 
-};
-
-exports.pageview = function (req, res) {
-	// Querying the data this works similarly to the Mongo db.collection.find() method
-	
-    const cio = new CIO("e852e13f1e42dd7e7798", "bd896e1a2113b9f7cf2f");
-    console.log(req.body);
-    cio.trackPageView(req.body.id, req.body.url).then(() => {
-        res.status(200).json({message : "data send to cusomer.io"});
-    }).catch( err => console.log(err));
-
-
-};
 
 exports.track = function (req, res) {
-	// Querying the data this works similarly to the Mongo db.collection.find() method
-	
-    const client = new Client({
-        connectionString: 'postgres://qnsustfngvgfhw:5d0b30eea0a84bd89a2239f961ea4f516c050fa08a7880386c9ca711ae79b6a3@ec2-184-73-169-163.compute-1.amazonaws.com:5432/d9hujrgrir06ai',
+    // Querying the data this works similarly to the Mongo db.collection.find() method
+    
+        const client = new Client({
+        connectionString: 'postgres://kpqavkfofrbdme:4d5fc3ca89d9259949ce625720db81152f3350e106988f493a59de6ca5386d60@ec2-54-235-104-136.compute-1.amazonaws.com:5432/d91sc91703qd7s',
         ssl: true,
         });
         
         client.connect();
-
+	
         let event_name = req.body.name.toLowerCase();
         event_name = event_name.split(' ').join('_');
         //console.log(event_name);
-        
-        client.query('SELECT * FROM javascript.audios_list', (err, res) => {
-        if (err){
-            console.log(err);
-            client.query(`CREATE TABLE ${event_name}( user_id serial PRIMARY KEY, username VARCHAR (50) UNIQUE NOT NULL, password VARCHAR (50) NOT NULL, email VARCHAR (355) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP ); `)
+        console.log(event_name);
+        if(event_name === 'audio_list'){
+                client.query('SELECT * FROM javascript.audio_list', (err, res) => {
+                if (err){
+                    console.log(err);
+                    client.query('CREATE SCHEMA javascript', (err3, res3) => {
+                        if(err3){
+                            console.log(err3);
+                            client.query('CREATE TABLE javascript.audio_list( id uuid, user_id text, event_name VARCHAR (50) UNIQUE NOT  NULL, created_on text NOT NULL, PRIMARY KEY (id))', (err1, res1) => {
+                                if(err1){ 
+                                    console.log(err1);
+                                    let date = new Date();
+                                    let id = uuid();
+                                    client.query("INSERT INTO javascript.audio_list (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.data.id + "', '"+ req.body.data.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            console.log("updated");
+                                        }
+                                    });
+                                } else {
+                                    let id = uuid();
+                                    let date = new Date();
+                                    console.log("audio_list table created" + res1);
+                                    client.query("INSERT INTO javascript.audio_list (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.data.id + "', '"+ req.body.data.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            console.log("updated");
+                                        }
+                                    });
+                                }
+                            })
+                        }
+                        else {
+                            client.query('CREATE TABLE javascript.audio_list( id uuid, user_id text, event_name VARCHAR (50) UNIQUE NOT  NULL, created_on text NOT NULL, PRIMARY KEY (id))', (err1, res1) => {
+                                if(err){ 
+                                    console.log(err1);
+                                    let date = new Date();
+                                    let id = uuid();
+
+                                    client.query("INSERT INTO javascript.audio_list ( id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.data.id + "', '"+ req.body.data.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            console.log("updated");
+                                        }
+                                    });
+                                } else {
+                                    let id = uuid();
+                                    let date = new Date();
+                                    console.log("audio_list table created" + res1);
+                                    client.query("INSERT INTO javascript.audio_list (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.data.id + "', '"+ req.body.data.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            console.log("updated");
+                                        }
+                                    });
+                                }
+                            }) 
+                        }
+                    });  
+                }
+                else {
+                    //console.log(res);
+                    //console.log(res.rows);
+                    
+                            let date = new Date();
+                            let id = uuid();
+
+                            client.query("INSERT INTO javascript.audio_list (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.data.id + "', '"+ req.body.data.name +"', '"+date+"')", (err2, res2) => {
+                                if(err2){
+                                    console.log(err2);
+                                } else {
+                                    console.log("updated");
+                                }
+                             })
+                }
+            });
+        } else if(event_name === 'video_list'){
+            client.query('SELECT * FROM javascript.video_list', (err, res) => {
+                if (err){
+                    console.log(err);
+                    client.query('CREATE SCHEMA javascript', (err3, res3) => {
+                        if(err3){
+                            console.log(err3);
+                            client.query('CREATE TABLE javascript.video_list( id uuid, user_id text, event_name VARCHAR (50) UNIQUE NOT  NULL, created_on text NOT NULL, PRIMARY KEY (id))', (err1, res1) => {
+                                if(err1){ 
+                                    console.log(err1);
+                                    let date = new Date();
+                                    let id = uuid();
+                                    client.query("INSERT INTO javascript.video_list (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.data.id + "', '"+ req.body.data.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            return err2;
+                                        } else {
+                                            return "updated";
+                                        }
+                                    });                                
+                                } else {
+                                    let date = new Date();
+                                    let id = uuid();
+
+                                    console.log("video_list table created" + res1);
+                                    client.query("INSERT INTO javascript.video_list (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.data.id + "', '"+ req.body.data.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            return err2;
+                                        } else {
+                                            return "updated";
+                                        }
+                                    });
+                                }
+                            })
+                        }
+                        else {
+                            client.query('CREATE TABLE javascript.video_list( id uuid, user_id text, event_name VARCHAR (50) UNIQUE NOT  NULL, created_on text NOT NULL, PRIMARY KEY (id))', (err1, res1) => {
+                                if(err){ 
+                                    console.log(err1);
+                                    let date = new Date();
+                                    let id = uuid();
+
+                                    client.query("INSERT INTO javascript.video_list (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.data.id + "', '"+ req.body.data.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            return err2;
+                                        } else {
+                                            return "updated";
+                                        }
+                                    });
+                                } else {
+                                    let date = new Date();
+                                    let id = uuid();
+
+                                    console.log("video_list table created1" + res1);
+                                    client.query("INSERT INTO javascript.video_list (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.data.id + "', '"+ req.body.data.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            return err2;
+                                        } else {
+                                            return "updated";
+                                        }
+                                    });
+                                }
+                            }) 
+                        }
+                    });  
+                }
+                else {
+                    console.log('here');
+                    let date = new Date();
+                    let id = uuid();
+                    client.query("INSERT INTO javascript.video_list (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.data.id + "', '"+ req.body.data.name +"', '"+date+"')", (err2, res2) => {
+                        if(err2){
+                            return err2;
+                        } else {
+                            console.log('updated');
+                            return "updated";
+                        }
+                    })
+                }
+            });
+        } else if(event_name === 'user_signin'){
+            client.query('SELECT * FROM javascript.user_login', (err, res4) => {
+                if (err){
+                    console.log(err);
+                    client.query('CREATE SCHEMA javascript', (err3, res3) => {
+                        if(err3){
+                            console.log(err3);
+                            client.query('CREATE TABLE javascript.user_login( id uuid, user_id text, event_name VARCHAR (50) UNIQUE NOT  NULL, created_on text NOT NULL, PRIMARY KEY (id))', (err1, res1) => {
+                                if(err1){ 
+                                    console.log(err1);
+                                    let date = new Date();
+                                    let id = uuid();
+                                    client.query("INSERT INTO javascript.user_login (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.id + "', '"+ req.body.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            res.status(200).json( { message : "updated" } );
+                                        }
+                                    });                                
+                                } else {
+                                    let date = new Date();
+                                    let id = uuid();
+
+                                    console.log("video_list table created" + res1);
+                                    client.query("INSERT INTO javascript.user_login (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.id + "', '"+ req.body.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            res.status(200).json( { message : "updated" } );
+                                        }
+                                    });
+                                }
+                            })
+                        }
+                        else {
+                            client.query('CREATE TABLE javascript.user_login( id uuid, user_id text, event_name VARCHAR (50) UNIQUE NOT  NULL, created_on text NOT NULL, PRIMARY KEY (id))', (err1, res1) => {
+                                if(err){ 
+                                    console.log(err1);
+                                    let date = new Date();
+                                    let id = uuid();
+
+                                    client.query("INSERT INTO javascript.user_login (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.id + "', '"+ req.body.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            res.status(200).json( { message : "updated" } );
+                                        }
+                                    });
+                                } else {
+                                    let date = new Date();
+                                    let id = uuid();
+
+                                    console.log("video_list table created1" + res1);
+                                    client.query("INSERT INTO javascript.user_login (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.id + "', '"+ req.body.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            res.status(200).json( { message : "updated" } );
+                                        }
+                                    });
+                                }
+                            }) 
+                        }
+                    });  
+                }
+                else {
+                    console.log('here');
+                    let date = new Date();
+                    let id = uuid();
+                    client.query("INSERT INTO javascript.user_login (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.id + "', '"+ req.body.name +"', '"+date+"')", (err2, res2) => {
+                        if(err2){
+                            console.log(err2);
+                        } else {
+                            console.log('updated');
+                            res.status(200).json( { message : "updated" } );
+                        }
+                    })
+                }
+            });
+        } else if(event_name === 'user_signup'){
+            client.query('SELECT * FROM javascript.user_signup', (err, res4) => {
+                if (err){
+                    console.log(err);
+                    client.query('CREATE SCHEMA javascript', (err3, res3) => {
+                        if(err3){
+                            console.log(err3);
+                            client.query('CREATE TABLE javascript.user_signup( id uuid, user_id text, event_name VARCHAR (50) UNIQUE NOT  NULL, created_on text NOT NULL, PRIMARY KEY (id))', (err1, res1) => {
+                                if(err1){ 
+                                    console.log(err1);
+                                    let date = new Date();
+                                    let id = uuid();
+                                    client.query("INSERT INTO javascript.user_signup (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.id + "', '"+ req.body.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            res.status(200).json( { message : "updated" } );
+                                        }
+                                    });                                
+                                } else {
+                                    let date = new Date();
+                                    let id = uuid();
+
+                                    console.log("video_list table created" + res1);
+                                    client.query("INSERT INTO javascript.user_signup (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.id + "', '"+ req.body.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            res.status(200).json( { message : "updated" } );
+                                        }
+                                    });
+                                }
+                            })
+                        }
+                        else {
+                            client.query('CREATE TABLE javascript.user_signup( id uuid, user_id text, event_name VARCHAR (50) UNIQUE NOT  NULL, created_on text NOT NULL, PRIMARY KEY (id))', (err1, res1) => {
+                                if(err){ 
+                                    console.log(err1);
+                                    let date = new Date();
+                                    let id = uuid();
+
+                                    client.query("INSERT INTO javascript.user_signup (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.id + "', '"+ req.body.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            res.status(200).json( { message : "updated" } );
+                                        }
+                                    });
+                                } else {
+                                    let date = new Date();
+                                    let id = uuid();
+
+                                    console.log("video_list table created1" + res1);
+                                    client.query("INSERT INTO javascript.user_signup (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.id + "', '"+ req.body.name +"', '"+date+"')", (err2, res2) => {
+                                        if(err2){
+                                            console.log(err2);
+                                        } else {
+                                            res.status(200).json( { message : "updated" } );
+                                        }
+                                    });
+                                }
+                            }) 
+                        }
+                    });  
+                }
+                else {
+                    console.log('here');
+                    let date = new Date();
+                    let id = uuid();
+                    client.query("INSERT INTO javascript.user_signup (id, user_id, event_name, created_on) VALUES ('"+id+"', '" + req.body.id + "', '"+ req.body.name +"', '"+date+"')", (err2, res2) => {
+                        if(err2){
+                            console.log(err2);
+                        } else {
+                            console.log('updated');
+                            res.status(200).json( { message : "updated" } );
+                        }
+                    })
+                }
+            });
         }
-        else {
-            //console.log(res);
-            //console.log(res.rows);
-            for (let row of res.rows) {
-                //console.log(JSON.parse(JSON.stringify(row)));
-            }
-        }
-            client.end();
-    });
 
 
 };
