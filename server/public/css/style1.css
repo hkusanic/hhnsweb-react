@@ -245,11 +245,11 @@
 	}
 }
 
-@media (max-width: 500px) {
+/* @media (max-width: 500px) {
 	.singleBiography_card_orange {
 		font-size: 11px !important
 	}
-}
+} */
 
 .singleBiography_card_white {
 	margin-left: 5%;
@@ -481,7 +481,7 @@ height:80vh
 @media (max-width: 425px) {
 	.singleblog_author {
 		font-family: Charter;
-		font-size: 10px !important;
+		font-size: 9px !important;
 		font-weight: bold;
 		margin-top: 0px !important;
 		color: #aeb1be;
@@ -691,7 +691,7 @@ height:80vh
 	}
 	}
 
-	@media (max-width: 320px){
+	/* @media (max-width: 320px){
 .orange {
     height: 313px;
     width: 268px;
@@ -703,16 +703,17 @@ height:80vh
     width: 268px !important;
     margin: auto;
 }
+	} */
 
 @media (max-width: 320px) {
 	.orange {
-		height: 363px;
+		height: 313px;
 		width: 268px;
 		margin: auto;
 		background-image: linear-gradient(to right, #f25858, #ff9f63);
 	}
 	.white {
-		height: 420px;
+		height: 347px !important;
 		width: 268px !important;
 		margin: auto;
 	}
@@ -724,7 +725,7 @@ height:80vh
 
 @media (max-width: 500px) and (min-width:321px) {
 	.white{
-		height: 420px;
+		height: 344px;
 		width: 337px;
 		margin: auto;
 	}
