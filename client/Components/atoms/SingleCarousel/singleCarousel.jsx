@@ -25,7 +25,6 @@ class SingleCarousel extends Component {
 				return (
 					<div
 						className="swiper-slide caraousel_sm_even"
-					// data-slide-bg={this.props.image}
 					>
 						<div className="slide-inner" />
 						<div className="insideCarousel_sm_even">
@@ -48,7 +47,6 @@ class SingleCarousel extends Component {
 				return (
 					<div
 						className="swiper-slide caraousel_sm_odd"
-					// data-slide-bg={this.props.image}
 					>
 						<div className="slide-inner" />
 						<div className="insideCarousel_sm_odd">

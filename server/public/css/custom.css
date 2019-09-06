@@ -1019,11 +1019,12 @@
 	height: 441px;
 	margin-top: 1000px;
 }
-
-.navbarItemAlign {
-	/* justify-content: space-between; */
-	/* width: 1170px; */
+@media (min-width: 500px) {
+.biographyCard{
+	height: 300px;
 }
+}
+
 
 .subGalleryImg {
 	height: 240px;
