@@ -237,6 +237,11 @@ exports = module.exports = function(app) {
 		keystone.middleware.api,
 		routes.api.video.getvideobyid
 	);
+	app.get(
+		"/api/video/getlatestvideodate/",
+		keystone.middleware.api,
+		routes.api.video.getLatestVideoDate
+	);
 	app.post(
 		"/api/video/updatePageView",
 		keystone.middleware.api,

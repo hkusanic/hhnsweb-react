@@ -133,7 +133,7 @@ exports.getLatestQuoteDate = function(req, res) {
 	console.log("function start");
 	Quote.model
 		.find()
-		.sort({ created_date_time: -1 })
+		.sort({ published_date: -1 })
 		.limit(1)
 		.exec((err, data) => {
 			if (err || !data) {
@@ -147,6 +147,7 @@ exports.getLatestQuoteDate = function(req, res) {
 			}
 			console.log("date>>>>", data);
 			res.json({
+				tnid: data[0].tnid,
 				published_date: data[0].published_date,
 				created_date_time: data[0].created_date_time,
 				success: true
@@ -400,9 +401,14 @@ exports.updateBulkNew = function(req, res) {
 						return res.apiError("create error", err);
 					}
 
-					res.apiResponse({
-						Quote: item
-					});
+					// res.apiResponse({
+					// 	Quote: item
+					// });
+					res.end(
+						JSON.stringify({
+							Quote: item
+						})
+					);
 				});
 			});
 	}

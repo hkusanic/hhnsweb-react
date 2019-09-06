@@ -681,6 +681,8 @@ exports.getLatestLectureDate = function(req, res) {
 			}
 			console.log("date>>>>", data);
 			res.json({
+				tnid: data[0].tnid,
+				published_date: data[0].published_date,
 				created_date_time: data[0].created_date_time,
 				success: true
 			});
@@ -745,10 +747,14 @@ exports.updateBulkNew = function(req, res) {
 						);
 						return res.apiError("create error", err);
 					}
-
-					res.apiResponse({
-						Blog: item
-					});
+					// res.apiResponse({
+					// 	Blog: item
+					// });
+					res.end(
+						JSON.stringify({
+							Lecture: item
+						})
+					);
 				});
 			});
 	}

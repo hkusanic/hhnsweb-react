@@ -347,6 +347,7 @@ function getEnglishLectureNodeList() {
 	rp(options)
 		.then(function(body) {
 			englishLectureDataList = body;
+
 			console.log(
 				"getEnglishLectureNodeList() function is successfully executed",
 				englishLectureDataList.length,
@@ -435,10 +436,12 @@ function getRussianLectureData(ar, callback) {
 				if (data[i].tnid != 0) {
 					const temp = {
 						tnid: data[i].tnid,
+						published_date: data[i].created,
 						languages: "both",
 						ru: {
 							nid: data[i].nid,
 							created: timeConverter(data[i].created),
+							published: data[i].created,
 							changed: timeConverter(data[i].changed),
 							title: data[i].title
 						}
@@ -448,10 +451,12 @@ function getRussianLectureData(ar, callback) {
 					const body = {
 						uuid: uuidv4(),
 						tnid: data[i].tnid,
+						published_date: data[i].created,
 						languages: "ru",
 						ru: {
 							nid: data[i].nid,
 							created: timeConverter(data[i].created),
+							published: data[i].created,
 							changed: timeConverter(data[i].changed),
 							title: data[i].title
 						}
@@ -527,11 +532,13 @@ function getEnglishLectureData(ar, callback) {
 				const body = {
 					uuid: uuidv4(),
 					tnid: item.tnid,
+					published_date: item.created,
 					languages: item.tnid != 0 ? "" : "en",
 					en: {
 						nid: item.nid,
 						title: item.title,
 						created: timeConverter(item.created),
+						published: item.created,
 						changed: timeConverter(item.changed)
 					}
 				};

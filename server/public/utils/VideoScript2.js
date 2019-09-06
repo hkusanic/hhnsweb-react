@@ -28,11 +28,43 @@ function uuidv4() {
 		return v.toString(16);
 	});
 }
-
+var latestVideoDate = null;
 var videoNodeList = [];
 var videoNodeListRaussain = [];
 
-function getVideoNodeList() {
+async function getLatestBlogDate() {
+	let options = {
+		method: "GET",
+		uri: "http://localhost:3000/api/blog/getlatestblogdate/",
+		//body: batchArray,
+		//json: true,
+		//pool: httpAgent,
+		timeout: 600000,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+	let response = await rp(options)
+		.then(date => {
+			return date;
+		})
+		.catch(err => {
+			console.log("errr", err);
+		});
+	return response;
+}
+
+async function getVideoNodeList() {
+	latestVideoDate = JSON.parse(await getLatestVideoDate());
+	console.log("latestBlogDate>>>", latestVideoDate);
+	console.log(
+		"from database>>>",
+		timeConverter(latestVideoDate.published_date).getTime()
+	);
+	console.log(
+		"from database>>>",
+		Date.parse(latestVideoDate.created_date_time)
+	);
 	const options = {
 		method: "GET",
 		uri:
@@ -52,7 +84,20 @@ function getVideoNodeList() {
 				videoNodeList.length,
 				"data received"
 			);
-			getVideoNodeListRaussain();
+			videoNodeList = videoNodeList.filter(function(object) {
+				return (
+					timeConverter(object.created).getTime() >
+					Date.parse(latestVideoDate.published_date)
+				);
+			});
+			if (videoNodeList && videoNodeList.length > 0) {
+				console.log("after filtering length>>>>", videoNodeList.length);
+				getVideoNodeListRaussain();
+			} else {
+				console.log("After Filteration list recieved>>>>", videoNodeList);
+			}
+
+			//getVideoNodeListRaussain();
 		})
 		.catch(function(err) {
 			console.log("Error inside getVideoNodeList() function ====>>>>", err);
@@ -79,7 +124,22 @@ function getVideoNodeListRaussain() {
 				videoNodeListRaussain.length,
 				"data received"
 			);
-			getVideoDatainBatches();
+
+			videoNodeListRaussain = videoNodeListRaussain.filter(function(object) {
+				return (
+					timeConverter(object.created).getTime() >
+					Date.parse(latestBlogDate.published_date)
+				);
+			});
+			if (videoNodeListRaussain && videoNodeListRaussain.length > 0) {
+				console.log("after filtering length>>>>", videoNodeListRaussain.length);
+				getVideoDatainBatches();
+			} else {
+				console.log(
+					"After Filteration list recieved>>>>",
+					videoNodeListRaussain
+				);
+			}
 		})
 		.catch(function(err) {
 			console.log(

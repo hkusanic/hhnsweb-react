@@ -104,7 +104,10 @@ async function getLatestBlogDate() {
 async function getEnglishNodeList() {
 	latestBlogDate = JSON.parse(await getLatestBlogDate());
 	console.log("latestBlogDate>>>", latestBlogDate);
-	console.log("from database>>>", Date.parse(latestBlogDate.publish_date));
+	console.log(
+		"from database>>>",
+		timeConverter(latestBlogDate.publish_date).getTime()
+	);
 	console.log("from database>>>", Date.parse(latestBlogDate.created_date_time));
 	const options = {
 		method: "GET",
@@ -126,18 +129,13 @@ async function getEnglishNodeList() {
 				"data received"
 			);
 			englishDataList = englishDataList.filter(function(object) {
-				console.log(object.created);
-				console.log(
-					"from newdata>>>>",
-					timeConverter(object.created).getTime()
-				);
-				console.log(
-					"from database>>>>",
-					Date.parse(latestBlogDate.publish_date)
-				);
-				var d = Date.parse(latestBlogDate.created_date_time);
-				console.log(typeof d);
-				console.log("jaado", timeConverter(object.created).getTime());
+				// console.log(
+				// 	"from database>>>>",
+				// 	Date.parse(latestBlogDate.publish_date)
+				// );
+				// var d = Date.parse(latestBlogDate.created_date_time);
+				// console.log(typeof d);
+				// console.log("jaado", timeConverter(object.created).getTime());
 				return (
 					timeConverter(object.created).getTime() >
 					Date.parse(latestBlogDate.publish_date)
@@ -444,7 +442,7 @@ async function getEnglishLectureNodeList() {
 			englishLectureDataList = englishLectureDataList.filter(function(object) {
 				return (
 					timeConverter(object.created).getTime() >
-					Date.parse(latestLectureDate.created_date_time)
+					Date.parse(latestLectureDate.published_date)
 				);
 			});
 			getEnglishLectureDatainBatches();
@@ -546,10 +544,12 @@ function getRussianLectureData(ar, callback) {
 				if (data[i].tnid != 0) {
 					const temp = {
 						tnid: data[i].tnid,
+						published_date: data[i].created,
 						languages: "both",
 						ru: {
 							nid: data[i].nid,
 							created: timeConverter(data[i].created),
+							published: data[i].created,
 							changed: timeConverter(data[i].changed),
 							title: data[i].title
 						}
@@ -559,10 +559,12 @@ function getRussianLectureData(ar, callback) {
 					const body = {
 						uuid: uuidv4(),
 						tnid: data[i].tnid,
+						published_date: data[i].created,
 						languages: "ru",
 						ru: {
 							nid: data[i].nid,
 							created: timeConverter(data[i].created),
+							published: data[i].created,
 							changed: timeConverter(data[i].changed),
 							title: data[i].title
 						}
@@ -638,11 +640,13 @@ function getEnglishLectureData(ar, callback) {
 				const body = {
 					uuid: uuidv4(),
 					tnid: item.tnid,
+					published_date: item.created,
 					languages: item.tnid != 0 ? "" : "en",
 					en: {
 						nid: item.nid,
 						title: item.title,
 						created: timeConverter(item.created),
+						published: item.created,
 						changed: timeConverter(item.changed)
 					}
 				};
@@ -770,6 +774,7 @@ function getEnglishTranscriptionData(ar, callback) {
 							transcription: {
 								nid: data[i].nid,
 								created: timeConverter(data[i].created),
+								published: data[i].created,
 								changed: timeConverter(data[i].changed),
 								title: data[i].title,
 								text: data[i].body.und[0] ? data[i].body.und[0].value : "",
@@ -1000,7 +1005,7 @@ async function getQutoesEnglishNodeList() {
 			quotesEnglishNodeList = quotesEnglishNodeList.filter(function(object) {
 				return (
 					timeConverter(object.created).getTime() >
-					Date.parse(latestQuotesDate.created_date_time)
+					Date.parse(latestQuotesDate.published_date)
 				);
 			});
 			if (quotesEnglishNodeList && quotesEnglishNodeList.length > 0) {
@@ -1010,7 +1015,7 @@ async function getQutoesEnglishNodeList() {
 				);
 				getQuotesDatainBatches();
 			} else {
-				console.log("after filteration array>>>", getQutoesEnglishNodeList);
+				console.log("after filteration array>>>", quotesEnglishNodeList);
 				console.log("no new english quotes here");
 			}
 		})
@@ -1132,7 +1137,7 @@ function getQuotesRuNodeList() {
 			quotesRaussainNodeList = quotesRaussainNodeList.filter(function(object) {
 				return (
 					timeConverter(object.created).getTime() >
-					Date.parse(latestQuotesDate.created_date_time)
+					Date.parse(latestQuotesDate.published_date)
 				);
 			});
 			if (quotesRaussainNodeList && quotesRaussainNodeList.length > 0) {
@@ -1353,7 +1358,7 @@ async function getEnglishKirtanNodeList() {
 			englishKirtanDataList = englishKirtanDataList.filter(function(object) {
 				return (
 					timeConverter(object.created).getTime() >
-					Date.parse(latestKirtanDate.created_date_time)
+					Date.parse(latestKirtanDate.published_date)
 				);
 			});
 			if (englishKirtanDataList && englishKirtanDataList.length > 0) {
@@ -1415,7 +1420,7 @@ function getEnglishKirtanData(ar, callback) {
 					soundcloud_link: item.soundcloud,
 					duration: item.duration,
 					created_date_time: timeConverter(ar[i].created),
-					published_date: ar[i].created,
+					published_date: timeConverter(ar[i].created),
 					counter: { downloads: item.downloads },
 					language: ar[i].tnid !== 0 ? "" : "en",
 					kirtan_creation_date:
@@ -1476,7 +1481,7 @@ function getRuKirtanNodeList() {
 			raussainKirtanDataList = raussainKirtanDataList.filter(function(object) {
 				return (
 					timeConverter(object.created).getTime() >
-					Date.parse(latestKirtanDate.created_date_time)
+					Date.parse(latestKirtanDate.published_date)
 				);
 			});
 			if (raussainKirtanDataList && raussainKirtanDataList > 0) {

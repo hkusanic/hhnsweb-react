@@ -419,7 +419,7 @@ exports.getLatestKirtanDate = function(req, res) {
 	console.log("function start");
 	Kirtan.model
 		.find()
-		.sort({ created_date_time: -1 })
+		.sort({ published_date: -1 })
 		.limit(1)
 		.exec((err, data) => {
 			if (err || !data) {
@@ -433,6 +433,7 @@ exports.getLatestKirtanDate = function(req, res) {
 			}
 			console.log("date>>>>", data);
 			res.json({
+				tnid: data[0].tnid,
 				published_date: data[0].published_date,
 				created_date_time: data[0].created_date_time,
 				success: true
