@@ -17726,9 +17726,9 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 	pointer-events: none;
 }
 
-.tour-default-figure img {
+/* .tour-default-figure img {
 	width: 100%;
-}
+} */
 
 .tour-default-figure:hover::before {
 	opacity: 1;

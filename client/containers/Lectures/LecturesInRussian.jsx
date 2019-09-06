@@ -30,25 +30,18 @@ class RussiaDubbedLectures extends Component {
 				title="Lecture Dubbed in Russian"
 			>
 				<div style={{ height: "458px" }}>
-					{/* <div className="centerAlign recentActivityCard">
-				<br />
-				<h3 style={{ fontFamily: "Charter" }}> Lecture Dubbed in Russian </h3>
-				<br />
-				<hr />
-				<br />
-				<br /> */}
 					{this.props.lectureDetails &&
 						this.props.lectureDetails.lectures &&
 						this.props.lectureDetails.lectures.map(eachLecture => {
 							return (
-								<div style={{ paddingBottom: "6%", textAlign: "left" }}>
+								<div className="lecture_div">
 									<Link
 										style={{ fontFamily: "Charter" }}
 										key={eachLecture.id}
 										to={`/lectureDetails/${eachLecture.uuid}`}
-									>{`New**  ${eachLecture.en.topic}`}</Link>
+									>{`${eachLecture.en.topic}`}</Link>
 									<p
-										style={{ marginTop: "0px", fontFamily: "Charter" }}
+										className="content_p"
 										key={eachLecture.id}
 									>{`Posted On     ${new Date(
 										eachLecture.created_date_time

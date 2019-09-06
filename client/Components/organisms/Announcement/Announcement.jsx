@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import reactCookie from "react-cookies";
-import { Translate } from "react-localize-redux";
-import ContentDetails from "../../../containers/contents/ContentDetails";
-import { Card, Tabs } from "antd";
-import RussiaDubbedLectures from "../../../containers/Lectures/LecturesInRussian";
-const { TabPane } = Tabs;
+import { Card } from "antd";
+
 export class Announcement extends Component {
 	announcement = () => {
 		if (reactCookie.load("languageCode") === "en") {
@@ -15,7 +12,6 @@ export class Announcement extends Component {
 							<h4 className="announcement_heading">Announcement</h4>
 						</div>
 						<p className="announcement_hare">Hare Krishna!</p>
-
 						<p style={{ textAlign: "justify", fontFamily: "Charter" }}>
 							For devotees who are visiting Mayapura between March 13-March 22
 							and wish to have darshan of Niranjana Swami during that time, we
@@ -29,7 +25,6 @@ export class Announcement extends Component {
 								Swami during this visit.
 							</span>
 						</p>
-
 						<p style={{ textAlign: "justify", fontFamily: "Charter" }}>
 							This website, which is still under construction, will also be used
 							in the future to schedule meetings when Maharaja is visiting North
@@ -46,9 +41,7 @@ export class Announcement extends Component {
 							&nbsp; will be merged into a single website. Stay tuned for
 							details!
 						</p>
-
 						<p className="fontWeight">Your servants</p>
-
 						<p>Site administrators</p>
 					</div>
 				</Card>
@@ -60,9 +53,7 @@ export class Announcement extends Component {
 						<div className="announcement_div">
 							<h4 className="announcement_heading">Объявление</h4>
 						</div>
-
 						<p className="fontWeight">Харе Кришна!</p>
-
 						<p align="justify">
 							Для преданных, которые посещают Маяпур в период с 13 по 22 марта и
 							хотят получить даршан с Ниранджаной Свами в течение этого времени,
@@ -76,7 +67,6 @@ export class Announcement extends Component {
 								время этого визита.
 							</span>
 						</p>
-
 						<p align="justify">
 							Этот веб-сайт, который все еще находится в стадии разработки,
 							также будет использоваться в будущем для планирования встреч,
@@ -93,9 +83,7 @@ export class Announcement extends Component {
 							</a>
 							&nbsp; будут объединены в один веб-сайт. Следите за подробностями!
 						</p>
-
 						<p className="fontWeight">Ваши слуги</p>
-
 						<p>Администраторы сайта</p>
 					</div>
 				</Card>

@@ -6,10 +6,7 @@ import { quoteOfDay } from "../../../actions/quoteActions";
 import renderHTML from "react-render-html";
 import reactCookie from "react-cookies";
 import script from "../../../assets/script.js";
-import { Card } from "antd";
 import { Translate } from "react-localize-redux";
-import ContentDetails from "../../../containers/contents/ContentDetails";
-import RussianDubbedLectures from "../../../containers/Lectures/LecturesInRussian";
 
 export class QuoteOfDay extends React.Component {
 	constructor(props) {
@@ -20,13 +17,28 @@ export class QuoteOfDay extends React.Component {
 	}
 	showing100Characters = sentence => {
 		var result = sentence;
-		var resultArray = result.split(" ");
-		if (resultArray.length > 67) {
-			resultArray = resultArray.slice(0, 67);
-			result = resultArray.join(" ") + "...";
+		console.log(sentence)
+		function GetNthOccurance(string, seek, occurance) {
+			var index = 0, i = 1;
+
+			while (index !== -1) {
+				index = string.indexOf(seek, index + 1);
+				if (occurance === i) {
+					break;
+				}
+				i++;
+			}
+			if (index !== -1) {
+				return index;
+			}
+		}
+		let index1 = GetNthOccurance(sentence, '>', 2);
+		if (result.length > 300) {
+			result = result.substring(index1 + 1, index1 + 153) + "..."
 		}
 		return result;
 	};
+
 	componentDidMount() {
 		script();
 		let authorList = ["Niranjana Swami", "Srila Prabhupada"];
@@ -51,10 +63,9 @@ export class QuoteOfDay extends React.Component {
 						<br />
 						<div className="row row-50 row-xxl-70">
 							<div
-								className="wow-outer col-md-6 col-lg-6 col-sm-12 page1"
+								className="wow-outer col-md-6 col-lg-6 col-sm-12 page1 quote_div"
 								style={{ padding: "2vw" }}
 							>
-								{/* <Card hoverable> */}
 								<div>
 									<Link
 										to={{
@@ -153,16 +164,13 @@ export class QuoteOfDay extends React.Component {
 											{({ translate }) => translate("FOOTER.readmore")}
 										</Translate>
 									</Link>
-
-									{/* </Card> */}
 								</div>
 							</div>
 
 							<div
-								className="wow-outer col-md-6 col-lg-6 col-sm-12 page1"
+								className="wow-outer col-md-6 col-lg-6 col-sm-12 page1 quote_div"
 								style={{ padding: "2vw" }}
 							>
-								{/* <Card hoverable> */}
 								<div>
 									<Link
 										to={{
@@ -262,8 +270,6 @@ export class QuoteOfDay extends React.Component {
 											{({ translate }) => translate("FOOTER.readmore")}
 										</Translate>
 									</Link>
-
-									{/* </Card> */}
 								</div>
 							</div>
 						</div>
