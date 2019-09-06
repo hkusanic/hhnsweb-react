@@ -377,6 +377,11 @@ exports = module.exports = function(app) {
 		keystone.middleware.api,
 		routes.api.lecture.getLatestLectureDate
 	);
+	// app.get(
+	// 	"/api/lecture/getlatesttranscriptiondate",
+	// 	keystone.middleware.api,
+	// 	routes.api.lecture.getLatestTranscriptionDate
+	// );
 	app.post("/api/signin/", keystone.middleware.api, routes.api.user.signin);
 	app.post("/api/signup/", keystone.middleware.api, routes.api.user.signup);
 	app.post("/api/signout/", keystone.middleware.api, routes.api.user.signout);

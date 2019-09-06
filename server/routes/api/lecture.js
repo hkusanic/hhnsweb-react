@@ -667,7 +667,7 @@ exports.getLatestLectureDate = function(req, res) {
 	console.log("function start");
 	Lecture.model
 		.find()
-		.sort({ created_date_time: -1 })
+		.sort({ published_date: -1 })
 		.limit(1)
 		.exec((err, data) => {
 			if (err || !data) {
@@ -688,6 +688,32 @@ exports.getLatestLectureDate = function(req, res) {
 			});
 		});
 };
+
+// exports.getLatestTranscriptionDate = function(req, res) {
+// 	console.log("function start");
+// 	Lecture.model
+// 		.find()
+// 		.sort({ ru.published : -1 })
+// 		.limit(1)
+// 		.exec((err, data) => {
+// 			if (err || !data) {
+// 				logger.error(
+// 					{
+// 						error: err
+// 					},
+// 					"API getlatestlecture"
+// 				);
+// 				return res.json({ error: { title: "Not able to sort" } });
+// 			}
+// 			console.log("date>>>>", data);
+// 			res.json({
+// 				tnid: data[0].tnid,
+// 				published_date: data[0].published_date,
+// 				created_date_time: data[0].created_date_time,
+// 				success: true
+// 			});
+// 		});
+// };
 exports.updateBulkNew = function(req, res) {
 	logger.info(
 		{

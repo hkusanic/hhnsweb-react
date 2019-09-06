@@ -181,7 +181,8 @@ function getVideoData(ar, callback) {
 
 							const options = {
 								method: "POST",
-								uri: "http://localhost:3000/api/video/create/",
+								//uri: "http://localhost:3000/api/video/create/",
+								uri: "http://dev.niranjanaswami.net/api/video/create/",
 								body: body,
 								json: true,
 								pool: httpAgent,
@@ -231,7 +232,8 @@ function getVideoData(ar, callback) {
 
 					const options = {
 						method: "POST",
-						uri: "http://localhost:3000/api/video/create/",
+						//uri: "http://localhost:3000/api/video/create/",
+						uri: "http://dev.niranjanaswami.net/api/video/create/",
 						body: body,
 						json: true,
 						pool: httpAgent,

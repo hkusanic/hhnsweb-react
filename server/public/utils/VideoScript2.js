@@ -6,7 +6,7 @@ var httpAgent = new https.Agent();
 httpAgent.maxSockets = 50;
 
 function timeConverter(timestamp) {
-	let date = new Date(timestamp * 1000);
+	let date = new Date(parseInt(timestamp) * 1000);
 	return date;
 }
 const cookie = new tough.Cookie({
@@ -28,14 +28,14 @@ function uuidv4() {
 		return v.toString(16);
 	});
 }
-var latestVideoDate = null;
+let latestVideoDate = null;
 var videoNodeList = [];
 var videoNodeListRaussain = [];
 
-async function getLatestBlogDate() {
+async function getLatestVideoDate() {
 	let options = {
 		method: "GET",
-		uri: "http://localhost:3000/api/blog/getlatestblogdate/",
+		uri: "http://localhost:3000/api/video/getlatestvideodate/",
 		//body: batchArray,
 		//json: true,
 		//pool: httpAgent,
@@ -56,7 +56,7 @@ async function getLatestBlogDate() {
 
 async function getVideoNodeList() {
 	latestVideoDate = JSON.parse(await getLatestVideoDate());
-	console.log("latestBlogDate>>>", latestVideoDate);
+	console.log("latestVideoDate>>>", latestVideoDate);
 	console.log(
 		"from database>>>",
 		timeConverter(latestVideoDate.published_date).getTime()
@@ -128,7 +128,7 @@ function getVideoNodeListRaussain() {
 			videoNodeListRaussain = videoNodeListRaussain.filter(function(object) {
 				return (
 					timeConverter(object.created).getTime() >
-					Date.parse(latestBlogDate.published_date)
+					Date.parse(latestVideoDate.published_date)
 				);
 			});
 			if (videoNodeListRaussain && videoNodeListRaussain.length > 0) {

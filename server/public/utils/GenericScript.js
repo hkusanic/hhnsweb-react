@@ -227,7 +227,8 @@ function getRaussainData(ar, callback) {
 function updateDatabase(batchArray, callback) {
 	let options = {
 		method: "POST",
-		uri: "http://localhost:3000/api/blog/updateBulkNew/",
+		//uri: "http://localhost:3000/api/blog/updateBulkNew/",
+		uri: "http://dev.niranjanaswami.net/api/blog/updateBulkNew/",
 		body: batchArray,
 		json: true,
 		pool: httpAgent,
@@ -248,7 +249,8 @@ function updateDatabase(batchArray, callback) {
 function createSingleRUBlogItem(body) {
 	const options = {
 		method: "POST",
-		uri: "http://localhost:3000/api/blog/create/",
+		//uri: "http://localhost:3000/api/blog/create/",
+		uri: "http://dev.niranjanaswami.net/api/blog/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -290,7 +292,6 @@ function getEnglishData(ar, callback) {
 					tnid: ar[i].tnid,
 					blog_creation_date: item.date,
 					created_date_time: timeConverter(ar[i].created),
-
 					//publish_date: timeConverter(ar[i].created),
 					publish_date: ar[i].created,
 					languages: item.tnid !== 0 ? "" : "en",
@@ -303,7 +304,8 @@ function getEnglishData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					uri: "http://localhost:3000/api/blog/create/",
+					//uri: "http://localhost:3000/api/blog/create/",
+					uri: "http://dev.niranjanaswami.net/api/blog/create/",
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -436,12 +438,12 @@ function getRussianLectureData(ar, callback) {
 				if (data[i].tnid != 0) {
 					const temp = {
 						tnid: data[i].tnid,
-						published_date: data[i].created,
+						published_date: timeConverter(data[i].created),
 						languages: "both",
 						ru: {
 							nid: data[i].nid,
 							created: timeConverter(data[i].created),
-							published: data[i].created,
+							published: timeConverter(data[i].created),
 							changed: timeConverter(data[i].changed),
 							title: data[i].title
 						}
@@ -451,12 +453,12 @@ function getRussianLectureData(ar, callback) {
 					const body = {
 						uuid: uuidv4(),
 						tnid: data[i].tnid,
-						published_date: data[i].created,
+						published_date: timeConverter(data[i].created),
 						languages: "ru",
 						ru: {
 							nid: data[i].nid,
 							created: timeConverter(data[i].created),
-							published: data[i].created,
+							published: timeConverter(data[i].created),
 							changed: timeConverter(data[i].changed),
 							title: data[i].title
 						}
@@ -532,13 +534,13 @@ function getEnglishLectureData(ar, callback) {
 				const body = {
 					uuid: uuidv4(),
 					tnid: item.tnid,
-					published_date: item.created,
+					published_date: timeConverter(item.created),
 					languages: item.tnid != 0 ? "" : "en",
 					en: {
 						nid: item.nid,
 						title: item.title,
 						created: timeConverter(item.created),
-						published: item.created,
+						published: timeConverter(item.created),
 						changed: timeConverter(item.changed)
 					}
 				};
@@ -646,6 +648,7 @@ function getEnglishTranscriptionData(ar, callback) {
 							transcription: {
 								nid: data[i].nid,
 								created: timeConverter(data[i].created),
+								published: timeConverter(data[i].created),
 								changed: timeConverter(data[i].changed),
 								title: data[i].title,
 								text: data[i].body.und[0] ? data[i].body.und[0].value : "",
@@ -745,6 +748,7 @@ function getRussianTranscriptionData(ar, callback) {
 							transcription: {
 								nid: data[i].nid,
 								created: timeConverter(data[i].created),
+								published: timeConverter(data[i].created),
 								changed: timeConverter(data[i].changed),
 								title: data[i].title,
 								text: data[i].body.und[0].value

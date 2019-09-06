@@ -47,10 +47,6 @@ rl.question(
 	}
 );
 function timeConverter(timestamp) {
-	// console.log(
-	// 	"tttttttttttttttttttt>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-	// 	typeof parseInt(timestamp)
-	// );
 	let date = new Date(parseInt(timestamp) * 1000);
 	return date;
 }
@@ -420,6 +416,14 @@ async function getLatestLectureDate() {
 }
 async function getEnglishLectureNodeList() {
 	latestLectureDate = JSON.parse(await getLatestLectureDate());
+	console.log(
+		"from database>>>",
+		timeConverter(latestLectureDate.published_date).getTime()
+	);
+	console.log(
+		"from database>>>",
+		Date.parse(latestLectureDate.created_date_time)
+	);
 	const options = {
 		method: "GET",
 		uri:
@@ -491,7 +495,7 @@ function getRuLectureNodeList() {
 			russianLectureDataList = russianLectureDataList.filter(function(object) {
 				return (
 					timeConverter(object.created).getTime() >
-					Date.parse(latestLectureDate.created_date_time)
+					Date.parse(latestLectureDate.published_date)
 				);
 			});
 			if (russianLectureDataList && russianLectureDataList.length > 0) {
@@ -544,12 +548,12 @@ function getRussianLectureData(ar, callback) {
 				if (data[i].tnid != 0) {
 					const temp = {
 						tnid: data[i].tnid,
-						published_date: data[i].created,
+						published_date: timeConverter(data[i].created),
 						languages: "both",
 						ru: {
 							nid: data[i].nid,
 							created: timeConverter(data[i].created),
-							published: data[i].created,
+							published: timeConverter(data[i].created),
 							changed: timeConverter(data[i].changed),
 							title: data[i].title
 						}
@@ -564,7 +568,7 @@ function getRussianLectureData(ar, callback) {
 						ru: {
 							nid: data[i].nid,
 							created: timeConverter(data[i].created),
-							published: data[i].created,
+							published: timeConverter(data[i].created),
 							changed: timeConverter(data[i].changed),
 							title: data[i].title
 						}
@@ -640,13 +644,13 @@ function getEnglishLectureData(ar, callback) {
 				const body = {
 					uuid: uuidv4(),
 					tnid: item.tnid,
-					published_date: item.created,
+					published_date: timeConverter(item.created),
 					languages: item.tnid != 0 ? "" : "en",
 					en: {
 						nid: item.nid,
 						title: item.title,
 						created: timeConverter(item.created),
-						published: item.created,
+						published: timeConverter(item.created),
 						changed: timeConverter(item.changed)
 					}
 				};
@@ -684,7 +688,16 @@ var englishTranscriptionDataList = [];
 var russianTranscriptionDataList = [];
 var transcriptionFinalData = [];
 
-function getEnglishTranscriptionNodeList() {
+async function getEnglishTranscriptionNodeList() {
+	latestLectureDate = JSON.parse(await getLatestLectureDate());
+	console.log(
+		"from database>>>",
+		timeConverter(latestLectureDate.published_date).getTime()
+	);
+	console.log(
+		"from database>>>",
+		Date.parse(latestLectureDate.created_date_time)
+	);
 	const options = {
 		method: "GET",
 		uri:
@@ -707,7 +720,7 @@ function getEnglishTranscriptionNodeList() {
 				function(object) {
 					return (
 						timeConverter(object.created).getTime() >
-						Date.parse(latestLectureDate.created_date_time)
+						Date.parse(latestLectureDate.published_date)
 					);
 				}
 			);
@@ -774,7 +787,7 @@ function getEnglishTranscriptionData(ar, callback) {
 							transcription: {
 								nid: data[i].nid,
 								created: timeConverter(data[i].created),
-								published: data[i].created,
+								published: timeConverter(data[i].created),
 								changed: timeConverter(data[i].changed),
 								title: data[i].title,
 								text: data[i].body.und[0] ? data[i].body.und[0].value : "",
@@ -828,7 +841,7 @@ function getRuTranscriptionNodeList() {
 				function(object) {
 					return (
 						timeConverter(object.created).getTime() >
-						Date.parse(latestLectureDate.publish_date)
+						Date.parse(latestLectureDate.published_date)
 					);
 				}
 			);
@@ -894,6 +907,7 @@ function getRussianTranscriptionData(ar, callback) {
 							transcription: {
 								nid: data[i].nid,
 								created: timeConverter(data[i].created),
+								published: timeConverter(data[i].created),
 								changed: timeConverter(data[i].changed),
 								title: data[i].title,
 								text: data[i].body.und[0].value
