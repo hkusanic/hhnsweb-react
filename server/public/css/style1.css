@@ -45,6 +45,7 @@
 	height: 90px;
 	object-fit: contain;
 	float: left;
+	margin-top: 7px;
 }
 
 .singleCarousel_image_sm {
@@ -52,7 +53,12 @@
 	height: 90px;
 	object-fit: contain;
 	float: left;
-	margin-top: -17px;
+	margin-top: -13px;
+}
+@media (max-width:320px){
+	.singleCarousel_image_sm {
+		margin-top: -18px !important;
+	}
 }
 
 .singleCarousel_p1_sm_odd {
@@ -194,12 +200,12 @@
 }
 @media (max-width:500px){
 	.singleBiography_cover{
-		width: 69px;
+	width: 69px;
     float: left;
     height: 123px;
     object-fit: contain;
-    margin-top: 3px;
-    margin-left: 5%;
+	margin-top: -10px;
+    margin-left: 8%;
     /* margin-right: 353px; */
 	}
 }
@@ -232,7 +238,7 @@
     color: #ffffff;
 }
 	}
-	@media (max-width: 500px) {
+	@media (max-width: 320px) {
 		.singleBiography_card_orange{
 			font-size:11px !important
 	}
@@ -312,6 +318,9 @@
 	text-align: justify;
 }
 
+.setHeight{
+height:80vh
+}
 @media (max-width: 500px) {
 	.singleBiography_text_white{
 		margin-left: 5%;
@@ -323,13 +332,24 @@
 	}
 	}
 
-.singleBiography_button {
+.singleBiography_button_orange {
 	width: 123px;
 	height: 47px;
 	border-radius: 4px;
 	border: solid 1px #ff7c2b;
 	background-color: white;
-	margin-top: 8%;
+	margin-top: 3%;
+	margin-left: 5%;
+	position: absolute;
+}
+
+.singleBiography_button_white {
+	width: 123px;
+	height: 47px;
+	border-radius: 4px;
+	border: solid 1px #ff7c2b;
+	background-color: white;
+	margin-top: 3%;
 	margin-left: 5%;
 	position: absolute;
 }
@@ -586,7 +606,7 @@
 
 .caraousel_even {
 	width: 100% !important;
-	height: 80vh !important;
+	/* height: 80vh !important; */
 	background-image: url("../images/swami-background.png");
 	background-size: cover;
 }
@@ -594,7 +614,7 @@
 .caraousel_odd {
 	width: 100% !important;
 	/* 116.28614916286149vh */
-	height: 80vh !important;
+	/* height: 80vh !important; */
 	background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg");
 	
 	background-size: cover;
@@ -608,13 +628,13 @@
 }
 
 .caraousel_sm_even {
-	height:86vh !important;
+	height:80vh !important;
 	background-size: cover;
 	background-image: url("../images/4-c-7-a-9333@2x.png");
 }
 
 .caraousel_sm_odd {
-	height: 86vh !important;
+	height:80vh !important;
 	background-size: cover;
 	background-image:url("../images/4-c-7-a-9333.jpg")
 	/* background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"); */
@@ -634,7 +654,7 @@
 
 .orange {
 	background-image: linear-gradient(to right, #f25858, #ff9f63);
-	height: 508px;
+	height: 473px;;
 }
 @media (max-width: 500px) and (min-width: 320px){
 	.orange{
@@ -647,23 +667,23 @@
 
 	@media (max-width: 320px){
 .orange {
-    height: 363px;
+    height: 313px;
     width: 268px;
     margin: auto;
     background-image: linear-gradient(to right, #f25858, #ff9f63);
 }
 .white{
-	height: 420px;
+	height: 347px !important;
     width: 268px !important;
     margin: auto;
 }
 }
 
 .white {
-	height: 508px;
+	height: 473px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 500px) and (min-width:321px) {
 	.white{
 		height: 420px;
 		width: 337px;

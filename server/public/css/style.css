@@ -5268,7 +5268,7 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 .insideCarousel_sm_even{
 	position: absolute;
     z-index: 36;
-    margin-top: 30vh;
+    margin-top: 26vh;
     width: 286px !important;
     height: 64px;
     background-image: linear-gradient(to right, #f25858, #ff9f63);
@@ -5278,7 +5278,7 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 .insideCarousel_sm_odd {
 	position: absolute;
     z-index: 36;
-    margin-top: 30vh;
+    margin-top: 26vh;
     width: 286px !important;
     height: 64px;
     background-image: linear-gradient(to right, #f25858, #ff9f63);
@@ -5288,7 +5288,7 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 .insideCarousel_even {
 	position: absolute;
 	margin-top: -16%;
-	width: 366px;
+	width: 400px;
 	height: 100px;
 	right: 5px;
 	background-image: linear-gradient(to right, #f25858, #ff9f63);
@@ -5297,7 +5297,7 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 .insideCarousel_odd {
 	position: absolute;
 	margin-top: -16%;
-	width: 366px;
+	width: 400px;
 	height: 100px;
 	background-image: linear-gradient(to right, #f25858, #ff9f63);
 	left: 5px
@@ -5311,23 +5311,33 @@ html:not(.tablet):not(.mobile) .thumbnail-indigo:hover .thumbnail-indigo-caption
 	.insideCarousel_sm_even {
 		position: absolute;
 		z-index: 36;
-		margin-top: 30vh;
+		margin-top: 23vh;
 		width: 234px !important;
 		height: 54px;
 		background-image: linear-gradient(to right, #f25858, #ff9f63);
-		left: 15% !important;
+		left:44px !important;
 	}
 	}
+	@media (max-width: 375px) and (min-width: 321px){
+		.insideCarousel_sm_even {
+			margin-left: -3% !important;
+			margin-top: 26vh !important;
+		}
+		.insideCarousel_sm_odd {
+			margin-left: 11% !important;
+			margin-top: 26vh !important;
+		}
+		}
 
 	@media (max-width: 320px){
 		.insideCarousel_sm_odd {
 			position: absolute;
 		z-index: 36;
-		margin-top: 30vh;
+		margin-top: 23vh;
 		width: 234px !important;
 		height: 54px;
 		background-image: linear-gradient(to right, #f25858, #ff9f63);
-		left: 0 !important;
+		left: -3px !important;
 		}
 		}
 

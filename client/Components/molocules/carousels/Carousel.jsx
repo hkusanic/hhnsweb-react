@@ -43,7 +43,7 @@ export class Carousel2 extends Component {
 		}
 		return (
 			<div>
-				<section className="swiper-container swiper-slider swiper-slider-light bg-gray-700 carouselMargin">
+				<section className="swiper-container swiper-slider swiper-slider-light bg-gray-700 carouselMargin setHeight">
 					<div className="swiper-wrapper">
 						{this.props.quote.quotes.length > 0 ? (
 							<SingleCarousel

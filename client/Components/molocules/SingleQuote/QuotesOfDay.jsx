@@ -17,7 +17,6 @@ export class QuoteOfDay extends React.Component {
 	}
 	showing100Characters = sentence => {
 		var result = sentence;
-		console.log(sentence)
 		function GetNthOccurance(string, seek, occurance) {
 			var index = 0, i = 1;
 
