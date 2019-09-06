@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { throttle } from "lodash";
 import { setActiveLanguage, withLocalize } from "react-localize-redux";
-import { Select, Menu, Dropdown, Icon } from "antd";
+import { Menu, Dropdown, Icon } from "antd";
 import Login from "./../../../containers/Login/Login";
 import { Link, Redirect } from "react-router-dom";
 import Auth from "../../../utils/Auth";
@@ -9,9 +9,7 @@ import { Translate } from "react-localize-redux";
 import { LanguageSwitch } from "../../atoms/LanguageSwitch/LanguageSwitch";
 import * as DATA from "../../../constants/biographies";
 import reactCookie from "react-cookies";
-import Column from "antd/lib/table/Column";
 
-const Option = Select.Option;
 const maxWidth = window.screen.width;
 const screenwidth = window.innerWidth;
 export class Navigation extends Component {
@@ -236,8 +234,8 @@ export class Navigation extends Component {
 														<Link
 															style={{ backgroundColor: "white" }}
 															className={`rd-nav-link ${
-																this.state.index === 1 ? "active1" : ""
-															} `}
+																this.state.index === 1 ? "active1" : null
+																} `}
 															to="/"
 														>
 															<img src="https://ik.imagekit.io/gcwjdmqwwznjl/swami__v3cKrjXs.svg" />
@@ -284,8 +282,8 @@ export class Navigation extends Component {
 									</div>
 								</div>
 							) : (
-								""
-							)}
+									null
+								)}
 
 							{maxWidth < 600 ? (
 								<div className="rd-navbar-aside head ">
@@ -330,8 +328,8 @@ export class Navigation extends Component {
 									</div>
 								</div>
 							) : (
-								""
-							)}
+									null
+								)}
 
 							<div>
 								<div>
@@ -354,8 +352,8 @@ export class Navigation extends Component {
 											>
 												<Link
 													className={`rd-nav-link ${
-														this.state.index === 1 ? "active1" : ""
-													} `}
+														this.state.index === 1 ? "active1" : null
+														} `}
 													to="/"
 												>
 													<img
@@ -385,9 +383,9 @@ export class Navigation extends Component {
 												>
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 1 ? "active1" : ""
-														} 
-														${maxWidth <= 1210 ? "gap" : " "}`}
+															this.state.index === 1 ? "active1" : null
+															} 
+														${maxWidth <= 1210 ? "gap" : null}`}
 														to="/"
 													>
 														<Translate>
@@ -398,9 +396,9 @@ export class Navigation extends Component {
 												<li className="rd-nav-item ">
 													<a
 														className={`rd-nav-link ${
-															this.state.index === 2 ? "active1" : ""
-														} 
-														${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 2 ? "active1" : null
+															} 
+														${maxWidth <= 1210 ? "gap" : null}
 														`}
 													>
 														<Translate>
@@ -455,8 +453,8 @@ export class Navigation extends Component {
 												<li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 10 ? "active1" : ""
-														} ${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 10 ? "active1" : null
+															} ${maxWidth <= 1210 ? "gap" : null}
 														`}
 														to={{
 															pathname: "/audio"
@@ -474,9 +472,9 @@ export class Navigation extends Component {
 												<li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 11 ? "active1" : ""
-														} 
-														${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 11 ? "active1" : null
+															} 
+														${maxWidth <= 1210 ? "gap" : null}
 														`}
 														to="/video"
 														onClick={() => {
@@ -492,9 +490,9 @@ export class Navigation extends Component {
 												<li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 3 ? "active1" : ""
-														} 
-														${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 3 ? "active1" : null
+															} 
+														${maxWidth <= 1210 ? "gap" : null}
 														`}
 														to="/blog"
 														onClick={() => {
@@ -510,8 +508,8 @@ export class Navigation extends Component {
 												<li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 4 ? "active1" : ""
-														} ${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 4 ? "active1" : null
+															} ${maxWidth <= 1210 ? "gap" : null}
 														`}
 														to="/transcriptions"
 														onClick={() => {
@@ -529,8 +527,8 @@ export class Navigation extends Component {
 												<li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 5 ? "active1" : ""
-														} ${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 5 ? "active1" : null
+															} ${maxWidth <= 1210 ? "gap" : null}
 														`}
 														to="/summaries"
 														onClick={() => {
@@ -547,16 +545,16 @@ export class Navigation extends Component {
 													<li className="rd-nav-item">
 														<Link
 															className={`rd-nav-link ${
-																this.state.index === 6 ? "active1" : ""
-															} `}
+																this.state.index === 6 ? "active1" : null
+																} `}
 															to="/"
 														>
 															Admin
 														</Link>
 													</li>
 												) : (
-													""
-												)}
+														""
+													)}
 												<li className="rd-nav-item hideMenu">
 													<a className="rd-nav-link">
 														<Login
@@ -573,7 +571,7 @@ export class Navigation extends Component {
 														reactCookie.load("languageCode") === "en"
 															? "enToggle"
 															: "ruToggle"
-													} `}
+														} `}
 												>
 													<Dropdown
 														optionFilterProp="children"
@@ -588,7 +586,7 @@ export class Navigation extends Component {
 												</li>
 
 												<li className="rd-nav-item hideMenu">
-													
+
 													<img
 														className="nav_image"
 														src="https://ik.imagekit.io/gcwjdmqwwznjl/Iskcon_logo_C-Q4c8R4B.jpg"
@@ -600,8 +598,8 @@ export class Navigation extends Component {
 										<br />
 									</div>
 								</div>
-								{this.state.redirect ? <Redirect to="/registration" /> : ""}
-								{this.state.login ? <Redirect to="/" /> : ""}
+								{this.state.redirect ? <Redirect to="/registration" /> : null}
+								{this.state.login ? <Redirect to="/" /> : null}
 							</div>
 						</nav>
 					</div>

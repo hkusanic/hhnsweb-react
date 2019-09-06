@@ -21,7 +21,7 @@ function showing100Characters(sentence) {
 const SingleBiography = props => {
 	return (
 		<div
-			className="col-sm-12 col-lg-6"
+			className="col-sm-12 col-lg-6 page1"
 			style={{
 				paddingRight: "0px",
 				paddingLeft: "0px",

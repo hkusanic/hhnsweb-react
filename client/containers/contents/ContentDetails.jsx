@@ -27,19 +27,12 @@ class ContentDetails extends Component {
 				title="Recent Content"
 			>
 				<div style={{ height: "458px" }}>
-					{/* // <div className="centerAlign recentActivityCard">
-			// 	<br />
-			// 	<h3 style={{ fontFamily: "Charter" }}> Lecture Dubbed in Russian </h3>
-			// 	<br />
-			// 	<hr />
-			// 	<br />
-			// 	<br /> */}
 					{this.props.contentDetails &&
 						this.props.contentDetails.content &&
 						this.props.contentDetails.content.map(eachContent => {
 							return (
 								<div
-									style={{ paddingBottom: "3%", textAlign: "left" }}
+									className="content_div1"
 									key={eachContent.content_uuid}
 								>
 									<Link
@@ -49,7 +42,7 @@ class ContentDetails extends Component {
 											eachContent.content_uuid
 											}`}
 									>
-										{`New**     ${eachContent.content_type}`}
+										{`${eachContent.content_type}`}
 									</Link>
 									<div className="recentContent_title">
 										{reactCookie.load("languageCode") === "en"
@@ -65,7 +58,7 @@ class ContentDetails extends Component {
 													: "NA"}
 									</div>
 									<p
-										style={{ marginTop: "0px", fontFamily: "Charter" }}
+										className="content_p"
 										key={eachContent.content_id}
 									>{`Posted On     ${new Date(
 										eachContent.created_date_time
