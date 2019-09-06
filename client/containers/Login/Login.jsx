@@ -300,12 +300,9 @@ export class Login extends Component {
                 } placement="bottomCenter"
                 >
                   <a className="ant-dropdown-link" href="#">
-                    {/* {this.state} */}
-                    {/* <Avatar /> */}
-                    <Avatar src="/images/avatar.png" />
-                    {/* <Avatar>USER</Avatar> */}
-                    {/* {this.state.fullName === "undefined undefined" ? "" : this.state.fullName}  */}
-                    {/* <Icon style={{ color: "black !important" }} type="down" /> */}
+                    {(this.state.profile_pic === "Profile pic not available" || this.state.profile_pic === "undefined") ? <Avatar src="/images/avatar.png" />
+                      :
+                      <Avatar src={this.state.profile_pic} />}
                   </a>
                 </Dropdown>
               }
