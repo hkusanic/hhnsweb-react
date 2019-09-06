@@ -57,14 +57,15 @@
 
 .singleCarousel_p1_sm_odd {
 	font-family: Charter;
-    font-size: 13px;
-    font-weight: 900;
-    color: white;
-    line-height: 1.1;
-    margin-top: 3%;
+	font-size: 13px;
+	font-weight: 900;
+	color: white;
+	line-height: 1.1;
+	margin-top: 3%;
 }
-@media (max-width:320px){
-	.singleCarousel_p1_sm_odd{
+
+@media (max-width:320px) {
+	.singleCarousel_p1_sm_odd {
 		font-family: Charter;
 		font-size: 9px;
 		font-weight: 900;
@@ -72,18 +73,19 @@
 		line-height: 1.1;
 		margin-top: 3%;
 	}
- }
+}
 
 .singleCarousel_p1_sm_even {
 	font-family: Charter;
-    font-size: 13px;
-    font-weight: 900;
-    color: white;
-    line-height: 1.1;
-    margin-top: 3%;
+	font-size: 13px;
+	font-weight: 900;
+	color: white;
+	line-height: 1.1;
+	margin-top: 3%;
 }
- @media (max-width:320px){
-	.singleCarousel_p1_sm_even{
+
+@media (max-width:320px) {
+	.singleCarousel_p1_sm_even {
 		font-family: Charter;
 		font-size: 9px;
 		font-weight: 900;
@@ -91,7 +93,7 @@
 		line-height: 1.1;
 		margin-top: 3%;
 	}
- }
+}
 
 .singleCarousel_p1_lg_even {
 	font-family: Charter;
@@ -117,8 +119,8 @@
 	color: white !important;
 }
 
-@media (max-width:320px){
-	.singleCarousel_p2_sm_even{
+@media (max-width:320px) {
+	.singleCarousel_p2_sm_even {
 		font-family: Charter;
 		margin-top: 3px;
 		font-size: 9px !important;
@@ -126,8 +128,8 @@
 	}
 }
 
-@media (max-width:320px){
-	.singleCarousel_p2_sm_odd{
+@media (max-width:320px) {
+	.singleCarousel_p2_sm_odd {
 		font-family: Charter;
 		margin-top: 3px;
 		font-size: 9px !important;
@@ -144,15 +146,15 @@
 .singleCarousel_p2_sm_even {
 	font-family: Charter;
 	margin-top: 3px;
-    font-size: 11px;
-    color: white;
+	font-size: 11px;
+	color: white;
 }
 
 .singleCarousel_p2_sm_odd {
 	font-family: Charter;
 	margin-top: 3px;
-    font-size: 11px;
-    color: white;
+	font-size: 11px;
+	color: white;
 }
 
 .singleCarousel_quotes {
@@ -192,18 +194,18 @@
 	margin-left: 5%;
 	margin-right: 353px;
 }
-@media (max-width:500px){
-	.singleBiography_cover{
+
+@media (max-width:500px) {
+	.singleBiography_cover {
 		width: 69px;
-    float: left;
-    height: 123px;
-    object-fit: contain;
-    margin-top: 3px;
-    margin-left: 5%;
-    /* margin-right: 353px; */
+		float: left;
+		height: 123px;
+		object-fit: contain;
+		margin-top: 3px;
+		margin-left: 5%;
+		/* margin-right: 353px; */
 	}
 }
-
 
 .singleBiography_card_orange {
 	margin-left: 5%;
@@ -218,27 +220,26 @@
 }
 
 @media (max-width: 500px) {
-	.singleBiography_card_orange{
-	    margin-left: 5%;
-    font-family: Charter;
-    font-size: 16px;
-    font-weight: bold;
-    float: right;
-    margin-top: -65px;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: #ffffff;
+	.singleBiography_card_orange {
+		margin-left: 5%;
+		font-family: Charter;
+		font-size: 16px;
+		font-weight: bold;
+		float: right;
+		margin-top: -65px;
+		font-style: normal;
+		font-stretch: normal;
+		line-height: normal;
+		letter-spacing: normal;
+		color: #ffffff;
+	}
 }
-	}
-	@media (max-width: 500px) {
-		.singleBiography_card_orange{
-			font-size:11px !important
-	}
-		}
 
-
+@media (max-width: 500px) {
+	.singleBiography_card_orange {
+		font-size: 11px !important
+	}
+}
 
 .singleBiography_card_white {
 	margin-left: 5%;
@@ -253,22 +254,20 @@
 }
 
 @media (max-width: 500px) {
-	.singleBiography_card_white{
-	    margin-top: -85px;
-    font-family: Charter;
-    font-size: 17px;
-    float: right;
-    margin-left: 110px;
-    font-weight: bold;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: #000000;
+	.singleBiography_card_white {
+		margin-top: -85px;
+		font-family: Charter;
+		font-size: 17px;
+		float: right;
+		margin-left: 110px;
+		font-weight: bold;
+		font-style: normal;
+		font-stretch: normal;
+		line-height: normal;
+		letter-spacing: normal;
+		color: #000000;
 	}
 }
-
-
 
 .singleBiography_text_orange {
 	margin-left: 5%;
@@ -280,27 +279,27 @@
 }
 
 @media (max-width: 500px) {
-	.singleBiography_text_orange{
+	.singleBiography_text_orange {
 		margin-left: 5%;
-    margin-right: 5%;
-    font-family: Charter-Roman;
-    font-size: 15px;
-    color: #faf9f9 !important;
-    text-align: justify;
+		margin-right: 5%;
+		font-family: Charter-Roman;
+		font-size: 15px;
+		color: #faf9f9 !important;
+		text-align: justify;
 	}
 }
 
-@media (max-width : 320px){
-	.singleBiography_text_orange{
-	font-size: 12px !important;
-	}
-	.singleBiography_text_white{
+@media (max-width: 320px) {
+	.singleBiography_text_orange {
 		font-size: 12px !important;
 	}
-	.singleBiography_card_white{
-		font-size:11px !important;
+	.singleBiography_text_white {
+		font-size: 12px !important;
+	}
+	.singleBiography_card_white {
+		font-size: 11px !important;
 		margin-left: 84px !important;
-	}	
+	}
 }
 
 .singleBiography_text_white {
@@ -313,7 +312,7 @@
 }
 
 @media (max-width: 500px) {
-	.singleBiography_text_white{
+	.singleBiography_text_white {
 		margin-left: 5%;
 		margin-right: 5%;
 		font-family: Charter-Roman;
@@ -321,7 +320,7 @@
 		color: #787878;
 		text-align: justify;
 	}
-	}
+}
 
 .singleBiography_button {
 	width: 123px;
@@ -451,7 +450,30 @@
 	font-size: 12px;
 	font-weight: bold;
 	/* line-height: 1.13; */
+	margin-top: 0px !important;
 	color: #aeb1be;
+}
+
+@media (max-width: 425px) {
+	.singleblog_author {
+		font-family: Charter;
+		font-size: 10px !important;
+		font-weight: bold;
+		margin-top: 0px !important;
+		color: #aeb1be;
+	}
+}
+
+@media (max-width: 320px) {
+	.singleblog_author {
+		font-size: 7px !important;
+	}
+	.singleblog_title {
+		font-family: Charter;
+		font-size: 17px !important;
+		font-weight: bold;
+		color: #ff7c2b;
+	}
 }
 
 .singleblog_div {
@@ -596,11 +618,10 @@
 	/* 116.28614916286149vh */
 	height: 80vh !important;
 	background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg");
-	
 	background-size: cover;
 }
 
-.singleBioMain{
+.singleBioMain {
 	padding-right: 0px;
 	padding-left: 0px;
 	top: -35px;
@@ -608,7 +629,7 @@
 }
 
 .caraousel_sm_even {
-	height:86vh !important;
+	height: 86vh !important;
 	background-size: cover;
 	background-image: url("../images/4-c-7-a-9333@2x.png");
 }
@@ -616,7 +637,7 @@
 .caraousel_sm_odd {
 	height: 86vh !important;
 	background-size: cover;
-	background-image:url("../images/4-c-7-a-9333.jpg")
+	background-image: url("../images/4-c-7-a-9333.jpg")
 	/* background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"); */
 }
 
@@ -636,27 +657,28 @@
 	background-image: linear-gradient(to right, #f25858, #ff9f63);
 	height: 508px;
 }
-@media (max-width: 500px) and (min-width: 320px){
-	.orange{
+
+@media (max-width: 500px) and (min-width: 320px) {
+	.orange {
 		height: 362px;
 		width: 337px;
 		margin: auto;
 		background-image: linear-gradient(to right, #f25858, #ff9f63)
 	}
-	}
+}
 
-	@media (max-width: 320px){
-.orange {
-    height: 363px;
-    width: 268px;
-    margin: auto;
-    background-image: linear-gradient(to right, #f25858, #ff9f63);
-}
-.white{
-	height: 420px;
-    width: 268px !important;
-    margin: auto;
-}
+@media (max-width: 320px) {
+	.orange {
+		height: 363px;
+		width: 268px;
+		margin: auto;
+		background-image: linear-gradient(to right, #f25858, #ff9f63);
+	}
+	.white {
+		height: 420px;
+		width: 268px !important;
+		margin: auto;
+	}
 }
 
 .white {
@@ -664,13 +686,12 @@
 }
 
 @media (max-width: 500px) {
-	.white{
+	.white {
 		height: 420px;
 		width: 337px;
 		margin: auto;
 	}
-	}
-
+}
 
 .nav_lang:active {
 	color: orange;
