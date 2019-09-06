@@ -43,12 +43,15 @@ rl.question(
 				getEnglishKirtanNodeList();
 			//getRuKirtanNodeList();
 		}
-
 		rl.close();
 	}
 );
 function timeConverter(timestamp) {
-	let date = new Date(timestamp * 1000);
+	// console.log(
+	// 	"tttttttttttttttttttt>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+	// 	typeof parseInt(timestamp)
+	// );
+	let date = new Date(parseInt(timestamp) * 1000);
 	return date;
 }
 const cookie = new tough.Cookie({
@@ -71,11 +74,38 @@ function uuidv4() {
 	});
 }
 /* #region Blog*/
+var latestBlogDate = null;
 var englishDataList = [];
 var raussainDataList = [];
 var raussainfinalData = [];
 
-function getEnglishNodeList() {
+async function getLatestBlogDate() {
+	let options = {
+		method: "GET",
+		uri: "http://localhost:3000/api/blog/getlatestblogdate/",
+		//body: batchArray,
+		//json: true,
+		//pool: httpAgent,
+		timeout: 600000,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+	let response = await rp(options)
+		.then(date => {
+			return date;
+		})
+		.catch(err => {
+			console.log("errr", err);
+		});
+	return response;
+}
+
+async function getEnglishNodeList() {
+	latestBlogDate = JSON.parse(await getLatestBlogDate());
+	console.log("latestBlogDate>>>", latestBlogDate);
+	console.log("from database>>>", Date.parse(latestBlogDate.publish_date));
+	console.log("from database>>>", Date.parse(latestBlogDate.created_date_time));
 	const options = {
 		method: "GET",
 		uri:
@@ -95,7 +125,30 @@ function getEnglishNodeList() {
 				englishDataList.length,
 				"data received"
 			);
-			getEnglishDatainBatches();
+			englishDataList = englishDataList.filter(function(object) {
+				console.log(object.created);
+				console.log(
+					"from newdata>>>>",
+					timeConverter(object.created).getTime()
+				);
+				console.log(
+					"from database>>>>",
+					Date.parse(latestBlogDate.publish_date)
+				);
+				var d = Date.parse(latestBlogDate.created_date_time);
+				console.log(typeof d);
+				console.log("jaado", timeConverter(object.created).getTime());
+				return (
+					timeConverter(object.created).getTime() >
+					Date.parse(latestBlogDate.publish_date)
+				);
+			});
+			if (englishDataList && englishDataList.length > 0) {
+				console.log("after filtering length>>>>", englishDataList);
+				getEnglishDatainBatches();
+			} else {
+				console.log("After Filteration list recieved>>>>", englishDataList);
+			}
 		})
 		.catch(function(err) {
 			console.log("Error inside getUserList() function ====>>>>", err);
@@ -160,7 +213,18 @@ function getRuNodeList() {
 				raussainDataList.length,
 				"data received"
 			);
-			getRaussainDatainBatches();
+			raussainDataList = raussainDataList.filter(function(object) {
+				return (
+					timeConverter(object.created).getTime() >
+					Date.parse(latestBlogDate.publish_date)
+				);
+			});
+			if (raussainDataList && raussainDataList.length > 0) {
+				console.log("after filteration length>>>>", raussainDataList.length);
+				getRaussainDatainBatches();
+			} else {
+				console.log("after filtering array>>", raussainDataList);
+			}
 		})
 		.catch(function(err) {
 			console.log("Error inside getRuNodeList() function ====>>>>", err);
@@ -184,7 +248,6 @@ function getRaussainData(ar, callback) {
 	});
 	Promise.all(Raussainpromise)
 		.then(data => {
-			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
 				if (ar[i].tnid !== 0) {
 					const temp = {
@@ -290,8 +353,7 @@ function getEnglishData(ar, callback) {
 					tnid: ar[i].tnid,
 					blog_creation_date: item.date,
 					created_date_time: timeConverter(ar[i].created),
-
-					//publish_date: timeConverter(ar[i].created),
+					//created_date_time: ar[i].created,
 					publish_date: ar[i].created,
 					languages: item.tnid !== 0 ? "" : "en",
 					comments: item.comments,
@@ -317,7 +379,9 @@ function getEnglishData(ar, callback) {
 			return Promise.all(insertDataPromise);
 		})
 		.then(data => {
-			console.log("data inserted =====>>>>", data.length);
+			if (data && data.length > 0) {
+				console.log("data inserted =====>>>>", data.length);
+			}
 			callback();
 		})
 		.catch(err => {
@@ -328,11 +392,36 @@ function getEnglishData(ar, callback) {
 
 /* #region Lectures*/
 
+var latestLectureDate = null;
 var englishLectureDataList = [];
 var russianLectureDataList = [];
 var russianLectureFinalData = [];
 
-function getEnglishLectureNodeList() {
+async function getLatestLectureDate() {
+	let options = {
+		method: "GET",
+		uri: "http://localhost:3000/api/lecture/getlatestlecturedate/",
+		//body: batchArray,
+		//json: true,
+		//pool: httpAgent,
+		timeout: 600000,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+	let response = await rp(options)
+		.then(date => {
+			console.log("success for latestlecturedate");
+			console.log(date);
+			return date;
+		})
+		.catch(err => {
+			console.log("errr", err);
+		});
+	return response;
+}
+async function getEnglishLectureNodeList() {
+	latestLectureDate = JSON.parse(await getLatestLectureDate());
 	const options = {
 		method: "GET",
 		uri:
@@ -352,6 +441,12 @@ function getEnglishLectureNodeList() {
 				englishLectureDataList.length,
 				"data received"
 			);
+			englishLectureDataList = englishLectureDataList.filter(function(object) {
+				return (
+					timeConverter(object.created).getTime() >
+					Date.parse(latestLectureDate.created_date_time)
+				);
+			});
 			getEnglishLectureDatainBatches();
 		})
 		.catch(function(err) {
@@ -395,7 +490,22 @@ function getRuLectureNodeList() {
 				russianLectureDataList.length,
 				"data received"
 			);
-			getRussianLectureDatainBatches();
+			russianLectureDataList = russianLectureDataList.filter(function(object) {
+				return (
+					timeConverter(object.created).getTime() >
+					Date.parse(latestLectureDate.created_date_time)
+				);
+			});
+			if (russianLectureDataList && russianLectureDataList.length > 0) {
+				console.log(
+					"after filteration length>>>>>>",
+					russianLectureDataList.length
+				);
+				getRussianLectureDatainBatches();
+			} else {
+				console.log("after filteration array>>>", russianLectureDataList);
+				console.log("no new data here");
+			}
 		})
 		.catch(function(err) {
 			console.log("Error inside getRuLectureNodeList() function ====>>>>", err);
@@ -431,6 +541,7 @@ function getRussianLectureData(ar, callback) {
 	Promise.all(Raussainpromise)
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
+
 			for (let i = 0; i < data.length; i++) {
 				if (data[i].tnid != 0) {
 					const temp = {
@@ -588,7 +699,27 @@ function getEnglishTranscriptionNodeList() {
 				englishTranscriptionDataList.length,
 				"data received"
 			);
-			getEnglishTranscriptionDatainBatches();
+			englishTranscriptionDataList = englishTranscriptionDataList.filter(
+				function(object) {
+					return (
+						timeConverter(object.created).getTime() >
+						Date.parse(latestLectureDate.created_date_time)
+					);
+				}
+			);
+			if (
+				englishTranscriptionDataList &&
+				englishTranscriptionDataList.length > 0
+			) {
+				console.log(
+					"after filteration>>>",
+					englishTranscriptionDataList.length
+				);
+				getEnglishTranscriptionDatainBatches();
+			} else {
+				console.log("after filteration array>>", englishTranscriptionDataList);
+				console.log("no new transcription here");
+			}
 		})
 		.catch(function(err) {
 			console.log(
@@ -688,7 +819,27 @@ function getRuTranscriptionNodeList() {
 				russianTranscriptionDataList.length,
 				"data received"
 			);
-			getRussianTranscriptionDatainBatches();
+			russianTranscriptionDataList = russianTranscriptionDataList.filter(
+				function(object) {
+					return (
+						timeConverter(object.created).getTime() >
+						Date.parse(latestLectureDate.publish_date)
+					);
+				}
+			);
+			if (
+				russianTranscriptionDataList &&
+				russianTranscriptionDataList.length > 0
+			) {
+				console.log(
+					"after filteration length>>>>",
+					russianTranscriptionDataList.length
+				);
+				getRussianTranscriptionDatainBatches();
+			} else {
+				console.log("after filteration array>>>", russianTranscriptionDataList);
+				console.log("no new russian transcript here");
+			}
 		})
 		.catch(function(err) {
 			console.log(
@@ -795,12 +946,37 @@ function updateDatabaseTranscriptions() {
 /* #endregion*/
 
 /* Quotes Script Start point */
-
+var latestQuotesDate = null;
 var quotesEnglishNodeList = [];
 var quotesRaussainNodeList = [];
 var quotesFinalRaussainData = [];
 
-function getQutoesEnglishNodeList() {
+async function getLatestQuoteDate() {
+	let options = {
+		method: "GET",
+		uri: "http://localhost:3000/api/quote/getlatestquotedate/",
+		//body: batchArray,
+		//json: true,
+		//pool: httpAgent,
+		timeout: 600000,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+	let response = await rp(options)
+		.then(date => {
+			console.log("success for latestquotedate");
+			console.log(date);
+			return date;
+		})
+		.catch(err => {
+			console.log("errr", err);
+		});
+	return response;
+}
+
+async function getQutoesEnglishNodeList() {
+	latestQuotesDate = JSON.parse(await getLatestQuoteDate());
 	const options = {
 		method: "GET",
 		uri:
@@ -821,7 +997,22 @@ function getQutoesEnglishNodeList() {
 				quotesEnglishNodeList.length,
 				"data received"
 			);
-			getQuotesDatainBatches();
+			quotesEnglishNodeList = quotesEnglishNodeList.filter(function(object) {
+				return (
+					timeConverter(object.created).getTime() >
+					Date.parse(latestQuotesDate.created_date_time)
+				);
+			});
+			if (quotesEnglishNodeList && quotesEnglishNodeList.length > 0) {
+				console.log(
+					"after filteration length>>>",
+					quotesEnglishNodeList.length
+				);
+				getQuotesDatainBatches();
+			} else {
+				console.log("after filteration array>>>", getQutoesEnglishNodeList);
+				console.log("no new english quotes here");
+			}
 		})
 		.catch(function(err) {
 			console.log(
@@ -931,13 +1122,29 @@ function getQuotesRuNodeList() {
 		.then(function(body) {
 			quotesRaussainNodeList = body;
 			console.log("quotesRaussainNodeList", quotesRaussainNodeList.length);
+
 			//quotesRaussainNodeList.splice(0, 4000);
 			console.log(
 				"gerQuotesRuNodeList() function is successfully executed",
 				quotesRaussainNodeList.length,
 				"data received"
 			);
-			getQuotesRaussainDatainBatches();
+			quotesRaussainNodeList = quotesRaussainNodeList.filter(function(object) {
+				return (
+					timeConverter(object.created).getTime() >
+					Date.parse(latestQuotesDate.created_date_time)
+				);
+			});
+			if (quotesRaussainNodeList && quotesRaussainNodeList.length > 0) {
+				console.log(
+					"after filteration length>>>",
+					quotesRaussainNodeList.length
+				);
+				getQuotesRaussainDatainBatches();
+			} else {
+				console.log("after filteration array>>>", getQutoesRaussainNodeList);
+				console.log("no new russain quotes here");
+			}
 		})
 		.catch(function(err) {
 			console.log("Error inside gerQuotesRuNodeList() function ====>>>>", err);
@@ -1088,11 +1295,40 @@ function createSingleRUQuoteItem(body) {
 
 /* kirtan Script Start point */
 
+let latestKirtanDate = null;
 var englishKirtanDataList = [];
 var raussainKirtanDataList = [];
 var raussainKirtanfinalData = [];
 
-function getEnglishKirtanNodeList() {
+async function getLatestKirtanDate() {
+	let options = {
+		method: "GET",
+		uri: "http://localhost:3000/api/kirtan/getlatestkirtandate/",
+		//body: batchArray,
+		//json: true,
+		//pool: httpAgent,
+		timeout: 600000,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+	let response = await rp(options)
+		.then(date => {
+			console.log("success for latestblogdate");
+			console.log(date);
+			return date;
+		})
+		.catch(err => {
+			console.log("errr", err);
+		});
+	return response;
+}
+
+async function getEnglishKirtanNodeList() {
+	latestKirtanDate = JSON.parse(await getLatestKirtanDate());
+	console.log("latestKirtanDate>>>", latestKirtanDate);
+	console.log("from database>>>>", latestKirtanDate.created_date_time);
+	console.log("from database>>>>", latestKirtanDate.published_date);
 	const options = {
 		method: "GET",
 		uri:
@@ -1114,7 +1350,22 @@ function getEnglishKirtanNodeList() {
 				englishKirtanDataList.length,
 				"data received"
 			);
-			getEnglishKirtanDatainBatches();
+			englishKirtanDataList = englishKirtanDataList.filter(function(object) {
+				return (
+					timeConverter(object.created).getTime() >
+					Date.parse(latestKirtanDate.created_date_time)
+				);
+			});
+			if (englishKirtanDataList && englishKirtanDataList.length > 0) {
+				console.log(
+					"after filteration length here>>>",
+					englishKirtanDataList.length
+				);
+				getEnglishKirtanDatainBatches();
+			} else {
+				console.log("after filteration array>>", englishKirtanDataList);
+				console.log("no new english kirtan here");
+			}
 		})
 		.catch(function(err) {
 			console.log("Error inside getUserList() function ====>>>>", err);
@@ -1164,7 +1415,7 @@ function getEnglishKirtanData(ar, callback) {
 					soundcloud_link: item.soundcloud,
 					duration: item.duration,
 					created_date_time: timeConverter(ar[i].created),
-					published_date: timeConverter(ar[i].created),
+					published_date: ar[i].created,
 					counter: { downloads: item.downloads },
 					language: ar[i].tnid !== 0 ? "" : "en",
 					kirtan_creation_date:
@@ -1221,7 +1472,23 @@ function getRuKirtanNodeList() {
 				raussainKirtanDataList.length,
 				"data received"
 			);
-			getRaussainKirtanDatainBatches();
+
+			raussainKirtanDataList = raussainKirtanDataList.filter(function(object) {
+				return (
+					timeConverter(object.created).getTime() >
+					Date.parse(latestKirtanDate.created_date_time)
+				);
+			});
+			if (raussainKirtanDataList && raussainKirtanDataList > 0) {
+				console.log(
+					"after filteration length>>>",
+					raussainKirtanDataList.length
+				);
+				getRaussainKirtanDatainBatches();
+			} else {
+				console.log("filtered array>>>", raussainKirtanDataList);
+				console.log("no new russian kirtan here");
+			}
 		})
 		.catch(function(err) {
 			console.log("Error inside getRuNodeList() function ====>>>>", err);

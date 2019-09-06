@@ -1,30 +1,30 @@
-var rp = require('request-promise');
-var tough = require('tough-cookie');
-var fs = require('fs');
-var https = require('https');
+var rp = require("request-promise");
+var tough = require("tough-cookie");
+var fs = require("fs");
+var https = require("https");
 var httpAgent = new https.Agent();
 httpAgent.maxSockets = 50;
 
-
-function timeConverter (timestamp) {
+function timeConverter(timestamp) {
 	let date = new Date(timestamp * 1000);
 	return date;
 }
 const cookie = new tough.Cookie({
-	key: 'SSESS8c0f16dd6e4ff53e267519930069d1e3',
-	value: 'n0WkWL01lD-WpWOSXtYM5kkNP8yee-3T-roRBO5K4QE',
-	domain: 'nrs.niranjanaswami.net',
+	key: "SSESS8c0f16dd6e4ff53e267519930069d1e3",
+	//value: "n0WkWL01lD-WpWOSXtYM5kkNP8yee-3T-roRBO5K4QE",
+	value: "C4iFoia_DH9PDEA5EAaW9cI1css1MjTKuQgFCY4ruAk",
+	domain: "nrs.niranjanaswami.net",
 	httpOnly: false,
-	maxAge: 315360000000000,
+	maxAge: 315360000000000
 });
 var cookiejar = rp.jar();
 cookiejar._jar.rejectPublicSuffixes = false;
-cookiejar.setCookie(cookie.toString(), 'https://nrs.niranjanaswami.net');
+cookiejar.setCookie(cookie.toString(), "https://nrs.niranjanaswami.net");
 
-function uuidv4 () {
-	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+function uuidv4() {
+	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
 		var r = (Math.random() * 16) | 0;
-		var v = c == 'x' ? r : (r & 0x3) | 0x8;
+		var v = c == "x" ? r : (r & 0x3) | 0x8;
 		return v.toString(16);
 	});
 }
@@ -32,59 +32,64 @@ function uuidv4 () {
 var videoNodeList = [];
 var videoNodeListRaussain = [];
 
-function getVideoNodeList () {
+function getVideoNodeList() {
 	const options = {
-		method: 'GET',
-		uri: 'https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=video&pagesize=1200&&page=0',
+		method: "GET",
+		uri:
+			"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=video&pagesize=1200&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
-			'User-Agent': 'Request-Promise',
-		},
+			"User-Agent": "Request-Promise"
+		}
 	};
 
 	rp(options)
-		.then(function (body) {
+		.then(function(body) {
 			videoNodeList = body;
 			console.log(
-				'getVideoNodeList() function is successfully executed',
+				"getVideoNodeList() function is successfully executed",
 				videoNodeList.length,
-				'data received'
+				"data received"
 			);
 			getVideoNodeListRaussain();
 		})
-		.catch(function (err) {
-			console.log('Error inside getVideoNodeList() function ====>>>>', err);
+		.catch(function(err) {
+			console.log("Error inside getVideoNodeList() function ====>>>>", err);
 		});
 }
 
-function getVideoNodeListRaussain () {
+function getVideoNodeListRaussain() {
 	const options = {
-		method: 'GET',
-		uri: 'https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=video&pagesize=1200&&page=0',
+		method: "GET",
+		uri:
+			"https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=video&pagesize=1200&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
-			'User-Agent': 'Request-Promise',
-		},
+			"User-Agent": "Request-Promise"
+		}
 	};
 
 	rp(options)
-		.then(function (body) {
+		.then(function(body) {
 			videoNodeListRaussain = body;
 			console.log(
-				'getVideoNodeListRaussain() function is successfully executed',
+				"getVideoNodeListRaussain() function is successfully executed",
 				videoNodeListRaussain.length,
-				'data received'
+				"data received"
 			);
 			getVideoDatainBatches();
 		})
-		.catch(function (err) {
-			console.log('Error inside getVideoNodeListRaussain() function ====>>>>', err);
+		.catch(function(err) {
+			console.log(
+				"Error inside getVideoNodeListRaussain() function ====>>>>",
+				err
+			);
 		});
 }
 
-function getVideoDatainBatches () {
+function getVideoDatainBatches() {
 	if (videoNodeList.length > 0) {
 		let ar = videoNodeList.splice(0, 10);
 		getVideoData(ar, () => {
@@ -95,160 +100,174 @@ function getVideoDatainBatches () {
 	}
 }
 
-function getVideoUrls (array) {
+function getVideoUrls(array) {
 	const url = [];
 	for (let i = 0; i < array.length; i++) {
-		const str = array[i].safe_value.replace('watch?v=', 'embed/');
+		const str = array[i].safe_value.replace("watch?v=", "embed/");
 		url.push(str);
 	}
 	return url;
 }
 
-function getVideoData (ar, callback) {
+function getVideoData(ar, callback) {
 	const Videopromise = [];
 	ar.map((item, i) => {
 		const options = {
-			method: 'GET',
+			method: "GET",
 			uri: `https://nrs.niranjanaswami.net/en/rest/node/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
 			headers: {
-				'User-Agent': 'Request-Promise',
-			},
+				"User-Agent": "Request-Promise"
+			}
 		};
 		Videopromise.push(rp(options));
 	});
-	Promise.all(Videopromise).then(data => {
-		const insertVideoPromise = data.map((item, j) => {
-			const refrenceId = data[j].field_video_reference && data[j].field_video_reference.und ? data[j].field_video_reference.und[0].target_id : null;
-			if (refrenceId !== null) {
-				const options = {
-					method: 'GET',
-					uri: `https://nrs.niranjanaswami.net/en/rest/object/${refrenceId}.json`,
-					json: true,
-					jar: cookiejar,
-					pool: httpAgent,
-					timeout: 6000000,
-					headers: {
-						'User-Agent': 'Request-Promise',
-					},
-				};
-				rp(options).then(singleLecture => {
+	Promise.all(Videopromise)
+		.then(data => {
+			const insertVideoPromise = data.map((item, j) => {
+				const refrenceId =
+					data[j].field_video_reference && data[j].field_video_reference.und
+						? data[j].field_video_reference.und[0].target_id
+						: null;
+				if (refrenceId !== null) {
+					const options = {
+						method: "GET",
+						uri: `https://nrs.niranjanaswami.net/en/rest/object/${refrenceId}.json`,
+						json: true,
+						jar: cookiejar,
+						pool: httpAgent,
+						timeout: 6000000,
+						headers: {
+							"User-Agent": "Request-Promise"
+						}
+					};
+					rp(options)
+						.then(singleLecture => {
+							const body = {
+								uuid: uuidv4(),
+								video_date: timeConverter(data[j].changed),
+								created_date_time: timeConverter(data[j].created),
+								publish_date: timeConverter(data[j].created),
+								type:
+									data[j].field_video_type && data[j].field_video_type.und
+										? data[j].field_video_type.und[0].value
+										: "",
+								en: {
+									nid: data[j].nid,
+									title: data[j].title,
+									body: data[j].body,
+									event: singleLecture.event,
+									location: singleLecture.location
+								},
+								ru: {
+									nid: getRaussianNodeId(data[j].nid),
+									title: getRaussianTitle(data[j].tnid),
+									body: data[j].body,
+									event: singleLecture.event,
+									location: singleLecture.location
+								},
+								oldData: {
+									referenceId: refrenceId
+								},
+								video_page_view: 0,
+								reference: singleLecture.title,
+								urls:
+									data[j].field_youtube && data[j].field_youtube.und
+										? getVideoUrls(data[j].field_youtube.und)
+										: []
+							};
+
+							const options = {
+								method: "POST",
+								uri: "http://localhost:3000/api/video/create/",
+								body: body,
+								json: true,
+								pool: httpAgent,
+								timeout: 6000000,
+								headers: {
+									"User-Agent": "Request-Promise"
+								}
+							};
+							return rp(options);
+						})
+						.catch(err => {
+							console.log("error in getting english video details ===>>>", err);
+						});
+				} else {
 					const body = {
 						uuid: uuidv4(),
-						video_date: timeConverter(data[j].changed),
+						video_date:
+							data[j].field_date && data[j].field_date.und
+								? data[j].field_date.und[0].value
+								: timeConverter(data[j].created),
 						created_date_time: timeConverter(data[j].created),
 						publish_date: timeConverter(data[j].created),
-						type: data[j].field_video_type && data[j].field_video_type.und ? data[j].field_video_type.und[0].value : '',
+						type:
+							data[j].field_video_type && data[j].field_video_type.und
+								? data[j].field_video_type.und[0].value
+								: "other",
 						en: {
 							nid: data[j].nid,
 							title: data[j].title,
-							body: data[j].body,
-							event: singleLecture.event,
-							location: singleLecture.location,
+							body: data[j].body
 						},
 						ru: {
 							nid: getRaussianNodeId(data[j].nid),
 							title: getRaussianTitle(data[j].tnid),
-							body: data[j].body,
-							event: singleLecture.event,
-							location: singleLecture.location,
+							body: data[j].body
 						},
 						oldData: {
-							referenceId: refrenceId,
+							referenceId: null
 						},
+						reference: "",
 						video_page_view: 0,
-						reference: singleLecture.title,
-						urls: data[j].field_youtube && data[j].field_youtube.und ? getVideoUrls(data[j].field_youtube.und) : [],
+						urls:
+							data[j].field_youtube && data[j].field_youtube.und
+								? getVideoUrls(data[j].field_youtube.und)
+								: []
 					};
 
 					const options = {
-						method: 'POST',
-						uri: 'http://localhost:3000/api/video/create/',
+						method: "POST",
+						uri: "http://localhost:3000/api/video/create/",
 						body: body,
 						json: true,
 						pool: httpAgent,
 						timeout: 6000000,
 						headers: {
-							'User-Agent': 'Request-Promise',
-						},
+							"User-Agent": "Request-Promise"
+						}
 					};
 					return rp(options);
-
-				}).catch(err => {
-					console.log('error in getting english video details ===>>>', err);
-				});
-			} else {
-				const body = {
-					uuid: uuidv4(),
-					video_date: data[j].field_date && data[j].field_date.und ? data[j].field_date.und[0].value : timeConverter(data[j].created),
-					created_date_time: timeConverter(data[j].created),
-					publish_date: timeConverter(data[j].created),
-					type: data[j].field_video_type && data[j].field_video_type.und ? data[j].field_video_type.und[0].value : 'other',
-					en: {
-						nid: data[j].nid,
-						title: data[j].title,
-						body: data[j].body,
-
-					},
-					ru: {
-						nid: getRaussianNodeId(data[j].nid),
-						title: getRaussianTitle(data[j].tnid),
-						body: data[j].body,
-					},
-					oldData: {
-						referenceId: null,
-					},
-					reference: '',
-					video_page_view: 0,
-					urls: data[j].field_youtube && data[j].field_youtube.und ? getVideoUrls(data[j].field_youtube.und) : [],
-
-				};
-
-				const options = {
-					method: 'POST',
-					uri: 'http://localhost:3000/api/video/create/',
-					body: body,
-					json: true,
-					pool: httpAgent,
-					timeout: 6000000,
-					headers: {
-						'User-Agent': 'Request-Promise',
-					},
-				};
-				return rp(options);
-
-			}
-
-
-		});
-		return Promise.all(insertVideoPromise);
-	})
+				}
+			});
+			return Promise.all(insertVideoPromise);
+		})
 		.then(data => {
-			console.log('data inserted =====>>>>', data.length);
+			console.log("data inserted =====>>>>", data.length);
 			callback();
 		})
 		.catch(err => {
-			console.log('error inside the profile api ===>>>', err);
+			console.log("error inside the profile api ===>>>", err);
 		});
+}
 
-};
-
-function getRaussianTitle (tnid) {
+function getRaussianTitle(tnid) {
 	for (let i = 0; i < videoNodeListRaussain.length; i++) {
 		if (videoNodeListRaussain[i].tnid === tnid) {
 			return videoNodeListRaussain[i].title;
 		}
 	}
-};
+}
 
-function getRaussianNodeId (tnid) {
+function getRaussianNodeId(tnid) {
 	for (let i = 0; i < videoNodeListRaussain.length; i++) {
 		if (videoNodeListRaussain[i].tnid === tnid) {
 			return videoNodeListRaussain[i].nid;
 		}
 	}
-};
+}
 
 getVideoNodeList();

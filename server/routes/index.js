@@ -92,6 +92,11 @@ exports = module.exports = function(app) {
 	);
 	app.post("/api/blog/find/", keystone.middleware.api, routes.api.blog.get);
 	app.get("/api/blog/", keystone.middleware.api, routes.api.blog.list);
+	app.get(
+		"/api/blog/getlatestblogdate",
+		keystone.middleware.api,
+		routes.api.blog.getLatestBlogDate
+	);
 	app.post(
 		"/api/blog/getblogbyid/",
 		keystone.middleware.api,
@@ -206,6 +211,11 @@ exports = module.exports = function(app) {
 		keystone.middleware.api,
 		routes.api.quote.getquotebyid
 	);
+	app.get(
+		"/api/quote/getlatestquotedate/",
+		keystone.middleware.api,
+		routes.api.quote.getLatestQuoteDate
+	);
 	app.all(
 		"/api/video/:id/update",
 		keystone.middleware.api,
@@ -314,6 +324,11 @@ exports = module.exports = function(app) {
 		keystone.middleware.api,
 		routes.api.kirtan.getKirtanbyid
 	);
+	app.get(
+		"/api/kirtan/getlatestkirtandate/",
+		keystone.middleware.api,
+		routes.api.kirtan.getLatestKirtanDate
+	);
 	app.all(
 		"/api/kirtan/updateCounters",
 		keystone.middleware.api,
@@ -351,6 +366,11 @@ exports = module.exports = function(app) {
 		"/api/lecture/getlecturebyid/",
 		keystone.middleware.api,
 		routes.api.lecture.getlecturebyid
+	);
+	app.get(
+		"/api/lecture/getlatestlecturedate/",
+		keystone.middleware.api,
+		routes.api.lecture.getLatestLectureDate
 	);
 	app.post("/api/signin/", keystone.middleware.api, routes.api.user.signin);
 	app.post("/api/signup/", keystone.middleware.api, routes.api.user.signup);
@@ -507,6 +527,7 @@ exports = module.exports = function(app) {
 		keystone.middleware.api,
 		routes.api.lecture.updateBulkNew
 	);
+
 	app.post(
 		"/api/lecture/uploadPdfToS3/",
 		keystone.middleware.api,
@@ -557,6 +578,17 @@ exports = module.exports = function(app) {
 		"/api/createunsubscribegroup/",
 		keystone.middleware.api,
 		routes.api.user.createUnsubscribeGroup
+	);
+
+	app.post(
+		"/api/transcript/create",
+		keystone.middleware.api,
+		routes.api.transcript.create
+	);
+	app.post(
+		"/api/transcript/updateBulkNew",
+		keystone.middleware.api,
+		routes.api.transcript.updateBulkNew
 	);
 
 	app.options("/api*", function(req, res) {

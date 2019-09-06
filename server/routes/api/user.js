@@ -1182,158 +1182,233 @@ exports.editprofile = function(req, res) {
 		});
 };
 
-exports.subscription = function(req, res) {
-	console.log("body>>>>>>>>>>>", req.body);
-	const { firstname, lastname, email } = req.body;
-	console.log("firstName", firstname);
-	if (!firstname || !lastname || !email) {
-		return res.json({
-			error: {
-				title: "Name and Email both are required",
-				detail: "Mandatory fields are missing. Please Check"
-			}
-		});
-	}
+// exports.subscription = function(req, res) {
+// 	console.log("body>>>>>>>>>>>", req.body);
+// 	const { firstname, lastname, email } = req.body;
+// 	console.log("firstName", firstname);
+// 	if (!firstname || !lastname || !email) {
+// 		return res.json({
+// 			error: {
+// 				title: "Name and Email both are required",
+// 				detail: "Mandatory fields are missing. Please Check"
+// 			}
+// 		});
+// 	}
 
-	keystone
-		.list("User")
-		.model.findOne()
-		.where("email", email)
-		.exec((err, userFound) => {
-			if (err) {
-				logger.error(
-					{
-						error: err
-					},
-					"API subscription"
-				);
-				return res.json({
-					error: { title: "Some error during user find" }
-				});
-			} else if (!userFound) {
-				// const options = {
-				// 	method: "GET",
-				// 	url:
-				// 		"https://api.sendgrid.com/v3/marketing/lists/d044f9b8-7742-49ac-be7b-6c65c56f67a7",
-				// 	headers: {
-				// 		Authorization:
-				// 			"Bearer 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",
-				// 		"User-Agent": "Request-Promise"
-				// 	},
-				// 	json: true // Automatically parses the JSON string in the response
-				// };
-				// rp(options)
-				// 	.then(function(repos) {
-				// 		console.log("User has %d repos", repos.length);
-				// 		console.log("repos>>>>>>>>>>>>>>", repos);
-				// 	})
-				// 	.catch(function(err) {
-				// 		console.log("err>>>>>>>>>>>>>>", err);
-				// 		// API call failed...
-				// 	});
-				const data = {
-					list_ids: ["d044f9b8-7742-49ac-be7b-6c65c56f67a7"],
-					contacts: [
-						{
-							//address_line_1: "string (optional)",
-							//address_line_2: "string (optional)",
-							//alternate_emails: ["string"],
-							//city: "string (optional)",
-							//country: "string (optional)",
-							email: email,
-							first_name: firstname,
-							id: UUID(),
-							last_name: lastname
-							//postal_code: "string (optional)",
-							//state_province_region: "string (optional)",
-							//custom_fields: {
-							//	status: 'subscribed'
-							//}
-						}
-					]
-				};
-				const putdata = JSON.stringify(data);
-				const options = {
-					method: "PUT",
-					url: "https://api.sendgrid.com/v3/marketing/contacts",
-					headers: {
-						authorization:
-							"Bearer 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"
-					},
-					body: putdata
-				};
-				rp(options)
-					.then(function(parsedBody) {
-						console.log("body>>>>>", parsedBody);
-					})
-					.catch(function(err) {
-						console.log("err>>>>>>", err);
-					});
-			} else {
-				console.log("userFound>>>>>>>>>>>>", userFound);
-				// const data = {
-				// 	list_ids: ["7bf9530e-4a7b-48ae-996f-93c0ad704423"],
-				// 	contacts: [
-				// 		{
-				// 			//address_line_1: "string (optional)",
-				// 			//address_line_2: "string (optional)",
-				// 			//alternate_emails: ["string"],
-				// 			//city: "string (optional)",
-				// 			//country: "string (optional)",
-				// 			email: email,
-				// 			first_name: firstname,
-				// 			id: UUID(),
-				// 			last_name: lastname
-				// 			//postal_code: "string (optional)",
-				// 			//state_province_region: "string (optional)",
-				// 			//custom_fields: {
-				// 			//	status: 'subscribed'
-				// 			//}
-				// 		}
-				// 	]
-				// };
-				// const putdata = JSON.stringify(data);
-				// const options = {
-				// 	method: "PUT",
-				// 	url: "https://api.sendgrid.com/v3/marketing/contacts/lists",
-				// 	headers: {
-				// 		authorization:
-				// 			"Bearer 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"
-				// 	},
-				// 	body: putdata
-				// };
-				// rp(options)
-				// 	.then(function(parsedBody) {
-				// 		console.log("body>>>>>", parsedBody);
-				// 	})
-				// 	.catch(function(err) {
-				// 		console.log("err>>>>>>>>>>>>", err);
-				// 	});
-			}
-		});
-};
+// 	keystone
+// 		.list("User")
+// 		.model.findOne()
+// 		.where("email", email)
+// 		.exec((err, userFound) => {
+// 			if (err) {
+// 				logger.error(
+// 					{
+// 						error: err
+// 					},
+// 					"API subscription"
+// 				);
+// 				return res.json({
+// 					error: { title: "Some error during user find" }
+// 				});
+// 			} else if (!userFound) {
+// 				// const options = {
+// 				// 	method: "GET",
+// 				// 	url:
+// 				// 		"https://api.sendgrid.com/v3/marketing/lists/d044f9b8-7742-49ac-be7b-6c65c56f67a7",
+// 				// 	headers: {
+// 				// 		Authorization:
+// 				// 			"Bearer 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",
+// 				// 		"User-Agent": "Request-Promise"
+// 				// 	},
+// 				// 	json: true // Automatically parses the JSON string in the response
+// 				// };
+// 				// rp(options)
+// 				// 	.then(function(repos) {
+// 				// 		console.log("User has %d repos", repos.length);
+// 				// 		console.log("repos>>>>>>>>>>>>>>", repos);
+// 				// 	})
+// 				// 	.catch(function(err) {
+// 				// 		console.log("err>>>>>>>>>>>>>>", err);
+// 				// 		// API call failed...
+// 				// 	});
+// 				const data = {
+// 					list_ids: ["d044f9b8-7742-49ac-be7b-6c65c56f67a7"],
+// 					contacts: [
+// 						{
+// 			exports.subscription = function(req, res) {
+// 	console.log("body>>>>>>>>>>>", req.body);
+// 	const { firstname, lastname, email } = req.body;
+// 	console.log("firstName", firstname);
+// 	if (!firstname || !lastname || !email) {
+// 		return res.json({
+// 			er
+// exports.subscription = function(req, res) {
+// 	console.log("body>>>>>>>>>>>", req.body);
+// 	const { firstname, lastname, email } = req.body;
+// 	console.log("firstName", firstname);
+// 	if (!firstname || !lastname || !email) {
+// 		return res.json({
+// 			error: {
+// 				title: "Name and Email both are required",
+// 				detail: "Mandatory fields are missing. Please Check"
+// 			}
+// 		});
+// 	}
+
+// 	keystone
+// 		.list("User")
+// 		.model.findOne()
+// 		.where("email", email)
+// 		.exec((err, userFound) => {
+// 			if (err) {
+// 				logger.error(
+// 					{
+// 						error: err
+// 					},
+// 					"API subscription"
+// 				);
+// 				return res.json({
+// 					error: { title: "Some error during user find" }
+// 				});
+// 			} else if (!userFound) {
+// 				// const options = {
+// 				// 	method: "GET",
+// 				// 	url:
+// 				// 		"https://api.sendgrid.com/v3/marketing/lists/d044f9b8-7742-49ac-be7b-6c65c56f67a7",
+// 				// 	headers: {
+// 				// 		Authorization:
+// 				// 			"Bearer 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",
+// 				// 		"User-Agent": "Request-Promise"
+// 				// 	},
+// 				// 	json: true // Automatically parses the JSON string in the response
+// 				// };
+// 				// rp(options)
+// 				// 	.then(function(repos) {
+// 				// 		console.log("User has %d repos", repos.length);
+// 				// 		console.log("repos>>>>>>>>>>>>>>", repos);
+// 				// 	})
+// 				// 	.catch(function(err) {
+// 				// 		console.log("err>>>>>>>>>>>>>>", err);
+// 				// 		// API call failed...
+// 				// 	});
+// 				const data = {
+// 					list_ids: ["d044f9b8-7742-49ac-be7b-6c65c56f67a7"],
+// 			ror: {
+// 				title: "Name and Email both are required",
+// 				detail: "Mandatory fields are missing. Please Check"
+// 			}
+// 		});
+// 	}
+
+// 	keystone
+// 		.list("User")
+// 		.model.findOne()
+// 		.where("email", email)
+// 		.exec((err, userFound) => {
+// 			if (err) {
+// 				logger.error(
+// 					{
+// 						error: err
+// 					},
+// 					"API subscription"
+// 				);
+// 				return res.json({
+// 					error: { title: "Some error during user find" }
+// 				});
+// 			} else if (!userFound) {
+// 				// const options = {
+// 				// 	method: "GET",
+// 				// 	url:
+// 				// 		"https://api.sendgrid.com/v3/marketing/lists/d044f9b8-7742-49ac-be7b-6c65c56f67a7",
+// 				// 	headers: {
+// 				// 		Authorization:
+// 				// 			"Bearer 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",
+// 				// 		"User-Agent": "Request-Promise"
+// 				// 	},
+// 				// 	json: true // Automatically parses the JSON string in the response
+// 				// };
+// 				// rp(options)
+// 				// 	.then(function(repos) {
+// 				// 		console.log("User has %d repos", repos.length);
+// 							//address_line_1: "string (optional)",
+// 							//address_line_2: "string (optional)",
+// 							//alternate_emails: ["string"],
+// 							//city: "string (optional)",
+// 							//country: "string (optional)",
+// 							email: email,
+// 							first_name: firstname,
+// 							id: UUID(),
+// 							last_name: lastname
+// 							//postal_code: "string (optional)",
+// 							//state_province_region: "string (optional)",
+// 							//custom_fields: {
+// 							//	status: 'subscribed'
+// 							//}
+// 						}
+// 					]
+// 				};
+// 				const putdata = JSON.stringify(data);
+// 				const options = {
+// 					method: "PUT",
+// 					url: "https://api.sendgrid.com/v3/marketing/contacts",
+// 					headers: {
+// 						authorization:
+// 							"Bearer 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"
+// 					},
+// 					body: putdata
+// 				};
+// 				rp(options)
+// 					.then(function(parsedBody) {
+// 						console.log("body>>>>>", parsedBody);
+// 					})
+// 					.catch(function(err) {
+// 						console.log("err>>>>>>", err);
+// 					});
+// 			} else {
+// 				console.log("userFound>>>>>>>>>>>>", userFound);
+// 				// const data = {
+// 				// 	list_ids: ["7bf9530e-4a7b-48ae-996f-93c0ad704423"],
+// 				// 	contacts: [
+// 				// 		{
+// 				// 			//address_line_1: "string (optional)",
+// 				// 			//address_line_2: "string (optional)",
+// 				// 			//alternate_emails: ["string"],
+// 				// 			//city: "string (optional)",
+// 				// 			//country: "string (optional)",
+// 				// 			email: email,
+// 				// 			first_name: firstname,
+// 				// 			id: UUID(),
+// 				// 			last_name: lastname
+// 				// 			//postal_code: "string (optional)",
+// 				// 			//state_province_region: "string (optional)",
+// 				// 			//custom_fields: {
+// 				// 			//	status: 'subscribed'
+// 				// 			//}
+// 				// 		}
+// 				// 	]
+// 				// };
+// 				// const putdata = JSON.stringify(data);
+// 				// const options = {
+// 				// 	method: "PUT",
+// 				// 	url: "https://api.sendgrid.com/v3/marketing/contacts/lists",
+// 				// 	headers: {
+// 				// 		authorization:
+// 				// 			"Bearer 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"
+// 				// 	},
+// 				// 	body: putdata
+// 				// };
+// 				// rp(options)
+// 				// 	.then(function(parsedBody) {
+// 				// 		console.log("body>>>>>", parsedBody);
+// 				// 	})
+// 				// 	.catch(function(err) {
+// 				// 		console.log("err>>>>>>>>>>>>", err);
+// 				// 	});
+// 			}
+// 		});
+// };
 
 exports.getSubscribersList = function(req, res) {
-	// var username = "anuragjais";
-	// var password = "Sangeeta@1996";
-	// var auth =
-	// 	"Basic " + new Buffer(username + ":" + password).toString("base64");
-	// const options = {
-	// 	method: "GET",
-	// 	url: "https://api.sendgrid.com/v3/marketing/contacts?page_size=100",
-	// 	// qs: { page_size: "100" },
-	// 	headers: {
-	// 		// authorization: auth
-	// 		Authorization:
-	// 			"Bearer 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"
-	// 	},
-	// 	body: "{}"
-	// };
-	// request(options, function(error, response, body) {
-	// 	if (error) throw new Error(error);
-	// 	console.log(error, response.statusCode, body);
-	// });
-
 	var options = {
 		uri: "https://api.sendgrid.com/v3/marketing/contacts",
 		qs: {
@@ -1411,6 +1486,36 @@ exports.createRegisteredSubscribedUsers = function(req, res) {
 };
 
 exports.createUnsubscribeGroup = function(req, res) {
+	const options = {
+		method: "POST",
+		url: "https://api.sendgrid.com/v3/asm/groups",
+		headers: {
+			authorization:
+				"Bearer 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",
+			"Content-Type": "application/json"
+		},
+		body: {
+			name: "NewsLetter Suggestions",
+			description: "Suggestions for NewsLetter our users might like.",
+			is_default: true
+		},
+		json: true
+	};
+	rp(options)
+		.then(function(parsedBody) {
+			console.log("body>>>>>", parsedBody);
+			// 			 { id: 9799,
+			//   name: 'NewsLetter Suggestions',
+			//   description: 'Suggestions for NewsLetter our users might like.',
+			//   last_email_sent_at: null,
+			//   is_default: true }
+		})
+		.catch(function(err) {
+			console.log("err>>>>>>", err);
+		});
+};
+
+exports.createCustomFields = function(req, res) {
 	const options = {
 		method: "POST",
 		url: "https://api.sendgrid.com/v3/asm/groups",

@@ -129,27 +129,6 @@ exports.subscription = function(req, res) {
 					error: { title: "Some error during user find" }
 				});
 			} else if (!userFound) {
-				// const options = {
-				// 	method: "GET",
-				// 	url:
-				// 		"https://api.sendgrid.com/v3/marketing/lists/d044f9b8-7742-49ac-be7b-6c65c56f67a7",
-				// 	headers: {
-				// 		Authorization:
-				// 			"Bearer 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",
-				// 		"User-Agent": "Request-Promise"
-				// 	},
-				// 	json: true // Automatically parses the JSON string in the response
-				// };
-				// rp(options)
-				// 	.then(function(repos) {
-				// 		console.log("User has %d repos", repos.length);
-				// 		console.log("repos>>>>>>>>>>>>>>", repos);
-				// 	})
-				// 	.catch(function(err) {
-				// 		console.log("err>>>>>>>>>>>>>>", err);
-				// 		// API call failed...
-				// 	});
-
 				async.series(
 					[
 						cb => {
@@ -239,50 +218,6 @@ exports.subscription = function(req, res) {
 							);
 							console.log("ERROR222", err);
 						}
-						// let onSuccess = function(user) {
-						// 	console.log("Im here");
-						// 	res.json({
-						// 		success: true,
-						// 		session: true,
-						// 		date: new Date().getTime(),
-						// 		admin: subscriber.canAccessKeystone,
-						// 		loginUser: {
-						// 			id: user.id,
-						// 			email: user.email,
-						// 			firstName: user.name.first,
-						// 			last: user.name.last,
-						// 			mobileNumber: user.mobileNumber,
-						// 			countryCode: user.countryCode,
-						// 			user_id: user.user_id,
-						// 			youbookme_url: process.env.YOUBOOKME_URL
-						// 		}
-						// 	});
-						// 	//return sgMail.send(msg);
-						// };
-
-						// let onFail = function(e) {
-						// 	logger.error(
-						// 		{
-						// 			error: e
-						// 		},
-						// 		"API signup user"
-						// 	);
-						// 	res.json({
-						// 		error: {
-						// 			title: "Sign up error",
-						// 			detail: "There was a problem signing you up, please try again"
-						// 		}
-						// 	});
-						// 	console.log("ERROR111", e);
-						// };
-
-						// keystone.session.signin(
-						// 	{ email: req.body.email, password: req.body.password },
-						// 	req,
-						// 	res,
-						// 	onSuccess,
-						// 	onFail
-						// );
 					}
 				);
 
@@ -299,11 +234,10 @@ exports.subscription = function(req, res) {
 							first_name: firstName,
 							id: UUID(),
 							last_name: lastName
-							//postal_code: "string (optional)",
-							//state_province_region: "string (optional)",
-							//custom_fields: {
-							//	status: 'subscribed'
-							//}
+							// custom_fields: {
+							// 	isRegistered: false,
+							// 	language: req.body.language
+							// }
 						}
 					]
 				};
@@ -417,50 +351,6 @@ exports.subscription = function(req, res) {
 							);
 							console.log("ERROR222", err);
 						}
-						let onSuccess = function(user) {
-							console.log("Im here");
-							res.json({
-								success: true,
-								session: true,
-								date: new Date().getTime(),
-								admin: subscriber.canAccessKeystone,
-								loginUser: {
-									id: user.id,
-									email: user.email,
-									firstName: user.name.first,
-									last: user.name.last,
-									mobileNumber: user.mobileNumber,
-									countryCode: user.countryCode,
-									user_id: user.user_id,
-									youbookme_url: process.env.YOUBOOKME_URL
-								}
-							});
-							//return sgMail.send(msg);
-						};
-
-						let onFail = function(e) {
-							logger.error(
-								{
-									error: e
-								},
-								"API signup user"
-							);
-							res.json({
-								error: {
-									title: "Sign up error",
-									detail: "There was a problem signing you up, please try again"
-								}
-							});
-							console.log("ERROR111", e);
-						};
-
-						// keystone.session.signin(
-						// 	{ email: req.body.email, password: req.body.password },
-						// 	req,
-						// 	res,
-						// 	onSuccess,
-						// 	onFail
-						// );
 					}
 				);
 				const data = {
@@ -476,11 +366,10 @@ exports.subscription = function(req, res) {
 							first_name: firstname,
 							id: UUID(),
 							last_name: lastname
-							//postal_code: "string (optional)",
-							//state_province_region: "string (optional)",
-							//custom_fields: {
-							//	status: 'subscribed'
-							//}
+							// custom_fields: {
+							// 	isRegistered: true,
+							// 	language: req.body.language
+							// }
 						}
 					]
 				};
@@ -502,5 +391,52 @@ exports.subscription = function(req, res) {
 						console.log("err>>>>>>>>>>>>", err);
 					});
 			}
+		});
+};
+
+exports.getSubscribersList = function(req, res) {
+	// var username = "anuragjais";
+	// var password = "Sangeeta@1996";
+	// var auth =
+	// 	"Basic " + new Buffer(username + ":" + password).toString("base64");
+	// const options = {
+	// 	method: "GET",
+	// 	url: "https://api.sendgrid.com/v3/marketing/contacts?page_size=100",
+	// 	// qs: { page_size: "100" },
+	// 	headers: {
+	// 		// authorization: auth
+	// 		Authorization:
+	// 			"Bearer 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"
+	// 	},
+	// 	body: "{}"
+	// };
+	// request(options, function(error, response, body) {
+	// 	if (error) throw new Error(error);
+	// 	console.log(error, response.statusCode, body);
+	// });
+
+	var options = {
+		uri: "https://api.sendgrid.com/v3/marketing/contacts",
+		qs: {
+			page_size: "100"
+		},
+		headers: {
+			Authorization:
+				"Bearer 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",
+			"User-Agent": "Request-Promise"
+		},
+		json: true // Automatically parses the JSON string in the response
+	};
+
+	rp(options)
+		.then(function(contacts) {
+			console.log("repos>>>>>>>>>>>>>>", contacts);
+			for (let contact of contacts) {
+				emaillist.push({ email: contact.email });
+			}
+		})
+		.catch(function(err) {
+			console.log("err>>>>>>>>>>>>>>", err);
+			// API call failed...
 		});
 };
