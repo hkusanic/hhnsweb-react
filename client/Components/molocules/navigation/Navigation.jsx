@@ -375,6 +375,7 @@ export class Navigation extends Component {
 															: "nav_span_lg"
 														: "nav_span_small"
 												}
+												style={{ right: "0 !important", position: "absolute !important" }}
 											>
 												<li
 													onClick={() => {
