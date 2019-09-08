@@ -251,7 +251,9 @@ export class Navigation extends Component {
 															<a
 																style={{
 																	marginTop: "21px",
-																	backgroundColor: "white"
+																	backgroundColor: "white",
+																	position: "relative",
+																	right: "-43px"
 																}}
 																className="rd-nav-link"
 															>
@@ -268,7 +270,8 @@ export class Navigation extends Component {
 											</div>
 											<div
 												className="topMenu languageToggle"
-												style={{ float: "right" }}
+												style={{ float: "right" , position: "relative",
+												right: "-43px"}}
 											>
 												<ul className="rd-navbar-nav">
 													<li
@@ -301,7 +304,7 @@ export class Navigation extends Component {
 													<li className="rd-nav-item">
 														<li>
 															<a
-																style={{ backgroundColor: "white" }}
+																style={{ backgroundColor: "white", position: "relative", right: "-43px" }}
 																className="rd-nav-link"
 															>
 																<Login
@@ -320,7 +323,8 @@ export class Navigation extends Component {
 												style={{ float: "right" }}
 											>
 												<ul className="rd-navbar-nav">
-													<li className="rd-nav-item">
+													<li className="rd-nav-item" style=
+														{{ position: "relative", right: "-44px" }}>
 														<LanguageSwitch />
 													</li>
 												</ul>

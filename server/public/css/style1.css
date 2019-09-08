@@ -55,7 +55,8 @@
 	float: left;
 	margin-top: -13px;
 }
-@media (max-width:320px){
+
+@media (max-width:320px) {
 	.singleCarousel_image_sm {
 		margin-top: -18px !important;
 	}
@@ -200,15 +201,16 @@
 	margin-left: 5%;
 	margin-right: 353px;
 }
-@media (max-width:500px){
-	.singleBiography_cover{
-	width: 54px;
-    float: left;
-    height: 123px;
-    object-fit: contain;
-	margin-top: -10px;
-    margin-left: 8%;
-    /* margin-right: 353px; */
+
+@media (max-width:500px) {
+	.singleBiography_cover {
+		width: 54px;
+		float: left;
+		height: 123px;
+		object-fit: contain;
+		margin-top: -10px;
+		margin-left: 8%;
+		/* margin-right: 353px; */
 	}
 }
 
@@ -225,23 +227,24 @@
 }
 
 @media (max-width: 500px) {
-	.singleBiography_card_orange{
-	    margin-left: 5%;
-    font-family: Charter;
-    font-size: 16px;
-    font-weight: bold;
-    float: right;
-    margin-top: -65px;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: #ffffff;
-}
+	.singleBiography_card_orange {
+		margin-left: 5%;
+		font-family: Charter;
+		font-size: 16px;
+		font-weight: bold;
+		float: right;
+		margin-top: -65px;
+		font-style: normal;
+		font-stretch: normal;
+		line-height: normal;
+		letter-spacing: normal;
+		color: #ffffff;
 	}
-	@media (max-width: 320px) {
-		.singleBiography_card_orange{
-			font-size:11px !important
+}
+
+@media (max-width: 320px) {
+	.singleBiography_card_orange {
+		font-size: 11px !important
 	}
 }
 
@@ -321,9 +324,10 @@
 	text-align: justify;
 }
 
-.setHeight{
-height:80vh
+.setHeight {
+	height: 80vh
 }
+
 @media (max-width: 500px) {
 	.singleBiography_text_white {
 		margin-left: 5%;
@@ -346,22 +350,20 @@ height:80vh
 	position: absolute;
 }
 
-@media (max-width :768px) and (min-width:500px){
+@media (max-width :768px) and (min-width:500px) {
 	.singleBiography_button_orange {
 		margin-top: -1% !important;
 	}
-	.singleBiography_button_white{
+	.singleBiography_button_white {
 		margin-top: -2% !important;
 	}
-	.white{
+	.white {
 		height: 412px !important;
 	}
-	.orange{
-
-	height:405px !important;
+	.orange {
+		height: 405px !important;
 	}
 }
-
 
 .singleBiography_button_white {
 	width: 123px;
@@ -507,6 +509,12 @@ height:80vh
 	}
 }
 
+@media (max-width: 768px) {
+	.singleblog_author {
+		font-size: 9px !important;
+	}
+}
+
 @media (max-width: 320px) {
 	.singleblog_author {
 		font-size: 7px !important;
@@ -517,8 +525,8 @@ height:80vh
 		font-weight: bold;
 		color: #ff7c2b;
 	}
-	.singleGrid_card{
-		width:270px !important
+	.singleGrid_card {
+		width: 270px !important
 	}
 }
 
@@ -551,7 +559,10 @@ height:80vh
 	/* display: flex; */
 	/* margin-right: 5%; */
 	margin-top: -2%;
-	margin-left: 13.188em;
+	margin-left: 19%;
+	/* margin-left: 35vh; */
+	/* position: relative;
+	right: -29%; */
 }
 
 .nav_span_xlg {
@@ -675,13 +686,13 @@ height:80vh
 }
 
 .caraousel_sm_even {
-	height:80vh !important;
+	height: 80vh !important;
 	background-size: cover;
 	background-image: url("../images/4-c-7-a-9333@2x.png");
 }
 
 .caraousel_sm_odd {
-	height:80vh !important;
+	height: 80vh !important;
 	background-size: cover;
 	background-image: url("../images/4-c-7-a-9333.jpg")
 	/* background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"); */
@@ -701,7 +712,8 @@ height:80vh
 
 .orange {
 	background-image: linear-gradient(to right, #f25858, #ff9f63);
-	height: 473px;;
+	height: 473px;
+	;
 }
 
 @media (max-width: 500px) and (min-width: 320px) {
@@ -711,8 +723,7 @@ height:80vh
 		margin: auto;
 		background-image: linear-gradient(to right, #f25858, #ff9f63)
 	}
-	}
-
+}
 
 @media (max-width: 320px) {
 	.orange {
@@ -733,7 +744,7 @@ height:80vh
 }
 
 @media (max-width: 500px) and (min-width:321px) {
-	.white{
+	.white {
 		height: 350px;
 		width: 337px;
 		margin: auto;

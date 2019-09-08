@@ -25,7 +25,7 @@ class ContentDetails extends Component {
 			<Card
 				className="centerAlign recentActivityCard"
 				title="Recent Content"
-				style={{ overflow: "scroll" }}
+				style={{ overflow: "auto" }}
 			>
 				<div style={{ height: "458px" }}>
 					{this.props.contentDetails &&
@@ -36,13 +36,6 @@ class ContentDetails extends Component {
 									className="content_div1"
 									key={eachContent.content_uuid}
 								>
-									<p>Hi</p>
-									<p>Hi</p>
-									<p>Hi</p>
-									<p>Hi</p>
-									<p>Hi</p>
-									<p>Hi</p>
-									<p>Hi</p>
 									<Link
 										style={{ fontFamily: "Charter" }}
 										key={eachContent.content_uuid}
