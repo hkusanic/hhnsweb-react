@@ -2,6 +2,13 @@ var rp = require("request-promise");
 var tough = require("tough-cookie");
 var fs = require("fs");
 var https = require("https");
+var EMAIL_CONFIG = require("../../constants/constant");
+require("dotenv").config({ path: "/home/system5/Desktop/hhnsweb-react/.env" });
+console.log(
+	"here>>>",
+	require("dotenv").config({ path: "/home/system5/Desktop/hhnsweb-react/.env" })
+);
+console.log("process>>", process.env);
 // var httpAgent = new https.Agent({
 // 	keepAlive: true,
 // 	keepAliveMsecs: 3000
@@ -79,7 +86,10 @@ function getEnglishNodeList() {
 	const options = {
 		method: "GET",
 		uri:
-			"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=blog&pagesize=600&&page=0",
+			EMAIL_CONFIG.CONSTANTS.FETCH_URL +
+			"/en/rest/node.json?parameters%5Btype%5D=blog&pagesize=600&&page=0",
+		// uri:
+		// 	"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=blog&pagesize=600&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
@@ -144,7 +154,11 @@ function getRuNodeList() {
 	const options = {
 		method: "GET",
 		uri:
-			"https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=blog&pagesize=600&&page=0",
+			EMAIL_CONFIG.CONSTANTS.FETCH_URL +
+			"/ru/rest/node.json?parameters%5Btype%5D=blog&pagesize=600&&page=0",
+
+		// uri:
+		// 	"https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=blog&pagesize=600&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
@@ -172,7 +186,10 @@ function getRaussainData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/ru/rest/object/${item.nid}.json`,
+			uri:
+				EMAIL_CONFIG.CONSTANTS.FETCH_URL + `/ru/rest/object/${item.nid}.json`,
+
+			// uri: `https://nrs.niranjanaswami.net/ru/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -228,7 +245,8 @@ function updateDatabase(batchArray, callback) {
 	let options = {
 		method: "POST",
 		//uri: "http://localhost:3000/api/blog/updateBulkNew/",
-		uri: "http://dev.niranjanaswami.net/api/blog/updateBulkNew/",
+		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/blog/updateBulkNew/",
+		//uri: "http://dev.niranjanaswami.net/api/blog/updateBulkNew/",
 		body: batchArray,
 		json: true,
 		pool: httpAgent,
@@ -250,7 +268,8 @@ function createSingleRUBlogItem(body) {
 	const options = {
 		method: "POST",
 		//uri: "http://localhost:3000/api/blog/create/",
-		uri: "http://dev.niranjanaswami.net/api/blog/create/",
+		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/blog/create/",
+		//uri: "http://dev.niranjanaswami.net/api/blog/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -272,7 +291,8 @@ function getEnglishData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/en/rest/object/${item.nid}.json`,
+			uri: `${EMAIL_CONFIG.CONSTANTS.FETCH_URL}/en/rest/object/${item.nid}.json`,
+			//uri: `https://nrs.niranjanaswami.net/en/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -305,7 +325,8 @@ function getEnglishData(ar, callback) {
 				const options = {
 					method: "POST",
 					//uri: "http://localhost:3000/api/blog/create/",
-					uri: "http://dev.niranjanaswami.net/api/blog/create/",
+					uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/blog/create/",
+					//uri: "http://dev.niranjanaswami.net/api/blog/create/",
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -337,8 +358,11 @@ var russianLectureFinalData = [];
 function getEnglishLectureNodeList() {
 	const options = {
 		method: "GET",
+		// uri:
+		// 	"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=lecture&pagesize=10000&&page=0",
 		uri:
-			"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=lecture&pagesize=10000&&page=0",
+			EMAIL_CONFIG.CONSTANTS.FETCH_URL +
+			"/en/rest/node.json?parameters%5Btype%5D=lecture&pagesize=10000&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
@@ -349,7 +373,6 @@ function getEnglishLectureNodeList() {
 	rp(options)
 		.then(function(body) {
 			englishLectureDataList = body;
-
 			console.log(
 				"getEnglishLectureNodeList() function is successfully executed",
 				englishLectureDataList.length,
@@ -381,8 +404,11 @@ function getEnglishLectureDatainBatches() {
 function getRuLectureNodeList() {
 	const options = {
 		method: "GET",
+		// uri:
+		// 	"https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=lecture&pagesize=6000&&page=0",
 		uri:
-			"https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=lecture&pagesize=6000&&page=0",
+			EMAIL_CONFIG.CONSTANTS.FETCH_URL +
+			"/ru/rest/node.json?parameters%5Btype%5D=lecture&pagesize=6000&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
@@ -421,7 +447,8 @@ function getRussianLectureData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/ru/rest/node/${item.nid}.json`,
+			//uri: `https://nrs.niranjanaswami.net/ru/rest/node/${item.nid}.json`,
+			uri: `${EMAIL_CONFIG.CONSTANTS.FETCH_URL}/ru/rest/node/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -476,7 +503,8 @@ function getRussianLectureData(ar, callback) {
 function updateDatabaseLectures() {
 	let options = {
 		method: "POST",
-		uri: "http://localhost:3000/api/lecture/updateBulkNew/",
+		//uri: "http://localhost:3000/api/lecture/updateBulkNew/",
+		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/updateBulkNew/",
 		body: russianLectureFinalData,
 		json: true,
 		pool: httpAgent,
@@ -496,7 +524,8 @@ function updateDatabaseLectures() {
 function createSingleRULectureItem(body) {
 	const options = {
 		method: "POST",
-		uri: "http://localhost:3000/api/lecture/create/",
+		//uri: "http://localhost:3000/api/lecture/create/",
+		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/create",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -518,7 +547,8 @@ function getEnglishLectureData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/en/rest/node/${item.nid}.json`,
+			//uri: `https://nrs.niranjanaswami.net/en/rest/node/${item.nid}.json`,
+			uri: `${EMAIL_CONFIG.CONSTANTS.FETCH_URL}/en/rest/node/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -546,7 +576,8 @@ function getEnglishLectureData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					uri: "http://localhost:3000/api/lecture/create/",
+					//uri: "http://localhost:3000/api/lecture/create/",
+					uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/create",
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -581,8 +612,11 @@ var transcriptionFinalData = [];
 function getEnglishTranscriptionNodeList() {
 	const options = {
 		method: "GET",
+		// uri:
+		// 	"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=transcription&pagesize=10000&&page=0",
 		uri:
-			"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=transcription&pagesize=10000&&page=0",
+			EMAIL_CONFIG.CONSTANTS.FETCH_URL +
+			"/en/rest/node.json?parameters%5Btype%5D=transcription&pagesize=10000&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
@@ -624,7 +658,8 @@ function getEnglishTranscriptionData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/en/rest/node/${item.nid}.json`,
+			//uri: `https://nrs.niranjanaswami.net/en/rest/node/${item.nid}.json`,
+			uri: EMAIL_CONFIG.CONSTANTS.FETCH_URL + `/en/rest/node/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -681,8 +716,11 @@ function getEnglishTranscriptionData(ar, callback) {
 function getRuTranscriptionNodeList() {
 	const options = {
 		method: "GET",
+		// uri:
+		// 	"https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=transcription&pagesize=6000&&page=0",
 		uri:
-			"https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=transcription&pagesize=6000&&page=0",
+			EMAIL_CONFIG.CONSTANTS.FETCH_URL +
+			"ru/rest/node.json?parameters%5Btype%5D=transcription&pagesize=6000&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
@@ -724,7 +762,8 @@ function getRussianTranscriptionData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/ru/rest/node/${item.nid}.json`,
+			// uri: `https://nrs.niranjanaswami.net/ru/rest/node/${item.nid}.json`,
+			uri: `${EMAIL_CONFIG.CONSTANTS.FETCH_URL}/ru/rest/node/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -785,7 +824,8 @@ function updateDatabaseTranscriptions() {
 	console.log("updateDatabaseTranscriptions is running");
 	let options = {
 		method: "POST",
-		uri: "http://localhost:3000/api/lecture/updateBulkNew",
+		//uri: "http://localhost:3000/api/lecture/updateBulkNew",
+		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/updateBulkNew",
 		body: transcriptionFinalData,
 		json: true,
 		pool: httpAgent,
@@ -814,8 +854,11 @@ var quotesFinalRaussainData = [];
 function getQutoesEnglishNodeList() {
 	const options = {
 		method: "GET",
+		// uri:
+		// 	"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=quote&pagesize=6000&&page=0",
 		uri:
-			"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=quote&pagesize=6000&&page=0",
+			EMAIL_CONFIG.CONSTANTS.FETCH_URL +
+			"/en/rest/node.json?parameters%5Btype%5D=quote&pagesize=6000&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
@@ -860,7 +903,8 @@ function getQuotesData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
+			//uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
+			uri: `${EMAIL_CONFIG.CONSTANTS.FETCH_URL}/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -894,7 +938,8 @@ function getQuotesData(ar, callback) {
 				const options = {
 					method: "POST",
 					//uri: "http://dev.niranjanaswami.net/api/quote/create/",
-					uri: "http://localhost:3000/api/quote/create/",
+					uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/quote/create/",
+					//uri: "http://localhost:3000/api/quote/create/",
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -929,8 +974,11 @@ function getQuotesSource(body) {
 function getQuotesRuNodeList() {
 	const options = {
 		method: "GET",
+		// uri:
+		// 	"https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=quote&pagesize=6000&&page=0",
 		uri:
-			"https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=quote&pagesize=6000&&page=0",
+			EMAIL_CONFIG.CONSTANTS.FETCH_URL +
+			"/ru/rest/node.json?parameters%5Btype%5D=quote&pagesize=6000&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
@@ -973,7 +1021,7 @@ function getQuotesRaussainData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
+			uri: `${EMAIL_CONFIG.CONSTANTS.FETCH_URL}/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -1053,7 +1101,8 @@ function updateQuoteDatabase(batchArray, callback) {
 	let options = {
 		method: "POST",
 		//uri: "http://dev.niranjanaswami.net/api/quote/updateBulkNew/",
-		uri: "http://localhost:3000/api/quote/updateBulkNew/",
+		//uri: "http://localhost:3000/api/quote/updateBulkNew/",
+		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/quote/updateBulkNew/",
 		body: batchArray,
 		json: true,
 		pool: httpAgent,
@@ -1078,7 +1127,8 @@ function createSingleRUQuoteItem(body) {
 	const options = {
 		method: "POST",
 		//uri: "http://dev.niranjanaswami.net/api/quote/create/",
-		uri: "http://localhost:3000/api/quote/create/",
+		//uri: "http://localhost:3000/api/quote/create/",
+		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/quote/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -1106,8 +1156,11 @@ var raussainKirtanfinalData = [];
 function getEnglishKirtanNodeList() {
 	const options = {
 		method: "GET",
+		// uri:
+		// 	"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=kirtan&pagesize=10000&&page=0",
 		uri:
-			"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=kirtan&pagesize=10000&&page=0",
+			EMAIL_CONFIG.CONSTANTS.FETCH_URL +
+			"/en/rest/node.json?parameters%5Btype%5D=kirtan&pagesize=10000&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
