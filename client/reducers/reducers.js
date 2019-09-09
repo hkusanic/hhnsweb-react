@@ -16,7 +16,6 @@ import sadhanaReducer from './sadhanaReducer/sadhanaReducer';
 import contentReducer from './content/contentReducer';
 import videoReducer from './videoReducer/videoReducer';
 
-
 import { routerReducer } from 'react-router-redux';
 
 const reducers = combineReducers({

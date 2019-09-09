@@ -163,6 +163,7 @@ exports.signin = function (req, res) {
 							user_id: user.user_id,
 							youbookme_url: process.env.YOUBOOKME_URL,
 							disciple: user.disciple,
+							profile_pic : user.profile_pic
 						},
 					});
 				},
