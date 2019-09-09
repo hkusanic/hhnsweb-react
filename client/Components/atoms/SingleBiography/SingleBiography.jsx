@@ -3,32 +3,42 @@ import renderHTML from "react-render-html";
 import { Link, withRouter } from "react-router-dom";
 import reactCookie from "react-cookies";
 import { Translate } from "react-localize-redux";
-
 import { Card } from "antd";
-import TextArea from "antd/lib/input/TextArea";
-const { Meta } = Card;
 
 function showing100Characters(sentence) {
+	// var result = sentence;
+	// var resultArray = result.split(" ");
+	// if (resultArray.length > 10) {
+	// 	resultArray = resultArray.slice(0, 25);
+	// 	result = resultArray.join(" ") + "...";
+	// }
+	// return result;
 	var result = sentence;
-	var resultArray = result.split(" ");
-	if (resultArray.length > 10) {
-		resultArray = resultArray.slice(0, 25);
-		result = resultArray.join(" ");
+	function GetNthOccurance(string, seek, occurance) {
+		var index = 0,
+			i = 1;
+
+		while (index !== -1) {
+			index = string.indexOf(seek, index + 1);
+			if (occurance === i) {
+				break;
+			}
+			i++;
+		}
+		if (index !== -1) {
+			return index;
+		}
+	}
+	let index1 = GetNthOccurance(sentence, ">", 2);
+	if (result.length > 300) {
+		result = result.substring(index1 + 1, index1 + 153) + "...";
 	}
 	return result;
 }
 
 const SingleBiography = props => {
 	return (
-		<div
-			class="col-sm-12 col-lg-6"
-			style={{
-				paddingRight: "0px",
-				paddingLeft: "0px",
-				top: "-35px",
-				zIndex: "1"
-			}}
-		>
+		<div className="col-sm-12 col-lg-6 singleBioMain page1">
 			<article>
 				<Link
 					to={{
@@ -104,7 +114,13 @@ const SingleBiography = props => {
 								}
 							}}
 						>
-							<button className="singleBiography_button">
+							<button
+								className={
+									props.title_en === "His Holiness Niranjana Swami"
+										? "singleBiography_button_orange"
+										: "singleBiography_button_white"
+								}
+							>
 								<Translate>
 									{({ translate }) => translate("FOOTER.readmore")}
 								</Translate>

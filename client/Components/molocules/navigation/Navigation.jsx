@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { throttle } from "lodash";
 import { setActiveLanguage, withLocalize } from "react-localize-redux";
-import { Select, Menu, Dropdown, Icon } from "antd";
+import { Menu, Dropdown, Icon } from "antd";
 import Login from "./../../../containers/Login/Login";
 import { Link, Redirect } from "react-router-dom";
 import Auth from "../../../utils/Auth";
@@ -9,15 +9,12 @@ import { Translate } from "react-localize-redux";
 import { LanguageSwitch } from "../../atoms/LanguageSwitch/LanguageSwitch";
 import * as DATA from "../../../constants/biographies";
 import reactCookie from "react-cookies";
-import Column from "antd/lib/table/Column";
-
-const Option = Select.Option;
 const maxWidth = window.screen.width;
 const screenwidth = window.innerWidth;
 export class Navigation extends Component {
 	constructor(props) {
 		super(props);
-		this.resize = throttle(this.resize.bind(this), 100);
+		// this.resize = throttle(this.resize.bind(this), 100);
 		this.state = {
 			isUserLogin: true,
 			Niranjana_swami_bio: "",
@@ -29,6 +26,44 @@ export class Navigation extends Component {
 			width: screenwidth
 		};
 	}
+	resize = () => this.forceUpdate();
+
+	// resize = () => {
+	// 	let width = window.innerWidth;
+	// 	if (this.state.width > 1440 && (width >= 0 && width <= 1440)) {
+	// 		this.setState({
+	// 			width: width
+	// 		});
+	// 		window.location.reload(false);
+	// 	}
+	// 	if (this.state.width < 600 && width >= 600) {
+	// 		this.setState({
+	// 			width: width
+	// 		});
+	// 		window.location.reload(false);
+	// 	}
+	// 	if (
+	// 		this.state.width > 600 &&
+	// 		this.state.width <= 1210 &&
+	// 		(width >= 1210 || width <= 600)
+	// 	) {
+	// 		this.setState({
+	// 			width: width
+	// 		});
+	// 		window.location.reload(false);
+	// 	}
+
+	// 	if (
+	// 		this.state.width > 1210 &&
+	// 		this.state.width <= 1440 &&
+	// 		(width >= 1440 || width <= 1210)
+	// 	) {
+	// 		this.setState({
+	// 			width: width
+	// 		});
+	// 		window.location.reload(false);
+	// 	}
+	// };
 
 	resize = () => {
 		let width = window.innerWidth;
@@ -68,7 +103,7 @@ export class Navigation extends Component {
 	};
 
 	componentDidMount() {
-		window.addEventListener("resize", this.resize);
+		// window.addEventListener("resize", this.resize);
 		const Prabhupada_swami_bio = {
 			img: "https://ik.imagekit.io/gcwjdmqwwznjl/Prabhupada-Bio_BkS_T-HUE.png",
 			title_en: DATA.BIOGRAPHY.one_title_en,
@@ -236,8 +271,8 @@ export class Navigation extends Component {
 														<Link
 															style={{ backgroundColor: "white" }}
 															className={`rd-nav-link ${
-																this.state.index === 1 ? "active1" : ""
-															} `}
+																this.state.index === 1 ? "active1" : null
+																} `}
 															to="/"
 														>
 															<img src="https://ik.imagekit.io/gcwjdmqwwznjl/swami__v3cKrjXs.svg" />
@@ -252,7 +287,9 @@ export class Navigation extends Component {
 															<a
 																style={{
 																	marginTop: "21px",
-																	backgroundColor: "white"
+																	backgroundColor: "white",
+																	position: "relative",
+																	right: "-43px"
 																}}
 																className="rd-nav-link"
 															>
@@ -269,7 +306,8 @@ export class Navigation extends Component {
 											</div>
 											<div
 												className="topMenu languageToggle"
-												style={{ float: "right" }}
+												style={{ float: "right" , position: "relative",
+												right: "-43px"}}
 											>
 												<ul className="rd-navbar-nav">
 													<li
@@ -284,8 +322,8 @@ export class Navigation extends Component {
 									</div>
 								</div>
 							) : (
-								""
-							)}
+									null
+								)}
 
 							{maxWidth < 600 ? (
 								<div className="rd-navbar-aside head ">
@@ -302,7 +340,7 @@ export class Navigation extends Component {
 													<li className="rd-nav-item">
 														<li>
 															<a
-																style={{ backgroundColor: "white" }}
+																style={{ backgroundColor: "white", position: "relative", right: "-43px" }}
 																className="rd-nav-link"
 															>
 																<Login
@@ -321,7 +359,8 @@ export class Navigation extends Component {
 												style={{ float: "right" }}
 											>
 												<ul className="rd-navbar-nav">
-													<li className="rd-nav-item">
+													<li className="rd-nav-item" style=
+														{{ position: "relative", right: "-44px" }}>
 														<LanguageSwitch />
 													</li>
 												</ul>
@@ -330,8 +369,8 @@ export class Navigation extends Component {
 									</div>
 								</div>
 							) : (
-								""
-							)}
+									null
+								)}
 
 							<div>
 								<div>
@@ -354,8 +393,8 @@ export class Navigation extends Component {
 											>
 												<Link
 													className={`rd-nav-link ${
-														this.state.index === 1 ? "active1" : ""
-													} `}
+														this.state.index === 1 ? "active1" : null
+														} `}
 													to="/"
 												>
 													<img
@@ -376,6 +415,7 @@ export class Navigation extends Component {
 															: "nav_span_lg"
 														: "nav_span_small"
 												}
+												style={{ right: "0 !important", position: "absolute !important" }}
 											>
 												<li
 													onClick={() => {
@@ -385,9 +425,9 @@ export class Navigation extends Component {
 												>
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 1 ? "active1" : ""
-														} 
-														${maxWidth <= 1210 ? "gap" : " "}`}
+															this.state.index === 1 ? "active1" : null
+															} 
+														${maxWidth <= 1210 ? "gap" : null}`}
 														to="/"
 													>
 														<Translate>
@@ -398,9 +438,9 @@ export class Navigation extends Component {
 												<li className="rd-nav-item ">
 													<a
 														className={`rd-nav-link ${
-															this.state.index === 2 ? "active1" : ""
-														} 
-														${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 2 ? "active1" : null
+															} 
+														${maxWidth <= 1210 ? "gap" : null}
 														`}
 													>
 														<Translate>
@@ -455,8 +495,8 @@ export class Navigation extends Component {
 												<li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 10 ? "active1" : ""
-														} ${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 10 ? "active1" : null
+															} ${maxWidth <= 1210 ? "gap" : null}
 														`}
 														to={{
 															pathname: "/audio"
@@ -474,9 +514,9 @@ export class Navigation extends Component {
 												<li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 11 ? "active1" : ""
-														} 
-														${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 11 ? "active1" : null
+															} 
+														${maxWidth <= 1210 ? "gap" : null}
 														`}
 														to="/video"
 														onClick={() => {
@@ -492,9 +532,9 @@ export class Navigation extends Component {
 												<li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 3 ? "active1" : ""
-														} 
-														${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 3 ? "active1" : null
+															} 
+														${maxWidth <= 1210 ? "gap" : null}
 														`}
 														to="/blog"
 														onClick={() => {
@@ -510,8 +550,8 @@ export class Navigation extends Component {
 												<li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 4 ? "active1" : ""
-														} ${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 4 ? "active1" : null
+															} ${maxWidth <= 1210 ? "gap" : null}
 														`}
 														to="/transcriptions"
 														onClick={() => {
@@ -529,8 +569,8 @@ export class Navigation extends Component {
 												<li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
-															this.state.index === 5 ? "active1" : ""
-														} ${maxWidth <= 1210 ? "gap" : " "}
+															this.state.index === 5 ? "active1" : null
+															} ${maxWidth <= 1210 ? "gap" : null}
 														`}
 														to="/summaries"
 														onClick={() => {
@@ -547,16 +587,16 @@ export class Navigation extends Component {
 													<li className="rd-nav-item">
 														<Link
 															className={`rd-nav-link ${
-																this.state.index === 6 ? "active1" : ""
-															} `}
+																this.state.index === 6 ? "active1" : null
+																} `}
 															to="/"
 														>
 															Admin
 														</Link>
 													</li>
 												) : (
-													""
-												)}
+														""
+													)}
 												<li className="rd-nav-item hideMenu">
 													<a className="rd-nav-link">
 														<Login
@@ -573,7 +613,7 @@ export class Navigation extends Component {
 														reactCookie.load("languageCode") === "en"
 															? "enToggle"
 															: "ruToggle"
-													} `}
+														} `}
 												>
 													<Dropdown
 														optionFilterProp="children"
@@ -588,7 +628,6 @@ export class Navigation extends Component {
 												</li>
 
 												<li className="rd-nav-item hideMenu">
-													
 													<img
 														className="nav_image"
 														src="https://ik.imagekit.io/gcwjdmqwwznjl/Iskcon_logo_C-Q4c8R4B.jpg"
@@ -600,8 +639,8 @@ export class Navigation extends Component {
 										<br />
 									</div>
 								</div>
-								{this.state.redirect ? <Redirect to="/registration" /> : ""}
-								{this.state.login ? <Redirect to="/" /> : ""}
+								{this.state.redirect ? <Redirect to="/registration" /> : null}
+								{this.state.login ? <Redirect to="/" /> : null}
 							</div>
 						</nav>
 					</div>

@@ -29,24 +29,27 @@ class RussiaDubbedLectures extends Component {
 				className="centerAlign recentActivityCard"
 				title="Lecture Dubbed in Russian"
 			>
-				{this.props.lectureDetails &&
-					this.props.lectureDetails.lectures &&
-					this.props.lectureDetails.lectures.map(eachLecture => {
-						return (
-							<div style={{ paddingBottom: "6%", textAlign: "left" }}>
-								<Link
-									key={eachLecture.id}
-									to={`/lectureDetails/${eachLecture.uuid}`}
-								>{`New**  ${eachLecture.en.topic}`}</Link>
-								<p
-									style={{ marginTop: "0px" }}
-									key={eachLecture.id}
-								>{`Posted On     ${new Date(
-									eachLecture.created_date_time
-								).toLocaleString("en-GB")}`}</p>
-							</div>
-						);
-					})}
+				<div style={{ height: "458px" }}>
+					{this.props.lectureDetails &&
+						this.props.lectureDetails.lectures &&
+						this.props.lectureDetails.lectures.map(eachLecture => {
+							return (
+								<div className="lecture_div">
+									<Link
+										style={{ fontFamily: "Charter" }}
+										key={eachLecture.id}
+										to={`/lectureDetails/${eachLecture.uuid}`}
+									>{`${eachLecture.en.topic}`}</Link>
+									<p
+										className="content_p"
+										key={eachLecture.id}
+									>{`Posted On     ${new Date(
+										eachLecture.created_date_time
+									).toLocaleString("en-GB")}`}</p>
+								</div>
+							);
+						})}
+				</div>
 			</Card>
 		);
 	}

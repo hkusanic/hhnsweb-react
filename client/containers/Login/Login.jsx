@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { isValidEmail, isNotEmpty, isMatch } from '../../utils/validation';
 import LoginForm from '../../Components/organisms/Form/LoginFrom';
 import IntlTelInput from 'react-intl-tel-input';
-import { Input, Tooltip, Icon, Menu, Dropdown, Button } from 'antd';
+import { Input, Tooltip, Icon, Menu, Dropdown, Button, Avatar } from 'antd';
 
 export class Login extends Component {
   constructor(props) {
@@ -25,7 +25,8 @@ export class Login extends Component {
       confirmPassword: '',
       error: '',
       regError: '',
-      fullName: ''
+      fullName: '',
+      profile_pic: ''
     }
   }
 
@@ -39,12 +40,13 @@ export class Login extends Component {
     if (!isUserLogin) {
       const userDetails = JSON.parse(Auth.getUserDetails());
       const name = `${userDetails.firstName} ${userDetails.last}`;
-      this.setState({ fullName: name });
+      const profile_pic = `${userDetails.profile_pic}`;
+      this.setState({ fullName: name, profile_pic: profile_pic });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if ((nextProps.login !== this.props.login) && nextProps.login.isLogin && !this.props.login.isLogin ) {
+    if ((nextProps.login !== this.props.login) && nextProps.login.isLogin && !this.props.login.isLogin) {
       const isUserLogin = Auth.isUserAuthenticated();
       if (!isUserLogin) {
         this.setState({
@@ -180,16 +182,20 @@ export class Login extends Component {
                 <ul className="list-inline-bordered" style={{ color: '#122e44' }}>
 
                   <li>
-                    <li style={{ fontFamily: "Charter",
-	                            fontSize: "14px",
-	                          fontWeight: "bold"}} className={login_modal_1} onClick={() => { this.props.handleLogin() }} data-rd-navbar-toggle="#rd-navbar-login-5">
+                    <li style={{
+                      fontFamily: "Charter",
+                      fontSize: "14px",
+                      fontWeight: "bold"
+                    }} className={login_modal_1} onClick={() => { this.props.handleLogin() }} data-rd-navbar-toggle="#rd-navbar-login-5">
                       Login
                     </li>
                     <div className={login_modal_2} id="rd-navbar-login-5">
-                      <h4 style={{ fontFamily: "Charter",
-	                            fontSize: "14px",
-	                          fontWeight: "bold"}}>
-                       Login
+                      <h4 style={{
+                        fontFamily: "Charter",
+                        fontSize: "14px",
+                        fontWeight: "bold"
+                      }}>
+                        Login
                       </h4>
                       <LoginForm loginUser={this.props.loginUser} error={this.state.error} />
                       <p onClick={() => { this.handleRemoveModal() }}>
@@ -198,15 +204,19 @@ export class Login extends Component {
                     </div>
                   </li>
                   <li>
-                    <li style={{ fontFamily: "Charter",
-	                            fontSize: "14px",
-	                          fontWeight: "bold"}} className={res_modal_1} onClick={() => { this.props.handleRedirect() }} data-rd-navbar-toggle="#rd-navbar-register-5" >
+                    <li style={{
+                      fontFamily: "Charter",
+                      fontSize: "14px",
+                      fontWeight: "bold"
+                    }} className={res_modal_1} onClick={() => { this.props.handleRedirect() }} data-rd-navbar-toggle="#rd-navbar-register-5" >
                       Register
                     </li>
                     <div className={res_modal_2} id="rd-navbar-register-5">
-                      <h4 style={{ fontFamily: "Charter",
-	                            fontSize: "14px",
-	                          fontWeight: "bold"}}> Register </h4>
+                      <h4 style={{
+                        fontFamily: "Charter",
+                        fontSize: "14px",
+                        fontWeight: "bold"
+                      }}> Register </h4>
                       <form className="rd-form rd-form-small">
                         <div className="form-wrap">
                           <input
@@ -275,14 +285,6 @@ export class Login extends Component {
                     </div>
                   </li>
                 </ul>
-                // : <ul className="list-inline-bordered" style={{color: '#122e44' }}>
-                //   <li>
-                //     <button className="rd-navbar-popup-toggle">
-                //       <Link to='/profile'>{profile}</Link>
-                //       </button>
-                //   </li>
-                //   <li><button className="rd-navbar-popup-toggle" data-rd-navbar-toggle="#rd-navbar-login-5" onClick={this.logoutSubmit}>{logout}</button></li>
-                // </ul>}
                 :
                 <Dropdown overlay={
                   <Menu>
@@ -295,9 +297,12 @@ export class Login extends Component {
                       <button className="logoutButton" onClick={this.logoutSubmit}>{logout}</button>
                     </Menu.Item>
                   </Menu>
-                } placement="bottomCenter">
+                } placement="bottomCenter"
+                >
                   <a className="ant-dropdown-link" href="#">
-                    {this.state.fullName=== "undefined undefined" ? "" : this.state.fullName} <Icon type="down" />
+                    {(this.state.profile_pic === "Profile pic not available" || this.state.profile_pic === "undefined") ? <Avatar src="/images/avatar.png" />
+                      :
+                      <Avatar src={this.state.profile_pic} />}
                   </a>
                 </Dropdown>
               }

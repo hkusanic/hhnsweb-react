@@ -135,8 +135,8 @@ export class AudioList extends Component {
 					reactCookie.load('languageCode') === 'en'
 						? 'en.title'
 						: 'ru.title'
-						? 'ru.title'
-						: 'en.title'
+							? 'ru.title'
+							: 'en.title'
 				),
 				render: (text, record, index) => (
 					<Link
@@ -150,8 +150,8 @@ export class AudioList extends Component {
 								reactCookie.load('languageCode') === 'en'
 									? record.en.title
 									: record.ru.title
-									? record.ru.title
-									: record.en.title
+										? record.ru.title
+										: record.en.title
 							)
 						)}
 					</Link>
@@ -259,15 +259,15 @@ export class AudioList extends Component {
 										<Collapse isOpened={!this.state.iconSearch}>
 											<SearchFilter
 												searchData={this.searchData}
-												cantoSearch= {true}
-												chapterSearch= {true}
-												verseSearch= {true}
-												translationSearch= {true}
-												yearSearch= {true}
-												locationSearch= {true}
-												topicSearch= {true}
-												eventSearch= {true}
-												isUpparRowSearch= {true}
+												cantoSearch={true}
+												chapterSearch={true}
+												verseSearch={true}
+												translationSearch={true}
+												yearSearch={true}
+												locationSearch={true}
+												topicSearch={true}
+												eventSearch={true}
+												isUpparRowSearch={true}
 											/>
 										</Collapse>
 									</div>
@@ -290,22 +290,22 @@ export class AudioList extends Component {
 												/>
 											</div>
 										) : (
-											<div style={{ textAlign: 'center' }}>
-												<p className="bookingForm">
-													{this.state.isSearch
-														? 'No Record Found'
-														: 'Hare Krishna...'}
-												</p>
-											</div>
-										)}
+												<div style={{ textAlign: 'center' }}>
+													<p className="bookingForm">
+														{this.state.isSearch
+															? 'No Record Found'
+															: 'Hare Krishna...'}
+													</p>
+												</div>
+											)}
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				) : (
-					<QuoteOfDay />
-				)}
+						<QuoteOfDay />
+					)}
 			</div>
 		);
 	}

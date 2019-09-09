@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { setActiveLanguage, withLocalize } from "react-localize-redux";
 import reactCookie from "react-cookies";
 import { Translate } from "react-localize-redux";
@@ -10,7 +9,7 @@ export class LanguageSwitch extends Component {
 	}
 
 	componentDidMount() {
-		$(window).load(function() {
+		$(window).load(function () {
 			$("html, body").animate({ scrollTop: $(document).height() }, 10);
 			$("html, body").animate({ scrollTop: 0 });
 		});
@@ -39,9 +38,8 @@ export class LanguageSwitch extends Component {
 						}
 					}}
 				>
-					{" "}
-					<Translate>{({ translate }) => translate("HOME.en")}</Translate>{" "}
-				</a>{" "}
+					<Translate>{({ translate }) => translate("HOME.en")}</Translate>
+				</a>
 				|
 				<a
 					className={
@@ -53,8 +51,7 @@ export class LanguageSwitch extends Component {
 						}
 					}}
 				>
-					{" "}
-					<Translate>{({ translate }) => translate("HOME.ru")}</Translate>{" "}
+					<Translate>{({ translate }) => translate("HOME.ru")}</Translate>
 				</a>
 			</span>
 		);

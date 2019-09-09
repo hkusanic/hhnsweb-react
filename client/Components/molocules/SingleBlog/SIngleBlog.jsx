@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import renderHTML from "react-render-html";
 import { Link } from "react-router-dom";
 import reactCookie from "react-cookies";
-import { Card } from "antd";
 
 export class SingleBlog extends Component {
 	constructor(props) {
@@ -36,8 +35,8 @@ export class SingleBlog extends Component {
 									reactCookie.load("languageCode") === "en"
 										? this.props.blog.en.title
 										: this.props.blog.ru.title
-										? this.props.blog.en.title
-										: this.props.blog.ru.title
+											? this.props.blog.en.title
+											: this.props.blog.ru.title
 								)}
 							</Link>
 						</h4>
@@ -54,8 +53,8 @@ export class SingleBlog extends Component {
 								reactCookie.load("languageCode") === "en"
 									? this.props.blog.en.body
 									: this.props.blog.ru.body
-									? this.props.blog.ru.body
-									: this.props.blog.en.body
+										? this.props.blog.ru.body
+										: this.props.blog.en.body
 							)
 						)}
 					</article>

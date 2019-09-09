@@ -360,7 +360,7 @@ export class Footer extends Component {
 										src="https://ik.imagekit.io/gcwjdmqwwznjl/SWAMI2_s6R_72Bx0.svg"
 									/>
 									<span>&nbsp;</span>
-									<span style={{ fontSize: "12px" }}>&copy;&nbsp;</span>
+									<span style={{ fontSize: "6px" }}>&copy;&nbsp;</span>
 									<Translate>
 										{({ translate }) => translate("FOOTER.copy_rights")}
 									</Translate>
