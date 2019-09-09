@@ -1,72 +1,35 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import script from "../../../assets/script";
-import { Pagination, Icon, Button } from "antd";
-import renderHTML from "react-render-html";
-import SingleBlogHome from "../../molocules/SingleBlog/Singlebloghome";
-import { connect } from "react-redux";
-import { getBlogs, getBlog } from "../../../actions/blogActions";
-import Auth from "../../../utils/Auth";
-import { Translate } from "react-localize-redux";
-import QuoteOfDay from "../../molocules/SingleQuote/QuotesOfDay";
-import { Redirect } from "react-router-dom";
-// import { connect } from "react-redux";
-import { quoteOfDay } from "../../../actions/quoteActions";
+import React from 'react';
+import script from '../../../assets/script';
+import SingleBlogHome from '../../molocules/SingleBlog/Singlebloghome';
+import { connect } from 'react-redux';
+import { quoteOfDay } from '../../../actions/quoteActions';
 
-export class Blogs extends Component {
-	constructor(props) {
+export class Blogs extends React.Component {
+	constructor (props) {
 		super(props);
 		this.state = {
-			quotes: []
+			quotes: [],
 		};
 	}
 
-	// componentDidMount() {
-	// 	this.setState({
-	// 		totalItem: this.props.blogsDetails.totalBlogs,
-	// 		blogs: this.props.blogsDetails.blogs
-	// 	});
-	// 	this.props.getBlogs(1);
-	// }
-
-	componentDidMount() {
+	componentDidMount () {
 		script();
-		let authorList = ["Niranjana Swami", "Srila Prabhupada"];
+		let authorList = ['Niranjana Swami', 'Srila Prabhupada'];
 		this.props.quoteOfDay(authorList);
 		this.setState({
-			quotes: this.props.quote.quotes
+			quotes: this.props.quote.quotes,
 		});
 	}
 
-	// componentWillReceiveProps(nextprops) {
-	// 	script();
-	// 	console.log(nextprops);
-	// 	console.log(this.props);
-	// 	let authorList = ["Niranjana Swami", "Srila Prabhupada"];
-	// 	this.props.quoteOfDay(authorList);
-	// }
-
-	// componentDidUpdate() {
-	// 	// script();
-	// 	// let authorList = ["Niranjana Swami", "Srila Prabhupada"];
-	// 	// this.props.quoteOfDay(authorList);
-	// 	this.setState({
-	// 		quotes: this.props.quote.quotes
-	// 	});
-	// }
-
-	render() {
+	render () {
 		if (!this.props.quote) {
 			<div> Loading... </div>;
 		}
 		return (
 			<div>
-				{console.log(this.props.quote)}
-				{console.log(this.state.quotes)}
 				<section>
-					<div style={{ textAlign: "center" }}>
-						<h3 style={{ marginTop: "25px" }}> Quotes of the day </h3>
-						{/* <h4> Lorem ipsum dolor sit amet, consectetur adipiscing elit </h4> */}
+					<div style={{ textAlign: 'center' }}>
+						<h3 style={{ marginTop: '25px' }}> Quotes of the day </h3>
 						<br />
 						<br />
 					</div>
@@ -79,10 +42,10 @@ export class Blogs extends Component {
 									date={this.props.quote.quotes[0].published_date}
 									description={this.props.quote.quotes[0].en.body}
 									to={{
-										pathname: "/quotes/Niranjana Swami",
-										state: "Niranjana Swami"
+										pathname: '/quotes/Niranjana Swami',
+										state: 'Niranjana Swami',
 									}}
-									image="images/person1.jpg"
+									image="https://ik.imagekit.io/gcwjdmqwwznjl/bitmap-copy-4_L1mokOQ4c.png"
 								/>
 
 								<SingleBlogHome
@@ -91,10 +54,10 @@ export class Blogs extends Component {
 									date={this.props.quote.quotes[1].published_date}
 									description={this.props.quote.quotes[1].en.body}
 									to={{
-										pathname: "/quotes/Srila Prabhupada",
-										state: "Srila Prabhupada"
+										pathname: '/quotes/Srila Prabhupada',
+										state: 'Srila Prabhupada',
 									}}
-									image="images/person2.jpg"
+									image="https://ik.imagekit.io/gcwjdmqwwznjl/person2_e_HY-dJNH.jpg"
 								/>
 							</div>
 						</div>
@@ -109,7 +72,7 @@ export class Blogs extends Component {
 
 const mapStateToProps = state => {
 	return {
-		quote: state.quoteReducer
+		quote: state.quoteReducer,
 	};
 };
 
@@ -117,7 +80,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		quoteOfDay: authorList => {
 			dispatch(quoteOfDay(authorList));
-		}
+		},
 	};
 };
 

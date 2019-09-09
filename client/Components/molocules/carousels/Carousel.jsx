@@ -1,43 +1,43 @@
-import React, { Component } from "react";
-import script from "../../../assets/script";
-import SingleCarousel from "../../atoms/SingleCarousel/singleCarousel";
-import Biography from "../Biography/Biography";
-import Announcement from "../../organisms/Announcement/Announcement";
-import GridLayoutMenus from "../../organisms/GridLayoutMenu/GridLayoutMenus";
-import QuoteOfDay from "../../molocules/SingleQuote/QuotesOfDay";
-import ContentDetails from "../../../containers/contents/ContentDetails";
-import RussianDubbedLectures from "../../../containers/Lectures/LecturesInRussian";
-import "./index.css";
-import { connect } from "react-redux";
-import { quoteOfDay } from "../../../actions/quoteActions";
+import React from 'react';
+import script from '../../../assets/script';
+import SingleCarousel from '../../atoms/SingleCarousel/singleCarousel';
+import Biography from '../Biography/Biography';
+import Announcement from '../../organisms/Announcement/Announcement';
+import GridLayoutMenus from '../../organisms/GridLayoutMenu/GridLayoutMenus';
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
+import ContentDetails from '../../../containers/contents/ContentDetails';
+import RussianDubbedLectures from '../../../containers/Lectures/LecturesInRussian';
+import './index.css';
+import { connect } from 'react-redux';
+import { quoteOfDay } from '../../../actions/quoteActions';
 
-export class Carousel2 extends Component {
-	constructor(props) {
+export class Carousel2 extends React.Component {
+	constructor (props) {
 		super(props);
 		var date = new Date().getSeconds();
 		if (date % 2 === 0) {
 			this.state = {
 				quotes: [],
-				evenodd: "even"
+				evenodd: 'even',
 			};
 		} else {
 			this.state = {
 				quotes: [],
-				evenodd: "odd"
+				evenodd: 'odd',
 			};
 		}
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		script();
-		let authorList = ["Niranjana Swami", "Srila Prabhupada"];
+		let authorList = ['Niranjana Swami', 'Srila Prabhupada'];
 		this.props.quoteOfDay(authorList);
 		this.setState({
-			quotes: this.props.quote.quotes
+			quotes: this.props.quote.quotes,
 		});
 	}
 
-	render() {
+	render () {
 		if (!this.props.quote) {
 			<div> Loading... </div>;
 		}
@@ -60,11 +60,23 @@ export class Carousel2 extends Component {
 				<br />
 				<br />
 				<div>
-					<img className="img1" src="images/circle.png" />
-					<img className="img2" src="images/circle.png" />
-					<img className="img3" src="images/circle.png" />
+					<img
+						className="img1"
+						src="https://ik.imagekit.io/gcwjdmqwwznjl/circle_6hILMgrYy.png"
+					/>
+					<img
+						className="img2"
+						src="https://ik.imagekit.io/gcwjdmqwwznjl/circle_6hILMgrYy.png"
+					/>
+					<img
+						className="img3"
+						src="https://ik.imagekit.io/gcwjdmqwwznjl/circle_6hILMgrYy.png"
+					/>
 					<GridLayoutMenus />
-					<img className="img4" src="images/circle.png" />
+					<img
+						className="img4"
+						src="https://ik.imagekit.io/gcwjdmqwwznjl/circle_6hILMgrYy.png"
+					/>
 					<br />
 					<br />
 					<div class="container">
@@ -90,7 +102,7 @@ export class Carousel2 extends Component {
 
 const mapStateToProps = state => {
 	return {
-		quote: state.quoteReducer
+		quote: state.quoteReducer,
 	};
 };
 
@@ -98,7 +110,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		quoteOfDay: authorList => {
 			dispatch(quoteOfDay(authorList));
-		}
+		},
 	};
 };
 

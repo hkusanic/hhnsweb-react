@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import renderHTML from "react-render-html";
-import reactCookie from "react-cookies";
+import React from 'react';
+import renderHTML from 'react-render-html';
+import reactCookie from 'react-cookies';
 
-export class BiographyDetails extends Component {
-	constructor(props) {
+export class BiographyDetails extends React.Component {
+	constructor (props) {
 		super(props);
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		window.scrollTo(0, 0);
 	}
 
-	render() {
+	render () {
 		if (!this.props.location.state) {
 			return <div>Error Occured..........</div>;
 		}
@@ -24,10 +24,10 @@ export class BiographyDetails extends Component {
 								<div className="col-12">
 									<h3
 										className="post-creative-title centerAlign alignment"
-										style={{ marginTop: "-7px" }}
+										style={{ marginTop: '-7px' }}
 									>
 										{renderHTML(
-											reactCookie.load("languageCode") === "en"
+											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.title_en
 												: this.props.location.state.title_ru
 										)}
@@ -38,13 +38,13 @@ export class BiographyDetails extends Component {
 								<div className="col">
 									<div className="floated">
 										<img
-											style={{ objectFit: "cover" }}
+											style={{ objectFit: 'cover' }}
 											src={this.props.location.state.img}
 										/>
 									</div>
 									<div className="textContent">
 										{renderHTML(
-											reactCookie.load("languageCode") === "en"
+											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.content_en
 												: this.props.location.state.content_ru
 										)}

@@ -10,7 +10,6 @@ export const CONTACT_US = 'CONTACT_US';
 export const GET_USER_DETAILS_BY_USER_ID = 'GET_USER_DETAILS_BY_USER_ID';
 export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
 
-
 // Blog Constants
 export const GET_BLOGS = 'GET_BLOGS';
 export const GET_BLOG = 'GET_BLOG';

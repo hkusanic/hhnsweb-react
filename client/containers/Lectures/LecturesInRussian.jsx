@@ -1,42 +1,42 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getRussianDubbedLecture } from "../../actions/lectureActions";
-import { Link } from "react-router-dom";
-import { Card } from "antd";
+import React from 'react';
+import { connect } from 'react-redux';
+import { getRussianDubbedLecture } from '../../actions/lectureActions';
+import { Link } from 'react-router-dom';
+import { Card } from 'antd';
 
-class RussiaDubbedLectures extends Component {
-	constructor(props) {
+class RussiaDubbedLectures extends React.Component {
+	constructor (props) {
 		super(props);
 		this.state = {
-			lecture: []
+			lecture: [],
 		};
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		this.setState({
-			lecture: this.props.lectureDetails.lecture
+			lecture: this.props.lectureDetails.lecture,
 		});
 		this.props.getRussianDubbedLecture({
 			page: 1,
-			translation: "Russian dubbed",
-			limit: 5
+			translation: 'Russian dubbed',
+			limit: 5,
 		});
 	}
 
-	render() {
+	render () {
 		return (
 			<Card
 				className="centerAlign recentActivityCard"
 				title="Lecture Dubbed in Russian"
 			>
-				<div style={{ height: "458px" }}>
-					{this.props.lectureDetails &&
-						this.props.lectureDetails.lectures &&
-						this.props.lectureDetails.lectures.map(eachLecture => {
+				<div style={{ height: '458px' }}>
+					{this.props.lectureDetails
+						&& this.props.lectureDetails.lectures
+						&& this.props.lectureDetails.lectures.map(eachLecture => {
 							return (
 								<div className="lecture_div">
 									<Link
-										style={{ fontFamily: "Charter" }}
+										style={{ fontFamily: 'Charter' }}
 										key={eachLecture.id}
 										to={`/lectureDetails/${eachLecture.uuid}`}
 									>{`${eachLecture.en.topic}`}</Link>
@@ -44,8 +44,8 @@ class RussiaDubbedLectures extends Component {
 										className="content_p"
 										key={eachLecture.id}
 									>{`Posted On     ${new Date(
-										eachLecture.created_date_time
-									).toLocaleString("en-GB")}`}</p>
+											eachLecture.created_date_time
+										).toLocaleString('en-GB')}`}</p>
 								</div>
 							);
 						})}
@@ -57,7 +57,7 @@ class RussiaDubbedLectures extends Component {
 
 const mapStateToProps = state => {
 	return {
-		lectureDetails: state.lectureReducer
+		lectureDetails: state.lectureReducer,
 	};
 };
 
@@ -65,7 +65,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		getRussianDubbedLecture: page => {
 			dispatch(getRussianDubbedLecture(page));
-		}
+		},
 	};
 };
 

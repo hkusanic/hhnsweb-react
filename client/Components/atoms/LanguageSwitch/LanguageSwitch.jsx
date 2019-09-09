@@ -1,57 +1,57 @@
-import React, { Component } from "react";
-import { setActiveLanguage, withLocalize } from "react-localize-redux";
-import reactCookie from "react-cookies";
-import { Translate } from "react-localize-redux";
+import React from 'react';
+import { setActiveLanguage, withLocalize } from 'react-localize-redux';
+import reactCookie from 'react-cookies';
+import { Translate } from 'react-localize-redux';
 
-export class LanguageSwitch extends Component {
-	constructor(props) {
+export class LanguageSwitch extends React.Component {
+	constructor (props) {
 		super(props);
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		$(window).load(function () {
-			$("html, body").animate({ scrollTop: $(document).height() }, 10);
-			$("html, body").animate({ scrollTop: 0 });
+			$('html, body').animate({ scrollTop: $(document).height() }, 10);
+			$('html, body').animate({ scrollTop: 0 });
 		});
 	}
 
-	languageToggle(language) {
+	languageToggle (language) {
 		setActiveLanguage(language);
-		reactCookie.save("languageCode", language, { path: "/" });
+		reactCookie.save('languageCode', language, { path: '/' });
 		window.location.reload();
 	}
 
-	render() {
-		let currentLanguage = "en";
-		if (reactCookie.load("languageCode")) {
-			currentLanguage = reactCookie.load("languageCode");
+	render () {
+		let currentLanguage = 'en';
+		if (reactCookie.load('languageCode')) {
+			currentLanguage = reactCookie.load('languageCode');
 		}
 		return (
 			<span>
 				<a
 					className={
-						currentLanguage === "en" ? "color-toggle" : "color-toggle-cursor"
+						currentLanguage === 'en' ? 'color-toggle' : 'color-toggle-cursor'
 					}
 					onClick={() => {
-						if (currentLanguage !== "en") {
-							this.languageToggle("en");
+						if (currentLanguage !== 'en') {
+							this.languageToggle('en');
 						}
 					}}
 				>
-					<Translate>{({ translate }) => translate("HOME.en")}</Translate>
+					<Translate>{({ translate }) => translate('HOME.en')}</Translate>
 				</a>
 				|
 				<a
 					className={
-						currentLanguage === "ru" ? "color-toggle" : "color-toggle-cursor"
+						currentLanguage === 'ru' ? 'color-toggle' : 'color-toggle-cursor'
 					}
 					onClick={() => {
-						if (currentLanguage !== "ru") {
-							this.languageToggle("ru");
+						if (currentLanguage !== 'ru') {
+							this.languageToggle('ru');
 						}
 					}}
 				>
-					<Translate>{({ translate }) => translate("HOME.ru")}</Translate>
+					<Translate>{({ translate }) => translate('HOME.ru')}</Translate>
 				</a>
 			</span>
 		);

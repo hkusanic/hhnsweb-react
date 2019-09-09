@@ -1,12 +1,12 @@
-import React from "react";
-import SingleGridMenu from "../../atoms/SingleGirdMenu/SingleGridMenu";
-import Auth from "../../../utils/Auth";
-import { Translate } from "react-localize-redux";
+import React from 'react';
+import SingleGridMenu from '../../atoms/SingleGirdMenu/SingleGridMenu';
+import Auth from '../../../utils/Auth';
+import { Translate } from 'react-localize-redux';
 export class GridLayoutMenus extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isUserLogin: true
+			isUserLogin: true,
 		};
 	}
 	componentDidMount() {
@@ -16,12 +16,12 @@ export class GridLayoutMenus extends React.Component {
 
 	handleNavigationClick = () => {
 		setTimeout(() => {
-			$(".login-modal-2").removeClass("active");
-			$(".register-modal-2").removeClass("active");
+			$('.login-modal-2').removeClass('active');
+			$('.register-modal-2').removeClass('active');
 			if (this.state.isUserLogin) {
-				$(".login-modal-2").addClass("active");
-				$(".rd-navbar-toggle").removeClass("active");
-				$(".rd-navbar-nav-wrap").removeClass("active");
+				$('.login-modal-2').addClass('active');
+				$('.rd-navbar-toggle').removeClass('active');
+				$('.rd-navbar-nav-wrap').removeClass('active');
 			}
 		}, 500);
 	};
@@ -31,7 +31,7 @@ export class GridLayoutMenus extends React.Component {
 			<div>
 				<section
 					className="section-lg text-center"
-					style={{ position: "relative", zIndex: "1" }}
+					style={{ position: 'relative', zIndex: '1' }}
 				>
 					<div className="container">
 						<div className="row row-50 row-lg-70 offset-top-2">
@@ -41,7 +41,7 @@ export class GridLayoutMenus extends React.Component {
 								menu={
 									<p>
 										<Translate>
-											{({ translate }) => translate("HOME.audio")}
+											{({ translate }) => translate('HOME.audio')}
 										</Translate>
 									</p>
 								}
@@ -54,7 +54,7 @@ export class GridLayoutMenus extends React.Component {
 								menu={
 									<p>
 										<Translate>
-											{({ translate }) => translate("HOME.video")}
+											{({ translate }) => translate('HOME.video')}
 										</Translate>
 									</p>
 								}
@@ -67,7 +67,7 @@ export class GridLayoutMenus extends React.Component {
 								menu={
 									<p>
 										<Translate>
-											{({ translate }) => translate("HOME.Transcriptions")}
+											{({ translate }) => translate('HOME.Transcriptions')}
 										</Translate>
 									</p>
 								}
@@ -80,7 +80,7 @@ export class GridLayoutMenus extends React.Component {
 								menu={
 									<p>
 										<Translate>
-											{({ translate }) => translate("HOME.Summaries")}
+											{({ translate }) => translate('HOME.Summaries')}
 										</Translate>
 									</p>
 								}
@@ -93,7 +93,7 @@ export class GridLayoutMenus extends React.Component {
 								menu={
 									<p>
 										<Translate>
-											{({ translate }) => translate("HOME.gallery")}
+											{({ translate }) => translate('HOME.gallery')}
 										</Translate>
 									</p>
 								}
@@ -114,7 +114,7 @@ export class GridLayoutMenus extends React.Component {
 								menu={
 									<p>
 										<Translate>
-											{({ translate }) => translate("lecturesTitle")}
+											{({ translate }) => translate('lecturesTitle')}
 										</Translate>
 									</p>
 								}

@@ -1,6 +1,6 @@
-import React from "react";
-import { Card } from "antd";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Card } from 'antd';
+import { Link } from 'react-router-dom';
 
 const SingleGridMenu = props => {
 	return (
@@ -13,8 +13,11 @@ const SingleGridMenu = props => {
 						onClick={props.handleNavigationClick}
 					>
 						<div className="singlegrid_div">
-							<img className="singleGrid_img" src={props.image} alt="Menu Image" />
-
+							<img
+								className="singleGrid_img"
+								src={props.image}
+								alt="Menu Image"
+							/>
 							<div className="singleGrid_menu">{props.menu}</div>
 						</div>
 					</Link>
