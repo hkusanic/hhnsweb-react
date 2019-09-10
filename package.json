@@ -6,6 +6,7 @@
     "@sendgrid/mail": "^6.4.0",
     "antd": "^3.16.6",
     "antd-init": "^2.0.7",
+    "aws-sdk": "^2.525.0",
     "axios": "^0.18.1",
     "bunyan": "^1.8.12",
     "cloudinary-react": "^1.1.0",

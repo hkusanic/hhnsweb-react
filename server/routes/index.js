@@ -10,7 +10,6 @@ var routes = {
 };
 var multipart = require("connect-multiparty");
 var multipartMiddleware = multipart();
-
 // Export our app routes
 exports = module.exports = function(app) {
 	// Get access to the API route in our app

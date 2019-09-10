@@ -1,38 +1,38 @@
-const keystone = require('keystone');
+const keystone = require("keystone");
 const Types = keystone.Field.Types;
-var EMAIL_CONFIG = require('../constants/constant');
-var nodemailer = require('nodemailer');
+var EMAIL_CONFIG = require("../constants/constant");
+var nodemailer = require("nodemailer");
 
-var transporter = nodemailer.createTransport(EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig);
+var transporter = nodemailer.createTransport(
+	EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig
+);
 
-function sendMail (from, to, subject, html) {
-
+function sendMail(from, to, subject, html) {
 	var mailOptions = createMailBody(from, to, subject, html);
 
 	return transporter.sendMail(mailOptions);
 }
 
-function createMailBody (from, to, subject, html) {
+function createMailBody(from, to, subject, html) {
 	var mailOptions = {
 		from: from,
 		to: to,
 		subject: subject,
-		html: html,
+		html: html
 	};
 	return mailOptions;
 }
 
-
-let Appointment = new keystone.List('Appointment', {
+let Appointment = new keystone.List("Appointment", {
 	autokey: {
-		path: 'slug',
-		from: 'email',
-		unique: true,
+		path: "slug",
+		from: "email",
+		unique: true
 	},
 	map: {
-		name: 'email',
+		name: "email"
 	},
-	defaultSort: '-dateCreated',
+	defaultSort: "-dateCreated"
 });
 
 Appointment.add({
@@ -42,68 +42,66 @@ Appointment.add({
 		required: true,
 		unique: true,
 		index: true,
-		default: '',
+		default: ""
 	},
 	requestedFor: {
 		type: Types.Select,
-		options: ['Darshan-15', 'Darshan-30', 'Darshan-45', 'Darshan-60'],
-		default: 'Darshan-15',
+		options: ["Darshan-15", "Darshan-30", "Darshan-45", "Darshan-60"],
+		default: "Darshan-15"
 	},
 	approvedFor: {
 		type: Types.Select,
-		options: ['Darshan-15', 'Darshan-30', 'Darshan-45', 'Darshan-60'],
-		default: 'Darshan-15',
+		options: ["Darshan-15", "Darshan-30", "Darshan-45", "Darshan-60"],
+		default: "Darshan-15"
 	},
 	disciple: {
 		type: String,
-		default: 'no',
+		default: "no"
 	},
 	mobileNumber: {
 		type: Types.Number,
-		default: 0,
+		default: 0
 	},
 	dateCreated: {
 		type: Types.Date,
-		default: Date.now,
+		default: Date.now
 	},
 	approved: {
 		type: Types.Boolean,
-		default: false,
+		default: false
 	},
 	canceled: {
 		type: Types.Boolean,
-		default: false,
+		default: false
 	},
 	created_date_time: { type: Types.Date, default: Date.now }
-
 });
 
-Appointment.defaultColumns = 'title_en, date|15%, needs_translation|10%';
+Appointment.defaultColumns = "title_en, date|15%, needs_translation|10%";
 
-Appointment.schema.pre('save', function (next) {
+Appointment.schema.pre("save", function(next) {
 	next();
 });
 
-Appointment.schema.post('save', function (data, next) {
-
+Appointment.schema.post("save", function(data, next) {
 	const siteUrl = EMAIL_CONFIG.CONSTANTS.SITE_URL;
 
 	const msg = {
 		to: data.email,
 		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
-		subject: '',
-		html: '',
+		subject: "",
+		html: ""
 	};
 
 	const msgApproval = {
 		to: data.email,
 		from: EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.FROM_EMAIL,
-		subject: '',
-		html: '',
+		subject: "",
+		html: ""
 	};
 
 	if (data.approved && data.canceled === false) {
-		msg.subject = 'Approved - Request for darshan with H.H. Niranjana Swami';
+		msg.subject = "Approved - Request for darshan with H.H. Niranjana Swami";
 		msg.html = `
 		<p>Hare Krishna,</p>
 		<p>Please accept our humble obeisances.</p>
@@ -116,9 +114,8 @@ Appointment.schema.post('save', function (data, next) {
 		<p>Your servants always,</p>
 		<p>Site administrators</p>
 		`;
-	}
-	else if (data.approved !== true && data.canceled === false) {
-		msg.subject = 'Request for darshan with H.H. Niranjana Swami';
+	} else if (data.approved !== true && data.canceled === false) {
+		msg.subject = "Request for darshan with H.H. Niranjana Swami";
 		msg.html = `
 		<p>Hare Krishna,</p>
 		<p>Please accept our humble obeisances.</p>
@@ -142,25 +139,25 @@ Appointment.schema.post('save', function (data, next) {
 		<br /><br />Your servants,
 		<br />Site Administrators</p>
 		`;
-		
-		for(let i = 0; i < EMAIL_CONFIG.CONSTANTS.APPROVAL_EMAILS.length; i++) {
 
- 		setTimeout(function(){
-			sendMail(msgApproval.from, EMAIL_CONFIG.CONSTANTS.APPROVAL_EMAILS[i], msgApproval.subject, msgApproval.html)
-			.then((res) => {
-				console.log('email was sent', res);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-
-		},10000);
-	
-}
-
-	}
-	else if (data.canceled === true) {
-		msg.subject = 'Declined - Request for darshan with H.H. Niranjana Swami';
+		for (let i = 0; i < EMAIL_CONFIG.CONSTANTS.APPROVAL_EMAILS.length; i++) {
+			setTimeout(function() {
+				sendMail(
+					msgApproval.from,
+					EMAIL_CONFIG.CONSTANTS.APPROVAL_EMAILS[i],
+					msgApproval.subject,
+					msgApproval.html
+				)
+					.then(res => {
+						console.log("email was sent", res);
+					})
+					.catch(err => {
+						console.error(err);
+					});
+			}, 10000);
+		}
+	} else if (data.canceled === true) {
+		msg.subject = "Declined - Request for darshan with H.H. Niranjana Swami";
 		msg.html = `
 		<p>Hare Krishna,</p>
 		<p>Please accept our humble obeisances.</p>
@@ -174,19 +171,18 @@ Appointment.schema.post('save', function (data, next) {
 	}
 
 	sendMail(msg.from, data.email, msg.subject, msg.html)
-		.then((res) => {
-			console.log('email was sent', res);
+		.then(res => {
+			console.log("email was sent", res);
 		})
-		.catch((err) => {
+		.catch(err => {
 			console.error(err);
 		});
 
 	next();
 });
 
-Appointment.schema.post('validate', function (err, next) {
+Appointment.schema.post("validate", function(err, next) {
 	next();
 });
-
 
 Appointment.register();

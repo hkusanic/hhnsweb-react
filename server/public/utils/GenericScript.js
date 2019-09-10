@@ -61,7 +61,8 @@ function timeConverter(timestamp) {
 const cookie = new tough.Cookie({
 	key: "SSESS8c0f16dd6e4ff53e267519930069d1e3",
 	//value: "mGCQ4zhYa9K0Dex2-xTn4Eh5c3Ej_4NnuEKuhxPcPb0",
-	value: "C4iFoia_DH9PDEA5EAaW9cI1css1MjTKuQgFCY4ruAk",
+	value: "pAZYmQp6eb3H7-be9S6Z6_3gSx8OfeNuq9egFKtQNaU",
+	//value: "pAZYmQp6eb3H7-be9S6Z6_3gSx8OfeNuq9egFKtQNaU",
 	domain: "nrs.niranjanaswami.net",
 	httpOnly: false,
 	maxAge: 315360000000000
@@ -244,8 +245,8 @@ function getRaussainData(ar, callback) {
 function updateDatabase(batchArray, callback) {
 	let options = {
 		method: "POST",
-		//uri: "http://localhost:3000/api/blog/updateBulkNew/",
-		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/blog/updateBulkNew/",
+		uri: "http://localhost:3000/api/blog/updateBulkNew/",
+		//uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/blog/updateBulkNew/",
 		//uri: "http://dev.niranjanaswami.net/api/blog/updateBulkNew/",
 		body: batchArray,
 		json: true,
@@ -267,8 +268,8 @@ function updateDatabase(batchArray, callback) {
 function createSingleRUBlogItem(body) {
 	const options = {
 		method: "POST",
-		//uri: "http://localhost:3000/api/blog/create/",
-		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/blog/create/",
+		uri: "http://localhost:3000/api/blog/create/",
+		//uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/blog/create/",
 		//uri: "http://dev.niranjanaswami.net/api/blog/create/",
 		body: body,
 		json: true,
@@ -324,8 +325,8 @@ function getEnglishData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					//uri: "http://localhost:3000/api/blog/create/",
-					uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/blog/create/",
+					uri: "http://localhost:3000/api/blog/create/",
+					//uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/blog/create/",
 					//uri: "http://dev.niranjanaswami.net/api/blog/create/",
 					body: body,
 					json: true,

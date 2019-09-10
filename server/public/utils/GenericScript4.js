@@ -3,7 +3,6 @@ var tough = require("tough-cookie");
 var fs = require("fs");
 var https = require("https");
 var AWS = require("aws-sdk");
-var EMAIL_CONFIG = require("../../constants/constant");
 require("dotenv").config({ path: "/home/system5/Desktop/hhnsweb-react/.env" });
 // var httpAgent = new https.Agent({
 // 	keepAlive: true,
@@ -32,8 +31,7 @@ function timeConverter(timestamp) {
 const cookie = new tough.Cookie({
 	key: "SSESS8c0f16dd6e4ff53e267519930069d1e3",
 	//value: "mGCQ4zhYa9K0Dex2-xTn4Eh5c3Ej_4NnuEKuhxPcPb0",
-	//value: "UGWJ-P9v7xXkfHy2DodqckkEog87sf8JbtYNvx-A-Dc",
-	value: "pAZYmQp6eb3H7-be9S6Z6_3gSx8OfeNuq9egFKtQNaU",
+	value: "UGWJ-P9v7xXkfHy2DodqckkEog87sf8JbtYNvx-A-Dc",
 	domain: "nrs.niranjanaswami.net",
 	httpOnly: false,
 	maxAge: 315360000000000
@@ -56,13 +54,56 @@ var raussainfinalData = [];
 
 var fetchDateTime;
 
+function saveErrorLog(error) {
+	// var AWS = require('aws-sdk');
+	// AWS.config.update({region: 'us-east-2'});
+	let date = new Date();
+
+	let folderName = Math.round(
+		new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
+	).toString();
+	let timestamp = new Date().getTime().toString();
+	console.log(timestamp);
+	let filePath = "errorSavingRecords/" + folderName + "/" + timestamp + ".txt";
+
+	//let s3 = new AWS.S3({apiVersion: '2006-03-01'});
+	var bucketParams = {
+		Bucket: "hhns"
+	};
+
+	let body = {
+		error: error
+	};
+
+	// Call S3 to obtain a list of the objects in the bucket
+	console.log("here1");
+	let objectParams = {
+		Bucket: bucketParams.Bucket,
+		Key: filePath,
+		Body: JSON.stringify(body)
+	};
+	let uploadPromise = new AWS.S3({ apiVersion: "2006-03-01" })
+		.putObject(objectParams)
+		.promise();
+	uploadPromise
+		.then(data => {
+			console.log(
+				"Successfully uploaded data to " + bucketParams.Bucket + "/" + filePath
+			);
+			//res.status(200).json( { message : "Successfully uploaded data to " + bucketParams.Bucket + "/" + filePath } );
+		})
+		.catch(err => {
+			console.log(err);
+			console.log({ error: err });
+		});
+}
+
 listObject();
 
 function listObject() {
 	// Load the AWS SDK for Node.js
-	//console.log("here>>>>>", process.env.AWS_ACCESS_KEY_ID);
+
 	AWS.config.update({
-		//region: process.env.AWS_region,
 		region: "us-east-2",
 		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
 		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
@@ -80,7 +121,7 @@ function listObject() {
 	let timestamp = Math.round(
 		new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
 	).toString();
-	// Call S3 to obtain a list of the objectst in the bucket
+	// Call S3 to obtain a list of the objects in the bucket
 	s3.listObjects(bucketParams, function(err, data) {
 		if (err) console.log(err, err.stack); // an error occurred
 
@@ -108,8 +149,9 @@ function listObject() {
 
 			var params = { Bucket: "hhns", Key: arr[0].Key };
 			//let filename = './data/timestamp.txt';
-			//var filename = "./data/" + arr[0].Key.replace(/^.*[\\\/]/, "");
-			//console.log(filename);
+			// var filename = "./data/" + arr[0].Key.replace(/^.*[\\\/]/, "");
+			// console.log(filename);
+			// var file = fs.createWriteStream(filename);
 			s3.getObject(params, function(err, data) {
 				if (err) return err;
 
@@ -141,15 +183,31 @@ function getEnglishNodeList() {
 	rp(options)
 		.then(async function(body) {
 			englishDataList = body;
+			englishDataList.splice(0, 490);
 			console.log(
 				"getEnglishList() function is successfully executed",
 				englishDataList.length,
 				"data received"
 			);
-			getEnglishDatainBatches();
+			englishDataList = englishDataList.filter(function(value) {
+				return value.created > fetchDateTime;
+			});
+			if (englishDataList && englishDataList.length > 0) {
+				console.log("after filteration>>>>", englishDataList.length);
+				getEnglishDatainBatches();
+			} else {
+				console.log("no new data here>>>");
+				getRuNodeList();
+			}
 		})
 		.catch(function(err) {
-			console.log("Error inside getUserList() function ====>>>>", err);
+			console.log(
+				"Error inside getEnglishNodeList() function in Blog region ====>>>>",
+				err
+			);
+			saveErrorLog(
+				"Error inside getEnglishNodeList() function in Blog region====>>>>"
+			);
 		});
 }
 
@@ -162,7 +220,7 @@ function getEnglishDatainBatches() {
 				getEnglishDatainBatches();
 				// console.log("fetching only 10 records");
 				// englishNodeList = 1;
-				//getRuNodeList();
+				// getRuNodeList();
 			}, 4000);
 		});
 	} else {
@@ -176,10 +234,10 @@ function getRaussainDatainBatches() {
 		let ar = raussainDataList.splice(0, 10);
 		getRaussainData(ar, () => {
 			setTimeout(() => {
-				//getRaussainDatainBatches();
-				console.log("fetching only 10 records");
-				russianNodeList = 1;
-				updateDatabaseInBatches();
+				getRaussainDatainBatches();
+				// console.log("fetching only 10 records");
+				// russianNodeList = 1;
+				// updateDatabaseInBatches();
 			}, 4000);
 		});
 	} else {
@@ -218,15 +276,31 @@ function getRuNodeList() {
 	rp(options)
 		.then(function(body) {
 			raussainDataList = body;
+			raussainDataList.splice(0, 490);
 			console.log(
 				"getRuNodeList() function is successfully executed",
 				raussainDataList.length,
 				"data received"
 			);
+			// raussainDataList = raussainDataList.filter(function(value) {
+			// 	return value.created > fetchDateTime;
+			// });
+			// if (raussainDataList && raussainDataList.length > 0) {
+			// 	console.log("after filteration>>>", raussainDataList.length);
+			// 	getRaussainDatainBatches();
+			// } else {
+			// 	console.log(
+			// 		"no new data here>> calling another function for populating lecture data"
+			// 	);
+			// 	getEnglishLectureNodeList();
+			// }
 			getRaussainDatainBatches();
 		})
 		.catch(function(err) {
 			console.log("Error inside getRuNodeList() function ====>>>>", err);
+			saveErrorLog(
+				"error inside getRuNodeList() function in Blog Region ====>>>>"
+			);
 		});
 }
 
@@ -249,43 +323,47 @@ function getRaussainData(ar, callback) {
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
-				if (ar[i].created > fetchDateTime) {
-					if (ar[i].tnid !== 0) {
-						const temp = {
-							tnid: ar[i].tnid,
-							languages: "both",
-							ru: {
-								nid: ar[i].nid,
-								title: data[i].title,
-								body: data[i].body
-							}
-						};
-						raussainfinalData.push(temp);
-					} else {
-						const body = {
-							uuid: uuidv4(),
-							author: "Niranjana Swami",
-							audio_files: [],
-							tnid: ar[i].tnid,
-							blog_creation_date: data[i].date,
-							created_date_time: timeConverter(ar[i].created),
-							publish_date: ar[i].created,
-							languages: ar[i].tnid !== 0 ? "" : "en",
-							comments: data[i].comments,
-							ru: {
-								nid: data[i].nid,
-								title: data[i].title,
-								body: data[i].body
-							}
-						};
-						createSingleRUBlogItem(body);
-					}
+				//if (ar[i].created > fetchDateTime) {
+				if (ar[i].tnid !== 0) {
+					const temp = {
+						tnid: ar[i].tnid,
+						languages: "both",
+						ru: {
+							nid: ar[i].nid,
+							title: data[i].title,
+							body: data[i].body
+						}
+					};
+					raussainfinalData.push(temp);
+				} else {
+					const body = {
+						uuid: uuidv4(),
+						author: "Niranjana Swami",
+						audio_files: [],
+						tnid: ar[i].tnid,
+						blog_creation_date: data[i].date,
+						created_date_time: timeConverter(ar[i].created),
+						publish_date: ar[i].created,
+						languages: ar[i].tnid !== 0 ? "" : "en",
+						comments: data[i].comments,
+						ru: {
+							nid: data[i].nid,
+							title: data[i].title,
+							body: data[i].body
+						}
+					};
+					createSingleRUBlogItem(body);
 				}
+				//}
+				// else {
+				// 	console.log("No new Data");
+				// }
 			}
 			callback();
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
+			saveErrorLog("error inside the profile api ===>>>");
 		});
 }
 
@@ -309,6 +387,7 @@ function updateDatabase(batchArray, callback) {
 		})
 		.catch(err => {
 			console.log("errr", err);
+			saveErrorLog("error in updateDatabase() function in Blog region");
 		});
 }
 function createSingleRUBlogItem(body) {
@@ -383,6 +462,9 @@ function getEnglishData(ar, callback) {
 				};
 				return rp(options);
 				//}
+				// else {
+				// 	console.log("No new Data");
+				// }
 			});
 			return Promise.all(insertDataPromise);
 		})
@@ -392,6 +474,9 @@ function getEnglishData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
+			saveErrorLog(
+				"error inside the profile api in getEnglishData() function===>>>"
+			);
 		});
 }
 /* #endregion*/
@@ -417,18 +502,33 @@ function getEnglishLectureNodeList() {
 	rp(options)
 		.then(function(body) {
 			englishLectureDataList = body;
-
+			englishLectureDataList.splice(0, 3300);
 			console.log(
 				"getEnglishLectureNodeList() function is successfully executed",
 				englishLectureDataList.length,
 				"data received"
 			);
-			getEnglishLectureDatainBatches();
+			englishLectureDataList = englishLectureDataList.filter(function(value) {
+				return englishLectureDataList.created > fetchDateTime;
+			});
+			if (englishLectureDataList && englishLectureDataList.length > 0) {
+				console.log(
+					"after filteration length>>",
+					englishLectureDataList.length
+				);
+				getEnglishLectureDatainBatches();
+			} else {
+				console.log("no new data here. Calling getRuLectureNodeList()");
+				getRuLectureNodeList();
+			}
 		})
 		.catch(function(err) {
 			console.log(
 				"Error inside getEnglishLectureNodeList() function ====>>>>",
 				err
+			);
+			saveErrorLog(
+				"Error inside getEnglishLectureNodeList() function ====>>>>" + err
 			);
 		});
 }
@@ -438,10 +538,10 @@ function getEnglishLectureDatainBatches() {
 		let ar = englishLectureDataList.splice(0, 10);
 		getEnglishLectureData(ar, () => {
 			setTimeout(() => {
-				//getEnglishLectureDatainBatches();
-				console.log("fetching only 10 English Lecture records");
-				englishLectureList = 1;
-				getRuLectureNodeList();
+				getEnglishLectureDatainBatches();
+				// console.log("fetching only 10 English Lecture records");
+				// englishLectureList = 1;
+				// getRuLectureNodeList();
 			}, 2000);
 		});
 	} else {
@@ -465,15 +565,32 @@ function getRuLectureNodeList() {
 	rp(options)
 		.then(function(body) {
 			russianLectureDataList = body;
+			russianLectureDataList.splice(0, 3300);
 			console.log(
 				"getRuLectureNodeList() function is successfully executed",
 				russianLectureDataList.length,
 				"data received"
 			);
-			getRussianLectureDatainBatches();
+			console.log("fetchDateTime>>", fetchDateTime);
+			russianLectureDataList = russianLectureDataList.filter(function(value) {
+				return value.created > fetchDateTime;
+			});
+			if (russianLectureDataList && russianLectureDataList.length > 0) {
+				console.log(
+					"after filteration length here>>>",
+					russianLectureDataList.length
+				);
+				getRussianLectureDatainBatches();
+			} else {
+				console.log(
+					"no new data here>>>>Calling another function for populating Transcription "
+				);
+				getEnglishTranscriptionNodeList();
+			}
 		})
 		.catch(function(err) {
 			console.log("Error inside getRuLectureNodeList() function ====>>>>", err);
+			saveErrorLog("Error inside getRuLectureNodeList() function ====>>>>");
 		});
 }
 function getRussianLectureDatainBatches() {
@@ -511,50 +628,54 @@ function getRussianLectureData(ar, callback) {
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
-				if (ar[i].created > fetchDateTime) {
-					if (data[i].tnid != 0) {
-						const temp = {
-							tnid: data[i].tnid,
-							published_date: timeConverter(data[i].created),
-							languages: "both",
-							ru: {
-								nid: data[i].nid,
-								created: timeConverter(data[i].created),
-								published: timeConverter(data[i].created),
-								changed: timeConverter(data[i].changed),
-								title: data[i].title
-							}
-						};
-						russianLectureFinalData.push(temp);
-					} else {
-						const body = {
-							uuid: uuidv4(),
-							tnid: data[i].tnid,
-							published_date: timeConverter(data[i].created),
-							languages: "ru",
-							ru: {
-								nid: data[i].nid,
-								created: timeConverter(data[i].created),
-								published: timeConverter(data[i].created),
-								changed: timeConverter(data[i].changed),
-								title: data[i].title
-							}
-						};
-						createSingleRULectureItem(body);
-					}
+				//if (data[i].created > fetchDateTime) {
+				if (data[i].tnid != 0) {
+					const temp = {
+						tnid: data[i].tnid,
+						published_date: timeConverter(data[i].created),
+						languages: "both",
+						ru: {
+							nid: data[i].nid,
+							created: timeConverter(data[i].created),
+							published: timeConverter(data[i].created),
+							changed: timeConverter(data[i].changed),
+							title: data[i].title
+						}
+					};
+					russianLectureFinalData.push(temp);
+				} else {
+					const body = {
+						uuid: uuidv4(),
+						tnid: data[i].tnid,
+						published_date: timeConverter(data[i].created),
+						languages: "ru",
+						ru: {
+							nid: data[i].nid,
+							created: timeConverter(data[i].created),
+							published: timeConverter(data[i].created),
+							changed: timeConverter(data[i].changed),
+							title: data[i].title
+						}
+					};
+					createSingleRULectureItem(body);
 				}
+				//}
 			}
 			callback();
 		})
 		.catch(err => {
 			console.log("error inside the getRussianLectureData() ===>>>", err);
+			saveErrorLog(
+				"error inside the getRussianLectureData() in Lecture region===>>>"
+			);
 		});
 }
 
 function updateDatabaseLectures() {
 	let options = {
 		method: "POST",
-		uri: "http://dev.niranjanaswami.net/api/lecture/updateBulkNew/",
+		uri: "http://localhost:3000/api/lecture/updateBulkNew/",
+		//uri: "http://dev.niranjanaswami.net/api/lecture/updateBulkNew/",
 		body: russianLectureFinalData,
 		json: true,
 		pool: httpAgent,
@@ -571,12 +692,14 @@ function updateDatabaseLectures() {
 		})
 		.catch(err => {
 			console.log("errr");
+			saveErrorLog("err inside updateDatabaseLecture region");
 		});
 }
 function createSingleRULectureItem(body) {
 	const options = {
 		method: "POST",
-		uri: "http://dev.niranjanaswami.net/api/lecture/create/",
+		uri: "http://localhost:3000/api/lecture/create/",
+		//uri: "http://dev.niranjanaswami.net/api/lecture/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -627,7 +750,8 @@ function getEnglishLectureData(ar, callback) {
 					};
 					const options = {
 						method: "POST",
-						uri: "http://dev.niranjanaswami.net/api/lecture/create/",
+						uri: "http://localhost:3000/api/lecturecreate/",
+						//uri: "http://dev.niranjanaswami.net/api/lecture/create/",
 						body: body,
 						json: true,
 						pool: httpAgent,
@@ -647,6 +771,7 @@ function getEnglishLectureData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
+			saveErrorLog("error inside the profile api ===>>>");
 		});
 }
 
@@ -679,13 +804,33 @@ function getEnglishTranscriptionNodeList() {
 				englishTranscriptionDataList.length,
 				"data received"
 			);
-			lectureList = 1;
-			getEnglishTranscriptionDatainBatches();
+			englishTranscriptionDataList = englishTranscriptionDataList.filter(
+				function(value) {
+					return englishTranscriptionDataList.created > fetchDateTime;
+				}
+			);
+			if (
+				englishTranscriptionDataList &&
+				englishTranscriptionDataList.length > 0
+			) {
+				console.log(
+					"after filteration>>>",
+					englishTranscriptionDataList.length
+				);
+				englishTranscriptsList = 1;
+				getEnglishTranscriptionDatainBatches();
+			} else {
+				console.log("no new data here>>> Calling RuNode list");
+				getRuTranscriptionNodeList();
+			}
 		})
 		.catch(function(err) {
 			console.log(
 				"Error inside getEnglishTranscriptionNodeList() function ====>>>>",
 				err
+			);
+			saveErrorLog(
+				"Error inside getEnglishTranscriptionNodeList() function in Transcription Region ====>>>>"
 			);
 		});
 }
@@ -765,6 +910,7 @@ function getEnglishTranscriptionData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the getEnglishTranscriptionData() ===>>>", err);
+			saveErrorLog("error inside the getEnglishTranscriptionData() ===>>>");
 		});
 }
 function getRuTranscriptionNodeList() {
@@ -787,12 +933,34 @@ function getRuTranscriptionNodeList() {
 				russianTranscriptionDataList.length,
 				"data received"
 			);
-			getRussianTranscriptionDatainBatches();
+			russianTranscriptionDataList = russianTranscriptionDataList.filter(
+				function(value) {
+					return value.created > fetchDateTime;
+				}
+			);
+			if (
+				russianTranscriptionDataList &&
+				russianTranscriptionDataList.length > 0
+			) {
+				console.log(
+					"after filteration length>>>",
+					russianTranscriptionDataList.length
+				);
+				getRussianTranscriptionDatainBatches();
+			} else {
+				console.log(
+					"no new data here>> calling another function for populating quotes"
+				);
+				getQutoesEnglishNodeList();
+			}
 		})
 		.catch(function(err) {
 			console.log(
 				"Error inside getRuTranscriptionNodeList() function ====>>>>",
 				err
+			);
+			saveErrorLog(
+				"Error inside getRuTranscriptionNodeList() function ====>>>>"
 			);
 		});
 }
@@ -801,10 +969,10 @@ function getRussianTranscriptionDatainBatches() {
 		let ar = russianTranscriptionDataList.splice(0, 10);
 		getRussianTranscriptionData(ar, () => {
 			setTimeout(() => {
-				//getRussianTranscriptionDatainBatches();
-				console.log("fetching only 10 russian transcription records");
-				russianTranscriptsList = 1;
-				updateDatabaseTranscriptions();
+				getRussianTranscriptionDatainBatches();
+				// console.log("fetching only 10 russian transcription records");
+				// russianTranscriptsList = 1;
+				// updateDatabaseTranscriptions();
 			}, 2000);
 		});
 	} else {
@@ -835,37 +1003,40 @@ function getRussianTranscriptionData(ar, callback) {
 					!Array.isArray(data[i].field_reference) &&
 					data[i].field_reference.und[0]
 				) {
-					if (ar[i].created > fetchDateTime) {
-						const temp = {
-							tnid: data[i].field_reference.und[0].target_id,
-							ru: {
-								transcription: {
-									nid: data[i].nid,
-									created: timeConverter(data[i].created),
-									published: timeConverter(data[i].created),
-									changed: timeConverter(data[i].changed),
-									title: data[i].title,
-									text: data[i].body.und[0].value
-										? data[i].body.und[0].value
+					//if (ar[i].created > fetchDateTime) {
+					const temp = {
+						tnid: data[i].field_reference.und[0].target_id,
+						ru: {
+							transcription: {
+								nid: data[i].nid,
+								created: timeConverter(data[i].created),
+								published: timeConverter(data[i].created),
+								changed: timeConverter(data[i].changed),
+								title: data[i].title,
+								text: data[i].body.und[0].value
+									? data[i].body.und[0].value
+									: "",
+								attachment_name:
+									!Array.isArray(data[i].field_attachment) &&
+									data[i].field_attachment.und[0]
+										? data[i].field_attachment.und[0].filename
 										: "",
-									attachment_name:
-										!Array.isArray(data[i].field_attachment) &&
-										data[i].field_attachment.und[0]
-											? data[i].field_attachment.und[0].filename
-											: "",
-									attachment_link:
-										!Array.isArray(data[i].field_attachment) &&
-										data[i].field_attachment.und[0]
-											? data[i].field_attachment.und[0].uri
-											: ""
-								}
+								attachment_link:
+									!Array.isArray(data[i].field_attachment) &&
+									data[i].field_attachment.und[0]
+										? data[i].field_attachment.und[0].uri
+										: ""
 							}
-						};
-						transcriptionFinalData.push(temp);
-					}
+						}
+					};
+					transcriptionFinalData.push(temp);
+					//}
 				} else {
 					console.log(
 						`Invalid or Missing Reference in data with nid ${data[i].nid}`
+					);
+					saveErrorLog(
+						`Invalid or Missing Reference in data with nid ${data[i].nid} in getRussianTranscriptiondata() function`
 					);
 				}
 			}
@@ -873,6 +1044,9 @@ function getRussianTranscriptionData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the getRussianTranscriptionData() ===>>>", err);
+			saveErrorLog(
+				"error inside the getRussianTranscriptionData() in Transcription region===>>>"
+			);
 		});
 }
 
@@ -880,6 +1054,7 @@ function updateDatabaseTranscriptions() {
 	console.log("updateDatabaseTranscriptions is running");
 	let options = {
 		method: "POST",
+
 		uri: "http://dev.niranjanaswami.net/api/lecture/updateBulkNew",
 		body: transcriptionFinalData,
 		json: true,
@@ -898,6 +1073,7 @@ function updateDatabaseTranscriptions() {
 		})
 		.catch(err => {
 			console.log("errr", err);
+			saveErrorLog("errr inside updateDatabaseTranscriptions function");
 		});
 }
 
@@ -924,19 +1100,32 @@ function getQutoesEnglishNodeList() {
 	rp(options)
 		.then(function(body) {
 			quotesEnglishNodeList = body;
-			//quotesEnglishNodeList.splice(0, 5216);
+			quotesEnglishNodeList.splice(0, 5216);
 			console.log(
 				"getQutoesEnglishNodeList() function is successfully executed",
 				quotesEnglishNodeList.length,
 				"data received"
 			);
-			getQuotesDatainBatches();
+			quotesEnglishNodeList = quotesEnglishNodeList.filter(function(value) {
+				return value.created > fetchDateTime;
+			});
+			if (quotesEnglishNodeList && quotesEnglishNodeList.length > 0) {
+				console.log(
+					"after filteration length>>>>",
+					quotesEnglishNodeList.length
+				);
+				getQuotesDatainBatches();
+			} else {
+				console.log("no new Data here");
+				getQuotesRuNodeList();
+			}
 		})
 		.catch(function(err) {
 			console.log(
 				"Error inside getQutoesEnglishNodeList() function ====>>>>",
 				err
 			);
+			saveErrorLog("Error inside getQutoesEnglishNodeList() function ====>>>>");
 		});
 }
 
@@ -975,41 +1164,39 @@ function getQuotesData(ar, callback) {
 	Promise.all(Quotespromise)
 		.then(data => {
 			const insertQuotesDataPromise = data.map((item, i) => {
-				if (ar[i].created > fetchDateTime) {
-					const body = {
-						uuid: uuidv4(),
-						author: item.author,
-						tnid: ar[i].tnid,
-						created_date_time: timeConverter(ar[i].created),
-						published_date: timeConverter(ar[i].created),
-						comments: item.comments,
-						en: {
-							nid: ar[i].nid,
-							title: item.title,
-							body:
-								item.body && item.body.length > 0
-									? getQuotesBody(item.body)
-									: "",
-							source_of_quote:
-								item.body && item.body.length > 0
-									? getQuotesSource(item.body)
-									: ""
-						}
-					};
-					const options = {
-						method: "POST",
-						//uri: "http://dev.niranjanaswami.net/api/quote/create/",
-						uri: "http://dev.niranjanaswami.net/api/quote/create/",
-						body: body,
-						json: true,
-						pool: httpAgent,
-						timeout: 6000000,
-						headers: {
-							"User-Agent": "Request-Promise"
-						}
-					};
-					return rp(options);
-				}
+				//if (ar[i].created > fetchDateTime) {
+				const body = {
+					uuid: uuidv4(),
+					author: item.author,
+					tnid: ar[i].tnid,
+					created_date_time: timeConverter(ar[i].created),
+					published_date: timeConverter(ar[i].created),
+					comments: item.comments,
+					en: {
+						nid: ar[i].nid,
+						title: item.title,
+						body:
+							item.body && item.body.length > 0 ? getQuotesBody(item.body) : "",
+						source_of_quote:
+							item.body && item.body.length > 0
+								? getQuotesSource(item.body)
+								: ""
+					}
+				};
+				const options = {
+					method: "POST",
+					//uri: "http://dev.niranjanaswami.net/api/quote/create/",
+					uri: "http://dev.niranjanaswami.net/api/quote/create/",
+					body: body,
+					json: true,
+					pool: httpAgent,
+					timeout: 6000000,
+					headers: {
+						"User-Agent": "Request-Promise"
+					}
+				};
+				return rp(options);
+				//}
 			});
 			return Promise.all(insertQuotesDataPromise);
 		})
@@ -1019,6 +1206,7 @@ function getQuotesData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside getQuotesData===>>>", err);
+			saveErrorLog("error inside getQuotesData===>>>");
 		});
 }
 
@@ -1048,16 +1236,31 @@ function getQuotesRuNodeList() {
 		.then(function(body) {
 			quotesRaussainNodeList = body;
 			console.log("quotesRaussainNodeList", quotesRaussainNodeList.length);
-			//quotesRaussainNodeList.splice(0, 4000);
+			quotesRaussainNodeList.splice(0, 4000);
 			console.log(
 				"gerQuotesRuNodeList() function is successfully executed",
 				quotesRaussainNodeList.length,
 				"data received"
 			);
-			getQuotesRaussainDatainBatches();
+			quotesRaussainNodeList = quotesRaussainNodeList.filter(function(value) {
+				return value.created > fetchDateTime;
+			});
+			if (quotesRaussainNodeList && quotesRaussainNodeList.length > 0) {
+				console.log(
+					"after filteration length >>>>",
+					quotesRaussainNodeList.length
+				);
+				getQuotesRaussainDatainBatches();
+			} else {
+				console.log(
+					"no new quotes here>>>calling another function for populating kirtan"
+				);
+				getEnglishKirtanNodeList();
+			}
 		})
 		.catch(function(err) {
 			console.log("Error inside gerQuotesRuNodeList() function ====>>>>", err);
+			saveErrorLog("Error inside gerQuotesRuNodeList() function ====>>>>");
 		});
 }
 
@@ -1097,47 +1300,46 @@ function getQuotesRaussainData(ar, callback) {
 		.then(data => {
 			//let quotesFinalRaussainData = [];
 			for (let i = 0; i < data.length; i++) {
-				if (ar[i].created > fetchDateTime) {
-					if (ar[i].tnid !== 0) {
-						console.log("presetn tnid");
+				//if (ar[i].created > fetchDateTime) {
+				if (ar[i].tnid !== 0) {
+					console.log("presetn tnid");
 
-						const temp = {
-							tnid: ar[i].tnid,
-							ru: {
-								nid: ar[i].nid,
-								title: data[i].title,
-								body:
-									data[i].body && data[i].body.length > 0
-										? getQuotesBody(data[i].body)
-										: "",
-								source_of_quote:
-									data[i].body && data[i].body.length > 0
-										? getQuotesSource(data[i].body)
-										: ""
-							}
-						};
-						quotesFinalRaussainData.push(temp);
-					} else {
-						console.log("not presetn tnid");
-						const body = {
-							uuid: uuidv4(),
-							author: data[i].author,
-							tnid: ar[i].tnid,
-							created_date_time: timeConverter(ar[i].created),
-							published_date: timeConverter(ar[i].created),
-							comments: data[i].comments,
-							ru: {
-								nid: ar[i].nid,
-								title: data[i].title,
-								body:
-									data[i].body.length > 0 ? getQuotesBody(data[i].body) : "",
-								source_of_quote:
-									data[i].body.length > 0 ? getQuotesSource(data[i].body) : ""
-							}
-						};
-						createSingleRUQuoteItem(body);
-					}
+					const temp = {
+						tnid: ar[i].tnid,
+						ru: {
+							nid: ar[i].nid,
+							title: data[i].title,
+							body:
+								data[i].body && data[i].body.length > 0
+									? getQuotesBody(data[i].body)
+									: "",
+							source_of_quote:
+								data[i].body && data[i].body.length > 0
+									? getQuotesSource(data[i].body)
+									: ""
+						}
+					};
+					quotesFinalRaussainData.push(temp);
+				} else {
+					console.log("not presetn tnid");
+					const body = {
+						uuid: uuidv4(),
+						author: data[i].author,
+						tnid: ar[i].tnid,
+						created_date_time: timeConverter(ar[i].created),
+						published_date: timeConverter(ar[i].created),
+						comments: data[i].comments,
+						ru: {
+							nid: ar[i].nid,
+							title: data[i].title,
+							body: data[i].body.length > 0 ? getQuotesBody(data[i].body) : "",
+							source_of_quote:
+								data[i].body.length > 0 ? getQuotesSource(data[i].body) : ""
+						}
+					};
+					createSingleRUQuoteItem(body);
 				}
+				//}
 			}
 			count++;
 			console.log("here", count);
@@ -1146,6 +1348,7 @@ function getQuotesRaussainData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
+			saveErrorLog("error inside the profile api ===>>>");
 		});
 }
 
@@ -1189,6 +1392,7 @@ function updateQuoteDatabase(batchArray, callback) {
 		})
 		.catch(err => {
 			console.log(err);
+			saveErrorLog("err inside updateQuoteDatabase() function");
 		});
 }
 
@@ -1213,6 +1417,7 @@ function createSingleRUQuoteItem(body) {
 		})
 		.catch(err => {
 			console.log(err);
+			saveErrorLog("err inside createSingleRUQuoteItem() function");
 		});
 }
 /* Quotes Script End point */
@@ -1239,16 +1444,26 @@ function getEnglishKirtanNodeList() {
 		.then(function(body) {
 			// console.log('body===>',body)
 			englishKirtanDataList = body;
-			//englishKirtanDataList.splice(0, 678);
+			englishKirtanDataList.splice(0, 678);
 			console.log(
 				"getEnglishList() function is successfully executed",
 				englishKirtanDataList.length,
 				"data received"
 			);
-			getEnglishKirtanDatainBatches();
+			englishKirtanDataList = englishDataList.filter(function(value) {
+				return value.created > fetchDateTime;
+			});
+			if (englishKirtanDataList && englishKirtanDataList.length > 0) {
+				console.log("after filteration>>>", englishKirtanDataList.length);
+				getEnglishKirtanDatainBatches();
+			} else {
+				console.log("no new kirtan here");
+				getRuKirtanNodeList();
+			}
 		})
 		.catch(function(err) {
 			console.log("Error inside getUserList() function ====>>>>", err);
+			saveErrorLog("Error inside getUserList() function ====>>>>");
 		});
 }
 
@@ -1259,10 +1474,10 @@ function getEnglishKirtanDatainBatches() {
 		let ar = englishKirtanDataList.splice(0, 10);
 		getEnglishKirtanData(ar, () => {
 			setTimeout(() => {
-				//getEnglishKirtanDatainBatches();
-				console.log("fetching only 10 kirtan records");
-				englishKirtanList = 1;
-				getRuKirtanNodeList();
+				getEnglishKirtanDatainBatches();
+				// console.log("fetching only 10 kirtan records");
+				// englishKirtanList = 1;
+				// getRuKirtanNodeList();
 			}, 2000);
 		});
 	} else {
@@ -1290,41 +1505,42 @@ function getEnglishKirtanData(ar, callback) {
 	Promise.all(Englishpromise)
 		.then(data => {
 			const insertDataPromise = data.map((item, i) => {
-				if (ar[i].created > fetchDateTime) {
-					const body = {
-						uuid: uuidv4(),
-						tnid: ar[i].tnid,
-						author: item.artist,
-						audio_files: item.file,
-						type: item.type,
-						soundcloud_link: item.soundcloud,
-						duration: item.duration,
-						created_date_time: timeConverter(ar[i].created),
-						published_date: timeConverter(ar[i].created),
-						counter: { downloads: item.downloads },
-						language: ar[i].tnid !== 0 ? "" : "en",
-						kirtan_creation_date:
-							typeof data[i].date === "string" ? data[i].date : "",
-						en: {
-							nid: ar[i].nid,
-							title: item.title,
-							event: item.event,
-							location: item.location
-						}
-					};
-					const options = {
-						method: "POST",
-						uri: `http://dev.niranjanaswami.net/api/kirtan/create/`,
-						body: body,
-						json: true,
-						pool: httpAgent,
-						timeout: 6000000,
-						headers: {
-							"User-Agent": "Request-Promise"
-						}
-					};
-					return rp(options);
-				}
+				//if (ar[i].created > fetchDateTime) {
+				const body = {
+					uuid: uuidv4(),
+					tnid: ar[i].tnid,
+					author: item.artist,
+					audio_files: item.file,
+					type: item.type,
+					soundcloud_link: item.soundcloud,
+					duration: item.duration,
+					created_date_time: timeConverter(ar[i].created),
+					published_date: timeConverter(ar[i].created),
+					counter: { downloads: item.downloads },
+					language: ar[i].tnid !== 0 ? "" : "en",
+					kirtan_creation_date:
+						typeof data[i].date === "string" ? data[i].date : "",
+					en: {
+						nid: ar[i].nid,
+						title: item.title,
+						event: item.event,
+						location: item.location
+					}
+				};
+				const options = {
+					method: "POST",
+					uri: "http://localhost:3000/api/kirtan/create/",
+					//uri: `http://dev.niranjanaswami.net/api/kirtan/create/`,
+					body: body,
+					json: true,
+					pool: httpAgent,
+					timeout: 6000000,
+					headers: {
+						"User-Agent": "Request-Promise"
+					}
+				};
+				return rp(options);
+				//}
 			});
 			return Promise.all(insertDataPromise);
 		})
@@ -1334,6 +1550,7 @@ function getEnglishKirtanData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
+			saveErrorLog("error inside the profile api ===>>>");
 		});
 }
 
@@ -1352,16 +1569,29 @@ function getRuKirtanNodeList() {
 	rp(options)
 		.then(function(body) {
 			raussainKirtanDataList = body;
-			//raussainKirtanDataList.splice(0, 813);
+			raussainKirtanDataList.splice(0, 813);
 			console.log(
 				"getRuNodeList() function is successfully executed",
 				raussainKirtanDataList.length,
 				"data received"
 			);
-			getRaussainKirtanDatainBatches();
+			raussainKirtanDataList = raussainKirtanDataList.filter(function(value) {
+				return value.created > fetchDateTime;
+			});
+			if (raussainKirtanDataList && raussainKirtanDataList.length > 0) {
+				console.log(
+					"after filteration length>>",
+					raussainKirtanDataList.length
+				);
+				getRaussainKirtanDatainBatches();
+			} else {
+				console.log("no new kirtan here ending");
+				updateS3();
+			}
 		})
 		.catch(function(err) {
 			console.log("Error inside getRuNodeList() function ====>>>>", err);
+			saveErrorLog("Error inside getRuNodeList() function ====>>>>");
 		});
 }
 
@@ -1395,12 +1625,12 @@ function updateKirtanDatabaseInBatches() {
 		updateKirtanDatabase(batchArray, () => {
 			console.log("i'm running callback");
 			setTimeout(() => {
-				//updateKirtanDatabaseInBatches();
-				console.log("saving only 10 kirtan records");
-				kirtanList = 1;
-				updateS3();
+				updateKirtanDatabaseInBatches();
+				//console.log("saving only 10 kirtan records");
 			}, 3000);
 		});
+	} else {
+		updateS3();
 	}
 }
 
@@ -1479,64 +1709,66 @@ function getRaussainKirtanData(ar, callback) {
 			//let raussainKirtanfinalData = [];
 
 			for (let i = 0; i < data.length; i++) {
-				if (ar[i].created > fetchDateTime) {
-					if (data[i].tnid !== 0) {
-						const temp = {
-							uuid: uuidv4(),
-							tnid: ar[i].tnid,
-							author: data[i].artist,
-							audio_files: data[i].file,
-							type: data[i].type,
-							soundcloud_link: data[i].soundcloud,
-							duration: data[i].duration,
-							counter: {
-								downloads: data[i].downloads
-							},
-							language: ar[i].tnid !== 0 ? "" : "both",
-							ru: {
-								nid: ar[i].nid,
-								title: data[i].title,
-								event: data[i].event,
-								location: data[i].location
-							}
-						};
-						raussainKirtanfinalData.push(temp);
-					} else {
-						const body = {
-							uuid: uuidv4(),
-							tnid: ar[i].tnid,
-							author: data[i].artist,
-							audio_files: data[i].file,
-							type: data[i].type,
-							soundcloud_link: data[i].soundcloud,
-							duration: data[i].duration,
-							counter: {
-								downloads: data[i].downloads
-							},
-							language: "ru",
-							ru: {
-								nid: ar[i].nid,
-								title: data[i].title,
-								event: data[i].event,
-								location: data[i].location
-							}
-						};
-						createSingleRUKirtanItem(body);
-					}
+				//if (ar[i].created > fetchDateTime) {
+				if (data[i].tnid !== 0) {
+					const temp = {
+						uuid: uuidv4(),
+						tnid: ar[i].tnid,
+						author: data[i].artist,
+						audio_files: data[i].file,
+						type: data[i].type,
+						soundcloud_link: data[i].soundcloud,
+						duration: data[i].duration,
+						counter: {
+							downloads: data[i].downloads
+						},
+						language: ar[i].tnid !== 0 ? "" : "both",
+						ru: {
+							nid: ar[i].nid,
+							title: data[i].title,
+							event: data[i].event,
+							location: data[i].location
+						}
+					};
+					raussainKirtanfinalData.push(temp);
+				} else {
+					const body = {
+						uuid: uuidv4(),
+						tnid: ar[i].tnid,
+						author: data[i].artist,
+						audio_files: data[i].file,
+						type: data[i].type,
+						soundcloud_link: data[i].soundcloud,
+						duration: data[i].duration,
+						counter: {
+							downloads: data[i].downloads
+						},
+						language: "ru",
+						ru: {
+							nid: ar[i].nid,
+							title: data[i].title,
+							event: data[i].event,
+							location: data[i].location
+						}
+					};
+					createSingleRUKirtanItem(body);
 				}
+				//}
 			}
 			//updateKirtanDatabase(raussainKirtanfinalData, callback);
 			callback();
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
+			saveErrorLog("error inside the profile api ===>>>");
 		});
 }
 
 function createSingleRUKirtanItem(body) {
 	const options = {
 		method: "POST",
-		uri: "http://dev.niranjanaswami.net/api/kirtan/create/",
+		uri: "http://localhost:3000/api/kirtan/create/",
+		//uri: "http://dev.niranjanaswami.net/api/kirtan/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -1551,6 +1783,7 @@ function createSingleRUKirtanItem(body) {
 		})
 		.catch(err => {
 			console.log(err);
+			saveErrorLog("err inside createSingleRUKirtanItem() function");
 		});
 }
 
@@ -1559,7 +1792,8 @@ function updateKirtanDatabase(array, callback) {
 		console.log("inside update kirtan ===>>>", array.length);
 	let options = {
 		method: "POST",
-		uri: `http://dev.niranjanaswami.net/api/kirtan/updateBulkNew/`,
+		uri: `http://localhost:3000/api/kirtan/updateBulkNew/`,
+		//uri: `http://dev.niranjanaswami.net/api/kirtan/updateBulkNew/`,
 		body: array,
 		json: true,
 		pool: httpAgent,
@@ -1575,6 +1809,7 @@ function updateKirtanDatabase(array, callback) {
 		})
 		.catch(err => {
 			console.log("errr===>>", err);
+			saveErrorLog("errr inside updateKirtanDatabase function===>>");
 		});
 }
 
