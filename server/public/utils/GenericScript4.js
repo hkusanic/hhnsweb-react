@@ -4,6 +4,7 @@ var fs = require("fs");
 var https = require("https");
 var AWS = require("aws-sdk");
 require("dotenv").config({ path: "/home/system5/Desktop/hhnsweb-react/.env" });
+//require("dotenv").config({ path: __dirname + "/.env" });
 // var httpAgent = new https.Agent({
 // 	keepAlive: true,
 // 	keepAliveMsecs: 3000
@@ -31,7 +32,7 @@ function timeConverter(timestamp) {
 const cookie = new tough.Cookie({
 	key: "SSESS8c0f16dd6e4ff53e267519930069d1e3",
 	//value: "mGCQ4zhYa9K0Dex2-xTn4Eh5c3Ej_4NnuEKuhxPcPb0",
-	value: "UGWJ-P9v7xXkfHy2DodqckkEog87sf8JbtYNvx-A-Dc",
+	value: "pAZYmQp6eb3H7-be9S6Z6_3gSx8OfeNuq9egFKtQNaU",
 	domain: "nrs.niranjanaswami.net",
 	httpOnly: false,
 	maxAge: 315360000000000
@@ -58,7 +59,6 @@ function saveErrorLog(error) {
 	// var AWS = require('aws-sdk');
 	// AWS.config.update({region: 'us-east-2'});
 	let date = new Date();
-
 	let folderName = Math.round(
 		new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
 	).toString();
@@ -116,11 +116,11 @@ function listObject() {
 	var bucketParams = {
 		Bucket: "hhns"
 	};
-
 	let date = new Date();
 	let timestamp = Math.round(
 		new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
 	).toString();
+	console.log("timestamp" + timestamp);
 	// Call S3 to obtain a list of the objects in the bucket
 	s3.listObjects(bucketParams, function(err, data) {
 		if (err) console.log(err, err.stack); // an error occurred
@@ -154,7 +154,6 @@ function listObject() {
 			// var file = fs.createWriteStream(filename);
 			s3.getObject(params, function(err, data) {
 				if (err) return err;
-
 				let objectData = data.Body.toString("utf-8");
 				console.log(JSON.parse(objectData).timestamp);
 				fetchDateTime = JSON.parse(objectData).timestamp;
@@ -251,12 +250,12 @@ function updateDatabaseInBatches() {
 		let batchArray = raussainfinalData.splice(0, 10);
 		updateDatabase(batchArray, () => {
 			setTimeout(() => {
-				//updateDatabaseInBatches();
-				console.log("saving only 10 records");
-				getEnglishLectureNodeList();
+				updateDatabaseInBatches();
+				// console.log("saving only 10 records");
+				// getEnglishLectureNodeList();
 			}, 1000);
 		});
-	} else if (raussainfinalData.length == 0) {
+	} else {
 		getEnglishLectureNodeList();
 	}
 }
@@ -370,8 +369,8 @@ function getRaussainData(ar, callback) {
 function updateDatabase(batchArray, callback) {
 	let options = {
 		method: "POST",
-		uri: "http://localhost:3000/api/blog/updateBulkNew/",
-		//uri: "http://dev.niranjanaswami.net/api/blog/updateBulkNew/",
+		//uri: "http://localhost:3000/api/blog/updateBulkNew/",
+		uri: "http://dev.niranjanaswami.net/api/blog/updateBulkNew/",
 		body: batchArray,
 		json: true,
 		pool: httpAgent,
@@ -393,8 +392,8 @@ function updateDatabase(batchArray, callback) {
 function createSingleRUBlogItem(body) {
 	const options = {
 		method: "POST",
-		uri: "http://localhost:3000/api/blog/create/",
-		//uri: "http://dev.niranjanaswami.net/api/blog/create/",
+		//uri: "http://localhost:3000/api/blog/create/",
+		uri: "http://dev.niranjanaswami.net/api/blog/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -450,8 +449,8 @@ function getEnglishData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					uri: "http://localhost:3000/api/blog/create/",
-					//uri: "http://dev.niranjanaswami.net/api/blog/create/",
+					//uri: "http://localhost:3000/api/blog/create/",
+					uri: "http://dev.niranjanaswami.net/api/blog/create/",
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -509,7 +508,7 @@ function getEnglishLectureNodeList() {
 				"data received"
 			);
 			englishLectureDataList = englishLectureDataList.filter(function(value) {
-				return englishLectureDataList.created > fetchDateTime;
+				return value.created > fetchDateTime;
 			});
 			if (englishLectureDataList && englishLectureDataList.length > 0) {
 				console.log(
@@ -598,10 +597,10 @@ function getRussianLectureDatainBatches() {
 		let ar = russianLectureDataList.splice(0, 10);
 		getRussianLectureData(ar, () => {
 			setTimeout(() => {
-				//getRussianLectureDatainBatches();
-				console.log("fetching only 10 russian lecture records");
-				russianLectureList = 1;
-				updateDatabaseLectures();
+				getRussianLectureDatainBatches();
+				// console.log("fetching only 10 russian lecture records");
+				// russianLectureList = 1;
+				// updateDatabaseLectures();
 			}, 2000);
 		});
 	} else {
@@ -674,8 +673,8 @@ function getRussianLectureData(ar, callback) {
 function updateDatabaseLectures() {
 	let options = {
 		method: "POST",
-		uri: "http://localhost:3000/api/lecture/updateBulkNew/",
-		//uri: "http://dev.niranjanaswami.net/api/lecture/updateBulkNew/",
+		//uri: "http://localhost:3000/api/lecture/updateBulkNew/",
+		uri: "http://dev.niranjanaswami.net/api/lecture/updateBulkNew/",
 		body: russianLectureFinalData,
 		json: true,
 		pool: httpAgent,
@@ -698,8 +697,8 @@ function updateDatabaseLectures() {
 function createSingleRULectureItem(body) {
 	const options = {
 		method: "POST",
-		uri: "http://localhost:3000/api/lecture/create/",
-		//uri: "http://dev.niranjanaswami.net/api/lecture/create/",
+		//uri: "http://localhost:3000/api/lecture/create/",
+		uri: "http://dev.niranjanaswami.net/api/lecture/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -750,8 +749,8 @@ function getEnglishLectureData(ar, callback) {
 					};
 					const options = {
 						method: "POST",
-						uri: "http://localhost:3000/api/lecturecreate/",
-						//uri: "http://dev.niranjanaswami.net/api/lecture/create/",
+						//uri: "http://localhost:3000/api/lecturecreate/",
+						uri: "http://dev.niranjanaswami.net/api/lecture/create/",
 						body: body,
 						json: true,
 						pool: httpAgent,
@@ -799,6 +798,7 @@ function getEnglishTranscriptionNodeList() {
 	rp(options)
 		.then(function(body) {
 			englishTranscriptionDataList = body;
+			englishTranscriptionDataList.splice(0, 60);
 			console.log(
 				"getEnglishTranscriptionNodeList() function is successfully executed",
 				englishTranscriptionDataList.length,
@@ -806,7 +806,7 @@ function getEnglishTranscriptionNodeList() {
 			);
 			englishTranscriptionDataList = englishTranscriptionDataList.filter(
 				function(value) {
-					return englishTranscriptionDataList.created > fetchDateTime;
+					return value.created > fetchDateTime;
 				}
 			);
 			if (
@@ -839,10 +839,10 @@ function getEnglishTranscriptionDatainBatches() {
 		let ar = englishTranscriptionDataList.splice(0, 10);
 		getEnglishTranscriptionData(ar, () => {
 			setTimeout(() => {
-				//getEnglishTranscriptionDatainBatches();
-				console.log("fetching only 10 transcription data records");
-				englishTranscriptsList = 1;
-				getRuTranscriptionNodeList();
+				getEnglishTranscriptionDatainBatches();
+				// console.log("fetching only 10 transcription data records");
+				// englishTranscriptsList = 1;
+				// getRuTranscriptionNodeList();
 			}, 2000);
 		});
 	} else {
@@ -904,6 +904,9 @@ function getEnglishTranscriptionData(ar, callback) {
 					console.log(
 						`Invalid or Missing Reference in data with nid ${data[i].nid}`
 					);
+					saveErrorLog(
+						`Invalid or Missing Reference in data with nid ${data[i].nid}`
+					);
 				}
 			}
 			callback();
@@ -928,6 +931,7 @@ function getRuTranscriptionNodeList() {
 	rp(options)
 		.then(function(body) {
 			russianTranscriptionDataList = body;
+			russianTranscriptionDataList.splice(0, 60);
 			console.log(
 				"getRuTranscriptionNodeList() function is successfully executed",
 				russianTranscriptionDataList.length,
@@ -1054,7 +1058,6 @@ function updateDatabaseTranscriptions() {
 	console.log("updateDatabaseTranscriptions is running");
 	let options = {
 		method: "POST",
-
 		uri: "http://dev.niranjanaswami.net/api/lecture/updateBulkNew",
 		body: transcriptionFinalData,
 		json: true,
@@ -1100,7 +1103,7 @@ function getQutoesEnglishNodeList() {
 	rp(options)
 		.then(function(body) {
 			quotesEnglishNodeList = body;
-			quotesEnglishNodeList.splice(0, 5216);
+			quotesEnglishNodeList.splice(0, 5400);
 			console.log(
 				"getQutoesEnglishNodeList() function is successfully executed",
 				quotesEnglishNodeList.length,
@@ -1134,10 +1137,10 @@ function getQuotesDatainBatches() {
 		let ar = quotesEnglishNodeList.splice(0, 10);
 		getQuotesData(ar, () => {
 			setTimeout(() => {
-				//getQuotesDatainBatches();
-				console.log("fetching only 10 quotes records");
-				englishQuotesList = 1;
-				getQuotesRuNodeList();
+				getQuotesDatainBatches();
+				// console.log("fetching only 10 quotes records");
+				// englishQuotesList = 1;
+				// getQuotesRuNodeList();
 			}, 3000);
 		});
 	} else {
@@ -1236,7 +1239,7 @@ function getQuotesRuNodeList() {
 		.then(function(body) {
 			quotesRaussainNodeList = body;
 			console.log("quotesRaussainNodeList", quotesRaussainNodeList.length);
-			quotesRaussainNodeList.splice(0, 4000);
+			quotesRaussainNodeList.splice(0, 5200);
 			console.log(
 				"gerQuotesRuNodeList() function is successfully executed",
 				quotesRaussainNodeList.length,
@@ -1269,10 +1272,10 @@ function getQuotesRaussainDatainBatches() {
 		let ar = quotesRaussainNodeList.splice(0, 10);
 		getQuotesRaussainData(ar, () => {
 			setTimeout(() => {
-				//getQuotesRaussainDatainBatches();
-				console.log("fetching only 10 russian quotes records");
-				russianQuotesList = 1;
-				updateQuoteDatabaseInBatches();
+				getQuotesRaussainDatainBatches();
+				// console.log("fetching only 10 russian quotes records");
+				// russianQuotesList = 1;
+				// updateQuoteDatabaseInBatches();
 			}, 3000);
 		});
 	} else {
@@ -1358,13 +1361,13 @@ function updateQuoteDatabaseInBatches() {
 		let batchArray = quotesFinalRaussainData.splice(0, 700);
 		updateQuoteDatabase(batchArray, () => {
 			setTimeout(() => {
-				//updateQuoteDatabaseInBatches();
-				console.log("saving only 10 russian quores records");
-				quotesList = 1;
-				getEnglishKirtanNodeList();
+				updateQuoteDatabaseInBatches();
+				// console.log("saving only 10 russian quores records");
+				// quotesList = 1;
+				// getEnglishKirtanNodeList();
 			}, 3000);
 		});
-	} else if (quotesFinalRaussainData.length == 0) {
+	} else {
 		quotesList = 1;
 		getEnglishKirtanNodeList();
 	}
@@ -1450,7 +1453,7 @@ function getEnglishKirtanNodeList() {
 				englishKirtanDataList.length,
 				"data received"
 			);
-			englishKirtanDataList = englishDataList.filter(function(value) {
+			englishKirtanDataList = englishKirtanDataList.filter(function(value) {
 				return value.created > fetchDateTime;
 			});
 			if (englishKirtanDataList && englishKirtanDataList.length > 0) {
@@ -1529,8 +1532,8 @@ function getEnglishKirtanData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					uri: "http://localhost:3000/api/kirtan/create/",
-					//uri: `http://dev.niranjanaswami.net/api/kirtan/create/`,
+					//uri: "http://localhost:3000/api/kirtan/create/",
+					uri: `http://dev.niranjanaswami.net/api/kirtan/create/`,
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -1586,7 +1589,7 @@ function getRuKirtanNodeList() {
 				getRaussainKirtanDatainBatches();
 			} else {
 				console.log("no new kirtan here ending");
-				updateS3();
+				getVideoNodeList();
 			}
 		})
 		.catch(function(err) {
@@ -1601,10 +1604,10 @@ function getRaussainKirtanDatainBatches() {
 		let ar = raussainKirtanDataList.splice(0, 10);
 		getRaussainKirtanData(ar, () => {
 			setTimeout(() => {
-				///getRaussainKirtanDatainBatches();
-				console.log("fetching only 10 russian kirtan records");
-				russianKirtanList = 1;
-				updateKirtanDatabaseInBatches();
+				getRaussainKirtanDatainBatches();
+				// console.log("fetching only 10 russian kirtan records");
+				// russianKirtanList = 1;
+				// updateKirtanDatabaseInBatches();
 			}, 2000);
 		});
 	} else {
@@ -1630,7 +1633,7 @@ function updateKirtanDatabaseInBatches() {
 			}, 3000);
 		});
 	} else {
-		updateS3();
+		getVideoNodeList();
 	}
 }
 
@@ -1767,8 +1770,8 @@ function getRaussainKirtanData(ar, callback) {
 function createSingleRUKirtanItem(body) {
 	const options = {
 		method: "POST",
-		uri: "http://localhost:3000/api/kirtan/create/",
-		//uri: "http://dev.niranjanaswami.net/api/kirtan/create/",
+		//uri: "http://localhost:3000/api/kirtan/create/",
+		uri: "http://dev.niranjanaswami.net/api/kirtan/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -1792,8 +1795,8 @@ function updateKirtanDatabase(array, callback) {
 		console.log("inside update kirtan ===>>>", array.length);
 	let options = {
 		method: "POST",
-		uri: `http://localhost:3000/api/kirtan/updateBulkNew/`,
-		//uri: `http://dev.niranjanaswami.net/api/kirtan/updateBulkNew/`,
+		//uri: `http://localhost:3000/api/kirtan/updateBulkNew/`,
+		uri: `http://dev.niranjanaswami.net/api/kirtan/updateBulkNew/`,
 		body: array,
 		json: true,
 		pool: httpAgent,
@@ -1814,3 +1817,418 @@ function updateKirtanDatabase(array, callback) {
 }
 
 /*  kirtan Script End point */
+
+/* region Video */
+
+var videoNodeList = [];
+var videoNodeListRaussain = [];
+
+function getVideoNodeList() {
+	const options = {
+		method: "GET",
+		uri:
+			"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=video&pagesize=1200&&page=0",
+		jar: cookiejar,
+		json: true,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+
+	rp(options)
+		.then(function(body) {
+			videoNodeList = body;
+			videoNodeList.splice(0, 1100);
+			console.log(
+				"getVideoNodeList() function is successfully executed",
+				videoNodeList.length,
+				"data received"
+			);
+			videoNodeList = videoNodeList.filter(function(value) {
+				return value.created > fetchDateTime;
+			});
+			if (videoNodeList && videoNodeList.length > 0) {
+				console.log("after filteration length", videoNodeList.length);
+				getVideoNodeListRaussain();
+			} else {
+				console.log("no new video here calling summary");
+				getRuSummaryNodeList();
+			}
+		})
+		.catch(function(err) {
+			console.log("Error inside getVideoNodeList() function ====>>>>", err);
+		});
+}
+
+function getVideoNodeListRaussain() {
+	const options = {
+		method: "GET",
+		uri:
+			"https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=video&pagesize=1200&&page=0",
+		jar: cookiejar,
+		json: true,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+
+	rp(options)
+		.then(function(body) {
+			videoNodeListRaussain = body;
+
+			console.log(
+				"getVideoNodeListRaussain() function is successfully executed",
+				videoNodeListRaussain.length,
+				"data received"
+			);
+			getVideoDatainBatches();
+		})
+		.catch(function(err) {
+			console.log(
+				"Error inside getVideoNodeListRaussain() function ====>>>>",
+				err
+			);
+		});
+}
+
+function getVideoDatainBatches() {
+	if (videoNodeList.length > 0) {
+		let ar = videoNodeList.splice(0, 10);
+		getVideoData(ar, () => {
+			setTimeout(() => {
+				getVideoDatainBatches();
+			}, 5000);
+		});
+	} else {
+		console.log("videos successfully stored>>");
+		getRuSummaryNodeList();
+	}
+}
+
+function getVideoUrls(array) {
+	const url = [];
+	for (let i = 0; i < array.length; i++) {
+		const str = array[i].safe_value.replace("watch?v=", "embed/");
+		url.push(str);
+	}
+	return url;
+}
+
+function getVideoData(ar, callback) {
+	const Videopromise = [];
+	ar.map((item, i) => {
+		const options = {
+			method: "GET",
+			uri: `https://nrs.niranjanaswami.net/en/rest/node/${item.nid}.json`,
+			json: true,
+			jar: cookiejar,
+			timeout: 6000000,
+			headers: {
+				"User-Agent": "Request-Promise"
+			}
+		};
+		Videopromise.push(rp(options));
+	});
+	Promise.all(Videopromise)
+		.then(data => {
+			const insertVideoPromise = data.map((item, j) => {
+				const refrenceId =
+					data[j].field_video_reference && data[j].field_video_reference.und
+						? data[j].field_video_reference.und[0].target_id
+						: null;
+				if (refrenceId !== null) {
+					const options = {
+						method: "GET",
+						uri: `https://nrs.niranjanaswami.net/en/rest/object/${refrenceId}.json`,
+						json: true,
+						jar: cookiejar,
+						pool: httpAgent,
+						timeout: 6000000,
+						headers: {
+							"User-Agent": "Request-Promise"
+						}
+					};
+					rp(options)
+						.then(singleLecture => {
+							const body = {
+								uuid: uuidv4(),
+								video_date: timeConverter(data[j].changed),
+								created_date_time: timeConverter(data[j].created),
+								published_date: timeConverter(data[j].created),
+								type:
+									data[j].field_video_type && data[j].field_video_type.und
+										? data[j].field_video_type.und[0].value
+										: "",
+								en: {
+									nid: data[j].nid,
+									title: data[j].title,
+									body: data[j].body,
+									event: singleLecture.event,
+									location: singleLecture.location
+								},
+								ru: {
+									nid: getRaussianNodeId(data[j].nid),
+									title: getRaussianTitle(data[j].tnid),
+									body: data[j].body,
+									event: singleLecture.event,
+									location: singleLecture.location
+								},
+								oldData: {
+									referenceId: refrenceId
+								},
+								video_page_view: 0,
+								reference: singleLecture.title,
+								urls:
+									data[j].field_youtube && data[j].field_youtube.und
+										? getVideoUrls(data[j].field_youtube.und)
+										: []
+							};
+
+							const options = {
+								method: "POST",
+								//uri: "http://localhost:3000/api/video/create/",
+								uri: "http://dev.niranjanaswami.net/api/video/create/",
+								body: body,
+								json: true,
+								pool: httpAgent,
+								timeout: 6000000,
+								headers: {
+									"User-Agent": "Request-Promise"
+								}
+							};
+							return rp(options);
+						})
+						.catch(err => {
+							console.log("error in getting english video details ===>>>", err);
+						});
+				} else {
+					const body = {
+						uuid: uuidv4(),
+						video_date:
+							data[j].field_date && data[j].field_date.und
+								? data[j].field_date.und[0].value
+								: timeConverter(data[j].created),
+						created_date_time: timeConverter(data[j].created),
+						published_date: timeConverter(data[j].created),
+						type:
+							data[j].field_video_type && data[j].field_video_type.und
+								? data[j].field_video_type.und[0].value
+								: "other",
+						en: {
+							nid: data[j].nid,
+							title: data[j].title,
+							body: data[j].body
+						},
+						ru: {
+							nid: getRaussianNodeId(data[j].nid),
+							title: getRaussianTitle(data[j].tnid),
+							body: data[j].body
+						},
+						oldData: {
+							referenceId: null
+						},
+						reference: "",
+						video_page_view: 0,
+						urls:
+							data[j].field_youtube && data[j].field_youtube.und
+								? getVideoUrls(data[j].field_youtube.und)
+								: []
+					};
+
+					const options = {
+						method: "POST",
+						//uri: "http://localhost:3000/api/video/create/",
+						uri: "http://dev.niranjanaswami.net/api/video/create/",
+						body: body,
+						json: true,
+						pool: httpAgent,
+						timeout: 6000000,
+						headers: {
+							"User-Agent": "Request-Promise"
+						}
+					};
+					return rp(options);
+				}
+			});
+			return Promise.all(insertVideoPromise);
+		})
+		.then(data => {
+			console.log("data inserted =====>>>>", data.length);
+			callback();
+		})
+		.catch(err => {
+			console.log("error inside the profile api ===>>>", err);
+		});
+}
+
+function getRaussianTitle(tnid) {
+	for (let i = 0; i < videoNodeListRaussain.length; i++) {
+		if (videoNodeListRaussain[i].tnid === tnid) {
+			return videoNodeListRaussain[i].title;
+		}
+	}
+}
+
+function getRaussianNodeId(tnid) {
+	for (let i = 0; i < videoNodeListRaussain.length; i++) {
+		if (videoNodeListRaussain[i].tnid === tnid) {
+			return videoNodeListRaussain[i].nid;
+		}
+	}
+}
+
+/* summary region */
+
+var russianSummaryDataList = [];
+var summaryFinalData = [];
+
+function getRuSummaryNodeList() {
+	const options = {
+		method: "GET",
+		uri:
+			"https://nrs.niranjanaswami.net/rest/node.json?parameters%5Btype%5D=summary&pagesize=6000&&page=0",
+		jar: cookiejar,
+		json: true,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+
+	rp(options)
+		.then(function(body) {
+			russianSummaryDataList = body;
+			russianSummaryDataList.splice(0, 550);
+			console.log(
+				"getRuSummaryNodeList() function is successfully executed",
+				russianSummaryDataList.length,
+				"data received"
+			);
+			russianSummaryDataList = russianSummaryDataList.filter(function(value) {
+				return value.created > fetchDateTime;
+			});
+			if (russianSummaryDataList && russianSummaryDataList.length > 0) {
+				console.log(
+					"after filteration length>>>",
+					russianSummaryDataList.length
+				);
+				getRussianSummaryDatainBatches();
+			} else {
+				updateS3();
+			}
+		})
+		.catch(function(err) {
+			console.log(
+				"Error inside getRuTranscriptionNodeList() function ====>>>>",
+				err
+			);
+		});
+}
+
+function getRussianSummaryDatainBatches() {
+	if (russianSummaryDataList.length > 0) {
+		let ar = russianSummaryDataList.splice(0, 10);
+		getRussianSummaryData(ar, () => {
+			setTimeout(() => {
+				getRussianSummaryDatainBatches();
+			}, 2000);
+		});
+	} else {
+		updateDatabaseSummary();
+	}
+}
+
+function getRussianSummaryData(ar, callback) {
+	const Raussainpromise = [];
+	ar.map((item, i) => {
+		const options = {
+			method: "GET",
+			uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
+			json: true,
+			jar: cookiejar,
+			timeout: 6000000,
+			headers: {
+				"User-Agent": "Request-Promise"
+			}
+		};
+		Raussainpromise.push(rp(options));
+	});
+	Promise.all(Raussainpromise)
+		.then(data => {
+			console.log("data Raussainpromise inserted =====>>>>", data.length);
+			for (let i = 0; i < data.length; i++) {
+				if (data[i].audio.nid && data[i].audio.nid != 0) {
+					let tnid;
+					getTNIDfromLecture(data[i].audio.nid).then(val => {
+						tnid = val;
+						if (tnid != 0) {
+							const temp = {
+								tnid: tnid,
+								ru: {
+									summary: {
+										nid: ar[i].nid,
+										text: data[i].body,
+										attachment_name: data[i].audio.title,
+										attachment_link: data[i].audio.file
+									}
+								}
+							};
+							summaryFinalData.push(temp);
+						}
+					});
+				} else {
+					console.log(
+						`Invalid or Missing Reference in data with nid ${data[i].audio.nid}`
+					);
+				}
+			}
+			callback();
+		})
+		.catch(err => {
+			console.log("error inside the getRussianSummaryData() ===>>>", err);
+		});
+}
+
+function getTNIDfromLecture(nid) {
+	const options = {
+		method: "GET",
+		uri: `https://nrs.niranjanaswami.net/ru/rest/node/${nid}.json`,
+		json: true,
+		jar: cookiejar,
+		timeout: 6000000,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+	return rp(options)
+		.then(data => {
+			return data.tnid;
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
+
+function updateDatabaseSummary() {
+	console.log("updateDatabaseSummary()", summaryFinalData.length);
+	let options = {
+		method: "POST",
+		uri: `http://dev.niranjanaswami.net/api/lecture/updateBulkNew/`,
+		body: summaryFinalData,
+		json: true,
+		pool: httpAgent,
+		timeout: 60000,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+	rp(options)
+		.then(data => {
+			console.log("success");
+			updateS3();
+		})
+		.catch(err => {
+			console.log("Error in updateDatabaseSummary()", err);
+		});
+}
+
+/* #endregion */

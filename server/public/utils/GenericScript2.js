@@ -2,6 +2,8 @@ var rp = require("request-promise");
 var tough = require("tough-cookie");
 var fs = require("fs");
 var https = require("https");
+var AWS = require("aws-sdk");
+require("dotenv").config({ path: "/home/system5/Desktop/hhnsweb-react/.env" });
 // var httpAgent = new https.Agent({
 // 	keepAlive: true,
 // 	keepAliveMsecs: 3000
@@ -53,7 +55,7 @@ function timeConverter(timestamp) {
 const cookie = new tough.Cookie({
 	key: "SSESS8c0f16dd6e4ff53e267519930069d1e3",
 	//value: "mGCQ4zhYa9K0Dex2-xTn4Eh5c3Ej_4NnuEKuhxPcPb0",
-	value: "C4iFoia_DH9PDEA5EAaW9cI1css1MjTKuQgFCY4ruAk",
+	value: "pAZYmQp6eb3H7-be9S6Z6_3gSx8OfeNuq9egFKtQNaU",
 	domain: "nrs.niranjanaswami.net",
 	httpOnly: false,
 	maxAge: 315360000000000
@@ -75,36 +77,62 @@ var englishDataList = [];
 var raussainDataList = [];
 var raussainfinalData = [];
 
-async function getLatestBlogDate() {
-	let options = {
-		method: "GET",
-		uri: "http://localhost:3000/api/blog/getlatestblogdate/",
-		//body: batchArray,
-		//json: true,
-		//pool: httpAgent,
-		timeout: 600000,
-		headers: {
-			"User-Agent": "Request-Promise"
-		}
+listObjects();
+function listObjects() {
+	// Set the region
+	AWS.config.update({
+		region: "us-east-2",
+		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+	});
+
+	// Create S3 service object
+	s3 = new AWS.S3({ apiVersion: "2006-03-01" });
+
+	// Create the parameters for calling listObjects
+	var bucketParams = {
+		Bucket: "hhns"
 	};
-	let response = await rp(options)
-		.then(date => {
-			return date;
-		})
-		.catch(err => {
-			console.log("errr", err);
-		});
-	return response;
+	// Call S3 to obtain a list of the objects in the bucket
+	s3.listObjects(bucketParams, function(err, data) {
+		if (err) {
+			console.log("Error", err);
+		} else {
+			console.log("Success", data);
+		}
+	});
 }
 
+// async function getLatestBlogDate() {
+// 	let options = {
+// 		method: "GET",
+// 		uri: "http://localhost:3000/api/blog/getlatestblogdate/",
+// 		//body: batchArray,
+// 		//json: true,
+// 		//pool: httpAgent,
+// 		timeout: 600000,
+// 		headers: {
+// 			"User-Agent": "Request-Promise"
+// 		}
+// 	};
+// 	let response = await rp(options)
+// 		.then(date => {
+// 			return date;
+// 		})
+// 		.catch(err => {
+// 			console.log("errr", err);
+// 		});
+// 	return response;
+// }
+
 async function getEnglishNodeList() {
-	latestBlogDate = JSON.parse(await getLatestBlogDate());
-	console.log("latestBlogDate>>>", latestBlogDate);
-	console.log(
-		"from database>>>",
-		timeConverter(latestBlogDate.publish_date).getTime()
-	);
-	console.log("from database>>>", Date.parse(latestBlogDate.created_date_time));
+	//atestBlogDate = JSON.parse(await getLatestBlogDate());
+	//console.log("latestBlogDate>>>", latestBlogDate);
+	// console.log(
+	// 	"from database>>>",
+	// 	timeConverter(latestBlogDate.publish_date).getTime()
+	// );
+	// console.log("from database>>>", Date.parse(latestBlogDate.created_date_time));
 	const options = {
 		method: "GET",
 		uri:
@@ -124,25 +152,27 @@ async function getEnglishNodeList() {
 				englishDataList.length,
 				"data received"
 			);
-			englishDataList = englishDataList.filter(function(object) {
-				// console.log(
-				// 	"from database>>>>",
-				// 	Date.parse(latestBlogDate.publish_date)
-				// );
-				// var d = Date.parse(latestBlogDate.created_date_time);
-				// console.log(typeof d);
-				// console.log("jaado", timeConverter(object.created).getTime());
-				return (
-					timeConverter(object.created).getTime() >
-					Date.parse(latestBlogDate.publish_date)
-				);
-			});
-			if (englishDataList && englishDataList.length > 0) {
-				console.log("after filtering length>>>>", englishDataList);
-				getEnglishDatainBatches();
-			} else {
-				console.log("After Filteration list recieved>>>>", englishDataList);
-			}
+			// englishDataList = englishDataList.filter(function(object) {
+			// 	// console.log(
+			// 	// 	"from database>>>>",
+			// 	// 	Date.parse(latestBlogDate.publish_date)
+			// 	// );
+			// 	// var d = Date.parse(latestBlogDate.created_date_time);
+			// 	// console.log(typeof d);
+			// 	// console.log("jaado", timeConverter(object.created).getTime());
+			// 	return (
+			// 		timeConverter(object.created).getTime() >
+			// 		Date.parse(latestBlogDate.publish_date)
+			// 	);
+			// });
+			// if (englishDataList && englishDataList.length > 0) {
+			// 	console.log("after filtering length>>>>", englishDataList);
+			// 	getEnglishDatainBatches();
+			// } else {
+			// 	console.log("After Filteration list recieved>>>>", englishDataList);
+			// }
+
+			getEnglishDatainBatches();
 		})
 		.catch(function(err) {
 			console.log("Error inside getUserList() function ====>>>>", err);

@@ -325,7 +325,8 @@ function getEnglishData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					uri: "http://localhost:3000/api/blog/create/",
+					//uri: "http://localhost:3000/api/blog/create/",
+					uri: EMAIL_CONFIG.CONSTANTS.SITE_URL + "/api/blog/create",
 					//uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/blog/create/",
 					//uri: "http://dev.niranjanaswami.net/api/blog/create/",
 					body: body,
