@@ -182,7 +182,7 @@ function getEnglishNodeList() {
 	rp(options)
 		.then(async function(body) {
 			englishDataList = body;
-			englishDataList.splice(0, 490);
+			//englishDataList.splice(0, 490);
 			console.log(
 				"getEnglishList() function is successfully executed",
 				englishDataList.length,
@@ -275,7 +275,7 @@ function getRuNodeList() {
 	rp(options)
 		.then(function(body) {
 			raussainDataList = body;
-			raussainDataList.splice(0, 490);
+			//raussainDataList.splice(0, 490);
 			console.log(
 				"getRuNodeList() function is successfully executed",
 				raussainDataList.length,
@@ -501,7 +501,7 @@ function getEnglishLectureNodeList() {
 	rp(options)
 		.then(function(body) {
 			englishLectureDataList = body;
-			englishLectureDataList.splice(0, 3300);
+			//englishLectureDataList.splice(0, 3300);
 			console.log(
 				"getEnglishLectureNodeList() function is successfully executed",
 				englishLectureDataList.length,
@@ -564,7 +564,7 @@ function getRuLectureNodeList() {
 	rp(options)
 		.then(function(body) {
 			russianLectureDataList = body;
-			russianLectureDataList.splice(0, 3300);
+			//russianLectureDataList.splice(0, 3300);
 			console.log(
 				"getRuLectureNodeList() function is successfully executed",
 				russianLectureDataList.length,
@@ -713,6 +713,7 @@ function createSingleRULectureItem(body) {
 		})
 		.catch(err => {
 			console.log(err);
+			saveErrorLog("err inside createSingleRULectureItem function");
 		});
 }
 function getEnglishLectureData(ar, callback) {
@@ -798,7 +799,7 @@ function getEnglishTranscriptionNodeList() {
 	rp(options)
 		.then(function(body) {
 			englishTranscriptionDataList = body;
-			englishTranscriptionDataList.splice(0, 60);
+			//englishTranscriptionDataList.splice(0, 60);
 			console.log(
 				"getEnglishTranscriptionNodeList() function is successfully executed",
 				englishTranscriptionDataList.length,
@@ -931,7 +932,7 @@ function getRuTranscriptionNodeList() {
 	rp(options)
 		.then(function(body) {
 			russianTranscriptionDataList = body;
-			russianTranscriptionDataList.splice(0, 60);
+			//russianTranscriptionDataList.splice(0, 60);
 			console.log(
 				"getRuTranscriptionNodeList() function is successfully executed",
 				russianTranscriptionDataList.length,
@@ -1103,7 +1104,7 @@ function getQutoesEnglishNodeList() {
 	rp(options)
 		.then(function(body) {
 			quotesEnglishNodeList = body;
-			quotesEnglishNodeList.splice(0, 5400);
+			//quotesEnglishNodeList.splice(0, 5400);
 			console.log(
 				"getQutoesEnglishNodeList() function is successfully executed",
 				quotesEnglishNodeList.length,
@@ -1239,7 +1240,7 @@ function getQuotesRuNodeList() {
 		.then(function(body) {
 			quotesRaussainNodeList = body;
 			console.log("quotesRaussainNodeList", quotesRaussainNodeList.length);
-			quotesRaussainNodeList.splice(0, 5200);
+			//quotesRaussainNodeList.splice(0, 5200);
 			console.log(
 				"gerQuotesRuNodeList() function is successfully executed",
 				quotesRaussainNodeList.length,
@@ -1447,7 +1448,7 @@ function getEnglishKirtanNodeList() {
 		.then(function(body) {
 			// console.log('body===>',body)
 			englishKirtanDataList = body;
-			englishKirtanDataList.splice(0, 678);
+			//englishKirtanDataList.splice(0, 678);
 			console.log(
 				"getEnglishList() function is successfully executed",
 				englishKirtanDataList.length,
@@ -1572,7 +1573,7 @@ function getRuKirtanNodeList() {
 	rp(options)
 		.then(function(body) {
 			raussainKirtanDataList = body;
-			raussainKirtanDataList.splice(0, 813);
+			//raussainKirtanDataList.splice(0, 813);
 			console.log(
 				"getRuNodeList() function is successfully executed",
 				raussainKirtanDataList.length,
@@ -1838,7 +1839,7 @@ function getVideoNodeList() {
 	rp(options)
 		.then(function(body) {
 			videoNodeList = body;
-			videoNodeList.splice(0, 1100);
+			//videoNodeList.splice(0, 1100);
 			console.log(
 				"getVideoNodeList() function is successfully executed",
 				videoNodeList.length,
@@ -1850,13 +1851,17 @@ function getVideoNodeList() {
 			if (videoNodeList && videoNodeList.length > 0) {
 				console.log("after filteration length", videoNodeList.length);
 				getVideoNodeListRaussain();
-			} else {
-				console.log("no new video here calling summary");
-				getRuSummaryNodeList();
 			}
+			//  else {
+			// 	console.log(
+			// 		"videonodelist updated calling getVideoNodeLisrRaussain here "
+			// 	);
+			// 	getVideoNodeListRaussain();
+			// }
 		})
 		.catch(function(err) {
 			console.log("Error inside getVideoNodeList() function ====>>>>", err);
+			saveErrorLog("err inside getVideoNodeList() function====>>>>");
 		});
 }
 
@@ -1875,19 +1880,29 @@ function getVideoNodeListRaussain() {
 	rp(options)
 		.then(function(body) {
 			videoNodeListRaussain = body;
-
-			console.log(
-				"getVideoNodeListRaussain() function is successfully executed",
-				videoNodeListRaussain.length,
-				"data received"
-			);
-			getVideoDatainBatches();
+			videoNodeListRaussain.splice(0, 1100);
+			videoNodeListRaussain = videoNodeListRaussain.filter(function(value) {
+				return value.created > fetchDateTime;
+			});
+			if (videoNodeListRaussain && videoNodeListRaussain.length > 0) {
+				console.log(
+					"getVideoNodeListRaussain() function is successfully executed",
+					videoNodeListRaussain.length,
+					"data received"
+				);
+				getVideoDatainBatches();
+			}
+			// else {
+			// 	console.log("no new video here calling summary");
+			// 	getRuSummaryNodeList();
+			// }
 		})
 		.catch(function(err) {
 			console.log(
 				"Error inside getVideoNodeListRaussain() function ====>>>>",
 				err
 			);
+			saveErrorLog("err inside getVideoNodeListRaussain() function====>>>>");
 		});
 }
 
@@ -2000,6 +2015,7 @@ function getVideoData(ar, callback) {
 						})
 						.catch(err => {
 							console.log("error in getting english video details ===>>>", err);
+							saveErrorLog("err in getting english video details====>>>>");
 						});
 				} else {
 					const body = {
@@ -2097,7 +2113,7 @@ function getRuSummaryNodeList() {
 	rp(options)
 		.then(function(body) {
 			russianSummaryDataList = body;
-			russianSummaryDataList.splice(0, 550);
+			//russianSummaryDataList.splice(0, 550);
 			console.log(
 				"getRuSummaryNodeList() function is successfully executed",
 				russianSummaryDataList.length,
@@ -2121,6 +2137,7 @@ function getRuSummaryNodeList() {
 				"Error inside getRuTranscriptionNodeList() function ====>>>>",
 				err
 			);
+			saveErrorLog("err inside getRuTranscriptionNodeList() function====>>>>");
 		});
 }
 
@@ -2185,6 +2202,7 @@ function getRussianSummaryData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the getRussianSummaryData() ===>>>", err);
+			saveErrorLog("err inside getRaussianSummaryData()====>>>>");
 		});
 }
 
@@ -2205,6 +2223,7 @@ function getTNIDfromLecture(nid) {
 		})
 		.catch(err => {
 			console.log(err);
+			saveErrorLog("err inside getTNIDfromLecture function====>>>>");
 		});
 }
 
@@ -2224,10 +2243,12 @@ function updateDatabaseSummary() {
 	rp(options)
 		.then(data => {
 			console.log("success");
+			console.log("calling updateS3()");
 			updateS3();
 		})
 		.catch(err => {
 			console.log("Error in updateDatabaseSummary()", err);
+			saveErrorLog("err in upDateDatabaseSummary()====>>>>");
 		});
 }
 
