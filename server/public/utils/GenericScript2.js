@@ -93,12 +93,16 @@ function listObjects() {
 	var bucketParams = {
 		Bucket: "hhns"
 	};
+	let timestamp = new Date(date.getFullYear(),)
 	// Call S3 to obtain a list of the objects in the bucket
 	s3.listObjects(bucketParams, function(err, data) {
 		if (err) {
 			console.log("Error", err);
 		} else {
 			console.log("Success", data);
+			let arr = data.Contents.filter(value=>{
+				if()
+			})
 		}
 	});
 }

@@ -182,7 +182,7 @@ function getEnglishNodeList() {
 	rp(options)
 		.then(async function(body) {
 			englishDataList = body;
-			//englishDataList.splice(0, 490);
+			englishDataList.splice(0, 490);
 			console.log(
 				"getEnglishList() function is successfully executed",
 				englishDataList.length,
@@ -275,7 +275,7 @@ function getRuNodeList() {
 	rp(options)
 		.then(function(body) {
 			raussainDataList = body;
-			//raussainDataList.splice(0, 490);
+			raussainDataList.splice(0, 490);
 			console.log(
 				"getRuNodeList() function is successfully executed",
 				raussainDataList.length,
@@ -304,6 +304,7 @@ function getRuNodeList() {
 }
 
 function getRaussainData(ar, callback) {
+	console.log("get russian data is running");
 	const Raussainpromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -322,41 +323,67 @@ function getRaussainData(ar, callback) {
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
+				console.log("here");
 				//if (ar[i].created > fetchDateTime) {
-				if (ar[i].tnid !== 0) {
+				if (parseInt(ar[i].tnid) !== 0) {
 					const temp = {
-						tnid: ar[i].tnid,
-						languages: "both",
-						ru: {
-							nid: ar[i].nid,
-							title: data[i].title,
-							body: data[i].body
+						fields: {
+							tnid: { "en-US": ar[i].tnid },
+							languages: { "en-US": "both" },
+							nid: { ru: ar[i].nid },
+							title: { ru: data[i].title },
+							body: { ru: data[i].body }
+							// ru: {
+							// 	nid: ar[i].nid,
+							// 	title: data[i].title,
+							// 	body: data[i].body
+							// }
 						}
 					};
+					console.log("temp>>", temp);
 					raussainfinalData.push(temp);
 				} else {
 					const body = {
-						uuid: uuidv4(),
-						author: "Niranjana Swami",
-						audio_files: [],
-						tnid: ar[i].tnid,
-						blog_creation_date: data[i].date,
-						created_date_time: timeConverter(ar[i].created),
-						publish_date: ar[i].created,
-						languages: ar[i].tnid !== 0 ? "" : "en",
-						comments: data[i].comments,
-						ru: {
-							nid: data[i].nid,
-							title: data[i].title,
-							body: data[i].body
+						fields: {
+							uuid: {
+								"en-US": uuidv4()
+							},
+							author: {
+								"en-US": "Niranjana Swami"
+							},
+							audio_files: {
+								"en-US": []
+							},
+							tnid: {
+								"en-US": ar[i].tnid
+							},
+							blog_creation_date: {
+								"en-US": data[i].date
+							},
+							created_date_time: { "en-US": timeConverter(ar[i].created) },
+							//publish_date: timeConverter(ar[i].created),
+							publish_date: {
+								"en-US": ar[i].created
+							},
+							languages:
+								data[i].tnid !== 0 ? { "en-US": "" } : { "en-US": "en" },
+							//languages: item.tnid !== 0 ? { "en-US": "" } : { "en-US": "en" },
+							//comments: { "en-US": data[i].comments },
+							nid: { ru: data[i].nid },
+							title: { ru: data[i].title },
+							body: { ru: data[i].body }
+							// ru: {
+							// 	"en-US": {
+							// 		nid: data[i].nid,
+							// 		title: data[i].title,
+							// 		body: data[i].body
+							// 	}
+							// }
 						}
 					};
+					console.log("body>>", body);
 					createSingleRUBlogItem(body);
 				}
-				//}
-				// else {
-				// 	console.log("No new Data");
-				// }
 			}
 			callback();
 		})
@@ -367,21 +394,38 @@ function getRaussainData(ar, callback) {
 }
 
 function updateDatabase(batchArray, callback) {
+	console.log("batchArray>>>", batchArray);
 	let options = {
-		method: "POST",
+		method: "GET",
 		//uri: "http://localhost:3000/api/blog/updateBulkNew/",
-		uri: "http://dev.niranjanaswami.net/api/blog/updateBulkNew/",
-		body: batchArray,
+		uri:
+			"https://api.contentful.com/spaces/5z1jjbbv7zko/environments/master/entries?access_token=''&content_type",
 		json: true,
 		pool: httpAgent,
 		timeout: 600000,
 		headers: {
-			"User-Agent": "Request-Promise"
+			"User-Agent": "Request-Promise",
+			Authorization: "Bearer CFPAT-sfCluxrxheLEkaUi2w09D9M3FGRmFZsZXfXugZSJ0XM"
+			// "Content-Type": "application / vnd.contentful.management.v1 + json",
+			// "X-Contentful-Content-Type": "blog"
 		}
 	};
 	rp(options)
 		.then(data => {
 			console.log("success");
+			console.log("data>>", data);
+			console.log("all entries data>>>>>>>>>>>>>>>>>>>");
+			for (let i = 0; i < data.items.length; i++) {
+				console.log(data.items[i].sys);
+				if (data.items[i].sys.contentType.id === "blog") {
+					console.log(data.items[i].sys);
+				}
+			}
+
+			// console.log("all entries fields>>>>");
+			// for (let i = 0; i < data.items.length; i++) {
+			// 	console.log(data.items[i].fields);
+			// }
 			callback();
 		})
 		.catch(err => {
@@ -390,16 +434,22 @@ function updateDatabase(batchArray, callback) {
 		});
 }
 function createSingleRUBlogItem(body) {
+	console.log("createSingleRuBlog running");
 	const options = {
 		method: "POST",
 		//uri: "http://localhost:3000/api/blog/create/",
-		uri: "http://dev.niranjanaswami.net/api/blog/create/",
+		//uri: "http://dev.niranjanaswami.net/api/blog/create/",
+		uri:
+			"https://api.contentful.com/spaces/5z1jjbbv7zko/environments/master/entries",
 		body: body,
 		json: true,
 		pool: httpAgent,
 		timeout: 6000000,
 		headers: {
-			"User-Agent": "Request-Promise"
+			"User-Agent": "Request-Promise",
+			Authorization: "Bearer CFPAT-sfCluxrxheLEkaUi2w09D9M3FGRmFZsZXfXugZSJ0XM",
+			"Content-Type": "application / vnd.contentful.management.v1 + json",
+			"X-Contentful-Content-Type": "blog"
 		}
 	};
 	rp(options)
@@ -420,7 +470,11 @@ function getEnglishData(ar, callback) {
 			jar: cookiejar,
 			timeout: 6000000,
 			headers: {
-				"User-Agent": "Request-Promise"
+				"User-Agent": "Request-Promise",
+				Authorization:
+					"Bearer CFPAT-sfCluxrxheLEkaUi2w09D9M3FGRmFZsZXfXugZSJ0XM",
+				"Content-Type": "application / vnd.contentful.management.v1 + json",
+				"X-Contentful-Content-Type": "blog"
 			}
 		};
 		Englishpromise.push(rp(options));
@@ -431,32 +485,53 @@ function getEnglishData(ar, callback) {
 				console.log(ar[i].created);
 				//if (ar[i].created > fetchDateTime) {
 				const body = {
-					uuid: uuidv4(),
-					author: "Niranjana Swami",
-					audio_files: [],
-					tnid: ar[i].tnid,
-					blog_creation_date: item.date,
-					created_date_time: timeConverter(ar[i].created),
-					//publish_date: timeConverter(ar[i].created),
-					publish_date: ar[i].created,
-					languages: item.tnid !== 0 ? "" : "en",
-					comments: item.comments,
-					en: {
-						nid: ar[i].nid,
-						title: item.title,
-						body: item.body
+					fields: {
+						uuid: {
+							"en-US": uuidv4()
+						},
+						author: {
+							"en-US": "Niranjana Swami"
+						},
+						audio_files: {
+							"en-US": []
+						},
+						tnid: {
+							"en-US": ar[i].tnid
+						},
+						blog_creation_date: {
+							"en-US": item.date
+						},
+						created_date_time: { "en-US": timeConverter(ar[i].created) },
+						publish_date: {
+							"en-US": timeConverter(ar[i].created)
+						},
+						languages: item.tnid !== 0 ? { "en-US": "" } : { "en-US": "en" },
+						//comments: { "en-US": item.comments },
+						nid: { "en-US": ar[i].nid },
+						title: { "en-US": item.title },
+						body: { "en-US": item.body }
+						// en: {
+						// 	"en-US": { nid: ar[i].nid, title: item.title, body: item.body }
+						// }
 					}
 				};
+				//console.log("body>>>", JSON.stringify(body));
 				const options = {
 					method: "POST",
 					//uri: "http://localhost:3000/api/blog/create/",
-					uri: "http://dev.niranjanaswami.net/api/blog/create/",
+					//uri: "http://dev.niranjanaswami.net/api/blog/create/",
+					uri:
+						"https://api.contentful.com/spaces/5z1jjbbv7zko/environments/master/entries",
 					body: body,
 					json: true,
 					pool: httpAgent,
 					timeout: 6000000,
 					headers: {
-						"User-Agent": "Request-Promise"
+						"User-Agent": "Request-Promise",
+						Authorization:
+							"Bearer CFPAT-sfCluxrxheLEkaUi2w09D9M3FGRmFZsZXfXugZSJ0XM",
+						"Content-Type": "application / vnd.contentful.management.v1 + json",
+						"X-Contentful-Content-Type": "blog"
 					}
 				};
 				return rp(options);
@@ -598,15 +673,11 @@ function getRussianLectureDatainBatches() {
 		getRussianLectureData(ar, () => {
 			setTimeout(() => {
 				getRussianLectureDatainBatches();
-				// console.log("fetching only 10 russian lecture records");
-				// russianLectureList = 1;
-				// updateDatabaseLectures();
 			}, 2000);
 		});
 	} else {
 		russianLectureList = 1;
-		//updateDatabaseLectures();
-		updateDatabaseLecturesinBatches();
+		updateDatabaseLectures();
 	}
 }
 function getRussianLectureData(ar, callback) {
@@ -671,19 +742,6 @@ function getRussianLectureData(ar, callback) {
 		});
 }
 
-function updateDatabaseLecturesinBatches() {
-	if (russianLectureFinalData.length > 0) {
-		let batchArray = russianLectureFinalData.splice(0, 700);
-		updateDatabaseLectures(batchArray, () => {
-			setTimeout(() => {
-				updateDatabaseLecturesinBatches();
-			}, 1000);
-		});
-	} else {
-		getEnglishTranscriptionNodeList();
-	}
-}
-
 function updateDatabaseLectures() {
 	let options = {
 		method: "POST",
@@ -700,7 +758,8 @@ function updateDatabaseLectures() {
 	rp(options)
 		.then(data => {
 			console.log("success");
-			callback();
+			console.log("saving lecture to database");
+			getEnglishTranscriptionNodeList();
 		})
 		.catch(err => {
 			console.log("errr");
@@ -995,8 +1054,7 @@ function getRussianTranscriptionDatainBatches() {
 		});
 	} else {
 		russianTranscriptsList = 1;
-		//updateDatabaseTranscriptions();
-		updateDatabaseTranscriptionsInBatches();
+		updateDatabaseTranscriptions();
 	}
 }
 function getRussianTranscriptionData(ar, callback) {
@@ -1069,19 +1127,6 @@ function getRussianTranscriptionData(ar, callback) {
 		});
 }
 
-function updateDatabaseTranscriptionsInBatches() {
-	if (transcriptionFinalData.length > 0) {
-		let batchArray = transcriptionFinalData.splice(0, 10);
-		updateDatabaseTranscriptions(batchArray, () => {
-			setTimeout(() => {
-				updateDatabaseTranscriptionsInBatches();
-			}, 1000);
-		});
-	} else {
-		transcriptsList = 1;
-		getQutoesEnglishNodeList();
-	}
-}
 function updateDatabaseTranscriptions() {
 	console.log("updateDatabaseTranscriptions is running");
 	let options = {
@@ -1098,7 +1143,9 @@ function updateDatabaseTranscriptions() {
 	rp(options)
 		.then(data => {
 			console.log("success");
-			callback();
+			console.log("saving all transcription records");
+			transcriptsList = 1;
+			getQutoesEnglishNodeList();
 		})
 		.catch(err => {
 			console.log("errr", err);
@@ -1905,7 +1952,7 @@ function getVideoNodeListRaussain() {
 	rp(options)
 		.then(function(body) {
 			videoNodeListRaussain = body;
-			//videoNodeListRaussain.splice(0, 1100);
+			videoNodeListRaussain.splice(0, 1100);
 			videoNodeListRaussain = videoNodeListRaussain.filter(function(value) {
 				return value.created > fetchDateTime;
 			});
@@ -2175,7 +2222,7 @@ function getRussianSummaryDatainBatches() {
 			}, 2000);
 		});
 	} else {
-		updateDatabaseSummaryInBatches();
+		updateDatabaseSummary();
 	}
 }
 
@@ -2252,20 +2299,6 @@ function getTNIDfromLecture(nid) {
 		});
 }
 
-function updateDatabaseSummaryInBatches() {
-	if (summaryFinalData.length > 0) {
-		let batchArray = summaryFinalData.splice(0, 10);
-		updateDatabaseSummary(batchArray, () => {
-			setTimeout(() => {
-				updateDatabaseSummaryInBatches();
-			}, 1000);
-		});
-	} else {
-		transcriptsList = 1;
-		updateS3();
-	}
-}
-
 function updateDatabaseSummary() {
 	console.log("updateDatabaseSummary()", summaryFinalData.length);
 	let options = {
@@ -2282,7 +2315,8 @@ function updateDatabaseSummary() {
 	rp(options)
 		.then(data => {
 			console.log("success");
-			callback();
+			console.log("calling updateS3()");
+			updateS3();
 		})
 		.catch(err => {
 			console.log("Error in updateDatabaseSummary()", err);

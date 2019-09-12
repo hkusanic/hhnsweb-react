@@ -441,7 +441,8 @@ function getRussianLectureDatainBatches() {
 			}, 2000);
 		});
 	} else {
-		updateDatabaseLectures();
+		//updateDatabaseLectures();
+		updateDatabaseLecturesinBatches();
 	}
 }
 function getRussianLectureData(ar, callback) {
@@ -502,11 +503,21 @@ function getRussianLectureData(ar, callback) {
 		});
 }
 
+function updateDatabaseLecturesinBatches() {
+	if (russianLectureFinalData.length > 0) {
+		let batchArray = russianLectureFinalData.splice(0, 10);
+		updateDatabaseLectures(batchArray, () => {
+			setTimeout(() => {
+				updateDatabaseLecturesinBatches();
+			}, 1000);
+		});
+	}
+}
 function updateDatabaseLectures() {
 	let options = {
 		method: "POST",
-		//uri: "http://localhost:3000/api/lecture/updateBulkNew/",
-		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/updateBulkNew/",
+		uri: "http://localhost:3000/api/lecture/updateBulkNew/",
+		//uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/updateBulkNew/",
 		body: russianLectureFinalData,
 		json: true,
 		pool: httpAgent,
@@ -518,16 +529,17 @@ function updateDatabaseLectures() {
 	rp(options)
 		.then(data => {
 			console.log("success");
+			callback();
 		})
 		.catch(err => {
-			console.log("errr");
+			console.log("errr", err);
 		});
 }
 function createSingleRULectureItem(body) {
 	const options = {
 		method: "POST",
-		//uri: "http://localhost:3000/api/lecture/create/",
-		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/create",
+		uri: "http://localhost:3000/api/lecture/create/",
+		//uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/create",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -578,8 +590,8 @@ function getEnglishLectureData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					//uri: "http://localhost:3000/api/lecture/create/",
-					uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/create",
+					uri: "http://localhost:3000/api/lecture/create/",
+					//uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/create",
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -722,7 +734,7 @@ function getRuTranscriptionNodeList() {
 		// 	"https://nrs.niranjanaswami.net/ru/rest/node.json?parameters%5Btype%5D=transcription&pagesize=6000&&page=0",
 		uri:
 			EMAIL_CONFIG.CONSTANTS.FETCH_URL +
-			"ru/rest/node.json?parameters%5Btype%5D=transcription&pagesize=6000&&page=0",
+			"/ru/rest/node.json?parameters%5Btype%5D=transcription&pagesize=6000&&page=0",
 		jar: cookiejar,
 		json: true,
 		headers: {
@@ -826,8 +838,8 @@ function updateDatabaseTranscriptions() {
 	console.log("updateDatabaseTranscriptions is running");
 	let options = {
 		method: "POST",
-		//uri: "http://localhost:3000/api/lecture/updateBulkNew",
-		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/updateBulkNew",
+		uri: "http://localhost:3000/api/lecture/updateBulkNew",
+		//uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/lecture/updateBulkNew",
 		body: transcriptionFinalData,
 		json: true,
 		pool: httpAgent,
@@ -940,8 +952,8 @@ function getQuotesData(ar, callback) {
 				const options = {
 					method: "POST",
 					//uri: "http://dev.niranjanaswami.net/api/quote/create/",
-					uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/quote/create/",
-					//uri: "http://localhost:3000/api/quote/create/",
+					//uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/quote/create/",
+					uri: "http://localhost:3000/api/quote/create/",
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -1103,8 +1115,8 @@ function updateQuoteDatabase(batchArray, callback) {
 	let options = {
 		method: "POST",
 		//uri: "http://dev.niranjanaswami.net/api/quote/updateBulkNew/",
-		//uri: "http://localhost:3000/api/quote/updateBulkNew/",
-		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/quote/updateBulkNew/",
+		uri: "http://localhost:3000/api/quote/updateBulkNew/",
+		//uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/quote/updateBulkNew/",
 		body: batchArray,
 		json: true,
 		pool: httpAgent,
@@ -1129,8 +1141,8 @@ function createSingleRUQuoteItem(body) {
 	const options = {
 		method: "POST",
 		//uri: "http://dev.niranjanaswami.net/api/quote/create/",
-		//uri: "http://localhost:3000/api/quote/create/",
-		uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/quote/create/",
+		uri: "http://localhost:3000/api/quote/create/",
+		//uri: EMAIL_CONFIG.CONSTANTS.SAVE_URL + "/api/quote/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,

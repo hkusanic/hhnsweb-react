@@ -11,6 +11,8 @@
     "bunyan": "^1.8.12",
     "cloudinary-react": "^1.1.0",
     "connect-multiparty": "^2.2.0",
+    "contentful": "^7.9.1",
+    "contentful-management": "^5.10.2",
     "dotenv": "^6.2.0",
     "express-ip": "^1.0.3",
     "fs-readfile-promise": "^3.0.1",
