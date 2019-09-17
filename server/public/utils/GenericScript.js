@@ -883,7 +883,7 @@ function getQutoesEnglishNodeList() {
 	rp(options)
 		.then(function(body) {
 			quotesEnglishNodeList = body;
-			//quotesEnglishNodeList.splice(0, 5216);
+			quotesEnglishNodeList.splice(0, 5516);
 			console.log(
 				"getQutoesEnglishNodeList() function is successfully executed",
 				quotesEnglishNodeList.length,
@@ -1004,7 +1004,7 @@ function getQuotesRuNodeList() {
 		.then(function(body) {
 			quotesRaussainNodeList = body;
 			console.log("quotesRaussainNodeList", quotesRaussainNodeList.length);
-			//quotesRaussainNodeList.splice(0, 4000);
+			quotesRaussainNodeList.splice(0, 5200);
 			console.log(
 				"gerQuotesRuNodeList() function is successfully executed",
 				quotesRaussainNodeList.length,
