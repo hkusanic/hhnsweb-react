@@ -4,7 +4,6 @@ var fs = require("fs");
 var https = require("https");
 var AWS = require("aws-sdk");
 require("dotenv").config({ path: "/home/system5/Desktop/hhnsweb-react/.env" });
-//require("dotenv").config({ path: __dirname + "/.env" });
 // var httpAgent = new https.Agent({
 // 	keepAlive: true,
 // 	keepAliveMsecs: 3000
@@ -19,6 +18,9 @@ var englishQuotesList = 0;
 var russianQuotesList = 0;
 var englishKirtanList = 0;
 var russianKirtanList = 0;
+var videoList = 0;
+var ruSummaryList = 0;
+var galleryList = 0;
 // });
 let count = 0;
 var httpAgent = new https.Agent();
@@ -163,6 +165,8 @@ function listObject() {
 			console.log("no data");
 			fetchDateTime = 0;
 			getEnglishNodeList();
+			//getQutoesEnglishNodeList();
+			//getEnglishKirtanNodeList();
 		}
 	});
 }
@@ -207,6 +211,7 @@ function getEnglishNodeList() {
 			saveErrorLog(
 				"Error inside getEnglishNodeList() function in Blog region====>>>>"
 			);
+			getRuNodeList();
 		});
 }
 
@@ -300,6 +305,7 @@ function getRuNodeList() {
 			saveErrorLog(
 				"error inside getRuNodeList() function in Blog Region ====>>>>"
 			);
+			getEnglishLectureNodeList();
 		});
 }
 
@@ -353,10 +359,6 @@ function getRaussainData(ar, callback) {
 					};
 					createSingleRUBlogItem(body);
 				}
-				//}
-				// else {
-				// 	console.log("No new Data");
-				// }
 			}
 			callback();
 		})
@@ -529,6 +531,7 @@ function getEnglishLectureNodeList() {
 			saveErrorLog(
 				"Error inside getEnglishLectureNodeList() function ====>>>>" + err
 			);
+			getRuLectureNodeList();
 		});
 }
 
@@ -590,6 +593,7 @@ function getRuLectureNodeList() {
 		.catch(function(err) {
 			console.log("Error inside getRuLectureNodeList() function ====>>>>", err);
 			saveErrorLog("Error inside getRuLectureNodeList() function ====>>>>");
+			getEnglishTranscriptionNodeList();
 		});
 }
 function getRussianLectureDatainBatches() {
@@ -629,7 +633,7 @@ function getRussianLectureData(ar, callback) {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
 				//if (data[i].created > fetchDateTime) {
-				if (data[i].tnid != 0) {
+				if (data[i].tnid !== 0) {
 					const temp = {
 						tnid: data[i].tnid,
 						published_date: timeConverter(data[i].created),
@@ -673,7 +677,7 @@ function getRussianLectureData(ar, callback) {
 
 function updateDatabaseLecturesinBatches() {
 	if (russianLectureFinalData.length > 0) {
-		let batchArray = russianLectureFinalData.splice(0, 700);
+		let batchArray = russianLectureFinalData.splice(0, 200);
 		updateDatabaseLectures(batchArray, () => {
 			setTimeout(() => {
 				updateDatabaseLecturesinBatches();
@@ -684,12 +688,12 @@ function updateDatabaseLecturesinBatches() {
 	}
 }
 
-function updateDatabaseLectures() {
+function updateDatabaseLectures(batchArray, callback) {
 	let options = {
 		method: "POST",
 		//uri: "http://localhost:3000/api/lecture/updateBulkNew/",
 		uri: "http://dev.niranjanaswami.net/api/lecture/updateBulkNew/",
-		body: russianLectureFinalData,
+		body: batchArray,
 		json: true,
 		pool: httpAgent,
 		timeout: 600000,
@@ -846,6 +850,7 @@ function getEnglishTranscriptionNodeList() {
 			saveErrorLog(
 				"Error inside getEnglishTranscriptionNodeList() function in Transcription Region ====>>>>"
 			);
+			getRuTranscriptionNodeList();
 		});
 }
 function getEnglishTranscriptionDatainBatches() {
@@ -860,7 +865,6 @@ function getEnglishTranscriptionDatainBatches() {
 			}, 2000);
 		});
 	} else {
-		englishTranscriptsList = 1;
 		getRuTranscriptionNodeList();
 	}
 }
@@ -980,6 +984,7 @@ function getRuTranscriptionNodeList() {
 			saveErrorLog(
 				"Error inside getRuTranscriptionNodeList() function ====>>>>"
 			);
+			getQutoesEnglishNodeList();
 		});
 }
 function getRussianTranscriptionDatainBatches() {
@@ -989,12 +994,10 @@ function getRussianTranscriptionDatainBatches() {
 			setTimeout(() => {
 				getRussianTranscriptionDatainBatches();
 				// console.log("fetching only 10 russian transcription records");
-				// russianTranscriptsList = 1;
 				// updateDatabaseTranscriptions();
 			}, 2000);
 		});
 	} else {
-		russianTranscriptsList = 1;
 		//updateDatabaseTranscriptions();
 		updateDatabaseTranscriptionsInBatches();
 	}
@@ -1078,16 +1081,17 @@ function updateDatabaseTranscriptionsInBatches() {
 			}, 1000);
 		});
 	} else {
-		transcriptsList = 1;
+		englishTranscriptsList = 1;
+		russianTranscriptsList = 1;
 		getQutoesEnglishNodeList();
 	}
 }
-function updateDatabaseTranscriptions() {
+function updateDatabaseTranscriptions(batchArray, callback) {
 	console.log("updateDatabaseTranscriptions is running");
 	let options = {
 		method: "POST",
 		uri: "http://dev.niranjanaswami.net/api/lecture/updateBulkNew",
-		body: transcriptionFinalData,
+		body: batchArray,
 		json: true,
 		pool: httpAgent,
 		timeout: 600000,
@@ -1155,6 +1159,7 @@ function getQutoesEnglishNodeList() {
 				err
 			);
 			saveErrorLog("Error inside getQutoesEnglishNodeList() function ====>>>>");
+			getQuotesRuNodeList();
 		});
 }
 
@@ -1180,7 +1185,8 @@ function getQuotesData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `http://dev.niranjanaswami.net/rest/object/${item.nid}.json`,
+			uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
+			//uri: `${EMAIL_CONFIG.CONSTANTS.FETCH_URL}/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -1290,6 +1296,7 @@ function getQuotesRuNodeList() {
 		.catch(function(err) {
 			console.log("Error inside gerQuotesRuNodeList() function ====>>>>", err);
 			saveErrorLog("Error inside gerQuotesRuNodeList() function ====>>>>");
+			getEnglishKirtanNodeList();
 		});
 }
 
@@ -1315,7 +1322,7 @@ function getQuotesRaussainData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `http://dev.niranjanaswami.net/rest/object/${item.nid}.json`,
+			uri: `https://nrs.niranjanaswami.net/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -1384,7 +1391,7 @@ function getQuotesRaussainData(ar, callback) {
 function updateQuoteDatabaseInBatches() {
 	console.log("updateQuoteDatabaseInBatches is running");
 	if (quotesFinalRaussainData.length > 0) {
-		let batchArray = quotesFinalRaussainData.splice(0, 700);
+		let batchArray = quotesFinalRaussainData.splice(0, 400);
 		updateQuoteDatabase(batchArray, () => {
 			setTimeout(() => {
 				updateQuoteDatabaseInBatches();
@@ -1493,6 +1500,7 @@ function getEnglishKirtanNodeList() {
 		.catch(function(err) {
 			console.log("Error inside getUserList() function ====>>>>", err);
 			saveErrorLog("Error inside getUserList() function ====>>>>");
+			getRuKirtanNodeList();
 		});
 }
 
@@ -1621,6 +1629,7 @@ function getRuKirtanNodeList() {
 		.catch(function(err) {
 			console.log("Error inside getRuNodeList() function ====>>>>", err);
 			saveErrorLog("Error inside getRuNodeList() function ====>>>>");
+			getVideoNodeList();
 		});
 }
 
@@ -1876,17 +1885,17 @@ function getVideoNodeList() {
 			if (videoNodeList && videoNodeList.length > 0) {
 				console.log("after filteration length", videoNodeList.length);
 				getVideoNodeListRaussain();
+			} else {
+				console.log(
+					"videonodelist updated calling getVideoNodeLisrRaussain here "
+				);
+				getVideoNodeListRaussain();
 			}
-			//  else {
-			// 	console.log(
-			// 		"videonodelist updated calling getVideoNodeLisrRaussain here "
-			// 	);
-			// 	getVideoNodeListRaussain();
-			// }
 		})
 		.catch(function(err) {
 			console.log("Error inside getVideoNodeList() function ====>>>>", err);
 			saveErrorLog("err inside getVideoNodeList() function====>>>>");
+			getVideoNodeListRaussain();
 		});
 }
 
@@ -1916,11 +1925,10 @@ function getVideoNodeListRaussain() {
 					"data received"
 				);
 				getVideoDatainBatches();
+			} else {
+				console.log("no new video here calling summary");
+				getRuSummaryNodeList();
 			}
-			// else {
-			// 	console.log("no new video here calling summary");
-			// 	getRuSummaryNodeList();
-			// }
 		})
 		.catch(function(err) {
 			console.log(
@@ -1928,6 +1936,7 @@ function getVideoNodeListRaussain() {
 				err
 			);
 			saveErrorLog("err inside getVideoNodeListRaussain() function====>>>>");
+			getRuSummaryNodeList();
 		});
 }
 
@@ -1941,6 +1950,7 @@ function getVideoDatainBatches() {
 		});
 	} else {
 		console.log("videos successfully stored>>");
+		videoList = 1;
 		getRuSummaryNodeList();
 	}
 }
@@ -2154,7 +2164,8 @@ function getRuSummaryNodeList() {
 				);
 				getRussianSummaryDatainBatches();
 			} else {
-				updateS3();
+				console.log("no new data here calling get GalleryList function");
+				getGalleryList();
 			}
 		})
 		.catch(function(err) {
@@ -2163,6 +2174,7 @@ function getRuSummaryNodeList() {
 				err
 			);
 			saveErrorLog("err inside getRuTranscriptionNodeList() function====>>>>");
+			getGalleryList();
 		});
 }
 
@@ -2261,17 +2273,17 @@ function updateDatabaseSummaryInBatches() {
 			}, 1000);
 		});
 	} else {
-		transcriptsList = 1;
-		updateS3();
+		ruSummaryList = 1;
+		getGalleryList();
 	}
 }
 
-function updateDatabaseSummary() {
+function updateDatabaseSummary(batchArray, callback) {
 	console.log("updateDatabaseSummary()", summaryFinalData.length);
 	let options = {
 		method: "POST",
 		uri: `http://dev.niranjanaswami.net/api/lecture/updateBulkNew/`,
-		body: summaryFinalData,
+		body: batchArray,
 		json: true,
 		pool: httpAgent,
 		timeout: 60000,
@@ -2291,3 +2303,144 @@ function updateDatabaseSummary() {
 }
 
 /* #endregion */
+
+/* start gallery region */
+
+let galleryDataList = [];
+
+function getGalleryList() {
+	const options = {
+		method: "GET",
+		uri:
+			"https://nrs.niranjanaswami.net/en/rest/node.json?parameters%5Btype%5D=Collection&pagesize=600&&page=0",
+		jar: cookiejar,
+		json: true,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+
+	rp(options)
+		.then(async function(body) {
+			galleryDataList = body;
+			//galleryDataList.splice(0, 490);
+			console.log(
+				"galleryDataList() function is successfully executed",
+				galleryDataList.length,
+				"data received"
+			);
+			fetchDateTime = 0;
+			galleryDataList = galleryDataList.filter(function(value) {
+				return value.created > fetchDateTime;
+			});
+			if (galleryDataList && galleryDataList.length > 0) {
+				console.log("after filteration>>>>", galleryDataList.length);
+				getGalleryDatainBatches();
+			} else {
+				console.log("no new data here>>>");
+				updateS3();
+			}
+		})
+		.catch(function(err) {
+			console.log(
+				"Error inside getGalleryList() function in Gallery region ====>>>>",
+				err
+			);
+			saveErrorLog(
+				"Error inside getGalleryList() function in Gallery region====>>>>"
+			);
+		});
+}
+
+function getGalleryDatainBatches() {
+	//getRuNodeList();
+	if (galleryDataList.length > 0) {
+		let ar = galleryDataList.splice(0, 10);
+		getGalleryData(ar, () => {
+			setTimeout(() => {
+				getGalleryDatainBatches();
+				// console.log("fetching only 10 records");
+				// englishNodeList = 1;
+				// getRuNodeList();
+			}, 4000);
+		});
+	} else {
+		galleryList = 1;
+		console.log("Gallery Updated");
+		updateS3();
+	}
+}
+
+function getGalleryData(ar, callback) {
+	const Gallerypromise = [];
+	ar.map((item, i) => {
+		const options = {
+			method: "GET",
+			uri: `https://nrs.niranjanaswami.net/en/rest/object/${item.nid}.json`,
+			json: true,
+			jar: cookiejar,
+			timeout: 6000000,
+			headers: {
+				"User-Agent": "Request-Promise"
+			}
+		};
+		Gallerypromise.push(rp(options));
+	});
+	Promise.all(Gallerypromise)
+		.then(data => {
+			const insertDataPromise = data.map((item, i) => {
+				let date;
+				if (item.date == false) {
+					date = new Date(ar[i].created * 1000);
+					let year = date.getFullYear();
+					let day = date.getDate();
+					let month = date.getMonth();
+					date = year + "-" + month + "-" + day;
+				} else {
+					date = item.date;
+				}
+				console.log(date);
+				//console.log(ar[i].created);
+				const body = {
+					uuid: uuidv4(),
+					title_en: item.title,
+					title_ru: "",
+					comment_uuid: "",
+					date: date,
+					gallery: item.gallery,
+					photos: item.photos,
+					publish_date: timeConverter(ar[i].created),
+					translation_required: ar[i].translate,
+					audit: []
+				};
+				const options = {
+					method: "POST",
+					//uri: "http://localhost:3000/api/blog/create/",
+					uri: "http://localhost:3000/api/gallery/create/",
+					body: body,
+					json: true,
+					pool: httpAgent,
+					timeout: 6000000,
+					headers: {
+						"User-Agent": "Request-Promise"
+					}
+				};
+				return rp(options);
+			});
+			return Promise.all(insertDataPromise);
+		})
+		.then(data => {
+			console.log("data inserted =====>>>>", data.length);
+			callback();
+		})
+		.catch(err => {
+			console.log(ar);
+			console.log("error inside the gallery api ===>>>", err);
+			saveErrorLog(
+				"error inside the gallery api in getGalleryData() function===>>>"
+			);
+		});
+}
+/* #endregion*/
+
+/* end gallery region */
