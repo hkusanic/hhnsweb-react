@@ -8,6 +8,7 @@ const readline = require("readline");
 var fs = require("fs");
 const axios = require("axios");
 var AWS = require("aws-sdk");
+require("dotenv").config({ path: "/home/system5/Desktop/hhnsweb-react/.env" });
 
 const rl = readline.createInterface({
 	input: process.stdin,
@@ -955,8 +956,8 @@ function getRussianTranscriptionData(ar, callback) {
 
 async function generateS3Object(awsConfig) {
 	const awsConfigObj = {
-		accessKeyId: "AKIA6OAXOGHHDEOMPCGS",
-		secretAccessKey: "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",
+		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 		s3BucketEndpoint: false,
 		endpoint: "https://s3.amazonaws.com"
 	};

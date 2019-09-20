@@ -826,8 +826,8 @@ function getRussianTranscriptionData(ar, callback) {
 
 async function generateS3Object(awsConfig) {
 	const awsConfigObj = {
-		accessKeyId: "AKIAJJPND6YRD2UHG2YQ",
-		secretAccessKey: "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",
+		accessKeyId: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		secretAccessKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 		s3BucketEndpoint: false,
 		endpoint: "https://s3.amazonaws.com"
 	};

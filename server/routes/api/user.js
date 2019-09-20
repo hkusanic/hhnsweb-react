@@ -819,8 +819,8 @@ exports.approvedUserForSadhana = function(req, res) {
  */
 function generateS3Object(awsConfig) {
 	const awsConfigObj = {
-		accessKeyId: "AKIA6OAXOGHHDEOMPCGS",
-		secretAccessKey: "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",
+		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 		s3BucketEndpoint: false,
 		endpoint: "https://s3.amazonaws.com"
 	};

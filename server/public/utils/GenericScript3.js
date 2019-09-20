@@ -59,8 +59,8 @@ var fetchDateTime;
 function saveErrorLog(error) {
 	AWS.config.update({
 		region: "us-east-1",
-		accessKeyId: "AKIA6OAXOGHHDEOMPCGS",
-		secretAccessKey: "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"
+		accessKeyId: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		secretAccessKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 	});
 
 	let date = new Date();
@@ -112,8 +112,9 @@ async function listObject() {
 	AWS.config.update({
 		region: "us-east-1",
 
-		accessKeyId: "AKIA6OAXOGHHDEOMPCGS",
-		secretAccessKey: "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"
+		accessKeyId: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		secretAccessKey:
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 	});
 
 	// Create S3 service object
@@ -1121,8 +1122,8 @@ function getRussianTranscriptionData(ar, callback) {
 
 async function generateS3Object(awsConfig) {
 	const awsConfigObj = {
-		accessKeyId: "AKIA6OAXOGHHDEOMPCGS",
-		secretAccessKey: "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",
+		accessKeyId: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		secretAccessKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 		s3BucketEndpoint: false,
 		endpoint: "https://s3.amazonaws.com"
 	};
@@ -1188,7 +1189,6 @@ async function updateS3Transcriptions() {
 				Body: base64data,
 				ACL: "public-read"
 			};
-			//const s3 = await generateS3Object();
 			let promise = new Promise((resolve, reject) => {
 				const s3 = generateS3Object();
 				resolve(s3);
