@@ -16,24 +16,34 @@ export class QuoteOfDay extends React.Component {
 		};
 	}
 	showing100Characters = sentence => {
+		console.log("sentence>>>", sentence);
 		var result = sentence;
-		function getNthOccurence(string, seek, occurance) {
-			var index = 0, i = 1;
+		//result = result.substring(0, 107);
+		// function getNthOccurence(string, seek, occurance) {
+		// 	var index = 0,
+		// 		i = 1;
 
-			while (index !== -1) {
-				index = string.indexOf(seek, index + 1);
-				if (occurance === i) {
-					break;
-				}
-				i++;
-			}
-			if (index !== -1) {
-				return index;
-			}
-		}
-		let index1 = getNthOccurence(sentence, '>', 2);
-		if (result.length > 250) {
-			result = result.substring(index1 + 1, index1 + 153) + "..."
+		// 	while (index !== -1) {
+		// 		index = string.indexOf(seek, index + 1);
+		// 		console.log("index>>", index);
+		// 		if (occurance === i) {
+		// 			break;
+		// 		}
+		// 		i++;
+		// 	}
+		// 	if (index !== -1) {
+		// 		return index;
+		// 	}
+		// }
+		//let index1 = getNthOccurence(sentence, ">", 2);
+		console.log("index1???????????", index1);
+		console.log("result>>>>", result);
+		if (result.length > 107) {
+			result = result.substring(3, 103) + "...";
+			console.log("result>>>>>>>>>>>>>>", result);
+		} else {
+			result = result.substring(3, result.length - 4) + "...";
+			console.log("res>>>", result);
 		}
 		return result;
 	};
@@ -42,6 +52,8 @@ export class QuoteOfDay extends React.Component {
 		script();
 		let authorList = ["Niranjana Swami", "Srila Prabhupada"];
 		this.props.quoteOfDay(authorList);
+		//console.log("quotes>>>>>>>>>>>>>>>>>>>", this.props.quoteOfDay.quotes);
+
 		this.setState({
 			quotes: this.props.quoteOfDay.quotes
 		});
@@ -89,21 +101,21 @@ export class QuoteOfDay extends React.Component {
 														this.showing100Characters(
 															reactCookie.load("languageCode") === "en"
 																? this.props &&
-																	this.props.quote &&
-																	this.props.quote.quotes &&
-																	this.props.quote.quotes[0] &&
-																	this.props.quote.quotes[0].en &&
-																	this.props.quote.quotes[0].en.body
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[0] &&
+																  this.props.quote.quotes[0].en &&
+																  this.props.quote.quotes[0].en.body
 																	? this.props.quote.quotes[0].en.body
 																	: "Sorry, No data available"
 																: this.props &&
-																	this.props.quote &&
-																	this.props.quote.quotes &&
-																	this.props.quote.quotes[0] &&
-																	this.props.quote.quotes[0].ru &&
-																	this.props.quote.quotes[0].ru.body
-																	? this.props.quote.quotes[0].ru.body
-																	: "Sorry, No data available"
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[0] &&
+																  this.props.quote.quotes[0].ru &&
+																  this.props.quote.quotes[0].ru.body
+																? this.props.quote.quotes[0].ru.body
+																: "Sorry, No data available"
 														)
 													)}
 												</p>
@@ -129,22 +141,22 @@ export class QuoteOfDay extends React.Component {
 														{renderHTML(
 															reactCookie.load("languageCode") === "en"
 																? this.props &&
-																	this.props.quote &&
-																	this.props.quote.quotes &&
-																	this.props.quote.quotes[0] &&
-																	this.props.quote.quotes[0].en &&
-																	this.props.quote.quotes[0].en.source_of_quote
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[0] &&
+																  this.props.quote.quotes[0].en &&
+																  this.props.quote.quotes[0].en.source_of_quote
 																	? this.props.quote.quotes[0].en
-																		.source_of_quote
+																			.source_of_quote
 																	: "Sorry, No data available"
 																: this.props &&
-																	this.props.quote &&
-																	this.props.quote.quotes &&
-																	this.props.quote.quotes[0] &&
-																	this.props.quote.quotes[0].ru &&
-																	this.props.quote.quotes[0].ru.source_of_quote
-																	? this.props.quote.quotes[0].ru.source_of_quote
-																	: "Sorry, No data available"
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[0] &&
+																  this.props.quote.quotes[0].ru &&
+																  this.props.quote.quotes[0].ru.source_of_quote
+																? this.props.quote.quotes[0].ru.source_of_quote
+																: "Sorry, No data available"
 														)}
 													</p>
 												</div>
@@ -194,23 +206,23 @@ export class QuoteOfDay extends React.Component {
 														this.showing100Characters(
 															reactCookie.load("languageCode") === "en"
 																? this.props &&
-																	this.props.quote &&
-																	this.props.quote.quotes &&
-																	this.props.quote.quotes[1] &&
-																	this.props.quote.quotes[1].en &&
-																	this.props.quote.quotes[1].en.body &&
-																	this.props.quote.quotes[1].en.body
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[1] &&
+																  this.props.quote.quotes[1].en &&
+																  this.props.quote.quotes[1].en.body &&
+																  this.props.quote.quotes[1].en.body
 																	? this.props.quote.quotes[1].en.body
 																	: "Sorry ,No data available"
 																: this.props &&
-																	this.props.quote &&
-																	this.props.quote.quotes &&
-																	this.props.quote.quotes[1] &&
-																	this.props.quote.quotes[1].ru &&
-																	this.props.quote.quotes[1].ru.body &&
-																	this.props.quote.quotes[1].ru.body
-																	? this.props.quote.quotes[1].ru.body
-																	: "Sorry, No data available"
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[1] &&
+																  this.props.quote.quotes[1].ru &&
+																  this.props.quote.quotes[1].ru.body &&
+																  this.props.quote.quotes[1].ru.body
+																? this.props.quote.quotes[1].ru.body
+																: "Sorry, No data available"
 														)
 													)}
 												</p>
@@ -236,21 +248,22 @@ export class QuoteOfDay extends React.Component {
 														{renderHTML(
 															reactCookie.load("languageCode") === "en"
 																? this.props &&
-																	this.props.quote &&
-																	this.props.quote.quotes &&
-																	this.props.quote.quotes[1] &&
-																	this.props.quote.quotes[1].en &&
-																	this.props.quote.quotes[1].en.source_of_quote
-																	? this.props.quote.quotes[1].en.source_of_quote
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[1] &&
+																  this.props.quote.quotes[1].en &&
+																  this.props.quote.quotes[1].en.source_of_quote
+																	? this.props.quote.quotes[1].en
+																			.source_of_quote
 																	: "Sorry, No data available"
 																: this.props &&
-																	this.props.quote &&
-																	this.props.quote.quotes &&
-																	this.props.quote.quotes[1] &&
-																	this.props.quote.quotes[1].ru &&
-																	this.props.quote.quotes[1].ru.source_of_quote
-																	? this.props.quote.quotes[1].ru.source_of_quote
-																	: "Sorry, No data available"
+																  this.props.quote &&
+																  this.props.quote.quotes &&
+																  this.props.quote.quotes[1] &&
+																  this.props.quote.quotes[1].ru &&
+																  this.props.quote.quotes[1].ru.source_of_quote
+																? this.props.quote.quotes[1].ru.source_of_quote
+																: "Sorry, No data available"
 														)}
 													</p>
 												</div>
