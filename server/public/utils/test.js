@@ -405,7 +405,7 @@ async function getEnglishLectureNodeList() {
 	rp(options)
 		.then(async function(body) {
 			englishLectureDataList = body;
-			englishLectureDataList.splice(0, 3300);
+			//englishLectureDataList.splice(0, 3300);
 			console.log(
 				"getEnglishLectureNodeList() function is successfully executed",
 				englishLectureDataList.length,
@@ -465,7 +465,7 @@ function getRuLectureNodeList() {
 	rp(options)
 		.then(async function(body) {
 			russianLectureDataList = body;
-			russianLectureDataList.splice(0, 3300);
+			//russianLectureDataList.splice(0, 3300);
 			console.log(
 				"getRuLectureNodeList() function is successfully executed",
 				russianLectureDataList.length,
