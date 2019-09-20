@@ -10224,11 +10224,12 @@ html.mobile .ui-to-top, html.tablet .ui-to-top {
 	color: #122e44;
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
 	background: #fff;
-	z-index: 3;
+	z-index: 300;
 }
 
 .rd-navbar-fixed .rd-navbar-nav-wrap {
 	color: #fff;
+	z-index: 100;
 	background: #fff;
 	border-right: 1px solid #e8e9ee;
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);

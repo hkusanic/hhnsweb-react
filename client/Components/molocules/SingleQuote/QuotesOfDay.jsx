@@ -36,8 +36,8 @@ export class QuoteOfDay extends React.Component {
 		// 	}
 		// }
 		//let index1 = getNthOccurence(sentence, ">", 2);
-		console.log("index1???????????", index1);
-		console.log("result>>>>", result);
+		//console.log("index1???????????", index1);
+		//console.log("result>>>>", result);
 		if (result.length > 107) {
 			result = result.substring(3, 103) + "...";
 			console.log("result>>>>>>>>>>>>>>", result);
