@@ -819,8 +819,8 @@ exports.approvedUserForSadhana = function(req, res) {
  */
 function generateS3Object(awsConfig) {
 	const awsConfigObj = {
-		accessKeyId: process.env.AWS_KEY,
-		secretAccessKey: process.env.AWS_SECRET,
+		accessKeyId: "AKIA6OAXOGHHDEOMPCGS",
+		secretAccessKey: "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",
 		s3BucketEndpoint: false,
 		endpoint: "https://s3.amazonaws.com"
 	};
@@ -828,13 +828,41 @@ function generateS3Object(awsConfig) {
 	return new AWS.S3();
 }
 
+// async function uploadToAWS(filePath, req, response) {
+// 	console.log("...came to upload aws");
+// 	let content = await readFilePromise(filePath);
+// 	let base64data = new Buffer(content, "binary");
+// 	let myKey = `profilePictures/pictures/${req.body.uid}/${req.body.oldData.picture.filename}`;
+// 	let params = {
+// 		Bucket: "hhnsuserprofile",
+// 		Key: myKey,
+// 		Body: base64data,
+// 		ACL: "public-read"
+// 	};
+// 	// fs.unlink(filePath, err => {
+// 	// 	if (err) {
+// 	// 		console.log(err);
+// 	// 	} else {
+// 	// 		console.log('deleted file');
+// 	// 	}
+// 	// });
+// 	const s3 = generateS3Object();
+// 	s3.upload(params, (err, data) => {
+// 		if (err) console.error(`Upload Error ${err}`);
+// 		console.log("Upload Completed");
+// 		return response.json({
+// 			url: data.Location
+// 		});
+// 	});
+// }
+
 async function uploadToAWS(filePath, req, response) {
 	console.log("...came to upload aws");
 	let content = await readFilePromise(filePath);
 	let base64data = new Buffer(content, "binary");
 	let myKey = `profilePictures/pictures/${req.body.uid}/${req.body.oldData.picture.filename}`;
 	let params = {
-		Bucket: process.env.AWS_BUCKET,
+		Bucket: "hhnsuserprofile2",
 		Key: myKey,
 		Body: base64data,
 		ACL: "public-read"
@@ -855,6 +883,32 @@ async function uploadToAWS(filePath, req, response) {
 		});
 	});
 }
+// exports.uploadPic = async (req, response) => {
+// 	var delayInMilliseconds = 1000;
+// 	if (req && req.body && req.body.oldData && req.body.oldData.picture) {
+// 		if (
+// 			req.body.oldData.picture &&
+// 			JSON.parse(req.body.oldData.picture) !== null
+// 		) {
+// 			req.body.oldData.picture = JSON.parse(req.body.oldData.picture);
+// 			let filePath = "./uploads/profile/" + Date.now() + ".jpg";
+// 			let url = req.body.oldData.picture.url;
+// 			let downloadImage = await download_image(url, filePath);
+// 			if (downloadImage.status) {
+// 				setTimeout(function() {
+// 					uploadToAWS(filePath, req, response);
+// 					console.log("done");
+// 				}, delayInMilliseconds);
+// 			}
+// 		} else {
+// 			console.log("profile pic not available");
+// 			return response.json({ url: "Profile pic not available" });
+// 		}
+// 	} else {
+// 		console.log("profile pic not available");
+// 		return response.json({ url: "Profile pic not available" });
+// 	}
+// };
 
 exports.uploadPic = async (req, response) => {
 	var delayInMilliseconds = 1000;
@@ -864,7 +918,7 @@ exports.uploadPic = async (req, response) => {
 			JSON.parse(req.body.oldData.picture) !== null
 		) {
 			req.body.oldData.picture = JSON.parse(req.body.oldData.picture);
-			let filePath = "./uploads/profile/" + Date.now() + ".jpg";
+			let filePath = "./uploadss/profile/" + Date.now() + ".jpg";
 			let url = req.body.oldData.picture.url;
 			let downloadImage = await download_image(url, filePath);
 			if (downloadImage.status) {

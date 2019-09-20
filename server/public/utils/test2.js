@@ -1,10 +1,13 @@
-"use strict";
 var rp = require("request-promise");
 var tough = require("tough-cookie");
 var fs = require("fs");
 var https = require("https");
 var AWS = require("aws-sdk");
-require("dotenv").config();
+var axios = require("axios");
+require("dotenv").config({ path: "/home/system5/Desktop/hhnsweb-react/.env" });
+// var httpAgent = new https.Agent({
+// 	keepAlive: true,
+// 	keepAliveMsecs: 3000
 
 var englishNodeList = 0;
 var russianNodeList = 0;
@@ -19,7 +22,7 @@ var russianKirtanList = 0;
 var videoList = 0;
 var ruSummaryList = 0;
 var galleryList = 0;
-
+// });
 let count = 0;
 var httpAgent = new https.Agent();
 httpAgent.maxSockets = 60;
@@ -56,12 +59,8 @@ var raussainfinalData = [];
 var fetchDateTime;
 
 function saveErrorLog(error) {
-	AWS.config.update({
-		region: "us-east-1",
-		accessKeyId: "AKIA6OAXOGHHDEOMPCGS",
-		secretAccessKey: "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"
-	});
-
+	// var AWS = require('aws-sdk');
+	// AWS.config.update({region: 'us-east-2'});
 	let date = new Date();
 	let folderName = Math.round(
 		new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
@@ -102,21 +101,19 @@ function saveErrorLog(error) {
 		});
 }
 
-let arr = [];
-let promise;
+listObject();
 
-async function listObject() {
+function listObject() {
 	// Load the AWS SDK for Node.js
 
 	AWS.config.update({
-		region: "us-east-1",
-
-		accessKeyId: "AKIA6OAXOGHHDEOMPCGS",
-		secretAccessKey: "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"
+		region: "us-east-2",
+		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 	});
 
 	// Create S3 service object
-	let s3 = new AWS.S3({ apiVersion: "2006-03-01" });
+	s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 
 	// Create the parameters for calling listObjects
 	var bucketParams = {
@@ -128,70 +125,55 @@ async function listObject() {
 	).toString();
 	console.log("timestamp" + timestamp);
 	// Call S3 to obtain a list of the objects in the bucket
+	s3.listObjects(bucketParams, function(err, data) {
+		if (err) console.log(err, err.stack); // an error occurred
 
-	return new Promise((resolve, reject) => {
-		s3.listObjects(bucketParams, async function(err, data) {
-			if (err) console.log(err, err.stack); // an error occurred
+		var sortArray;
 
-			var sortArray;
-
-			let arr = data.Contents.filter(value => {
-				if (value.Key.includes("savingRecords/" + timestamp + "/")) {
-					return value;
-				} else if (value.Key.includes("savingRecords/")) {
-					return value;
-				}
-			});
-			if (arr.length > 0) {
-				arr.sort(function(a, b) {
-					return b.LastModified > a.LastModified
-						? 1
-						: a.LastModified > b.LastModified
-						? -1
-						: 0;
-				});
-
-				for (var file of arr) {
-					console.log(file);
-				}
-
-				var params = { Bucket: "hhns", Key: arr[0].Key };
-				//let filename = './data/timestamp.txt';
-				// var filename = "./data/" + arr[0].Key.replace(/^.*[\\\/]/, "");
-				// console.log(filename);
-				// var file = fs.createWriteStream(filename);
-				return new Promise((resolve, reject) => {
-					s3.getObject(params, async function(err, data) {
-						if (err) return err;
-						let objectData = data.Body.toString("utf-8");
-						console.log(JSON.parse(objectData).timestamp);
-						fetchDateTime = Math.round(JSON.parse(objectData).timestamp / 1000);
-						//resolve(data);
-						//await getEnglishNodeList(); // Use the encoding necessary
-						return new Promise(async (resolve, reject) => {
-							const data = await getEnglishNodeList();
-							//const data = await getUserList();
-							resolve(data);
-						});
-					});
-				});
-			} else {
-				console.log("no data");
-				fetchDateTime = 0;
-				//resolve("no data");
-				//await getEnglishNodeList();
-				//getQutoesEnglishNodeList();
-				return new Promise(async (resolve, reject) => {
-					const data = await getEnglishNodeList();
-					//const data = await getUserList();
-					resolve(data);
-				});
+		let arr = data.Contents.filter(value => {
+			if (value.Key.includes("savingRecords/" + timestamp + "/")) {
+				return value;
+			} else if (value.Key.includes("savingRecords/")) {
+				return value;
 			}
 		});
+		if (arr.length > 0) {
+			arr.sort(function(a, b) {
+				return b.LastModified > a.LastModified
+					? 1
+					: a.LastModified > b.LastModified
+					? -1
+					: 0;
+			});
+
+			for (var file of arr) {
+				console.log(file);
+			}
+
+			var params = { Bucket: "hhns", Key: arr[0].Key };
+			//let filename = './data/timestamp.txt';
+			// var filename = "./data/" + arr[0].Key.replace(/^.*[\\\/]/, "");
+			// console.log(filename);
+			// var file = fs.createWriteStream(filename);
+			s3.getObject(params, function(err, data) {
+				if (err) return err;
+				let objectData = data.Body.toString("utf-8");
+				console.log(JSON.parse(objectData).timestamp);
+				fetchDateTime = JSON.parse(objectData).timestamp;
+				getEnglishNodeList(); // Use the encoding necessary
+			});
+		} else {
+			console.log("no data");
+			fetchDateTime = 0;
+			//getEnglishNodeList();
+			getEnglishLectureNodeList();
+			//getQutoesEnglishNodeList();
+			//getEnglishKirtanNodeList();
+		}
 	});
 }
 
-async function getEnglishNodeList() {
+function getEnglishNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -217,13 +199,13 @@ async function getEnglishNodeList() {
 			});
 			if (englishDataList && englishDataList.length > 0) {
 				console.log("after filteration>>>>", englishDataList.length);
-				await getEnglishDatainBatches();
+				getEnglishDatainBatches();
 			} else {
-				console.log("no new english blog data here>>>");
-				await getRuNodeList();
+				console.log("no new data here>>>");
+				getRuNodeList();
 			}
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log(
 				"Error inside getEnglishNodeList() function in Blog region ====>>>>",
 				err
@@ -231,11 +213,11 @@ async function getEnglishNodeList() {
 			saveErrorLog(
 				"Error inside getEnglishNodeList() function in Blog region====>>>>"
 			);
-			await getRuNodeList();
+			getRuNodeList();
 		});
 }
 
-async function getEnglishDatainBatches() {
+function getEnglishDatainBatches() {
 	//getRuNodeList();
 	if (englishDataList.length > 0) {
 		let ar = englishDataList.splice(0, 10);
@@ -249,11 +231,11 @@ async function getEnglishDatainBatches() {
 		});
 	} else {
 		englishNodeList = 1;
-		await getRuNodeList();
+		getRuNodeList();
 	}
 }
 
-async function getRaussainDatainBatches() {
+function getRaussainDatainBatches() {
 	if (raussainDataList.length > 0) {
 		let ar = raussainDataList.splice(0, 10);
 		getRaussainData(ar, () => {
@@ -266,14 +248,14 @@ async function getRaussainDatainBatches() {
 		});
 	} else {
 		russianNodeList = 1;
-		await updateDatabaseInBatches();
+		updateDatabaseInBatches();
 	}
 }
 
-async function updateDatabaseInBatches() {
+function updateDatabaseInBatches() {
 	if (raussainfinalData.length > 0) {
 		let batchArray = raussainfinalData.splice(0, 10);
-		updateDatabase(batchArray, async () => {
+		updateDatabase(batchArray, () => {
 			setTimeout(() => {
 				updateDatabaseInBatches();
 				// console.log("saving only 10 records");
@@ -281,11 +263,11 @@ async function updateDatabaseInBatches() {
 			}, 1000);
 		});
 	} else {
-		await getEnglishLectureNodeList();
+		getEnglishLectureNodeList();
 	}
 }
 
-async function getRuNodeList() {
+function getRuNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -298,7 +280,7 @@ async function getRuNodeList() {
 	};
 
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			raussainDataList = body;
 			//raussainDataList.splice(0, 490);
 			console.log(
@@ -311,20 +293,21 @@ async function getRuNodeList() {
 			});
 			if (raussainDataList && raussainDataList.length > 0) {
 				console.log("after filteration>>>", raussainDataList.length);
-				await getRaussainDatainBatches();
+				getRaussainDatainBatches();
 			} else {
 				console.log(
-					"no new russian blog data here>> calling another function for populating lecture data"
+					"no new data here>> calling another function for populating lecture data"
 				);
-				await getEnglishLectureNodeList();
+				getEnglishLectureNodeList();
 			}
+			//getRaussainDatainBatches();
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log("Error inside getRuNodeList() function ====>>>>", err);
 			saveErrorLog(
 				"error inside getRuNodeList() function in Blog Region ====>>>>"
 			);
-			await getEnglishLectureNodeList();
+			getEnglishLectureNodeList();
 		});
 }
 
@@ -347,6 +330,7 @@ function getRaussainData(ar, callback) {
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
+				//if (ar[i].created > fetchDateTime) {
 				if (ar[i].tnid !== 0) {
 					const temp = {
 						tnid: ar[i].tnid,
@@ -389,8 +373,8 @@ function getRaussainData(ar, callback) {
 function updateDatabase(batchArray, callback) {
 	let options = {
 		method: "POST",
-		//uri: "http://localhost:3000/api/blog/updateBulkNew/",
-		uri: "http://dev.niranjanaswami.net/api/blog/updateBulkNew/",
+		uri: "http://localhost:3000/api/blog/updateBulkNew/",
+		//uri: "http://dev.niranjanaswami.net/api/blog/updateBulkNew/",
 		body: batchArray,
 		json: true,
 		pool: httpAgent,
@@ -412,8 +396,8 @@ function updateDatabase(batchArray, callback) {
 function createSingleRUBlogItem(body) {
 	const options = {
 		method: "POST",
-		//uri: "http://localhost:3000/api/blog/create/",
-		uri: "http://dev.niranjanaswami.net/api/blog/create/",
+		uri: "http://localhost:3000/api/blog/create/",
+		//uri: "http://dev.niranjanaswami.net/api/blog/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -469,8 +453,8 @@ function getEnglishData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					//uri: "http://localhost:3000/api/blog/create/",
-					uri: "http://dev.niranjanaswami.net/api/blog/create/",
+					uri: "http://localhost:3000/api/blog/create/",
+					//uri: "http://dev.niranjanaswami.net/api/blog/create/",
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -506,7 +490,7 @@ var englishLectureDataList = [];
 var russianLectureDataList = [];
 var russianLectureFinalData = [];
 
-async function getEnglishLectureNodeList() {
+function getEnglishLectureNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -519,7 +503,7 @@ async function getEnglishLectureNodeList() {
 	};
 
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			englishLectureDataList = body;
 			//englishLectureDataList.splice(0, 3300);
 			console.log(
@@ -535,15 +519,13 @@ async function getEnglishLectureNodeList() {
 					"after filteration length>>",
 					englishLectureDataList.length
 				);
-				await getEnglishLectureDatainBatches();
+				getEnglishLectureDatainBatches();
 			} else {
-				console.log(
-					"no new english lecture data here. Calling getRuLectureNodeList()"
-				);
-				await getRuLectureNodeList();
+				console.log("no new data here. Calling getRuLectureNodeList()");
+				getRuLectureNodeList();
 			}
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log(
 				"Error inside getEnglishLectureNodeList() function ====>>>>",
 				err
@@ -551,11 +533,11 @@ async function getEnglishLectureNodeList() {
 			saveErrorLog(
 				"Error inside getEnglishLectureNodeList() function ====>>>>" + err
 			);
-			await getRuLectureNodeList();
+			getRuLectureNodeList();
 		});
 }
 
-async function getEnglishLectureDatainBatches() {
+function getEnglishLectureDatainBatches() {
 	if (englishLectureDataList.length > 0) {
 		let ar = englishLectureDataList.splice(0, 10);
 		getEnglishLectureData(ar, () => {
@@ -568,11 +550,11 @@ async function getEnglishLectureDatainBatches() {
 		});
 	} else {
 		englishLectureList = 1;
-		await getRuLectureNodeList();
+		getRuLectureNodeList();
 	}
 }
 
-async function getRuLectureNodeList() {
+function getRuLectureNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -585,9 +567,10 @@ async function getRuLectureNodeList() {
 	};
 
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			russianLectureDataList = body;
 			//russianLectureDataList.splice(0, 3300);
+
 			console.log(
 				"getRuLectureNodeList() function is successfully executed",
 				russianLectureDataList.length,
@@ -602,21 +585,21 @@ async function getRuLectureNodeList() {
 					"after filteration length here>>>",
 					russianLectureDataList.length
 				);
-				await getRussianLectureDatainBatches();
+				getRussianLectureDatainBatches();
 			} else {
 				console.log(
-					"no new russian lectures data here>>>>Calling another function for populating Transcription "
+					"no new data here>>>>Calling another function for populating Transcription "
 				);
-				await getEnglishTranscriptionNodeList();
+				getEnglishTranscriptionNodeList();
 			}
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log("Error inside getRuLectureNodeList() function ====>>>>", err);
 			saveErrorLog("Error inside getRuLectureNodeList() function ====>>>>");
-			await getEnglishTranscriptionNodeList();
+			getEnglishTranscriptionNodeList();
 		});
 }
-async function getRussianLectureDatainBatches() {
+function getRussianLectureDatainBatches() {
 	if (russianLectureDataList.length > 0) {
 		let ar = russianLectureDataList.splice(0, 10);
 		getRussianLectureData(ar, () => {
@@ -630,7 +613,7 @@ async function getRussianLectureDatainBatches() {
 	} else {
 		russianLectureList = 1;
 		//updateDatabaseLectures();
-		await updateDatabaseLecturesinBatches();
+		updateDatabaseLecturesinBatches();
 	}
 }
 function getRussianLectureData(ar, callback) {
@@ -652,6 +635,7 @@ function getRussianLectureData(ar, callback) {
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
+				//if (data[i].created > fetchDateTime) {
 				if (data[i].tnid !== 0) {
 					const temp = {
 						tnid: ar[i].tnid,
@@ -704,7 +688,7 @@ function getRussianLectureData(ar, callback) {
 		});
 }
 
-async function updateDatabaseLecturesinBatches() {
+function updateDatabaseLecturesinBatches() {
 	if (russianLectureFinalData.length > 0) {
 		let batchArray = russianLectureFinalData.splice(0, 200);
 		updateDatabaseLectures(batchArray, () => {
@@ -713,7 +697,7 @@ async function updateDatabaseLecturesinBatches() {
 			}, 1000);
 		});
 	} else {
-		await getEnglishTranscriptionNodeList();
+		getEnglishTranscriptionNodeList();
 	}
 }
 
@@ -780,6 +764,20 @@ function getEnglishLectureData(ar, callback) {
 	Promise.all(Englishpromise)
 		.then(data => {
 			const insertDataPromise = data.map((item, i) => {
+				//if (item.created > fetchDateTime) {
+				// const body = {
+				// 	uuid: uuidv4(),
+				// 	tnid: item.tnid,
+				// 	published_date: timeConverter(item.created),
+				// 	languages: item.tnid != 0 ? "" : "en",
+				// 	en: {
+				// 		nid: item.nid,
+				// 		title: item.title,
+				// 		created: timeConverter(item.created),
+				// 		published: timeConverter(item.created),
+				// 		changed: timeConverter(item.changed)
+				// 	}
+				// };
 				const body = {
 					uuid: uuidv4(),
 					tnid: ar[i].tnid,
@@ -808,7 +806,7 @@ function getEnglishLectureData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					//uri: "http://localhost:3000/api/lecturecreate/",
+					//uri: "http://localhost:3000/api/lecture/create/",
 					uri: "http://dev.niranjanaswami.net/api/lecture/create/",
 					body: body,
 					json: true,
@@ -819,6 +817,7 @@ function getEnglishLectureData(ar, callback) {
 					}
 				};
 				return rp(options);
+				//}
 			});
 			return Promise.all(insertDataPromise);
 		})
@@ -841,8 +840,9 @@ get target id and insert data into target */
 var englishTranscriptionDataList = [];
 var russianTranscriptionDataList = [];
 var transcriptionFinalData = [];
+let errorList = [];
 
-async function getEnglishTranscriptionNodeList() {
+function getEnglishTranscriptionNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -854,9 +854,9 @@ async function getEnglishTranscriptionNodeList() {
 		}
 	};
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			englishTranscriptionDataList = body;
-			//englishTranscriptionDataList.splice(0, 60);
+			englishTranscriptionDataList.splice(0, 60);
 			console.log(
 				"getEnglishTranscriptionNodeList() function is successfully executed",
 				englishTranscriptionDataList.length,
@@ -876,15 +876,13 @@ async function getEnglishTranscriptionNodeList() {
 					englishTranscriptionDataList.length
 				);
 				englishTranscriptsList = 1;
-				await getEnglishTranscriptionDatainBatches();
+				getEnglishTranscriptionDatainBatches();
 			} else {
-				console.log(
-					"no new English Transcriptions data here>>> Calling RuNode Transcription list"
-				);
-				await getRuTranscriptionNodeList();
+				console.log("no new data here>>> Calling RuNode list");
+				getRuTranscriptionNodeList();
 			}
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log(
 				"Error inside getEnglishTranscriptionNodeList() function ====>>>>",
 				err
@@ -892,22 +890,19 @@ async function getEnglishTranscriptionNodeList() {
 			saveErrorLog(
 				"Error inside getEnglishTranscriptionNodeList() function in Transcription Region ====>>>>"
 			);
-			await getRuTranscriptionNodeList();
+			getRuTranscriptionNodeList();
 		});
 }
-async function getEnglishTranscriptionDatainBatches() {
+function getEnglishTranscriptionDatainBatches() {
 	if (englishTranscriptionDataList.length > 0) {
 		let ar = englishTranscriptionDataList.splice(0, 10);
 		getEnglishTranscriptionData(ar, () => {
 			setTimeout(() => {
 				getEnglishTranscriptionDatainBatches();
-				// console.log("fetching only 10 transcription data records");
-				// englishTranscriptsList = 1;
-				// getRuTranscriptionNodeList();
 			}, 2000);
 		});
 	} else {
-		await getRuTranscriptionNodeList();
+		getRuTranscriptionNodeList();
 	}
 }
 function getEnglishTranscriptionData(ar, callback) {
@@ -930,38 +925,10 @@ function getEnglishTranscriptionData(ar, callback) {
 		.then(data => {
 			console.log("data EnglishPromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
+				console.log("data[i]>>", data[i]);
 				if (data[i].audio.nid) {
 					let filePath = "./uploads/transcription/" + Date.now() + ".pdf";
 					console.log("filePath>>", filePath);
-					// let url = data[i].file;
-					// let tempFile = fs.createWriteStream(filePath);
-					// tempFile.on("open", function(fd) {
-					// 	http.request(url, function(res) {
-					// 		res
-					// 			.on("data", function(chunk) {
-					// 				tempFile.write(chunk);
-					// 				const temp = {
-					// 					tnid: data[i].audio.nid,
-					// 					en: {
-					// 						transcription: {
-					// 							nid: ar[i].nid,
-					// 							title: data[i].title,
-					// 							text: data[i].body,
-					// 							attachment_name: data[i].file,
-					// 							attachment_link: filePath
-					// 						}
-					// 					}
-					// 				};
-					// 				transcriptionFinalData.push(temp);
-					// 			})
-					// 			.on("end", function() {
-					// 				tempFile.end();
-					// 				//fs.renameSync(tempFile.path, filepath);
-					// 				//return callback(filepath);
-					// 			});
-					// 	});
-					// });
-					// console.log("tempFile>>", tempFile);
 					axios({
 						url: data[i].file,
 						responseType: "stream"
@@ -1002,7 +969,7 @@ function getEnglishTranscriptionData(ar, callback) {
 			saveErrorLog("error inside the getEnglishTranscriptionData() ===>>>");
 		});
 }
-async function getRuTranscriptionNodeList() {
+function getRuTranscriptionNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -1015,7 +982,7 @@ async function getRuTranscriptionNodeList() {
 	};
 
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			russianTranscriptionDataList = body;
 			//russianTranscriptionDataList.splice(0, 60);
 			console.log(
@@ -1036,15 +1003,15 @@ async function getRuTranscriptionNodeList() {
 					"after filteration length>>>",
 					russianTranscriptionDataList.length
 				);
-				await getRussianTranscriptionDatainBatches();
+				getRussianTranscriptionDatainBatches();
 			} else {
 				console.log(
-					"no new data in russian transcriptions here>> calling another function for populating quotes"
+					"no new data here>> calling another function for populating quotes"
 				);
-				await getQutoesEnglishNodeList();
+				getQutoesEnglishNodeList();
 			}
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log(
 				"Error inside getRuTranscriptionNodeList() function ====>>>>",
 				err
@@ -1052,10 +1019,11 @@ async function getRuTranscriptionNodeList() {
 			saveErrorLog(
 				"Error inside getRuTranscriptionNodeList() function ====>>>>"
 			);
-			await getQutoesEnglishNodeList();
+			//getQutoesEnglishNodeList();
+			getRuSummaryNodeList();
 		});
 }
-async function getRussianTranscriptionDatainBatches() {
+function getRussianTranscriptionDatainBatches() {
 	if (russianTranscriptionDataList.length > 0) {
 		let ar = russianTranscriptionDataList.splice(0, 10);
 		getRussianTranscriptionData(ar, () => {
@@ -1066,8 +1034,8 @@ async function getRussianTranscriptionDatainBatches() {
 			}, 2000);
 		});
 	} else {
-		await updateDatabaseTranscriptions();
-		//await updateDatabaseTranscriptionsInBatches();
+		//updateDatabaseTranscriptions();
+		updateDatabaseTranscriptionsInBatches();
 	}
 }
 function getRussianTranscriptionData(ar, callback) {
@@ -1089,6 +1057,7 @@ function getRussianTranscriptionData(ar, callback) {
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
+				//console.log("data[i]>>>>", data[i]);
 				if (data[i].audio.nid) {
 					let filePath = "./uploads/transcription/" + Date.now() + ".pdf";
 					axios({
@@ -1115,12 +1084,12 @@ function getRussianTranscriptionData(ar, callback) {
 						.catch(error => {
 							console.log("Error while downloading file ==>> ", error);
 						});
-				}
-				//}
-				else {
+				} else {
 					console.log(
 						`Invalid or Missing Reference in data with nid ${data[i].nid}`
 					);
+					// let str = `Ru ${ar[i].nid}`;
+					// errorList.push(str);
 					saveErrorLog(
 						`Invalid or Missing Reference in data with nid ${data[i].nid} in getRussianTranscriptiondata() function`
 					);
@@ -1136,7 +1105,7 @@ function getRussianTranscriptionData(ar, callback) {
 		});
 }
 
-// async function updateDatabaseTranscriptionsInBatches() {
+// function updateDatabaseTranscriptionsInBatches() {
 // 	if (transcriptionFinalData.length > 0) {
 // 		let batchArray = transcriptionFinalData.splice(0, 10);
 // 		updateDatabaseTranscriptions(batchArray, () => {
@@ -1147,14 +1116,15 @@ function getRussianTranscriptionData(ar, callback) {
 // 	} else {
 // 		englishTranscriptsList = 1;
 // 		russianTranscriptsList = 1;
-// 		await getQutoesEnglishNodeList();
+// 		getQutoesEnglishNodeList();
 // 	}
 // }
 // function updateDatabaseTranscriptions(batchArray, callback) {
 // 	console.log("updateDatabaseTranscriptions is running");
 // 	let options = {
 // 		method: "POST",
-// 		uri: "http://dev.niranjanaswami.net/api/lecture/updateBulkNew",
+// 		uri: "http://localhost:3000/api/lecture/updateBulkNew",
+// 		//uri: "http://dev.niranjanaswami.net/api/lecture/updateBulkNew",
 // 		body: batchArray,
 // 		json: true,
 // 		pool: httpAgent,
@@ -1183,8 +1153,10 @@ function getRussianTranscriptionData(ar, callback) {
 
 async function generateS3Object(awsConfig) {
 	const awsConfigObj = {
-		accessKeyId: "AKIA6OAXOGHHDEOMPCGS",
-		secretAccessKey: "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",
+		// accessKeyId: "AKIAJJPND6YRD2UHG2YQ",
+		// secretAccessKey: "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",
+		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 		s3BucketEndpoint: false,
 		endpoint: "https://s3.amazonaws.com"
 	};
@@ -1192,9 +1164,23 @@ async function generateS3Object(awsConfig) {
 	return new AWS.S3();
 }
 
-async function updateDatabaseTranscriptions() {
+function updateDatabaseTranscriptionsInBatches() {
+	if (transcriptionFinalData.length > 0) {
+		let batchArray = transcriptionFinalData.splice(0, 10);
+		updateDatabaseTranscriptions(batchArray, () => {
+			setTimeout(() => {
+				updateDatabaseTranscriptionsInBatches();
+			}, 1000);
+		});
+	} else {
+		englishTranscriptsList = 1;
+		russianTranscriptsList = 1;
+		//getQutoesEnglishNodeList();
+	}
+}
+async function updateDatabaseTranscriptions(transcriptionFinalData, callback) {
 	console.log("updateDatabaseTranscriptions is running");
-	console.log(transcriptionFinalData);
+	//console.log(transcriptionFinalData);
 	let counter0 = 0;
 	let counter1 = 0;
 	for (let i = 0; i < transcriptionFinalData.length; i++) {
@@ -1255,35 +1241,61 @@ async function updateDatabaseTranscriptions() {
 			});
 		}
 	}
-	let timer = setInterval(() => {
-		if (counter1 === counter0) {
-			let options = {
-				method: "POST",
-				uri: "http://localhost:3000/api/lecture/updateBulkNew",
-				// uri: `${apiURL}/api/lecture/updateBulkNew/`,
-				body: transcriptionFinalData,
-				json: true,
-				pool: httpAgent,
-				timeout: 600000,
-				headers: {
-					"User-Agent": "Request-Promise"
-				}
-			};
-			rp(options)
-				.then(data => {
-					console.log("success");
-					writeErrors();
-				})
-				.catch(err => {
-					console.log(err);
-					writeErrors();
-				});
-			clearInterval(timer);
-		} else {
-			console.log("Waiting for upload to complete");
-		}
-	}, 2000);
-	getQutoesEnglishNodeList();
+	if (counter1 === counter0) {
+		let options = {
+			method: "POST",
+			uri: "http://localhost:3000/api/lecture/updateBulkNew",
+			body: transcriptionFinalData,
+			json: true,
+			pool: httpAgent,
+			timeout: 600000,
+			headers: {
+				"User-Agent": "Request-Promise"
+			}
+		};
+		rp(options)
+			.then(data => {
+				console.log("success");
+				//writeErrors();
+				callback();
+			})
+			.catch(err => {
+				console.log(err);
+				writeErrors();
+			});
+	} else {
+		console.log("Waiting for upload to complete");
+	}
+
+	// let timer = setInterval(() => {
+	// 	if (counter1 === counter0) {
+	// 		let options = {
+	// 			method: "POST",
+	// 			uri: "http://localhost:3000/api/lecture/updateBulkNew",
+	// 			// uri: `${apiURL}/api/lecture/updateBulkNew/`,
+	// 			body: transcriptionFinalData,
+	// 			json: true,
+	// 			pool: httpAgent,
+	// 			timeout: 600000,
+	// 			headers: {
+	// 				"User-Agent": "Request-Promise"
+	// 			}
+	// 		};
+	// 		rp(options)
+	// 			.then(data => {
+	// 				console.log("success");
+	// 				writeErrors();
+	// 			})
+	// 			.catch(err => {
+	// 				console.log(err);
+	// 				writeErrors();
+	// 			});
+	// 		clearInterval(timer);
+	// 	} else {
+	// 		console.log("Waiting for upload to complete");
+	// 	}
+	// }, 2000);
+	//getQutoesEnglishNodeList();
 }
 
 function writeErrors() {
@@ -1292,14 +1304,16 @@ function writeErrors() {
 		console.log("Successfully Written to File.");
 	});
 }
+
 /* #endregion*/
+
 /* Quotes Script Start point */
 
 var quotesEnglishNodeList = [];
 var quotesRaussainNodeList = [];
 var quotesFinalRaussainData = [];
 
-async function getQutoesEnglishNodeList() {
+function getQutoesEnglishNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -1312,7 +1326,7 @@ async function getQutoesEnglishNodeList() {
 	};
 
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			quotesEnglishNodeList = body;
 			//quotesEnglishNodeList.splice(0, 5400);
 			console.log(
@@ -1328,25 +1342,23 @@ async function getQutoesEnglishNodeList() {
 					"after filteration length>>>>",
 					quotesEnglishNodeList.length
 				);
-				await getQuotesDatainBatches();
+				getQuotesDatainBatches();
 			} else {
-				console.log(
-					"no new english quotes Data here calling russian quotes list"
-				);
-				await getQuotesRuNodeList();
+				console.log("no new Data here");
+				getQuotesRuNodeList();
 			}
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log(
 				"Error inside getQutoesEnglishNodeList() function ====>>>>",
 				err
 			);
 			saveErrorLog("Error inside getQutoesEnglishNodeList() function ====>>>>");
-			await getQuotesRuNodeList();
+			getQuotesRuNodeList();
 		});
 }
 
-async function getQuotesDatainBatches() {
+function getQuotesDatainBatches() {
 	if (quotesEnglishNodeList.length > 0) {
 		let ar = quotesEnglishNodeList.splice(0, 10);
 		getQuotesData(ar, () => {
@@ -1359,7 +1371,7 @@ async function getQuotesDatainBatches() {
 		});
 	} else {
 		englishQuotesList = 1;
-		await getQuotesRuNodeList();
+		getQuotesRuNodeList();
 	}
 }
 
@@ -1403,8 +1415,9 @@ function getQuotesData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
+					uri: "http://localhost:3000/api/quote/create",
 					//uri: "http://dev.niranjanaswami.net/api/quote/create/",
-					uri: "http://dev.niranjanaswami.net/api/quote/create/",
+					//uri: "http://dev.niranjanaswami.net/api/quote/create/",
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -1438,7 +1451,7 @@ function getQuotesSource(body) {
 	return body.substr(startIndex + 5);
 }
 
-async function getQuotesRuNodeList() {
+function getQuotesRuNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -1451,7 +1464,7 @@ async function getQuotesRuNodeList() {
 	};
 
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			quotesRaussainNodeList = body;
 			console.log("quotesRaussainNodeList", quotesRaussainNodeList.length);
 			//quotesRaussainNodeList.splice(0, 5200);
@@ -1468,22 +1481,22 @@ async function getQuotesRuNodeList() {
 					"after filteration length >>>>",
 					quotesRaussainNodeList.length
 				);
-				await getQuotesRaussainDatainBatches();
+				getQuotesRaussainDatainBatches();
 			} else {
 				console.log(
-					"no new russian quotes here>>>calling another function for populating kirtan"
+					"no new quotes here>>>calling another function for populating kirtan"
 				);
-				await getEnglishKirtanNodeList();
+				getEnglishKirtanNodeList();
 			}
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log("Error inside gerQuotesRuNodeList() function ====>>>>", err);
 			saveErrorLog("Error inside gerQuotesRuNodeList() function ====>>>>");
-			await getEnglishKirtanNodeList();
+			getEnglishKirtanNodeList();
 		});
 }
 
-async function getQuotesRaussainDatainBatches() {
+function getQuotesRaussainDatainBatches() {
 	if (quotesRaussainNodeList.length > 0) {
 		let ar = quotesRaussainNodeList.splice(0, 10);
 		getQuotesRaussainData(ar, () => {
@@ -1496,7 +1509,7 @@ async function getQuotesRaussainDatainBatches() {
 		});
 	} else {
 		russianQuotesList = 1;
-		await updateQuoteDatabaseInBatches();
+		updateQuoteDatabaseInBatches();
 	}
 }
 
@@ -1571,7 +1584,7 @@ function getQuotesRaussainData(ar, callback) {
 		});
 }
 
-async function updateQuoteDatabaseInBatches() {
+function updateQuoteDatabaseInBatches() {
 	console.log("updateQuoteDatabaseInBatches is running");
 	if (quotesFinalRaussainData.length > 0) {
 		let batchArray = quotesFinalRaussainData.splice(0, 400);
@@ -1584,8 +1597,8 @@ async function updateQuoteDatabaseInBatches() {
 			}, 3000);
 		});
 	} else {
-		//quotesList = 1;
-		await getEnglishKirtanNodeList();
+		quotesList = 1;
+		getEnglishKirtanNodeList();
 	}
 }
 
@@ -1594,8 +1607,9 @@ function updateQuoteDatabase(batchArray, callback) {
 	console.log("length of batchArray", batchArray.length);
 	let options = {
 		method: "POST",
+		uri: "http://localhost:3000/api/quote/updateBulkNew",
 		//uri: "http://dev.niranjanaswami.net/api/quote/updateBulkNew/",
-		uri: "http://dev.niranjanaswami.net/api/quote/updateBulkNew/",
+		//uri: "http://dev.niranjanaswami.net/api/quote/updateBulkNew/",
 		body: batchArray,
 		json: true,
 		pool: httpAgent,
@@ -1620,8 +1634,9 @@ function createSingleRUQuoteItem(body) {
 	console.log("single create api for quotes");
 	const options = {
 		method: "POST",
+		uri: "http://localhost:3000/api/quote/create/",
 		//uri: "http://dev.niranjanaswami.net/api/quote/create/",
-		uri: "http://dev.niranjanaswami.net/api/quote/create/",
+		//uri: "http://dev.niranjanaswami.net/api/quote/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -1647,7 +1662,7 @@ var englishKirtanDataList = [];
 var raussainKirtanDataList = [];
 var raussainKirtanfinalData = [];
 
-async function getEnglishKirtanNodeList() {
+function getEnglishKirtanNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -1660,7 +1675,7 @@ async function getEnglishKirtanNodeList() {
 	};
 
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			// console.log('body===>',body)
 			englishKirtanDataList = body;
 			//englishKirtanDataList.splice(0, 678);
@@ -1674,20 +1689,20 @@ async function getEnglishKirtanNodeList() {
 			});
 			if (englishKirtanDataList && englishKirtanDataList.length > 0) {
 				console.log("after filteration>>>", englishKirtanDataList.length);
-				await getEnglishKirtanDatainBatches();
+				getEnglishKirtanDatainBatches();
 			} else {
-				console.log("no new english kirtan here calling russian kirtan list");
-				await getRuKirtanNodeList();
+				console.log("no new kirtan here");
+				getRuKirtanNodeList();
 			}
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log("Error inside getUserList() function ====>>>>", err);
 			saveErrorLog("Error inside getUserList() function ====>>>>");
-			await getRuKirtanNodeList();
+			getRuKirtanNodeList();
 		});
 }
 
-async function getEnglishKirtanDatainBatches() {
+function getEnglishKirtanDatainBatches() {
 	//getRuKirtanNodeList();
 	//console.log("englishDataList===>", englishDataList);
 	if (englishKirtanDataList.length > 0) {
@@ -1702,7 +1717,7 @@ async function getEnglishKirtanDatainBatches() {
 		});
 	} else {
 		englishKirtanList = 1;
-		await getRuKirtanNodeList();
+		getRuKirtanNodeList();
 	}
 }
 
@@ -1749,8 +1764,8 @@ function getEnglishKirtanData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					//uri: "http://localhost:3000/api/kirtan/create/",
-					uri: `http://dev.niranjanaswami.net/api/kirtan/create/`,
+					uri: "http://localhost:3000/api/kirtan/create/",
+					//uri: `http://dev.niranjanaswami.net/api/kirtan/create/`,
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -1774,7 +1789,7 @@ function getEnglishKirtanData(ar, callback) {
 		});
 }
 
-async function getRuKirtanNodeList() {
+function getRuKirtanNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -1787,7 +1802,7 @@ async function getRuKirtanNodeList() {
 	};
 
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			raussainKirtanDataList = body;
 			//raussainKirtanDataList.splice(0, 813);
 			console.log(
@@ -1803,20 +1818,20 @@ async function getRuKirtanNodeList() {
 					"after filteration length>>",
 					raussainKirtanDataList.length
 				);
-				await getRaussainKirtanDatainBatches();
+				getRaussainKirtanDatainBatches();
 			} else {
-				console.log("no new russian kirtan here ending calling video list");
-				await getVideoNodeList();
+				console.log("no new kirtan here ending");
+				getVideoNodeList();
 			}
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log("Error inside getRuNodeList() function ====>>>>", err);
 			saveErrorLog("Error inside getRuNodeList() function ====>>>>");
-			await getVideoNodeList();
+			getVideoNodeList();
 		});
 }
 
-async function getRaussainKirtanDatainBatches() {
+function getRaussainKirtanDatainBatches() {
 	//console.log("getRaussainKirtanDatainBatches is running");
 	if (raussainKirtanDataList.length > 0) {
 		let ar = raussainKirtanDataList.splice(0, 10);
@@ -1835,11 +1850,11 @@ async function getRaussainKirtanDatainBatches() {
 		// 	}, 3000);
 		// });
 		russianKirtanList = 1;
-		await updateKirtanDatabaseInBatches();
+		updateKirtanDatabaseInBatches();
 	}
 }
 
-async function updateKirtanDatabaseInBatches() {
+function updateKirtanDatabaseInBatches() {
 	console.log("updateKirtanDataBaseInBatches() is running ");
 	if (raussainKirtanfinalData.length > 0) {
 		let batchArray = raussainKirtanfinalData.splice(0, 100);
@@ -1851,11 +1866,11 @@ async function updateKirtanDatabaseInBatches() {
 			}, 3000);
 		});
 	} else {
-		await getVideoNodeList();
+		getVideoNodeList();
 	}
 }
 
-async function updateS3() {
+function updateS3() {
 	// var AWS = require('aws-sdk');
 	// AWS.config.update({region: 'us-east-2'});
 	let date = new Date();
@@ -1883,7 +1898,10 @@ async function updateS3() {
 		englishQuotesList: englishQuotesList,
 		russianQuotesList: russianQuotesList,
 		englishKirtanList: englishKirtanList,
-		russianKirtanList: russianKirtanList
+		russianKirtanList: russianKirtanList,
+		videoList: videoList,
+		ruSummaryList: ruSummaryList,
+		galleryList: galleryList
 	};
 
 	// Call S3 to obtain a list of the objects in the bucket
@@ -1988,8 +2006,8 @@ function getRaussainKirtanData(ar, callback) {
 function createSingleRUKirtanItem(body) {
 	const options = {
 		method: "POST",
-		//uri: "http://localhost:3000/api/kirtan/create/",
-		uri: "http://dev.niranjanaswami.net/api/kirtan/create/",
+		uri: "http://localhost:3000/api/kirtan/create/",
+		//uri: "http://dev.niranjanaswami.net/api/kirtan/create/",
 		body: body,
 		json: true,
 		pool: httpAgent,
@@ -2013,8 +2031,8 @@ function updateKirtanDatabase(array, callback) {
 		console.log("inside update kirtan ===>>>", array.length);
 	let options = {
 		method: "POST",
-		//uri: `http://localhost:3000/api/kirtan/updateBulkNew/`,
-		uri: `http://dev.niranjanaswami.net/api/kirtan/updateBulkNew/`,
+		uri: `http://localhost:3000/api/kirtan/updateBulkNew/`,
+		//uri: `http://dev.niranjanaswami.net/api/kirtan/updateBulkNew/`,
 		body: array,
 		json: true,
 		pool: httpAgent,
@@ -2041,7 +2059,7 @@ function updateKirtanDatabase(array, callback) {
 var videoNodeList = [];
 var videoNodeListRaussain = [];
 
-async function getVideoNodeList() {
+function getVideoNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -2054,7 +2072,7 @@ async function getVideoNodeList() {
 	};
 
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			videoNodeList = body;
 			//videoNodeList.splice(0, 1100);
 			console.log(
@@ -2067,12 +2085,12 @@ async function getVideoNodeList() {
 			});
 			if (videoNodeList && videoNodeList.length > 0) {
 				console.log("after filteration length", videoNodeList.length);
-				await getVideoNodeListRaussain();
+				getVideoNodeListRaussain();
 			} else {
 				console.log(
-					"no new videonodelist updated calling getVideoNodeLisrRaussain here "
+					"videonodelist updated calling getVideoNodeLisrRaussain here "
 				);
-				await getVideoNodeListRaussain();
+				getVideoNodeListRaussain();
 			}
 		})
 		.catch(function(err) {
@@ -2082,7 +2100,7 @@ async function getVideoNodeList() {
 		});
 }
 
-async function getVideoNodeListRaussain() {
+function getVideoNodeListRaussain() {
 	const options = {
 		method: "GET",
 		uri:
@@ -2095,7 +2113,7 @@ async function getVideoNodeListRaussain() {
 	};
 
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			videoNodeListRaussain = body;
 			//videoNodeListRaussain.splice(0, 1100);
 			videoNodeListRaussain = videoNodeListRaussain.filter(function(value) {
@@ -2107,23 +2125,23 @@ async function getVideoNodeListRaussain() {
 					videoNodeListRaussain.length,
 					"data received"
 				);
-				await getVideoDatainBatches();
+				getVideoDatainBatches();
 			} else {
 				console.log("no new video here calling summary");
-				await getRuSummaryNodeList();
+				getRuSummaryNodeList();
 			}
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log(
 				"Error inside getVideoNodeListRaussain() function ====>>>>",
 				err
 			);
 			saveErrorLog("err inside getVideoNodeListRaussain() function====>>>>");
-			await getRuSummaryNodeList();
+			getRuSummaryNodeList();
 		});
 }
 
-async function getVideoDatainBatches() {
+function getVideoDatainBatches() {
 	if (videoNodeList.length > 0) {
 		let ar = videoNodeList.splice(0, 10);
 		getVideoData(ar, () => {
@@ -2134,7 +2152,7 @@ async function getVideoDatainBatches() {
 	} else {
 		console.log("videos successfully stored>>");
 		videoList = 1;
-		await getRuSummaryNodeList();
+		getRuSummaryNodeList();
 	}
 }
 
@@ -2219,8 +2237,8 @@ function getVideoData(ar, callback) {
 
 							const options = {
 								method: "POST",
-								//uri: "http://localhost:3000/api/video/create/",
-								uri: "http://dev.niranjanaswami.net/api/video/create/",
+								uri: "http://localhost:3000/api/video/create/",
+								//uri: "http://dev.niranjanaswami.net/api/video/create/",
 								body: body,
 								json: true,
 								pool: httpAgent,
@@ -2271,8 +2289,8 @@ function getVideoData(ar, callback) {
 
 					const options = {
 						method: "POST",
-						//uri: "http://localhost:3000/api/video/create/",
-						uri: "http://dev.niranjanaswami.net/api/video/create/",
+						uri: "http://localhost:3000/api/video/create/",
+						//uri: "http://dev.niranjanaswami.net/api/video/create/",
 						body: body,
 						json: true,
 						pool: httpAgent,
@@ -2316,7 +2334,7 @@ function getRaussianNodeId(tnid) {
 var russianSummaryDataList = [];
 var summaryFinalData = [];
 
-async function getRuSummaryNodeList() {
+function getRuSummaryNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -2329,9 +2347,9 @@ async function getRuSummaryNodeList() {
 	};
 
 	rp(options)
-		.then(async function(body) {
+		.then(function(body) {
 			russianSummaryDataList = body;
-			//russianSummaryDataList.splice(0, 550);
+			russianSummaryDataList.splice(0, 550);
 			console.log(
 				"getRuSummaryNodeList() function is successfully executed",
 				russianSummaryDataList.length,
@@ -2345,23 +2363,23 @@ async function getRuSummaryNodeList() {
 					"after filteration length>>>",
 					russianSummaryDataList.length
 				);
-				await getRussianSummaryDatainBatches();
+				getRussianSummaryDatainBatches();
 			} else {
-				console.log("no new data in summary calling get GalleryList function");
-				await getGalleryList();
+				console.log("no new data here calling get GalleryList function");
+				//getGalleryList();
 			}
 		})
-		.catch(async function(err) {
+		.catch(function(err) {
 			console.log(
 				"Error inside getRuTranscriptionNodeList() function ====>>>>",
 				err
 			);
 			saveErrorLog("err inside getRuTranscriptionNodeList() function====>>>>");
-			await getGalleryList();
+			//getGalleryList();
 		});
 }
 
-async function getRussianSummaryDatainBatches() {
+function getRussianSummaryDatainBatches() {
 	if (russianSummaryDataList.length > 0) {
 		let ar = russianSummaryDataList.splice(0, 10);
 		getRussianSummaryData(ar, () => {
@@ -2370,7 +2388,7 @@ async function getRussianSummaryDatainBatches() {
 			}, 2000);
 		});
 	} else {
-		await updateDatabaseSummaryInBatches();
+		updateDatabaseSummaryInBatches();
 	}
 }
 
@@ -2447,7 +2465,7 @@ function getTNIDfromLecture(nid) {
 		});
 }
 
-async function updateDatabaseSummaryInBatches() {
+function updateDatabaseSummaryInBatches() {
 	if (summaryFinalData.length > 0) {
 		let batchArray = summaryFinalData.splice(0, 10);
 		updateDatabaseSummary(batchArray, () => {
@@ -2457,7 +2475,7 @@ async function updateDatabaseSummaryInBatches() {
 		});
 	} else {
 		ruSummaryList = 1;
-		await getGalleryList();
+		getGalleryList();
 	}
 }
 
@@ -2465,7 +2483,8 @@ function updateDatabaseSummary(batchArray, callback) {
 	console.log("updateDatabaseSummary()", summaryFinalData.length);
 	let options = {
 		method: "POST",
-		uri: `http://dev.niranjanaswami.net/api/lecture/updateBulkNew/`,
+		uri: "http://localhost:3000/api/lecture/updateBulkNew/",
+		//uri: `http://dev.niranjanaswami.net/api/lecture/updateBulkNew/`,
 		body: batchArray,
 		json: true,
 		pool: httpAgent,
@@ -2491,7 +2510,7 @@ function updateDatabaseSummary(batchArray, callback) {
 
 let galleryDataList = [];
 
-async function getGalleryList() {
+function getGalleryList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -2512,15 +2531,16 @@ async function getGalleryList() {
 				galleryDataList.length,
 				"data received"
 			);
+			fetchDateTime = 0;
 			galleryDataList = galleryDataList.filter(function(value) {
 				return parseInt(value.created) > fetchDateTime;
 			});
 			if (galleryDataList && galleryDataList.length > 0) {
 				console.log("after filteration>>>>", galleryDataList.length);
-				await getGalleryDatainBatches();
+				getGalleryDatainBatches();
 			} else {
 				console.log("no new data here>>>");
-				await getUserList();
+				updateS3();
 			}
 		})
 		.catch(function(err) {
@@ -2534,12 +2554,12 @@ async function getGalleryList() {
 		});
 }
 
-async function getGalleryDatainBatches() {
+function getGalleryDatainBatches() {
 	//getRuNodeList();
 	if (galleryDataList.length > 0) {
 		let ar = galleryDataList.splice(0, 10);
-		getGalleryData(ar, async () => {
-			setTimeout(async () => {
+		getGalleryData(ar, () => {
+			setTimeout(() => {
 				getGalleryDatainBatches();
 				// console.log("fetching only 10 records");
 				// englishNodeList = 1;
@@ -2547,13 +2567,13 @@ async function getGalleryDatainBatches() {
 			}, 4000);
 		});
 	} else {
-		//gallerylist = 1;
+		galleryList = 1;
 		console.log("Gallery Updated");
-		await getUserList();
+		updateS3();
 	}
 }
 
-async function getGalleryData(ar, callback) {
+function getGalleryData(ar, callback) {
 	const Gallerypromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -2581,6 +2601,7 @@ async function getGalleryData(ar, callback) {
 				} else {
 					date = item.date;
 				}
+				console.log(date);
 				//console.log(ar[i].created);
 				const body = {
 					uuid: uuidv4(),
@@ -2597,7 +2618,7 @@ async function getGalleryData(ar, callback) {
 				const options = {
 					method: "POST",
 					//uri: "http://localhost:3000/api/blog/create/",
-					uri: "http://dev.niranjanaswami.net/api/gallery/create/",
+					uri: "http://localhost:3000/api/gallery/create/",
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -2625,379 +2646,3 @@ async function getGalleryData(ar, callback) {
 /* #endregion*/
 
 /* end gallery region */
-
-/* User List Region  */
-
-var normalUserList = [];
-var discipleUserList = [];
-var normalUserDetailsList = [];
-var discipleUserDetailsList = [];
-var finalUserData = [];
-
-// async function getDiscipleUserDetailsinBatches() {
-// 	if (normalUserList.length > 0) {
-// 		let ar = normalUserDetailsList.splice(0, 10);
-// 		getDiscipleUserDetails(ar, () => {
-// 			setTimeout(() => {
-// 				getDiscipleUserDetailsinBatches();
-// 				// console.log("fetching only 10 records");
-// 				// russianNodeList = 1;
-// 				// updateDatabaseInBatches();
-// 			}, 4000);
-// 		});
-// 	}
-// }
-
-function getDiscipleUserDetails() {
-	const DisPromiseArr = [];
-
-	for (let k = 0; k < normalUserDetailsList.length; k++) {
-		for (let m = 0; m < discipleUserList.length; m++) {
-			if (
-				normalUserDetailsList[k] &&
-				normalUserDetailsList[k].uid !== undefined &&
-				discipleUserList[m] &&
-				discipleUserList[m].uid !== undefined
-			) {
-				if (normalUserDetailsList[k].uid === discipleUserList[m].uid) {
-					let options = {
-						method: "GET",
-						uri:
-							"https://nrs.niranjanaswami.net/en/rest/node/" +
-							discipleUserList[m].nid +
-							".json",
-						jar: cookiejar,
-						json: true,
-						timeout: 600000,
-						pool: httpAgent,
-						headers: {
-							"User-Agent": "Request-Promise"
-						}
-					};
-					DisPromiseArr.push(rp(options));
-				}
-			}
-		}
-	}
-	Promise.all(DisPromiseArr)
-		.then(data => {
-			discipleUserDetailsList = data;
-			console.log(
-				"getDiscipleUserDetails() function is successfully executed",
-				discipleUserDetailsList.length,
-				"details data received"
-			);
-			for (let u = 0; u < normalUserDetailsList.length; u++) {
-				if (normalUserDetailsList[u] && normalUserDetailsList[u].uid) {
-					let data = {
-						oldData: {}
-					};
-					data.user_id = uuidv4();
-					data.userName = normalUserDetailsList[u].name;
-					data.email = normalUserDetailsList[u].mail;
-					data.isPasswordUpdated = false;
-					data.password = "Gauranga";
-					data.timezone = normalUserDetailsList[u].timezone;
-					data.language = normalUserDetailsList[u].language;
-					data.created = normalUserDetailsList[u].created;
-					data.access = normalUserDetailsList[u].access;
-					data.login = normalUserDetailsList[u].login;
-					data.signature = normalUserDetailsList[u].signature;
-					data.signature_format = normalUserDetailsList[u].signature_format;
-					data.canAccessKeystone = false;
-					data.oldData.uid = normalUserDetailsList[u].uid;
-					data.oldData.init = normalUserDetailsList[u].init;
-					data.oldData.picture = normalUserDetailsList[u].picture;
-					data.oldData.path =
-						"https://nrs.niranjanaswami.net/en/rest/user/" +
-						normalUserDetailsList[u].field_disciple;
-					data.disciple = normalUserDetailsList[u].field_disciple.und
-						? normalUserDetailsList[u].field_disciple.und[0].value
-						: "No";
-					for (let v = 0; v < discipleUserDetailsList.length; v++) {
-						if (discipleUserDetailsList[v] && discipleUserDetailsList[v].uid) {
-							if (
-								discipleUserDetailsList[v].uid === normalUserDetailsList[u].uid
-							) {
-								data.disciple_profile = {};
-								data.name = {};
-								data.disciple_profile.first_initiation_date = discipleUserDetailsList[
-									v
-								].field_first_initiation_date.und
-									? discipleUserDetailsList[v].field_first_initiation_date
-											.und[0].value
-									: "";
-								data.disciple_profile.second_initiation_date = discipleUserDetailsList[
-									v
-								].field_second_initiation_date.und
-									? discipleUserDetailsList[v].field_second_initiation_date
-											.und[0].value
-									: "";
-								data.disciple_profile.spiritual_name = discipleUserDetailsList[
-									v
-								].field_spiritual_name.und
-									? discipleUserDetailsList[v].field_spiritual_name.und[0].value
-									: "";
-								data.disciple_profile.temple = discipleUserDetailsList[v]
-									.field_temple.und
-									? discipleUserDetailsList[v].field_temple.und[0].value
-									: "";
-								data.disciple_profile.verifier =
-									discipleUserDetailsList[v].verifier &&
-									discipleUserDetailsList[v].verifier.und
-										? discipleUserDetailsList[v].verifier.und[0].value
-										: "";
-								data.disciple_profile.marital_status = discipleUserDetailsList[
-									v
-								].field_marital_status.und
-									? discipleUserDetailsList[v].field_marital_status.und[0].value
-									: "";
-								data.disciple_profile.education = discipleUserDetailsList[v]
-									.field_education.und
-									? discipleUserDetailsList[v].field_education.und[0].value
-									: "";
-								data.gender = discipleUserDetailsList[v].field_gender.und
-									? discipleUserDetailsList[v].field_gender.und[0].value
-									: "";
-								data.mobileNumber = discipleUserDetailsList[v]
-									.field_mobile_phone.und
-									? discipleUserDetailsList[v].field_mobile_phone.und[0].value
-									: "";
-								data.dob = discipleUserDetailsList[v].field_birth_date.und
-									? discipleUserDetailsList[v].field_birth_date.und[0].value
-									: "";
-								data.name.first = discipleUserDetailsList[v].field_name.und
-									? discipleUserDetailsList[v].field_name.und[0].value
-									: "";
-								data.name.last = discipleUserDetailsList[v].field_surname.und
-									? discipleUserDetailsList[v].field_surname.und[0].value
-									: "";
-								data.oldData.vid = discipleUserDetailsList[v].vid;
-								data.oldData.nid = discipleUserDetailsList[v].nid;
-							}
-						}
-					}
-					data.oldData.picture = JSON.stringify(data.oldData.picture);
-					finalUserData.push(data);
-					createSingleUser(data);
-				}
-			}
-			//return finalUserData;
-		})
-		// .then(data => {
-		// 	console.log(
-		// 		"final User data is integrated  total user is :",
-		// 		finalUserData.length
-		// 	);
-		// 	const ProfilePromise = finalUserData.map((item, i) => {
-		// 		let options = {
-		// 			method: "POST",
-		// 			uri: "http://localhost:3000/api/user/uploadPic",
-		// 			//uri: "http://dev.niranjanaswami.net/api/user/uploadPic/",
-		// 			body: item,
-		// 			json: true,
-		// 			pool: httpAgent,
-		// 			timeout: 600000,
-		// 			headers: {
-		// 				"User-Agent": "Request-Promise"
-		// 			}
-		// 		};
-		// 		return rp(options);
-		// 	});
-		// 	Promise.all(ProfilePromise)
-		// 		.then(data => {
-		// 			for (let p = 0; p < finalUserData.length; p++) {
-		// 				finalUserData[p].profile_pic = data[p].url;
-		// 			}
-		// 			var json = JSON.stringify(finalUserData, null, 2);
-		// 			fs.writeFile("UpdatedUserData.json", json, "utf8", () => {
-		// 				console.log("success");
-		// 			});
-		// 		})
-		// 		.catch(err => {
-		// 			console.log("error inside the profile api ===>>>", err);
-		// 		});
-		// })
-		.catch(err => {
-			console.log(
-				"Error inside getDiscipleUserDetails() function ====>>>>",
-				err
-			);
-			console.log(ar);
-		});
-}
-
-function createSingleUser(body) {
-	//console.log(body);
-	const options = {
-		method: "POST",
-		uri: "http://localhost:3000/api/user/uploadPic",
-		///uri: "http://dev.niranjanaswami.net/api/user/uploadPic",
-		body: body,
-		json: true,
-		pool: httpAgent,
-		timeout: 6000000,
-		headers: {
-			"User-Agent": "Request-Promise"
-		}
-	};
-	rp(options)
-		.then(data => {
-			console.log("Single User inserted");
-		})
-		.catch(err => {
-			console.log(err);
-		});
-}
-
-async function getNormalUserDetailsinBatches() {
-	if (normalUserList.length > 0) {
-		let ar = normalUserList.splice(0, 10);
-		getNormalUserDetails(ar, () => {
-			setTimeout(() => {
-				getNormalUserDetailsinBatches();
-				// console.log("fetching only 10 records");
-				// russianNodeList = 1;
-				// updateDatabaseInBatches();
-			}, 4000);
-		});
-	} else {
-		await updateS3();
-	}
-}
-
-function getNormalUserDetails(ar, callback) {
-	console.log("length ===>>>", ar.length);
-	const PromiseArr = ar.map((item, i) => {
-		if (i < ar.length) {
-			const uid = ar[i].uid;
-			// console.log('uid ====>>>', uid);
-			if (ar[i].uid !== undefined && ar[i].uid !== "0" && ar[i].uid !== null) {
-				let options = {
-					method: "GET",
-					uri: "https://nrs.niranjanaswami.net/en/rest/user/" + uid + ".json",
-					jar: cookiejar,
-					json: true,
-					pool: httpAgent,
-					timeout: 600000,
-					headers: {
-						"User-Agent": "Request-Promise"
-					}
-				};
-				return rp(options);
-			}
-		}
-	});
-
-	Promise.all(PromiseArr)
-		.then(data => {
-			normalUserDetailsList = data;
-			getDiscipleUserDetails();
-			console.log(
-				"getNormalUserDetails() function is successfully executed",
-				normalUserDetailsList.length,
-				"details data received"
-			);
-			callback();
-		})
-		.catch(err => {
-			console.log("Error inside getNormalUserDetails() function ====>>>>", err);
-		});
-}
-
-async function getDiscipleUserList() {
-	let options = {
-		method: "GET",
-		uri:
-			"https://nrs.niranjanaswami.net/rest/node.json?parameters[type]=disciple_profile&pagesize=2000&page=0 ",
-		jar: cookiejar,
-		json: true,
-		headers: {
-			"User-Agent": "Request-Promise"
-		}
-	};
-
-	rp(options)
-		.then(async function(body) {
-			discipleUserList = body;
-			await getNormalUserDetailsinBatches();
-			console.log(
-				"getDiscipleUserList() function is successfully executed",
-				discipleUserList.length,
-				"data received"
-			);
-		})
-		.catch(function(err) {
-			console.log("Error inside getDiscipleUserList() function ====>>>>", err);
-		});
-}
-
-async function getUserList() {
-	let options = {
-		method: "GET",
-		uri: "https://nrs.niranjanaswami.net/rest/user.json?pagesize=5000&page=0",
-		jar: cookiejar,
-		json: true,
-		headers: {
-			"User-Agent": "Request-Promise"
-		}
-	};
-
-	rp(options)
-		.then(async function(body) {
-			normalUserList = body;
-			console.log(
-				"getUserList() function is successfully executed",
-				normalUserList.length,
-				"data received"
-			);
-			normalUserList = normalUserList.filter(function(value) {
-				return parseInt(value.created) > fetchDateTime;
-			});
-			if (normalUserList && normalUserList.length > 0) {
-				console.log("after filteration>>>>", normalUserList.length);
-				await getDiscipleUserList();
-			} else {
-				console.log("no new data here>>>");
-				await updateS3();
-			}
-		})
-		.catch(function(err) {
-			console.log("Error inside getUserList() function ====>>>>", err);
-			saveErrorLog("Error inside getUserList() function ====>>>>");
-		});
-}
-
-/* User List region ends  */
-
-module.exports.hello = async event => {
-	function wait() {
-		return new Promise((resolve, reject) => {
-			setTimeout(() => resolve("hello"), 2000);
-		});
-	}
-
-	console.log(await wait());
-	console.log(await wait());
-	console.log(await listObject());
-	console.log(await wait());
-	console.log(await wait());
-	console.log(await wait());
-
-	return "exiting";
-	//listObject();
-	// return {
-	//   statusCode: 200,
-	//   body: JSON.stringify(
-	//     {
-	//       message: 'Go Serverless v1.0! Your function executed successfully!',
-	//       input: event,
-	//     },
-	//     null,
-	//     2
-	//   ),
-	// };
-
-	// Use this code if you don't use the http event with the LAMBDA-PROXY integration
-	// return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
-};

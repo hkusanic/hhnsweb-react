@@ -749,7 +749,7 @@ exports.updateBulkNew = function(req, res) {
 						},
 						"API updateBulk blog"
 					);
-					// return res.apiError('database error', err);
+					 //return res.apiError('database error', err);
 					return;
 				}
 				if (!item) {
@@ -759,7 +759,7 @@ exports.updateBulkNew = function(req, res) {
 						},
 						"API updateBulk blog"
 					);
-					// return res.apiError('not found !!');
+					 //return res.apiError('not found !!');
 					return;
 				}
 

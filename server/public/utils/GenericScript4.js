@@ -193,7 +193,7 @@ function getEnglishNodeList() {
 				"data received"
 			);
 			englishDataList = englishDataList.filter(function(value) {
-				return value.created > fetchDateTime;
+				return parseInt(value.created) > fetchDateTime;
 			});
 			if (englishDataList && englishDataList.length > 0) {
 				console.log("after filteration>>>>", englishDataList.length);
@@ -286,19 +286,19 @@ function getRuNodeList() {
 				raussainDataList.length,
 				"data received"
 			);
-			// raussainDataList = raussainDataList.filter(function(value) {
-			// 	return value.created > fetchDateTime;
-			// });
-			// if (raussainDataList && raussainDataList.length > 0) {
-			// 	console.log("after filteration>>>", raussainDataList.length);
-			// 	getRaussainDatainBatches();
-			// } else {
-			// 	console.log(
-			// 		"no new data here>> calling another function for populating lecture data"
-			// 	);
-			// 	getEnglishLectureNodeList();
-			// }
-			getRaussainDatainBatches();
+			raussainDataList = raussainDataList.filter(function(value) {
+				return parseInt(value.created) > fetchDateTime;
+			});
+			if (raussainDataList && raussainDataList.length > 0) {
+				console.log("after filteration>>>", raussainDataList.length);
+				getRaussainDatainBatches();
+			} else {
+				console.log(
+					"no new data here>> calling another function for populating lecture data"
+				);
+				getEnglishLectureNodeList();
+			}
+			//getRaussainDatainBatches();
 		})
 		.catch(function(err) {
 			console.log("Error inside getRuNodeList() function ====>>>>", err);
@@ -328,7 +328,6 @@ function getRaussainData(ar, callback) {
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
-				//if (ar[i].created > fetchDateTime) {
 				if (ar[i].tnid !== 0) {
 					const temp = {
 						tnid: ar[i].tnid,
@@ -510,7 +509,7 @@ function getEnglishLectureNodeList() {
 				"data received"
 			);
 			englishLectureDataList = englishLectureDataList.filter(function(value) {
-				return value.created > fetchDateTime;
+				return parseInt(value.created) > fetchDateTime;
 			});
 			if (englishLectureDataList && englishLectureDataList.length > 0) {
 				console.log(
@@ -541,9 +540,6 @@ function getEnglishLectureDatainBatches() {
 		getEnglishLectureData(ar, () => {
 			setTimeout(() => {
 				getEnglishLectureDatainBatches();
-				// console.log("fetching only 10 English Lecture records");
-				// englishLectureList = 1;
-				// getRuLectureNodeList();
 			}, 2000);
 		});
 	} else {
@@ -575,7 +571,7 @@ function getRuLectureNodeList() {
 			);
 			console.log("fetchDateTime>>", fetchDateTime);
 			russianLectureDataList = russianLectureDataList.filter(function(value) {
-				return value.created > fetchDateTime;
+				return parseInt(value.created) > fetchDateTime;
 			});
 			if (russianLectureDataList && russianLectureDataList.length > 0) {
 				console.log(
@@ -602,14 +598,10 @@ function getRussianLectureDatainBatches() {
 		getRussianLectureData(ar, () => {
 			setTimeout(() => {
 				getRussianLectureDatainBatches();
-				// console.log("fetching only 10 russian lecture records");
-				// russianLectureList = 1;
-				// updateDatabaseLectures();
 			}, 2000);
 		});
 	} else {
 		russianLectureList = 1;
-		//updateDatabaseLectures();
 		updateDatabaseLecturesinBatches();
 	}
 }
@@ -632,7 +624,6 @@ function getRussianLectureData(ar, callback) {
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
-				//if (data[i].created > fetchDateTime) {
 				if (data[i].tnid !== 0) {
 					const temp = {
 						tnid: data[i].tnid,
@@ -738,7 +729,7 @@ function getEnglishLectureData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/en/rest/node/${item.nid}.json`,
+			uri: `https://nrs.niranjanaswami.net/en/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -751,34 +742,46 @@ function getEnglishLectureData(ar, callback) {
 	Promise.all(Englishpromise)
 		.then(data => {
 			const insertDataPromise = data.map((item, i) => {
-				if (item.created > fetchDateTime) {
-					const body = {
-						uuid: uuidv4(),
-						tnid: item.tnid,
-						published_date: timeConverter(item.created),
-						languages: item.tnid != 0 ? "" : "en",
-						en: {
-							nid: item.nid,
-							title: item.title,
-							created: timeConverter(item.created),
-							published: timeConverter(item.created),
-							changed: timeConverter(item.changed)
-						}
-					};
-					const options = {
-						method: "POST",
-						//uri: "http://localhost:3000/api/lecturecreate/",
-						uri: "http://dev.niranjanaswami.net/api/lecture/create/",
-						body: body,
-						json: true,
-						pool: httpAgent,
-						timeout: 6000000,
-						headers: {
-							"User-Agent": "Request-Promise"
-						}
-					};
-					return rp(options);
-				}
+				const body = {
+					uuid: uuidv4(),
+					tnid: ar[i].tnid,
+					languages: item.tnid != 0 ? "" : "en",
+					author: item.author,
+					soundcloud_link: item.soundcloud,
+					lecture_date: item.date,
+					published_date: timeConverter(ar[i].created),
+					created_date_time: timeConverter(ar[i].created),
+					duration: item.duration,
+					part: item.part,
+					chapter: item.chapter,
+					verse: item.verse,
+					audio_link: item.file,
+					en: {
+						nid: ar[i].nid,
+						title: item.title,
+						event: item.event,
+						topic: item.topic,
+						location: item.location,
+						translation: item.translation
+					},
+					counters: {
+						downloads: item.downloads
+					}
+				};
+				const options = {
+					method: "POST",
+					//uri: "http://localhost:3000/api/lecturecreate/",
+					uri: "http://dev.niranjanaswami.net/api/lecture/create/",
+					body: body,
+					json: true,
+					pool: httpAgent,
+					timeout: 6000000,
+					headers: {
+						"User-Agent": "Request-Promise"
+					}
+				};
+				return rp(options);
+				//}
 			});
 			return Promise.all(insertDataPromise);
 		})
@@ -824,7 +827,7 @@ function getEnglishTranscriptionNodeList() {
 			);
 			englishTranscriptionDataList = englishTranscriptionDataList.filter(
 				function(value) {
-					return value.created > fetchDateTime;
+					return parseInt(value.created) > fetchDateTime;
 				}
 			);
 			if (
@@ -859,9 +862,6 @@ function getEnglishTranscriptionDatainBatches() {
 		getEnglishTranscriptionData(ar, () => {
 			setTimeout(() => {
 				getEnglishTranscriptionDatainBatches();
-				// console.log("fetching only 10 transcription data records");
-				// englishTranscriptsList = 1;
-				// getRuTranscriptionNodeList();
 			}, 2000);
 		});
 	} else {
@@ -957,7 +957,7 @@ function getRuTranscriptionNodeList() {
 			);
 			russianTranscriptionDataList = russianTranscriptionDataList.filter(
 				function(value) {
-					return value.created > fetchDateTime;
+					return parseInt(value.created) > fetchDateTime;
 				}
 			);
 			if (
@@ -1140,7 +1140,7 @@ function getQutoesEnglishNodeList() {
 				"data received"
 			);
 			quotesEnglishNodeList = quotesEnglishNodeList.filter(function(value) {
-				return value.created > fetchDateTime;
+				return parseInt(value.created) > fetchDateTime;
 			});
 			if (quotesEnglishNodeList && quotesEnglishNodeList.length > 0) {
 				console.log(
@@ -1278,7 +1278,7 @@ function getQuotesRuNodeList() {
 				"data received"
 			);
 			quotesRaussainNodeList = quotesRaussainNodeList.filter(function(value) {
-				return value.created > fetchDateTime;
+				return parseInt(value.created) > fetchDateTime;
 			});
 			if (quotesRaussainNodeList && quotesRaussainNodeList.length > 0) {
 				console.log(
@@ -1487,7 +1487,7 @@ function getEnglishKirtanNodeList() {
 				"data received"
 			);
 			englishKirtanDataList = englishKirtanDataList.filter(function(value) {
-				return value.created > fetchDateTime;
+				return parseInt(value.created) > fetchDateTime;
 			});
 			if (englishKirtanDataList && englishKirtanDataList.length > 0) {
 				console.log("after filteration>>>", englishKirtanDataList.length);
@@ -1613,7 +1613,7 @@ function getRuKirtanNodeList() {
 				"data received"
 			);
 			raussainKirtanDataList = raussainKirtanDataList.filter(function(value) {
-				return value.created > fetchDateTime;
+				return parseInt(value.created) > fetchDateTime;
 			});
 			if (raussainKirtanDataList && raussainKirtanDataList.length > 0) {
 				console.log(
@@ -1880,7 +1880,7 @@ function getVideoNodeList() {
 				"data received"
 			);
 			videoNodeList = videoNodeList.filter(function(value) {
-				return value.created > fetchDateTime;
+				return parseInt(value.created) > fetchDateTime;
 			});
 			if (videoNodeList && videoNodeList.length > 0) {
 				console.log("after filteration length", videoNodeList.length);
@@ -1916,7 +1916,7 @@ function getVideoNodeListRaussain() {
 			videoNodeListRaussain = body;
 			//videoNodeListRaussain.splice(0, 1100);
 			videoNodeListRaussain = videoNodeListRaussain.filter(function(value) {
-				return value.created > fetchDateTime;
+				return parseInt(value.created) > fetchDateTime;
 			});
 			if (videoNodeListRaussain && videoNodeListRaussain.length > 0) {
 				console.log(
@@ -2155,7 +2155,7 @@ function getRuSummaryNodeList() {
 				"data received"
 			);
 			russianSummaryDataList = russianSummaryDataList.filter(function(value) {
-				return value.created > fetchDateTime;
+				return parseInt(value.created) > fetchDateTime;
 			});
 			if (russianSummaryDataList && russianSummaryDataList.length > 0) {
 				console.log(
@@ -2331,7 +2331,7 @@ function getGalleryList() {
 			);
 			fetchDateTime = 0;
 			galleryDataList = galleryDataList.filter(function(value) {
-				return value.created > fetchDateTime;
+				return parseInt(value.created) > fetchDateTime;
 			});
 			if (galleryDataList && galleryDataList.length > 0) {
 				console.log("after filteration>>>>", galleryDataList.length);

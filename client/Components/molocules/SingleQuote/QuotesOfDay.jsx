@@ -1,29 +1,29 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { quoteOfDay } from '../../../actions/quoteActions';
-import renderHTML from 'react-render-html';
-import reactCookie from 'react-cookies';
-import script from '../../../assets/script.js';
+import React from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { quoteOfDay } from "../../../actions/quoteActions";
+import renderHTML from "react-render-html";
+import reactCookie from "react-cookies";
+import script from "../../../assets/script.js";
 
 export class QuoteOfDay extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
-			quotes: [],
+			quotes: []
 		};
 	}
-	componentDidMount () {
+	componentDidMount() {
 		script();
-		let authorList = ['Niranjana Swami', 'Srila Prabhupada'];
+		let authorList = ["Niranjana Swami", "Srila Prabhupada"];
 		this.props.quoteOfDay(authorList);
 		this.setState({
-			quotes: this.props.quoteOfDay.quotes,
+			quotes: this.props.quoteOfDay.quotes
 		});
 	}
 
-	render () {
+	render() {
 		if (!this.props.quote) {
 			<div>Loading...</div>;
 		}
@@ -47,7 +47,7 @@ export class QuoteOfDay extends React.Component {
 								<Link
 									to={{
 										pathname: `/quotes/Niranjana Swami`,
-										state: 'Niranjana Swami',
+										state: "Niranjana Swami"
 									}}
 								>
 									<blockquote class="quote-modern quote-modern-big wow fadeInUpSmall">
@@ -64,23 +64,23 @@ export class QuoteOfDay extends React.Component {
 										<div class="quote-modern-text">
 											<p className="quotesFont">
 												{renderHTML(
-													reactCookie.load('languageCode') === 'en'
-														? this.props
-														  && this.props.quote
-														  && this.props.quote.quotes
-														  && this.props.quote.quotes[0]
-														  && this.props.quote.quotes[0].en
-														  && this.props.quote.quotes[0].en.body
+													reactCookie.load("languageCode") === "en"
+														? this.props &&
+														  this.props.quote &&
+														  this.props.quote.quotes &&
+														  this.props.quote.quotes[0] &&
+														  this.props.quote.quotes[0].en &&
+														  this.props.quote.quotes[0].en.body
 															? this.props.quote.quotes[0].en.body
-															: 'Sorry, No data available'
-														: this.props
-														  && this.props.quote
-														  && this.props.quote.quotes
-														  && this.props.quote.quotes[0]
-														  && this.props.quote.quotes[0].ru
-														  && this.props.quote.quotes[0].ru.body
-															? this.props.quote.quotes[0].ru.body
-															: 'Sorry, No data available'
+															: "Sorry, No data available"
+														: this.props &&
+														  this.props.quote &&
+														  this.props.quote.quotes &&
+														  this.props.quote.quotes[0] &&
+														  this.props.quote.quotes[0].ru &&
+														  this.props.quote.quotes[0].ru.body
+														? this.props.quote.quotes[0].ru.body
+														: "Sorry, No data available"
 												)}
 											</p>
 										</div>
@@ -95,30 +95,32 @@ export class QuoteOfDay extends React.Component {
 											</div>
 											<div class="quote-modern-info">
 												<cite class="quote-modern-cite">
-													{this.props
-														&& this.props.quote
-														&& this.props.quote.quotes
-														&& this.props.quote.quotes[0]
-														&& titleCase(this.props.quote.quotes[0].author)}
+													{this.props &&
+														this.props.quote &&
+														this.props.quote.quotes &&
+														this.props.quote.quotes[0] &&
+														titleCase(this.props.quote.quotes[0].author)}
 												</cite>
 												<p class="quote-modern-caption">
-													{renderHTML(reactCookie.load('languageCode') === 'en'
-														? this.props
-														  && this.props.quote
-														  && this.props.quote.quotes
-														  && this.props.quote.quotes[0]
-														  && this.props.quote.quotes[0].en
-														  && this.props.quote.quotes[0].en.source_of_quote
-															? this.props.quote.quotes[0].en.source_of_quote
-															: 'Sorry, No data available'
-														: this.props
-														  && this.props.quote
-														  && this.props.quote.quotes
-														  && this.props.quote.quotes[0]
-														  && this.props.quote.quotes[0].ru
-														  && this.props.quote.quotes[0].ru.source_of_quote
+													{renderHTML(
+														reactCookie.load("languageCode") === "en"
+															? this.props &&
+															  this.props.quote &&
+															  this.props.quote.quotes &&
+															  this.props.quote.quotes[0] &&
+															  this.props.quote.quotes[0].en &&
+															  this.props.quote.quotes[0].en.source_of_quote
+																? this.props.quote.quotes[0].en.source_of_quote
+																: "Sorry, No data available"
+															: this.props &&
+															  this.props.quote &&
+															  this.props.quote.quotes &&
+															  this.props.quote.quotes[0] &&
+															  this.props.quote.quotes[0].ru &&
+															  this.props.quote.quotes[0].ru.source_of_quote
 															? this.props.quote.quotes[0].ru.source_of_quote
-															: 'Sorry, No data available')}
+															: "Sorry, No data available"
+													)}
 												</p>
 											</div>
 										</div>
@@ -128,7 +130,7 @@ export class QuoteOfDay extends React.Component {
 									className="button-winona post-modern-title readMoreFont"
 									to={{
 										pathname: `/quotes/Niranjana Swami`,
-										state: 'Niranjana Swami',
+										state: "Niranjana Swami"
 									}}
 								>
 									Read More...
@@ -137,8 +139,8 @@ export class QuoteOfDay extends React.Component {
 							<div class="wow-outer websiteFontFamily">
 								<Link
 									to={{
-										pathname: '/quotes/Srila Prabhupada',
-										state: 'Srila Prabhupada',
+										pathname: "/quotes/Srila Prabhupada",
+										state: "Srila Prabhupada"
 									}}
 								>
 									<blockquote class="quote-modern quote-modern-big wow fadeInUpSmall">
@@ -155,25 +157,25 @@ export class QuoteOfDay extends React.Component {
 										<div class="quote-modern-text">
 											<p className="quotesFont">
 												{renderHTML(
-													reactCookie.load('languageCode') === 'en'
-														? this.props
-														  && this.props.quote
-														  && this.props.quote.quotes
-														  && this.props.quote.quotes[1]
-														  && this.props.quote.quotes[1].en
-														  && this.props.quote.quotes[1].en.body
-														  && this.props.quote.quotes[1].en.body
+													reactCookie.load("languageCode") === "en"
+														? this.props &&
+														  this.props.quote &&
+														  this.props.quote.quotes &&
+														  this.props.quote.quotes[1] &&
+														  this.props.quote.quotes[1].en &&
+														  this.props.quote.quotes[1].en.body &&
+														  this.props.quote.quotes[1].en.body
 															? this.props.quote.quotes[1].en.body
-															: 'Sorry ,No data available'
-														: this.props
-														  && this.props.quote
-														  && this.props.quote.quotes
-														  && this.props.quote.quotes[1]
-														  && this.props.quote.quotes[1].ru
-														  && this.props.quote.quotes[1].ru.body
-														  && this.props.quote.quotes[1].ru.body
-															? this.props.quote.quotes[1].ru.body
-															: 'Sorry, No data available'
+															: "Sorry ,No data available"
+														: this.props &&
+														  this.props.quote &&
+														  this.props.quote.quotes &&
+														  this.props.quote.quotes[1] &&
+														  this.props.quote.quotes[1].ru &&
+														  this.props.quote.quotes[1].ru.body &&
+														  this.props.quote.quotes[1].ru.body
+														? this.props.quote.quotes[1].ru.body
+														: "Sorry, No data available"
 												)}
 											</p>
 										</div>
@@ -188,30 +190,32 @@ export class QuoteOfDay extends React.Component {
 											</div>
 											<div class="quote-modern-info">
 												<cite class="quote-modern-cite">
-													{this.props
-														&& this.props.quote
-														&& this.props.quote.quotes
-														&& this.props.quote.quotes[1]
-														&& titleCase(this.props.quote.quotes[1].author)}
+													{this.props &&
+														this.props.quote &&
+														this.props.quote.quotes &&
+														this.props.quote.quotes[1] &&
+														titleCase(this.props.quote.quotes[1].author)}
 												</cite>
 												<p class="quote-modern-caption">
-													{renderHTML(reactCookie.load('languageCode') === 'en'
-														? this.props
-														  && this.props.quote
-														  && this.props.quote.quotes
-														  && this.props.quote.quotes[1]
-														  && this.props.quote.quotes[1].en
-														  && this.props.quote.quotes[1].en.source_of_quote
-															? this.props.quote.quotes[1].en.source_of_quote
-															: 'Sorry, No data available'
-														: this.props
-														  && this.props.quote
-														  && this.props.quote.quotes
-														  && this.props.quote.quotes[1]
-														  && this.props.quote.quotes[1].ru
-														  && this.props.quote.quotes[1].ru.source_of_quote
+													{renderHTML(
+														reactCookie.load("languageCode") === "en"
+															? this.props &&
+															  this.props.quote &&
+															  this.props.quote.quotes &&
+															  this.props.quote.quotes[1] &&
+															  this.props.quote.quotes[1].en &&
+															  this.props.quote.quotes[1].en.source_of_quote
+																? this.props.quote.quotes[1].en.source_of_quote
+																: "Sorry, No data available"
+															: this.props &&
+															  this.props.quote &&
+															  this.props.quote.quotes &&
+															  this.props.quote.quotes[1] &&
+															  this.props.quote.quotes[1].ru &&
+															  this.props.quote.quotes[1].ru.source_of_quote
 															? this.props.quote.quotes[1].ru.source_of_quote
-															: 'Sorry, No data available')}
+															: "Sorry, No data available"
+													)}
 												</p>
 											</div>
 										</div>
@@ -220,8 +224,8 @@ export class QuoteOfDay extends React.Component {
 								<Link
 									className="button-winona post-modern-title readMoreFont"
 									to={{
-										pathname: '/quotes/Srila Prabhupada',
-										state: 'Srila Prabhupada',
+										pathname: "/quotes/Srila Prabhupada",
+										state: "Srila Prabhupada"
 									}}
 								>
 									Read More...
@@ -237,7 +241,7 @@ export class QuoteOfDay extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		quote: state.quoteReducer,
+		quote: state.quoteReducer
 	};
 };
 
@@ -245,7 +249,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		quoteOfDay: authorList => {
 			dispatch(quoteOfDay(authorList));
-		},
+		}
 	};
 };
 
@@ -255,9 +259,9 @@ export default connect(
 )(QuoteOfDay);
 
 const titleCase = str => {
-	str = str.toLowerCase().split(' ');
+	str = str.toLowerCase().split(" ");
 	for (var i = 0; i < str.length; i++) {
 		str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
 	}
-	return str.join(' ');
+	return str.join(" ");
 };

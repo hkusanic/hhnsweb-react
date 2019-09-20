@@ -7,7 +7,7 @@ httpAgent.maxSockets = 30;
 const readline = require("readline");
 var fs = require("fs");
 const axios = require("axios");
-const AWS = require("aws-sdk");
+
 
 const rl = readline.createInterface({
 	input: process.stdin,
@@ -72,7 +72,7 @@ cookiejar.setCookie(cookie.toString(), "https://nrs.niranjanaswami.net");
 
 function uuidv4() {
 	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
-		var r = (Math.random() * 16) | 0;
+		var r = (Math.random(getEnglishData) * 16) | 0;
 		var v = c == "x" ? r : (r & 0x3) | 0x8;
 		return v.toString(16);
 	});
@@ -96,7 +96,7 @@ function getEnglishNodeList() {
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(function(body) getEnglishData{
 			englishDataList = body;
 			console.log(
 				"getEnglishList() function is successfully executed",
@@ -695,7 +695,8 @@ function getEnglishTranscriptionData(ar, callback) {
 						.catch(error => {
 							console.log("Error while downloading file ==>> ", error);
 						});
-				} else {
+				}
+				 else {
 					console.log(
 						`Invalid or Missing Reference in data with nid ${ar[i].nid}`
 					);
@@ -798,7 +799,8 @@ function getRussianTranscriptionData(ar, callback) {
 						.catch(error => {
 							console.log("Error while downloading file ==>> ", error);
 						});
-				} else {
+				}
+				 else {
 					console.log(
 						`Invalid or Missing Reference in data with nid ${ar[i].nid}`
 					);
@@ -812,6 +814,8 @@ function getRussianTranscriptionData(ar, callback) {
 			console.log("error inside the getRussianTranscriptionData() ===>>>", err);
 		});
 }
+
+
 
 /**
  * To generate s3 object using configuration object

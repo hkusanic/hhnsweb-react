@@ -2,30 +2,71 @@ var rp = require("request-promise");
 var tough = require("tough-cookie");
 var fs = require("fs");
 var https = require("https");
+var httpAgent = new https.Agent();
+httpAgent.maxSockets = 30;
+const readline = require("readline");
+var fs = require("fs");
+const axios = require("axios");
 var AWS = require("aws-sdk");
-require("dotenv").config({ path: "/home/system5/Desktop/hhnsweb-react/.env" });
-// var httpAgent = new https.Agent({
-// 	keepAlive: true,
-// 	keepAliveMsecs: 3000
 
-var englishNodeList = 0;
-var russianNodeList = 0;
-var englishLectureList = 0;
-var russianLectureList = 0;
-var englishTranscriptsList = 0;
-var russianTranscriptsList = 0;
-var englishQuotesList = 0;
-var russianQuotesList = 0;
-var englishKirtanList = 0;
-var russianKirtanList = 0;
-var videoList = 0;
-var ruSummaryList = 0;
-var galleryList = 0;
-// });
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
+let apiURL = "http://localhost:3000";
+rl.question("Please provide the api url\n", answer => {
+	apiURL = answer ? answer : "http://localhost:3000";
+	console.log(`API url: ${apiURL}`);
+	rl.question(
+		"What do you like to do? \n1.Populate Blog Data\n2.Populate Lecture Data\n3.Insert Transcription Data into Lectures\n4.Insert Summary Data into Lectures\n5.Insert Quotes Data\n6.Insert Kirtan Data\n7.Insert Video Data\n8.Insert Gallery Data.\n9.Insert User Data\n",
+		answer => {
+			switch (answer) {
+				case "1":
+					console.log("Populating Blog Data");
+					getEnglishNodeList();
+					break;
+				case "2":
+					console.log("Populating Lecture Data");
+					getEnglishLectureNodeList();
+					break;
+				case "3":
+					console.log("Populating Transcription Data");
+					getEnglishTranscriptionNodeList();
+					break;
+				case "4":
+					console.log("Populating Summary Data");
+					getRuSummaryNodeList();
+					break;
+				case "5":
+					console.log("Populating Quotes Data");
+					getQutoesEnglishNodeList();
+					break;
+				case "6":
+					console.log("Populating Kirtan Data");
+					getEnglishKirtanNodeList();
+					//getRuKirtanNodeList();
+					break;
+				case "7":
+					console.log("Populating Video Data");
+					getVideoNodeList();
+					break;
+				case "8":
+					console.log("Populating gallery Data");
+					getGalleryList();
+					break;
+				case "9":
+					console.log("Populating User Data");
+					getUserList();
+					break;
+			}
+			rl.close();
+		}
+	);
+});
+
 let count = 0;
 var httpAgent = new https.Agent();
 httpAgent.maxSockets = 60;
-const readline = require("readline");
 
 function timeConverter(timestamp) {
 	let date = new Date(timestamp * 1000);
@@ -33,7 +74,6 @@ function timeConverter(timestamp) {
 }
 const cookie = new tough.Cookie({
 	key: "SSESS8c0f16dd6e4ff53e267519930069d1e3",
-	//value: "mGCQ4zhYa9K0Dex2-xTn4Eh5c3Ej_4NnuEKuhxPcPb0",
 	value: "pAZYmQp6eb3H7-be9S6Z6_3gSx8OfeNuq9egFKtQNaU",
 	domain: "nrs.niranjanaswami.net",
 	httpOnly: false,
@@ -50,130 +90,13 @@ function uuidv4() {
 		return v.toString(16);
 	});
 }
+
 /* #region Blog*/
 var englishDataList = [];
 var raussainDataList = [];
 var raussainfinalData = [];
 
-var fetchDateTime;
-
-function saveErrorLog(error) {
-	// var AWS = require('aws-sdk');
-	// AWS.config.update({region: 'us-east-2'});
-	let date = new Date();
-	let folderName = Math.round(
-		new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
-	).toString();
-	let timestamp = new Date().getTime().toString();
-	console.log(timestamp);
-	let filePath = "errorSavingRecords/" + folderName + "/" + timestamp + ".txt";
-
-	//let s3 = new AWS.S3({apiVersion: '2006-03-01'});
-	var bucketParams = {
-		Bucket: "hhns"
-	};
-
-	let body = {
-		error: error
-	};
-
-	// Call S3 to obtain a list of the objects in the bucket
-	console.log("here1");
-	let objectParams = {
-		Bucket: bucketParams.Bucket,
-		Key: filePath,
-		Body: JSON.stringify(body)
-	};
-	let uploadPromise = new AWS.S3({ apiVersion: "2006-03-01" })
-		.putObject(objectParams)
-		.promise();
-	uploadPromise
-		.then(data => {
-			console.log(
-				"Successfully uploaded data to " + bucketParams.Bucket + "/" + filePath
-			);
-			//res.status(200).json( { message : "Successfully uploaded data to " + bucketParams.Bucket + "/" + filePath } );
-		})
-		.catch(err => {
-			console.log(err);
-			console.log({ error: err });
-		});
-}
-
-listObject();
-
-function listObject() {
-	// Load the AWS SDK for Node.js
-
-	AWS.config.update({
-		region: "us-east-2",
-		//accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-		//secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-		accessKeyId: "AKIA6OAXOGHHDEOMPCGS",
-		secretAccessKey: "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"
-	});
-
-	// Create S3 service object
-	s3 = new AWS.S3({ apiVersion: "2006-03-01" });
-
-	// Create the parameters for calling listObjects
-	var bucketParams = {
-		Bucket: "hhns"
-	};
-	let date = new Date();
-	let timestamp = Math.round(
-		new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
-	).toString();
-	console.log("timestamp" + timestamp);
-	// Call S3 to obtain a list of the objects in the bucket
-	s3.listObjects(bucketParams, function(err, data) {
-		if (err) console.log(err, err.stack); // an error occurred
-
-		var sortArray;
-
-		let arr = data.Contents.filter(value => {
-			if (value.Key.includes("savingRecords/" + timestamp + "/")) {
-				return value;
-			} else if (value.Key.includes("savingRecords/")) {
-				return value;
-			}
-		});
-		if (arr.length > 0) {
-			arr.sort(function(a, b) {
-				return b.LastModified > a.LastModified
-					? 1
-					: a.LastModified > b.LastModified
-					? -1
-					: 0;
-			});
-
-			for (var file of arr) {
-				console.log(file);
-			}
-
-			var params = { Bucket: "hhns", Key: arr[0].Key };
-			//let filename = './data/timestamp.txt';
-			// var filename = "./data/" + arr[0].Key.replace(/^.*[\\\/]/, "");
-			// console.log(filename);
-			// var file = fs.createWriteStream(filename);
-			s3.getObject(params, function(err, data) {
-				if (err) return err;
-				let objectData = data.Body.toString("utf-8");
-				console.log(JSON.parse(objectData).timestamp);
-				fetchDateTime = JSON.parse(objectData).timestamp;
-				getEnglishNodeList(); // Use the encoding necessary
-			});
-		} else {
-			console.log("no data");
-			fetchDateTime = 0;
-			getEnglishNodeList();
-			//getQutoesEnglishNodeList();
-			//getEnglishKirtanNodeList();
-		}
-	});
-}
-
-function getEnglishNodeList() {
+async function getEnglishNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -194,43 +117,37 @@ function getEnglishNodeList() {
 				englishDataList.length,
 				"data received"
 			);
-			englishDataList = englishDataList.filter(function(value) {
-				return value.created > fetchDateTime;
-			});
-			if (englishDataList && englishDataList.length > 0) {
-				console.log("after filteration>>>>", englishDataList.length);
-				getEnglishDatainBatches();
-			} else {
-				console.log("no new data here>>>");
-				getRuNodeList();
-			}
+			// englishDataList = englishDataList.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (englishDataList && englishDataList.length > 0) {
+			// 	console.log("after filteration>>>>", englishDataList.length);
+			// 	await getEnglishDatainBatches();
+			// } else {
+			// 	console.log("no new english blog data here>>>");
+			// 	await getRuNodeList();
+			// }
+			getEnglishDatainBatches();
 		})
-		.catch(function(err) {
+		.catch(async function(err) {
 			console.log(
 				"Error inside getEnglishNodeList() function in Blog region ====>>>>",
 				err
 			);
-			saveErrorLog(
-				"Error inside getEnglishNodeList() function in Blog region====>>>>"
-			);
-			getRuNodeList();
+
+			//await getRuNodeList();
 		});
 }
 
 function getEnglishDatainBatches() {
-	//getRuNodeList();
 	if (englishDataList.length > 0) {
 		let ar = englishDataList.splice(0, 10);
 		getEnglishData(ar, () => {
 			setTimeout(() => {
 				getEnglishDatainBatches();
-				// console.log("fetching only 10 records");
-				// englishNodeList = 1;
-				// getRuNodeList();
 			}, 4000);
 		});
 	} else {
-		englishNodeList = 1;
 		getRuNodeList();
 	}
 }
@@ -247,7 +164,6 @@ function getRaussainDatainBatches() {
 			}, 4000);
 		});
 	} else {
-		russianNodeList = 1;
 		updateDatabaseInBatches();
 	}
 }
@@ -255,19 +171,18 @@ function getRaussainDatainBatches() {
 function updateDatabaseInBatches() {
 	if (raussainfinalData.length > 0) {
 		let batchArray = raussainfinalData.splice(0, 10);
-		updateDatabase(batchArray, () => {
+		updateDatabase(batchArray, async () => {
 			setTimeout(() => {
 				updateDatabaseInBatches();
-				// console.log("saving only 10 records");
-				// getEnglishLectureNodeList();
 			}, 1000);
 		});
-	} else {
-		getEnglishLectureNodeList();
 	}
+	// else {
+	// 	getEnglishLectureNodeList();
+	// }
 }
 
-function getRuNodeList() {
+async function getRuNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -280,7 +195,7 @@ function getRuNodeList() {
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(async function(body) {
 			raussainDataList = body;
 			//raussainDataList.splice(0, 490);
 			console.log(
@@ -289,14 +204,14 @@ function getRuNodeList() {
 				"data received"
 			);
 			// raussainDataList = raussainDataList.filter(function(value) {
-			// 	return value.created > fetchDateTime;
+			// 	return parseInt(value.created) > fetchDateTime;
 			// });
 			// if (raussainDataList && raussainDataList.length > 0) {
 			// 	console.log("after filteration>>>", raussainDataList.length);
-			// 	getRaussainDatainBatches();
+			// 	await getRaussainDatainBatches();
 			// } else {
 			// 	console.log(
-			// 		"no new data here>> calling another function for populating lecture data"
+			// 		"no new russian blog data here>> calling another function for populating lecture data"
 			// 	);
 			// 	getEnglishLectureNodeList();
 			// }
@@ -304,10 +219,6 @@ function getRuNodeList() {
 		})
 		.catch(function(err) {
 			console.log("Error inside getRuNodeList() function ====>>>>", err);
-			saveErrorLog(
-				"error inside getRuNodeList() function in Blog Region ====>>>>"
-			);
-			getEnglishLectureNodeList();
 		});
 }
 
@@ -330,7 +241,6 @@ function getRaussainData(ar, callback) {
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
-				//if (ar[i].created > fetchDateTime) {
 				if (ar[i].tnid !== 0) {
 					const temp = {
 						tnid: ar[i].tnid,
@@ -366,7 +276,6 @@ function getRaussainData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
-			saveErrorLog("error inside the profile api ===>>>");
 		});
 }
 
@@ -390,7 +299,7 @@ function updateDatabase(batchArray, callback) {
 		})
 		.catch(err => {
 			console.log("errr", err);
-			saveErrorLog("error in updateDatabase() function in Blog region");
+			// saveErrorLog("error in updateDatabase() function in Blog region");
 		});
 }
 function createSingleRUBlogItem(body) {
@@ -432,7 +341,7 @@ function getEnglishData(ar, callback) {
 	Promise.all(Englishpromise)
 		.then(data => {
 			const insertDataPromise = data.map((item, i) => {
-				console.log(ar[i].created);
+				//console.log(ar[i].created);
 				//if (ar[i].created > fetchDateTime) {
 				const body = {
 					uuid: uuidv4(),
@@ -464,10 +373,6 @@ function getEnglishData(ar, callback) {
 					}
 				};
 				return rp(options);
-				//}
-				// else {
-				// 	console.log("No new Data");
-				// }
 			});
 			return Promise.all(insertDataPromise);
 		})
@@ -477,20 +382,15 @@ function getEnglishData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
-			saveErrorLog(
-				"error inside the profile api in getEnglishData() function===>>>"
-			);
 		});
 }
 /* #endregion*/
-
-/* #region Lectures*/
 
 var englishLectureDataList = [];
 var russianLectureDataList = [];
 var russianLectureFinalData = [];
 
-function getEnglishLectureNodeList() {
+async function getEnglishLectureNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -503,49 +403,45 @@ function getEnglishLectureNodeList() {
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(async function(body) {
 			englishLectureDataList = body;
-			//englishLectureDataList.splice(0, 3300);
+			englishLectureDataList.splice(0, 3300);
 			console.log(
 				"getEnglishLectureNodeList() function is successfully executed",
 				englishLectureDataList.length,
 				"data received"
 			);
-			englishLectureDataList = englishLectureDataList.filter(function(value) {
-				return value.created > fetchDateTime;
-			});
-			if (englishLectureDataList && englishLectureDataList.length > 0) {
-				console.log(
-					"after filteration length>>",
-					englishLectureDataList.length
-				);
-				getEnglishLectureDatainBatches();
-			} else {
-				console.log("no new data here. Calling getRuLectureNodeList()");
-				getRuLectureNodeList();
-			}
+			// englishLectureDataList = englishLectureDataList.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (englishLectureDataList && englishLectureDataList.length > 0) {
+			// 	console.log(
+			// 		"after filteration length>>",
+			// 		englishLectureDataList.length
+			// 	);
+			// 	await getEnglishLectureDatainBatches();
+			// } else {
+			// 	console.log(
+			// 		"no new english lecture data here. Calling getRuLectureNodeList()"
+			// 	);
+			// 	await getRuLectureNodeList();
+			// }
+			getEnglishLectureDatainBatches();
 		})
 		.catch(function(err) {
 			console.log(
 				"Error inside getEnglishLectureNodeList() function ====>>>>",
 				err
 			);
-			saveErrorLog(
-				"Error inside getEnglishLectureNodeList() function ====>>>>" + err
-			);
-			getRuLectureNodeList();
 		});
 }
 
-function getEnglishLectureDatainBatches() {
+async function getEnglishLectureDatainBatches() {
 	if (englishLectureDataList.length > 0) {
 		let ar = englishLectureDataList.splice(0, 10);
 		getEnglishLectureData(ar, () => {
 			setTimeout(() => {
 				getEnglishLectureDatainBatches();
-				// console.log("fetching only 10 English Lecture records");
-				// englishLectureList = 1;
-				// getRuLectureNodeList();
 			}, 2000);
 		});
 	} else {
@@ -567,35 +463,34 @@ function getRuLectureNodeList() {
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(async function(body) {
 			russianLectureDataList = body;
-			//russianLectureDataList.splice(0, 3300);
+			russianLectureDataList.splice(0, 3300);
 			console.log(
 				"getRuLectureNodeList() function is successfully executed",
 				russianLectureDataList.length,
 				"data received"
 			);
-			console.log("fetchDateTime>>", fetchDateTime);
-			russianLectureDataList = russianLectureDataList.filter(function(value) {
-				return value.created > fetchDateTime;
-			});
-			if (russianLectureDataList && russianLectureDataList.length > 0) {
-				console.log(
-					"after filteration length here>>>",
-					russianLectureDataList.length
-				);
-				getRussianLectureDatainBatches();
-			} else {
-				console.log(
-					"no new data here>>>>Calling another function for populating Transcription "
-				);
-				getEnglishTranscriptionNodeList();
-			}
+			// console.log("fetchDateTime>>", fetchDateTime);
+			// russianLectureDataList = russianLectureDataList.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (russianLectureDataList && russianLectureDataList.length > 0) {
+			// 	console.log(
+			// 		"after filteration length here>>>",
+			// 		russianLectureDataList.length
+			// 	);
+			// 	await getRussianLectureDatainBatches();
+			// } else {
+			// 	console.log(
+			// 		"no new russian lectures data here>>>>Calling another function for populating Transcription "
+			// 	);
+			// 	await getEnglishTranscriptionNodeList();
+			// }
+			getRussianLectureDatainBatches();
 		})
 		.catch(function(err) {
 			console.log("Error inside getRuLectureNodeList() function ====>>>>", err);
-			saveErrorLog("Error inside getRuLectureNodeList() function ====>>>>");
-			getEnglishTranscriptionNodeList();
 		});
 }
 function getRussianLectureDatainBatches() {
@@ -604,14 +499,10 @@ function getRussianLectureDatainBatches() {
 		getRussianLectureData(ar, () => {
 			setTimeout(() => {
 				getRussianLectureDatainBatches();
-				// console.log("fetching only 10 russian lecture records");
-				// russianLectureList = 1;
-				// updateDatabaseLectures();
 			}, 2000);
 		});
 	} else {
 		russianLectureList = 1;
-		//updateDatabaseLectures();
 		updateDatabaseLecturesinBatches();
 	}
 }
@@ -620,7 +511,7 @@ function getRussianLectureData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/ru/rest/node/${item.nid}.json`,
+			uri: `https://nrs.niranjanaswami.net/ru/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -634,46 +525,51 @@ function getRussianLectureData(ar, callback) {
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
-				//if (data[i].created > fetchDateTime) {
 				if (data[i].tnid !== 0) {
 					const temp = {
-						tnid: data[i].tnid,
-						published_date: timeConverter(data[i].created),
+						tnid: ar[i].tnid,
 						languages: "both",
 						ru: {
-							nid: data[i].nid,
-							created: timeConverter(data[i].created),
-							published: timeConverter(data[i].created),
-							changed: timeConverter(data[i].changed),
-							title: data[i].title
+							nid: ar[i].nid,
+							title: data[i].title,
+							event: data[i].event,
+							topic: data[i].topic,
+							location: data[i].location,
+							translation: data[i].translation
 						}
 					};
 					russianLectureFinalData.push(temp);
 				} else {
 					const body = {
 						uuid: uuidv4(),
-						tnid: data[i].tnid,
-						published_date: timeConverter(data[i].created),
+						tnid: ar[i].tnid,
 						languages: "ru",
+						author: data[i].author,
+						soundcloud_link: data[i].soundcloud,
+						lecture_date: data[i].date,
+						published_date: timeConverter(ar[i].created),
+						duration: data[i].duration,
+						part: data[i].part,
+						chapter: data[i].chapter,
+						verse: data[i].verse,
+						audio_link: data[i].file,
+						created_date_time: timeConverter(ar[i].created),
 						ru: {
-							nid: data[i].nid,
-							created: timeConverter(data[i].created),
-							published: timeConverter(data[i].created),
-							changed: timeConverter(data[i].changed),
-							title: data[i].title
+							nid: ar[i].nid,
+							title: data[i].title,
+							event: data[i].event,
+							topic: data[i].topic,
+							location: data[i].location,
+							translation: data[i].translation
 						}
 					};
 					createSingleRULectureItem(body);
 				}
-				//}
 			}
 			callback();
 		})
 		.catch(err => {
 			console.log("error inside the getRussianLectureData() ===>>>", err);
-			saveErrorLog(
-				"error inside the getRussianLectureData() in Lecture region===>>>"
-			);
 		});
 }
 
@@ -685,8 +581,6 @@ function updateDatabaseLecturesinBatches() {
 				updateDatabaseLecturesinBatches();
 			}, 1000);
 		});
-	} else {
-		getEnglishTranscriptionNodeList();
 	}
 }
 
@@ -710,7 +604,6 @@ function updateDatabaseLectures(batchArray, callback) {
 		})
 		.catch(err => {
 			console.log("errr");
-			saveErrorLog("err inside updateDatabaseLecture region");
 		});
 }
 function createSingleRULectureItem(body) {
@@ -732,7 +625,6 @@ function createSingleRULectureItem(body) {
 		})
 		.catch(err => {
 			console.log(err);
-			saveErrorLog("err inside createSingleRULectureItem function");
 		});
 }
 function getEnglishLectureData(ar, callback) {
@@ -740,7 +632,7 @@ function getEnglishLectureData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/en/rest/node/${item.nid}.json`,
+			uri: `https://nrs.niranjanaswami.net/en/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -753,34 +645,45 @@ function getEnglishLectureData(ar, callback) {
 	Promise.all(Englishpromise)
 		.then(data => {
 			const insertDataPromise = data.map((item, i) => {
-				if (item.created > fetchDateTime) {
-					const body = {
-						uuid: uuidv4(),
-						tnid: item.tnid,
-						published_date: timeConverter(item.created),
-						languages: item.tnid != 0 ? "" : "en",
-						en: {
-							nid: item.nid,
-							title: item.title,
-							created: timeConverter(item.created),
-							published: timeConverter(item.created),
-							changed: timeConverter(item.changed)
-						}
-					};
-					const options = {
-						method: "POST",
-						uri: "http://localhost:3000/api/lecture/create/",
-						//uri: "http://dev.niranjanaswami.net/api/lecture/create/",
-						body: body,
-						json: true,
-						pool: httpAgent,
-						timeout: 6000000,
-						headers: {
-							"User-Agent": "Request-Promise"
-						}
-					};
-					return rp(options);
-				}
+				const body = {
+					uuid: uuidv4(),
+					tnid: ar[i].tnid,
+					languages: item.tnid != 0 ? "" : "en",
+					author: item.author,
+					soundcloud_link: item.soundcloud,
+					lecture_date: item.date,
+					published_date: timeConverter(ar[i].created),
+					created_date_time: timeConverter(ar[i].created),
+					duration: item.duration,
+					part: item.part,
+					chapter: item.chapter,
+					verse: item.verse,
+					audio_link: item.file,
+					en: {
+						nid: ar[i].nid,
+						title: item.title,
+						event: item.event,
+						topic: item.topic,
+						location: item.location,
+						translation: item.translation
+					},
+					counters: {
+						downloads: item.downloads
+					}
+				};
+				const options = {
+					method: "POST",
+					uri: "http://localhost:3000/api/lecture/create/",
+					//uri: "http://dev.niranjanaswami.net/api/lecture/create/",
+					body: body,
+					json: true,
+					pool: httpAgent,
+					timeout: 6000000,
+					headers: {
+						"User-Agent": "Request-Promise"
+					}
+				};
+				return rp(options);
 			});
 			return Promise.all(insertDataPromise);
 		})
@@ -790,10 +693,8 @@ function getEnglishLectureData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
-			saveErrorLog("error inside the profile api ===>>>");
 		});
 }
-
 /* #endregion*/
 
 /* #region Transcription*/
@@ -804,7 +705,7 @@ var englishTranscriptionDataList = [];
 var russianTranscriptionDataList = [];
 var transcriptionFinalData = [];
 
-function getEnglishTranscriptionNodeList() {
+async function getEnglishTranscriptionNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -816,41 +717,41 @@ function getEnglishTranscriptionNodeList() {
 		}
 	};
 	rp(options)
-		.then(function(body) {
+		.then(async function(body) {
 			englishTranscriptionDataList = body;
-			//englishTranscriptionDataList.splice(0, 60);
+			englishTranscriptionDataList.splice(0, 60);
 			console.log(
 				"getEnglishTranscriptionNodeList() function is successfully executed",
 				englishTranscriptionDataList.length,
 				"data received"
 			);
-			englishTranscriptionDataList = englishTranscriptionDataList.filter(
-				function(value) {
-					return value.created > fetchDateTime;
-				}
-			);
-			if (
-				englishTranscriptionDataList &&
-				englishTranscriptionDataList.length > 0
-			) {
-				console.log(
-					"after filteration>>>",
-					englishTranscriptionDataList.length
-				);
-				englishTranscriptsList = 1;
-				getEnglishTranscriptionDatainBatches();
-			} else {
-				console.log("no new data here>>> Calling RuNode list");
-				getRuTranscriptionNodeList();
-			}
+			// englishTranscriptionDataList = englishTranscriptionDataList.filter(
+			// 	function(value) {
+			// 		return parseInt(value.created) > fetchDateTime;
+			// 	}
+			// );
+			// if (
+			// 	englishTranscriptionDataList &&
+			// 	englishTranscriptionDataList.length > 0
+			// ) {
+			// 	console.log(
+			// 		"after filteration>>>",
+			// 		englishTranscriptionDataList.length
+			// 	);
+			// 	englishTranscriptsList = 1;
+			// 	await getEnglishTranscriptionDatainBatches();
+			// } else {
+			// 	console.log(
+			// 		"no new English Transcriptions data here>>> Calling RuNode Transcription list"
+			// 	);
+			// 	await getRuTranscriptionNodeList();
+			// }
+			getEnglishTranscriptionDatainBatches();
 		})
-		.catch(function(err) {
+		.catch(async function(err) {
 			console.log(
 				"Error inside getEnglishTranscriptionNodeList() function ====>>>>",
 				err
-			);
-			saveErrorLog(
-				"Error inside getEnglishTranscriptionNodeList() function in Transcription Region ====>>>>"
 			);
 			getRuTranscriptionNodeList();
 		});
@@ -861,9 +762,6 @@ function getEnglishTranscriptionDatainBatches() {
 		getEnglishTranscriptionData(ar, () => {
 			setTimeout(() => {
 				getEnglishTranscriptionDatainBatches();
-				// console.log("fetching only 10 transcription data records");
-				// englishTranscriptsList = 1;
-				// getRuTranscriptionNodeList();
 			}, 2000);
 		});
 	} else {
@@ -871,12 +769,11 @@ function getEnglishTranscriptionDatainBatches() {
 	}
 }
 function getEnglishTranscriptionData(ar, callback) {
-	//console.log("ar>>>>", ar);
 	const Englishpromise = [];
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/en/rest/node/${item.nid}.json`,
+			uri: `https://nrs.niranjanaswami.net/en/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -890,41 +787,35 @@ function getEnglishTranscriptionData(ar, callback) {
 		.then(data => {
 			console.log("data EnglishPromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
-				if (
-					!Array.isArray(data[i].field_reference) &&
-					data[i].field_reference.und[0]
-				) {
-					if (data[i].created > fetchDateTime) {
-						const temp = {
-							tnid: data[i].field_reference.und[0].target_id,
-							en: {
-								transcription: {
-									nid: data[i].nid,
-									created: timeConverter(data[i].created),
-									published: timeConverter(data[i].created),
-									changed: timeConverter(data[i].changed),
-									title: data[i].title,
-									text: data[i].body.und[0] ? data[i].body.und[0].value : "",
-									attachment_name:
-										!Array.isArray(data[i].field_attachment) &&
-										data[i].field_attachment.und[0]
-											? data[i].field_attachment.und[0].filename
-											: "",
-									attachment_link:
-										!Array.isArray(data[i].field_attachment) &&
-										data[i].field_attachment.und[0]
-											? data[i].field_attachment.und[0].uri
-											: ""
+				if (data[i].audio.nid) {
+					let filePath = "./uploadss/transcriptions/" + Date.now() + ".pdf";
+					console.log("filePath>>", filePath);
+					axios({
+						url: data[i].file,
+						responseType: "stream"
+					})
+						.then(response => {
+							response.data.pipe(fs.createWriteStream(filePath));
+							console.log("File downloaded sucessfully");
+							const temp = {
+								tnid: data[i].audio.nid,
+								en: {
+									transcription: {
+										nid: ar[i].nid,
+										title: data[i].title,
+										text: data[i].body,
+										attachment_name: data[i].filename,
+										attachment_link: filePath
+									}
 								}
-							}
-						};
-						transcriptionFinalData.push(temp);
-					}
+							};
+							transcriptionFinalData.push(temp);
+						})
+						.catch(error => {
+							console.log("Error while downloading file ==>> ", error);
+						});
 				} else {
 					console.log(
-						`Invalid or Missing Reference in data with nid ${data[i].nid}`
-					);
-					saveErrorLog(
 						`Invalid or Missing Reference in data with nid ${data[i].nid}`
 					);
 				}
@@ -933,10 +824,9 @@ function getEnglishTranscriptionData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the getEnglishTranscriptionData() ===>>>", err);
-			saveErrorLog("error inside the getEnglishTranscriptionData() ===>>>");
 		});
 }
-function getRuTranscriptionNodeList() {
+async function getRuTranscriptionNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -949,59 +839,53 @@ function getRuTranscriptionNodeList() {
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(async function(body) {
 			russianTranscriptionDataList = body;
-			//russianTranscriptionDataList.splice(0, 60);
+			russianTranscriptionDataList.splice(0, 60);
 			console.log(
 				"getRuTranscriptionNodeList() function is successfully executed",
 				russianTranscriptionDataList.length,
 				"data received"
 			);
-			russianTranscriptionDataList = russianTranscriptionDataList.filter(
-				function(value) {
-					return value.created > fetchDateTime;
-				}
-			);
-			if (
-				russianTranscriptionDataList &&
-				russianTranscriptionDataList.length > 0
-			) {
-				console.log(
-					"after filteration length>>>",
-					russianTranscriptionDataList.length
-				);
-				getRussianTranscriptionDatainBatches();
-			} else {
-				console.log(
-					"no new data here>> calling another function for populating quotes"
-				);
-				getQutoesEnglishNodeList();
-			}
+			// russianTranscriptionDataList = russianTranscriptionDataList.filter(
+			// 	function(value) {
+			// 		return parseInt(value.created) > fetchDateTime;
+			// 	}
+			// );
+			// if (
+			// 	russianTranscriptionDataList &&
+			// 	russianTranscriptionDataList.length > 0
+			// ) {
+			// 	console.log(
+			// 		"after filteration length>>>",
+			// 		russianTranscriptionDataList.length
+			// 	);
+			// 	await getRussianTranscriptionDatainBatches();
+			// } else {
+			// 	console.log(
+			// 		"no new data in russian transcriptions here>> calling another function for populating quotes"
+			// 	);
+			// 	await getQutoesEnglishNodeList();
+			// }
+			getRussianTranscriptionDatainBatches();
 		})
-		.catch(function(err) {
+		.catch(async function(err) {
 			console.log(
 				"Error inside getRuTranscriptionNodeList() function ====>>>>",
 				err
 			);
-			saveErrorLog(
-				"Error inside getRuTranscriptionNodeList() function ====>>>>"
-			);
-			getQutoesEnglishNodeList();
 		});
 }
-function getRussianTranscriptionDatainBatches() {
+async function getRussianTranscriptionDatainBatches() {
 	if (russianTranscriptionDataList.length > 0) {
 		let ar = russianTranscriptionDataList.splice(0, 10);
 		getRussianTranscriptionData(ar, () => {
 			setTimeout(() => {
 				getRussianTranscriptionDatainBatches();
-				// console.log("fetching only 10 russian transcription records");
-				// updateDatabaseTranscriptions();
 			}, 2000);
 		});
 	} else {
-		//updateDatabaseTranscriptions();
-		updateDatabaseTranscriptionsInBatches();
+		updateS3Transcriptions();
 	}
 }
 function getRussianTranscriptionData(ar, callback) {
@@ -1009,7 +893,7 @@ function getRussianTranscriptionData(ar, callback) {
 	ar.map((item, i) => {
 		const options = {
 			method: "GET",
-			uri: `https://nrs.niranjanaswami.net/ru/rest/node/${item.nid}.json`,
+			uri: `https://nrs.niranjanaswami.net/ru/rest/object/${item.nid}.json`,
 			json: true,
 			jar: cookiejar,
 			timeout: 6000000,
@@ -1023,44 +907,35 @@ function getRussianTranscriptionData(ar, callback) {
 		.then(data => {
 			console.log("data Raussainpromise inserted =====>>>>", data.length);
 			for (let i = 0; i < data.length; i++) {
-				if (
-					!Array.isArray(data[i].field_reference) &&
-					data[i].field_reference.und[0]
-				) {
-					//if (ar[i].created > fetchDateTime) {
-					const temp = {
-						tnid: data[i].field_reference.und[0].target_id,
-						ru: {
-							transcription: {
-								nid: data[i].nid,
-								created: timeConverter(data[i].created),
-								published: timeConverter(data[i].created),
-								changed: timeConverter(data[i].changed),
-								title: data[i].title,
-								text: data[i].body.und[0].value
-									? data[i].body.und[0].value
-									: "",
-								attachment_name:
-									!Array.isArray(data[i].field_attachment) &&
-									data[i].field_attachment.und[0]
-										? data[i].field_attachment.und[0].filename
-										: "",
-								attachment_link:
-									!Array.isArray(data[i].field_attachment) &&
-									data[i].field_attachment.und[0]
-										? data[i].field_attachment.und[0].uri
-										: ""
-							}
-						}
-					};
-					transcriptionFinalData.push(temp);
-					//}
+				if (data[i].audio.nid) {
+					let filePath = "./uploadss/transcriptions/" + Date.now() + ".pdf";
+					axios({
+						url: data[i].file,
+						responseType: "stream"
+					})
+						.then(response => {
+							response.data.pipe(fs.createWriteStream(filePath));
+							console.log("File downloaded sucessfully");
+							const temp = {
+								tnid: data[i].audio.nid,
+								ru: {
+									transcription: {
+										nid: ar[i].nid,
+										title: data[i].title,
+										text: data[i].body,
+										attachment_name: data[i].filename,
+										attachment_link: filePath
+									}
+								}
+							};
+							transcriptionFinalData.push(temp);
+						})
+						.catch(error => {
+							console.log("Error while downloading file ==>> ", error);
+						});
 				} else {
 					console.log(
 						`Invalid or Missing Reference in data with nid ${data[i].nid}`
-					);
-					saveErrorLog(
-						`Invalid or Missing Reference in data with nid ${data[i].nid} in getRussianTranscriptiondata() function`
 					);
 				}
 			}
@@ -1068,32 +943,130 @@ function getRussianTranscriptionData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the getRussianTranscriptionData() ===>>>", err);
-			saveErrorLog(
-				"error inside the getRussianTranscriptionData() in Transcription region===>>>"
-			);
 		});
 }
 
-function updateDatabaseTranscriptionsInBatches() {
+/**
+ * To generate s3 object using configuration object
+ * @param {object} awsConfig
+ * @param {string} awsConfig.accessKeyId Access Key of AWS configuration
+ * @param {string} awsConfig.secretAccessKey Access Secret Key(Token) of AWS configuration
+ */
+
+async function generateS3Object(awsConfig) {
+	const awsConfigObj = {
+		accessKeyId: "AKIA6OAXOGHHDEOMPCGS",
+		secretAccessKey: "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",
+		s3BucketEndpoint: false,
+		endpoint: "https://s3.amazonaws.com"
+	};
+	AWS.config.update(awsConfigObj);
+	return new AWS.S3();
+}
+
+async function updateS3Transcriptions() {
+	console.log("updateS3Transcriptions is running");
+	console.log(transcriptionFinalData);
+	let counter0 = 0;
+	let counter1 = 0;
+	let promiseArrayEN = [];
+	let promiseArrayRU = [];
+	for (let i = 0; i < transcriptionFinalData.length; i++) {
+		let filePathEN =
+			transcriptionFinalData[i].en &&
+			transcriptionFinalData[i].en.transcription.attachment_link
+				? transcriptionFinalData[i].en.transcription.attachment_link
+				: null;
+		let filePathRU =
+			transcriptionFinalData[i].ru &&
+			transcriptionFinalData[i].ru.transcription.attachment_link
+				? transcriptionFinalData[i].ru.transcription.attachment_link
+				: null;
+		if (filePathEN) {
+			counter0++;
+			let content = await fs.readFileSync(filePathEN);
+			let base64data = new Buffer(content, "binary");
+			let myKey = `uploadss/transcriptions/${Date.now()}.pdf`;
+			let params = {
+				Bucket: "nrstranscriptionlist2",
+				Key: myKey,
+				Body: base64data,
+				ACL: "public-read"
+			};
+			let promise = new Promise((resolve, reject) => {
+				const s3 = generateS3Object();
+				resolve(s3);
+			});
+			promise.then(s3 => {
+				let url;
+				s3.upload(params, (err, data) => {
+					if (err) console.error(`Upload Error ${err}`);
+					else {
+						url = data.Location;
+						console.log("Upload Completed, url ==>> ", url);
+						transcriptionFinalData[i].en.transcription.attachment_link = url;
+						//transcriptionFinalData[i].en.transcription.attachment_name = url;
+						counter1++;
+					}
+				});
+			});
+		}
+		if (filePathRU) {
+			counter0++;
+			let content = await fs.readFileSync(filePathRU);
+			let base64data = new Buffer(content, "binary");
+			let myKey = `uploadss/transcriptions/${Date.now()}.pdf`;
+			let params = {
+				Bucket: "nrstranscriptionlist2",
+				Key: myKey,
+				Body: base64data,
+				ACL: "public-read"
+			};
+			//const s3 = await generateS3Object();
+			let promise = new Promise((resolve, reject) => {
+				const s3 = generateS3Object();
+				resolve(s3);
+			});
+			promise.then(s3 => {
+				let url;
+				s3.upload(params, (err, data) => {
+					if (err) console.error(`Upload Error ${err}`);
+					else {
+						url = data.Location;
+						console.log("Upload Completed, url ==>> ", url);
+						transcriptionFinalData[i].ru.transcription.attachment_link = url;
+						//transcriptionFinalData[i].ru.transcription.attachment_name = url;
+						counter1++;
+					}
+				});
+			});
+		}
+	}
+	setTimeout(() => {
+		console.log("here");
+		updateDatabaseTranscriptionsInBatches();
+	}, 8000);
+}
+
+async function updateDatabaseTranscriptionsInBatches() {
+	console.log("sending data in batches");
 	if (transcriptionFinalData.length > 0) {
 		let batchArray = transcriptionFinalData.splice(0, 10);
 		updateDatabaseTranscriptions(batchArray, () => {
 			setTimeout(() => {
 				updateDatabaseTranscriptionsInBatches();
-			}, 1000);
+			}, 2000);
 		});
-	} else {
-		englishTranscriptsList = 1;
-		russianTranscriptsList = 1;
-		getQutoesEnglishNodeList();
 	}
 }
-function updateDatabaseTranscriptions(batchArray, callback) {
-	console.log("updateDatabaseTranscriptions is running");
+
+async function updateDatabaseTranscriptions(batchArray, callback) {
+	console.log("saving data in batches");
 	let options = {
 		method: "POST",
 		uri: "http://localhost:3000/api/lecture/updateBulkNew",
 		//uri: "http://dev.niranjanaswami.net/api/lecture/updateBulkNew",
+		//uri: `${apiURL}/api/lecture/updateBulkNew/`,
 		body: batchArray,
 		json: true,
 		pool: httpAgent,
@@ -1108,11 +1081,10 @@ function updateDatabaseTranscriptions(batchArray, callback) {
 			callback();
 		})
 		.catch(err => {
-			console.log("errr", err);
-			saveErrorLog("errr inside updateDatabaseTranscriptions function");
+			console.log(err);
+			callback();
 		});
 }
-
 /* #endregion*/
 
 /* Quotes Script Start point */
@@ -1121,7 +1093,7 @@ var quotesEnglishNodeList = [];
 var quotesRaussainNodeList = [];
 var quotesFinalRaussainData = [];
 
-function getQutoesEnglishNodeList() {
+async function getQutoesEnglishNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -1134,39 +1106,40 @@ function getQutoesEnglishNodeList() {
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(async function(body) {
 			quotesEnglishNodeList = body;
-			//quotesEnglishNodeList.splice(0, 5400);
+			quotesEnglishNodeList.splice(0, 5400);
 			console.log(
 				"getQutoesEnglishNodeList() function is successfully executed",
 				quotesEnglishNodeList.length,
 				"data received"
 			);
-			quotesEnglishNodeList = quotesEnglishNodeList.filter(function(value) {
-				return value.created > fetchDateTime;
-			});
-			if (quotesEnglishNodeList && quotesEnglishNodeList.length > 0) {
-				console.log(
-					"after filteration length>>>>",
-					quotesEnglishNodeList.length
-				);
-				getQuotesDatainBatches();
-			} else {
-				console.log("no new Data here");
-				getQuotesRuNodeList();
-			}
+			// quotesEnglishNodeList = quotesEnglishNodeList.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (quotesEnglishNodeList && quotesEnglishNodeList.length > 0) {
+			// 	console.log(
+			// 		"after filteration length>>>>",
+			// 		quotesEnglishNodeList.length
+			// 	);
+			// 	await getQuotesDatainBatches();
+			// } else {
+			// 	console.log(
+			// 		"no new english quotes Data here calling russian quotes list"
+			// 	);
+			// 	await getQuotesRuNodeList();
+			// }
+			getQuotesDatainBatches();
 		})
-		.catch(function(err) {
+		.catch(async function(err) {
 			console.log(
 				"Error inside getQutoesEnglishNodeList() function ====>>>>",
 				err
 			);
-			saveErrorLog("Error inside getQutoesEnglishNodeList() function ====>>>>");
-			getQuotesRuNodeList();
 		});
 }
 
-function getQuotesDatainBatches() {
+async function getQuotesDatainBatches() {
 	if (quotesEnglishNodeList.length > 0) {
 		let ar = quotesEnglishNodeList.splice(0, 10);
 		getQuotesData(ar, () => {
@@ -1179,7 +1152,7 @@ function getQuotesDatainBatches() {
 		});
 	} else {
 		englishQuotesList = 1;
-		getQuotesRuNodeList();
+		await getQuotesRuNodeList();
 	}
 }
 
@@ -1223,8 +1196,7 @@ function getQuotesData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					//uri: "http://dev.niranjanaswami.net/api/quote/create/",
-					uri: "http://localhost:3000/api/quote/create",
+					uri: "http://localhost:3000/api/quote/create/",
 					//uri: "http://dev.niranjanaswami.net/api/quote/create/",
 					body: body,
 					json: true,
@@ -1245,7 +1217,6 @@ function getQuotesData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside getQuotesData===>>>", err);
-			saveErrorLog("error inside getQuotesData===>>>");
 		});
 }
 
@@ -1259,7 +1230,7 @@ function getQuotesSource(body) {
 	return body.substr(startIndex + 5);
 }
 
-function getQuotesRuNodeList() {
+async function getQuotesRuNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -1272,39 +1243,38 @@ function getQuotesRuNodeList() {
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(async function(body) {
 			quotesRaussainNodeList = body;
 			console.log("quotesRaussainNodeList", quotesRaussainNodeList.length);
-			//quotesRaussainNodeList.splice(0, 5200);
+			quotesRaussainNodeList.splice(0, 5200);
 			console.log(
 				"gerQuotesRuNodeList() function is successfully executed",
 				quotesRaussainNodeList.length,
 				"data received"
 			);
-			quotesRaussainNodeList = quotesRaussainNodeList.filter(function(value) {
-				return value.created > fetchDateTime;
-			});
-			if (quotesRaussainNodeList && quotesRaussainNodeList.length > 0) {
-				console.log(
-					"after filteration length >>>>",
-					quotesRaussainNodeList.length
-				);
-				getQuotesRaussainDatainBatches();
-			} else {
-				console.log(
-					"no new quotes here>>>calling another function for populating kirtan"
-				);
-				getEnglishKirtanNodeList();
-			}
+			// quotesRaussainNodeList = quotesRaussainNodeList.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (quotesRaussainNodeList && quotesRaussainNodeList.length > 0) {
+			// 	console.log(
+			// 		"after filteration length >>>>",
+			// 		quotesRaussainNodeList.length
+			// 	);
+			// 	getQuotesRaussainDatainBatches();
+			// } else {
+			// 	console.log(
+			// 		"no new russian quotes here>>>calling another function for populating kirtan"
+			// 	);
+			getQuotesRaussainDatainBatches();
+
+			// }
 		})
 		.catch(function(err) {
 			console.log("Error inside gerQuotesRuNodeList() function ====>>>>", err);
-			saveErrorLog("Error inside gerQuotesRuNodeList() function ====>>>>");
-			getEnglishKirtanNodeList();
 		});
 }
 
-function getQuotesRaussainDatainBatches() {
+async function getQuotesRaussainDatainBatches() {
 	if (quotesRaussainNodeList.length > 0) {
 		let ar = quotesRaussainNodeList.splice(0, 10);
 		getQuotesRaussainData(ar, () => {
@@ -1338,9 +1308,7 @@ function getQuotesRaussainData(ar, callback) {
 	});
 	Promise.all(QuotesRaussainpromise)
 		.then(data => {
-			//let quotesFinalRaussainData = [];
 			for (let i = 0; i < data.length; i++) {
-				//if (ar[i].created > fetchDateTime) {
 				if (ar[i].tnid !== 0) {
 					console.log("presetn tnid");
 
@@ -1383,16 +1351,14 @@ function getQuotesRaussainData(ar, callback) {
 			}
 			count++;
 			console.log("here", count);
-			//updateQuoteDatabase(quotesFinalRaussainData, callback);
 			callback();
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
-			saveErrorLog("error inside the profile api ===>>>");
 		});
 }
 
-function updateQuoteDatabaseInBatches() {
+async function updateQuoteDatabaseInBatches() {
 	console.log("updateQuoteDatabaseInBatches is running");
 	if (quotesFinalRaussainData.length > 0) {
 		let batchArray = quotesFinalRaussainData.splice(0, 400);
@@ -1404,9 +1370,6 @@ function updateQuoteDatabaseInBatches() {
 				// getEnglishKirtanNodeList();
 			}, 3000);
 		});
-	} else {
-		quotesList = 1;
-		getEnglishKirtanNodeList();
 	}
 }
 
@@ -1415,8 +1378,8 @@ function updateQuoteDatabase(batchArray, callback) {
 	console.log("length of batchArray", batchArray.length);
 	let options = {
 		method: "POST",
-		//uri: "http://dev.niranjanaswami.net/api/quote/updateBulkNew/",
 		uri: "http://localhost:3000/api/quote/updateBulkNew",
+		//uri: "http://dev.niranjanaswami.net/api/quote/updateBulkNew/",
 		//uri: "http://dev.niranjanaswami.net/api/quote/updateBulkNew/",
 		body: batchArray,
 		json: true,
@@ -1433,7 +1396,6 @@ function updateQuoteDatabase(batchArray, callback) {
 		})
 		.catch(err => {
 			console.log(err);
-			saveErrorLog("err inside updateQuoteDatabase() function");
 		});
 }
 
@@ -1442,8 +1404,8 @@ function createSingleRUQuoteItem(body) {
 	console.log("single create api for quotes");
 	const options = {
 		method: "POST",
+		uri: "http://localhost:3000/api/lecture/updateBulkNew",
 		//uri: "http://dev.niranjanaswami.net/api/quote/create/",
-		uri: "http://localhost:3000/api/quote/create",
 		//uri: "http://dev.niranjanaswami.net/api/quote/create/",
 		body: body,
 		json: true,
@@ -1459,7 +1421,6 @@ function createSingleRUQuoteItem(body) {
 		})
 		.catch(err => {
 			console.log(err);
-			saveErrorLog("err inside createSingleRUQuoteItem() function");
 		});
 }
 /* Quotes Script End point */
@@ -1470,7 +1431,7 @@ var englishKirtanDataList = [];
 var raussainKirtanDataList = [];
 var raussainKirtanfinalData = [];
 
-function getEnglishKirtanNodeList() {
+async function getEnglishKirtanNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -1483,34 +1444,33 @@ function getEnglishKirtanNodeList() {
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(async function(body) {
 			// console.log('body===>',body)
 			englishKirtanDataList = body;
-			//englishKirtanDataList.splice(0, 678);
+			englishKirtanDataList.splice(0, 720);
 			console.log(
 				"getEnglishList() function is successfully executed",
 				englishKirtanDataList.length,
 				"data received"
 			);
-			englishKirtanDataList = englishKirtanDataList.filter(function(value) {
-				return value.created > fetchDateTime;
-			});
-			if (englishKirtanDataList && englishKirtanDataList.length > 0) {
-				console.log("after filteration>>>", englishKirtanDataList.length);
-				getEnglishKirtanDatainBatches();
-			} else {
-				console.log("no new kirtan here");
-				getRuKirtanNodeList();
-			}
+			// englishKirtanDataList = englishKirtanDataList.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (englishKirtanDataList && englishKirtanDataList.length > 0) {
+			// 	console.log("after filteration>>>", englishKirtanDataList.length);
+			// 	await getEnglishKirtanDatainBatches();
+			// } else {
+			// 	console.log("no new english kirtan here calling russian kirtan list");
+			// 	await getRuKirtanNodeList();
+			// }
+			getEnglishKirtanDatainBatches();
 		})
-		.catch(function(err) {
+		.catch(async function(err) {
 			console.log("Error inside getUserList() function ====>>>>", err);
-			saveErrorLog("Error inside getUserList() function ====>>>>");
-			getRuKirtanNodeList();
 		});
 }
 
-function getEnglishKirtanDatainBatches() {
+async function getEnglishKirtanDatainBatches() {
 	//getRuKirtanNodeList();
 	//console.log("englishDataList===>", englishDataList);
 	if (englishKirtanDataList.length > 0) {
@@ -1518,14 +1478,11 @@ function getEnglishKirtanDatainBatches() {
 		getEnglishKirtanData(ar, () => {
 			setTimeout(() => {
 				getEnglishKirtanDatainBatches();
-				// console.log("fetching only 10 kirtan records");
-				// englishKirtanList = 1;
-				// getRuKirtanNodeList();
 			}, 2000);
 		});
 	} else {
 		englishKirtanList = 1;
-		getRuKirtanNodeList();
+		await getRuKirtanNodeList();
 	}
 }
 
@@ -1593,11 +1550,10 @@ function getEnglishKirtanData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
-			saveErrorLog("error inside the profile api ===>>>");
 		});
 }
 
-function getRuKirtanNodeList() {
+async function getRuKirtanNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -1610,35 +1566,35 @@ function getRuKirtanNodeList() {
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(async function(body) {
 			raussainKirtanDataList = body;
-			//raussainKirtanDataList.splice(0, 813);
+			raussainKirtanDataList.splice(0, 823);
 			console.log(
 				"getRuNodeList() function is successfully executed",
 				raussainKirtanDataList.length,
 				"data received"
 			);
-			raussainKirtanDataList = raussainKirtanDataList.filter(function(value) {
-				return value.created > fetchDateTime;
-			});
-			if (raussainKirtanDataList && raussainKirtanDataList.length > 0) {
-				console.log(
-					"after filteration length>>",
-					raussainKirtanDataList.length
-				);
-				getRaussainKirtanDatainBatches();
-			} else {
-				console.log("no new kirtan here ending");
-				getVideoNodeList();
-			}
+			// raussainKirtanDataList = raussainKirtanDataList.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (raussainKirtanDataList && raussainKirtanDataList.length > 0) {
+			// 	console.log(
+			// 		"after filteration length>>",
+			// 		raussainKirtanDataList.length
+			// 	);
+			// 	 getRaussainKirtanDatainBatches();
+			// } else {
+			// 	console.log("no new russian kirtan here ending calling video list");
+			// 	await getVideoNodeList();
+			// }
+			getRaussainKirtanDatainBatches();
 		})
-		.catch(function(err) {
+		.catch(async function(err) {
 			console.log("Error inside getRuNodeList() function ====>>>>", err);
 			saveErrorLog("Error inside getRuNodeList() function ====>>>>");
-			getVideoNodeList();
+			await getVideoNodeList();
 		});
 }
-
 function getRaussainKirtanDatainBatches() {
 	//console.log("getRaussainKirtanDatainBatches is running");
 	if (raussainKirtanDataList.length > 0) {
@@ -1646,17 +1602,9 @@ function getRaussainKirtanDatainBatches() {
 		getRaussainKirtanData(ar, () => {
 			setTimeout(() => {
 				getRaussainKirtanDatainBatches();
-				// console.log("fetching only 10 russian kirtan records");
-				// russianKirtanList = 1;
-				// updateKirtanDatabaseInBatches();
 			}, 2000);
 		});
 	} else {
-		// updateKirtanDatabase(raussainKirtanfinalData, () => {
-		// 	setTimeout(() => {
-		// 		updateKirtanDatabase();
-		// 	}, 3000);
-		// });
 		russianKirtanList = 1;
 		updateKirtanDatabaseInBatches();
 	}
@@ -1670,70 +1618,64 @@ function updateKirtanDatabaseInBatches() {
 			console.log("i'm running callback");
 			setTimeout(() => {
 				updateKirtanDatabaseInBatches();
-				//console.log("saving only 10 kirtan records");
 			}, 3000);
 		});
-	} else {
-		getVideoNodeList();
 	}
 }
 
-function updateS3() {
-	// var AWS = require('aws-sdk');
-	// AWS.config.update({region: 'us-east-2'});
-	let date = new Date();
+// async function updateS3() {
+// 	// var AWS = require('aws-sdk');
+// 	// AWS.config.update({region: 'us-east-2'});
+// 	let date = new Date();
 
-	let folderName = Math.round(
-		new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
-	).toString();
-	let timestamp = new Date().getTime().toString();
-	console.log(timestamp);
-	let filePath = "savingRecords/" + folderName + "/" + timestamp + ".txt";
+// 	let folderName = Math.round(
+// 		new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
+// 	).toString();
+// 	let timestamp = new Date().getTime().toString();
+// 	console.log(timestamp);
+// 	let filePath = "savingRecords/" + folderName + "/" + timestamp + ".txt";
 
-	//let s3 = new AWS.S3({apiVersion: '2006-03-01'});
-	var bucketParams = {
-		Bucket: "hhns"
-	};
+// 	//let s3 = new AWS.S3({apiVersion: '2006-03-01'});
+// 	var bucketParams = {
+// 		Bucket: "hhns"
+// 	};
 
-	let body = {
-		timestamp: timestamp,
-		englishNodeList: englishNodeList,
-		russianNodeList: russianNodeList,
-		englishLectureList: englishLectureList,
-		russianLectureList: russianLectureList,
-		englishTranscriptsList: englishTranscriptsList,
-		russianTranscriptsList: russianTranscriptsList,
-		englishQuotesList: englishQuotesList,
-		russianQuotesList: russianQuotesList,
-		englishKirtanList: englishKirtanList,
-		russianKirtanList: russianKirtanList,
-		videoList: videoList,
-		ruSummaryList: ruSummaryList,
-		galleryList: galleryList
-	};
+// 	let body = {
+// 		timestamp: timestamp,
+// 		englishNodeList: englishNodeList,
+// 		russianNodeList: russianNodeList,
+// 		englishLectureList: englishLectureList,
+// 		russianLectureList: russianLectureList,
+// 		englishTranscriptsList: englishTranscriptsList,
+// 		russianTranscriptsList: russianTranscriptsList,
+// 		englishQuotesList: englishQuotesList,
+// 		russianQuotesList: russianQuotesList,
+// 		englishKirtanList: englishKirtanList,
+// 		russianKirtanList: russianKirtanList
+// 	};
 
-	// Call S3 to obtain a list of the objects in the bucket
-	console.log("here1");
-	let objectParams = {
-		Bucket: bucketParams.Bucket,
-		Key: filePath,
-		Body: JSON.stringify(body)
-	};
-	let uploadPromise = new AWS.S3({ apiVersion: "2006-03-01" })
-		.putObject(objectParams)
-		.promise();
-	uploadPromise
-		.then(data => {
-			console.log(
-				"Successfully uploaded data to " + bucketParams.Bucket + "/" + filePath
-			);
-			//res.status(200).json( { message : "Successfully uploaded data to " + bucketParams.Bucket + "/" + filePath } );
-		})
-		.catch(err => {
-			console.log(err);
-			console.log({ error: err });
-		});
-}
+// 	// Call S3 to obtain a list of the objects in the bucket
+// 	console.log("here1");
+// 	let objectParams = {
+// 		Bucket: bucketParams.Bucket,
+// 		Key: filePath,
+// 		Body: JSON.stringify(body)
+// 	};
+// 	let uploadPromise = new AWS.S3({ apiVersion: "2006-03-01" })
+// 		.putObject(objectParams)
+// 		.promise();
+// 	uploadPromise
+// 		.then(data => {
+// 			console.log(
+// 				"Successfully uploaded data to " + bucketParams.Bucket + "/" + filePath
+// 			);
+// 			//res.status(200).json( { message : "Successfully uploaded data to " + bucketParams.Bucket + "/" + filePath } );
+// 		})
+// 		.catch(err => {
+// 			console.log(err);
+// 			console.log({ error: err });
+// 		});
+// }
 
 function getRaussainKirtanData(ar, callback) {
 	const Raussainpromise = [];
@@ -1753,10 +1695,8 @@ function getRaussainKirtanData(ar, callback) {
 	Promise.all(Raussainpromise)
 		.then(data => {
 			console.log("successfully executed====>>>>", data.length);
-			//let raussainKirtanfinalData = [];
 
 			for (let i = 0; i < data.length; i++) {
-				//if (ar[i].created > fetchDateTime) {
 				if (data[i].tnid !== 0) {
 					const temp = {
 						uuid: uuidv4(),
@@ -1800,14 +1740,11 @@ function getRaussainKirtanData(ar, callback) {
 					};
 					createSingleRUKirtanItem(body);
 				}
-				//}
 			}
-			//updateKirtanDatabase(raussainKirtanfinalData, callback);
 			callback();
 		})
 		.catch(err => {
 			console.log("error inside the profile api ===>>>", err);
-			saveErrorLog("error inside the profile api ===>>>");
 		});
 }
 
@@ -1826,11 +1763,10 @@ function createSingleRUKirtanItem(body) {
 	};
 	rp(options)
 		.then(data => {
-			console.log("Single RU Blog inserted");
+			console.log("Single RU Kirtan inserted");
 		})
 		.catch(err => {
 			console.log(err);
-			saveErrorLog("err inside createSingleRUKirtanItem() function");
 		});
 }
 
@@ -1856,7 +1792,6 @@ function updateKirtanDatabase(array, callback) {
 		})
 		.catch(err => {
 			console.log("errr===>>", err);
-			saveErrorLog("errr inside updateKirtanDatabase function===>>");
 		});
 }
 
@@ -1867,7 +1802,7 @@ function updateKirtanDatabase(array, callback) {
 var videoNodeList = [];
 var videoNodeListRaussain = [];
 
-function getVideoNodeList() {
+async function getVideoNodeList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -1880,35 +1815,34 @@ function getVideoNodeList() {
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(async function(body) {
 			videoNodeList = body;
-			//videoNodeList.splice(0, 1100);
+			videoNodeList.splice(0, 1100);
 			console.log(
 				"getVideoNodeList() function is successfully executed",
 				videoNodeList.length,
 				"data received"
 			);
-			videoNodeList = videoNodeList.filter(function(value) {
-				return value.created > fetchDateTime;
-			});
-			if (videoNodeList && videoNodeList.length > 0) {
-				console.log("after filteration length", videoNodeList.length);
-				getVideoNodeListRaussain();
-			} else {
-				console.log(
-					"videonodelist updated calling getVideoNodeLisrRaussain here "
-				);
-				getVideoNodeListRaussain();
-			}
+			// videoNodeList = videoNodeList.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (videoNodeList && videoNodeList.length > 0) {
+			// 	console.log("after filteration length", videoNodeList.length);
+			// 	await getVideoNodeListRaussain();
+			// } else {
+			// 	console.log(
+			// 		"no new videonodelist updated calling getVideoNodeLisrRaussain here "
+			// 	);
+			// 	await getVideoNodeListRaussain();
+			// }
+			getVideoNodeListRaussain();
 		})
 		.catch(function(err) {
 			console.log("Error inside getVideoNodeList() function ====>>>>", err);
-			saveErrorLog("err inside getVideoNodeList() function====>>>>");
-			getVideoNodeListRaussain();
 		});
 }
 
-function getVideoNodeListRaussain() {
+async function getVideoNodeListRaussain() {
 	const options = {
 		method: "GET",
 		uri:
@@ -1921,35 +1855,34 @@ function getVideoNodeListRaussain() {
 	};
 
 	rp(options)
-		.then(function(body) {
+		.then(async function(body) {
 			videoNodeListRaussain = body;
-			//videoNodeListRaussain.splice(0, 1100);
-			videoNodeListRaussain = videoNodeListRaussain.filter(function(value) {
-				return value.created > fetchDateTime;
-			});
-			if (videoNodeListRaussain && videoNodeListRaussain.length > 0) {
-				console.log(
-					"getVideoNodeListRaussain() function is successfully executed",
-					videoNodeListRaussain.length,
-					"data received"
-				);
-				getVideoDatainBatches();
-			} else {
-				console.log("no new video here calling summary");
-				getRuSummaryNodeList();
-			}
+			videoNodeListRaussain.splice(0, 1100);
+			// videoNodeListRaussain = videoNodeListRaussain.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (videoNodeListRaussain && videoNodeListRaussain.length > 0) {
+			// 	console.log(
+			// 		"getVideoNodeListRaussain() function is successfully executed",
+			// 		videoNodeListRaussain.length,
+			// 		"data received"
+			// 	);
+			// 	await getVideoDatainBatches();
+			// } else {
+			// 	console.log("no new video here calling summary");
+			// 	await getRuSummaryNodeList();
+			// }
+			getVideoDatainBatches();
 		})
-		.catch(function(err) {
+		.catch(async function(err) {
 			console.log(
 				"Error inside getVideoNodeListRaussain() function ====>>>>",
 				err
 			);
-			saveErrorLog("err inside getVideoNodeListRaussain() function====>>>>");
-			getRuSummaryNodeList();
 		});
 }
 
-function getVideoDatainBatches() {
+async function getVideoDatainBatches() {
 	if (videoNodeList.length > 0) {
 		let ar = videoNodeList.splice(0, 10);
 		getVideoData(ar, () => {
@@ -1957,10 +1890,6 @@ function getVideoDatainBatches() {
 				getVideoDatainBatches();
 			}, 5000);
 		});
-	} else {
-		console.log("videos successfully stored>>");
-		videoList = 1;
-		getRuSummaryNodeList();
 	}
 }
 
@@ -2059,7 +1988,6 @@ function getVideoData(ar, callback) {
 						})
 						.catch(err => {
 							console.log("error in getting english video details ===>>>", err);
-							saveErrorLog("err in getting english video details====>>>>");
 						});
 				} else {
 					const body = {
@@ -2157,33 +2085,34 @@ function getRuSummaryNodeList() {
 	rp(options)
 		.then(function(body) {
 			russianSummaryDataList = body;
-			//russianSummaryDataList.splice(0, 550);
+			russianSummaryDataList.splice(0, 550);
 			console.log(
 				"getRuSummaryNodeList() function is successfully executed",
 				russianSummaryDataList.length,
 				"data received"
 			);
-			russianSummaryDataList = russianSummaryDataList.filter(function(value) {
-				return value.created > fetchDateTime;
-			});
-			if (russianSummaryDataList && russianSummaryDataList.length > 0) {
-				console.log(
-					"after filteration length>>>",
-					russianSummaryDataList.length
-				);
-				getRussianSummaryDatainBatches();
-			} else {
-				console.log("no new data here calling get GalleryList function");
-				getGalleryList();
-			}
+			// russianSummaryDataList = russianSummaryDataList.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (russianSummaryDataList && russianSummaryDataList.length > 0) {
+			// 	console.log(
+			// 		"after filteration length>>>",
+			// 		russianSummaryDataList.length
+			// 	);
+			// 	await getRussianSummaryDatainBatches();
+			// } else {
+			// 	console.log("no new data in summary calling get GalleryList function");
+			// 	await getGalleryList();
+			// }
+			getRussianSummaryDatainBatches();
 		})
-		.catch(function(err) {
+		.catch(async function(err) {
 			console.log(
 				"Error inside getRuTranscriptionNodeList() function ====>>>>",
 				err
 			);
 			saveErrorLog("err inside getRuTranscriptionNodeList() function====>>>>");
-			getGalleryList();
+			await getGalleryList();
 		});
 }
 
@@ -2248,7 +2177,6 @@ function getRussianSummaryData(ar, callback) {
 		})
 		.catch(err => {
 			console.log("error inside the getRussianSummaryData() ===>>>", err);
-			saveErrorLog("err inside getRaussianSummaryData()====>>>>");
 		});
 }
 
@@ -2269,11 +2197,10 @@ function getTNIDfromLecture(nid) {
 		})
 		.catch(err => {
 			console.log(err);
-			saveErrorLog("err inside getTNIDfromLecture function====>>>>");
 		});
 }
 
-function updateDatabaseSummaryInBatches() {
+async function updateDatabaseSummaryInBatches() {
 	if (summaryFinalData.length > 0) {
 		let batchArray = summaryFinalData.splice(0, 10);
 		updateDatabaseSummary(batchArray, () => {
@@ -2281,9 +2208,6 @@ function updateDatabaseSummaryInBatches() {
 				updateDatabaseSummaryInBatches();
 			}, 1000);
 		});
-	} else {
-		ruSummaryList = 1;
-		getGalleryList();
 	}
 }
 
@@ -2291,7 +2215,7 @@ function updateDatabaseSummary(batchArray, callback) {
 	console.log("updateDatabaseSummary()", summaryFinalData.length);
 	let options = {
 		method: "POST",
-		uri: "http://localhost:3000/api/lecture/updateBulkNew/",
+		uri: "http://localhost:3000/api/lecture/updateBulkNew",
 		//uri: `http://dev.niranjanaswami.net/api/lecture/updateBulkNew/`,
 		body: batchArray,
 		json: true,
@@ -2308,7 +2232,6 @@ function updateDatabaseSummary(batchArray, callback) {
 		})
 		.catch(err => {
 			console.log("Error in updateDatabaseSummary()", err);
-			saveErrorLog("err in upDateDatabaseSummary()====>>>>");
 		});
 }
 
@@ -2318,7 +2241,7 @@ function updateDatabaseSummary(batchArray, callback) {
 
 let galleryDataList = [];
 
-function getGalleryList() {
+async function getGalleryList() {
 	const options = {
 		method: "GET",
 		uri:
@@ -2333,31 +2256,28 @@ function getGalleryList() {
 	rp(options)
 		.then(async function(body) {
 			galleryDataList = body;
-			//galleryDataList.splice(0, 490);
+			galleryDataList.splice(0, 290);
 			console.log(
 				"galleryDataList() function is successfully executed",
 				galleryDataList.length,
 				"data received"
 			);
-			fetchDateTime = 0;
-			galleryDataList = galleryDataList.filter(function(value) {
-				return parseInt(value.created) > fetchDateTime;
-			});
-			if (galleryDataList && galleryDataList.length > 0) {
-				console.log("after filteration>>>>", galleryDataList.length);
-				getGalleryDatainBatches();
-			} else {
-				console.log("no new data here>>>");
-				updateS3();
-			}
+			// galleryDataList = galleryDataList.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (galleryDataList && galleryDataList.length > 0) {
+			// 	console.log("after filteration>>>>", galleryDataList.length);
+			// 	await getGalleryDatainBatches();
+			// } else {
+			// 	console.log("no new data here>>>");
+			// 	await getUserList();
+			// }
+			getGalleryDatainBatches();
 		})
 		.catch(function(err) {
 			console.log(
 				"Error inside getGalleryList() function in Gallery region ====>>>>",
 				err
-			);
-			saveErrorLog(
-				"Error inside getGalleryList() function in Gallery region====>>>>"
 			);
 		});
 }
@@ -2366,22 +2286,15 @@ function getGalleryDatainBatches() {
 	//getRuNodeList();
 	if (galleryDataList.length > 0) {
 		let ar = galleryDataList.splice(0, 10);
-		getGalleryData(ar, () => {
-			setTimeout(() => {
+		getGalleryData(ar, async () => {
+			setTimeout(async () => {
 				getGalleryDatainBatches();
-				// console.log("fetching only 10 records");
-				// englishNodeList = 1;
-				// getRuNodeList();
 			}, 4000);
 		});
-	} else {
-		galleryList = 1;
-		console.log("Gallery Updated");
-		updateS3();
 	}
 }
 
-function getGalleryData(ar, callback) {
+async function getGalleryData(ar, callback) {
 	const Gallerypromise = [];
 	ar.map((item, i) => {
 		const options = {
@@ -2409,7 +2322,6 @@ function getGalleryData(ar, callback) {
 				} else {
 					date = item.date;
 				}
-				console.log(date);
 				//console.log(ar[i].created);
 				const body = {
 					uuid: uuidv4(),
@@ -2425,8 +2337,8 @@ function getGalleryData(ar, callback) {
 				};
 				const options = {
 					method: "POST",
-					//uri: "http://localhost:3000/api/blog/create/",
 					uri: "http://localhost:3000/api/gallery/create/",
+					//uri: "http://dev.niranjanaswami.net/api/gallery/create/",
 					body: body,
 					json: true,
 					pool: httpAgent,
@@ -2446,11 +2358,299 @@ function getGalleryData(ar, callback) {
 		.catch(err => {
 			console.log(ar);
 			console.log("error inside the gallery api ===>>>", err);
-			saveErrorLog(
-				"error inside the gallery api in getGalleryData() function===>>>"
-			);
 		});
 }
 /* #endregion*/
 
 /* end gallery region */
+
+/* User List Region  */
+
+var normalUserList = [];
+var discipleUserList = [];
+var normalUserDetailsList = [];
+var discipleUserDetailsList = [];
+var finalUserData = [];
+
+function getDiscipleUserDetails() {
+	const DisPromiseArr = [];
+
+	for (let k = 0; k < normalUserDetailsList.length; k++) {
+		for (let m = 0; m < discipleUserList.length; m++) {
+			if (
+				normalUserDetailsList[k] &&
+				normalUserDetailsList[k].uid !== undefined &&
+				discipleUserList[m] &&
+				discipleUserList[m].uid !== undefined
+			) {
+				if (normalUserDetailsList[k].uid === discipleUserList[m].uid) {
+					let options = {
+						method: "GET",
+						uri:
+							"https://nrs.niranjanaswami.net/en/rest/node/" +
+							discipleUserList[m].nid +
+							".json",
+						jar: cookiejar,
+						json: true,
+						timeout: 600000,
+						pool: httpAgent,
+						headers: {
+							"User-Agent": "Request-Promise"
+						}
+					};
+					DisPromiseArr.push(rp(options));
+				}
+			}
+		}
+	}
+	Promise.all(DisPromiseArr)
+		.then(data => {
+			discipleUserDetailsList = data;
+			console.log(
+				"getDiscipleUserDetails() function is successfully executed",
+				discipleUserDetailsList.length,
+				"details data received"
+			);
+			for (let u = 0; u < normalUserDetailsList.length; u++) {
+				if (normalUserDetailsList[u] && normalUserDetailsList[u].uid) {
+					let data = {
+						oldData: {}
+					};
+					data.user_id = uuidv4();
+					data.userName = normalUserDetailsList[u].name;
+					data.email = normalUserDetailsList[u].mail;
+					data.isPasswordUpdated = false;
+					data.password = "Gauranga";
+					data.timezone = normalUserDetailsList[u].timezone;
+					data.language = normalUserDetailsList[u].language;
+					data.created = normalUserDetailsList[u].created;
+					data.access = normalUserDetailsList[u].access;
+					data.login = normalUserDetailsList[u].login;
+					data.signature = normalUserDetailsList[u].signature;
+					data.signature_format = normalUserDetailsList[u].signature_format;
+					data.canAccessKeystone = false;
+					data.oldData.uid = normalUserDetailsList[u].uid;
+					data.oldData.init = normalUserDetailsList[u].init;
+					data.oldData.picture = normalUserDetailsList[u].picture;
+					data.oldData.path =
+						"https://nrs.niranjanaswami.net/en/rest/user/" +
+						normalUserDetailsList[u].field_disciple;
+					data.disciple = normalUserDetailsList[u].field_disciple.und
+						? normalUserDetailsList[u].field_disciple.und[0].value
+						: "No";
+					for (let v = 0; v < discipleUserDetailsList.length; v++) {
+						if (discipleUserDetailsList[v] && discipleUserDetailsList[v].uid) {
+							if (
+								discipleUserDetailsList[v].uid === normalUserDetailsList[u].uid
+							) {
+								data.disciple_profile = {};
+								data.name = {};
+								data.disciple_profile.first_initiation_date = discipleUserDetailsList[
+									v
+								].field_first_initiation_date.und
+									? discipleUserDetailsList[v].field_first_initiation_date
+											.und[0].value
+									: "";
+								data.disciple_profile.second_initiation_date = discipleUserDetailsList[
+									v
+								].field_second_initiation_date.und
+									? discipleUserDetailsList[v].field_second_initiation_date
+											.und[0].value
+									: "";
+								data.disciple_profile.spiritual_name = discipleUserDetailsList[
+									v
+								].field_spiritual_name.und
+									? discipleUserDetailsList[v].field_spiritual_name.und[0].value
+									: "";
+								data.disciple_profile.temple = discipleUserDetailsList[v]
+									.field_temple.und
+									? discipleUserDetailsList[v].field_temple.und[0].value
+									: "";
+								data.disciple_profile.verifier =
+									discipleUserDetailsList[v].verifier &&
+									discipleUserDetailsList[v].verifier.und
+										? discipleUserDetailsList[v].verifier.und[0].value
+										: "";
+								data.disciple_profile.marital_status = discipleUserDetailsList[
+									v
+								].field_marital_status.und
+									? discipleUserDetailsList[v].field_marital_status.und[0].value
+									: "";
+								data.disciple_profile.education = discipleUserDetailsList[v]
+									.field_education.und
+									? discipleUserDetailsList[v].field_education.und[0].value
+									: "";
+								data.gender = discipleUserDetailsList[v].field_gender.und
+									? discipleUserDetailsList[v].field_gender.und[0].value
+									: "";
+								data.mobileNumber = discipleUserDetailsList[v]
+									.field_mobile_phone.und
+									? discipleUserDetailsList[v].field_mobile_phone.und[0].value
+									: "";
+								data.dob = discipleUserDetailsList[v].field_birth_date.und
+									? discipleUserDetailsList[v].field_birth_date.und[0].value
+									: "";
+								data.name.first = discipleUserDetailsList[v].field_name.und
+									? discipleUserDetailsList[v].field_name.und[0].value
+									: "";
+								data.name.last = discipleUserDetailsList[v].field_surname.und
+									? discipleUserDetailsList[v].field_surname.und[0].value
+									: "";
+								data.oldData.vid = discipleUserDetailsList[v].vid;
+								data.oldData.nid = discipleUserDetailsList[v].nid;
+							}
+						}
+					}
+					data.oldData.picture = JSON.stringify(data.oldData.picture);
+					finalUserData.push(data);
+					createSingleUser(data);
+				}
+			}
+		})
+
+		.catch(err => {
+			console.log(
+				"Error inside getDiscipleUserDetails() function ====>>>>",
+				err
+			);
+			console.log(ar);
+		});
+}
+
+function createSingleUser(body) {
+	//console.log(body);
+	const options = {
+		method: "POST",
+		uri: "http://localhost:3000/api/user/uploadPic",
+		///uri: "http://dev.niranjanaswami.net/api/user/uploadPic",
+		body: body,
+		json: true,
+		pool: httpAgent,
+		timeout: 6000000,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+	rp(options)
+		.then(data => {
+			console.log("Single User inserted");
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
+
+async function getNormalUserDetailsinBatches() {
+	if (normalUserList.length > 0) {
+		let ar = normalUserList.splice(0, 10);
+		getNormalUserDetails(ar, () => {
+			setTimeout(() => {
+				getNormalUserDetailsinBatches();
+			}, 4000);
+		});
+	}
+}
+
+function getNormalUserDetails(ar, callback) {
+	console.log("length ===>>>", ar.length);
+	const PromiseArr = ar.map((item, i) => {
+		if (i < ar.length) {
+			const uid = ar[i].uid;
+			// console.log('uid ====>>>', uid);
+			if (ar[i].uid !== undefined && ar[i].uid !== "0" && ar[i].uid !== null) {
+				let options = {
+					method: "GET",
+					uri: "https://nrs.niranjanaswami.net/en/rest/user/" + uid + ".json",
+					jar: cookiejar,
+					json: true,
+					pool: httpAgent,
+					timeout: 600000,
+					headers: {
+						"User-Agent": "Request-Promise"
+					}
+				};
+				return rp(options);
+			}
+		}
+	});
+
+	Promise.all(PromiseArr)
+		.then(data => {
+			normalUserDetailsList = data;
+			getDiscipleUserDetails();
+			console.log(
+				"getNormalUserDetails() function is successfully executed",
+				normalUserDetailsList.length,
+				"details data received"
+			);
+			callback();
+		})
+		.catch(err => {
+			console.log("Error inside getNormalUserDetails() function ====>>>>", err);
+		});
+}
+
+async function getDiscipleUserList() {
+	let options = {
+		method: "GET",
+		uri:
+			"https://nrs.niranjanaswami.net/rest/node.json?parameters[type]=disciple_profile&pagesize=2000&page=0 ",
+		jar: cookiejar,
+		json: true,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+
+	rp(options)
+		.then(async function(body) {
+			discipleUserList = body;
+			discipleUserList.splice(0, 820);
+
+			console.log(
+				"getDiscipleUserList() function is successfully executed",
+				discipleUserList.length,
+				"data received"
+			);
+			await getNormalUserDetailsinBatches();
+		})
+		.catch(function(err) {
+			console.log("Error inside getDiscipleUserList() function ====>>>>", err);
+		});
+}
+
+async function getUserList() {
+	let options = {
+		method: "GET",
+		uri: "https://nrs.niranjanaswami.net/rest/user.json?pagesize=5000&page=0",
+		jar: cookiejar,
+		json: true,
+		headers: {
+			"User-Agent": "Request-Promise"
+		}
+	};
+
+	rp(options)
+		.then(async function(body) {
+			normalUserList = body;
+			normalUserList.splice(0, 4200);
+			console.log(
+				"getUserList() function is successfully executed",
+				normalUserList.length,
+				"data received"
+			);
+			// normalUserList = normalUserList.filter(function(value) {
+			// 	return parseInt(value.created) > fetchDateTime;
+			// });
+			// if (normalUserList && normalUserList.length > 0) {
+			// 	console.log("after filteration>>>>", normalUserList.length);
+			// 	await getDiscipleUserList();
+			// }
+			await getDiscipleUserList();
+		})
+		.catch(function(err) {
+			console.log("Error inside getUserList() function ====>>>>", err);
+		});
+}
+
+/* User List region ends  */

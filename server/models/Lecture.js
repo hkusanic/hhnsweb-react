@@ -40,8 +40,8 @@ Lecture.add({
 		transcription: {
 			nid: { type: String },
 			title: { type: String },
-			created: { type: Types.Date, default: Date.now },
-			published: { type: String },
+			//created: { type: Types.Date, default: Date.now },
+			//published: { type: String },
 			text: { type: Types.Text },
 			attachment_name: { type: String },
 			attachment_link: { type: Types.TextArray }
@@ -58,8 +58,8 @@ Lecture.add({
 	ru: {
 		nid: { type: String },
 		title: { type: String },
-		created: { type: Types.Date, default: Date.now },
-		published: { type: String },
+		//created: { type: Types.Date, default: Date.now },
+		//published: { type: String },
 		changed: { type: Types.Date, default: Date.now },
 		event: { type: String },
 		topic: { type: String },
