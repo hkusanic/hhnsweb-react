@@ -492,36 +492,41 @@
 
 .singleblog_author {
 	font-family: Charter;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: bold;
 	/* line-height: 1.13; */
 	margin-top: 0px !important;
 	color: #aeb1be;
 }
 
-@media (max-width: 425px) {
+/* @media (max-width: 425px) {
 	.singleblog_author {
 		font-family: Charter;
 		font-size: 10px !important;
 		font-weight: bold;
 		margin-top: 0px !important;
 		color: #aeb1be;
+		width: 250px;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
-}
+} */
 
-@media (max-width: 768px) and (min-width: 426px) {
+@media (max-width: 1024px) {
 	.singleblog_author {
 		font-size: 12px !important;
 		width: 250px;
-		white-space: nowrap;
-		overflow: hidden;
 		text-overflow: ellipsis;
+		overflow: hidden;
+		/* white-space: nowrap; */
 	}
 }
 
 @media (max-width: 320px) {
 	.singleblog_author {
 		font-size: 10px !important;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 	.singleblog_title {
 		font-family: Charter;

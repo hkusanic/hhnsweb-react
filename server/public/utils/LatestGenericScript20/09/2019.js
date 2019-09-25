@@ -2034,7 +2034,7 @@ function getRuSummaryNodeList() {
 	rp(options)
 		.then(function(body) {
 			russianSummaryDataList = body;
-			russianSummaryDataList.splice(0, 550);
+			//russianSummaryDataList.splice(0, 550);
 			console.log(
 				"getRuSummaryNodeList() function is successfully executed",
 				russianSummaryDataList.length,
