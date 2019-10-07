@@ -265,7 +265,7 @@ exports.list = function (req, res) {
 
 	if (req.query.year) {
 		let year_query = {
-			created_date_time: {
+			lecture_date: {
 				$regex: '.*' + req.query.year + '.*',
 				$options: 'i',
 			},
@@ -276,7 +276,7 @@ exports.list = function (req, res) {
 
 	if (req.query.date) {
 		let date_query = {
-			created_date_time: {
+			lecture_date: {
 				$regex: '.*' + req.query.date + '.*',
 				$options: 'i',
 			},
