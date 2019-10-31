@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Auth from '../../../utils/Auth';
 import { connect } from 'react-redux';
 import { loginUser } from '../../../actions/loginActions';
 
-export class ShellCompoenent extends Component {
+export class ShellCompoenent extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {

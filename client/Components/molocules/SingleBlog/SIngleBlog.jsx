@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import renderHTML from 'react-render-html';
-import { Link } from 'react-router-dom';
-import reactCookie from 'react-cookies';
-import { Card } from 'antd';
+import React, { Component } from "react";
+import renderHTML from "react-render-html";
+import { Link } from "react-router-dom";
+import reactCookie from "react-cookies";
 
 export class SingleBlog extends Component {
 	constructor(props) {
@@ -12,10 +11,10 @@ export class SingleBlog extends Component {
 
 	showing100Characters = sentence => {
 		var result = sentence;
-		var resultArray = result.split(' ');
+		var resultArray = result.split(" ");
 		if (resultArray.length > 10) {
 			resultArray = resultArray.slice(0, 10);
-			result = resultArray.join(' ') + '...';
+			result = resultArray.join(" ") + "...";
 		}
 		return result;
 	};
@@ -29,15 +28,15 @@ export class SingleBlog extends Component {
 							<Link
 								to={{
 									pathname: `/blogDetails/${this.props.blog.uuid}`,
-									state: this.props.blog,
+									state: this.props.blog
 								}}
 							>
 								{renderHTML(
-									reactCookie.load('languageCode') === 'en'
+									reactCookie.load("languageCode") === "en"
 										? this.props.blog.en.title
 										: this.props.blog.ru.title
-										? this.props.blog.en.title
-										: this.props.blog.ru.title
+											? this.props.blog.en.title
+											: this.props.blog.ru.title
 								)}
 							</Link>
 						</h4>
@@ -51,11 +50,11 @@ export class SingleBlog extends Component {
 						</ul>
 						{renderHTML(
 							this.showing100Characters(
-								reactCookie.load('languageCode') === 'en'
+								reactCookie.load("languageCode") === "en"
 									? this.props.blog.en.body
 									: this.props.blog.ru.body
-									? this.props.blog.ru.body
-									: this.props.blog.en.body
+										? this.props.blog.ru.body
+										: this.props.blog.en.body
 							)
 						)}
 					</article>

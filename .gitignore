@@ -35,3 +35,11 @@ server/public/js/
 #mp3 and pdf files
 *.mp3
 *.pdf
+
+
+#ignore templates
+template_58204_OGG2umm0Vll7xx7tUUPq
+__MACOSX
+
+test.js
+/localStorage

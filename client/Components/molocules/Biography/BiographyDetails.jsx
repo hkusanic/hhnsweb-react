@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import renderHTML from 'react-render-html';
 import reactCookie from 'react-cookies';
 
-export class BiographyDetails extends Component {
+export class BiographyDetails extends React.Component {
 	constructor (props) {
 		super(props);
 	}
@@ -22,7 +22,10 @@ export class BiographyDetails extends Component {
 						<div className="container">
 							<div className="row">
 								<div className="col-12">
-									<h3 className="post-creative-title centerAlign alignment">
+									<h3
+										className="post-creative-title centerAlign alignment"
+										style={{ marginTop: '-7px' }}
+									>
 										{renderHTML(
 											reactCookie.load('languageCode') === 'en'
 												? this.props.location.state.title_en
@@ -49,19 +52,6 @@ export class BiographyDetails extends Component {
 								</div>
 							</div>
 						</div>
-						{/* <h3 className="post-creative-title centerAlign alignment">
-										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.title_en
-												: this.props.location.state.title_ru
-										)}
-									</h3> */}
-						{/* <img src={this.props.location.state.img} /> */}
-						{/* {renderHTML(
-										reactCookie.load('languageCode') === 'en'
-											? this.props.location.state.content_en
-											: this.props.location.state.content_ru
-									)} */}
 					</article>
 				</section>
 			</div>

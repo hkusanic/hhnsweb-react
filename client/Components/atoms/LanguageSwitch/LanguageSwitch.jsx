@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
-import {
-	Link,
-} from 'react-router-dom';
+import React from 'react';
 import { setActiveLanguage, withLocalize } from 'react-localize-redux';
 import reactCookie from 'react-cookies';
 import { Translate } from 'react-localize-redux';
 
-
-export class LanguageSwitch extends Component {
+export class LanguageSwitch extends React.Component {
 	constructor (props) {
 		super(props);
 	}
@@ -23,7 +19,6 @@ export class LanguageSwitch extends Component {
 		setActiveLanguage(language);
 		reactCookie.save('languageCode', language, { path: '/' });
 		window.location.reload();
-
 	}
 
 	render () {
@@ -33,21 +28,34 @@ export class LanguageSwitch extends Component {
 		}
 		return (
 			<span>
-				<a className={currentLanguage === 'en' ? 'color-toggle' : 'color-toggle-cursor'} onClick={
-					() => {
+				<a
+					className={
+						currentLanguage === 'en' ? 'color-toggle' : 'color-toggle-cursor'
+					}
+					onClick={() => {
 						if (currentLanguage !== 'en') {
 							this.languageToggle('en');
-						} }} > <Translate>
-						{({ translate }) => translate('HOME.en')}
-					</Translate> </a> |
-				<a className={currentLanguage === 'ru' ? 'color-toggle' : 'color-toggle-cursor'} onClick={() => {
-					if (currentLanguage !== 'ru') {
-						this.languageToggle('ru'); } }}> <Translate>
-						{({ translate }) => translate('HOME.ru')}
-					</Translate> </a>
-			</span>);
+						}
+					}}
+				>
+					<Translate>{({ translate }) => translate('HOME.en')}</Translate>
+				</a>
+				|
+				<a
+					className={
+						currentLanguage === 'ru' ? 'color-toggle' : 'color-toggle-cursor'
+					}
+					onClick={() => {
+						if (currentLanguage !== 'ru') {
+							this.languageToggle('ru');
+						}
+					}}
+				>
+					<Translate>{({ translate }) => translate('HOME.ru')}</Translate>
+				</a>
+			</span>
+		);
 	}
-
 }
 
 export default withLocalize(LanguageSwitch);

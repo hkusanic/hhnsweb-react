@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Icon } from 'antd';
-import renderHTML from 'react-render-html';
-import reactCookie from 'react-cookies';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Comments from '../Comments/Comments';
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { getBlogByUuid } from '../../../actions/blogActions';
+import React, { Component } from "react";
+import { Icon } from "antd";
+import renderHTML from "react-render-html";
+import reactCookie from "react-cookies";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import Comments from "../Comments/Comments";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
+import { getBlogByUuid } from "../../../actions/blogActions";
 
 export class BlogDetails extends Component {
 	constructor(props) {
@@ -16,7 +16,7 @@ export class BlogDetails extends Component {
 
 	componentDidMount() {
 		const body = {
-			uuid: this.props.match.params.uuid,
+			uuid: this.props.match.params.uuid
 		};
 
 		this.props.getBlogByUuid(body);
@@ -43,7 +43,7 @@ export class BlogDetails extends Component {
 			return <div>Error Occured..........</div>;
 		}
 
-		if (!localStorage.getItem('user')) {
+		if (!localStorage.getItem("user")) {
 			return (
 				<div className="loginText">
 					<p className="bookingForm">Please log in to continue</p>
@@ -57,14 +57,14 @@ export class BlogDetails extends Component {
 					className="bg-gray-100"
 					style={{
 						backgroundImage:
-							'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
+							"url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)"
 					}}
 				>
 					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
 							<ul class="breadcrumbs-custom-path">
 								<li>
-									<Link to="" onClick={() => this.props.history.push('/')}>
+									<Link to="" onClick={() => this.props.history.push("/")}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
 									</Link>
 								</li>
@@ -76,10 +76,17 @@ export class BlogDetails extends Component {
 								<li>
 									<a className="textColor">
 										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? blogDetails.en.title ? blogDetails.en.title : blogDetails.ru.title? blogDetails.ru.title : ''
-												: blogDetails.ru.title ? tblogDetails.ru.title : blogDetails.en.title ? blogDetails.en.title : ''
-												
+											reactCookie.load("languageCode") === "en"
+												? blogDetails.en.title
+													? blogDetails.en.title
+													: blogDetails.ru.title
+													? blogDetails.ru.title
+													: ""
+												: blogDetails.ru.title
+												? tblogDetails.ru.title
+												: blogDetails.en.title
+												? blogDetails.en.title
+												: ""
 										)}
 									</a>
 								</li>
@@ -89,48 +96,13 @@ export class BlogDetails extends Component {
 				</section>
 				<section className="section section-lg">
 					<div className="container padTop">
-						{/* <div style={{ paddingLeft: '15%' }} className="row row-100">
-							<div className="col-lg-12"> */}
-						{/* <Breadcrumb>
-									<Link to=" " onClick={() => this.props.history.push('/')}>
-										<Breadcrumb.Item>Home</Breadcrumb.Item>
-									</Link>
-									<Icon
-										type="double-right"
-										style={{
-											alignSelf: 'center',
-											paddingLeft: 5,
-											paddingRight: 5,
-										}}
-									/>
-									<Link to=" " onClick={() => this.props.history.goBack()}>
-										<Breadcrumb.Item>Blog</Breadcrumb.Item>
-									</Link>
-									<Icon
-										type="double-right"
-										style={{
-											alignSelf: 'center',
-											paddingLeft: 5,
-											paddingRight: 5,
-										}}
-									/>
-									<Breadcrumb.Item active>
-										{renderHTML(
-											reactCookie.load('languageCode') === 'en'
-												? this.props.location.state.title_en
-												: this.props.location.state.title_ru
-										)}
-									</Breadcrumb.Item>
-								</Breadcrumb> */}
-						{/* </div>
-						</div> */}
 						<div className="row row-100">
 							<div className="col-lg-12">
 								<article className="post-creative">
 									<h3 className="post-creative-title">
 										{blogDetails &&
 											renderHTML(
-												reactCookie.load('languageCode') === 'en'
+												reactCookie.load("languageCode") === "en"
 													? blogDetails.en.title
 													: blogDetails.ru.title
 													? blogDetails.ru.title
@@ -142,7 +114,9 @@ export class BlogDetails extends Component {
 											<span className="icon mdi mdi-calendar-clock" />
 											<time dateTime="2018">
 												{blogDetails &&
-													new Date(blogDetails.created_date_time).toDateString()}
+													new Date(
+														blogDetails.created_date_time
+													).toDateString()}
 											</time>
 										</li>
 										<li>
@@ -150,13 +124,10 @@ export class BlogDetails extends Component {
 											<a>Blog</a>
 										</li>
 									</ul>
-									<div
-										style={{ paddingTop: '15px' }}
-										className="textContent"
-									>
+									<div style={{ paddingTop: "15px" }} className="textContent">
 										{blogDetails &&
 											renderHTML(
-												reactCookie.load('languageCode') === 'en'
+												reactCookie.load("languageCode") === "en"
 													? blogDetails.en.body
 													: blogDetails.ru.body
 													? blogDetails.ru.body
@@ -169,7 +140,6 @@ export class BlogDetails extends Component {
 									<Comments lecture_uuid={blogDetails.uuid} />
 								</article>
 							</div>
-							{/* <div className="col-lg-4" /> */}
 						</div>
 					</div>
 				</section>
@@ -180,7 +150,7 @@ export class BlogDetails extends Component {
 
 const mapStateToProps = state => {
 	return {
-		blogDetails: state.blogReducer.blog,
+		blogDetails: state.blogReducer.blog
 	};
 };
 const mapDispatchToProps = dispatch => {
@@ -188,7 +158,7 @@ const mapDispatchToProps = dispatch => {
 		updateCounters: body => {
 			dispatch(updateCounters(body));
 		},
-		getBlogByUuid: body => dispatch(getBlogByUuid(body)),
+		getBlogByUuid: body => dispatch(getBlogByUuid(body))
 	};
 };
 

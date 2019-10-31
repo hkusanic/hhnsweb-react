@@ -265,7 +265,7 @@ exports.list = function (req, res) {
 
 	if (req.query.year) {
 		let year_query = {
-			created_date: {
+			lecture_date: {
 				$regex: '.*' + req.query.year + '.*',
 				$options: 'i',
 			},
@@ -276,7 +276,7 @@ exports.list = function (req, res) {
 
 	if (req.query.date) {
 		let date_query = {
-			created_date: {
+			lecture_date: {
 				$regex: '.*' + req.query.date + '.*',
 				$options: 'i',
 			},
@@ -553,12 +553,10 @@ exports.updateCounters = function (req, res) {
 				item.counters.video_page_view = item.counters.video_page_view + 1;
 			}
 			if (req.body.en_transcription_view) {
-				item.counters.en_transcription_view
-					= item.counters.en_transcription_view + 1;
+				item.counters.en_transcription_view = item.counters.en_transcription_view + 1;
 			}
 			if (req.body.ru_transcription_view) {
-				item.counters.ru_transcription_view
-					= item.counters.ru_transcription_view + 1;
+				item.counters.ru_transcription_view = item.counters.ru_transcription_view + 1;
 			}
 			if (req.body.en_summary_view) {
 				item.counters.en_summary_view = item.counters.en_summary_view + 1;
@@ -779,12 +777,9 @@ exports.uploadPDF = async (req, response) => {
 			console.log('done');
 		}, delayInMilliseconds);
 	}
-
-
 };
 
-const download_pdf = (url, pdf_path) =>
-{
+const download_pdf = (url, pdf_path) => {
 	console.log('download_pdf() ====>>> Trying to download pdf from old server');
 	axios({
 		url: url,
