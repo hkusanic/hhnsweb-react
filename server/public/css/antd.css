@@ -352,7 +352,7 @@ mark {
 
 .anticon {
   display: inline-block;
-  margin-top: 8px;
+
   color: inherit;
   font-style: normal;
   line-height: 0;
@@ -372,6 +372,13 @@ mark {
   display: inline-block;
 }
 
+.anticon-right{
+  margin-top: 8px !important;
+}
+
+.anticon-left{
+  margin-top: 8px !important;
+}
 .anticon::before {
   display: none;
 }

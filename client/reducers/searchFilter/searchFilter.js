@@ -4,6 +4,7 @@ const initialState = {
 	events: [],
 	locations: [],
 	topics: [],
+	translations: [],
 	isCompleted: false,
 	error: '',
 };
@@ -27,6 +28,12 @@ const searchFilterReducer = (state = initialState, action) => {
 			state = {
 				...state,
 				topics: action.payload.topic,
+			};
+			break;
+		case types.GET_TRANSLATION:
+			state = {
+				...state,
+				translations: action.payload.translation,
 			};
 			break;
 		case 'reset_state':

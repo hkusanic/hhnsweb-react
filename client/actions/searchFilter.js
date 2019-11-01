@@ -1,63 +1,82 @@
 import searchFilterApi from '../utils/api/searchFilter';
 import * as types from '../constants/index';
 
-export function getEvents() {
-	return (dispatch) => {
+export function getEvents () {
+	return dispatch => {
 		searchFilterApi
 			.getEvents()
-			.then((response) => {
+			.then(response => {
 				dispatch(getEventsAction(response.data));
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.error(err);
 			});
 	};
 }
 
-export function getLocations() {
-	return (dispatch) => {
+export function getLocations () {
+	return dispatch => {
 		searchFilterApi
 			.getLocations()
-			.then((response) => {
-				// console.log('getlocation action', response.data);
+			.then(response => {
 				dispatch(getLocationsAction(response.data));
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.error(err);
 			});
 	};
 }
 
-export function getTopics() {
-	return (dispatch) => {
+export function getTopics () {
+	return dispatch => {
 		searchFilterApi
 			.getTopics()
-			.then((response) => {
+			.then(response => {
 				dispatch(getTopicsAction(response.data));
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.error(err);
 			});
 	};
 }
 
-export function getEventsAction(data) {
+export function getTranslations () {
+	return dispatch => {
+		searchFilterApi
+			.getTranslations()
+			.then(response => {
+				dispatch(getTranslationsAction(response.data));
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+}
+
+export function getEventsAction (data) {
 	return {
 		type: types.GET_EVENTS,
-		payload: data
+		payload: data,
 	};
 }
 
-export function getLocationsAction(data) {
+export function getLocationsAction (data) {
 	return {
 		type: types.GET_LOCATIONS,
-		payload: data
+		payload: data,
 	};
 }
 
-export function getTopicsAction(data) {
+export function getTopicsAction (data) {
 	return {
 		type: types.GET_TOPIC,
-		payload: data
+		payload: data,
+	};
+}
+
+export function getTranslationsAction (data) {
+	return {
+		type: types.GET_TRANSLATION,
+		payload: data,
 	};
 }

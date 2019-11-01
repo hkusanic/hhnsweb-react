@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import renderHTML from 'react-render-html';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Table, Icon, Button } from 'antd';
+import React, { Component } from "react";
+import renderHTML from "react-render-html";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { Table, Icon, Button } from "antd";
 import {
 	searchLecture,
 	updateCounters,
-	resetState,
-} from '../../../actions/lectureActions';
-import Auth from '../../../utils/Auth';
-import SearchFilter from '../SeachFilter/SearchFilter';
-import { Collapse } from 'react-collapse';
-import reactCookie from 'react-cookies';
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
+	resetState
+} from "../../../actions/lectureActions";
+import Auth from "../../../utils/Auth";
+import SearchFilter from "../SeachFilter/SearchFilter";
+import { Collapse } from "react-collapse";
+import reactCookie from "react-cookies";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
+import QuoteOfDay from "../../molocules/SingleQuote/QuotesOfDay";
 
 const defaultPageSize = 20;
 
@@ -30,7 +30,7 @@ export class AudioList extends Component {
 			isSearch: false,
 			data: [],
 			pagination: {},
-			loading: false,
+			loading: false
 		};
 		const { resetState } = this.props;
 		resetState();
@@ -51,7 +51,7 @@ export class AudioList extends Component {
 			currentPage: this.props.lecturesDetails.currentPage,
 			isUserLogin,
 			loading: false,
-			pagination,
+			pagination
 		});
 
 		this.props.searchLecture(body);
@@ -67,7 +67,7 @@ export class AudioList extends Component {
 
 		this.setState({
 			currentPage: nextProps.lecturesDetails.currentPage,
-			pagination,
+			pagination
 		});
 
 		if (nextProps.lecturesDetails.Count) {
@@ -80,7 +80,7 @@ export class AudioList extends Component {
 		pager.current = pagination.current;
 		pager.total = this.props.lecturesDetails.totalLectures;
 		this.setState({
-			pagination: pager,
+			pagination: pager
 		});
 
 		let body = Object.assign({}, this.state.body);
@@ -90,10 +90,10 @@ export class AudioList extends Component {
 
 	showing100Characters = sentence => {
 		var result = sentence;
-		var resultArray = result.split(' ');
+		var resultArray = result.split(" ");
 		if (resultArray.length > 15) {
 			resultArray = resultArray.slice(0, 15);
-			result = resultArray.join(' ') + '...';
+			result = resultArray.join(" ") + "...";
 		}
 		return result;
 	};
@@ -111,7 +111,7 @@ export class AudioList extends Component {
 	handleUpdate = item => {
 		const body = {
 			uuid: item.uuid,
-			downloads: true,
+			downloads: true
 		};
 		this.props.updateCounters(body);
 	};
@@ -119,7 +119,7 @@ export class AudioList extends Component {
 	updateAudioPlayCount = uuid => {
 		const body = {
 			uuid: uuid,
-			audio_play_count: true,
+			audio_play_count: true
 		};
 		this.props.updateCounters(body);
 	};
@@ -129,41 +129,41 @@ export class AudioList extends Component {
 		const mobileBrkPnt = 767;
 		const columns = [
 			{
-				title: maxWidth > mobileBrkPnt ? 'Title' : '',
-				className: 'audioTable_title',
+				title: maxWidth > mobileBrkPnt ? "Title" : "",
+				className: "audioTable_title",
 				dataIndex: renderHTML(
-					reactCookie.load('languageCode') === 'en'
-						? 'en.title'
-						: 'ru.title'
-							? 'ru.title'
-							: 'en.title'
+					reactCookie.load("languageCode") === "en"
+						? "en.title"
+						: "ru.title"
+						? "ru.title"
+						: "en.title"
 				),
 				render: (text, record, index) => (
 					<Link
 						to={{
 							pathname: `/audioDetails/${record.uuid}`,
-							state: record,
+							state: record
 						}}
 					>
 						{renderHTML(
 							this.showing100Characters(
-								reactCookie.load('languageCode') === 'en'
+								reactCookie.load("languageCode") === "en"
 									? record.en.title
 									: record.ru.title
-										? record.ru.title
-										: record.en.title
+									? record.ru.title
+									: record.en.title
 							)
 						)}
 					</Link>
-				),
+				)
 			},
 			{
-				title: maxWidth > mobileBrkPnt ? 'Audio' : '',
-				dataIndex: 'audio_link',
-				className: 'audioTable_audio',
+				title: maxWidth > mobileBrkPnt ? "Audio" : "",
+				dataIndex: "audio_link",
+				className: "audioTable_audio",
 				render: (text, record, index) => (
 					<audio
-						style={{ height: '30px' }}
+						style={{ height: "30px" }}
 						controls
 						controlsList="nodownload"
 						onPlay={() => {
@@ -172,12 +172,12 @@ export class AudioList extends Component {
 					>
 						<source src={renderHTML(record.audio_link)} type="audio/mpeg" />
 					</audio>
-				),
+				)
 			},
 			{
-				title: maxWidth > mobileBrkPnt ? 'Downloads' : '',
-				dataIndex: 'counters.downloads',
-				className: 'downloadSign',
+				title: maxWidth > mobileBrkPnt ? "Downloads" : "",
+				dataIndex: "counters.downloads",
+				className: "downloadSign",
 				render: (text, record, index) => (
 					<React.Fragment>
 						<span className="downloadDetails">{record.counters.downloads}</span>
@@ -189,21 +189,21 @@ export class AudioList extends Component {
 							}}
 							download="download"
 						>
-							<Icon type="download" style={{ fontSize: '1.5rem' }} />
-							{maxWidth <= mobileBrkPnt ? ' Download' : null}
+							<Icon type="download" style={{ fontSize: "1.5rem" }} />
+							{maxWidth <= mobileBrkPnt ? " Download" : null}
 						</a>
 					</React.Fragment>
-				),
-			},
+				)
+			}
 		];
 
 		this.props.history.location.currentPage = this.state.currentPage;
 		let class_icon_search = this.state.iconSearch
-			? 'icon-search fa fa-search'
-			: 'display-none-icon';
+			? "icon-search fa fa-search"
+			: "display-none-icon";
 		let class_icon_close = this.state.iconSearch
-			? 'display-none-icon'
-			: 'icon-search fa fa-close';
+			? "display-none-icon"
+			: "icon-search fa fa-close";
 
 		return (
 			<div>
@@ -211,14 +211,14 @@ export class AudioList extends Component {
 					className="bg-gray-100"
 					style={{
 						backgroundImage:
-							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
+							"url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)"
 					}}
 				>
 					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
 							<ul class="breadcrumbs-custom-path">
 								<li>
-									<Link to="" onClick={() => this.props.history.push('/')}>
+									<Link to="" onClick={() => this.props.history.push("/")}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
 									</Link>
 								</li>
@@ -235,10 +235,10 @@ export class AudioList extends Component {
 						<div className="container mt-5">
 							<div
 								className="row justify-content-center"
-								style={{ marginTop: '0', marginBottom: '0' }}
+								style={{ marginTop: "0", marginBottom: "0" }}
 							>
 								<div className="col-lg-12">
-									<div style={{ textAlign: 'center' }}>
+									<div style={{ textAlign: "center" }}>
 										<Button
 											className="searchButtonColor searchIconBorder"
 											type="primary"
@@ -253,7 +253,7 @@ export class AudioList extends Component {
 							{!this.state.iconSearch && (
 								<div
 									className="row justify-content-center"
-									style={{ marginTop: '0' }}
+									style={{ marginTop: "0" }}
 								>
 									<div className="col-lg-12">
 										<Collapse isOpened={!this.state.iconSearch}>
@@ -274,7 +274,10 @@ export class AudioList extends Component {
 								</div>
 							)}
 
-							<div className="row justify-content-center" style={{ paddingTop: '20px' }}>
+							<div
+								className="row justify-content-center"
+								style={{ paddingTop: "20px" }}
+							>
 								<div className="col-lg-12">
 									<div className="table-responsive wow ">
 										{this.props.lecturesDetails.lectures.length > 0 ? (
@@ -290,22 +293,22 @@ export class AudioList extends Component {
 												/>
 											</div>
 										) : (
-												<div style={{ textAlign: 'center' }}>
-													<p className="bookingForm">
-														{this.state.isSearch
-															? 'No Record Found'
-															: 'Hare Krishna...'}
-													</p>
-												</div>
-											)}
+											<div style={{ textAlign: "center" }}>
+												<p className="bookingForm">
+													{this.state.isSearch
+														? "No Record Found"
+														: "Hare Krishna..."}
+												</p>
+											</div>
+										)}
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				) : (
-						<QuoteOfDay />
-					)}
+					<QuoteOfDay />
+				)}
 			</div>
 		);
 	}
@@ -313,7 +316,7 @@ export class AudioList extends Component {
 
 const mapStateToProps = state => {
 	return {
-		lecturesDetails: state.lectureReducer,
+		lecturesDetails: state.lectureReducer
 	};
 };
 
@@ -327,7 +330,7 @@ const mapDispatchToProps = dispatch => {
 		},
 		resetState: () => {
 			dispatch(resetState());
-		},
+		}
 	};
 };
 
