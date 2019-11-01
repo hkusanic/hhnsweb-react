@@ -56,7 +56,7 @@
 	margin-top: -13px;
 }
 
-@media (max-width:320px) {
+@media (max-width: 320px) {
 	.singleCarousel_image_sm {
 		margin-top: -18px !important;
 	}
@@ -71,7 +71,7 @@
 	margin-top: 3%;
 }
 
-@media (max-width:320px) {
+@media (max-width: 320px) {
 	.singleCarousel_p1_sm_odd {
 		font-family: Charter;
 		font-size: 9px;
@@ -91,7 +91,7 @@
 	margin-top: 3%;
 }
 
-@media (max-width:320px) {
+@media (max-width: 320px) {
 	.singleCarousel_p1_sm_even {
 		font-family: Charter;
 		font-size: 9px;
@@ -126,7 +126,7 @@
 	color: white !important;
 }
 
-@media (max-width:320px) {
+@media (max-width: 320px) {
 	.singleCarousel_p2_sm_even {
 		font-family: Charter;
 		margin-top: 3px;
@@ -135,7 +135,7 @@
 	}
 }
 
-@media (max-width:320px) {
+@media (max-width: 320px) {
 	.singleCarousel_p2_sm_odd {
 		font-family: Charter;
 		margin-top: 3px;
@@ -202,7 +202,7 @@
 	margin-right: 353px;
 }
 
-@media (max-width:500px) {
+@media (max-width: 500px) {
 	.singleBiography_cover {
 		width: 54px;
 		float: left;
@@ -244,7 +244,7 @@
 
 @media (max-width: 320px) {
 	.singleBiography_card_orange {
-		font-size: 11px !important
+		font-size: 11px !important;
 	}
 }
 
@@ -325,7 +325,7 @@
 }
 
 .setHeight {
-	height: 80vh
+	height: 80vh;
 }
 
 @media (max-width: 500px) {
@@ -350,7 +350,7 @@
 	position: absolute;
 }
 
-@media (max-width :768px) and (min-width:500px) {
+@media (max-width: 768px) and (min-width: 500px) {
 	.singleBiography_button_orange {
 		margin-top: -1% !important;
 	}
@@ -492,32 +492,41 @@
 
 .singleblog_author {
 	font-family: Charter;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: bold;
 	/* line-height: 1.13; */
 	margin-top: 0px !important;
 	color: #aeb1be;
 }
 
-@media (max-width: 425px) {
+/* @media (max-width: 425px) {
 	.singleblog_author {
 		font-family: Charter;
-		font-size: 9px !important;
+		font-size: 10px !important;
 		font-weight: bold;
 		margin-top: 0px !important;
 		color: #aeb1be;
+		width: 250px;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
-}
+} */
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 	.singleblog_author {
-		font-size: 9px !important;
+		font-size: 12px !important;
+		width: 250px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		/* white-space: nowrap; */
 	}
 }
 
 @media (max-width: 320px) {
 	.singleblog_author {
-		font-size: 7px !important;
+		font-size: 10px !important;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 	.singleblog_title {
 		font-family: Charter;
@@ -526,7 +535,7 @@
 		color: #ff7c2b;
 	}
 	.singleGrid_card {
-		width: 270px !important
+		width: 270px !important;
 	}
 }
 
@@ -694,7 +703,7 @@
 .caraousel_sm_odd {
 	height: 80vh !important;
 	background-size: cover;
-	background-image: url("../images/4-c-7-a-9333.jpg")
+	background-image: url("../images/4-c-7-a-9333.jpg");
 	/* background-image: url("https://ik.imagekit.io/gcwjdmqwwznjl/4-c-7-a-9333_wnQXEX0yy.jpg"); */
 }
 
@@ -713,7 +722,6 @@
 .orange {
 	background-image: linear-gradient(to right, #f25858, #ff9f63);
 	height: 473px;
-	;
 }
 
 @media (max-width: 500px) and (min-width: 320px) {
@@ -721,7 +729,7 @@
 		height: 326px;
 		width: 337px;
 		margin: auto;
-		background-image: linear-gradient(to right, #f25858, #ff9f63)
+		background-image: linear-gradient(to right, #f25858, #ff9f63);
 	}
 }
 
@@ -743,7 +751,7 @@
 	height: 473px;
 }
 
-@media (max-width: 500px) and (min-width:321px) {
+@media (max-width: 500px) and (min-width: 321px) {
 	.white {
 		height: 350px;
 		width: 337px;

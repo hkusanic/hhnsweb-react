@@ -1,13 +1,13 @@
-var keystone = require('keystone');
-let logger = require('./../../logger/logger');
+var keystone = require("keystone");
+let logger = require("./../../logger/logger");
 
 /**
  * List Page
  */
 
 // Getting our page model
-var Blog = keystone.list('Blog');
-const AWS = require('aws-sdk');
+var Blog = keystone.list("Blog");
+const AWS = require("aws-sdk");
 
 /**
  * To generate presigned url for upload and download of file.
@@ -22,25 +22,25 @@ const AWS = require('aws-sdk');
  * @param {number} config.signedUrlExpireSeconds Expiration time of presignedUrl
  * @param {string} config.bucket Bucket name where file will be uploaded/downloaded
  */
-function todayDate () {
+function todayDate() {
 	var today = new Date();
 	var dd = today.getDate();
 	var mm = today.getMonth() + 1; // January is 0!
 
 	var yyyy = today.getFullYear();
 	if (dd < 10) {
-		dd = '0' + dd;
+		dd = "0" + dd;
 	}
 	if (mm < 10) {
-		mm = '0' + mm;
+		mm = "0" + mm;
 	}
-	var today = yyyy + '-' + mm + '-' + dd;
+	var today = yyyy + "-" + mm + "-" + dd;
 	return today;
 }
-function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
-	if (type === 'upload' && !fileDetails.type) {
+function generatePresignedUrl(type = "upload", fileDetails, s3, config) {
+	if (type === "upload" && !fileDetails.type) {
 		throw new Error(
-			'Missing arguments : Please specify the mime type of file.'
+			"Missing arguments : Please specify the mime type of file."
 		);
 	}
 
@@ -48,18 +48,18 @@ function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
 	const fileType = fileDetails.type;
 
 	const urlType = {
-		upload: 'putObject',
-		download: 'getObject',
+		upload: "putObject",
+		download: "getObject"
 	};
 	const commonOptions = {
 		Bucket: process.env.AWS_BUCKET,
 		Key: myKey,
 		Expires: 100000,
-		ACL: 'public-read',
+		ACL: "public-read"
 	};
 	const options = {
 		upload: Object.assign({}, commonOptions, { ContentType: fileType }),
-		download: Object.assign({}, commonOptions),
+		download: Object.assign({}, commonOptions)
 	};
 	return s3.getSignedUrl(urlType[type], options[type]);
 }
@@ -70,19 +70,19 @@ function generatePresignedUrl (type = 'upload', fileDetails, s3, config) {
  * @param {string} awsConfig.accessKeyId Access Key of AWS configuration
  * @param {string} awsConfig.secretAccessKey Access Secret Key(Token) of AWS configuration
  */
-function generateS3Object (awsConfig) {
+function generateS3Object(awsConfig) {
 	const awsConfigObj = {
 		accessKeyId: process.env.AWS_KEY,
 		secretAccessKey: process.env.AWS_SECRET,
 		s3BucketEndpoint: false,
-		endpoint: 'https://s3.amazonaws.com',
+		endpoint: "https://s3.amazonaws.com"
 	};
 
-	console.log('accessKeyId ======>>>>>>', process.env.AWS_KEY);
-	console.log('secretAccessKey ======>>>>>>', process.env.AWS_SECRET);
-	console.log('bucket ======>>>>>>', process.env.AWS_BUCKET);
-	logger.info({ awsConfigObj: awsConfigObj }, 'AWS Object');
-	logger.info({ bucketName: process.env.AWS_BUCKET }, 'Bucket Name');
+	console.log("accessKeyId ======>>>>>>", process.env.AWS_KEY);
+	console.log("secretAccessKey ======>>>>>>", process.env.AWS_SECRET);
+	console.log("bucket ======>>>>>>", process.env.AWS_BUCKET);
+	logger.info({ awsConfigObj: awsConfigObj }, "AWS Object");
+	logger.info({ bucketName: process.env.AWS_BUCKET }, "Bucket Name");
 	AWS.config.update(awsConfigObj);
 	return new AWS.S3();
 }
@@ -92,11 +92,11 @@ exports.generateUploadUrl = (req, res) => {
 	const errors = [];
 	if (!req.query.name) {
 		isError = true;
-		handleErr('noVideoName', errors);
+		handleErr("noVideoName", errors);
 	}
 	if (!req.query.type) {
 		isError = true;
-		handleErr('noVideoType', errors);
+		handleErr("noVideoType", errors);
 	}
 	if (isError) {
 		logger.error({ err: errors });
@@ -106,11 +106,11 @@ exports.generateUploadUrl = (req, res) => {
 	const options = {
 		signedUrlExpireSeconds: 100000,
 		bucket: process.env.BUCKET,
-		ACL: 'public-read',
+		ACL: "public-read"
 	};
-	const url = generatePresignedUrl('upload', req.query, s3, options);
+	const url = generatePresignedUrl("upload", req.query, s3, options);
 	return res.json({
-		presignedUrl: url,
+		presignedUrl: url
 	});
 };
 
@@ -123,51 +123,51 @@ exports.deleteFile = (req, res) => {
 			Objects: [
 				// required
 				{
-					Key: req.query.filename, // required
-				},
-			],
-		},
+					Key: req.query.filename // required
+				}
+			]
+		}
 	};
-	bucketInstance.deleteObjects(params, function (err, data) {
+	bucketInstance.deleteObjects(params, function(err, data) {
 		if (data) {
 			return res.apiResponse({
 				data: data,
-				success: true,
+				success: true
 			});
 		} else {
-			return res.apiError('not found/deleted', err);
+			return res.apiError("not found/deleted", err);
 		}
 	});
 };
 
 // Creating the API end point
 // More about keystone api here: https://gist.github.com/JedWatson/9741171
-exports.list = function (req, res) {
+exports.list = function(req, res) {
 	// Querying the data this works similarly to the Mongo db.collection.find() method
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
-		'API list blog'
+		"API list blog"
 	);
 	Blog.paginate({
 		page: req.query.page || 1,
-		perPage: 20,
+		perPage: 20
 	})
-	.sort({ blog_creation_date: 'desc' })
-		.exec(function (err, items) {
+		.sort({ blog_creation_date: "desc" })
+		.exec(function(err, items) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
-					'API list blog'
+					"API list blog"
 				);
-				return res.apiError('database error', err);
+				return res.apiError("database error", err);
 			}
 			res.apiResponse({
 				// Filter page by
-				blog: items,
+				blog: items
 			});
 
 			// Using express req.query we can limit the number of recipes returned by setting a limit property in the link
@@ -175,280 +175,285 @@ exports.list = function (req, res) {
 		});
 };
 
-exports.get = function (req, res) {
+exports.get = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
-		'API get blog'
+		"API get blog"
 	);
 	Blog.model
 		.findOne()
 		.where({ uuid: req.body.uuid })
-		.exec(function (err, item) {
+		.exec(function(err, item) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
-					'API get blog'
+					"API get blog"
 				);
-				return res.apiError('database error', err);
+				return res.apiError("database error", err);
 			}
 			if (!item) {
 				logger.error(
 					{
-						error: 'item not found',
+						error: "item not found"
 					},
-					'API get blog'
+					"API get blog"
 				);
-				return res.apiError('not found');
+				return res.apiError("not found");
 			}
 			res.apiResponse({
-				blog: item,
+				blog: item
 			});
 		});
 };
 
-exports.create = function (req, res) {
+exports.create = function(req, res) {
 	var item = new Blog.model();
-	var data = req.method === 'POST' ? req.body : req.query;
+	var data = req.method === "POST" ? req.body : req.query;
 	// data.date = todayDate();
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
-		'API create Blog'
+		"API create Blog"
 	);
-	item.getUpdateHandler(req).process(data, function (err) {
+	item.getUpdateHandler(req).process(data, function(err) {
 		if (err) {
 			logger.error(
 				{
-					error: err,
+					error: err
 				},
-				'API create Blog'
+				"API create Blog"
 			);
-			return res.apiError('error', err);
+			return res.apiError("error", err);
 		}
 
 		res.apiResponse({
-			Blog: item,
+			Blog: item
 		});
 	});
 };
 
-exports.getblogbyid = function (req, res) {
+exports.getblogbyid = function(req, res) {
 	if (!req.body.uuid) {
 		res.json({
 			error: {
-				title: 'Id is Required',
-				detail: 'Mandatory values are missing. Please check.',
-			},
+				title: "Id is Required",
+				detail: "Mandatory values are missing. Please check."
+			}
 		});
 	}
 
 	Blog.model
 		.findOne()
-		.where('uuid', req.body.uuid)
+		.where("uuid", req.body.uuid)
 		.exec((err, blog) => {
 			if (err || !blog) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
-					'API getblogbyid'
+					"API getblogbyid"
 				);
-				return res.json({ error: { title: 'Not able to find blog' } });
+				return res.json({ error: { title: "Not able to find blog" } });
 			}
 			res.json({
 				blog: blog,
-				success: true,
+				success: true
 			});
 		});
 };
 
-exports.update = function (req, res) {
+exports.update = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
-		'API update blog'
+		"API update blog"
 	);
 
-	Blog.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
+	Blog.model.findOne({ uuid: req.params.id }).exec(function(err, item) {
 		if (err) {
 			logger.error(
 				{
-					error: err,
+					error: err
 				},
-				'API update blog'
+				"API update blog"
 			);
-			return res.apiError('database error', err);
+			return res.apiError("database error", err);
 		}
 		if (!item) {
 			logger.error(
 				{
-					error: 'Item not found',
+					error: "Item not found"
 				},
-				'API update blog'
+				"API update blog"
 			);
-			return res.apiError('not found');
+			return res.apiError("not found");
 		}
 
-		var data = req.method === 'POST' ? req.body : req.query;
+		var data = req.method === "POST" ? req.body : req.query;
 
-		item.getUpdateHandler(req).process(data, function (err) {
+		item.getUpdateHandler(req).process(data, function(err) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
-					'API update blog'
+					"API update blog"
 				);
-				return res.apiError('create error', err);
+				return res.apiError("create error", err);
 			}
 
 			res.apiResponse({
-				Blog: item,
+				Blog: item
 			});
 		});
 	});
 };
 
-exports.remove = function (req, res) {
+exports.remove = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
-		'API remove blog'
+		"API remove blog"
 	);
-	Blog.model.findOne({ uuid: req.params.id }).exec(function (err, item) {
+	Blog.model.findOne({ uuid: req.params.id }).exec(function(err, item) {
 		if (err) {
 			logger.error(
 				{
-					error: err,
+					error: err
 				},
-				'API remove blog'
+				"API remove blog"
 			);
-			return res.apiError('database error', err);
+			return res.apiError("database error", err);
 		}
 		if (!item) {
 			logger.error(
 				{
-					error: 'No Item',
+					error: "No Item"
 				},
-				'API remove blog'
+				"API remove blog"
 			);
-			return res.apiError('not found');
+			return res.apiError("not found");
 		}
 
-		item.remove(function (err) {
+		item.remove(function(err) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
-					'API remove blog'
+					"API remove blog"
 				);
-				return res.apiError('database error', err);
+				return res.apiError("database error", err);
 			}
 
 			return res.apiResponse({
-				Blog: true,
+				Blog: true
 			});
 		});
 	});
 };
 
-exports.createBulkNew = function (req, res) {
+exports.createBulkNew = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
-		'API createBulk blog'
+		"API createBulk blog"
 	);
 	keystone.createItems(
 		{
-			Blog: req.body,
+			Blog: req.body
 		},
-		function (err, stats) {
+		function(err, stats) {
 			if (err) {
 				logger.error(
 					{
-						error: err,
+						error: err
 					},
-					'API createBulk blog'
+					"API createBulk blog"
 				);
-				return res.apiError('error', err);
+				return res.apiError("error", err);
 			}
 			return res.apiResponse({
-				Blog: true,
+				Blog: true
 			});
 		}
 	);
 };
 
-exports.updateBulkNew = function (req, res) {
+exports.updateBulkNew = function(req, res) {
 	logger.info(
 		{
-			req: req,
+			req: req
 		},
-		'API updateBulk blog'
+		"API updateBulk blog"
 	);
 	if (!req.body) {
 		logger.error(
 			{
-				error: 'No Data',
+				error: "No Data"
 			},
-			'API updateBulk blog'
+			"API updateBulk blog"
 		);
 		res.json({
 			error: {
-				title: 'Data is Reqired',
-				detail: 'Mandatory values are missing. Please check.',
-			},
+				title: "Data is Reqired",
+				detail: "Mandatory values are missing. Please check."
+			}
 		});
 	}
 	let data = req.body;
 	for (let i = 0; i < data.length; i++) {
 		Blog.model
 			.findOne({
-				tnid: data[i].tnid,
+				tnid: data[i].tnid
 			})
-			.exec(function (err, item) {
+			.exec(function(err, item) {
 				if (err) {
 					logger.error(
 						{
-							error: err,
+							error: err
 						},
-						'API updateBulk blog'
+						"API updateBulk blog"
 					);
 					return;
 				}
 				if (!item) {
 					logger.error(
 						{
-							error: 'No Item',
+							error: "No Item"
 						},
-						'API updateBulk blog'
+						"API updateBulk blog"
 					);
 					return;
 				}
 
-				item.getUpdateHandler(req).process(data[i], function (err) {
+				item.getUpdateHandler(req).process(data[i], function(err) {
 					if (err) {
 						logger.error(
 							{
-								error: err,
+								error: err
 							},
-							'API updateBulk blog'
+							"API updateBulk blog"
 						);
 						return;
 					}
 
-					res.apiResponse({
-						Blog: item,
-					});
+					// res.apiResponse({
+					// 	Blog: item,
+					// });
+					res.end(
+						JSON.stringify({
+							Blog: item
+						})
+					);
 				});
 			});
 	}
