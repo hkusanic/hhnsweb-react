@@ -1,5 +1,4 @@
 exports.CONSTANTS = {
-
 	EMAIL_CONFIG_APPOINTMENT: {
 		API_KEY: process.env.MAILGUN_API_KEY,
 		DOMAIN: process.env.MAIL_GUN_DOMAIN,
@@ -15,7 +14,6 @@ exports.CONSTANTS = {
 					port: process.env.NODE_MAIL_PORT,
 					secure: process.env.NODE_MAIL_SECURE, // use SSL
 					auth: {
-
 						user: process.env.NODE_MAIL_USER,
 						pass: process.env.NODE_MAIL_PASSWORD,
 					},
@@ -23,8 +21,6 @@ exports.CONSTANTS = {
 				sender: process.env.NODE_MAIL_SENDER, // sender address
 			},
 		},
-
-
 	},
 	SITE_URL: process.env.SITE_URL,
 	APPROVAL_EMAILS: process.env.APPROVAL_EMAILS ? process.env.APPROVAL_EMAILS.split(',') : '',

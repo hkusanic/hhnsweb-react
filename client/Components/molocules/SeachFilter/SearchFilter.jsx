@@ -3,11 +3,7 @@ import scrollToElement from 'scroll-to-element';
 import { connect } from 'react-redux';
 import reactCookie from 'react-cookies';
 import { Input, Tooltip, Icon, Menu, Dropdown, Button } from 'antd';
-import {
-	getEvents,
-	getLocations,
-	getTopics,
-} from '../../../actions/searchFilter';
+import { getEvents, getLocations, getTopics, getTranslations } from '../../../actions/searchFilter';
 
 export class SearchFilter extends Component {
 	constructor(props) {
@@ -28,9 +24,11 @@ export class SearchFilter extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getEvents();
-		this.props.getLocations();
-		this.props.getTopics();
+		const { getEvents, getLocations, getTopics, getTranslations } = this.props;
+		getEvents();
+		getLocations();
+		getTopics();
+		getTranslations();
 		const years = this.getYearsList(1980);
 		this.setState({ years });
 		scrollToElement();
@@ -38,11 +36,7 @@ export class SearchFilter extends Component {
 
 	renderOptions = (item, key, type) => {
 		return (
-			<Dropdown.Item
-				bsPrefix="dropdown-item"
-				key={key}
-				onSelect={() => this.handleChange(type, item.title)}
-			>
+			<Dropdown.Item bsPrefix="dropdown-item" key={key} onSelect={() => this.handleChange(type, item.title)}>
 				{item.title}
 			</Dropdown.Item>
 		);
@@ -50,11 +44,7 @@ export class SearchFilter extends Component {
 
 	renderYearsList = (item, key, type) => {
 		return (
-			<Dropdown.Item
-				bsPrefix="dropdown-item"
-				key={key}
-				onSelect={() => this.handleChange(type, item)}
-			>
+			<Dropdown.Item bsPrefix="dropdown-item" key={key} onSelect={() => this.handleChange(type, item)}>
 				{item}
 			</Dropdown.Item>
 		);
@@ -113,23 +103,23 @@ export class SearchFilter extends Component {
 	};
 
 	handleSearchData = () => {
+		const { author, event, location, topic, year, title, translation, verse, chapter, songs } = this.state;
 		const body = {
-			event: this.state.event,
-			location: this.state.location,
-			topic: this.state.topic,
-			year: this.state.year,
-			title: this.state.title,
-			author: this.state.author,
-			translation: this.state.translation,
-			verse: this.state.verse,
-			chapter: this.state.chapter,
-			songs: this.state.songs,
+			event,
+			location,
+			topic,
+			year,
+			title,
+			author,
+			translation,
+			verse,
+			chapter,
+			songs,
 		};
 		this.props.searchData(body);
 	};
 
 	scrollToElement = () => {
-		console.log('came here');
 		scrollToElement('#id', {
 			offset: -150,
 			ease: 'linear',
@@ -144,21 +134,36 @@ export class SearchFilter extends Component {
 
 		const authorMenu = (
 			<Menu>
-				<Menu.Item
-					onClick={() => this.handleChange('author', 'Niranjana Swami')}
-				>
-					Niranjana Swami
-				</Menu.Item>
+				<Menu.Item onClick={() => this.handleChange('author', 'Niranjana Swami')}>Niranjana Swami</Menu.Item>
 			</Menu>
 		);
 
 		const translationMenu = (
 			<Menu>
-				<Menu.Item
-					onClick={() => this.handleChange('translation', 'Hungarian')}
-				>
-					Hungarian
-				</Menu.Item>
+				{this.props.searchFilterReducer.translations.length > 0 &&
+					this.props.searchFilterReducer.translations.map((item, index) => {
+						return (
+							<Menu.Item
+								key={index}
+								onClick={() =>
+									this.handleChange(
+										'translation',
+										reactCookie.load('languageCode') === 'en'
+											? item.title_en
+											: item.title_ru
+											? item.title_ru
+											: item.title_en
+									)
+								}
+							>
+								{reactCookie.load('languageCode') === 'en'
+									? item.title_en
+									: item.title_ru
+									? item.title_ru
+									: item.title_en}
+							</Menu.Item>
+						);
+					})}
 			</Menu>
 		);
 
@@ -251,10 +256,7 @@ export class SearchFilter extends Component {
 			<Menu>
 				{this.state.years.length > 0
 					? this.state.years.map((item, index) => (
-							<Menu.Item
-								key={index}
-								onClick={() => this.handleChange('year', item)}
-							>
+							<Menu.Item key={index} onClick={() => this.handleChange('year', item)}>
 								{item}
 							</Menu.Item>
 					  ))
@@ -276,10 +278,7 @@ export class SearchFilter extends Component {
 										suffix={
 											this.state.songs === '' && (
 												<Tooltip title="Please enter the song you want to search">
-													<Icon
-														type="info-circle"
-														style={{ color: 'rgba(0,0,0,.45)' }}
-													/>
+													<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
 												</Tooltip>
 											)
 										}
@@ -296,10 +295,7 @@ export class SearchFilter extends Component {
 										suffix={
 											this.state.chapter === '' && (
 												<Tooltip title="Please enter the chapter you want to search">
-													<Icon
-														type="info-circle"
-														style={{ color: 'rgba(0,0,0,.45)' }}
-													/>
+													<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
 												</Tooltip>
 											)
 										}
@@ -316,10 +312,7 @@ export class SearchFilter extends Component {
 										suffix={
 											this.state.verse === '' && (
 												<Tooltip title="Please enter the verse you want to search">
-													<Icon
-														type="info-circle"
-														style={{ color: 'rgba(0,0,0,.45)' }}
-													/>
+													<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
 												</Tooltip>
 											)
 										}
@@ -329,18 +322,9 @@ export class SearchFilter extends Component {
 							) : null}
 							{this.props.translationSearch ? (
 								<div className="col-6 my-1 col-md-3">
-									<Dropdown
-										overlay={translationMenu}
-										overlayClassName="searchDropDownDiv"
-									>
-										<Button
-											className="w-100"
-											onClick={() => this.scrollToElement()}
-										>
-											{this.state.translation
-												? this.state.translation
-												: 'Translation'}{' '}
-											<Icon type="down" />
+									<Dropdown overlay={translationMenu} overlayClassName="searchDropDownDiv">
+										<Button className="w-100" onClick={() => this.scrollToElement()}>
+											{this.state.translation ? this.state.translation : 'Translation'} <Icon type="down" />
 										</Button>
 									</Dropdown>
 								</div>
@@ -353,64 +337,36 @@ export class SearchFilter extends Component {
 					<div className="row">
 						{this.props.yearSearch ? (
 							<div className="col-6 my-1 col-md-3 ">
-								<Dropdown
-									overlay={yearMenu}
-									overlayClassName="searchDropDownDiv"
-								>
-									<Button
-										className="w-100"
-										onClick={() => this.scrollToElement()}
-									>
-										{this.state.year ? this.state.year : 'Year'}{' '}
-										<Icon type="down" />
+								<Dropdown overlay={yearMenu} overlayClassName="searchDropDownDiv">
+									<Button className="w-100" onClick={() => this.scrollToElement()}>
+										{this.state.year ? this.state.year : 'Year'} <Icon type="down" />
 									</Button>
 								</Dropdown>
 							</div>
 						) : null}
 						{this.props.locationSearch ? (
 							<div className="col-6 my-1 col-md-3">
-								<Dropdown
-									overlay={locationMenu}
-									overlayClassName="searchDropDownDiv"
-								>
-									<Button
-										className="w-100"
-										onClick={() => this.scrollToElement()}
-									>
-										{this.state.location ? this.state.location : 'Location'}{' '}
-										<Icon type="down" />
+								<Dropdown overlay={locationMenu} overlayClassName="searchDropDownDiv">
+									<Button className="w-100" onClick={() => this.scrollToElement()}>
+										{this.state.location ? this.state.location : 'Location'} <Icon type="down" />
 									</Button>
 								</Dropdown>
 							</div>
 						) : null}
 						{this.props.topicSearch ? (
 							<div className="col-6 my-1 col-md-3">
-								<Dropdown
-									overlay={topicMenu}
-									overlayClassName="searchDropDownDiv"
-								>
-									<Button
-										className="w-100"
-										onClick={() => this.scrollToElement()}
-									>
-										{this.state.topic ? this.state.topic : 'Topic'}{' '}
-										<Icon type="down" />
+								<Dropdown overlay={topicMenu} overlayClassName="searchDropDownDiv">
+									<Button className="w-100" onClick={() => this.scrollToElement()}>
+										{this.state.topic ? this.state.topic : 'Topic'} <Icon type="down" />
 									</Button>
 								</Dropdown>
 							</div>
 						) : null}
 						{this.props.eventSearch ? (
 							<div className="col-6 my-1 col-md-3">
-								<Dropdown
-									overlay={eventMenu}
-									overlayClassName="searchDropDownDiv"
-								>
-									<Button
-										className="w-100"
-										onClick={() => this.scrollToElement()}
-									>
-										{this.state.event ? this.state.event : 'Event'}{' '}
-										<Icon type="down" />
+								<Dropdown overlay={eventMenu} overlayClassName="searchDropDownDiv">
+									<Button className="w-100" onClick={() => this.scrollToElement()}>
+										{this.state.event ? this.state.event : 'Event'} <Icon type="down" />
 									</Button>
 								</Dropdown>
 							</div>
@@ -431,12 +387,7 @@ export class SearchFilter extends Component {
 							</Button>
 						</div>
 						<div className="col-12 my-1 col-md-3">
-							<Button
-								className="w-100"
-								type="danger"
-								icon="reset"
-								onClick={this.reset}
-							>
+							<Button className="w-100" type="danger" icon="reset" onClick={this.reset}>
 								Reset
 							</Button>
 						</div>
@@ -463,6 +414,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		getTopics: () => {
 			dispatch(getTopics());
+		},
+		getTranslations: () => {
+			dispatch(getTranslations());
 		},
 	};
 };
