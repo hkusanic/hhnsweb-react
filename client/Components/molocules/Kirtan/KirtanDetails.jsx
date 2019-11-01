@@ -1,15 +1,11 @@
-import React, { Component } from "react";
-import { Icon } from "antd";
-import { Link } from "react-router-dom";
-import renderHTML from "react-render-html";
-import reactCookie from "react-cookies";
-import Breadcrumb from "react-bootstrap/Breadcrumb";
-import { connect } from "react-redux";
-import {
-	getKirtanByUuid,
-	updateCounters,
-	resetState
-} from "../../../actions/kirtanAction";
+import React, { Component } from 'react';
+import { Icon } from 'antd';
+import { Link } from 'react-router-dom';
+import renderHTML from 'react-render-html';
+import reactCookie from 'react-cookies';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { connect } from 'react-redux';
+import { getKirtanByUuid, updateCounters, resetState } from '../../../actions/kirtanAction';
 
 export class KirtanDetails extends Component {
 	constructor(props) {
@@ -23,7 +19,7 @@ export class KirtanDetails extends Component {
 
 	componentDidMount() {
 		const body = {
-			uuid: this.props.match.params.uuid
+			uuid: this.props.match.params.uuid,
 		};
 		this.props.updateCounters(body);
 		this.props.getKirtanByUuid(body);
@@ -36,7 +32,7 @@ export class KirtanDetails extends Component {
 	handleUpdate = uuid => {
 		const body = {
 			uuid: uuid,
-			downloads: true
+			downloads: true,
 		};
 		this.props.updateCounters(body);
 	};
@@ -53,13 +49,13 @@ export class KirtanDetails extends Component {
 		const maxWidth = window.screen.width;
 		if (!kirtanDetails) {
 			return (
-				<div style={{ textAlign: "center" }}>
+				<div style={{ textAlign: 'center' }}>
 					<p className="bookingForm">Hare Krishna...</p>
 				</div>
 			);
 		}
 
-		if (!localStorage.getItem("user")) {
+		if (!localStorage.getItem('user')) {
 			return (
 				<div className="loginText">
 					<p className="bookingForm">Please log in to continue</p>
@@ -72,15 +68,14 @@ export class KirtanDetails extends Component {
 				<section
 					className="bg-gray-100"
 					style={{
-						backgroundImage:
-							"url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)"
+						backgroundImage: 'url(https://ik.imagekit.io/gcwjdmqwwznjl/blog_header_BJ1M6bS8E.png)',
 					}}
 				>
 					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
 							<ul class="breadcrumbs-custom-path">
 								<li>
-									<Link to="" onClick={() => this.props.history.push("/")}>
+									<Link to="" onClick={() => this.props.history.push('/')}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
 									</Link>
 								</li>
@@ -92,17 +87,17 @@ export class KirtanDetails extends Component {
 								<li>
 									<a className="textColor">
 										{renderHTML(
-											reactCookie.load("languageCode") === "en"
+											reactCookie.load('languageCode') === 'en'
 												? kirtanDetails.en && kirtanDetails.en.title
 													? kirtanDetails.en.title
 													: kirtanDetails.ru && kirtanDetails.ru.title
 													? kirtanDetails.ru.title
-													: ""
+													: ''
 												: kirtanDetails.ru && kirtanDetails.ru.title
 												? kirtanDetails.ru.title
 												: kirtanDetails.en && kirtanDetails.en.title
 												? kirtanDetails.en.title
-												: ""
+												: ''
 										)}
 									</a>
 								</li>
@@ -117,53 +112,49 @@ export class KirtanDetails extends Component {
 								<article className="post-creative">
 									<h3 className="post-creative-title">
 										{renderHTML(
-											reactCookie.load("languageCode") === "en"
+											reactCookie.load('languageCode') === 'en'
 												? kirtanDetails.en && kirtanDetails.en.title
 													? kirtanDetails.en.title
 													: kirtanDetails.ru && kirtanDetails.ru.title
 													? kirtanDetails.ru.title
-													: ""
+													: ''
 												: kirtanDetails.ru && kirtanDetails.ru.title
 												? kirtanDetails.ru.title
 												: kirtanDetails.en && kirtanDetails.en.title
 												? kirtanDetails.en.title
-												: ""
+												: ''
 										)}
 									</h3>
 									<ul className="post-creative-meta">
 										<li>
 											<span className="icon mdi mdi-calendar-clock" />
-											<time dateTime="2018">
-												{new Date(
-													kirtanDetails.created_date_time
-												).toDateString()}
-											</time>
+											<time dateTime="2018">{new Date(kirtanDetails.created_date_time).toDateString()}</time>
 										</li>
 										<li>
 											<span className="icon mdi mdi-tag-multiple" />
 											<a>Kirtan</a>
 										</li>
 									</ul>
-									<div className="row" style={{ paddingTop: "20px" }}>
+									<div className="row" style={{ paddingTop: '20px' }}>
 										<div className="col textContent">
 											{renderHTML(
-												reactCookie.load("languageCode") === "en"
+												reactCookie.load('languageCode') === 'en'
 													? kirtanDetails.en && kirtanDetails.en.body
 														? kirtanDetails.en.body
 														: kirtanDetails.ru && kirtanDetails.ru.body
 														? kirtanDetails.ru.body
-														: "<p></p>"
+														: '<p></p>'
 													: kirtanDetails.ru && kirtanDetails.ru.body
 													? kirtanDetails.ru.body
 													: kirtanDetails.en && kirtanDetails.en.body
 													? kirtanDetails.en.body
-													: "<p></p>"
+													: '<p></p>'
 											)}
 										</div>
 									</div>
 								</article>
 
-								<div style={{ paddingTop: "20px" }}>
+								<div style={{ paddingTop: '20px' }}>
 									<table className="maintable">
 										<tbody>
 											{kirtanDetails.audio_link ? (
@@ -171,20 +162,13 @@ export class KirtanDetails extends Component {
 													<td>
 														<b>
 															<span>Audio</span>&nbsp;
-															{maxWidth > mobileBrkPnt ? ":" : null}
+															{maxWidth > mobileBrkPnt ? ':' : null}
 														</b>
 													</td>
 
 													<td className="padLeftRow downloadDiv">
-														<audio
-															style={{ height: "30px" }}
-															controlsList="nodownload"
-															controls
-														>
-															<source
-																src={renderHTML(kirtanDetails.audio_link)}
-																type="audio/mpeg"
-															/>
+														<audio style={{ height: '30px' }} controlsList="nodownload" controls>
+															<source src={renderHTML(kirtanDetails.audio_link)} type="audio/mpeg" />
 														</audio>
 														<a
 															className="downloadIcon"
@@ -194,10 +178,7 @@ export class KirtanDetails extends Component {
 															}}
 															download="download"
 														>
-															<Icon
-																type="download"
-																style={{ fontSize: "1.5rem" }}
-															/>
+															<Icon type="download" style={{ fontSize: '1.5rem' }} />
 														</a>
 													</td>
 												</tr>
@@ -215,17 +196,17 @@ export class KirtanDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? kirtanDetails.en && kirtanDetails.en.event
 															? kirtanDetails.en.event
 															: kirtanDetails.ru && kirtanDetails.ru.event
 															? kirtanDetails.ru.event
-															: ""
+															: ''
 														: kirtanDetails.ru && kirtanDetails.ru.event
 														? kirtanDetails.ru.event
 														: kirtanDetails.en && kirtanDetails.en.event
 														? kirtanDetails.en.event
-														: ""}
+														: ''}
 												</td>
 											</tr>
 											{kirtanDetails.author ? (
@@ -245,9 +226,7 @@ export class KirtanDetails extends Component {
 															<span>Durations</span> :
 														</b>
 													</td>
-													<td className="padLeftRow">
-														{kirtanDetails.duration}
-													</td>
+													<td className="padLeftRow">{kirtanDetails.duration}</td>
 												</tr>
 											) : null}
 											<tr>
@@ -257,46 +236,42 @@ export class KirtanDetails extends Component {
 													</b>
 												</td>
 												<td className="padLeftRow">
-													{reactCookie.load("languageCode") === "en"
+													{reactCookie.load('languageCode') === 'en'
 														? kirtanDetails.en && kirtanDetails.en.location
 															? kirtanDetails.en.location
 															: kirtanDetails.ru && kirtanDetails.ru.location
 															? kirtanDetails.ru.location
-															: ""
+															: ''
 														: kirtanDetails.ru && kirtanDetails.ru.location
 														? kirtanDetails.ru.location
 														: kirtanDetails.en && kirtanDetails.en.location
 														? kirtanDetails.en.location
-														: ""}
+														: ''}
 												</td>
 											</tr>
-											{kirtanDetails.counters &&
-											kirtanDetails.counters.downloads ? (
+											{kirtanDetails.counters && kirtanDetails.counters.downloads ? (
 												<tr>
 													<td>
 														<b>
 															<span>Downloads</span> :
 														</b>
 													</td>
-													<td className="padLeftRow">
-														{kirtanDetails.counters &&
-															kirtanDetails.counters.downloads}
-													</td>
+													<td className="padLeftRow">{kirtanDetails.counters && kirtanDetails.counters.downloads}</td>
 												</tr>
 											) : null}
-											{reactCookie.load("languageCode") === "en" ? (
+											{reactCookie.load('languageCode') === 'en' ? (
 												kirtanDetails.en && kirtanDetails.en.topic ? (
 													kirtanDetails.en.topic
 												) : kirtanDetails.ru && kirtanDetails.ru.topic ? (
 													kirtanDetails.ru.topic
 												) : (
-													""
+													''
 												)
 											) : kirtanDetails.ru && kirtanDetails.ru.topic ? (
 												kirtanDetails.ru.topic
 											) : kirtanDetails.en && kirtanDetails.en.topic ? (
 												kirtanDetails.en.topic
-											) : "" ? (
+											) : '' ? (
 												<tr>
 													<td>
 														<b>
@@ -304,17 +279,17 @@ export class KirtanDetails extends Component {
 														</b>
 													</td>
 													<td className="padLeftRow">
-														{reactCookie.load("languageCode") === "en"
+														{reactCookie.load('languageCode') === 'en'
 															? kirtanDetails.en && kirtanDetails.en.topic
 																? kirtanDetails.en.topic
 																: kirtanDetails.ru && kirtanDetails.ru.topic
 																? kirtanDetails.ru.topic
-																: ""
+																: ''
 															: kirtanDetails.ru && kirtanDetails.ru.topic
 															? kirtanDetails.ru.topic
 															: kirtanDetails.en && kirtanDetails.en.topic
 															? kirtanDetails.en.topic
-															: ""}
+															: ''}
 													</td>
 												</tr>
 											) : null}
@@ -332,7 +307,7 @@ export class KirtanDetails extends Component {
 
 const mapStateToProps = state => {
 	return {
-		kirtanDetails: state.kirtanReducer.kirtan
+		kirtanDetails: state.kirtanReducer.kirtan,
 	};
 };
 
@@ -346,7 +321,7 @@ const mapDispatchToProps = dispatch => {
 		},
 		resetState: () => {
 			dispatch(resetState());
-		}
+		},
 	};
 };
 
