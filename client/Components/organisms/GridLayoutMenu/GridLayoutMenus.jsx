@@ -14,6 +14,11 @@ export class GridLayoutMenus extends React.Component {
 		this.setState({ isUserLogin });
 	}
 
+	componentWillReceiveProps(nextProps) {
+		const isUserLogin = Auth.isUserAuthenticated();
+		this.setState({ isUserLogin });
+	}
+
 	handleNavigationClick = () => {
 		setTimeout(() => {
 			$('.login-modal-2').removeClass('active');
@@ -37,7 +42,12 @@ export class GridLayoutMenus extends React.Component {
 						<div className="row row-50 row-lg-70 offset-top-2">
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
-								image="images/audio.svg"
+								// image="images/audio.svg"
+								image={
+									!this.state.isUserLogin
+										? 'images/lectures.svg'
+										: 'images/audio.svg'
+								}
 								menu={
 									<p>
 										<Translate>
@@ -108,24 +118,46 @@ export class GridLayoutMenus extends React.Component {
 								description="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/mkv"
 							/>
-							<SingleGridMenu
-								handleNavigationClick={this.handleNavigationClick}
-								image="images/lectures.svg"
-								menu={
-									<p>
-										<Translate>
-											{({ translate }) => translate('lecturesTitle')}
-										</Translate>
-									</p>
-								}
-								description="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-								link="/lectures"
-							/>
+							{!this.state.isUserLogin ? (
+								<SingleGridMenu
+									handleNavigationClick={this.handleNavigationClick}
+									image="images/lectures.svg"
+									menu={
+										<p>
+											<Translate>
+												{({ translate }) => translate('HOME.Sadhana_Sheet')}
+											</Translate>
+										</p>
+									}
+									description="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+									link="/sadhanaList"
+								/>
+							) : (
+								<SingleGridMenu
+									handleNavigationClick={this.handleNavigationClick}
+									image="images/lectures.svg"
+									menu={
+										<p>
+											<Translate>
+												{({ translate }) => translate('lecturesTitle')}
+											</Translate>
+										</p>
+									}
+									description="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+									link="/lectures"
+								/>
+							)}
 
 							<SingleGridMenu
 								handleNavigationClick={this.handleNavigationClick}
 								image="images/kirtan.svg"
-								menu="Kirtan"
+								menu={
+									<p>
+										<Translate>
+											{({ translate }) => translate('HOME.kirtan')}
+										</Translate>
+									</p>
+								}
 								description="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 								link="/kirtan"
 							/>

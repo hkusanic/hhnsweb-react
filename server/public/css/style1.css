@@ -568,10 +568,16 @@
 	/* display: flex; */
 	/* margin-right: 5%; */
 	margin-top: -2%;
-	margin-left: 19%;
+	margin-left: 18%;
 	/* margin-left: 35vh; */
 	/* position: relative;
 	right: -29%; */
+}
+
+.nav_span_lg_login {
+	justify-content: space-between;
+	margin-top: -2%;
+	margin-left: 17%;
 }
 
 .nav_span_xlg {
@@ -821,3 +827,8 @@
 	padding-bottom: 6%;
 	text-align: left;
 }
+
+.menuPic {
+	margin-left: 1% !important;
+}
+

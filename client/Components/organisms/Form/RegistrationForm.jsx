@@ -46,7 +46,11 @@ export class RegistrationForm extends Component {
                 email: this.state.email_signup,
                 password: this.state.password_signup,
                 firstname: this.state.firstName,
-                lastname: this.state.lastName
+                lastname: this.state.lastName,
+                name: {
+                    first: this.state.firstName,
+                    last: this.state.lastName
+                }
             }
             this.props.signup(body);
         }

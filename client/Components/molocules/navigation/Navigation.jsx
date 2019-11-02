@@ -508,6 +508,28 @@ export class Navigation extends Component {
 														</Translate>
 													</Link>
 												</li>
+												{!this.state.isUserLogin ? (
+													<li className="rd-nav-item">
+														<Link
+															className={`rd-nav-link ${
+																this.state.index === 7 ? 'active1' : null
+															} 
+														${maxWidth <= 1210 ? 'gap' : null}
+														`}
+															to="/sadhanaList"
+															onClick={() => {
+																this.handleRemoveModal(7);
+																this.handleNavigationClick(7);
+															}}
+														>
+															<Translate>
+																{({ translate }) =>
+																	translate('HOME.Sadhana_Sheet')
+																}
+															</Translate>
+														</Link>
+													</li>
+												) : null}
 												{this.props.isAdmin && this.props.isLogin ? (
 													<li className="rd-nav-item">
 														<Link
@@ -552,7 +574,11 @@ export class Navigation extends Component {
 													</Dropdown>
 												</li>
 
-												<li className="rd-nav-item hideMenu">
+												<li
+													className={`rd-nav-item hideMenu ${
+														!this.state.isUserLogin ? 'menuPic' : null
+													}`}
+												>
 													<img
 														className="nav_image"
 														src="https://ik.imagekit.io/gcwjdmqwwznjl/Iskcon_logo_C-Q4c8R4B.jpg"

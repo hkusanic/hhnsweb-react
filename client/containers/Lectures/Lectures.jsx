@@ -7,6 +7,7 @@ import { searchLecture, updateCounters } from '../../actions/lectureActions';
 import Auth from '../../utils/Auth';
 import { Translate } from 'react-localize-redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from '../../Components/molocules/SingleQuote/QuotesOfDay';
 
 export class Lectures extends Component {
 	constructor(props) {
@@ -62,22 +63,20 @@ export class Lectures extends Component {
 							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
 					}}
 				>
-					{!this.state.isUserLogin ? (
-						<div class="breadcrumbs-custom-inner headingImage">
-							<div class="container breadcrumbs-custom-container">
-								<ul class="breadcrumbs-custom-path">
-									<li>
-										<Link to="" onClick={() => this.props.history.push('/')}>
-											<Breadcrumb.Item>Home</Breadcrumb.Item>
-										</Link>
-									</li>
-									<li>
-										<a className="textColor">Lecture</a>
-									</li>
-								</ul>
-							</div>
+					<div class="breadcrumbs-custom-inner headingImage">
+						<div class="container breadcrumbs-custom-container">
+							<ul class="breadcrumbs-custom-path">
+								<li>
+									<Link to="" onClick={() => this.props.history.push('/')}>
+										<Breadcrumb.Item>Home</Breadcrumb.Item>
+									</Link>
+								</li>
+								<li>
+									<a className="textColor">Lecture</a>
+								</li>
+							</ul>
 						</div>
-					) : null}
+					</div>
 				</section>
 				{!this.state.isUserLogin ? (
 					<div className="container">
@@ -107,9 +106,7 @@ export class Lectures extends Component {
 						/>
 					</div>
 				) : (
-					<div className="loginText">
-						<p className="bookingForm">Please log in to continue</p>
-					</div>
+					<QuoteOfDay />
 				)}
 			</div>
 		);

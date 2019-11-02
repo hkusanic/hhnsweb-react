@@ -163,7 +163,9 @@ exports.signin = function (req, res) {
 							user_id: user.user_id,
 							youbookme_url: process.env.YOUBOOKME_URL,
 							disciple: user.disciple,
-							profile_pic : user.profile_pic
+							profile_pic: user.profile_pic,
+							sadhanaSheetEnable: user.sadhanaSheetEnable,
+							userName: user.userName,
 						},
 					});
 				},
@@ -244,17 +246,20 @@ exports.signup = function (req, res) {
 					signature: req.body.signature,
 					signature_format: req.body.signature_format,
 					canAccessKeystone: req.body.canAccessKeystone,
-					oldData: {
+				};
+
+				if (req.body.oldData && Object.keys(req.body.oldData).length > 0) {
+					userData.oldData = {
 						uid: req.body.oldData.uid,
 						vid: req.body.oldData.vid,
 						nid: req.body.oldData.nid,
 						init: req.body.oldData.init,
 						picture: req.body.oldData.picture,
 						path: req.body.oldData.path,
-					},
+					};
 				};
-				if (Object.keys(req.body.disciple_profile).length > 0) {
-					console.log('inside it');
+
+				if (req.body.disciple_profile && Object.keys(req.body.disciple_profile).length > 0) {
 					userData.disciple_profile = {
 						first_initiation_date:
 							req.body.disciple_profile.first_initiation_date,

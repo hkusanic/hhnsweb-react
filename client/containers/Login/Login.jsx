@@ -109,7 +109,11 @@ export class Login extends Component {
         firstname: this.state.firstName,
         lastname: this.state.lastName,
         mobileNumber: this.state.mobileNumber,
-        countryCode: this.state.countryCode
+        countryCode: this.state.countryCode,
+        name: {
+          first: this.state.firstName,
+          last: this.state.lastName
+        }
       }
       this.props.signup(body);
     }
