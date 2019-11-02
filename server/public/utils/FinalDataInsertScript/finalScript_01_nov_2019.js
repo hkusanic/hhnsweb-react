@@ -1460,7 +1460,7 @@ async function getEnglishKirtanNodeList () {
 		.then(async function (body) {
 			// console.log('body===>',body)
 			englishKirtanDataList = body;
-			englishKirtanDataList.splice(0, 720);
+			englishKirtanDataList.splice(0, 10000);
 			console.log(
 				'getEnglishList() function is successfully executed',
 				englishKirtanDataList.length,
@@ -1523,7 +1523,7 @@ function getEnglishKirtanData (ar, callback) {
 					uuid: uuidv4(),
 					tnid: ar[i].tnid,
 					author: item.artist,
-					audio_files: item.file,
+					audio_link: item.file,
 					type: item.type,
 					soundcloud_link: item.soundcloud,
 					duration: item.duration,
