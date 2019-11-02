@@ -21,7 +21,7 @@
     "keystone-storage-adapter-s3": "^2.0.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
-    "mongoose": "^5.4.4",
+    "mongoose": "^5.7.5",
     "nodemailer": "^5.1.1",
     "pug": "^2.0.3",
     "query-string": "^6.2.0",

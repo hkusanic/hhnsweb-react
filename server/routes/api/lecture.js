@@ -553,10 +553,12 @@ exports.updateCounters = function (req, res) {
 				item.counters.video_page_view = item.counters.video_page_view + 1;
 			}
 			if (req.body.en_transcription_view) {
-				item.counters.en_transcription_view = item.counters.en_transcription_view + 1;
+				item.counters.en_transcription_view
+					= item.counters.en_transcription_view + 1;
 			}
 			if (req.body.ru_transcription_view) {
-				item.counters.ru_transcription_view = item.counters.ru_transcription_view + 1;
+				item.counters.ru_transcription_view
+					= item.counters.ru_transcription_view + 1;
 			}
 			if (req.body.en_summary_view) {
 				item.counters.en_summary_view = item.counters.en_summary_view + 1;
