@@ -57,7 +57,8 @@
     "video": ["Video", "видео"],
     "Transcriptions": ["Transcriptions", "Транскрипции"],
     "Summaries": ["Summaries", "Конспекты"],
-    "kirtan": ["Kirtan", "киртан"]
+    "kirtan": ["Kirtan", "киртан"],
+    "Sadhana_Sheet": ["Sadhana Sheet", "Садхана Лист"]
   },
   "FOOTER": {
     "quick_links": ["Quick Links", "Быстрые ссылки"],

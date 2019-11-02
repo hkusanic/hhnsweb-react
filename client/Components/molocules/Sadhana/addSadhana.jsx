@@ -53,7 +53,7 @@ class AddSadhana extends React.Component {
 
 	uuidv4 = () => {
 		// eslint-disable-next-line func-names
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 			// eslint-disable-next-line no-bitwise
 			const r = (Math.random() * 16) | 0;
 
@@ -68,19 +68,24 @@ class AddSadhana extends React.Component {
 		if (Config.sadhanaSheetAllowedDays) {
 			days = Config.sadhanaSheetAllowedDays;
 		}
-		if (current > moment().endOf('day') || current < moment().subtract(days, 'days'))
-			return true
-
+		if (
+			current > moment().endOf('day') ||
+			current < moment().subtract(days, 'days')
+		)
+			return true;
 		else {
 			for (let i = 0; i < notAllowedDates.length; i++) {
-				if (moment(current).toDate().toISOString().substring(0, 10) == notAllowedDates[i].toISOString().substring(0, 10))
-					return true
-				else
-					return false
+				if (
+					moment(current)
+						.toDate()
+						.toISOString()
+						.substring(0, 10) ==
+					notAllowedDates[i].toISOString().substring(0, 10)
+				)
+					return true;
+				else return false;
 			}
-
 		}
-
 	}
 	handleSubmit = event => {
 		event.preventDefault();
@@ -88,16 +93,7 @@ class AddSadhana extends React.Component {
 		const { time_rising, userId } = this.state;
 
 		form.validateFields(
-			[
-				'firstname',
-				'lastname',
-				'email',
-				'date',
-				'time_rising',
-				'rounds',
-				'reading',
-				'association',
-			],
+			['email', 'date', 'time_rising', 'rounds', 'reading', 'association'],
 			(err, values) => {
 				if (!err) {
 					const userDetails = JSON.parse(localStorage.getItem('user'));
@@ -116,8 +112,7 @@ class AddSadhana extends React.Component {
 						lectures: form.getFieldValue('lectures'),
 						additional_comments: form.getFieldValue('additional_comments'),
 						userId,
-						user: userDetails.user
-
+						user: userDetails.user,
 					};
 					this.props.createSadhana(body);
 				}
@@ -147,22 +142,30 @@ class AddSadhana extends React.Component {
 			days = Config.sadhanaSheetAllowedDays;
 		}
 		const notAllowedDates = this.props.notAllowedDates;
-		
-		if (current <= moment().endOf('day') && current >= moment().subtract(days, 'days')){
+
+		if (
+			current <= moment().endOf('day') &&
+			current >= moment().subtract(days, 'days')
+		) {
 			style.color = 'green';
 			for (let i = 0; i < notAllowedDates.length; i++) {
-			if (moment(current).toDate().toISOString().substring(0, 10) == notAllowedDates[i].toISOString().substring(0, 10))
-				style.color = 'red';
+				if (
+					moment(current)
+						.toDate()
+						.toISOString()
+						.substring(0, 10) ==
+					notAllowedDates[i].toISOString().substring(0, 10)
+				)
+					style.color = 'red';
+			}
 		}
-		}
-			
 
 		return (
 			<div className="ant-calendar-date" style={style}>
 				{current.date()}
 			</div>
 		);
-	}
+	};
 	render() {
 		const { language, firstName, lastName, email } = this.state;
 		const { form } = this.props;
@@ -210,8 +213,13 @@ class AddSadhana extends React.Component {
 								<Form>
 									<div className="row">
 										<div className="col-12">
-											<Button type="danger" onClick={this.props.addSadhanaSheet}
-												className="closeAddSadhanaCard">X</Button>
+											<Button
+												type="danger"
+												onClick={this.props.addSadhanaSheet}
+												className="closeAddSadhanaCard"
+											>
+												X
+											</Button>
 										</div>
 
 										<div className="col-12 my-1 col-md-6">
@@ -262,12 +270,18 @@ class AddSadhana extends React.Component {
 															message: 'This field is required',
 														},
 													],
-												})(<DatePicker dateRender={this.dateRender}
-													disabledDate={this.disabledDate} />)}
+												})(
+													<DatePicker
+														dateRender={this.dateRender}
+														disabledDate={this.disabledDate}
+													/>
+												)}
 											</Form.Item>
 										</div>
 										<div className="col-12 my-1 col-md-6">
-											<Form.Item label={language ? 'Time Rising' : 'Time Rising'}>
+											<Form.Item
+												label={language ? 'Time Rising' : 'Time Rising'}
+											>
 												{form.getFieldDecorator('time_rising', {
 													rules: [
 														{
@@ -494,11 +508,13 @@ class AddSadhana extends React.Component {
 												<Button type="danger" onClick={this.handleReset}>
 													Discard
 												</Button>
-												<Button type="danger" onClick={this.props.addSadhanaSheet}
-													style={{ marginLeft: 20 }}>
+												<Button
+													type="danger"
+													onClick={this.props.addSadhanaSheet}
+													style={{ marginLeft: 20 }}
+												>
 													Close
 												</Button>
-
 											</div>
 										</Form.Item>
 									</div>

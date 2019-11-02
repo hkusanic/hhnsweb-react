@@ -20,6 +20,7 @@ export class SadhanaList extends React.Component {
 			pagination: {},
 			sadhanaList: [],
 			showSadhanaForm: false,
+			sadhanaSheetEnable: false,
 			notAllowedDates: [],
 		};
 	}
@@ -36,6 +37,7 @@ export class SadhanaList extends React.Component {
 			this.setState(
 				{
 					user_id: userDetails.user_id,
+					sadhanaSheetEnable: userDetails.sadhanaSheetEnable,
 					isUserLogin,
 					pagination,
 				},
@@ -114,8 +116,7 @@ export class SadhanaList extends React.Component {
 
 	checkTodaySadhanaSubmitted = () => {
 		let days = 2;
-		if (Config.sadhanaSheetAllowedDays)
-			days = Config.sadhanaSheetAllowedDays;
+		if (Config.sadhanaSheetAllowedDays) days = Config.sadhanaSheetAllowedDays;
 		const { sadhana } = this.props;
 		const { sadhanaList } = sadhana;
 		let arDate = [];
@@ -161,7 +162,6 @@ export class SadhanaList extends React.Component {
 		location.reload();
 	};
 	render() {
-		console.log('whole reducer -====>>>>', this.props.redu);
 		const columns = [
 			{
 				title: 'Date',
@@ -234,7 +234,7 @@ export class SadhanaList extends React.Component {
 						</div>
 					</div>
 				</section>
-				{!this.state.isUserLogin ? (
+				{!this.state.isUserLogin && this.state.sadhanaSheetEnable ? (
 					<div className="PadTop">
 						<div className="container mt-5">
 							<div
@@ -301,7 +301,9 @@ export class SadhanaList extends React.Component {
 											</div>
 										) : (
 											<div style={{ textAlign: 'center' }}>
-												<p className="bookingForm">No Sadhana Sheet Found</p>
+												{!this.state.showSadhanaForm ? (
+													<p className="bookingForm">No Sadhana Sheet Found</p>
+												) : null}
 											</div>
 										)}
 									</div>
@@ -309,7 +311,11 @@ export class SadhanaList extends React.Component {
 							</div>
 						</div>
 					</div>
-				) : null}
+				) : (
+					<div style={{ textAlign: 'center', height: '110px' }}>
+						<p className="bookingForm">Sadhana Sheet is not Enable</p>
+					</div>
+				)}
 			</div>
 		);
 	}
@@ -318,7 +324,6 @@ export class SadhanaList extends React.Component {
 const mapStateToProps = state => {
 	return {
 		sadhana: state.sadhanaReducer,
-		redu: state,
 	};
 };
 

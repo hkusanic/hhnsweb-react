@@ -1,38 +1,38 @@
-import React from "react";
-import { connect } from "react-redux";
-import ReactQuill from "react-quill";
+import React from 'react';
+import { connect } from 'react-redux';
+import ReactQuill from 'react-quill';
 import {
 	getComments,
 	getReplies,
 	createCommet,
 	createReply,
 	deleteComment,
-	resetState
-} from "../../../actions/comment";
-import Comment from "./comment";
+	resetState,
+} from '../../../actions/comment';
+import Comment from './comment';
 
 export class Comments extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			user: {},
-			username: "",
-			subject: "",
-			comment: "",
+			username: '',
+			subject: '',
+			comment: '',
 			comments: [],
-			message1: ""
+			message1: '',
 		};
 		this.props.resetState();
 	}
 	componentDidMount() {
-		const user = JSON.parse(localStorage.getItem("user"));
+		const user = JSON.parse(localStorage.getItem('user'));
 		this.setState(
 			{
-				user
+				user,
 			},
 			() => {
 				this.props.getComments({
-					lecture_uuid: this.props.lecture_uuid
+					lecture_uuid: this.props.lecture_uuid,
 				});
 			}
 		);
@@ -45,14 +45,14 @@ export class Comments extends React.Component {
 		) {
 			this.setState(
 				{
-					username: "",
-					comment: "",
-					subject: "",
-					message1: "Your Comment has been submitted for Approval"
+					username: '',
+					comment: '',
+					subject: '',
+					message1: 'Your Comment has been submitted for Approval',
 				},
 				() => {
 					this.props.getComments({
-						lecture_uuid: this.props.lecture_uuid
+						lecture_uuid: this.props.lecture_uuid,
 					});
 				}
 			);
@@ -62,42 +62,42 @@ export class Comments extends React.Component {
 			nextProps.commentReducer.isCommentDeleted
 		) {
 			this.props.getComments({
-				lecture_uuid: this.props.lecture_uuid
+				lecture_uuid: this.props.lecture_uuid,
 			});
 		}
 	}
 	handleSubject = event => {
 		const value = event.target.value;
-		if (value != "") {
+		if (value != '') {
 			this.setState({
-				message1: "",
-				subject: value
+				message1: '',
+				subject: value,
 			});
 		}
 	};
 	handleComment = event => {
 		const value = event;
-		if (value != "<p><br></p>") {
+		if (value != '<p><br></p>') {
 			this.setState({
-				message1: "",
-				comment: value
+				message1: '',
+				comment: value,
 			});
 		}
 	};
 	handleUsername = event => {
 		const value = event.target.value;
-		if (value != "") {
+		if (value != '') {
 			this.setState({
-				message1: "",
-				username: value
+				message1: '',
+				username: value,
 			});
 		}
 	};
 
 	uuidv4 = () => {
-		return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 			var r = (Math.random() * 16) | 0,
-				v = c == "x" ? r : (r & 0x3) | 0x8;
+				v = c == 'x' ? r : (r & 0x3) | 0x8;
 			return v.toString(16);
 		});
 	};
@@ -109,8 +109,8 @@ export class Comments extends React.Component {
 			message: this.state.comment,
 			subject: this.state.subject,
 			author_email: this.state.user.email,
-			author_name: `${this.state.user.firstName} ${this.state.user.last}`,
-			approved: "2"
+			author_name: `${this.state.user.userName}`,
+			approved: '2',
 		};
 		this.props.createCommet(body);
 	};
@@ -147,11 +147,11 @@ export class Comments extends React.Component {
 									</label>
 									<input
 										className="form-input inputBox"
-										style={{ backgroundColor: "#f6f6f6" }}
+										style={{ backgroundColor: '#f6f6f6' }}
 										type="text"
 										name="name"
 										readOnly={true}
-										value={`${this.state.user.firstName} ${this.state.user.last}`}
+										value={`${this.state.user.userName}`}
 										onChange={event => {
 											this.handleUsername(event);
 										}}
@@ -191,7 +191,7 @@ export class Comments extends React.Component {
 						</div>
 						<div className="group group-middle">
 							<div className="wow-outer">
-								<h4 style={{ color: "orange" }}>{this.state.message1} </h4>
+								<h4 style={{ color: 'orange' }}>{this.state.message1} </h4>
 								<button
 									className="button button-primary button-winona"
 									onClick={event => {
@@ -211,7 +211,7 @@ export class Comments extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		commentReducer: state.commentReducer
+		commentReducer: state.commentReducer,
 	};
 };
 
@@ -234,7 +234,7 @@ const mapDispatchToProps = dispatch => {
 		},
 		resetState: () => {
 			dispatch(resetState());
-		}
+		},
 	};
 };
 

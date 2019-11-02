@@ -9510,7 +9510,7 @@ html.mobile .ui-to-top, html.tablet .ui-to-top {
 }
 
 .rd-navbar-static .rd-nav-item+.rd-nav-item {
-	margin-left: 2%;
+	margin-left: 1.8%;
 }
 
 .rd-navbar-static .rd-nav-link {
@@ -9822,7 +9822,7 @@ html.mobile .ui-to-top, html.tablet .ui-to-top {
 
 @media (min-width: 1200px) {
 	.rd-navbar-static .rd-nav-item+.rd-nav-item {
-		margin-left: 2%;
+		margin-left: 1.8%;
 	}
 }
 

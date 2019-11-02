@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { Icon } from "antd";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { getMkv } from "../../../actions/mkv";
-import Auth from "../../../utils/Auth";
-import Breadcrumb from "react-bootstrap/Breadcrumb";
-import QuoteOfDay from "../../molocules/SingleQuote/QuotesOfDay";
+import React, { Component } from 'react';
+import { Icon } from 'antd';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getMkv } from '../../../actions/mkv';
+import Auth from '../../../utils/Auth';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import QuoteOfDay from '../../molocules/SingleQuote/QuotesOfDay';
 export class MKV extends Component {
 	constructor(props) {
 		super(props);
@@ -13,21 +13,21 @@ export class MKV extends Component {
 			showTabs: false,
 			array: [],
 			selectedMkv: {},
-			isUserLogin: false
+			isUserLogin: false,
 		};
 	}
 
 	componentDidMount() {
 		const isUserLogin = Auth.isUserAuthenticated();
 		this.setState({
-			isUserLogin
+			isUserLogin,
 		});
 		this.props.getMkv({});
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
-			array: nextProps.mkv.mkv
+			array: nextProps.mkv.mkv,
 		});
 	}
 	handleShowTabs = item => {
@@ -36,10 +36,6 @@ export class MKV extends Component {
 	render() {
 		if (!(this.state.array.length > 0)) {
 			return <p>Loading...</p>;
-		}
-
-		if (!localStorage.getItem("user")) {
-			return <QuoteOfDay />;
 		}
 
 		return (
@@ -51,14 +47,14 @@ export class MKV extends Component {
 					className="bg-gray-100"
 					style={{
 						backgroundImage:
-							"url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)"
+							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
 					}}
 				>
 					<div class="breadcrumbs-custom-inner headingImage">
 						<div class="container breadcrumbs-custom-container">
 							<ul class="breadcrumbs-custom-path">
 								<li>
-									<Link to="" onClick={() => this.props.history.push("/")}>
+									<Link to="" onClick={() => this.props.history.push('/')}>
 										<Breadcrumb.Item>Home</Breadcrumb.Item>
 									</Link>
 								</li>
@@ -89,18 +85,18 @@ export class MKV extends Component {
 									<Breadcrumb.Item active>MKV</Breadcrumb.Item>
 								</Breadcrumb>
 							</div> */}
-							<div style={{ textAlign: "center" }}>
+							<div style={{ textAlign: 'center' }}>
 								<p className="title">MKV</p>
 							</div>
-							<div className="row" style={{ margin: 0, textAlign: "center" }}>
+							<div className="row" style={{ margin: 0, textAlign: 'center' }}>
 								{this.state.array.map((item, key) => {
 									return (
 										<div
 											key={key}
 											className={
 												this.state.selectedMkv.year === item.year
-													? "col-sm-6 wow-outer OuterDiv outer"
-													: "col-sm-6 wow-outer OuterDiv"
+													? 'col-sm-6 wow-outer OuterDiv outer'
+													: 'col-sm-6 wow-outer OuterDiv'
 											}
 											onClick={() => this.handleShowTabs({ item })}
 										>
@@ -258,7 +254,7 @@ export class MKV extends Component {
 
 const mapStateToProps = state => {
 	return {
-		mkv: state.mkvReducer
+		mkv: state.mkvReducer,
 	};
 };
 
@@ -266,7 +262,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		getMkv: body => {
 			dispatch(getMkv(body));
-		}
+		},
 	};
 };
 

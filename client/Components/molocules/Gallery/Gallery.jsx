@@ -37,10 +37,6 @@ export class Gallery extends React.Component {
 		let { mainGallery } = galleryReducer;
 		mainGallery = handleFilterGallery(mainGallery);
 
-		if (!localStorage.getItem('user')) {
-			return <QuoteOfDay />;
-		}
-
 		return (
 			<div>
 				<section
