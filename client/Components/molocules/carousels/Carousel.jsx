@@ -51,7 +51,7 @@ export class Carousel2 extends React.Component {
 								heading="Quote of the Day"
 								text={this.props.quote.quotes[0].en.body}
 								author={this.props.quote.quotes[0].author}
-								status={this.state.evenodd}
+								status="even"
 							/>
 						) : null}
 					</div>
