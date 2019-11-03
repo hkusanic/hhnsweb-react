@@ -62,7 +62,7 @@
     "scroll-to-element": "^2.0.3",
     "tough-cookie": "^3.0.0",
     "underscore": "^1.9.1",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

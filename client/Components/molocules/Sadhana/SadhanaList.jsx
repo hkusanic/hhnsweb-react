@@ -295,7 +295,7 @@ export class SadhanaList extends React.Component {
 													rowClassName={(record, index) => {
 														return index % 2 === 0
 															? 'tableRow grey'
-															: 'tableRow white';
+															: 'tableRow';
 													}}
 												/>
 											</div>
