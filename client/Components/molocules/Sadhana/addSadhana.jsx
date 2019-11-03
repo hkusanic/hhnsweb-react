@@ -62,6 +62,7 @@ class AddSadhana extends React.Component {
 			return v.toString(16);
 		});
 	};
+
 	disabledDate(current) {
 		const notAllowedDates = this.props.notAllowedDates;
 		let days = 2;
@@ -87,6 +88,7 @@ class AddSadhana extends React.Component {
 			}
 		}
 	}
+
 	handleSubmit = event => {
 		event.preventDefault();
 		const { form } = this.props;
@@ -135,6 +137,7 @@ class AddSadhana extends React.Component {
 
 		return dateString;
 	};
+
 	dateRender = current => {
 		const style = {};
 		let days = 2;
@@ -166,6 +169,7 @@ class AddSadhana extends React.Component {
 			</div>
 		);
 	};
+
 	render() {
 		const { language, firstName, lastName, email } = this.state;
 		const { form } = this.props;

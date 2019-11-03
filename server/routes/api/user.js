@@ -8,6 +8,7 @@ const AWS = require('aws-sdk');
 const axios = require('axios');
 const fs = require('fs');
 const readFilePromise = require('fs-readfile-promise');
+const uuidv4 = require('uuid/v4');
 
 var transporter = nodemailer.createTransport(
 	EMAIL_CONFIG.CONSTANTS.EMAIL_CONFIG_APPOINTMENT.NODE_MAILER.mail.smtpConfig
@@ -231,7 +232,7 @@ exports.signup = function (req, res) {
 						first: req.body.name ? req.body.name.first : '',
 						last: req.body.name ? req.body.name.last : '',
 					},
-					user_id: req.body.user_id,
+					user_id: req.body.user_id ? req.body.user_id : uuidv4(),
 					userName: req.body.userName,
 					email: req.body.email,
 					password: req.body.password,
@@ -306,6 +307,8 @@ exports.signup = function (req, res) {
 						countryCode: user.countryCode,
 						user_id: user.user_id,
 						youbookme_url: process.env.YOUBOOKME_URL,
+						sadhanaSheetEnable: user.sadhanaSheetEnable,
+						userName: user.userName,
 					},
 				});
 			};

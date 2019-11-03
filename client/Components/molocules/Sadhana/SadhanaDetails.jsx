@@ -22,7 +22,7 @@ export class SadhanaDetails extends React.Component {
 			time_rising: '',
 			userId: '',
 			email: '',
-			customStyleLeft:{},
+			customStyleLeft: {},
 			firstName: '',
 			lastName: '',
 		};
@@ -53,22 +53,23 @@ export class SadhanaDetails extends React.Component {
 			if (singleSadhanaSheet.userId === this.state.userId) {
 				this.setState({
 					sadhanaDetails: singleSadhanaSheet,
-					customStyleLeft: {}
+					customStyleLeft: {},
 				});
 			} else {
 				this.props.history.push('/sadhanaList');
 			}
 		}
-		if(noMoreSadhanaSheet &&  singleSadhanaSheet === undefined){
+		if (noMoreSadhanaSheet && singleSadhanaSheet === undefined) {
 			this.setState({
-				customStyleLeft: { pointerEvents: 'none', opacity: '0.4' }
-			})
+				customStyleLeft: { pointerEvents: 'none', opacity: '0.4' },
+			});
 		}
 	}
 
 	handleReset = () => {
 		const { form } = this.props;
 		form.resetFields();
+		this.props.history.push('/sadhanaList');
 	};
 
 	formatDate = date => {
@@ -139,11 +140,12 @@ export class SadhanaDetails extends React.Component {
 	};
 
 	getNextDaySadhanaSheet = () => {
-		const { sadhanaDetails } = this.state;
+		const { sadhanaDetails, userId } = this.state;
 
 		const nextDate = this.getNextDate(new Date(sadhanaDetails.date));
 		const body = {
 			date: nextDate,
+			userId: userId,
 			email: sadhanaDetails.email,
 		};
 
@@ -151,11 +153,12 @@ export class SadhanaDetails extends React.Component {
 	};
 
 	getPrevDaySadhanaSheet = () => {
-		const { sadhanaDetails } = this.state;
+		const { sadhanaDetails, userId } = this.state;
 
 		const previousDate = this.getPreviousDate(new Date(sadhanaDetails.date));
 		const body = {
 			date: previousDate,
+			userId: userId,
 			email: sadhanaDetails.email,
 		};
 
@@ -163,14 +166,24 @@ export class SadhanaDetails extends React.Component {
 	};
 
 	render() {
-		const { sadhanaDetails, language, customStyleLeft, email, firstName, lastName } = this.state;
+		const {
+			sadhanaDetails,
+			language,
+			customStyleLeft,
+			email,
+			firstName,
+			lastName,
+		} = this.state;
 		const { form } = this.props;
 		const dateFormat = 'YYYY/MM/DD';
 
-		let customStyleRight = {}
+		let customStyleRight = {};
 
-		if (sadhanaDetails.date === this.formatDate(new Date()) || sadhanaDetails.noMoreSadhanaSheet) {
-			customStyleRight = { pointerEvents: 'none', opacity: '0.4' }
+		if (
+			sadhanaDetails.date === this.formatDate(new Date()) ||
+			sadhanaDetails.noMoreSadhanaSheet
+		) {
+			customStyleRight = { pointerEvents: 'none', opacity: '0.4' };
 		}
 
 		if (!sadhanaDetails) {
@@ -418,7 +431,7 @@ export class SadhanaDetails extends React.Component {
 														Update
 													</Button>
 												</span>
-												<Button type="danger" onClick={this.handlereset}>
+												<Button type="danger" onClick={this.handleReset}>
 													Discard
 												</Button>
 											</div>

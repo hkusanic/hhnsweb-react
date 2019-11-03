@@ -120,7 +120,7 @@ exports.create = function (req, res) {
 	var item = new Sadhana.model();
 	var data = req.method === 'POST' ? req.body : req.query;
 	data.user = mongoose.Types.ObjectId(data.user);
-	data.date = data.date.substring(0,10);
+	data.date = data.date.substring(0, 10);
 	// data.date = todayDate();
 	logger.info(
 		{
