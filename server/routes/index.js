@@ -3,7 +3,8 @@ let modelHelper = require('../helpers/modelHelper');
 var path = require('path');
 var webpack = require('webpack');
 var webpackConfig = require('../../webpack.config');
-var compiler = webpack(webpackConfig)
+var compiler = webpack(webpackConfig);
+const sadhanaRoutes = require('./sadhana');
 
 
 // Then to get access to our API route we will use importer
@@ -19,24 +20,25 @@ var multipartMiddleware = multipart();
 // Export our app routes
 exports = module.exports = function (app) {
 	// Get access to the API route in our app
-	app.use(require("webpack-dev-middleware")(compiler, {
+	app.use(require('webpack-dev-middleware')(compiler, {
 		hot: true, noInfo: true,
 		// contentBase: '/server/public',
 		publicPath: webpackConfig.output.publicPath,
 		historyApiFallBack: true,
 		proxy: {
-			"*": "http://localhost:3000"
+			'*': 'http://localhost:3000',
 		},
 	}));
-	app.use(require("webpack-hot-middleware")(compiler, {
+	app.use(require('webpack-hot-middleware')(compiler, {
 		hot: true, noInfo: true,
 		// contentBase: '/server/public/',
 		publicPath: webpackConfig.output.publicPath,
 		historyApiFallBack: true,
 		proxy: {
-			"*": "http://localhost:3000"
+			'*': 'http://localhost:3000',
 		},
 	}));
+	app.use('/api/sadhana/', keystone.middleware.api, sadhanaRoutes);
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
 	app.get('/api/content/', keystone.middleware.api, routes.api.content.list);
 	app.get('/api/content/getLimitedList', keystone.middleware.api, routes.api.content.getlimitedlist);
@@ -133,12 +135,12 @@ exports = module.exports = function (app) {
 	app.get('/api/appointment/', keystone.middleware.api, routes.api.appointment.list);
 	app.get('/api/blog/generateUploadUrl/', keystone.middleware.api, routes.api.blog.generateUploadUrl);
 	app.get('/api/blog/deleteFile/', keystone.middleware.api, routes.api.blog.deleteFile);
-	app.post('/api/sadhana/find/', keystone.middleware.api, routes.api.sadhana.get);
-	app.get('/api/sadhana/', keystone.middleware.api, routes.api.sadhana.list);
-	app.post('/api/sadhana/getSadhanaById/', keystone.middleware.api, routes.api.sadhana.getSadhanaById);
-	app.post('/api/sadhana/create/', keystone.middleware.api, routes.api.sadhana.create);
-	app.all('/api/sadhana/:id/update', keystone.middleware.api, routes.api.sadhana.update);
-	app.post('/api/sadhana/:id/remove', keystone.middleware.api, routes.api.sadhana.remove);
+	// app.post('/api/sadhana/find/', keystone.middleware.api, routes.api.sadhana.get);
+	// app.get('/api/sadhana/', keystone.middleware.api, routes.api.sadhana.list);
+	// app.post('/api/sadhana/getSadhanaById/', keystone.middleware.api, routes.api.sadhana.getSadhanaById);
+	// app.post('/api/sadhana/create/', keystone.middleware.api, routes.api.sadhana.create);
+	// app.all('/api/sadhana/:id/update', keystone.middleware.api, routes.api.sadhana.update);
+	// app.post('/api/sadhana/:id/remove', keystone.middleware.api, routes.api.sadhana.remove);
 	app.get('/api/fileupload/list', keystone.middleware.api, routes.api.fileupload.list);
 	app.get('/api/fileupload/:id', keystone.middleware.api, routes.api.fileupload.get);
 	app.all('/api/fileupload/:id/update', keystone.middleware.api, routes.api.fileupload.update);
@@ -167,7 +169,7 @@ exports = module.exports = function (app) {
 		// Render some simple boilerplate html
 		console.log('====>', req.originalUrl);
 
-		function renderFullPage(result) {
+		function renderFullPage (result) {
 			// Note the div class name here, we will use that as a hook for our React code
 			// static menu  <!doctype html>
 			return `
