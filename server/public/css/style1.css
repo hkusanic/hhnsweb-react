@@ -568,7 +568,7 @@
 	/* display: flex; */
 	/* margin-right: 5%; */
 	margin-top: -2%;
-	margin-left: 18%;
+	margin-left: 20%;
 	/* margin-left: 35vh; */
 	/* position: relative;
 	right: -29%; */
@@ -583,9 +583,9 @@
 .nav_span_xlg {
 	justify-content: space-between;
 	/* display: flex; */
-	/* margin-right: 5%; */
+	margin-right: 3%;
 	margin-top: -2%;
-	margin-left: 24%;
+	margin-left: 42%;
 }
 
 .nav_language {

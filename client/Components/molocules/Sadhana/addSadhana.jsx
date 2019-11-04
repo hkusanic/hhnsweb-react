@@ -276,8 +276,8 @@ class AddSadhana extends React.Component {
 													],
 												})(
 													<DatePicker
-														dateRender={this.dateRender}
-														disabledDate={this.disabledDate}
+													// dateRender={this.dateRender}
+													// disabledDate={this.disabledDate}
 													/>
 												)}
 											</Form.Item>

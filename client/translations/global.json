@@ -39,7 +39,7 @@
     "blog": ["Blog", "Блог"],
     "calendar": ["Calendar", "КАЛЕНДАРЬ"],
     "availability": ["AVAILABILITY", "ДОСТУПНОСТЬ"],
-    "booking": ["BOOKING", "ЗАПИСЬ"],
+    "booking": ["Booking", "ЗАПИСЬ"],
     "contacts": ["Contacts", "контакты"],
     "login": ["LOG IN", "АВТОРИЗОВАТЬСЯ"],
     "Register": ["REGISTRATION", "РЕГИСТРАЦИЯ"],

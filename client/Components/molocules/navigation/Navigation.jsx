@@ -472,7 +472,7 @@ export class Navigation extends Component {
 														</Translate>
 													</Link>
 												</li>
-												<li className="rd-nav-item">
+												{/* <li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
 															this.state.index === 4 ? 'active1' : null
@@ -490,8 +490,38 @@ export class Navigation extends Component {
 															}
 														</Translate>
 													</Link>
+												</li> */}
+												<li className="rd-nav-item">
+													<Link
+														className={`rd-nav-link ${
+															this.state.index === 4 ? 'active1' : ''
+														} ${maxWidth <= 1210 ? 'gap' : null} `}
+														to="/booking"
+														onClick={() => {
+															this.handleNavigationClick(4);
+														}}
+													>
+														<Translate>
+															{({ translate }) => translate('HOME.booking')}
+														</Translate>
+													</Link>
 												</li>
 												<li className="rd-nav-item">
+													<Link
+														className={`rd-nav-link ${
+															this.state.index === 5 ? 'active1' : ''
+														} ${maxWidth <= 1210 ? 'gap' : null} `}
+														to="/calender"
+														onClick={() => {
+															this.handleNavigationClick(5);
+														}}
+													>
+														<Translate>
+															{({ translate }) => translate('HOME.calendar')}
+														</Translate>
+													</Link>
+												</li>
+												{/* <li className="rd-nav-item">
 													<Link
 														className={`rd-nav-link ${
 															this.state.index === 5 ? 'active1' : null
@@ -507,7 +537,7 @@ export class Navigation extends Component {
 															{({ translate }) => translate('HOME.Summaries')}
 														</Translate>
 													</Link>
-												</li>
+												</li> */}
 												{!this.state.isUserLogin ? (
 													<li className="rd-nav-item">
 														<Link

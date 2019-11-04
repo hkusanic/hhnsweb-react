@@ -29,7 +29,6 @@ Sadhana.add({
 	userId: { type: String },
 	user: { type: Types.Relationship, ref: 'User' },
 	created_date_time: { type: Types.Date, default: Date.now },
-
 });
 
 Sadhana.register();
