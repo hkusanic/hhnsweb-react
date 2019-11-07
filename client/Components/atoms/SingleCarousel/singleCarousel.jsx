@@ -36,7 +36,7 @@ class SingleCarousel extends Component {
 								</p>
 
 								<p className="singleCarousel_p2_sm_even">
-									A.C Bhakthivedanta Swami Prabhupada
+									A.C Bhaktivedanta Swami Prabhupada
 								</p>
 							</div>
 						</div>
@@ -58,7 +58,7 @@ class SingleCarousel extends Component {
 								</p>
 
 								<p className="singleCarousel_p2_sm_odd">
-									A.C Bhakthivedanta Swami Prabhupada
+									A.C Bhaktivedanta Swami Prabhupada
 								</p>
 							</div>
 						</div>
@@ -82,7 +82,7 @@ class SingleCarousel extends Component {
 									</p>
 
 									<p className="singleCarousel_p2_lg_even">
-										A.C Bhakthivedanta Swami Prabhupada
+										A.C Bhaktivedanta Swami Prabhupada
 									</p>
 								</div>
 							</div>
@@ -105,7 +105,7 @@ class SingleCarousel extends Component {
 									</p>
 
 									<p className="singleCarousel_p2_lg_odd">
-										A.C Bhakthivedanta Swami Prabhupada
+										A.C Bhaktivedanta Swami Prabhupada
 									</p>
 								</div>
 							</div>
