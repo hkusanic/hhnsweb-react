@@ -21,6 +21,10 @@ const errors = {
 		code: 'MISSING_ASSOCIATION',
 		msg: 'Sadhana Sheet asociations is not provided',
 	},
+	missingEmail: {
+		code: 'MISSING_EMAIL',
+		msg: 'Email id is not provided',
+	},
 };
 
 module.exports = {

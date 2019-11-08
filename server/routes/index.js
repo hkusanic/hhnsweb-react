@@ -5,7 +5,7 @@ var webpack = require('webpack');
 var webpackConfig = require('../../webpack.config');
 var compiler = webpack(webpackConfig);
 const sadhanaRoutes = require('./sadhana');
-
+const userVerifyRoutes = require('./userVerify');
 
 // Then to get access to our API route we will use importer
 var importRoutes = keystone.importer(__dirname);
@@ -38,6 +38,7 @@ exports = module.exports = function (app) {
 			'*': 'http://localhost:3000',
 		},
 	}));
+	app.use('/api/userVerify/', keystone.middleware.api, userVerifyRoutes);
 	app.use('/api/sadhana/', keystone.middleware.api, sadhanaRoutes);
 	app.get('/api/recipe/', keystone.middleware.api, routes.api.recipe.list);
 	app.get('/api/content/', keystone.middleware.api, routes.api.content.list);

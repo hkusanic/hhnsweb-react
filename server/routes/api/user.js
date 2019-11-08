@@ -741,6 +741,30 @@ exports.approvedUserForSadhana = function (req, res) {
 					);
 					return res.apiError('Enable Sadhana Sheet Error', err);
 				}
+				const subject = 'Sadhana Sheet Access Approved';
+				const html = `
+	  <p>Hare Krishna,</p>
+	  <p>Please accept our humble obeisances.</p>
+	  <p>All glories to Srila Prabhupada!</p>
+	  <br/>
+	  <p>You have been access to use sadhana sheet</p>
+	  <br/>
+	  <p>Your servants always,</p>
+	  <p>Site administrators</p>
+	  `;
+				sendMail('shailedra@cronj.com', user.email, subject, html)
+					.then(res => {
+						console.log('email was sent', res)		
+					})
+					.catch(err => {
+						logger.error(
+							{
+								error: err,
+							},
+							'API forgotpassword'
+						);
+						console.error(err);
+					});
 
 				res.json({
 					isSadhanaSheetEnable: true,

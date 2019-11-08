@@ -3,7 +3,7 @@ const sadhanaService = require('../services/sadhana');
 const { handleError } = require('../utils/error.handler');
 const { logger } = require('../logger/newLogger');
 
-exports.list = function (req, res) {
+exports.list = async function (req, res) {
 	let query = [];
 	let isError = false;
 	let errors = [];
@@ -61,7 +61,7 @@ exports.list = function (req, res) {
 		});
 };
 
-exports.getSadhanaById = function (req, res) {
+exports.getSadhanaById = async function (req, res) {
 	let errors = [];
 	let isError = false;
 	const body = req.body;
@@ -93,7 +93,7 @@ exports.getSadhanaById = function (req, res) {
 		});
 };
 
-exports.createSadhanaSheet = function (req, res) {
+exports.createSadhanaSheet = async function (req, res) {
 	let isError = false;
 	let errors = [];
 	const body = req.body;
@@ -150,7 +150,7 @@ exports.createSadhanaSheet = function (req, res) {
 		});
 };
 
-exports.deleteSadhanaSheet = function (req, res) {
+exports.deleteSadhanaSheet = async function (req, res) {
 	let isError = false;
 	let errors = [];
 	const id = req.params.id;
@@ -185,7 +185,7 @@ exports.deleteSadhanaSheet = function (req, res) {
 		});
 };
 
-exports.updateSadhanaSheet = function (req, res) {
+exports.updateSadhanaSheet = async function (req, res) {
 	let isError = false;
 	let errors = [];
 	const body = req.body;
