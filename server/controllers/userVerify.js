@@ -53,8 +53,15 @@ exports.createUser = async function (req, res) {
 			return userVerifyServices.createUser(req);
 		})
 		.then(data => {
+			return userVerifyServices.sendNewUserSubmissionEmail(
+				process.env.USER_VERIFY_ADMIN_EMIAL
+			);
+		})
+		.then(data => {
 			logger.info('Creating User Verify API Succeed');
-			res.status(200).json({ user: data, isCreated: true });
+			res
+				.status(200)
+				.json({ meaage: 'Data is submitted successfully', isCreated: true });
 		})
 		.catch(err => {
 			if (isError) {

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const ketstone = require('keystone');
 const UserVerify = ketstone.list('UserVerify');
+const emailService = require('../services/email.service');
 
 exports.getUserList = function (body) {
 	return new Promise(function (resolve, reject) {
@@ -90,6 +91,30 @@ exports.deleteUser = function (id) {
 					}
 					return resolve(true);
 				});
+			});
+	});
+};
+
+exports.sendNewUserSubmissionEmail = function (emails) {
+	return new Promise(function (resolve, reject) {
+		const subject = 'New User submitted the details';
+		const html = `
+	  <p>Hare Krishna,</p>
+	  <p>Please accept our humble obeisances.</p>
+	  <p>All glories to Srila Prabhupada!</p>
+	  <br/>
+	  <p>A new user is submit the user verify data</p>
+	  <br/>
+	  <p>Your servants always,</p>
+		<p>Site administrators</p>`;
+		emailService
+			.sendMail('shailedra@cronj.com', emails, subject, html)
+			.then(res => {
+				resolve(res);
+				console.log('email was sent', res);
+			})
+			.catch(err => {
+				reject(err);
 			});
 	});
 };
