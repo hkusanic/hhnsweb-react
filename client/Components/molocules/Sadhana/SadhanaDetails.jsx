@@ -107,6 +107,7 @@ export class SadhanaDetails extends React.Component {
 		event.preventDefault();
 		const { form } = this.props;
 		const { time_rising, userId, sadhanaDetails } = this.state;
+		const { isEnglishDominantLanguage } = sadhanaDetails;
 
 		form.validateFields(
 			[
@@ -132,6 +133,7 @@ export class SadhanaDetails extends React.Component {
 						lectures: form.getFieldValue('lectures'),
 						additional_comments: form.getFieldValue('additional_comments'),
 						userId,
+						isEnglishDominantLanguage,
 					};
 					this.props.updateSadhana(sadhanaDetails.uuid, body);
 				}
