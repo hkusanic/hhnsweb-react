@@ -252,7 +252,7 @@ exports.deleteSadhanaSheet = async function (req, res) {
 exports.updateSadhanaSheet = async function (req, res) {
 	let isError = false;
 	let errors = [];
-	const body = req.body;
+	let body = req.body;
 	return new Promise(function (resolve, reject) {
 		if (!body.uuid) {
 			isError = true;
@@ -268,6 +268,48 @@ exports.updateSadhanaSheet = async function (req, res) {
 			return resolve(true);
 		}
 	})
+		.then(async resolved => {
+			if (body.isEnglishDominantLanguage === false) {
+				body.ru = {
+					reading: body.reading,
+					association: body.association,
+					comments: body.comments ? body.comments : '',
+					additional_comments: body.additional_comments
+						? body.additional_comments
+						: '',
+					lectures: body.lectures ? body.lectures : '',
+				};
+				const ruSadhanaData = [];
+				ruSadhanaData[0] = body.reading;
+				ruSadhanaData[1] = body.association;
+				ruSadhanaData[2] = body.comments;
+				ruSadhanaData[3] = body.additional_comments;
+				ruSadhanaData[4] = body.lectures;
+				const convertedData = await sadhanaService.convertDataIntoOtherLanguage(
+					ruSadhanaData,
+					'en'
+				);
+				body.en = {
+					reading: convertedData[0].translatedText,
+					association: convertedData[1].translatedText,
+					comments: convertedData[2].translatedText,
+					additional_comments: convertedData[3].translatedText,
+					lectures: convertedData[4].translatedText,
+				};
+				return true;
+			} else if (body.isEnglishDominantLanguage === true) {
+				body.en = {
+					reading: body.reading,
+					association: body.association,
+					comments: body.comments ? body.comments : '',
+					additional_comments: body.additional_comments
+						? body.additional_comments
+						: '',
+					lectures: body.lectures ? body.lectures : '',
+				};
+				return true;
+			}
+		})
 		.then(resolved => {
 			return sadhanaService.updateSadhanaSheet(req);
 		})
