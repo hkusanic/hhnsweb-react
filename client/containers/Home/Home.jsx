@@ -1,62 +1,63 @@
-import React, { Component } from 'react';
-import script from '../../assets/script.js';
-import Navigation from '../../Components/molocules/navigation/Navigation';
-import Carousel from '../../Components/molocules/carousels/Carousel';
-import Footer from '../../Components/molocules/Footer/Footer';
-import Blog from '../../containers/Blog/Blog';
-import Calender from '../../containers/Calender/Calender';
-import Lectures from '../../containers/Lectures/Lectures';
-import Quotes from '../../containers/Quote/Quote';
-import Booking from '../../containers/Booking/Booking';
-import BlogDetails from '../../Components/molocules/SingleBlog/BlogDetails';
-import BiographyDetails from '../../Components/molocules/Biography/BiographyDetails';
-import LectureDetails from '../../Components/molocules/SingleLecture/LectureDetails';
-import QuoteDetails from '../../Components/molocules/SingleQuote/QuoteDetails';
-import AudioList from './../../Components/molocules/Audio/AudioList';
-import VideoList from '../../Components/molocules/Video/VideoList';
-import AudioDetails from '../../Components/molocules/Audio/AudioDetails';
-import VideoDetails from '../../Components/molocules/Video/VideoDetails';
-import ForgotPassword from '../../Components/organisms/Form/ForgotPassword';
-import ShellCompoenent from '../../Components/organisms/ShellComponent/ShellComponent';
-import ResetPassword from '../../Components/organisms/Form/ResetPasswordForm';
-import updatePassword from '../../Components/organisms/Form/updatePassword';
-import UserProfile from '../../Components/molocules/Profile/UserProfile';
-import Registration from '../../Components/molocules/Registration/Registration';
-import Contact from '../../Components/organisms/Form/Contact';
-import AppointmentListing from '../../Components/molocules/AppointmentListing/AppointmentListing';
-import Photos from '../../Components/molocules/Photos/Photos';
-import Gallery from '../../Components/molocules/Gallery/Gallery';
-import SubGallery from '../../Components/molocules/Gallery/SubGallery';
-import ScrollToTop from '../../Components/atoms/ScrollToTop/ScrollToTop';
-import Summaries from '../../Components/molocules/Summaries/Summaries';
-import Transcritpion from '../../Components/molocules/Transcriptions/Transcriptions';
-import TranscriptionDetails from '../../Components/molocules/Transcriptions/TranscriptionsDetails';
-import SummariesDetails from '../../Components/molocules/Summaries/SummariesDetails';
-import Kirtan from '../../Components/molocules/Kirtan/Kirtan';
-import KirtanDetails from '../../Components/molocules/Kirtan/KirtanDetails';
-import MKV from '../../Components/molocules/MKV/mkv';
-import SadhanaList from '../../Components/molocules/Sadhana/SadhanaList';
-import SadhanaDetails from '../../Components/molocules/Sadhana/SadhanaDetails';
-import AddSadhana from '../../Components/molocules/Sadhana/addSadhana';
-import UpdateProfile from '../../Components/molocules/UpdateProfile/UpdateProfile';
+import React, { Component } from "react";
+import script from "../../assets/script.js";
+import Navigation from "../../Components/molocules/navigation/Navigation";
+import Carousel from "../../Components/molocules/carousels/Carousel";
+import Footer from "../../Components/molocules/Footer/Footer";
+import Blog from "../../containers/Blog/Blog";
+import Calender from "../../containers/Calender/Calender";
+import Lectures from "../../containers/Lectures/Lectures";
+import Quotes from "../../containers/Quote/Quote";
+import Booking from "../../containers/Booking/Booking";
+import BlogDetails from "../../Components/molocules/SingleBlog/BlogDetails";
+import BiographyDetails from "../../Components/molocules/Biography/BiographyDetails";
+import LectureDetails from "../../Components/molocules/SingleLecture/LectureDetails";
+import QuoteDetails from "../../Components/molocules/SingleQuote/QuoteDetails";
+import AudioList from "./../../Components/molocules/Audio/AudioList";
+import VideoList from "../../Components/molocules/Video/VideoList";
+import AudioDetails from "../../Components/molocules/Audio/AudioDetails";
+import VideoDetails from "../../Components/molocules/Video/VideoDetails";
+import ForgotPassword from "../../Components/organisms/Form/ForgotPassword";
+import ShellCompoenent from "../../Components/organisms/ShellComponent/ShellComponent";
+import ResetPassword from "../../Components/organisms/Form/ResetPasswordForm";
+import updatePassword from "../../Components/organisms/Form/updatePassword";
+import UserProfile from "../../Components/molocules/Profile/UserProfile";
+import Registration from "../../Components/molocules/Registration/Registration";
+import Contact from "../../Components/organisms/Form/Contact";
+import AppointmentListing from "../../Components/molocules/AppointmentListing/AppointmentListing";
+import Photos from "../../Components/molocules/Photos/Photos";
+import Gallery from "../../Components/molocules/Gallery/Gallery";
+import SubGallery from "../../Components/molocules/Gallery/SubGallery";
+import ScrollToTop from "../../Components/atoms/ScrollToTop/ScrollToTop";
+import Summaries from "../../Components/molocules/Summaries/Summaries";
+import Transcritpion from "../../Components/molocules/Transcriptions/Transcriptions";
+import TranscriptionDetails from "../../Components/molocules/Transcriptions/TranscriptionsDetails";
+import SummariesDetails from "../../Components/molocules/Summaries/SummariesDetails";
+import Kirtan from "../../Components/molocules/Kirtan/Kirtan";
+import KirtanDetails from "../../Components/molocules/Kirtan/KirtanDetails";
+import MKV from "../../Components/molocules/MKV/mkv";
+import SadhanaList from "../../Components/molocules/Sadhana/SadhanaList";
+import SadhanaDetails from "../../Components/molocules/Sadhana/SadhanaDetails";
+import AddSadhana from "../../Components/molocules/Sadhana/addSadhana";
+import UpdateProfile from "../../Components/molocules/UpdateProfile/UpdateProfile";
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch } from "react-router-dom";
+import DiscipleSignup from "../DiscipleSignup/DiscipleSignup.jsx";
 
 export class Home extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			isLogin: false,
 			isAdmin: false,
-			userId: '',
+			userId: ""
 		};
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		script();
 	}
 
-	render () {
+	render() {
 		return (
 			<div>
 				<div className="page">
@@ -117,6 +118,7 @@ export class Home extends Component {
 									component={SadhanaDetails}
 								/>
 								<Route path="/addSadhana" component={AddSadhana} />
+								<Route path="/discipleSignup" component={DiscipleSignup} />
 							</ShellCompoenent>
 						</ScrollToTop>
 					</Switch>
