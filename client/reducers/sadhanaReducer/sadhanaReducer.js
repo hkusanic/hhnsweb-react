@@ -10,6 +10,8 @@ const initialState = {
 	currentPage: 1,
 	singleSadhanaSheet: '',
 	noMoreSadhanaSheet: false,
+	isDetectedLanguageCorrect: null,
+	isEnglishDominantLanguage: null,
 };
 
 const sadhanaReducer = (state = initialState, action) => {
@@ -60,13 +62,35 @@ const sadhanaReducer = (state = initialState, action) => {
 			break;
 
 		case types.GET_SINGLE_SHEET_BY_DATE_USER:
-
 			state = {
 				...state,
 				singleSadhanaSheet: action.payload,
 				noMoreSadhanaSheet: true,
 			};
 			break;
+
+		case types.DETECT_LANGUAGE:
+			const detectedArray = action.payload.data.data.language;
+			let isDetectedLanguageCorrect = null;
+			let isEnglishDominantLanguage = null;
+			if (detectedArray[0].language === detectedArray[1].language) {
+				isDetectedLanguageCorrect = true;
+				if (detectedArray[0].language === 'en') {
+					isEnglishDominantLanguage = true;
+				}
+				if (detectedArray[0].language === 'ru') {
+					isEnglishDominantLanguage = false;
+				}
+			} else {
+				isDetectedLanguageCorrect = false;
+			}
+			state = {
+				...state,
+				isDetectedLanguageCorrect,
+				isEnglishDominantLanguage,
+			};
+			break;
+
 		default:
 			return state;
 	}

@@ -2,10 +2,7 @@ require('dotenv').config();
 const ketstone = require('keystone');
 const mongoose = require('mongoose');
 const Sadhana = ketstone.list('Sadhana');
-const googleTranslate = require('google-translate')(
-	process.env.GOOGLE_API_KEY,
-	{ concurrentLimit: 20 }
-);
+const googleTranslate = require('google-translate')(process.env.GOOGLE_API_KEY, { concurrentLimit: 20 });
 
 exports.list = function (body) {
 	return new Promise(function (resolve, reject) {
@@ -108,7 +105,7 @@ exports.checkLanguageType = function (body) {
 			if (err) {
 				return reject(err);
 			} else {
-				return resolve(detection.language);
+				return resolve(detection);
 			}
 		});
 	});
@@ -123,5 +120,22 @@ exports.convertDataIntoOtherLanguage = async function (data, targetlanguage) {
 				resolve(translation);
 			}
 		});
+	});
+};
+
+exports.isSheetExistForUser = async function (userId, date) {
+	return new Promise(function (resolve, reject) {
+		Sadhana.model
+			.findOne()
+			.where({ userId: userId, date: date.substring(0, 10) })
+			.exec(function (err, sadhanaDetails) {
+				if (err) {
+					return reject(err);
+				} else if (!sadhanaDetails) {
+					return resolve(false);
+				} else {
+					return resolve(true);
+				}
+			});
 	});
 };

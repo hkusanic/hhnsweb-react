@@ -126,10 +126,7 @@ exports.createSadhanaSheet = async function (req, res) {
 			isError = true;
 			handleError('missingSadhanaAssociation', errors);
 		}
-		if (
-			body.isEnglishDominantLanguage === undefined
-			|| body.isEnglishDominantLanguage === null
-		) {
+		if (body.isEnglishDominantLanguage === undefined || body.isEnglishDominantLanguage === null) {
 			isError = true;
 			handleError('missingDominantLanguage', errors);
 		}
@@ -139,46 +136,51 @@ exports.createSadhanaSheet = async function (req, res) {
 			return resolve(true);
 		}
 	})
+		.then(data1 => {
+			return sadhanaService.isSheetExistForUser(body.userId, body.date);
+		})
 		.then(async resolved => {
-			if (!body.isEnglishDominantLanguage) {
-				body.ru = {
-					reading: body.reading,
-					association: body.association,
-					comments: body.comments ? body.comments : '',
-					additional_comments: body.additional_comments
-						? body.additional_comments
-						: '',
-					lectures: body.lectures ? body.lectures : '',
+			if (resolved === false) {
+				if (!body.isEnglishDominantLanguage) {
+					body.ru = {
+						reading: body.reading,
+						association: body.association,
+						comments: body.comments ? body.comments : '',
+						additional_comments: body.additional_comments ? body.additional_comments : '',
+						lectures: body.lectures ? body.lectures : '',
+					};
+					const ruSadhanaData = [];
+					ruSadhanaData[0] = body.reading;
+					ruSadhanaData[1] = body.association;
+					ruSadhanaData[2] = body.comments;
+					ruSadhanaData[3] = body.additional_comments;
+					ruSadhanaData[4] = body.lectures;
+					const convertedData = await sadhanaService.convertDataIntoOtherLanguage(ruSadhanaData, 'en');
+					body.en = {
+						reading: convertedData[0].translatedText,
+						association: convertedData[1].translatedText,
+						comments: convertedData[2].translatedText,
+						additional_comments: convertedData[3].translatedText,
+						lectures: convertedData[4].translatedText,
+					};
+					return true;
+				} else {
+					body.en = {
+						reading: body.reading,
+						association: body.association,
+						comments: body.comments ? body.comments : '',
+						additional_comments: body.additional_comments ? body.additional_comments : '',
+						lectures: body.lectures ? body.lectures : '',
+					};
+					return true;
+				}
+			} else if (resolved === true) {
+				const errorMessage = {
+					message: 'Sadhana sheet is already submitted for this date',
+					isAlreadyExist: true,
+					isCreated: false,
 				};
-				const ruSadhanaData = [];
-				ruSadhanaData[0] = body.reading;
-				ruSadhanaData[1] = body.association;
-				ruSadhanaData[2] = body.comments;
-				ruSadhanaData[3] = body.additional_comments;
-				ruSadhanaData[4] = body.lectures;
-				const convertedData = await sadhanaService.convertDataIntoOtherLanguage(
-					ruSadhanaData,
-					'en'
-				);
-				body.en = {
-					reading: convertedData[0].translatedText,
-					association: convertedData[1].translatedText,
-					comments: convertedData[2].translatedText,
-					additional_comments: convertedData[3].translatedText,
-					lectures: convertedData[4].translatedText,
-				};
-				return true;
-			} else {
-				body.en = {
-					reading: body.reading,
-					association: body.association,
-					comments: body.comments ? body.comments : '',
-					additional_comments: body.additional_comments
-						? body.additional_comments
-						: '',
-					lectures: body.lectures ? body.lectures : '',
-				};
-				return true;
+				throw errorMessage;
 			}
 		})
 		.then(resolved2 => {
@@ -186,14 +188,16 @@ exports.createSadhanaSheet = async function (req, res) {
 		})
 		.then(data => {
 			logger.info('Creating Sadhana Sheet API Succeed');
-			res.status(200).json({ sadhana: data, isCreated: true });
+			res.status(200).json({ sadhana: data, isCreated: true, isAlreadyExist: false });
 		})
 		.catch(err => {
 			if (isError) {
 				res.status(400).json({ Errors: errors });
+			} else if (err.isAlreadyExist) {
+				res.status(400).json(err);
 			} else {
 				logger.error(err);
-				res.status(500).json({ Errors: err });
+				res.status(500).json(err);
 			}
 		});
 };

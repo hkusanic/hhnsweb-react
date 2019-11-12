@@ -2,7 +2,6 @@ import sadhanaApi from '../utils/api/sadhana';
 import * as types from '../constants/index';
 import { notification } from 'antd';
 
-
 export function getSadhanaList (body, type) {
 	return dispatch => {
 		sadhanaApi
@@ -44,14 +43,23 @@ export function createSadhana (body) {
 				dispatch(createSadhanaSheetAction(response));
 			})
 			.catch(err => {
-				notification.error({
-					message: 'Error',
-					description: `Some error occured, please try again.`,
-					style: {
-						marginTop: 50,
-					},
-				});
-				console.error(err);
+				if (err.response.data && err.response.data.isAlreadyExist === true) {
+					notification.error({
+						message: 'Error',
+						description: err.response.data.message,
+						style: {
+							marginTop: 50,
+						},
+					});
+				} else {
+					notification.error({
+						message: 'Error',
+						description: `Some error occured, please try again.`,
+						style: {
+							marginTop: 50,
+						},
+					});
+				}
 			});
 	};
 }
@@ -98,7 +106,25 @@ export function getSadhanaById (body) {
 						marginTop: 50,
 					},
 				});
-				console.error(err);
+			});
+	};
+}
+
+export function detectLanguage (body) {
+	return dispatch => {
+		sadhanaApi
+			.detectLanguage(body)
+			.then(response => {
+				dispatch(detectLanguageAction(response));
+			})
+			.catch(err => {
+				notification.error({
+					message: 'Error',
+					description: `Some error occured, please try again.`,
+					style: {
+						marginTop: 50,
+					},
+				});
 			});
 	};
 }
@@ -134,6 +160,13 @@ export function getSadhanaByIdAction (data) {
 export function getSingleSadhanaSheetByDate (data) {
 	return {
 		type: types.GET_SINGLE_SHEET_BY_DATE_USER,
+		payload: data,
+	};
+}
+
+export function detectLanguageAction (data) {
+	return {
+		type: types.DETECT_LANGUAGE,
 		payload: data,
 	};
 }

@@ -1,12 +1,9 @@
 import React from 'react';
-import { Form, Input, Button, DatePicker, TimePicker } from 'antd';
-import { Link } from 'react-router-dom';
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { Form, Input, Button, DatePicker, TimePicker, notification } from 'antd';
 import Auth from '../../../utils/Auth';
 import moment from 'moment';
-import { createSadhana } from '../../../actions/sadhanaAction';
+import { createSadhana, detectLanguage } from '../../../actions/sadhanaAction';
 import { connect } from 'react-redux';
-import { relative } from 'path';
 const Config = require('Config');
 const { TextArea } = Input;
 
@@ -21,6 +18,7 @@ class AddSadhana extends React.Component {
 			email: '',
 			userId: '',
 			time_rising: '',
+			isEnglishDominantLanguage: null,
 		};
 		this.disabledDate = this.disabledDate.bind(this);
 		this.dateRender = this.dateRender.bind(this);
@@ -40,9 +38,36 @@ class AddSadhana extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		const { isDetectedLanguageCorrect, isEnglishDominantLanguage } = this.props.sadhana;
 		if (nextProps.sadhana.isCreated) {
 			// this.props.history.push('/sadhanaList');
 			this.props.refreshPage();
+		}
+		if (
+			isDetectedLanguageCorrect !== nextProps.sadhana.isDetectedLanguageCorrect &&
+			nextProps.sadhana.isDetectedLanguageCorrect === false
+		) {
+			notification.error({
+				message: 'Error',
+				description: `Please Fill the sadhana sheet only in one language.`,
+				style: {
+					marginTop: 50,
+				},
+			});
+		}
+		if (
+			isEnglishDominantLanguage !== nextProps.sadhana.isEnglishDominantLanguage &&
+			nextProps.sadhana.isDetectedLanguageCorrect === true &&
+			isEnglishDominantLanguage === null
+		) {
+			this.setState(
+				{
+					isEnglishDominantLanguage: nextProps.sadhana.isEnglishDominantLanguage,
+				},
+				() => {
+					this.handleSubmit();
+				}
+			);
 		}
 	}
 
@@ -69,19 +94,14 @@ class AddSadhana extends React.Component {
 		if (Config.sadhanaSheetAllowedDays) {
 			days = Config.sadhanaSheetAllowedDays;
 		}
-		if (
-			current > moment().endOf('day') ||
-			current < moment().subtract(days, 'days')
-		)
-			return true;
+		if (current > moment().endOf('day') || current < moment().subtract(days, 'days')) return true;
 		else {
 			for (let i = 0; i < notAllowedDates.length; i++) {
 				if (
 					moment(current)
 						.toDate()
 						.toISOString()
-						.substring(0, 10) ==
-					notAllowedDates[i].toISOString().substring(0, 10)
+						.substring(0, 10) == notAllowedDates[i].toISOString().substring(0, 10)
 				)
 					return true;
 				else return false;
@@ -89,37 +109,46 @@ class AddSadhana extends React.Component {
 		}
 	}
 
-	handleSubmit = event => {
+	handleSubmit = () => {
+		const { form } = this.props;
+		const { time_rising, userId, isEnglishDominantLanguage } = this.state;
+
+		form.validateFields(['email', 'date', 'time_rising', 'rounds', 'reading', 'association'], (err, values) => {
+			if (!err) {
+				const userDetails = JSON.parse(localStorage.getItem('user'));
+				const body = {
+					uuid: this.uuidv4(),
+					firstName: values.firstname,
+					lastName: values.lastname,
+					email: values.email,
+					creation_date_time: new Date(),
+					date: values.date,
+					time_rising: time_rising,
+					rounds: values.rounds,
+					reading: values.reading,
+					association: values.association,
+					comments: form.getFieldValue('comments'),
+					lectures: form.getFieldValue('lectures'),
+					additional_comments: form.getFieldValue('additional_comments'),
+					userId,
+					user: userDetails.user,
+					isEnglishDominantLanguage,
+				};
+				this.props.createSadhana(body);
+			}
+		});
+	};
+
+	handleDetectlanguage = event => {
 		event.preventDefault();
 		const { form } = this.props;
-		const { time_rising, userId } = this.state;
 
-		form.validateFields(
-			['email', 'date', 'time_rising', 'rounds', 'reading', 'association'],
-			(err, values) => {
-				if (!err) {
-					const userDetails = JSON.parse(localStorage.getItem('user'));
-					const body = {
-						uuid: this.uuidv4(),
-						firstName: values.firstname,
-						lastName: values.lastname,
-						email: values.email,
-						creation_date_time: new Date(),
-						date: values.date,
-						time_rising: time_rising,
-						rounds: values.rounds,
-						reading: values.reading,
-						association: values.association,
-						comments: form.getFieldValue('comments'),
-						lectures: form.getFieldValue('lectures'),
-						additional_comments: form.getFieldValue('additional_comments'),
-						userId,
-						user: userDetails.user,
-					};
-					this.props.createSadhana(body);
-				}
+		form.validateFields(['email', 'date', 'time_rising', 'rounds', 'reading', 'association'], (err, values) => {
+			if (!err) {
+				const body = { text: [values.reading, values.association] };
+				this.props.detectLanguage(body);
 			}
-		);
+		});
 	};
 
 	onChange = (time, timeString) => {
@@ -129,11 +158,7 @@ class AddSadhana extends React.Component {
 	};
 
 	formatDate = date => {
-		const dateString = new Date(
-			date.getTime() - date.getTimezoneOffset() * 60000
-		)
-			.toISOString()
-			.split('T')[0];
+		const dateString = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().split('T')[0];
 
 		return dateString;
 	};
@@ -146,18 +171,14 @@ class AddSadhana extends React.Component {
 		}
 		const notAllowedDates = this.props.notAllowedDates;
 
-		if (
-			current <= moment().endOf('day') &&
-			current >= moment().subtract(days, 'days')
-		) {
+		if (current <= moment().endOf('day') && current >= moment().subtract(days, 'days')) {
 			style.color = 'green';
 			for (let i = 0; i < notAllowedDates.length; i++) {
 				if (
 					moment(current)
 						.toDate()
 						.toISOString()
-						.substring(0, 10) ==
-					notAllowedDates[i].toISOString().substring(0, 10)
+						.substring(0, 10) == notAllowedDates[i].toISOString().substring(0, 10)
 				)
 					style.color = 'red';
 			}
@@ -171,6 +192,7 @@ class AddSadhana extends React.Component {
 	};
 
 	render() {
+		console.log('sadhana sheet reducer ====>>>>', this.props.sadhana);
 		const { language, firstName, lastName, email } = this.state;
 		const { form } = this.props;
 		const dateFormat = 'YYYY-MM-DD';
@@ -180,36 +202,6 @@ class AddSadhana extends React.Component {
 		}
 		return (
 			<React.Fragment>
-				{/* <section
-					className="bg-gray-100"
-					style={{
-						backgroundImage:
-							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
-					}}
-				>
-					<div class="breadcrumbs-custom-inner headingImage">
-						<div class="container breadcrumbs-custom-container">
-							<ul class="breadcrumbs-custom-path">
-								<li>
-									<Link to="" onClick={() => this.props.history.push('/')}>
-										<Breadcrumb.Item>Home</Breadcrumb.Item>
-									</Link>
-								</li>
-								<li>
-									<Link
-										to=""
-										onClick={() => this.props.history.push('/sadhanaList')}
-									>
-										<Breadcrumb.Item>Sadhana List</Breadcrumb.Item>
-									</Link>
-								</li>
-								<li>
-									<a className="textColor">Add Sadhana</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</section> */}
 				<div className="row justify-content-center">
 					<section className="card col-lg-8 sadhanaAdd">
 						<div className="card-body">
@@ -217,11 +209,7 @@ class AddSadhana extends React.Component {
 								<Form>
 									<div className="row">
 										<div className="col-12">
-											<Button
-												type="danger"
-												onClick={this.props.addSadhanaSheet}
-												className="closeAddSadhanaCard"
-											>
+											<Button type="danger" onClick={this.props.addSadhanaSheet} className="closeAddSadhanaCard">
 												X
 											</Button>
 										</div>
@@ -283,9 +271,7 @@ class AddSadhana extends React.Component {
 											</Form.Item>
 										</div>
 										<div className="col-12 my-1 col-md-6">
-											<Form.Item
-												label={language ? 'Time Rising' : 'Time Rising'}
-											>
+											<Form.Item label={language ? 'Time Rising' : 'Time Rising'}>
 												{form.getFieldDecorator('time_rising', {
 													rules: [
 														{
@@ -294,13 +280,7 @@ class AddSadhana extends React.Component {
 														},
 													],
 													initialValue: '',
-												})(
-													<TimePicker
-														use12Hours
-														format="h:mm a"
-														onChange={this.onChange}
-													/>
-												)}
+												})(<TimePicker use12Hours format="h:mm a" onChange={this.onChange} />)}
 											</Form.Item>
 										</div>
 										<div className="col-12 my-1 col-md-6">
@@ -313,107 +293,11 @@ class AddSadhana extends React.Component {
 														},
 													],
 													initialValue: '',
-												})(
-													<Input
-														placeholder="Rounds"
-														type="number"
-														name="rounds"
-													/>
-												)}
+												})(<Input placeholder="Rounds" type="number" name="rounds" />)}
 											</Form.Item>
 										</div>
 									</div>
-									{/* <div className="form-group inline-block-element inline-block-children">
-										<Form.Item label={language ? 'First Name' : 'First Name'}>
-											{form.getFieldDecorator('firstname', {
-												initialValue: firstName,
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-											})(<Input disabled placeholder="Name" name="name" />)}
-										</Form.Item>
-									</div>
-									<div className="form-group inline-block-element inline-block-element-right inline-block-children">
-										<Form.Item label={language ? 'Last Name' : 'Last Name'}>
-											{form.getFieldDecorator('lastname', {
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-												initialValue: lastName,
-											})(<Input disabled placeholder="Name" name="name" />)}
-										</Form.Item>
-									</div>
-									<div className="form-group inline-block-element inline-block-children">
-										<Form.Item label={language ? 'Email' : 'Email'}>
-											{form.getFieldDecorator('email', {
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-												initialValue: email,
-											})(<Input disabled placeholder="Email" name="email" />)}
-										</Form.Item>
-									</div>
-									<div className="form-group inline-block-element inline-block-element-right inline-block-children">
-										<Form.Item label={language ? 'Date' : 'Date'}>
-											{form.getFieldDecorator('date', {
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-												initialValue: moment(new Date(), dateFormat),
-											})(<DatePicker  disabledDate={this.disabledDate}/>)}
-										</Form.Item>
-									</div> 
-									
-									<div className="form-group inline-block-element">
-										<Form.Item label={language ? 'Time Rising' : 'Time Rising'}>
-											{form.getFieldDecorator('time_rising', {
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-												initialValue: '',
-											})(
-												<TimePicker
-													use12Hours
-													format="h:mm a"
-													onChange={this.onChange}
-												/>
-											)}
-										</Form.Item>
-									</div>
-									<div className="form-group inline-block-element inline-block-element-right">
-										<Form.Item label={language ? 'Rounds' : 'Rounds'}>
-											{form.getFieldDecorator('rounds', {
-												rules: [
-													{
-														required: true,
-														message: 'This field is required',
-													},
-												],
-												initialValue: '',
-											})(
-												<Input
-													placeholder="Rounds"
-													type="number"
-													name="rounds"
-												/>
-											)}
-										</Form.Item>
-									</div> */}
+
 									<div className="form-group">
 										<Form.Item label={language ? 'Reading' : 'Reading'}>
 											{form.getFieldDecorator('reading', {
@@ -424,13 +308,7 @@ class AddSadhana extends React.Component {
 													},
 												],
 												initialValue: '',
-											})(
-												<TextArea
-													rows={4}
-													placeholder="Reading"
-													name="reading"
-												/>
-											)}
+											})(<TextArea rows={4} placeholder="Reading" name="reading" />)}
 										</Form.Item>
 									</div>
 									<div className="form-group">
@@ -443,56 +321,28 @@ class AddSadhana extends React.Component {
 													},
 												],
 												initialValue: '',
-											})(
-												<TextArea
-													rows={4}
-													placeholder="Association"
-													name="association"
-												/>
-											)}
+											})(<TextArea rows={4} placeholder="Association" name="association" />)}
 										</Form.Item>
 									</div>
 									<div className="form-group">
 										<Form.Item label={language ? 'Comments' : 'Comments'}>
 											{form.getFieldDecorator('comments', {
 												initialValue: '',
-											})(
-												<TextArea
-													rows={4}
-													placeholder="Comments"
-													name="comments"
-												/>
-											)}
+											})(<TextArea rows={4} placeholder="Comments" name="comments" />)}
 										</Form.Item>
 									</div>
 									<div className="form-group">
 										<Form.Item label={language ? 'Lectures' : 'Lectures'}>
 											{form.getFieldDecorator('lectures', {
 												initialValue: '',
-											})(
-												<TextArea
-													rows={4}
-													placeholder="Lectures"
-													name="lectures"
-												/>
-											)}
+											})(<TextArea rows={4} placeholder="Lectures" name="lectures" />)}
 										</Form.Item>
 									</div>
 									<div className="form-group">
-										<Form.Item
-											label={
-												language ? 'Additional Comments' : 'Additional Comments'
-											}
-										>
+										<Form.Item label={language ? 'Additional Comments' : 'Additional Comments'}>
 											{form.getFieldDecorator('additional_comments', {
 												initialValue: '',
-											})(
-												<TextArea
-													rows={4}
-													placeholder="Additional Comments"
-													name="additional_comments"
-												/>
-											)}
+											})(<TextArea rows={4} placeholder="Additional Comments" name="additional_comments" />)}
 										</Form.Item>
 									</div>
 									<div>
@@ -503,7 +353,7 @@ class AddSadhana extends React.Component {
 														type="primary"
 														className="sadhanaSubmitButton"
 														onClick={event => {
-															this.handleSubmit(event);
+															this.handleDetectlanguage(event);
 														}}
 													>
 														Submit
@@ -512,11 +362,7 @@ class AddSadhana extends React.Component {
 												<Button type="danger" onClick={this.handleReset}>
 													Discard
 												</Button>
-												<Button
-													type="danger"
-													onClick={this.props.addSadhanaSheet}
-													style={{ marginLeft: 20 }}
-												>
+												<Button type="danger" onClick={this.props.addSadhanaSheet} style={{ marginLeft: 20 }}>
 													Close
 												</Button>
 											</div>
@@ -542,6 +388,9 @@ const mapDispatchToProps = dispatch => {
 	return {
 		createSadhana: body => {
 			dispatch(createSadhana(body));
+		},
+		detectLanguage: body => {
+			dispatch(detectLanguage(body));
 		},
 	};
 };

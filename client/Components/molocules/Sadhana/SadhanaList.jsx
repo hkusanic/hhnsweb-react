@@ -59,14 +59,9 @@ export class SadhanaList extends React.Component {
 		pagination.current = nextProps.sadhana.currentPage;
 		let sadhanaList = nextProps.sadhana.sadhanaList.map((obj, index) => {
 			let obj1 = {
-				additional_comments: obj.additional_comments.substring(0, 200),
 				approved: obj.approved,
-				association: obj.association.substring(0, 200),
-				comments: obj.comments.substring(0, 200),
-				creation_date_time: obj.creation_date_time,
+				created_date_time: obj.created_date_time,
 				date: obj.date,
-				lectures: obj.lectures,
-				reading: obj.reading.substring(0, 200),
 				rounds: obj.rounds,
 				slug: obj.slug,
 				time_rising: obj.time_rising,
@@ -74,6 +69,19 @@ export class SadhanaList extends React.Component {
 				__v: obj.__v,
 				_id: obj._id,
 			};
+			if (obj.isEnglishDominantLanguage) {
+				obj1.additional_comments = obj.en.additional_comments.substring(0, 200);
+				obj1.association = obj.en.association.substring(0, 200);
+				obj1.comments = obj.en.comments.substring(0, 200);
+				obj1.reading = obj.en.reading.substring(0, 200);
+				obj1.lectures = obj.en.lectures;
+			} else {
+				obj1.additional_comments = obj.ru.additional_comments.substring(0, 200);
+				obj1.association = obj.ru.association.substring(0, 200);
+				obj1.comments = obj.ru.comments.substring(0, 200);
+				obj1.reading = obj.ru.reading.substring(0, 200);
+				obj1.lectures = obj.ru.lectures;
+			}
 			return obj1;
 		});
 		this.setState({
@@ -96,11 +104,7 @@ export class SadhanaList extends React.Component {
 	};
 
 	formatDate = date => {
-		const dateString = new Date(
-			date.getTime() - date.getTimezoneOffset() * 60000
-		)
-			.toISOString()
-			.split('T')[0];
+		const dateString = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().split('T')[0];
 
 		return dateString;
 	};
@@ -129,10 +133,7 @@ export class SadhanaList extends React.Component {
 		let notAllowedDates = [];
 		for (let i = 0; i < sadhanaList.length; i++) {
 			for (let j = 0; j < arDate.length; j++) {
-				if (
-					sadhanaList[i].date.substring(0, 10) ===
-					this.formatDate(arDate[j]).substring(0, 10)
-				) {
+				if (sadhanaList[i].date.substring(0, 10) === this.formatDate(arDate[j]).substring(0, 10)) {
 					ctr++;
 					notAllowedDates.push(arDate[j]);
 				}
@@ -144,23 +145,25 @@ export class SadhanaList extends React.Component {
 	};
 
 	addSadhanaSheet = () => {
-		const { history } = this.props;
 		let val = this.state.showSadhanaForm;
-		if (!this.checkTodaySadhanaSubmitted()) {
-			this.setState({ showSadhanaForm: !val });
-		} else {
-			notification.error({
-				message: 'Error',
-				description: `You have already Submitted the sadhana sheet for the allowed days.`,
-				style: {
-					marginTop: 50,
-				},
-			});
-		}
+		this.setState({ showSadhanaForm: !val });
+		// if (!this.checkTodaySadhanaSubmitted()) {
+		// 	this.setState({ showSadhanaForm: !val });
+		// } else {
+		// 	notification.error({
+		// 		message: 'Error',
+		// 		description: `You have already Submitted the sadhana sheet for the allowed days.`,
+		// 		style: {
+		// 			marginTop: 50,
+		// 		},
+		// 	});
+		// }
 	};
+
 	refreshPage = () => {
 		location.reload();
 	};
+
 	render() {
 		const columns = [
 			{
@@ -170,9 +173,7 @@ export class SadhanaList extends React.Component {
 				render: date => (
 					<div>
 						<div className="sadhnaTable_headers">Date</div>
-						<div className="sadhnaTable_columns">{`${new Date(
-							date
-						).toDateString()}`}</div>
+						<div className="sadhnaTable_columns">{`${new Date(date).toDateString()}`}</div>
 					</div>
 				),
 			},
@@ -215,8 +216,7 @@ export class SadhanaList extends React.Component {
 				<section
 					className="bg-gray-100"
 					style={{
-						backgroundImage:
-							'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
+						backgroundImage: 'url(https://ik.imagekit.io/gcwjdmqwwznjl/Booking_v2_HkCb1eBDV.png)',
 					}}
 				>
 					<div className="breadcrumbs-custom-inner headingImage">
@@ -237,19 +237,12 @@ export class SadhanaList extends React.Component {
 				{!this.state.isUserLogin && this.state.sadhanaSheetEnable ? (
 					<div className="PadTop">
 						<div className="container mt-5">
-							<div
-								className="row justify-content-center"
-								style={{ marginTop: '0', marginBottom: '0' }}
-							>
+							<div className="row justify-content-center" style={{ marginTop: '0', marginBottom: '0' }}>
 								{!this.state.showSadhanaForm ? (
 									<div className="col-lg-12">
 										<div className="centerAlign">
 											{/* <DatePicker onChange={this.handleDateChange} className="datePickerFilter" /> */}
-											<Button
-												type="primary"
-												className="sadhanaButton"
-												onClick={this.addSadhanaSheet}
-											>
+											<Button type="primary" className="sadhanaButton" onClick={this.addSadhanaSheet}>
 												Add Sadhana Sheet
 											</Button>
 										</div>
@@ -275,10 +268,7 @@ export class SadhanaList extends React.Component {
 												<Table
 													columns={columns}
 													rowKey={record => record.uuid}
-													dataSource={sortByDate(
-														this.state.sadhanaList,
-														'date'
-													)}
+													dataSource={sortByDate(this.state.sadhanaList, 'date')}
 													onRow={(record, index) => {
 														return {
 															onClick: event => {
@@ -293,17 +283,13 @@ export class SadhanaList extends React.Component {
 													loading={this.state.loading}
 													onChange={this.handlePagination}
 													rowClassName={(record, index) => {
-														return index % 2 === 0
-															? 'tableRow grey'
-															: 'tableRow';
+														return index % 2 === 0 ? 'tableRow grey' : 'tableRow';
 													}}
 												/>
 											</div>
 										) : (
 											<div style={{ textAlign: 'center' }}>
-												{!this.state.showSadhanaForm ? (
-													<p className="bookingForm">No Sadhana Sheet Found</p>
-												) : null}
+												{!this.state.showSadhanaForm ? <p className="bookingForm">No Sadhana Sheet Found</p> : null}
 											</div>
 										)}
 									</div>

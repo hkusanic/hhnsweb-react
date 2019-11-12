@@ -345,7 +345,9 @@ export class SadhanaDetails extends React.Component {
 														message: 'This field is required',
 													},
 												],
-												initialValue: sadhanaDetails.reading,
+												initialValue: sadhanaDetails.isEnglishDominantLanguage
+													? sadhanaDetails.en.reading
+													: sadhanaDetails.ru.reading,
 											})(
 												<TextArea
 													rows={4}
@@ -364,7 +366,9 @@ export class SadhanaDetails extends React.Component {
 														message: 'This field is required',
 													},
 												],
-												initialValue: sadhanaDetails.association,
+												initialValue: sadhanaDetails.isEnglishDominantLanguage
+													? sadhanaDetails.en.association
+													: sadhanaDetails.ru.association,
 											})(
 												<TextArea
 													rows={4}
@@ -377,7 +381,9 @@ export class SadhanaDetails extends React.Component {
 									<div className="form-group">
 										<Form.Item label={language ? 'Comments' : 'Comments'}>
 											{form.getFieldDecorator('comments', {
-												initialValue: sadhanaDetails.comments,
+												initialValue: sadhanaDetails.isEnglishDominantLanguage
+													? sadhanaDetails.en.comments
+													: sadhanaDetails.ru.comments,
 											})(
 												<TextArea
 													rows={4}
@@ -390,7 +396,9 @@ export class SadhanaDetails extends React.Component {
 									<div className="form-group">
 										<Form.Item label={language ? 'Lectures' : 'Lectures'}>
 											{form.getFieldDecorator('lectures', {
-												initialValue: sadhanaDetails.lectures,
+												initialValue: sadhanaDetails.isEnglishDominantLanguage
+													? sadhanaDetails.en.lectures
+													: sadhanaDetails.ru.lectures,
 											})(
 												<TextArea
 													rows={4}
@@ -407,7 +415,9 @@ export class SadhanaDetails extends React.Component {
 											}
 										>
 											{form.getFieldDecorator('additional_comments', {
-												initialValue: sadhanaDetails.additional_comments,
+												initialValue: sadhanaDetails.isEnglishDominantLanguage
+													? sadhanaDetails.en.additional_comments
+													: sadhanaDetails.ru.additional_comments,
 											})(
 												<TextArea
 													rows={4}
