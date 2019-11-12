@@ -192,7 +192,6 @@ class AddSadhana extends React.Component {
 	};
 
 	render() {
-		console.log('sadhana sheet reducer ====>>>>', this.props.sadhana);
 		const { language, firstName, lastName, email } = this.state;
 		const { form } = this.props;
 		const dateFormat = 'YYYY-MM-DD';

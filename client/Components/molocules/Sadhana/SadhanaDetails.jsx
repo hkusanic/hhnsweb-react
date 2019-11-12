@@ -271,7 +271,7 @@ export class SadhanaDetails extends React.Component {
 									</div>
 									<div className="form-group">
 										<Form.Item label={language ? 'Email' : 'Email'}>
-											{form.getFieldDecorator('emai;', {
+											{form.getFieldDecorator('email', {
 												rules: [
 													{
 														required: true,

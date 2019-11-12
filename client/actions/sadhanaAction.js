@@ -43,6 +43,7 @@ export function createSadhana (body) {
 				dispatch(createSadhanaSheetAction(response));
 			})
 			.catch(err => {
+				dispatch(createSadhanaError(err.response.data));
 				if (err.response.data && err.response.data.isAlreadyExist === true) {
 					notification.error({
 						message: 'Error',
@@ -167,6 +168,13 @@ export function getSingleSadhanaSheetByDate (data) {
 export function detectLanguageAction (data) {
 	return {
 		type: types.DETECT_LANGUAGE,
+		payload: data,
+	};
+}
+
+export function createSadhanaError (data) {
+	return {
+		type: types.CREATE_SADHANA_SHEET_ERROR,
 		payload: data,
 	};
 }

@@ -39,6 +39,17 @@ const sadhanaReducer = (state = initialState, action) => {
 				isCompleted: true,
 				isUpdated: false,
 				noMoreSadhanaSheet: false,
+				isDetectedLanguageCorrect: null,
+				isEnglishDominantLanguage: null,
+			};
+			break;
+
+		case types.CREATE_SADHANA_SHEET_ERROR:
+			state = {
+				...state,
+				isDetectedLanguageCorrect: null,
+				isEnglishDominantLanguage: null,
+				isCreated: false,
 			};
 			break;
 
