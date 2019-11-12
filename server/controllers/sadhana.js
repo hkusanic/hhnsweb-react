@@ -126,7 +126,10 @@ exports.createSadhanaSheet = async function (req, res) {
 			isError = true;
 			handleError('missingSadhanaAssociation', errors);
 		}
-		if (body.isEnglishDominantLanguage === undefined || body.isEnglishDominantLanguage === null) {
+		if (
+			body.isEnglishDominantLanguage === undefined
+			|| body.isEnglishDominantLanguage === null
+		) {
 			isError = true;
 			handleError('missingDominantLanguage', errors);
 		}
@@ -146,7 +149,9 @@ exports.createSadhanaSheet = async function (req, res) {
 						reading: body.reading,
 						association: body.association,
 						comments: body.comments ? body.comments : '',
-						additional_comments: body.additional_comments ? body.additional_comments : '',
+						additional_comments: body.additional_comments
+							? body.additional_comments
+							: '',
 						lectures: body.lectures ? body.lectures : '',
 					};
 					const ruSadhanaData = [];
@@ -155,7 +160,10 @@ exports.createSadhanaSheet = async function (req, res) {
 					ruSadhanaData[2] = body.comments;
 					ruSadhanaData[3] = body.additional_comments;
 					ruSadhanaData[4] = body.lectures;
-					const convertedData = await sadhanaService.convertDataIntoOtherLanguage(ruSadhanaData, 'en');
+					const convertedData = await sadhanaService.convertDataIntoOtherLanguage(
+						ruSadhanaData,
+						'en'
+					);
 					body.en = {
 						reading: convertedData[0].translatedText,
 						association: convertedData[1].translatedText,
@@ -169,7 +177,9 @@ exports.createSadhanaSheet = async function (req, res) {
 						reading: body.reading,
 						association: body.association,
 						comments: body.comments ? body.comments : '',
-						additional_comments: body.additional_comments ? body.additional_comments : '',
+						additional_comments: body.additional_comments
+							? body.additional_comments
+							: '',
 						lectures: body.lectures ? body.lectures : '',
 					};
 					return true;
@@ -188,7 +198,9 @@ exports.createSadhanaSheet = async function (req, res) {
 		})
 		.then(data => {
 			logger.info('Creating Sadhana Sheet API Succeed');
-			res.status(200).json({ sadhana: data, isCreated: true, isAlreadyExist: false });
+			res
+				.status(200)
+				.json({ sadhana: data, isCreated: true, isAlreadyExist: false });
 		})
 		.catch(err => {
 			if (isError) {
