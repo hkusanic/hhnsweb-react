@@ -7,5 +7,6 @@ router.post('/getSadhanaById', controller.getSadhanaById);
 router.post('/create/', controller.createSadhanaSheet);
 router.all('/:id/update', controller.updateSadhanaSheet);
 router.post('/:id/remove', controller.deleteSadhanaSheet);
+router.post('/checkLanguage', controller.checkLanguageType);
 
 module.exports = router;

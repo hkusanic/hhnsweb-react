@@ -25,6 +25,14 @@ const errors = {
 		code: 'MISSING_EMAIL',
 		msg: 'Email id is not provided',
 	},
+	missingText: {
+		code: 'MISSING_TEXT_TO_DETECT_LANGUAGE',
+		msg: 'Text for detecting langauge is missing',
+	},
+	missingDominantLanguage: {
+		code: 'MISSING_DOMINANT_LANGUAGE',
+		msg: 'Dominant Laguage is not provided',
+	},
 };
 
 module.exports = {
