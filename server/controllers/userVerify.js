@@ -33,7 +33,7 @@ exports.getUserList = async function (req, res) {
 exports.createUser = async function (req, res) {
 	let isError = false;
 	let errors = [];
-	const body = req.body;
+	let body = req.body;
 	return new Promise(function (resolve, reject) {
 		if (!body.user_id) {
 			isError = true;
@@ -50,11 +50,15 @@ exports.createUser = async function (req, res) {
 		}
 	})
 		.then(resolved => {
+			if (body.children) {
+				body.children = JSON.stringify(body.children);
+			}
 			return userVerifyServices.createUser(req);
 		})
 		.then(data => {
 			return userVerifyServices.sendNewUserSubmissionEmail(
-				process.env.USER_VERIFY_ADMIN_EMIAL
+				process.env.USER_VERIFY_ADMIN_EMIAL,
+				body
 			);
 		})
 		.then(data => {
