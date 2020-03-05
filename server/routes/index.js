@@ -155,6 +155,20 @@ exports = module.exports = function (app) {
 	app.post('/api/updateRegistration/', keystone.middleware.api, routes.api.user.updateRegistration);
 	app.post('/api/updatePassword/', keystone.middleware.api, routes.api.user.updatePassword);
 
+	app.post('/api/notes/', keystone.middleware.api, routes.api.note.create);
+	app.put('/api/notes/:id', keystone.middleware.api, routes.api.note.update);
+	app.delete('/api/notes/:id', keystone.middleware.api, routes.api.note.remove);
+	app.get('/api/notes/:id', keystone.middleware.api, routes.api.note.getNoteById);
+	app.get('/api/lecture/:id/notes', keystone.middleware.api, routes.api.note.getNotesByLectureId);
+
+	app.post('/api/user/:id/createFavourite', keystone.middleware.api, routes.api.favourite.create);
+	app.delete('/api/user/:id/removeFavourite', keystone.middleware.api, routes.api.favourite.remove);
+	app.get('/api/user/:id/favourites', keystone.middleware.api, routes.api.favourite.getUserFavourites);
+
+	app.post('/api/user/:id/createReaction', keystone.middleware.api, routes.api.reaction.create);
+	app.delete('/api/user/:id/removeReaction', keystone.middleware.api, routes.api.reaction.remove);
+	app.get('/api/lecture/:id/reactions', keystone.middleware.api, routes.api.reaction.getLectureReactions);
+
 	app.options('/api*', function (req, res) { res.send(200); });
 
 	// app.post('/api/blog/generateUploadUrl', multipartMiddleware,routes.api.blog.generateUploadUrl );
