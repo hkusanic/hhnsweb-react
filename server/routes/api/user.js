@@ -1,6 +1,6 @@
 var keystone = require('keystone');
 const async = require('async');
-var Email = require('keystone-email');
+// var Email = require('keystone-email');
 var nodemailer = require('nodemailer');
 var EMAIL_CONFIG = require('../../constants/constant');
 let logger = require('./../../logger/logger');
@@ -343,7 +343,7 @@ exports.signup = function (req, res) {
 var User = keystone.list('User');
 
 exports.create = function (req, res) {
-	var item = new User.model();
+	// var item = new User.model();
 	var data = req.method === 'POST' ? req.body : req.query;
 	logger.info(
 		{
@@ -351,8 +351,18 @@ exports.create = function (req, res) {
 		},
 		'API create User'
 	);
+
+	User.model.create(data, (err, user) => {
+		if (err) {
+			return res.apiError('error', err);
+		}
+		res.apiResponse({
+			user: user,
+		});
+	});
+
 	// data.oldData.picture = JSON.stringify(data.oldData.picture);
-	item.getUpdateHandler(req).process(data, function (err) {
+	/* item.getUpdateHandler(req).process(data, function (err) {
 		if (err) {
 			logger.error(
 				{
@@ -366,7 +376,7 @@ exports.create = function (req, res) {
 		res.apiResponse({
 			user: item,
 		});
-	});
+	});*/
 };
 
 exports.createBulk = function (req, res) {
@@ -754,7 +764,7 @@ exports.approvedUserForSadhana = function (req, res) {
 	  `;
 				sendMail('shailedra@cronj.com', user.email, subject, html)
 					.then(res => {
-						console.log('email was sent', res)		
+						console.log('email was sent', res);
 					})
 					.catch(err => {
 						logger.error(

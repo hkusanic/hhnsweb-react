@@ -1,5 +1,8 @@
 const keystone = require('keystone');
 const Types = keystone.Field.Types;
+const userPhoneSchema = require('./schemas/UserPhone');
+const userContactSchema = require('./schemas/UserContact');
+const legalNameSchema = require('./schemas/LegalName');
 
 // First we gonna create our User list
 let User = new keystone.List('User');
@@ -49,6 +52,8 @@ User.add({
 		verifier: { type: String },
 		marital_status: { type: String },
 		education: { type: String },
+		skills: { type: String },
+		service: { type: String },
 	},
 	profile_pic: { type: String },
 	address: {
@@ -59,7 +64,21 @@ User.add({
 		postalcode: { type: String },
 	},
 	created_date_time: { type: Types.Date, default: Date.now },
+});
 
+User.schema.add({
+	phones: {
+		type: [userPhoneSchema],
+		required: false,
+	},
+	legal_name: {
+		type: legalNameSchema,
+		required: false,
+	},
+	contacts: {
+		type: [userContactSchema],
+		required: false,
+	},
 });
 
 User.register();
