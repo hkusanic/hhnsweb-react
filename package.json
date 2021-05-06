@@ -63,7 +63,7 @@
     "request-promise": "^4.2.4",
     "scroll-to-element": "^2.0.3",
     "tough-cookie": "^3.0.0",
-    "underscore": "^1.9.1",
+    "underscore": "^1.12.1",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
